@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/black"
     tools:context=".ui.ui.activities.LogInActivity">
 
     <TextView
@@ -14,7 +14,7 @@
         android:padding="10dp"
         android:text="@string/login"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/log_in_mobile_no"
@@ -31,7 +31,11 @@
         android:hint="@string/edit_number_hint"
         android:inputType="number"
         android:maxLength="10"
-        android:padding="15dp"
+        android:paddingEnd="15dp"
+        android:paddingStart="5dp"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        android:textColor="@color/white"
         android:textColorHint="@color/hint"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -49,7 +53,7 @@
         android:paddingStart="30dp"
         android:paddingEnd="30dp"
         android:text="@string/tc_and_pp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textColorLink="@color/button_blue"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -90,7 +94,7 @@
         android:paddingEnd="0dp"
         android:paddingBottom="15dp"
         android:text="@string/mobile_prefix"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/log_in_mobile_no"
         app:layout_constraintEnd_toStartOf="@+id/log_in_mobile_no"
@@ -138,6 +142,16 @@
         app:layout_constraintBottom_toBottomOf="@+id/log_in_and"
         app:layout_constraintStart_toEndOf="@+id/log_in_and"
         app:layout_constraintTop_toTopOf="@+id/log_in_and" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/log_in_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

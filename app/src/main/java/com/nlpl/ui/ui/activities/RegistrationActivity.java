@@ -55,6 +55,7 @@ public class RegistrationActivity extends AppCompatActivity {
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
         language = (TextView) action_bar.findViewById(R.id.action_bar_language_selector);
 
+        language.setText(getString(R.string.english));
         language.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,6 +71,31 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 languageDialog.show();
                 languageDialog.getWindow().setAttributes(lp2);
+
+                TextView english = languageDialog.findViewById(R.id.english);
+                TextView marathi = languageDialog.findViewById(R.id.marathi);
+                TextView hindi = languageDialog.findViewById(R.id.hindi);
+
+                english.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        language.setText(getString(R.string.english));
+                    }
+                });
+
+                marathi.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        language.setText(getString(R.string.marathi));
+                    }
+                });
+
+                hindi.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        language.setText(getString(R.string.hindi));
+                    }
+                });
 
             }
         });
@@ -341,6 +367,19 @@ public class RegistrationActivity extends AppCompatActivity {
 
     public void onRadioClick(View view) {
 
+        String nameWatcher = name.getText().toString().trim();
+        String stateWatcher = selectStateText.getText().toString().trim();
+        String cityWatcher = selectDistrictText.getText().toString().trim();
+
+        //--------------------------------------------------------------------------------------
+        if (!nameWatcher.isEmpty() && !stateWatcher.isEmpty() && !cityWatcher.isEmpty()) {
+            okButton.setEnabled(true);
+            okButton.setBackgroundResource((R.drawable.button_active));
+        } else {
+            okButton.setBackground(getResources().getDrawable(R.drawable.button_de_active));
+        }
+        //--------------------------------------------------------------------------------------
+
         switch (view.getId()) {
             case R.id.registration_truck_owner:
                 ownerButton.setChecked(true);
@@ -348,6 +387,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 brokerButton.setChecked(false);
                 customerButton.setChecked(false);
                 role = "Truck Owner";
+
                 break;
 
             case R.id.registration_driver:
@@ -356,6 +396,8 @@ public class RegistrationActivity extends AppCompatActivity {
                 brokerButton.setChecked(false);
                 customerButton.setChecked(false);
                 role = "Driver";
+
+
                 break;
 
             case R.id.registration_broker:
@@ -364,6 +406,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 brokerButton.setChecked(true);
                 customerButton.setChecked(false);
                 role = "Broker";
+
                 break;
 
             case R.id.registration_customer:
@@ -372,21 +415,36 @@ public class RegistrationActivity extends AppCompatActivity {
                 brokerButton.setChecked(false);
                 customerButton.setChecked(true);
                 role = "Owner";
+
                 break;
         }
     }
 
     public void onClickRegistration(View view) {
-        Intent i8 = new Intent(RegistrationActivity.this, ProfileAndRegistrationActivity.class);
-        i8.putExtra("mobile2", mobile);
-        i8.putExtra("name2", name.getText().toString());
-        i8.putExtra("isPersonal", false);
-        i8.putExtra("isBank", false);
-        i8.putExtra("isTrucks", false);
-        i8.putExtra("isDriver", false);
-        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i8);
-        overridePendingTransition(0, 0);
+
+        String nameWatcher = name.getText().toString().trim();
+        String stateWatcher = selectStateText.getText().toString().trim();
+        String cityWatcher = selectDistrictText.getText().toString().trim();
+        boolean owner = ownerButton.isChecked();
+        boolean driver = driverButton.isChecked();
+        boolean broker = brokerButton.isChecked();
+        boolean customer = customerButton.isChecked();
+
+        if (!nameWatcher.isEmpty() && !stateWatcher.isEmpty() && !cityWatcher.isEmpty() && (owner || driver || broker || customer)) {
+            okButton.setEnabled(true);
+            okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            Intent i8 = new Intent(RegistrationActivity.this, ProfileAndRegistrationActivity.class);
+            i8.putExtra("mobile2", mobile);
+            i8.putExtra("name2", name.getText().toString());
+            i8.putExtra("isPersonal", false);
+            i8.putExtra("isBank", false);
+            i8.putExtra("isTrucks", false);
+            i8.putExtra("isDriver", false);
+            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i8);
+            overridePendingTransition(0, 0);
+
+        }
 //            RegistrationActivity.this.finish();
     }
 
@@ -399,18 +457,17 @@ public class RegistrationActivity extends AppCompatActivity {
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             String nameWatcher = name.getText().toString().trim();
-            String stateWatcher = name.getText().toString().trim();
-            String cityWatcher = name.getText().toString().trim();
+            String stateWatcher = selectStateText.getText().toString().trim();
+            String cityWatcher = selectDistrictText.getText().toString().trim();
             boolean owner = ownerButton.isChecked();
             boolean driver = driverButton.isChecked();
             boolean broker = brokerButton.isChecked();
             boolean customer = customerButton.isChecked();
 
-            if (!nameWatcher.isEmpty() && !stateWatcher.isEmpty() && !cityWatcher.isEmpty() && owner || driver || broker || customer) {
+            if (!nameWatcher.isEmpty() && !stateWatcher.isEmpty() && !cityWatcher.isEmpty() && (owner || driver || broker || customer)) {
                 okButton.setEnabled(true);
-                okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                okButton.setBackgroundResource((R.drawable.button_active));
             } else {
-                okButton.setEnabled(false);
                 okButton.setBackground(getResources().getDrawable(R.drawable.button_de_active));
             }
         }

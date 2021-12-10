@@ -57,12 +57,12 @@ public class LogInActivity extends AppCompatActivity {
     public void onTcAndPP(View view) {
         switch (view.getId()) {
             case R.id.log_in_tc:
-                Intent i1 = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com"));
+                Intent i1 = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.nlpl.net/"));
                 startActivity(i1);
                 break;
 
             case R.id.log_in_pp:
-                Intent i2 = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.gmail.com"));
+                Intent i2 = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.nlpl.net"));
                 startActivity(i2);
                 break;
         }

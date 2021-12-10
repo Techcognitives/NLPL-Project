@@ -30,6 +30,8 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
     Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone;
 
+    ImageView successPersonal, successBank, successTrucks, successDrivers;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +54,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
         language = (TextView) action_bar.findViewById(R.id.action_bar_language_selector);
 
+        language.setText(getString(R.string.english));
         language.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,13 +71,38 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 languageDialog.show();
                 languageDialog.getWindow().setAttributes(lp2);
 
+                TextView english = languageDialog.findViewById(R.id.english);
+                TextView marathi = languageDialog.findViewById(R.id.marathi);
+                TextView hindi = languageDialog.findViewById(R.id.hindi);
+
+                english.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        language.setText(getString(R.string.english));
+                    }
+                });
+
+                marathi.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        language.setText(getString(R.string.marathi));
+                    }
+                });
+
+                hindi.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        language.setText(getString(R.string.hindi));
+                    }
+                });
+
             }
         });
 
         actionBarTitle.setText("Registration");
         actionBarBackButton.setVisibility(View.GONE);
 
-        personalDetails = findViewById(R.id.persnolDetails);
+        personalDetails = findViewById(R.id.personalDetails);
         bankDetails = findViewById(R.id.bankDetails);
         addTrucks = findViewById(R.id.addTrurks);
         addDrivers = findViewById(R.id.adddrivers);
@@ -84,25 +112,30 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         mobileText = (TextView) findViewById(R.id.profile_registration_mobile_text);
 
         String hello = getString(R.string.hello);
-        nameTitle.setText(hello+" "+name);
-        mobileText.setText(mobile);
+        nameTitle.setText(hello+" "+name+"!");
+        String s = mobile.substring(3,13);
+        mobileText.setText("+91 "+s);
+
+        successPersonal = (ImageView) findViewById(R.id.profile_and_registration_success_profile);
+        successBank = (ImageView) findViewById(R.id.profile_and_registration_success_bank);
+        successTrucks = (ImageView) findViewById(R.id.profile_and_registration_success_trucks);
+        successDrivers = (ImageView) findViewById(R.id.profile_and_registration_success_drivers);
 
         if (isPersonalDetailsDone){
-            personalDetails.setBackground(getResources().getDrawable(R.drawable.button_active));
+            successPersonal.setVisibility(View.VISIBLE);
         }
         if (isBankDetailsDone){
-            bankDetails.setBackground(getResources().getDrawable(R.drawable.button_active));
+            successBank.setVisibility(View.VISIBLE);
         }
         if (isAddTrucksDone){
-            addTrucks.setBackground(getResources().getDrawable(R.drawable.button_active));
+            successTrucks.setVisibility(View.VISIBLE);
         }
         if (isAddDriversDone){
-            addDrivers.setBackground(getResources().getDrawable(R.drawable.button_active));
+            successDrivers.setVisibility(View.VISIBLE);
         }
         if (isPersonalDetailsDone && isBankDetailsDone && isAddTrucksDone && isAddDriversDone){
             okBtn.setBackground(getResources().getDrawable(R.drawable.button_active));
         }
-
         personalDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

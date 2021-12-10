@@ -1,11 +1,13 @@
 package com.nlpl.ui.ui.activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.icu.text.DecimalFormat;
@@ -61,7 +63,8 @@ public class OtpCodeActivity extends AppCompatActivity {
         copyOTP = (TextView) findViewById(R.id.copy_otp);
 //        reSendOtp = findViewById(R.id.resend_otp);
         String enterCode = getString(R.string.enter_code);
-        otpTitle.setText(enterCode + mobile);
+        String s = mobile.substring(3,13);
+        otpTitle.setText(enterCode + "+91 "+s);
 
         otp1 = (EditText) findViewById(R.id.enter_otp_1);
         otp2 = (EditText) findViewById(R.id.enter_otp_2);
@@ -325,7 +328,15 @@ public class OtpCodeActivity extends AppCompatActivity {
                     overridePendingTransition(0, 0);
                     OtpCodeActivity.this.finish();
                 } else {
-                    Toast.makeText(getApplicationContext(), "SignIn Code Error", Toast.LENGTH_LONG).show();
+                    AlertDialog.Builder my_alert = new AlertDialog.Builder(OtpCodeActivity.this);
+                    my_alert.setTitle("Invalid OTP");
+                    my_alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    my_alert.show();
                 }
             }
         });
