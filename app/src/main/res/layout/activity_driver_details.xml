@@ -29,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@+id/driver_details_action_bar" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/driverName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -76,11 +76,11 @@
             android:id="@+id/imageDL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:padding="2dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/image_view_border"
+            android:padding="2dp"
             android:src="@drawable/driving_license"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textDL"
@@ -90,40 +90,39 @@
 
         <TextView
             android:id="@+id/textDL"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:padding="10dp"
             android:text="@string/DriverLicense"
             android:textColor="@color/black"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/imageDL"
             app:layout_constraintEnd_toStartOf="@+id/uploadDL"
             app:layout_constraintStart_toEndOf="@+id/imageDL"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageDL"
             app:layout_constraintVertical_bias="0.506" />
 
         <TextView
             android:id="@+id/editDL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="20dp"
             android:drawableStart="@drawable/ic_edit"
             android:padding="10dp"
             android:text="@string/edit"
             android:textColor="#000000"
             android:textSize="20sp"
             android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/textDL"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textDL"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/textDL" />
 
         <Button
             android:id="@+id/uploadDL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/all_rounded_small"
             android:backgroundTint="@color/button_blue"
             android:drawableStart="@drawable/ic_upload"
@@ -133,9 +132,11 @@
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/textDL"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/textDL"
+            app:layout_constraintTop_toTopOf="@+id/textDL"
+            app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
@@ -185,7 +186,10 @@
         android:inputType="number"
         android:layout_marginTop="10dp"
         android:maxLength="10"
-        android:padding="15dp"
+        android:paddingEnd="15dp"
+        android:paddingStart="5dp"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
         android:textColorHint="@color/hint"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -204,6 +208,6 @@
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintTop_toBottomOf="@+id/driverName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

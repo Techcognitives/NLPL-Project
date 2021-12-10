@@ -934,10 +934,10 @@
     //------------------------------------Profile and registration Activity ------------------------
     <string name="hello">Hello,</string>
     <string name="mobNo">+91 9999999999</string>
-    <string name="personalDetails">Personal Details</string>
-    <string name="BankDetails">Bank Details</string>
-    <string name="AddTrucks">Add Trucks</string>
-    <string name="AddDrivers">Add Drivers</string>
+    <string name="personalDetails"><p>   </p>Personal Details</string>
+    <string name="BankDetails"><p>   </p>Bank Details</string>
+    <string name="AddTrucks"><p>   </p>Add Trucks</string>
+    <string name="AddDrivers"><p>   </p>Add Drivers</string>
     //----------------------------------------------------------------------------------------------
 
     //---------------------------------------Personal Details Activity------------------------------

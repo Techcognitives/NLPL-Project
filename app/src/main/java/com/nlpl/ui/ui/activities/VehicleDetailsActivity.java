@@ -11,6 +11,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -37,14 +39,14 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     TextView openText, closedText, tarpaulinText;
     String bodyTypeSelected;
 
-    Button uploadRC, uploadInsurance;
+    Button uploadRC, uploadInsurance, okVehicleDetails;
     TextView textRC, editRC;
     TextView textInsurance, editInsurance;
     int GET_FROM_GALLERY = 0;
     int GET_FROM_GALLERY1 = 1;
 
     String mobile, name;
-    Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone;
+    Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, isRcUploaded=false, isInsurance=false, truckSelected=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +65,13 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             Log.i("Name", name);
         }
 
+
         action_bar = findViewById(R.id.vehicle_details_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
         language = (TextView) action_bar.findViewById(R.id.action_bar_language_selector);
 
+        language.setText(getString(R.string.english));
         language.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,6 +87,31 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
                 languageDialog.show();
                 languageDialog.getWindow().setAttributes(lp2);
+
+                TextView english = languageDialog.findViewById(R.id.english);
+                TextView marathi = languageDialog.findViewById(R.id.marathi);
+                TextView hindi = languageDialog.findViewById(R.id.hindi);
+
+                english.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        language.setText(getString(R.string.english));
+                    }
+                });
+
+                marathi.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        language.setText(getString(R.string.marathi));
+                    }
+                });
+
+                hindi.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        language.setText(getString(R.string.hindi));
+                    }
+                });
 
             }
         });
@@ -110,6 +139,10 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         uploadInsurance = (Button) findViewById(R.id.vehicle_details_insurance_upload_button);
         textInsurance = (TextView) findViewById(R.id.vehicle_details_insurance_text);
         editInsurance = (TextView) findViewById(R.id.vehicle_details_edit_insurance);
+
+        okVehicleDetails= findViewById(R.id.vehicle_details_ok_button);
+
+        vehicleNumberEdit.addTextChangedListener(vehicleTextWatecher);
 
         uploadRC.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,6 +176,11 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     }
 
     public void onClickVehicle(View view) {
+        truckSelected=true;
+        String vehicleNum = vehicleNumberEdit.getText().toString();
+        if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected ){
+            okVehicleDetails.setBackgroundResource(R.drawable.button_active);
+        }
         switch (view.getId()) {
             case R.id.vehicle_details_open_type:
                 openType.setBackgroundResource(R.drawable.image_view_border_selected);
@@ -186,6 +224,12 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             uploadRC.setVisibility(View.INVISIBLE);
             editRC.setVisibility(View.VISIBLE);
 
+            isRcUploaded=true;
+            String vehicleNum = vehicleNumberEdit.getText().toString();
+            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected ){
+                okVehicleDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
             Uri selectedImage = data.getData();
 //            imgPAN.setImageURI(selectedImage);
             Bitmap bitmap = null;
@@ -203,6 +247,12 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             uploadInsurance.setVisibility(View.INVISIBLE);
             editInsurance.setVisibility(View.VISIBLE);
 
+            isInsurance=true;
+            String vehicleNum = vehicleNumberEdit.getText().toString();
+            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected ){
+                okVehicleDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
             Uri selectedImage = data.getData();
 //            imgPAN.setImageURI(selectedImage);
             Bitmap bitmap = null;
@@ -219,16 +269,47 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     }
 
     public void onClickVehicleDetailsOk(View view) {
-        Intent i8 = new Intent(VehicleDetailsActivity.this, ProfileAndRegistrationActivity.class);
-        i8.putExtra("mobile2", mobile);
-        i8.putExtra("name2", name);
-        i8.putExtra("isPersonal", isPersonalDetailsDone);
-        i8.putExtra("isBank", isBankDetailsDone);
+        String vehicleNum = vehicleNumberEdit.getText().toString();
+        if (!vehicleNum.isEmpty()&&isRcUploaded&&isInsurance&&truckSelected) {
+            Intent i8 = new Intent(VehicleDetailsActivity.this, ProfileAndRegistrationActivity.class);
+            i8.putExtra("mobile2", mobile);
+            i8.putExtra("name2", name);
+            i8.putExtra("isPersonal", isPersonalDetailsDone);
+            i8.putExtra("isBank", isBankDetailsDone);
             i8.putExtra("isTrucks", true);
-            i8.putExtra("isDriver",isAddDriversDone);
-        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i8);
-        overridePendingTransition(0, 0);
-        VehicleDetailsActivity.this.finish();
+            i8.putExtra("isDriver", isAddDriversDone);
+            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i8);
+            overridePendingTransition(0, 0);
+            VehicleDetailsActivity.this.finish();
+        }else{
+            okVehicleDetails.setBackground(getResources().getDrawable(R.drawable.button_de_active));
+
+        }
     }
+
+    private TextWatcher vehicleTextWatecher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String vehicleNum = vehicleNumberEdit.getText().toString().trim();
+            if (!vehicleNum.isEmpty()&&isRcUploaded&&isInsurance&&truckSelected) {
+                okVehicleDetails.setBackgroundResource((R.drawable.button_active));
+            }else{
+                okVehicleDetails.setBackground(getResources().getDrawable(R.drawable.button_de_active));
+
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+
+
 }

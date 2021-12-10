@@ -33,7 +33,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     Dialog languageDialog;
 
     TextView panCardText, editPAN, editBack, editFront, frontText, backText;
-    Button uploadPAN, uploadF, uploadB;
+    Button uploadPAN, uploadF, uploadB, okPersonalDetails;
     ImageView imgPAN, imgF, imgB;
     RadioButton radioAadhar, radioVoter;
     private int GET_FROM_GALLERY=0;
@@ -60,11 +60,16 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             Log.i("Name", name);
         }
 
+        if (isPanUploaded && isFrontUploaded && isBackUploaded){
+            okPersonalDetails.setBackgroundResource((R.drawable.button_active));
+        }
+
         action_bar = findViewById(R.id.personal_details_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
         language = (TextView) action_bar.findViewById(R.id.action_bar_language_selector);
 
+        language.setText(getString(R.string.english));
         language.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,6 +85,31 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
                 languageDialog.show();
                 languageDialog.getWindow().setAttributes(lp2);
+
+                TextView english = languageDialog.findViewById(R.id.english);
+                TextView marathi = languageDialog.findViewById(R.id.marathi);
+                TextView hindi = languageDialog.findViewById(R.id.hindi);
+
+                english.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        language.setText(getString(R.string.english));
+                    }
+                });
+
+                marathi.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        language.setText(getString(R.string.marathi));
+                    }
+                });
+
+                hindi.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        language.setText(getString(R.string.hindi));
+                    }
+                });
 
             }
         });
@@ -106,6 +136,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         editBack = findViewById(R.id.editBack);
         radioAadhar = findViewById(R.id.radioAadhar);
         radioVoter = findViewById(R.id.radioVoter);
+        okPersonalDetails = findViewById(R.id.okPersonalDetails);
 
         uploadPAN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,6 +218,10 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             editPAN.setVisibility(View.VISIBLE);
             isPanUploaded = true;
 
+            if (isPanUploaded && isFrontUploaded && isBackUploaded){
+                okPersonalDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
             Uri selectedImage = data.getData();
 //            imgPAN.setImageURI(selectedImage);
             Bitmap bitmap = null;
@@ -205,6 +240,10 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             editFront.setVisibility(View.VISIBLE);
             isFrontUploaded = true;
 
+            if (isPanUploaded && isFrontUploaded && isBackUploaded){
+                okPersonalDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
             Uri selectedImage = data.getData();
 //            imgPAN.setImageURI(selectedImage);
             Bitmap bitmap = null;
@@ -222,6 +261,10 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             uploadB.setVisibility(View.INVISIBLE);
             editBack.setVisibility(View.VISIBLE);
             isBackUploaded = true;
+
+            if (isPanUploaded && isFrontUploaded && isBackUploaded){
+                okPersonalDetails.setBackgroundResource(R.drawable.button_active);
+            }
 
             Uri selectedImage = data.getData();
 //            imgPAN.setImageURI(selectedImage);

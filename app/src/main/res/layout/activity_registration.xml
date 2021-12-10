@@ -78,34 +78,33 @@
 
     <TextView
         android:id="@+id/registration_select_city"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/edit_text_border"
         android:drawableEnd="@drawable/ic_down"
         android:drawableTint="@color/black"
         android:hint="@string/select_city"
         android:padding="20dp"
         android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/registration_select_state"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/registration_select_state"
-        app:layout_constraintTop_toBottomOf="@+id/registration_location" />
+        app:layout_constraintTop_toTopOf="@+id/registration_select_state" />
 
     <TextView
         android:id="@+id/registration_select_state"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="5dp"
         android:background="@drawable/edit_text_border"
         android:drawableEnd="@drawable/ic_down"
         android:drawableTint="@color/black"
         android:hint="@string/select_state"
         android:padding="20dp"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toStartOf="@+id/registration_select_city"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registration_location" />
