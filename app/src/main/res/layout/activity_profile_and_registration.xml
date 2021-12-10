@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.ui.activities.ProfileAndRegistrationActivity">
+
+    <include
+        android:id="@+id/profile_registration_action_bar"
+        layout="@layout/action_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/profile_registration_mobile_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/mobNo"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backText" />
+
+    <TextView
+        android:id="@+id/backText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:text="@string/name"
+        android:textAlignment="center"
+        android:layout_marginTop="20dp"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_registration_action_bar" />
+
+    <Button
+        android:id="@+id/persnolDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/button_de_active_light_blue"
+        android:drawableEnd="@drawable/ic_right"
+        android:gravity="center|start"
+        android:paddingLeft="20dp"
+        android:text="@string/personalDetails"
+        android:textAllCaps="false"
+        android:textColor="@color/background"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_registration_mobile_text" />
+
+    <Button
+        android:id="@+id/bankDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/button_de_active_light_blue"
+        android:drawableEnd="@drawable/ic_right"
+        android:gravity="center|start"
+        android:paddingLeft="20dp"
+        android:text="@string/BankDetails"
+        android:textAllCaps="false"
+        android:textColor="@color/background"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/persnolDetails" />
+
+    <Button
+        android:id="@+id/addTrurks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/button_de_active_light_blue"
+        android:drawableEnd="@drawable/ic_right"
+        android:gravity="center|start"
+        android:paddingLeft="20dp"
+        android:text="@string/AddTrucks"
+        android:textAllCaps="false"
+        android:textColor="@color/background"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bankDetails" />
+
+    <Button
+        android:id="@+id/adddrivers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/button_de_active_light_blue"
+        android:drawableEnd="@drawable/ic_right"
+        android:gravity="center|start"
+        android:paddingLeft="20dp"
+        android:text="@string/AddDrivers"
+        android:textAllCaps="false"
+        android:textColor="@color/background"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addTrurks" />
+
+    <Button
+        android:id="@+id/ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/button_de_active"
+        android:text="@string/ok"
+        android:textAllCaps="false"
+        android:textColor="@color/background"
+        android:textSize="20sp"
+        android:onClick="onClickProfileAndRegister"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/adddrivers"
+        app:layout_constraintVertical_bias="0.591" />
+</androidx.constraintlayout.widget.ConstraintLayout>

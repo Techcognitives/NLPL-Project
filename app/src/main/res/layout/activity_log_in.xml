@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".ui.ui.activities.LogInActivity">
+
+    <TextView
+        android:id="@+id/log_in_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/login"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/log_in_mobile_no"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/log_in_mobile_no"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/mobile_number_right"
+        android:hint="@string/edit_number_hint"
+        android:inputType="number"
+        android:maxLength="10"
+        android:padding="15dp"
+        android:textColorHint="@color/hint"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/log_in_series"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="Autofill" />
+
+    <TextView
+        android:id="@+id/log_in_agree_tc_pp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        android:text="@string/tc_and_pp"
+        android:textColor="@color/black"
+        android:textColorLink="@color/button_blue"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/log_in_get_otp_button" />
+
+    <Button
+        android:id="@+id/log_in_get_otp_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/button_de_active"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textStyle="bold"
+        android:text="@string/get_otp"
+        android:enabled="false"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/log_in_mobile_no" />
+
+    <TextView
+        android:id="@+id/log_in_series"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/mobile_number_left"
+        android:paddingStart="15dp"
+        android:paddingTop="15dp"
+        android:paddingEnd="0dp"
+        android:paddingBottom="15dp"
+        android:text="@string/mobile_prefix"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/log_in_mobile_no"
+        app:layout_constraintEnd_toStartOf="@+id/log_in_mobile_no"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/log_in_mobile_no" />
+
+    <TextView
+        android:id="@+id/log_in_tc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/underline_blue"
+        android:gravity="end"
+        android:text="@string/tc"
+        android:onClick="onTcAndPP"
+        android:textAlignment="textEnd"
+        android:textColor="@color/button_blue"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/log_in_and"
+        app:layout_constraintEnd_toStartOf="@+id/log_in_and"
+        app:layout_constraintTop_toTopOf="@+id/log_in_and" />
+
+    <TextView
+        android:id="@+id/log_in_and"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/and"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/log_in_agree_tc_pp"
+        app:layout_constraintStart_toStartOf="@+id/log_in_agree_tc_pp"
+        app:layout_constraintTop_toBottomOf="@+id/log_in_agree_tc_pp" />
+
+    <TextView
+        android:id="@+id/log_in_pp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/underline_blue"
+        android:foregroundGravity="right"
+        android:text="@string/pp"
+        android:onClick="onTcAndPP"
+        android:textColor="@color/button_blue"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/log_in_and"
+        app:layout_constraintStart_toEndOf="@+id/log_in_and"
+        app:layout_constraintTop_toTopOf="@+id/log_in_and" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

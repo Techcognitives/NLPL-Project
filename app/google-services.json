@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "631763251671",
+    "project_id": "find-yourtruck",
+    "storage_bucket": "find-yourtruck.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:631763251671:android:a0e33670599028ac11db92",
+        "android_client_info": {
+          "package_name": "com.nlpl"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "631763251671-g02rts8s9ikl80c1jt6161cbp6keu2qj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nlpl",
+            "certificate_hash": "0650cf8ae9c1604ad35664a2d39174c6f145921e"
+          }
+        },
+        {
+          "client_id": "631763251671-18igb2dmhrmnmmqhm138pil6p7r60hbj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBa7806OhCruJtOlE-j98j18Sk_isAv0WI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "631763251671-18igb2dmhrmnmmqhm138pil6p7r60hbj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

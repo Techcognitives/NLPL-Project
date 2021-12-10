@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable-v24/border.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable-v24/button_de_active.xml" value="0.37447916666666664" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable-v24/button_de_active_light_blue.xml" value="0.21666666666666667" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable-v24/countdown_background.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.21875" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable-v24/ic_right.xml" value="0.37447916666666664" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable-v24/mobile_number_left.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable-v24/mobile_number_right.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable-v24/otp_underline.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/all_rounded_small.xml" value="0.378125" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/border.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/broker.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/business.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/button_active.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/countdown_background.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/edit_text_border.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/edit_text_border_small.xml" value="0.378125" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/edit_text_border_small_black.xml" value="0.378125" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/four_border_rounded.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/four_side_radius_small.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/four_side_rounded.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/ic_back.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/ic_baseline_call_24.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/ic_baseline_directions_car_24.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/ic_baseline_keyboard_arrow_right_24.xml" value="0.21875" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/ic_baseline_people_24.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/ic_edit.xml" value="0.378125" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.21875" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/ic_right.xml" value="0.37447916666666664" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/ic_upload.xml" value="0.378125" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/image_view_border.xml" value="0.378125" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/image_view_border_selected.xml" value="0.378125" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/language_selector_top_corners.xml" value="0.378125" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/language_selector_top_cornors.xml" value="0.378125" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/mobile_number_left.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/mobile_number_right.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/otp_underline.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/shadow_file.xml" value="0.378125" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/truck_logo.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/underline.xml" value="0.378125" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable/underline_blue.xml" value="0.378125" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/layout/action_bar.xml" value="0.3432971014492754" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/layout/activity_add_driver.xml" value="0.3625" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/layout/activity_add_vehicle.xml" value="0.3625" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/layout/activity_bank_details.xml" value="0.29528985507246375" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/layout/activity_driver_details.xml" value="0.3432971014492754" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/layout/activity_firm.xml" value="0.3625" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/layout/activity_individual.xml" value="0.3625" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/layout/activity_individual_or_firm.xml" value="0.3625" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/layout/activity_log_in.xml" value="0.3625" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/layout/activity_otp_code.xml" value="0.3625" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/layout/activity_owner_or_broker.xml" value="0.3625" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/layout/activity_payment.xml" value="0.3625" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/layout/activity_personal_details.xml" value="0.3432971014492754" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/layout/activity_profile_and_registration.xml" value="0.3432971014492754" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/layout/activity_razor_pay.xml" value="0.3625" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/layout/activity_register_user.xml" value="0.3625" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/layout/activity_registration.xml" value="0.37205567451820126" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/layout/activity_registration_two.xml" value="0.29483695652173914" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/layout/activity_rezor_pay.xml" value="0.3625" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/layout/activity_setup_done.xml" value="0.3625" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/layout/activity_splash_screen.xml" value="0.29483695652173914" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/layout/activity_vehicle_details.xml" value="0.3432971014492754" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/layout/custom_list_row.xml" value="0.3401268115942029" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/layout/dialog_language.xml" value="0.2921195652173913" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/layout/dialog_select_state.xml" value="0.3016304347826087" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.21875" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/mipmap-anydpi-v26/ic_launcher34.webp.xml" value="0.21875" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.21875" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.ui.activities.VehicleDetailsActivity">
+
+    <include
+        android:id="@+id/vehicle_details_action_bar"
+        layout="@layout/action_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/vehicle_details_vehicle_number_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingEnd="0dp"
+        android:text="@string/vehicle_number"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vehicle_details_action_bar" />
+
+    <EditText
+        android:id="@+id/vehicle_details_vehicle_number_edit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/edit_text_border_small_black"
+        android:ems="10"
+        android:layout_marginTop="3dp"
+        android:hint="@string/vehicle_number_edit"
+        android:paddingStart="20dp"
+        android:paddingEnd="0dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vehicle_details_vehicle_number_text" />
+
+    <TextView
+        android:id="@+id/vehicle_details_body_type_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingEnd="0dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:text="@string/body_type"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vehicle_details_vehicle_number_edit" />
+
+    <ImageView
+        android:id="@+id/vehicle_details_open_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/image_view_border"
+        android:paddingStart="5dp"
+        android:paddingTop="15dp"
+        android:paddingEnd="5dp"
+        android:paddingBottom="15dp"
+        android:src="@drawable/truck_open"
+        android:onClick="onClickVehicle"
+        app:layout_constraintEnd_toStartOf="@+id/vehicle_details_closed_type"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vehicle_details_body_type_text" />
+
+    <ImageView
+        android:id="@+id/vehicle_details_closed_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/image_view_border"
+        android:paddingStart="5dp"
+        android:paddingTop="15dp"
+        android:paddingEnd="5dp"
+        android:onClick="onClickVehicle"
+        android:layout_marginTop="4dp"
+        android:paddingBottom="15dp"
+        android:src="@drawable/truck_close"
+        app:layout_constraintBottom_toBottomOf="@+id/vehicle_details_open_type"
+        app:layout_constraintEnd_toStartOf="@+id/vehicle_details_tarpaulin_type"
+        app:layout_constraintStart_toEndOf="@+id/vehicle_details_open_type"
+        app:layout_constraintTop_toTopOf="@+id/vehicle_details_open_type" />
+
+    <ImageView
+        android:id="@+id/vehicle_details_tarpaulin_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/image_view_border"
+        android:paddingStart="5dp"
+        android:paddingTop="15dp"
+        android:onClick="onClickVehicle"
+        android:paddingEnd="5dp"
+        android:layout_marginTop="4dp"
+        android:paddingBottom="15dp"
+        android:src="@drawable/truck_tarpaulin"
+        app:layout_constraintBottom_toBottomOf="@+id/vehicle_details_closed_type"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/vehicle_details_closed_type"
+        app:layout_constraintTop_toBottomOf="@+id/vehicle_details_body_type_text" />
+
+    <TextView
+        android:id="@+id/vehicle_details_open_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/open"
+        android:layout_marginTop="3dp"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/vehicle_details_open_type"
+        app:layout_constraintStart_toStartOf="@+id/vehicle_details_open_type"
+        app:layout_constraintTop_toBottomOf="@+id/vehicle_details_open_type" />
+
+    <TextView
+        android:id="@+id/vehicle_details_closed_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/closed"
+        android:layout_marginTop="3dp"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/vehicle_details_open_text"
+        app:layout_constraintEnd_toEndOf="@+id/vehicle_details_closed_type"
+        app:layout_constraintStart_toStartOf="@+id/vehicle_details_closed_type"
+        app:layout_constraintTop_toTopOf="@+id/vehicle_details_open_text" />
+
+    <TextView
+        android:id="@+id/vehicle_details_tarpaulin_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/tarpaulin"
+        android:layout_marginTop="3dp"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/vehicle_details_closed_text"
+        app:layout_constraintEnd_toEndOf="@+id/vehicle_details_tarpaulin_type"
+        app:layout_constraintStart_toStartOf="@+id/vehicle_details_tarpaulin_type"
+        app:layout_constraintTop_toTopOf="@+id/vehicle_details_closed_text" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/vehicle_details_rc_book_constrain"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/shadow_file"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vehicle_details_rc_book_text">
+
+        <ImageView
+            android:id="@+id/vehicle_details_rc_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/image_view_border"
+            android:padding="2dp"
+            android:src="@drawable/rc_book"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/vehicle_details_rc_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/vehicle_details_rc_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/rc_book"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/vehicle_details_rc_image"
+            app:layout_constraintEnd_toStartOf="@+id/vehicle_details_rc_upload"
+            app:layout_constraintHorizontal_bias="0.228"
+            app:layout_constraintStart_toEndOf="@+id/vehicle_details_rc_image"
+            app:layout_constraintTop_toTopOf="@+id/vehicle_details_rc_image"
+            app:layout_constraintVertical_bias="0.506" />
+
+        <Button
+            android:id="@+id/vehicle_details_rc_upload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/all_rounded_small"
+            android:backgroundTint="@color/button_blue"
+            android:drawableStart="@drawable/ic_upload"
+            android:padding="10dp"
+            android:text="@string/Upload"
+            android:layout_marginEnd="10dp"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/vehicle_details_rc_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/vehicle_details_rc_text"
+            app:layout_constraintTop_toTopOf="@+id/vehicle_details_rc_text"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/vehicle_details_edit_rc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_edit"
+            android:text="@string/edit"
+            android:padding="10dp"
+            android:layout_marginEnd="20dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/vehicle_details_rc_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.753"
+            app:layout_constraintStart_toEndOf="@+id/vehicle_details_rc_text"
+            app:layout_constraintTop_toTopOf="@+id/vehicle_details_rc_text" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/vehicle_details_ok_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_de_active"
+        android:drawableStart="@color/black"
+        android:text="@string/ok"
+        android:onClick="onClickVehicleDetailsOk"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:textAllCaps="false"
+        android:textColor="@color/background"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vehicle_details_insurance_constrain" />
+
+    <TextView
+        android:id="@+id/vehicle_details_rc_book_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingEnd="0dp"
+        android:text="@string/rc_book"
+        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vehicle_details_open_text" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/vehicle_details_insurance_constrain"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/shadow_file"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vehicle_details_insurance_text_view">
+
+        <ImageView
+            android:id="@+id/vehicle_details_insurance_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/image_view_border"
+            android:padding="2dp"
+            android:src="@drawable/insurance"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/vehicle_details_insurance_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/vehicle_details_insurance_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/insurance"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/vehicle_details_insurance_upload_button"
+            app:layout_constraintHorizontal_bias="0.228"
+            app:layout_constraintStart_toEndOf="@+id/vehicle_details_insurance_image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.506" />
+
+        <Button
+            android:id="@+id/vehicle_details_insurance_upload_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/all_rounded_small"
+            android:backgroundTint="@color/button_blue"
+            android:drawableStart="@drawable/ic_upload"
+            android:padding="10dp"
+            android:text="@string/Upload"
+            android:layout_marginEnd="10dp"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/vehicle_details_insurance_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/vehicle_details_insurance_text"
+            app:layout_constraintTop_toTopOf="@+id/vehicle_details_insurance_text" />
+
+        <TextView
+            android:id="@+id/vehicle_details_edit_insurance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_edit"
+            android:text="@string/edit"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:padding="10dp"
+            android:layout_marginEnd="20dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/vehicle_details_insurance_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.753"
+            app:layout_constraintStart_toEndOf="@+id/vehicle_details_insurance_text"
+            app:layout_constraintTop_toTopOf="@+id/vehicle_details_insurance_text" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/vehicle_details_insurance_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingEnd="0dp"
+        android:text="@string/insurance"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vehicle_details_rc_book_constrain" />
+</androidx.constraintlayout.widget.ConstraintLayout>
