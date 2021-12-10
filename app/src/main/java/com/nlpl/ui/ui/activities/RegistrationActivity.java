@@ -38,7 +38,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
     EditText name;
     Button okButton;
-    boolean from;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
