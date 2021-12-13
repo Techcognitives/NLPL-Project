@@ -48,7 +48,6 @@ public class OtpCodeActivity extends AppCompatActivity {
     String otp;
     FirebaseAuth mAuth;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
