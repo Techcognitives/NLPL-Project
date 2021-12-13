@@ -46,7 +46,7 @@ public class OtpCodeActivity extends AppCompatActivity {
     EditText otp1, otp2, otp3, otp4, otp5, otp6;
     Button otpButton;
     String otp;
-    FirebaseAuth mAuth, nnn;
+    FirebaseAuth mAuth;
 
 
     @Override
