@@ -160,7 +160,7 @@
         android:layout_marginStart="176dp"
         android:layout_marginEnd="177dp"
         android:layout_marginBottom="92dp"
-        android:text="rasika "
+        android:text="rasika 6767"
         android:textColor="#FFFFFF"
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
