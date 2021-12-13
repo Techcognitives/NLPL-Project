@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -28,6 +29,10 @@ public class LogInActivity extends AppCompatActivity {
         getStarted = (Button) findViewById(R.id.log_in_get_otp_button);
 
         mobileNo.addTextChangedListener(mobileNumberTextWatcher);
+
+        mobileNo.requestFocus();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
 
         getStarted.setOnClickListener(new View.OnClickListener() {
             @Override

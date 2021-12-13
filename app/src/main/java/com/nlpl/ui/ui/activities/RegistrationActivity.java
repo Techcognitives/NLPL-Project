@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
@@ -112,6 +114,11 @@ public class RegistrationActivity extends AppCompatActivity {
         selectStateText.addTextChangedListener(registrationWatcher);
         selectDistrictText.addTextChangedListener(registrationWatcher);
 
+        name.requestFocus();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+        name.setFilters(new InputFilter[] { filter });
+
 //        if (!name.getText().toString().isEmpty() && !selectStateText.getText().toString().isEmpty() && !selectDistrictText.getText().toString().isEmpty() && role != null){
 //            okButton.setBackground(getDrawable(R.drawable.button_active));
 //        }else if (name.getText().toString().isEmpty() || selectStateText.getText().toString().isEmpty() || selectDistrictText.getText().toString().isEmpty() || role == null) {
@@ -126,6 +133,7 @@ public class RegistrationActivity extends AppCompatActivity {
         selectStateText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                name.setCursorVisible(false);
                 selectStateDialog = new Dialog(RegistrationActivity.this);
                 selectStateDialog.setContentView(R.layout.dialog_select_state);
 //                dialog.getWindow().setLayout(1000,3000);
@@ -475,6 +483,20 @@ public class RegistrationActivity extends AppCompatActivity {
         @Override
         public void afterTextChanged(Editable editable) {
 
+        }
+    };
+    private String blockCharacterSet ="~#^|$%&*!+@₹_-()':;?/={}";
+
+    private InputFilter filter = new InputFilter() {
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+
+
+            if (source != null && blockCharacterSet.contains(("" + source))) {
+                return "";
+            }
+            return null;
         }
     };
 }

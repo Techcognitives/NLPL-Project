@@ -26,10 +26,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backText" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_registration_name_text" />
 
     <TextView
-        android:id="@+id/backText"
+        android:id="@+id/profile_registration_name_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -43,27 +43,27 @@
         app:layout_constraintTop_toBottomOf="@+id/profile_registration_action_bar" />
 
     <Button
-        android:id="@+id/personalDetails"
+        android:id="@+id/profile_registration_personal_details_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="52dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/button_active"
-        android:drawableEnd="@drawable/ic_right"
         android:drawableStart="@drawable/personal"
-        android:paddingLeft="10dp"
+        android:drawableEnd="@drawable/ic_right"
         android:gravity="center|start"
+        android:paddingLeft="10dp"
         android:text="@string/personalDetails"
         android:textAllCaps="false"
         android:textColor="@color/background"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/profile_and_registration_success_profile"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profile_and_registration_success_profile"
         app:layout_constraintTop_toBottomOf="@+id/profile_registration_mobile_text" />
 
     <Button
-        android:id="@+id/bankDetails"
+        android:id="@+id/profile_registration_bank_details_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -78,12 +78,12 @@
         android:textAllCaps="false"
         android:textColor="@color/background"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/profile_and_registration_success_bank"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/personalDetails" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profile_and_registration_success_bank"
+        app:layout_constraintTop_toBottomOf="@+id/profile_registration_personal_details_button" />
 
     <Button
-        android:id="@+id/addTrurks"
+        android:id="@+id/profile_registration_truck_details"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -98,12 +98,12 @@
         android:textAllCaps="false"
         android:textColor="@color/background"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/profile_and_registration_success_trucks"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bankDetails" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profile_and_registration_success_trucks"
+        app:layout_constraintTop_toBottomOf="@+id/profile_registration_bank_details_button" />
 
     <Button
-        android:id="@+id/adddrivers"
+        android:id="@+id/profile_registration_driver_details"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -118,12 +118,12 @@
         android:textAllCaps="false"
         android:textColor="@color/background"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/profile_and_registration_success_drivers"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addTrurks" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profile_and_registration_success_drivers"
+        app:layout_constraintTop_toBottomOf="@+id/profile_registration_truck_details" />
 
     <Button
-        android:id="@+id/ok"
+        android:id="@+id/profile_registration_ok_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -138,59 +138,57 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/adddrivers"
+        app:layout_constraintTop_toBottomOf="@+id/profile_registration_driver_details"
         app:layout_constraintVertical_bias="0.591" />
 
     <ImageView
         android:id="@+id/profile_and_registration_success_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/personalDetails"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/personalDetails"
-        app:layout_constraintTop_toTopOf="@+id/personalDetails"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_registration_personal_details_button"
+        app:layout_constraintEnd_toStartOf="@+id/profile_registration_personal_details_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/profile_registration_personal_details_button"
         app:srcCompat="@drawable/success" />
 
     <ImageView
         android:id="@+id/profile_and_registration_success_bank"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/bankDetails"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bankDetails"
-        app:layout_constraintTop_toTopOf="@+id/bankDetails"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_registration_bank_details_button"
+        app:layout_constraintEnd_toStartOf="@+id/profile_registration_bank_details_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/profile_registration_bank_details_button"
+        app:layout_constraintVertical_bias="0.416"
         app:srcCompat="@drawable/success" />
 
     <ImageView
         android:id="@+id/profile_and_registration_success_trucks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/addTrurks"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/addTrurks"
-        app:layout_constraintTop_toTopOf="@+id/addTrurks"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_registration_truck_details"
+        app:layout_constraintEnd_toStartOf="@+id/profile_registration_truck_details"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/profile_registration_truck_details"
+        app:layout_constraintVertical_bias="0.625"
         app:srcCompat="@drawable/success" />
 
     <ImageView
         android:id="@+id/profile_and_registration_success_drivers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/adddrivers"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/adddrivers"
-        app:layout_constraintTop_toTopOf="@+id/adddrivers"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_registration_driver_details"
+        app:layout_constraintEnd_toStartOf="@+id/profile_registration_driver_details"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/profile_registration_driver_details"
         app:srcCompat="@drawable/success" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

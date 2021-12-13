@@ -10,6 +10,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
@@ -117,6 +119,13 @@ public class BankDetailsActivity extends AppCompatActivity {
         okButton = (Button) findViewById(R.id.bank_details_ok_button);
         okButton.setEnabled(false);
 
+
+        bankName.requestFocus();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+        bankName.setFilters(new InputFilter[] { filter });
+        ifscCode.setFilters(new InputFilter[] { filter });
+
         bankName.addTextChangedListener(bankDetailsWatcher);
         accountNo.addTextChangedListener(bankDetailsWatcher);
         reAccount.addTextChangedListener(bankDetailsWatcher);
@@ -177,6 +186,21 @@ public class BankDetailsActivity extends AppCompatActivity {
         @Override
         public void afterTextChanged(Editable editable) {
 
+        }
+    };
+
+    private String blockCharacterSet ="~#^|$%&*!+@₹_-()':;?/={}";
+
+    private InputFilter filter = new InputFilter() {
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+
+
+            if (source != null && blockCharacterSet.contains(("" + source))) {
+                return "";
+            }
+            return null;
         }
     };
 }
