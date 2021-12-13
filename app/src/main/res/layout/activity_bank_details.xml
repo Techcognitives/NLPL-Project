@@ -39,6 +39,7 @@
         android:background="@drawable/edit_text_border"
         android:ems="10"
         android:hint="@string/Bank_name_hint"
+        android:cursorVisible="true"
         android:inputType="textPersonName"
         android:padding="20dp"
         android:textSize="18sp"

@@ -19,6 +19,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -79,6 +80,9 @@ public class OtpCodeActivity extends AppCompatActivity {
         otp4.addTextChangedListener(otpWatcher);
         otp5.addTextChangedListener(otpWatcher);
         otp6.addTextChangedListener(otpWatcher);
+
+        otp1.requestFocus();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         setupOTPInputs();
         mAuth = FirebaseAuth.getInstance();

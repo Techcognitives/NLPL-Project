@@ -1,9 +1,11 @@
 package com.nlpl.ui.ui.activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -12,6 +14,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
@@ -35,7 +39,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     Dialog languageDialog;
 
     EditText vehicleNumberEdit;
-    ImageView openType, closedType, tarpaulinType;
+    ImageView openType, closedType, tarpaulinType, imgRC, imgI;
     TextView openText, closedText, tarpaulinText;
     String bodyTypeSelected;
 
@@ -139,10 +143,16 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         uploadInsurance = (Button) findViewById(R.id.vehicle_details_insurance_upload_button);
         textInsurance = (TextView) findViewById(R.id.vehicle_details_insurance_text);
         editInsurance = (TextView) findViewById(R.id.vehicle_details_edit_insurance);
+        imgRC = findViewById(R.id.vehicle_details_rc_image);
+        imgI = findViewById(R.id.vehicle_details_insurance_image);
 
         okVehicleDetails= findViewById(R.id.vehicle_details_ok_button);
 
         vehicleNumberEdit.addTextChangedListener(vehicleTextWatecher);
+
+        vehicleNumberEdit.requestFocus();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        vehicleNumberEdit.setFilters(new InputFilter[] { filter });
 
         uploadRC.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -220,6 +230,17 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
         //Detects request code for PAN
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
+
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
+            my_alert.setTitle("Successfully Uploaded");
+            my_alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            my_alert.show();
+
             textRC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadRC.setVisibility(View.INVISIBLE);
             editRC.setVisibility(View.VISIBLE);
@@ -231,7 +252,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             }
 
             Uri selectedImage = data.getData();
-//            imgPAN.setImageURI(selectedImage);
+            imgRC.setImageURI(selectedImage);
             Bitmap bitmap = null;
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
@@ -243,6 +264,15 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
+            my_alert.setTitle("Successfully Uploaded");
+            my_alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            my_alert.show();
             textInsurance.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadInsurance.setVisibility(View.INVISIBLE);
             editInsurance.setVisibility(View.VISIBLE);
@@ -254,7 +284,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             }
 
             Uri selectedImage = data.getData();
-//            imgPAN.setImageURI(selectedImage);
+            imgI.setImageURI(selectedImage);
             Bitmap bitmap = null;
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
@@ -308,6 +338,21 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         @Override
         public void afterTextChanged(Editable editable) {
 
+        }
+    };
+
+    private String blockCharacterSet ="~#^|$%&*!+@₹_-()':;?/={}";
+
+    private InputFilter filter = new InputFilter() {
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+
+
+            if (source != null && blockCharacterSet.contains(("" + source))) {
+                return "";
+            }
+            return null;
         }
     };
 

@@ -14,6 +14,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
@@ -40,6 +42,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
     Button uploadDL, okDriverDetails;
     TextView textDL, editDL;
     int GET_FROM_GALLERY=0;
+    ImageView driverLicenseImage;
 
     String mobile, name;
     Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, isDLUploaded=false;
@@ -71,6 +74,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         driverName.addTextChangedListener(driverWatcher);
         driverMobile.addTextChangedListener(driverWatcher);
+
+        driverName.requestFocus();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        driverName.setFilters(new InputFilter[] { filter });
 
         language.setText(getString(R.string.english));
         language.setOnClickListener(new View.OnClickListener() {
@@ -128,7 +135,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         uploadDL = findViewById(R.id.uploadDL);
         editDL = findViewById(R.id.editDL);
         textDL = findViewById(R.id.textDL);
-
+        driverLicenseImage = (ImageView) findViewById(R.id.imageDL);
 
 
         uploadDL.setOnClickListener(new View.OnClickListener() {
@@ -154,6 +161,17 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         //Detects request code for PAN
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
+
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
+            my_alert.setTitle("Successfully Uploaded");
+            my_alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            my_alert.show();
+
             textDL.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadDL.setVisibility(View.INVISIBLE);
             editDL.setVisibility(View.VISIBLE);
@@ -166,7 +184,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 okDriverDetails.setBackgroundResource(R.drawable.button_active);
             }
             Uri selectedImage = data.getData();
-//            imgPAN.setImageURI(selectedImage);
+            driverLicenseImage.setImageURI(selectedImage);
             Bitmap bitmap = null;
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
@@ -228,6 +246,21 @@ public class DriverDetailsActivity extends AppCompatActivity {
         @Override
         public void afterTextChanged(Editable editable) {
 
+        }
+    };
+
+    private String blockCharacterSet ="~#^|$%&*!+@₹_-()':;?/={}";
+
+    private InputFilter filter = new InputFilter() {
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+
+
+            if (source != null && blockCharacterSet.contains(("" + source))) {
+                return "";
+            }
+            return null;
         }
     };
 }

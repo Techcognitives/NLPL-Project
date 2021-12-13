@@ -1,9 +1,11 @@
 package com.nlpl.ui.ui.activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -124,7 +126,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
         panCardText = findViewById(R.id.pancard1);
         frontText = findViewById(R.id.frontText);
-        backText = findViewById(R.id.backText);
+        backText = findViewById(R.id.profile_registration_name_text);
         uploadPAN = findViewById(R.id.uploadPan);
         uploadF = findViewById(R.id.uploadF);
         uploadB = findViewById(R.id.uploadB);
@@ -213,6 +215,17 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
         //Detects request code for PAN
         if(requestCode==GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
+
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
+            my_alert.setTitle("Successfully Uploaded");
+            my_alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            my_alert.show();
+
             panCardText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
             uploadPAN.setVisibility(View.INVISIBLE);
             editPAN.setVisibility(View.VISIBLE);
@@ -223,7 +236,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             }
 
             Uri selectedImage = data.getData();
-//            imgPAN.setImageURI(selectedImage);
+            imgPAN.setImageURI(selectedImage);
             Bitmap bitmap = null;
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
@@ -235,6 +248,17 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }else if (requestCode==GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK){
+
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
+            my_alert.setTitle("Successfully Uploaded");
+            my_alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            my_alert.show();
+
             frontText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
             uploadF.setVisibility(View.INVISIBLE);
             editFront.setVisibility(View.VISIBLE);
@@ -245,7 +269,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             }
 
             Uri selectedImage = data.getData();
-//            imgPAN.setImageURI(selectedImage);
+            imgF.setImageURI(selectedImage);
             Bitmap bitmap = null;
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
@@ -257,6 +281,17 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }else if (requestCode==GET_FROM_GALLERY2 && resultCode == Activity.RESULT_OK){
+
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
+            my_alert.setTitle("Successfully Uploaded");
+            my_alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            my_alert.show();
+
             backText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
             uploadB.setVisibility(View.INVISIBLE);
             editBack.setVisibility(View.VISIBLE);
@@ -267,7 +302,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             }
 
             Uri selectedImage = data.getData();
-//            imgPAN.setImageURI(selectedImage);
+            imgB.setImageURI(selectedImage);
             Bitmap bitmap = null;
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);

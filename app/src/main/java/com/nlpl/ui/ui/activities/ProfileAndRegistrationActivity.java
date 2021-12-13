@@ -102,13 +102,13 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         actionBarTitle.setText("Registration");
         actionBarBackButton.setVisibility(View.GONE);
 
-        personalDetails = findViewById(R.id.personalDetails);
-        bankDetails = findViewById(R.id.bankDetails);
-        addTrucks = findViewById(R.id.addTrurks);
-        addDrivers = findViewById(R.id.adddrivers);
-        okBtn = findViewById(R.id.ok);
+        personalDetails = findViewById(R.id.profile_registration_personal_details_button);
+        bankDetails = findViewById(R.id.profile_registration_bank_details_button);
+        addTrucks = findViewById(R.id.profile_registration_truck_details);
+        addDrivers = findViewById(R.id.profile_registration_driver_details);
+        okBtn = findViewById(R.id.profile_registration_ok_button);
 
-        nameTitle = (TextView) findViewById(R.id.backText);
+        nameTitle = (TextView) findViewById(R.id.profile_registration_name_text);
         mobileText = (TextView) findViewById(R.id.profile_registration_mobile_text);
 
         String hello = getString(R.string.hello);

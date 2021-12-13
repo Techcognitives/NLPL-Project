@@ -47,13 +47,14 @@
 
         <ImageView
             android:id="@+id/imagePan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/all_rounded_small"
             android:src="@drawable/pan_card"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/pancard1"
             app:layout_constraintStart_toStartOf="parent"
@@ -188,8 +189,8 @@
 
         <ImageView
             android:id="@+id/imageF"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
@@ -269,7 +270,7 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
 
         <TextView
-            android:id="@+id/backText"
+            android:id="@+id/profile_registration_name_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -296,15 +297,15 @@
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/backText"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_registration_name_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/backText"
-            app:layout_constraintTop_toTopOf="@+id/backText" />
+            app:layout_constraintStart_toEndOf="@+id/profile_registration_name_text"
+            app:layout_constraintTop_toTopOf="@+id/profile_registration_name_text" />
 
         <ImageView
             android:id="@+id/imageB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
@@ -312,7 +313,7 @@
             android:src="@drawable/aadhar_card_back"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/backText"
+            app:layout_constraintEnd_toStartOf="@+id/profile_registration_name_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -327,11 +328,11 @@
             android:padding="10dp"
             android:layout_marginEnd="20dp"
             android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/backText"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_registration_name_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/backText"
-            app:layout_constraintTop_toTopOf="@+id/backText"
+            app:layout_constraintStart_toEndOf="@+id/profile_registration_name_text"
+            app:layout_constraintTop_toTopOf="@+id/profile_registration_name_text"
             app:layout_constraintVertical_bias="0.505" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
