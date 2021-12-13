@@ -120,9 +120,9 @@
         android:id="@+id/log_in_and"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/and"
         android:paddingStart="4dp"
         android:paddingEnd="4dp"
+        android:text="@string/and"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/log_in_agree_tc_pp"
@@ -152,6 +152,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Abhi"
+        android:textColor="@color/white"
+        android:textSize="32sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/log_in_and" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
