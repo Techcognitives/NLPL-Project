@@ -35,6 +35,8 @@ import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.nlpl.R;
 
+import org.w3c.dom.Text;
+
 import java.util.concurrent.TimeUnit;
 
 public class OtpCodeActivity extends AppCompatActivity {
@@ -45,6 +47,7 @@ public class OtpCodeActivity extends AppCompatActivity {
     Button otpButton;
     String otp;
     FirebaseAuth mAuth;
+    TextView rasikaText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,10 @@ public class OtpCodeActivity extends AppCompatActivity {
         otp4 = (EditText) findViewById(R.id.enter_otp_4);
         otp5 = (EditText) findViewById(R.id.enter_otp_5);
         otp6 = (EditText) findViewById(R.id.enter_otp_6);
+
+        rasikaText = (TextView) findViewById(R.id.rasika_text);
+
+        rasikaText.setText("RASIKA");
 
         otp1.addTextChangedListener(otpWatcher);
         otp2.addTextChangedListener(otpWatcher);

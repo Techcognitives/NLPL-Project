@@ -103,7 +103,7 @@
         app:layout_constraintTop_toBottomOf="@+id/otp_button" />
 
     <TextView
-        android:id="@+id/resend_otp2"
+        android:id="@+id/rasika_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="14dp"
