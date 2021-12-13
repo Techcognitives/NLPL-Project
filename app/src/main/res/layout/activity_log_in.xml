@@ -171,7 +171,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="115dp"
         android:layout_marginBottom="126dp"
-        android:text="Gotad"
+        android:text="Gotad  "
         android:textColor="@color/white"
         android:textSize="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
