@@ -47,7 +47,7 @@ public class OtpCodeActivity extends AppCompatActivity {
     Button otpButton;
     String otp;
     FirebaseAuth mAuth;
-    TextView rasikaText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +77,9 @@ public class OtpCodeActivity extends AppCompatActivity {
         otp5 = (EditText) findViewById(R.id.enter_otp_5);
         otp6 = (EditText) findViewById(R.id.enter_otp_6);
 
-        rasikaText = (TextView) findViewById(R.id.rasika_text);
 
-        rasikaText.setText("RASIKA");
+
+
 
         otp1.addTextChangedListener(otpWatcher);
         otp2.addTextChangedListener(otpWatcher);
