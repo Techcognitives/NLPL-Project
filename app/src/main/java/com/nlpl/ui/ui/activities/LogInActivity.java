@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.nlpl.R;
 
@@ -20,6 +21,7 @@ public class LogInActivity extends AppCompatActivity {
 
     EditText mobileNo;
     Button getStarted;
+    TextView abhi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,9 @@ public class LogInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
         mobileNo = (EditText) findViewById(R.id.log_in_mobile_no);
         getStarted = (Button) findViewById(R.id.log_in_get_otp_button);
+        abhi = findViewById(R.id.abji_login);
+
+        abhi.setText("Ae vedya Abhya");
 
         mobileNo.addTextChangedListener(mobileNumberTextWatcher);
 
