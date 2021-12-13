@@ -48,7 +48,6 @@ public class OtpCodeActivity extends AppCompatActivity {
     String otp;
     FirebaseAuth mAuth;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,10 +75,6 @@ public class OtpCodeActivity extends AppCompatActivity {
         otp4 = (EditText) findViewById(R.id.enter_otp_4);
         otp5 = (EditText) findViewById(R.id.enter_otp_5);
         otp6 = (EditText) findViewById(R.id.enter_otp_6);
-
-
-
-
 
         otp1.addTextChangedListener(otpWatcher);
         otp2.addTextChangedListener(otpWatcher);
