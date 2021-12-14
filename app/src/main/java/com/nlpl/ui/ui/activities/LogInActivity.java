@@ -120,12 +120,10 @@ public class LogInActivity extends AppCompatActivity {
             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i8);
             overridePendingTransition(0, 0);
+            LogInActivity.this.finish();
         }else{
             Log.i("New User", "New User");
-            Intent intent = new Intent(LogInActivity.this, LogInActivity.class);
-            startActivity(intent);
         }
-        LogInActivity.this.finish();
 
     }
 
