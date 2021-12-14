@@ -113,8 +113,8 @@ public class LogInActivity extends AppCompatActivity {
         super.onStart();
 
         FirebaseUser mFireBaseUser = mFireAuth.getCurrentUser();
-        Log.i("Phone", mFireBaseUser.getPhoneNumber());
         if (mFireBaseUser != null){
+            Log.i("Phone", mFireBaseUser.getPhoneNumber());
             Intent i8 = new Intent(LogInActivity.this, RegistrationActivity.class);
             i8.putExtra("mobile1", mFireBaseUser.getPhoneNumber());
             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
