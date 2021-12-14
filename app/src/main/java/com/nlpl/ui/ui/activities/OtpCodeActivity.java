@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.icu.text.DecimalFormat;
 import android.icu.text.NumberFormat;
@@ -117,6 +118,7 @@ public class OtpCodeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 otp = otp1.getText().toString() + otp2.getText().toString() + otp3.getText().toString() + otp4.getText().toString() + otp5.getText().toString() + otp6.getText().toString();
+
 //                Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
 //                i8.putExtra("mobile1", mobile);
 //                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

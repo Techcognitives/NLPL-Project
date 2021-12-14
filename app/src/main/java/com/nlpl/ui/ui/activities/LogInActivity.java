@@ -3,12 +3,15 @@ package com.nlpl.ui.ui.activities;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -21,6 +24,7 @@ public class LogInActivity extends AppCompatActivity {
 
     EditText mobileNo;
     Button getStarted;
+    String mobile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +44,7 @@ public class LogInActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (mobileNo.getText().length()==10) {
                     Intent i5 = new Intent(LogInActivity.this, OtpCodeActivity.class);
-                    String mobile = "+91" + mobileNo.getText().toString();
+                    mobile = "+91" + mobileNo.getText().toString();
                     i5.putExtra("mobile", mobile);
                     startActivity(i5);
                     overridePendingTransition(0, 0);
@@ -99,7 +103,7 @@ public class LogInActivity extends AppCompatActivity {
         }
     };
 
-//    public void onOtp(View view) {
+    //    public void onOtp(View view) {
 //        if (mobileNo.getText().length()==10) {
 //            Intent i5 = new Intent(LogInActivity.this, OtpCodeActivity.class);
 //            i5.putExtra("mobile", mobileNo.getText().toString());
