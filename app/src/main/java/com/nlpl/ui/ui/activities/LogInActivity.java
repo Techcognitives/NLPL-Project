@@ -116,7 +116,7 @@ public class LogInActivity extends AppCompatActivity {
         Log.i("Phone", mFireBaseUser.getPhoneNumber());
         if (mFireBaseUser != null){
             Intent i8 = new Intent(LogInActivity.this, RegistrationActivity.class);
-            i8.putExtra("mobile1", mobile);
+            i8.putExtra("mobile1", mFireBaseUser.getPhoneNumber());
             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i8);
             overridePendingTransition(0, 0);
