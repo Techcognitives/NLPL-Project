@@ -110,28 +110,28 @@ public class OtpCodeActivity extends AppCompatActivity {
 //            }
 //        }).start();
 
-//        initiateOtp();
+        initiateOtp();
         setCountdown();
 
         otpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 otp = otp1.getText().toString() + otp2.getText().toString() + otp3.getText().toString() + otp4.getText().toString() + otp5.getText().toString() + otp6.getText().toString();
-                Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
-                i8.putExtra("mobile1", mobile);
-                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i8);
-                overridePendingTransition(0, 0);
-                OtpCodeActivity.this.finish();
+//                Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
+//                i8.putExtra("mobile1", mobile);
+//                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(i8);
+//                overridePendingTransition(0, 0);
+//                OtpCodeActivity.this.finish();
 
-//                if (otp1.getText().toString().isEmpty() || otp2.getText().toString().isEmpty() || otp3.getText().toString().isEmpty() || otp4.getText().toString().isEmpty() || otp5.getText().toString().isEmpty() || otp6.getText().toString().isEmpty()) {
-//                    Toast.makeText(getApplicationContext(), "Field is blank", Toast.LENGTH_LONG).show();
-//                } else {
-//                    Log.i("OTP", otp);
-//                    Log.i("OTP ID", otpId);
-//                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpId, otp);
-//                    signInWithPhoneAuthCredential(credential);
-//                }
+                if (otp1.getText().toString().isEmpty() || otp2.getText().toString().isEmpty() || otp3.getText().toString().isEmpty() || otp4.getText().toString().isEmpty() || otp5.getText().toString().isEmpty() || otp6.getText().toString().isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Field is blank", Toast.LENGTH_LONG).show();
+                } else {
+                    Log.i("OTP", otp);
+                    Log.i("OTP ID", otpId);
+                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpId, otp);
+                    signInWithPhoneAuthCredential(credential);
+                }
             }
         });
 
@@ -361,7 +361,6 @@ public class OtpCodeActivity extends AppCompatActivity {
     private TextWatcher otpWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
         }
 
         @Override
