@@ -101,7 +101,6 @@ public class LogInActivity extends AppCompatActivity {
                 getStarted.setBackground(getResources().getDrawable(R.drawable.button_de_active));
             }
         }
-
         @Override
         public void afterTextChanged(Editable editable) {
 
