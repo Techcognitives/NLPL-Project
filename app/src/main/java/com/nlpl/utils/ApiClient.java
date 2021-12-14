@@ -1,4 +1,4 @@
-package com.nlpl.ui.ui.utils;
+package com.nlpl.utils;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
