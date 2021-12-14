@@ -19,15 +19,11 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private static int SPLASH_SCREEN = 2000; //Delay for Animation
 
-    private FirebaseAuth mFireAuth;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         Checkout.preload(getApplicationContext());
-
-        mFireAuth = FirebaseAuth.getInstance();
         //------------------------------------- Handler for Animation --------------------------------------
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -40,16 +36,5 @@ public class SplashScreenActivity extends AppCompatActivity {
         }, SPLASH_SCREEN);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
 
-        FirebaseUser mFireBaseUser = mFireAuth.getCurrentUser();
-        if (mFireBaseUser != null){
-            Log.i("Logged In", "User Logged In");
-        }else{
-            Log.i("New User", "New User");
-        }
-
-    }
 }

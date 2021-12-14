@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.nlpl.R;
 
 public class LogInActivity extends AppCompatActivity {
@@ -26,10 +28,13 @@ public class LogInActivity extends AppCompatActivity {
     Button getStarted;
     String mobile;
 
+    private FirebaseAuth mFireAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+        mFireAuth = FirebaseAuth.getInstance();
         mobileNo = (EditText) findViewById(R.id.log_in_mobile_no);
         getStarted = (Button) findViewById(R.id.log_in_get_otp_button);
 
@@ -102,6 +107,28 @@ public class LogInActivity extends AppCompatActivity {
 
         }
     };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser mFireBaseUser = mFireAuth.getCurrentUser();
+        Log.i("Phone", mFireBaseUser.getPhoneNumber());
+        if (mFireBaseUser != null){
+            Intent i8 = new Intent(LogInActivity.this, RegistrationActivity.class);
+            i8.putExtra("mobile1", mobile);
+            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i8);
+            overridePendingTransition(0, 0);
+            LogInActivity.this.finish();
+        }else{
+            Log.i("New User", "New User");
+            Intent intent = new Intent(LogInActivity.this, LogInActivity.class);
+            startActivity(intent);
+            LogInActivity.this.finish();
+        }
+
+    }
 
     //    public void onOtp(View view) {
 //        if (mobileNo.getText().length()==10) {
