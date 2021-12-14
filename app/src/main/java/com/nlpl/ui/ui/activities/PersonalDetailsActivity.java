@@ -217,8 +217,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         if(requestCode==GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
 
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
-            my_alert.setTitle("Successfully Uploaded");
-            my_alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            my_alert.setTitle("PAN Card Uploaded Successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
@@ -250,8 +250,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         }else if (requestCode==GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK){
 
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
-            my_alert.setTitle("Successfully Uploaded");
-            my_alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            my_alert.setTitle("Uploaded Successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
@@ -283,8 +283,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         }else if (requestCode==GET_FROM_GALLERY2 && resultCode == Activity.RESULT_OK){
 
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
-            my_alert.setTitle("Successfully Uploaded");
-            my_alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            my_alert.setTitle("Uploaded Successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
@@ -319,17 +319,28 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
     public void onClickOKPersonal(View view) {
         if (isPanUploaded && isFrontUploaded && isBackUploaded){
-            Intent i8 = new Intent(PersonalDetailsActivity.this, ProfileAndRegistrationActivity.class);
-            i8.putExtra("mobile2", mobile);
-            i8.putExtra("name2", name);
-            i8.putExtra("isPersonal", true);
-            i8.putExtra("isBank", isBankDetailsDone);
-            i8.putExtra("isTrucks", isAddTrucksDone);
-            i8.putExtra("isDriver",isAddDriversDone);
-            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i8);
-            overridePendingTransition(0, 0);
-            PersonalDetailsActivity.this.finish();
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
+            my_alert.setTitle("Personal Details Uploaded Successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                    Intent i8 = new Intent(PersonalDetailsActivity.this, ProfileAndRegistrationActivity.class);
+                    i8.putExtra("mobile2", mobile);
+                    i8.putExtra("name2", name);
+                    i8.putExtra("isPersonal", true);
+                    i8.putExtra("isBank", isBankDetailsDone);
+                    i8.putExtra("isTrucks", isAddTrucksDone);
+                    i8.putExtra("isDriver",isAddDriversDone);
+                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i8);
+                    overridePendingTransition(0, 0);
+                    PersonalDetailsActivity.this.finish();
+                }
+            });
+            my_alert.show();
+
+
         }
     }
 }

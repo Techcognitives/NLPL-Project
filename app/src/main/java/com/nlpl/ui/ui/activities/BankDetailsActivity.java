@@ -135,21 +135,33 @@ public class BankDetailsActivity extends AppCompatActivity {
 
     public void onClickBankDetailsOk(View view) {
         if (accountNo.getText().toString().equals(reAccount.getText().toString())) {
-            Intent i8 = new Intent(BankDetailsActivity.this, ProfileAndRegistrationActivity.class);
-            i8.putExtra("mobile2", mobile);
-            i8.putExtra("name2", name);
-            i8.putExtra("isPersonal", isPersonalDetailsDone);
-            i8.putExtra("isBank", true);
-            i8.putExtra("isTrucks", isAddTrucksDone);
-            i8.putExtra("isDriver", isAddDriversDone);
-            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i8);
-            overridePendingTransition(0, 0);
-            BankDetailsActivity.this.finish();
+            reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
+            my_alert.setTitle("Bank Details Uploaded Successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                    Intent i8 = new Intent(BankDetailsActivity.this, ProfileAndRegistrationActivity.class);
+                    i8.putExtra("mobile2", mobile);
+                    i8.putExtra("name2", name);
+                    i8.putExtra("isPersonal", isPersonalDetailsDone);
+                    i8.putExtra("isBank", true);
+                    i8.putExtra("isTrucks", isAddTrucksDone);
+                    i8.putExtra("isDriver", isAddDriversDone);
+                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i8);
+                    overridePendingTransition(0, 0);
+                    BankDetailsActivity.this.finish();
+                }
+            });
+            my_alert.show();
         } else {
+            reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
             AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
             my_alert.setTitle("Account number does not match");
-            my_alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            my_alert.setMessage("Please enter correct account number as above");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
@@ -181,6 +193,12 @@ public class BankDetailsActivity extends AppCompatActivity {
                 okButton.setBackground(getResources().getDrawable(R.drawable.button_de_active));
                 okButton.setEnabled(false);
             }
+
+            if (accNo1.equals(reAccNo1)){
+                reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+            }else{
+                reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+            }
         }
 
         @Override
@@ -203,4 +221,23 @@ public class BankDetailsActivity extends AppCompatActivity {
             return null;
         }
     };
+
+    public void onAccCheck(View view) {
+        if (accountNo.getText().toString().equals(reAccount.getText().toString())) {
+            reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+        }else {
+            reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
+            my_alert.setTitle("Account number does not match");
+            my_alert.setMessage("Please enter correct account number as above");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            my_alert.show();
+        }
+
+    }
 }

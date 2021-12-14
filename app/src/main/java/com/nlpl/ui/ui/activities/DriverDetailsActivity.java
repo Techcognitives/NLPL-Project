@@ -163,7 +163,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
 
             AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
-            my_alert.setTitle("Successfully Uploaded");
+            my_alert.setTitle("Uploaded Successfully");
             my_alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -206,8 +206,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
             if (driverMobileText.length() != 10) {
                 AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
                 my_alert.setTitle("Invalid Mobile Number");
-                my_alert.setMessage("Please enter a valid mobile number");
-                my_alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                my_alert.setMessage("Please enter a 10 digit valid mobile number");
+                my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
@@ -216,17 +216,28 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 my_alert.show();
 
             } else {
-                Intent i8 = new Intent(DriverDetailsActivity.this, ProfileAndRegistrationActivity.class);
-                i8.putExtra("mobile2", mobile);
-                i8.putExtra("name2", name);
-                i8.putExtra("isPersonal", isPersonalDetailsDone);
-                i8.putExtra("isBank", isBankDetailsDone);
-                i8.putExtra("isTrucks", isAddTrucksDone);
-                i8.putExtra("isDriver", true);
-                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i8);
-                overridePendingTransition(0, 0);
-                DriverDetailsActivity.this.finish();
+                AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
+                my_alert.setTitle("Driver Details Uploaded Successfully");
+                my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+
+                        Intent i8 = new Intent(DriverDetailsActivity.this, ProfileAndRegistrationActivity.class);
+                        i8.putExtra("mobile2", mobile);
+                        i8.putExtra("name2", name);
+                        i8.putExtra("isPersonal", isPersonalDetailsDone);
+                        i8.putExtra("isBank", isBankDetailsDone);
+                        i8.putExtra("isTrucks", isAddTrucksDone);
+                        i8.putExtra("isDriver", true);
+                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i8);
+                        overridePendingTransition(0, 0);
+                        DriverDetailsActivity.this.finish();
+                    }
+                });
+                my_alert.show();
+
 
             }
         }

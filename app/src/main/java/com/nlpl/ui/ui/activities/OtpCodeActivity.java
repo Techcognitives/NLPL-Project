@@ -330,16 +330,28 @@ public class OtpCodeActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
-                    i8.putExtra("mobile1", mobile);
-                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i8);
-                    overridePendingTransition(0, 0);
-                    OtpCodeActivity.this.finish();
+                    AlertDialog.Builder my_alert = new AlertDialog.Builder(OtpCodeActivity.this);
+                    my_alert.setTitle("OTP validated successfully");
+                    my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                            Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
+                            i8.putExtra("mobile1", mobile);
+                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(i8);
+                            overridePendingTransition(0, 0);
+                            OtpCodeActivity.this.finish();
+                        }
+                    });
+                    my_alert.show();
+
+
                 } else {
                     AlertDialog.Builder my_alert = new AlertDialog.Builder(OtpCodeActivity.this);
                     my_alert.setTitle("Invalid OTP");
-                    my_alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    my_alert.setMessage("Please enter a 6 digit OTP sent to your Mobile Number");
+                    my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();

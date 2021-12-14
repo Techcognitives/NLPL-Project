@@ -48,15 +48,26 @@ public class LogInActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (mobileNo.getText().length()==10) {
-                    Intent i5 = new Intent(LogInActivity.this, OtpCodeActivity.class);
-                    mobile = "+91" + mobileNo.getText().toString();
-                    i5.putExtra("mobile", mobile);
-                    startActivity(i5);
-                    overridePendingTransition(0, 0);
+                    AlertDialog.Builder my_alert = new AlertDialog.Builder(LogInActivity.this);
+                    my_alert.setTitle("OTP is sent to your Mobile Number");
+                    my_alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                            Intent i5 = new Intent(LogInActivity.this, OtpCodeActivity.class);
+                            mobile = "+91" + mobileNo.getText().toString();
+                            i5.putExtra("mobile", mobile);
+                            startActivity(i5);
+                            overridePendingTransition(0, 0);
+                        }
+                    });
+                    my_alert.show();
+
+
                 } else {
                     AlertDialog.Builder my_alert = new AlertDialog.Builder(LogInActivity.this);
                     my_alert.setTitle("Invalid Mobile Number");
-                    my_alert.setMessage("Please enter a valid mobile number");
+                    my_alert.setMessage("Please enter a 10 digit valid mobile number");
                     my_alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {

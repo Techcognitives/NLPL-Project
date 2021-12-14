@@ -232,7 +232,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
 
             AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
-            my_alert.setTitle("Successfully Uploaded");
+            my_alert.setTitle("Uploaded Successfully");
             my_alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -265,7 +265,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             }
         } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
-            my_alert.setTitle("Successfully Uploaded");
+            my_alert.setTitle("Uploaded Successfully");
             my_alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -301,17 +301,28 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     public void onClickVehicleDetailsOk(View view) {
         String vehicleNum = vehicleNumberEdit.getText().toString();
         if (!vehicleNum.isEmpty()&&isRcUploaded&&isInsurance&&truckSelected) {
-            Intent i8 = new Intent(VehicleDetailsActivity.this, ProfileAndRegistrationActivity.class);
-            i8.putExtra("mobile2", mobile);
-            i8.putExtra("name2", name);
-            i8.putExtra("isPersonal", isPersonalDetailsDone);
-            i8.putExtra("isBank", isBankDetailsDone);
-            i8.putExtra("isTrucks", true);
-            i8.putExtra("isDriver", isAddDriversDone);
-            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i8);
-            overridePendingTransition(0, 0);
-            VehicleDetailsActivity.this.finish();
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
+            my_alert.setTitle("Vehicle Details Uploaded Successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                    Intent i8 = new Intent(VehicleDetailsActivity.this, ProfileAndRegistrationActivity.class);
+                    i8.putExtra("mobile2", mobile);
+                    i8.putExtra("name2", name);
+                    i8.putExtra("isPersonal", isPersonalDetailsDone);
+                    i8.putExtra("isBank", isBankDetailsDone);
+                    i8.putExtra("isTrucks", true);
+                    i8.putExtra("isDriver", isAddDriversDone);
+                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i8);
+                    overridePendingTransition(0, 0);
+                    VehicleDetailsActivity.this.finish();
+                }
+            });
+            my_alert.show();
+
+
         }else{
             okVehicleDetails.setBackground(getResources().getDrawable(R.drawable.button_de_active));
 

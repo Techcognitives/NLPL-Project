@@ -1,8 +1,10 @@
 package com.nlpl.ui.ui.activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -441,16 +443,29 @@ public class RegistrationActivity extends AppCompatActivity {
         if (!nameWatcher.isEmpty() && !stateWatcher.isEmpty() && !cityWatcher.isEmpty() && (owner || driver || broker || customer)) {
             okButton.setEnabled(true);
             okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            Intent i8 = new Intent(RegistrationActivity.this, ProfileAndRegistrationActivity.class);
-            i8.putExtra("mobile2", mobile);
-            i8.putExtra("name2", name.getText().toString());
-            i8.putExtra("isPersonal", false);
-            i8.putExtra("isBank", false);
-            i8.putExtra("isTrucks", false);
-            i8.putExtra("isDriver", false);
-            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i8);
-            overridePendingTransition(0, 0);
+
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(RegistrationActivity.this);
+            my_alert.setTitle(" Registration Successful");
+            my_alert.setMessage("Welcome to Find YourTruck\nPlease update your profile and explore the platform benefits");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                    Intent i8 = new Intent(RegistrationActivity.this, ProfileAndRegistrationActivity.class);
+                    i8.putExtra("mobile2", mobile);
+                    i8.putExtra("name2", name.getText().toString());
+                    i8.putExtra("isPersonal", false);
+                    i8.putExtra("isBank", false);
+                    i8.putExtra("isTrucks", false);
+                    i8.putExtra("isDriver", false);
+                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i8);
+                    overridePendingTransition(0, 0);
+                }
+            });
+            my_alert.show();
+
+
 
         }
 //            RegistrationActivity.this.finish();
