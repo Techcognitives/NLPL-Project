@@ -137,7 +137,7 @@ public class BankDetailsActivity extends AppCompatActivity {
         if (accountNo.getText().toString().equals(reAccount.getText().toString())) {
             reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
             AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
-            my_alert.setTitle("Bank Details Uploaded Successfully");
+            my_alert.setTitle("Bank Details Added Successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
