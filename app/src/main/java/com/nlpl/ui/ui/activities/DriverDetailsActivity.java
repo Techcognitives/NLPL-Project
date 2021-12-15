@@ -163,8 +163,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
 
             AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
-            my_alert.setTitle("Uploaded Successfully");
-            my_alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            my_alert.setTitle("Driving Licence Uploaded Successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
@@ -206,7 +206,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
             if (driverMobileText.length() != 10) {
                 AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
                 my_alert.setTitle("Invalid Mobile Number");
-                my_alert.setMessage("Please enter a 10 digit valid mobile number");
+                my_alert.setMessage("Please enter a 10 digit valid mobile number.");
                 my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -217,7 +217,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
             } else {
                 AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
-                my_alert.setTitle("Driver Details Uploaded Successfully");
+                my_alert.setTitle("Driver Details added successfully");
                 my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

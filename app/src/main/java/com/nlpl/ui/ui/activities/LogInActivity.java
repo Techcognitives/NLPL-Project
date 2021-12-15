@@ -25,6 +25,7 @@ import com.nlpl.R;
 public class LogInActivity extends AppCompatActivity {
 
     EditText mobileNo;
+    TextView series;
     Button getStarted;
     String mobile;
 
@@ -37,6 +38,7 @@ public class LogInActivity extends AppCompatActivity {
         mFireAuth = FirebaseAuth.getInstance();
         mobileNo = (EditText) findViewById(R.id.log_in_mobile_no);
         getStarted = (Button) findViewById(R.id.log_in_get_otp_button);
+        series = (TextView) findViewById(R.id.log_in_series);
 
         mobileNo.addTextChangedListener(mobileNumberTextWatcher);
 
@@ -47,28 +49,26 @@ public class LogInActivity extends AppCompatActivity {
         getStarted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mobile = "+91" + mobileNo.getText().toString();
                 if (mobileNo.getText().length()==10) {
                     AlertDialog.Builder my_alert = new AlertDialog.Builder(LogInActivity.this);
-                    my_alert.setTitle("OTP is sent to your Mobile Number");
-                    my_alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    my_alert.setTitle("OTP is sent to "+mobile);
+                    my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
                             Intent i5 = new Intent(LogInActivity.this, OtpCodeActivity.class);
-                            mobile = "+91" + mobileNo.getText().toString();
                             i5.putExtra("mobile", mobile);
                             startActivity(i5);
                             overridePendingTransition(0, 0);
                         }
                     });
                     my_alert.show();
-
-
                 } else {
                     AlertDialog.Builder my_alert = new AlertDialog.Builder(LogInActivity.this);
-                    my_alert.setTitle("Invalid Mobile Number");
-                    my_alert.setMessage("Please enter a 10 digit valid mobile number");
-                    my_alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    my_alert.setTitle("Invalid mobile number");
+                    my_alert.setMessage("Please enter a 10 digit valid mobile number.");
+                    my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
@@ -105,9 +105,13 @@ public class LogInActivity extends AppCompatActivity {
             String mobileNoWatcher = mobileNo.getText().toString().trim();
 
             if (mobileNoWatcher.length() == 10){
+                mobileNo.setBackground(getResources().getDrawable(R.drawable.mobile_number_right));
+                series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left));
                 getStarted.setEnabled(true);
                 getStarted.setBackground(getResources().getDrawable(R.drawable.button_active));
             }else{
+                mobileNo.setBackground(getResources().getDrawable(R.drawable.mobile_number_right_red));
+                series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left_red));
                 getStarted.setEnabled(true);
                 getStarted.setBackground(getResources().getDrawable(R.drawable.button_de_active));
             }

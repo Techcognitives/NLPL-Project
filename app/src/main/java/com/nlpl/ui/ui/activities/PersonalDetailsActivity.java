@@ -320,7 +320,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     public void onClickOKPersonal(View view) {
         if (isPanUploaded && isFrontUploaded && isBackUploaded){
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
-            my_alert.setTitle("Personal Details Uploaded Successfully");
+            my_alert.setTitle("Personal Details added successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {

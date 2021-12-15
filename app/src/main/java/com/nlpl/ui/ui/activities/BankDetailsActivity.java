@@ -137,7 +137,7 @@ public class BankDetailsActivity extends AppCompatActivity {
         if (accountNo.getText().toString().equals(reAccount.getText().toString())) {
             reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
             AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
-            my_alert.setTitle("Bank Details Added Successfully");
+            my_alert.setTitle("Bank Details added successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -160,7 +160,7 @@ public class BankDetailsActivity extends AppCompatActivity {
             reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
             AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
             my_alert.setTitle("Account number does not match");
-            my_alert.setMessage("Please enter correct account number as above");
+            my_alert.setMessage("Please enter correct account number as above.");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -229,7 +229,7 @@ public class BankDetailsActivity extends AppCompatActivity {
             reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
             AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
             my_alert.setTitle("Account number does not match");
-            my_alert.setMessage("Please enter correct account number as above");
+            my_alert.setMessage("Please enter correct account number as above.");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {

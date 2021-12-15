@@ -350,7 +350,7 @@ public class OtpCodeActivity extends AppCompatActivity {
                 } else {
                     AlertDialog.Builder my_alert = new AlertDialog.Builder(OtpCodeActivity.this);
                     my_alert.setTitle("Invalid OTP");
-                    my_alert.setMessage("Please enter a 6 digit OTP sent to your Mobile Number");
+                    my_alert.setMessage("Please enter a 6 digit OTP sent to your mobile number.");
                     my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {

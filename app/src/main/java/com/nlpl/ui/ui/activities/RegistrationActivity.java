@@ -34,7 +34,7 @@ public class RegistrationActivity extends AppCompatActivity {
     View action_bar;
     TextView actionBarTitle, selectStateText, selectDistrictText, language;
     ImageView actionBarBackButton;
-    ArrayAdapter<CharSequence> selectStateArray, selectDistrictArray;
+    ArrayAdapter<CharSequence> selectStateArray, selectDistrictArray, selectStateUnionCode;
     Dialog selectStateDialog, selectDistrictDialog, languageDialog;
     String selectedDistrict, selectedState, role;
     int parentID;
@@ -146,6 +146,8 @@ public class RegistrationActivity extends AppCompatActivity {
                 EditText searchState = (EditText) selectStateDialog.findViewById(R.id.search_state);
 
                 selectStateArray = ArrayAdapter.createFromResource(RegistrationActivity.this, R.array.array_indian_states, R.layout.custom_list_row);
+                selectStateUnionCode = ArrayAdapter.createFromResource(RegistrationActivity.this, R.array.array_indian_states_union_territory_codes, R.layout.custom_list_row);
+
                 stateList.setAdapter(selectStateArray);
 
                 searchState.addTextChangedListener(new TextWatcher() {
@@ -166,7 +168,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 stateList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
-                        selectStateText.setText(selectStateArray.getItem(i)); //Set Selected Credentials
+                        selectStateText.setText(selectStateUnionCode.getItem(i)); //Set Selected Credentials
                         selectStateDialog.dismiss();
 
                         parentID = parent.getId();
@@ -445,8 +447,8 @@ public class RegistrationActivity extends AppCompatActivity {
             okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
 
             AlertDialog.Builder my_alert = new AlertDialog.Builder(RegistrationActivity.this);
-            my_alert.setTitle(" Registration Successful");
-            my_alert.setMessage("Welcome to Find YourTruck\nPlease update your profile and explore the platform benefits");
+            my_alert.setTitle("Registration Successful");
+            my_alert.setMessage("Welcome to Find YourTruck\n\nPlease update your profile and explore the platform benefits.");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {

@@ -232,8 +232,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
 
             AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
-            my_alert.setTitle("Uploaded Successfully");
-            my_alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            my_alert.setTitle("RC Uploaded Successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
@@ -265,8 +265,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             }
         } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
-            my_alert.setTitle("Uploaded Successfully");
-            my_alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            my_alert.setTitle("Insurance Uploaded Successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
@@ -302,7 +302,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         String vehicleNum = vehicleNumberEdit.getText().toString();
         if (!vehicleNum.isEmpty()&&isRcUploaded&&isInsurance&&truckSelected) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
-            my_alert.setTitle("Vehicle Details Uploaded Successfully");
+            my_alert.setTitle("Vehicle Details added successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {

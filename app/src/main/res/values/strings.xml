@@ -41,6 +41,46 @@
         <item>West Bengal</item>
     </string-array>
 
+    <string-array name="array_indian_states_union_territory_codes">
+        <item>AN</item>
+        <item>AP</item>
+        <item>AR</item>
+        <item>AS</item>
+        <item>BR</item>
+        <item>CH/PB</item>
+        <item>CG</item>
+        <item>DD</item>
+        <item>DD</item>
+        <item>DL</item>
+        <item>GA</item>
+        <item>GJ</item>
+        <item>HR</item>
+        <item>HP</item>
+        <item>JK</item>
+        <item>JH</item>
+        <item>KA</item>
+        <item>KL</item>
+        <item>LA</item>
+        <item>LD</item>
+        <item>MP</item>
+        <item>MH</item>
+        <item>MN</item>
+        <item>ML</item>
+        <item>MZ</item>
+        <item>NL</item>
+        <item>OD</item>
+        <item>PY</item>
+        <item>PB</item>
+        <item>RJ</item>
+        <item>SK</item>
+        <item>TN</item>
+        <item>TS</item>
+        <item>TR</item>
+        <item>UK</item>
+        <item>UP</item>
+        <item>WB</item>
+    </string-array>
+
     <string-array name="array_andhra_pradesh_districts">
         <item>Anantapur</item>
         <item>Chittoor</item>
@@ -920,8 +960,9 @@
     <string name="name">Name</string>
     <string name="name_hint">Enter your name</string>
     <string name="location">Location</string>
-    <string name="select_state">Select State</string>
-    <string name="select_city">Select City</string>
+    <string name="select_state">State</string>
+    <string name="select_city">City</string>
+    <string name="pin_code">PIN Code</string>
     <string name="are_u_sp">Are you a Service Provider? </string>
     <string name="truck_owner">Truck Owner</string>
     <string name="driver">Driver</string>
