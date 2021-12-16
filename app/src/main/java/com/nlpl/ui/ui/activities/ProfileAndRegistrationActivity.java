@@ -30,7 +30,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     TextView nameTitle, mobileText;
     ConstraintLayout personal_done, bankDone, vehicleDone, driverDone;
 
-
     Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, getIsPersonalDetailsDoneVisible=false, getIsBankDetailsDoneVisible = false, getIsAddTrucksDoneVisible = false, getIsAddDriversDoneVisible = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
