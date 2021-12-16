@@ -975,7 +975,7 @@
 
     //------------------------------------Profile and registration Activity ------------------------
     <string name="hello">Hello,</string>
-    <string name="mobNo">+91 9999999999</string>
+    <string name="mobNo">+91</string>
     <string name="personalDetails"><p>   </p>Personal Details</string>
     <string name="BankDetails"><p>   </p>Bank Details</string>
     <string name="AddTrucks"><p>   </p>Add Trucks</string>

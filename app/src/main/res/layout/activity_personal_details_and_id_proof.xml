@@ -8,7 +8,7 @@
     tools:context=".ui.ui.activities.PersonalDetailsAndIdProofActivity">
 
     <include
-        android:id="@+id/bank_details_action_bar"
+        android:id="@+id/personal_details_id_proof_action_bar"
         layout="@layout/action_bar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/cdsbjcdcs"
+        android:id="@+id/personal_details_id_proof_pan_aadhar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
@@ -25,23 +25,25 @@
         android:background="@drawable/personal_details_buttons_de_active"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
+        android:onClick="onClickPersonalOrAadhar"
         android:text="@string/pan_and_aadhar"
         android:textAllCaps="false"
         android:textColor="@color/background"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/jdxscdcm"
+        app:layout_constraintBottom_toBottomOf="@+id/personal_details_id_proof_personal_address_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/jdxscdcm"
-        app:layout_constraintTop_toTopOf="@+id/jdxscdcm" />
+        app:layout_constraintStart_toEndOf="@+id/personal_details_id_proof_personal_address_button"
+        app:layout_constraintTop_toTopOf="@+id/personal_details_id_proof_personal_address_button" />
 
     <Button
-        android:id="@+id/jdxscdcm"
+        android:id="@+id/personal_details_id_proof_personal_address_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="3dp"
+        android:onClick="onClickPersonalOrAadhar"
         android:background="@drawable/personal_details_buttons_active"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
@@ -50,61 +52,70 @@
         android:textColor="@color/background"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/cdsbjcdcs"
+        app:layout_constraintEnd_toStartOf="@+id/personal_details_id_proof_pan_aadhar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bank_details_action_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_action_bar" />
 
     <View
-        android:id="@+id/jncnndsncksdm"
+        android:id="@+id/personal_details_id_proof_personal_view"
         android:layout_width="0dp"
-        android:layout_height="3dp"
+        android:layout_height="2dp"
         android:background="@color/dark_blue"
-        app:layout_constraintEnd_toEndOf="@+id/jdxscdcm"
+        app:layout_constraintEnd_toEndOf="@+id/personal_details_id_proof_personal_address_button"
         app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="@+id/jdxscdcm"
-        app:layout_constraintTop_toBottomOf="@+id/jdxscdcm" />
+        app:layout_constraintStart_toStartOf="@+id/personal_details_id_proof_personal_address_button"
+        app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_personal_address_button" />
 
     <View
-        android:id="@+id/dnsscsdcs"
+        android:id="@+id/personal_details_id_proof_pan_view"
         android:layout_width="0dp"
-        android:layout_height="3dp"
+        android:layout_height="2dp"
         android:background="@color/medium_blue"
-        app:layout_constraintEnd_toEndOf="@+id/cdsbjcdcs"
-        app:layout_constraintStart_toStartOf="@+id/cdsbjcdcs"
-        app:layout_constraintTop_toBottomOf="@+id/cdsbjcdcs" />
+        app:layout_constraintEnd_toEndOf="@+id/personal_details_id_proof_pan_aadhar"
+        app:layout_constraintStart_toStartOf="@+id/personal_details_id_proof_pan_aadhar"
+        app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_pan_aadhar" />
 
     <EditText
-        android:id="@+id/udhesincfsocm"
+        android:id="@+id/personal_details_id_proof_personal_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/edit_text_border"
         android:ems="10"
         android:hint="@string/name_hint"
         android:inputType="textPersonName"
         android:padding="20dp"
         android:textSize="18sp"
-        tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="155dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_personal_view" />
 
     <TextView
-        android:id="@+id/dcnsnccds"
+        android:id="@+id/personal_details_id_proof_series"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:background="@drawable/mobile_number_left"
         android:paddingStart="15dp"
         android:paddingTop="15dp"
         android:paddingEnd="0dp"
         android:paddingBottom="15dp"
-        android:text="@string/mobile_prefix"
+        android:text="@string/mobNo"
         android:textColor="@color/black"
         android:textSize="20sp"
-        tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="236dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/personal_details_id_proof_mobile_number"
+        app:layout_constraintEnd_toStartOf="@+id/personal_details_id_proof_mobile_number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/personal_details_id_proof_mobile_number" />
 
     <EditText
-        android:id="@+id/dnccsksd"
+        android:id="@+id/personal_details_id_proof_mobile_number"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/mobile_number_right"
         android:hint="@string/edit_number_hint"
         android:inputType="number"
@@ -116,12 +127,13 @@
         android:textColor="@color/black"
         android:textColorHint="@color/hint"
         android:textSize="20sp"
-        tools:ignore="Autofill"
-        tools:layout_editor_absoluteX="79dp"
-        tools:layout_editor_absoluteY="236dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/personal_details_id_proof_series"
+        app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_personal_name"
+        tools:ignore="Autofill" />
 
     <Button
-        android:id="@+id/registration_ok"
+        android:id="@+id/personal_details_id_proof_ok"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -137,10 +149,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_customer_constrain" />
 
     <TextView
-        android:id="@+id/registration_select_city"
+        android:id="@+id/personal_details_id_proof_select_city"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -150,13 +162,13 @@
         android:hint="@string/select_city"
         android:padding="20dp"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/registration_address_edit"
-        app:layout_constraintEnd_toStartOf="@+id/registration_pin_code_edit"
-        app:layout_constraintStart_toEndOf="@+id/registration_select_state"
-        app:layout_constraintTop_toBottomOf="@+id/registration_location" />
+        app:layout_constraintBottom_toTopOf="@+id/personal_details_id_proof_address_edit"
+        app:layout_constraintEnd_toStartOf="@+id/personal_details_id_proof_pin_code_edit"
+        app:layout_constraintStart_toEndOf="@+id/personal_details_id_proof_select_state"
+        app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_location_text" />
 
     <TextView
-        android:id="@+id/registration_select_state"
+        android:id="@+id/personal_details_id_proof_select_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -166,27 +178,27 @@
         android:hint="@string/select_state"
         android:padding="20dp"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/registration_select_city"
-        app:layout_constraintEnd_toStartOf="@+id/registration_select_city"
+        app:layout_constraintBottom_toBottomOf="@+id/personal_details_id_proof_select_city"
+        app:layout_constraintEnd_toStartOf="@+id/personal_details_id_proof_select_city"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/registration_select_city" />
+        app:layout_constraintTop_toTopOf="@+id/personal_details_id_proof_select_city" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/personal_details_id_proof_sp_constrain"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/edit_text_border_small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registration_address_edit">
+        app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_address_edit">
 
 
         <TextView
-            android:id="@+id/registration_sp"
+            android:id="@+id/personal_details_id_proof_sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -195,14 +207,14 @@
             android:text="@string/are_u_sp"
             android:textColor="@color/black"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/registration_truck_owner"
+            app:layout_constraintBottom_toTopOf="@+id/personal_details_id_proof_truck_owner"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.081"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <RadioButton
-            android:id="@+id/registration_truck_owner"
+            android:id="@+id/personal_details_id_proof_truck_owner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -215,72 +227,72 @@
             android:textColor="@color/black"
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/registration_driver"
+            app:layout_constraintEnd_toStartOf="@+id/personal_details_id_proof_driver"
             app:layout_constraintHorizontal_bias="0.14"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registration_sp"
+            app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_sp"
             app:layout_constraintVertical_bias="0.0" />
 
         <RadioButton
-            android:id="@+id/registration_driver"
+            android:id="@+id/personal_details_id_proof_driver"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:buttonTint="@color/button_blue"
             android:onClick="onRadioClick"
             android:text="@string/driver"
             android:textSize="17sp"
-            app:layout_constraintBottom_toBottomOf="@+id/registration_truck_owner"
-            app:layout_constraintEnd_toStartOf="@+id/registration_broker"
-            app:layout_constraintStart_toEndOf="@+id/registration_truck_owner"
-            app:layout_constraintTop_toTopOf="@+id/registration_truck_owner" />
+            app:layout_constraintBottom_toBottomOf="@+id/personal_details_id_proof_truck_owner"
+            app:layout_constraintEnd_toStartOf="@+id/personal_details_id_proof_broker"
+            app:layout_constraintStart_toEndOf="@+id/personal_details_id_proof_truck_owner"
+            app:layout_constraintTop_toTopOf="@+id/personal_details_id_proof_truck_owner" />
 
         <RadioButton
-            android:id="@+id/registration_broker"
+            android:id="@+id/personal_details_id_proof_broker"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:buttonTint="@color/button_blue"
             android:onClick="onRadioClick"
             android:text="@string/broker"
             android:textSize="17sp"
-            app:layout_constraintBottom_toBottomOf="@+id/registration_driver"
+            app:layout_constraintBottom_toBottomOf="@+id/personal_details_id_proof_driver"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/registration_driver"
-            app:layout_constraintTop_toTopOf="@+id/registration_driver" />
+            app:layout_constraintStart_toEndOf="@+id/personal_details_id_proof_driver"
+            app:layout_constraintTop_toTopOf="@+id/personal_details_id_proof_driver" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
+        android:id="@+id/personal_details_id_proof_customer_constrain"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/edit_text_border_small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+        app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_sp_constrain">
 
         <TextView
-            android:id="@+id/registration_text_customer"
+            android:id="@+id/personal_details_id_proof_text_customer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/underline"
-            android:text="@string/customer"
             android:paddingStart="0dp"
             android:paddingEnd="150dp"
+            android:text="@string/customer"
             android:textColor="@color/black"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/registration_customer"
+            app:layout_constraintBottom_toTopOf="@+id/personal_details_id_proof_customer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <RadioButton
-            android:id="@+id/registration_customer"
+            android:id="@+id/personal_details_id_proof_customer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
@@ -291,13 +303,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.045"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registration_text_customer"
+            app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_text_customer"
             app:layout_constraintVertical_bias="0.091" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <EditText
-        android:id="@+id/registration_pin_code_edit"
+        android:id="@+id/personal_details_id_proof_pin_code_edit"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
@@ -308,14 +320,14 @@
         android:maxLength="6"
         android:padding="20dp"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/registration_select_city"
+        app:layout_constraintBottom_toBottomOf="@+id/personal_details_id_proof_select_city"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/registration_select_city"
-        app:layout_constraintTop_toTopOf="@+id/registration_select_city"
+        app:layout_constraintStart_toEndOf="@+id/personal_details_id_proof_select_city"
+        app:layout_constraintTop_toTopOf="@+id/personal_details_id_proof_select_city"
         app:layout_constraintVertical_bias="1.0" />
 
     <EditText
-        android:id="@+id/registration_address_edit"
+        android:id="@+id/personal_details_id_proof_address_edit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -325,26 +337,28 @@
         android:inputType="textPersonName"
         android:padding="20dp"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/registration_pin_code_edit"
-        app:layout_constraintStart_toStartOf="@+id/registration_select_state"
-        app:layout_constraintTop_toBottomOf="@+id/registration_select_city" />
+        app:layout_constraintEnd_toEndOf="@+id/personal_details_id_proof_pin_code_edit"
+        app:layout_constraintStart_toStartOf="@+id/personal_details_id_proof_select_state"
+        app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_select_city" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cghghtxjgh"
+        android:id="@+id/personal_details_id_proof_constrain_pan_aadhar_upload"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/background"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/personal_details_id_proof_ok"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dnsscsdcs">
+        app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_pan_view">
 
         <include
-            android:id="@+id/jhfjdxthzh"
+            android:id="@+id/personal_details_id_proof_layout_registration_pan_aadhar"
             layout="@layout/activity_personal_details"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -353,9 +367,10 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/registration_location"
+        android:id="@+id/personal_details_id_proof_location_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:paddingStart="20dp"
         android:paddingEnd="0dp"
         android:text="@string/location"
@@ -363,6 +378,6 @@
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dnccsksd" />
+        app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_mobile_number" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
