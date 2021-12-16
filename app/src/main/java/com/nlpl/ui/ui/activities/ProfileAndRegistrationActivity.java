@@ -21,12 +21,12 @@ import com.nlpl.R;
 public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
     View action_bar;
-    TextView actionBarTitle, language, addCompany, phoneDone, nameDone, firmDone, firmName, addressDone;
+    TextView editPersonalDetails, actionBarTitle, language, addCompany, phoneDone, nameDone, firmDone, firmName, addressDone;
     ImageView actionBarBackButton;
     Dialog languageDialog;
 
     Button personalDetails, bankDetails, addTrucks, addDrivers;
-    String mobile, name, address, pinCode, city;
+    String mobile, name, address, pinCode, city, bankName, accNo;
     TextView nameTitle, mobileText;
     ConstraintLayout personal_done;
 
@@ -44,6 +44,8 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             address = bundle.getString("address");
             pinCode = bundle.getString("pinCode");
             city = bundle.getString("city");
+            bankName = bundle.getString("bankName");
+            accNo = bundle.getString("accNo");
             isPersonalDetailsDone = bundle.getBoolean("isPersonal");
             isBankDetailsDone = bundle.getBoolean("isBank");
             isAddTrucksDone = bundle.getBoolean("isTrucks");
@@ -116,6 +118,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         firmDone = findViewById(R.id.firm_done);
         firmName = findViewById(R.id.firm_name_done);
         addressDone = findViewById(R.id.address_done);
+        editPersonalDetails = findViewById(R.id.editPersonalDetails);
 
         nameTitle = (TextView) findViewById(R.id.profile_registration_name_text);
         mobileText = (TextView) findViewById(R.id.profile_registration_mobile_text);
@@ -127,7 +130,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
         if (isPersonalDetailsDone){
             getIsPersonalDetailsDoneVisible = true;
-            personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, 0, 0);
+            personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_down_personal, 0);
             personal_done.setVisibility(View.VISIBLE);
             addCompany.setVisibility(View.VISIBLE);
             phoneDone.setText("+91 "+s);
@@ -136,7 +139,8 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
         }
         if (isBankDetailsDone){
-            bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, 0, 0);
+            bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_down_personal, 0);
+
         }
         if (isAddTrucksDone){
             addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, 0, 0);
@@ -155,12 +159,21 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             }
         });
 
+        editPersonalDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileAndRegistrationActivity.this, PersonalDetailsAndIdProofActivity.class);
+                startActivity(intent);
+            }
+        });
+
         personalDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if (isPersonalDetailsDone){
                     if (getIsPersonalDetailsDoneVisible){
+                        personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
                         personal_done.setVisibility(View.GONE);
                         addCompany.setVisibility(View.GONE);
                         phoneDone.setText("+91 "+s);
@@ -168,6 +181,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         addressDone.setText(address+", "+city+" "+pinCode);
                         getIsPersonalDetailsDoneVisible= false;
                     }else {
+                        personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_down_personal, 0);
                         personal_done.setVisibility(View.VISIBLE);
                         addCompany.setVisibility(View.VISIBLE);
                         phoneDone.setText("+91 " + s);
@@ -183,6 +197,8 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     intent.putExtra("address", address);
                     intent.putExtra("pinCode", pinCode);
                     intent.putExtra("city", city);
+                    intent.putExtra("bankName", bankName);
+                    intent.putExtra("accNo", accNo);
                     intent.putExtra("isPersonal", isPersonalDetailsDone);
                     intent.putExtra("isBank", isBankDetailsDone);
                     intent.putExtra("isTrucks", isAddTrucksDone);
@@ -202,6 +218,8 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 intent.putExtra("address", address);
                 intent.putExtra("pinCode", pinCode);
                 intent.putExtra("city", city);
+                intent.putExtra("bankName", bankName);
+                intent.putExtra("accNo", accNo);
                 intent.putExtra("isPersonal", isPersonalDetailsDone);
                 intent.putExtra("isBank", isBankDetailsDone);
                 intent.putExtra("isTrucks", isAddTrucksDone);
@@ -220,6 +238,8 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 intent.putExtra("address", address);
                 intent.putExtra("pinCode", pinCode);
                 intent.putExtra("city", city);
+                intent.putExtra("bankName", bankName);
+                intent.putExtra("accNo", accNo);
                 intent.putExtra("isPersonal", isPersonalDetailsDone);
                 intent.putExtra("isBank", isBankDetailsDone);
                 intent.putExtra("isTrucks", isAddTrucksDone);
@@ -238,6 +258,8 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 intent.putExtra("address", address);
                 intent.putExtra("pinCode", pinCode);
                 intent.putExtra("city", city);
+                intent.putExtra("bankName", bankName);
+                intent.putExtra("accNo", accNo);
                 intent.putExtra("isPersonal", isPersonalDetailsDone);
                 intent.putExtra("isBank", isBankDetailsDone);
                 intent.putExtra("isTrucks", isAddTrucksDone);
