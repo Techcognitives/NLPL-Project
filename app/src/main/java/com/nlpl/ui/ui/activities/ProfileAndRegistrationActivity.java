@@ -155,6 +155,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             addressDone.setText(address+", "+city+" "+pinCode);
 
         }
+
         if (isBankDetailsDone){
 
             personal_done.setVisibility(View.GONE);
