@@ -1043,6 +1043,10 @@
     //--------------------------- Personal Details And Id Proof Activity ---------------------------
     <string name="personal">Personal &amp; Address</string>
     <string name="pan_and_aadhar">PAN &amp; Aadhar</string>
+    <string name="phone">Phone:</string>
+    <string name="firm">Firm Name:</string>
+    <string name="addressColon">Address:</string>
+    <string name="add_company">+ Add Company</string>
     //----------------------------------------------------------------------------------------------
 
 </resources>
