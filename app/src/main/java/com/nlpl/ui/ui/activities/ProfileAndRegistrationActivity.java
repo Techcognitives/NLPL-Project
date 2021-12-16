@@ -139,7 +139,8 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
         }
         if (isBankDetailsDone){
-            bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, 0, 0);
+            bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_down_personal, 0);
+
         }
         if (isAddTrucksDone){
             addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, 0, 0);
