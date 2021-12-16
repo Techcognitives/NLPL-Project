@@ -49,7 +49,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     int GET_FROM_GALLERY = 0;
     int GET_FROM_GALLERY1 = 1;
 
-    String mobile, name, address,pinCode,city;
+    String mobile, name, address,pinCode, city, bankName, accNo;
     Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, isRcUploaded=false, isInsurance=false, truckSelected=false;
 
     @Override
@@ -64,6 +64,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             address = bundle.getString("address");
             pinCode = bundle.getString("pinCode");
             city = bundle.getString("city");
+            bankName = bundle.getString("bankName");
+            accNo = bundle.getString("accNo");
             isPersonalDetailsDone = bundle.getBoolean("isPersonal");
             isBankDetailsDone = bundle.getBoolean("isBank");
             isAddTrucksDone = bundle.getBoolean("isTrucks");
@@ -316,6 +318,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                     i8.putExtra("address", address);
                     i8.putExtra("pinCode", pinCode);
                     i8.putExtra("city", city);
+                    i8.putExtra("bankName", bankName);
+                    i8.putExtra("accNo", accNo);
                     i8.putExtra("isPersonal", isPersonalDetailsDone);
                     i8.putExtra("isBank", isBankDetailsDone);
                     i8.putExtra("isTrucks", true);
