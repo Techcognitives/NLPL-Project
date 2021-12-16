@@ -10,19 +10,23 @@
         android:id="@+id/registration_action_bar"
         layout="@layout/action_bar"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/registration_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:paddingStart="20dp"
         android:paddingEnd="0dp"
         android:text="@string/name"
         android:textColor="@color/black"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registration_action_bar" />
 
@@ -31,7 +35,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/edit_text_border"
         android:ems="10"
@@ -40,6 +44,7 @@
         android:padding="20dp"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registration_name" />
 
@@ -78,35 +83,35 @@
 
     <TextView
         android:id="@+id/registration_select_city"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:background="@drawable/edit_text_border"
         android:drawableEnd="@drawable/ic_down"
         android:drawableTint="@color/black"
         android:hint="@string/select_city"
         android:padding="20dp"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/registration_select_state"
-        app:layout_constraintEnd_toStartOf="@+id/editTextTextPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/registration_address_edit"
+        app:layout_constraintEnd_toStartOf="@+id/registration_pin_code_edit"
         app:layout_constraintStart_toEndOf="@+id/registration_select_state"
-        app:layout_constraintTop_toTopOf="@+id/registration_select_state" />
+        app:layout_constraintTop_toBottomOf="@+id/registration_location" />
 
     <TextView
         android:id="@+id/registration_select_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
         android:background="@drawable/edit_text_border"
         android:drawableEnd="@drawable/ic_down"
         android:drawableTint="@color/black"
         android:hint="@string/select_state"
         android:padding="20dp"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintBottom_toBottomOf="@+id/registration_select_city"
         app:layout_constraintEnd_toStartOf="@+id/registration_select_city"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registration_location" />
+        app:layout_constraintTop_toTopOf="@+id/registration_select_city" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -117,8 +122,9 @@
         android:layout_marginEnd="20dp"
         android:background="@drawable/edit_text_border_small"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registration_select_state">
+        app:layout_constraintTop_toBottomOf="@+id/registration_address_edit">
 
 
         <TextView
@@ -232,22 +238,37 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
-        android:layout_width="0dp"
+        android:id="@+id/registration_pin_code_edit"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:background="@drawable/edit_text_border"
         android:ems="10"
         android:hint="@string/pin_code"
-        android:inputType="textPersonName"
+        android:inputType="number"
+        android:maxLength="6"
         android:padding="20dp"
         android:textSize="18sp"
-        android:maxLength="6"
         app:layout_constraintBottom_toBottomOf="@+id/registration_select_city"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/registration_select_city"
         app:layout_constraintTop_toTopOf="@+id/registration_select_city"
         app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/registration_address_edit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edit_text_border"
+        android:ems="10"
+        android:hint="@string/address"
+        android:inputType="textPersonName"
+        android:padding="20dp"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/registration_pin_code_edit"
+        app:layout_constraintStart_toStartOf="@+id/registration_select_state"
+        app:layout_constraintTop_toBottomOf="@+id/registration_select_city" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -115,7 +115,7 @@ public class BankDetailsActivity extends AppCompatActivity {
         bankName = (EditText) findViewById(R.id.bank_details_person_name_text_edit);
         accountNo = (EditText) findViewById(R.id.bank_details_account_number_edit);
         reAccount = (EditText) findViewById(R.id.bank_details_reenter_account_number_edit);
-        ifscCode = (EditText) findViewById(R.id.editTextTextPersonName6);
+        ifscCode = (EditText) findViewById(R.id.bank_details_ifsc_edit);
         okButton = (Button) findViewById(R.id.bank_details_ok_button);
         okButton.setEnabled(false);
 

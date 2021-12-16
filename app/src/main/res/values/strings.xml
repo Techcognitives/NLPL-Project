@@ -963,6 +963,7 @@
     <string name="select_state">State</string>
     <string name="select_city">City</string>
     <string name="pin_code">PIN Code</string>
+    <string name="address">Address</string>
     <string name="are_u_sp">Are you a Service Provider? </string>
     <string name="truck_owner">Truck Owner</string>
     <string name="driver">Driver</string>
@@ -1019,15 +1020,29 @@
     <string name="EnterDriverName">Enter Driver Name</string>
     <string name="UploadDriverLicense">Upload Driver License</string>
     <string name="DriverLicense">Driver License</string>
+    <string name="driver_mobile_number_hint">Enter Driver Mobile Number</string>
     <string name="AddAnotherDriver">ADD ANOTHER DRIVER</string>
     <string name="driver_mobile_number">Driver Mobile Number</string>
     //----------------------------------------------------------------------------------------------
 
-    //-------------------------------------- Language Dialog--------------------------------
+    //-------------------------------------- Language Dialog----------------------------------------
     <string name="select_language">Please select your language</string>
     <string name="english">English</string>
     <string name="marathi">मराठी</string>
     <string name="hindi">हिंदी</string>
+    //----------------------------------------------------------------------------------------------
+
+    //-------------------------------------- Company Details ---------------------------------------
+    <string name="company_name">Company Name</string>
+    <string name="company_address">Company Address</string>
+    <string name="company_name_hint">Enter Company Name</string>
+    <string name="gst_number_hint">GST Number</string>
+    <string name="pan_number">PAN Number</string>
+    //----------------------------------------------------------------------------------------------
+
+    //--------------------------- Personal Details And Id Proof Activity ---------------------------
+    <string name="personal">Personal &amp; Address</string>
+    <string name="pan_and_aadhar">PAN &amp; Aadhar</string>
     //----------------------------------------------------------------------------------------------
 
 </resources>

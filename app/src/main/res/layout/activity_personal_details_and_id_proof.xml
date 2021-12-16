@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.ui.activities.PersonalDetailsAndIdProofActivity">
+
+    <include
+        android:id="@+id/bank_details_action_bar"
+        layout="@layout/action_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/cdsbjcdcs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/button_de_active"
+        android:onClick="onClickBankDetailsOk"
+        android:text="@string/pan_and_aadhar"
+        android:textAllCaps="false"
+        android:textColor="@color/background"
+        android:textSize="18sp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/jdxscdcm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/jdxscdcm"
+        app:layout_constraintTop_toTopOf="@+id/jdxscdcm" />
+
+    <Button
+        android:id="@+id/jdxscdcm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="3dp"
+        android:background="@drawable/personal_details_buttons_active"
+        android:onClick="onClickBankDetailsOk"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="@string/personal"
+        android:textAllCaps="false"
+        android:textColor="@color/background"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/cdsbjcdcs"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bank_details_action_bar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

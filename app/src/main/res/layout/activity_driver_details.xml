@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/driver_details_driver_name_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingStart="20dp"
@@ -29,12 +29,12 @@
         app:layout_constraintTop_toBottomOf="@+id/driver_details_action_bar" />
 
     <EditText
-        android:id="@+id/driverName"
+        android:id="@+id/driver_details_driver_name_edit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/edit_text_border"
         android:ems="10"
         android:hint="@string/EnterDriverName"
@@ -43,10 +43,10 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintTop_toBottomOf="@+id/driver_details_driver_name_text" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/driver_details_driver_license_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingStart="20dp"
@@ -57,10 +57,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/driver_details_mobile_no" />
+        app:layout_constraintTop_toBottomOf="@+id/driver_details_mobile_number_edit" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout3"
+        android:id="@+id/driver_details_driver_license_constrain"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -70,10 +70,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9">
+        app:layout_constraintTop_toBottomOf="@+id/driver_details_driver_license_text">
 
         <ImageView
-            android:id="@+id/imageDL"
+            android:id="@+id/driver_details_driver_license_image"
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_marginStart="10dp"
@@ -83,27 +83,27 @@
             android:padding="2dp"
             android:src="@drawable/driving_license"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textDL"
+            app:layout_constraintEnd_toStartOf="@+id/driver_details_driver_license_text_image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/textDL"
+            android:id="@+id/driver_details_driver_license_text_image"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="@string/DriverLicense"
             android:textColor="@color/black"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageDL"
-            app:layout_constraintEnd_toStartOf="@+id/uploadDL"
-            app:layout_constraintStart_toEndOf="@+id/imageDL"
-            app:layout_constraintTop_toTopOf="@+id/imageDL"
+            app:layout_constraintBottom_toBottomOf="@+id/driver_details_driver_license_image"
+            app:layout_constraintEnd_toStartOf="@+id/driver_details_upload_driver_license"
+            app:layout_constraintStart_toEndOf="@+id/driver_details_driver_license_image"
+            app:layout_constraintTop_toTopOf="@+id/driver_details_driver_license_image"
             app:layout_constraintVertical_bias="0.506" />
 
         <TextView
-            android:id="@+id/editDL"
+            android:id="@+id/driver_details_edit_driver_license"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
@@ -113,13 +113,13 @@
             android:textColor="#000000"
             android:textSize="20sp"
             android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/textDL"
+            app:layout_constraintBottom_toBottomOf="@+id/driver_details_driver_license_text_image"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textDL"
-            app:layout_constraintTop_toTopOf="@+id/textDL" />
+            app:layout_constraintStart_toEndOf="@+id/driver_details_driver_license_text_image"
+            app:layout_constraintTop_toTopOf="@+id/driver_details_driver_license_text_image" />
 
         <Button
-            android:id="@+id/uploadDL"
+            android:id="@+id/driver_details_upload_driver_license"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
@@ -132,15 +132,15 @@
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/textDL"
+            app:layout_constraintBottom_toBottomOf="@+id/driver_details_driver_license_text_image"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textDL"
-            app:layout_constraintTop_toTopOf="@+id/textDL"
+            app:layout_constraintStart_toEndOf="@+id/driver_details_driver_license_text_image"
+            app:layout_constraintTop_toTopOf="@+id/driver_details_driver_license_text_image"
             app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/driverDetailsOK"
+        android:id="@+id/driver_details_ok_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -156,7 +156,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
+        app:layout_constraintTop_toBottomOf="@+id/driver_details_driver_license_constrain" />
 
     <TextView
         android:id="@+id/driver_details_mobile_prefix"
@@ -171,43 +171,30 @@
         android:text="@string/mobile_prefix"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/driver_details_mobile_no"
-        app:layout_constraintEnd_toStartOf="@+id/driver_details_mobile_no"
+        app:layout_constraintBottom_toBottomOf="@+id/driver_details_mobile_number_edit"
+        app:layout_constraintEnd_toStartOf="@+id/driver_details_mobile_number_edit"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/driver_details_mobile_no" />
+        app:layout_constraintTop_toTopOf="@+id/driver_details_mobile_number_edit" />
 
     <EditText
-        android:id="@+id/driver_details_mobile_no"
+        android:id="@+id/driver_details_mobile_number_edit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/mobile_number_right"
-        android:hint="@string/edit_number_hint"
+        android:hint="@string/driver_mobile_number_hint"
         android:inputType="number"
-        android:layout_marginTop="10dp"
         android:maxLength="10"
-        android:paddingEnd="15dp"
         android:paddingStart="5dp"
-        android:paddingBottom="15dp"
         android:paddingTop="15dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="15dp"
         android:textColorHint="@color/hint"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/driver_details_mobile_prefix"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/driver_details_driver_name_edit"
         tools:ignore="Autofill" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:paddingStart="20dp"
-        android:text="@string/driver_mobile_number"
-        android:textColor="@color/black"
-        android:textSize="22sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/driverName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

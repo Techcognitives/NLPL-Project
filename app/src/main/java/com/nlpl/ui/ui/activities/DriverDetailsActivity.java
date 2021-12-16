@@ -28,6 +28,8 @@ import android.widget.TextView;
 
 import com.nlpl.R;
 
+import org.w3c.dom.Text;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -40,7 +42,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
     Dialog languageDialog;
 
     Button uploadDL, okDriverDetails;
-    TextView textDL, editDL;
+    TextView textDL, editDL, series;
     int GET_FROM_GALLERY=0;
     ImageView driverLicenseImage;
 
@@ -68,9 +70,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
         language = (TextView) action_bar.findViewById(R.id.action_bar_language_selector);
-        driverMobile = findViewById(R.id.driver_details_mobile_no);
-        driverName=findViewById(R.id.driverName);
-        okDriverDetails=findViewById(R.id.driverDetailsOK);
+        driverMobile = findViewById(R.id.driver_details_mobile_number_edit);
+        driverName=findViewById(R.id.driver_details_driver_name_edit);
+        okDriverDetails=findViewById(R.id.driver_details_ok_button);
+        series = (TextView) findViewById(R.id.driver_details_mobile_prefix);
 
         driverName.addTextChangedListener(driverWatcher);
         driverMobile.addTextChangedListener(driverWatcher);
@@ -132,10 +135,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
             }
         });
 
-        uploadDL = findViewById(R.id.uploadDL);
-        editDL = findViewById(R.id.editDL);
-        textDL = findViewById(R.id.textDL);
-        driverLicenseImage = (ImageView) findViewById(R.id.imageDL);
+        uploadDL = findViewById(R.id.driver_details_upload_driver_license);
+        editDL = findViewById(R.id.driver_details_edit_driver_license);
+        textDL = findViewById(R.id.driver_details_driver_license_text_image);
+        driverLicenseImage = (ImageView) findViewById(R.id.driver_details_driver_license_image);
 
 
         uploadDL.setOnClickListener(new View.OnClickListener() {
@@ -163,7 +166,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
 
             AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
-            my_alert.setTitle("Driving Licence Uploaded Successfully");
+            my_alert.setTitle("Driving License uploaded successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -251,7 +254,15 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String mobileNoWatcher = driverMobile.getText().toString().trim();
 
+            if (mobileNoWatcher.length()==10){
+                driverMobile.setBackground(getResources().getDrawable(R.drawable.mobile_number_right));
+                series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left));
+            }else{
+                driverMobile.setBackground(getResources().getDrawable(R.drawable.mobile_number_right_red));
+                series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left_red));
+            }
         }
 
         @Override

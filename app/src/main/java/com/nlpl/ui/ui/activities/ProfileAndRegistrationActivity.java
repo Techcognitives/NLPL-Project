@@ -24,14 +24,11 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     ImageView actionBarBackButton;
     Dialog languageDialog;
 
-    Button personalDetails, bankDetails, addTrucks, addDrivers, okBtn;
+    Button personalDetails, bankDetails, addTrucks, addDrivers;
     String mobile, name;
     TextView nameTitle, mobileText;
 
     Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone;
-
-    ImageView successPersonal, successBank, successTrucks, successDrivers;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,14 +96,13 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             }
         });
 
-        actionBarTitle.setText("Registration");
+        actionBarTitle.setText("My Profile");
         actionBarBackButton.setVisibility(View.GONE);
 
         personalDetails = findViewById(R.id.profile_registration_personal_details_button);
         bankDetails = findViewById(R.id.profile_registration_bank_details_button);
         addTrucks = findViewById(R.id.profile_registration_truck_details);
         addDrivers = findViewById(R.id.profile_registration_driver_details);
-        okBtn = findViewById(R.id.profile_registration_ok_button);
 
         nameTitle = (TextView) findViewById(R.id.profile_registration_name_text);
         mobileText = (TextView) findViewById(R.id.profile_registration_mobile_text);
@@ -116,25 +112,19 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         String s = mobile.substring(3,13);
         mobileText.setText("+91 "+s);
 
-        successPersonal = (ImageView) findViewById(R.id.profile_and_registration_success_profile);
-        successBank = (ImageView) findViewById(R.id.profile_and_registration_success_bank);
-        successTrucks = (ImageView) findViewById(R.id.profile_and_registration_success_trucks);
-        successDrivers = (ImageView) findViewById(R.id.profile_and_registration_success_drivers);
-
         if (isPersonalDetailsDone){
-            successPersonal.setVisibility(View.VISIBLE);
+            personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, 0, 0);
         }
         if (isBankDetailsDone){
-            successBank.setVisibility(View.VISIBLE);
+            bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, 0, 0);
         }
         if (isAddTrucksDone){
-            successTrucks.setVisibility(View.VISIBLE);
+            addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, 0, 0);
         }
         if (isAddDriversDone){
-            successDrivers.setVisibility(View.VISIBLE);
+            addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, 0, 0);
         }
         if (isPersonalDetailsDone && isBankDetailsDone && isAddTrucksDone && isAddDriversDone){
-            okBtn.setBackground(getResources().getDrawable(R.drawable.button_active));
         }
         personalDetails.setOnClickListener(new View.OnClickListener() {
             @Override

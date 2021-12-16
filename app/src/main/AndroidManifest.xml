@@ -15,9 +15,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NLPL">
         <activity
-            android:name=".ui.ui.activities.DriverDetailsActivity"
+            android:name=".ui.ui.activities.PersonalDetailsAndIdProofActivity"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:exported="false" />
+        <activity
+            android:name=".ui.ui.activities.CompanyDetailsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
+        <activity
+            android:name=".ui.ui.activities.DriverDetailsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
             android:name=".ui.ui.activities.VehicleDetailsActivity"
             android:exported="false"
