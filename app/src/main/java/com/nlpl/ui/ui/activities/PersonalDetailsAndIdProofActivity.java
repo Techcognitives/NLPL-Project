@@ -3,12 +3,16 @@ package com.nlpl.ui.ui.activities;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -27,6 +31,9 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.nlpl.R;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
@@ -47,10 +54,21 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     String mobile;
     EditText name, pinCode, address, mobileEdit;
     Button okButton;
-
+//--------------------------------------------------------------------------------------------------
     View panAndAadharView;
     Button panAndAadharButton;
     View panView;
+
+    TextView panCardText, editPAN, editBack, editFront, frontText, backText;
+    Button uploadPAN, uploadF, uploadB;
+    ImageView imgPAN, imgF, imgB;
+    RadioButton radioAadhar, radioVoter;
+    private int GET_FROM_GALLERY=0;
+    private int GET_FROM_GALLERY1=1;
+    private int GET_FROM_GALLERY2=2;
+
+    String vehicleNo, city, idProof, bankName, accNo;
+    Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, isPanUploaded=false, isFrontUploaded=false, isBackUploaded=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -425,8 +443,101 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
 
         //------------------------------------------------------------------------------------------
+        panCardText = panAndAadharView.findViewById(R.id.pancard1);
+        frontText = panAndAadharView.findViewById(R.id.frontText);
+        backText = panAndAadharView.findViewById(R.id.profile_registration_name_text);
+        uploadPAN = panAndAadharView.findViewById(R.id.uploadPan);
+        uploadF = panAndAadharView.findViewById(R.id.uploadF);
+        uploadB = panAndAadharView.findViewById(R.id.uploadB);
+        imgPAN = panAndAadharView.findViewById(R.id.imagePan);
+        imgF = panAndAadharView.findViewById(R.id.imageF);
+        imgB = panAndAadharView.findViewById(R.id.imageB);
+        editPAN = panAndAadharView.findViewById(R.id.edit1);
+        editFront = panAndAadharView.findViewById(R.id.editFront);
+        editBack = panAndAadharView.findViewById(R.id.editBack);
+        radioAadhar = panAndAadharView.findViewById(R.id.radioAadhar);
+        radioVoter = panAndAadharView.findViewById(R.id.radioVoter);
 
+//        if (isPersonalDetailsDone){
+//            panCardText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
+//            uploadPAN.setVisibility(View.INVISIBLE);
+//            editPAN.setVisibility(View.VISIBLE);
+//
+//            frontText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
+//            uploadF.setVisibility(View.INVISIBLE);
+//            editFront.setVisibility(View.VISIBLE);
+//
+//            backText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
+//            uploadB.setVisibility(View.INVISIBLE);
+//            editBack.setVisibility(View.VISIBLE);
+//        }
 
+        uploadPAN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+            }
+        });
+
+        editPAN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+            }
+        });
+
+        uploadF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY1);
+            }
+        });
+
+        editFront.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY1);
+            }
+        });
+
+        uploadB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY2);
+            }
+        });
+        editBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY2);
+            }
+        });
+
+        radioVoter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                radioAadhar.setChecked(false);
+                radioVoter.setChecked(true);
+                frontText.setText("Voter ID Front");
+                backText.setText("Voter ID Back");
+                imgF.setImageDrawable(getDrawable(R.drawable.voter_id_front));
+                imgB.setImageDrawable(getDrawable(R.drawable.voter_id_back));
+                idProof = "voter";
+            }
+        });
+
+        radioAadhar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                radioAadhar.setChecked(true);
+                radioVoter.setChecked(false);
+                frontText.setText("Aadhar Front");
+                backText.setText("Aadhar Back");
+                imgF.setImageDrawable(getDrawable(R.drawable.aadhar_card_front));
+                imgB.setImageDrawable(getDrawable(R.drawable.aadhar_card_back));
+                idProof = "aadhar";
+            }
+        });
         //------------------------------------------------------------------------------------------
     }
 
@@ -455,7 +566,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     }
 
     //----------------------------------------------------------------------------------------------
-    public void onClickRadioPersonal(View view) {
+    public void onRadioClick(View view) {
 
         name.setCursorVisible(false);
         pinCode.setCursorVisible(false);
@@ -607,6 +718,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         }
     };
+
     private String blockCharacterSet ="~#^|$%&*!+@₹_-()':;?/={}";
 
     private InputFilter filter = new InputFilter() {
@@ -622,5 +734,114 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         }
     };
     //----------------------------------------------------------------------------------------------
+
+    //-----------------------------------------------upload Image------------------------------------------------------------
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //Detects request code for PAN
+        if(requestCode==GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
+
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
+            my_alert.setTitle("PAN Card Uploaded Successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            my_alert.show();
+
+            panCardText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
+            uploadPAN.setVisibility(View.INVISIBLE);
+            editPAN.setVisibility(View.VISIBLE);
+            isPanUploaded = true;
+
+            if (isPanUploaded && isFrontUploaded && isBackUploaded){
+                okButton.setBackgroundResource(R.drawable.button_active);
+            }
+
+            Uri selectedImage = data.getData();
+            imgPAN.setImageURI(selectedImage);
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }else if (requestCode==GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK){
+
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
+            my_alert.setTitle("Uploaded Successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            my_alert.show();
+
+            frontText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
+            uploadF.setVisibility(View.INVISIBLE);
+            editFront.setVisibility(View.VISIBLE);
+            isFrontUploaded = true;
+
+            if (isPanUploaded && isFrontUploaded && isBackUploaded){
+                okButton.setBackgroundResource(R.drawable.button_active);
+            }
+
+            Uri selectedImage = data.getData();
+            imgF.setImageURI(selectedImage);
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }else if (requestCode==GET_FROM_GALLERY2 && resultCode == Activity.RESULT_OK){
+
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
+            my_alert.setTitle("Uploaded Successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            my_alert.show();
+
+            backText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
+            uploadB.setVisibility(View.INVISIBLE);
+            editBack.setVisibility(View.VISIBLE);
+            isBackUploaded = true;
+
+            if (isPanUploaded && isFrontUploaded && isBackUploaded){
+                okButton.setBackgroundResource(R.drawable.button_active);
+            }
+
+            Uri selectedImage = data.getData();
+            imgB.setImageURI(selectedImage);
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+    //-------------------------------------------------------------------------------------------------------------------
 
 }
