@@ -994,6 +994,7 @@
     <string name="acNo">A/C No: </string>
     <string name="addBank">+ Add Bank</string>
     <string name="addTruck">+ Add Truck</string>
+    <string name="addDriver">+ Add Driver</string>
     //----------------------------------------------------------------------------------------------
 
     //---------------------------------------Bank Details Activity----------------------------------

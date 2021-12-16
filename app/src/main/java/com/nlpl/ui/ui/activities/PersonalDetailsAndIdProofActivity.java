@@ -70,10 +70,28 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     String vehicleNo, city, idProof, bankName, accNo;
     Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, isPanUploaded=false, isFrontUploaded=false, isBackUploaded=false;
 
+    String personName, addressBundle, pinCodeBundle, bankName2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_details_and_id_proof);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            mobile = bundle.getString("mobile3");
+            personName = bundle.getString("name3");
+            addressBundle = bundle.getString("address");
+            pinCodeBundle = bundle.getString("pinCode");
+            city = bundle.getString("city");
+            bankName2 = bundle.getString("bankName");
+            accNo = bundle.getString("accNo");
+            vehicleNo = bundle.getString("vehicleNo");
+            isPersonalDetailsDone = bundle.getBoolean("isPersonal");
+            isBankDetailsDone = bundle.getBoolean("isBank");
+            isAddTrucksDone = bundle.getBoolean("isTrucks");
+            isAddDriversDone = bundle.getBoolean("isDriver");
+            Log.i("Mobile No", mobile);
+        }
 
         action_bar = findViewById(R.id.personal_details_id_proof_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
@@ -147,6 +165,11 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         selectStateText = (TextView) personalAndAddressView.findViewById(R.id.registration_select_state);
         selectDistrictText = (TextView) personalAndAddressView.findViewById(R.id.registration_select_city);
         okButton = (Button) findViewById(R.id.personal_details_id_proof_ok_button);
+
+        name.setText(personName);
+        pinCode.setText(pinCodeBundle);
+        address.setText(addressBundle);
+        mobileEdit.setText(mobile);
 
         name.addTextChangedListener(proofAndPersonalWatcher);
         selectStateText.addTextChangedListener(proofAndPersonalWatcher);
@@ -651,18 +674,22 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
                     Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, ProfileAndRegistrationActivity.class);
-                    i8.putExtra("mobile2", mobile);
+                    i8.putExtra("mobile2", mobileEdit.getText().toString());
                     i8.putExtra("name2", name.getText().toString());
-                    i8.putExtra("isPersonal", false);
-                    i8.putExtra("isBank", false);
                     i8.putExtra("address", address.getText().toString());
                     i8.putExtra("pinCode", pinCode.getText().toString());
-                    i8.putExtra("city", selectDistrictText.getText().toString());
-                    i8.putExtra("isTrucks", false);
-                    i8.putExtra("isDriver", false);
+                    i8.putExtra("city", selectStateText.getText().toString());
+                    i8.putExtra("bankName", bankName);
+                    i8.putExtra("accNo", accNo);
+                    i8.putExtra("vehicleNo", vehicleNo);
+                    i8.putExtra("isPersonal", true);
+                    i8.putExtra("isBank", isBankDetailsDone);
+                    i8.putExtra("isTrucks", isAddTrucksDone);
+                    i8.putExtra("isDriver",isAddDriversDone);
                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i8);
                     overridePendingTransition(0, 0);
+                    PersonalDetailsAndIdProofActivity.this.finish();
                 }
             });
             my_alert.show();
