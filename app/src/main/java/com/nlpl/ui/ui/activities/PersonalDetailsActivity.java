@@ -131,7 +131,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 PersonalDetailsActivity.this.finish();
             }
         });
-
+//--------------------------------------------------------------------------------------------------
         panAndAadharView = (View) findViewById(R.id.personal_details_pan_and_aadhar);
 
         panCardText = panAndAadharView.findViewById(R.id.pancard1);
