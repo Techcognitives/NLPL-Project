@@ -101,8 +101,9 @@
         android:textColor="@color/background"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_registration_bank_details_button" />
+        app:layout_constraintTop_toBottomOf="@+id/addBankDone" />
 
     <Button
         android:id="@+id/profile_registration_driver_details"
@@ -121,8 +122,9 @@
         android:textColor="@color/background"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_registration_truck_details" />
+        app:layout_constraintTop_toBottomOf="@+id/addTruck" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/personal_done"
@@ -172,7 +174,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginEnd="8dp"
             android:drawableStart="@drawable/success"
             android:text="@string/phone"
             android:textColor="#000000"
@@ -185,6 +187,7 @@
             android:id="@+id/phone_done"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:text="TextView"
             android:textColor="#000000"
             android:textSize="16sp"
@@ -228,30 +231,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
             android:drawableStart="@drawable/success"
             android:text="@string/addressColon"
             android:textColor="#000000"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/address_done"
             app:layout_constraintEnd_toStartOf="@+id/address_done"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/firm_done" />
+            app:layout_constraintTop_toTopOf="@+id/address_done" />
 
         <TextView
             android:id="@+id/address_done"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:text="TextView"
             android:textColor="#000000"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView11"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView11"
-            app:layout_constraintTop_toTopOf="@+id/textView11" />
+            app:layout_constraintTop_toBottomOf="@+id/phone_done" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -270,5 +273,154 @@
         app:layout_constraintEnd_toEndOf="@+id/personal_done"
         app:layout_constraintStart_toStartOf="@+id/personal_done"
         app:layout_constraintTop_toBottomOf="@+id/personal_done" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bankDetailsDoneLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:visibility="gone"
+        android:background="@drawable/shadow_file"
+        app:layout_constraintEnd_toEndOf="@+id/profile_registration_bank_details_button"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/profile_registration_bank_details_button"
+        app:layout_constraintTop_toBottomOf="@+id/profile_registration_bank_details_button">
+
+        <TextView
+            android:id="@+id/bankNameDone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:drawableStart="@drawable/success"
+            android:text="TextView"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/editBankDetailsDone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/editBankDetailsDone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:drawableStart="@drawable/ic_edit"
+            android:paddingLeft="10dp"
+            android:paddingEnd="10dp"
+            android:text="@string/edit"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/bankNameDone"
+            app:layout_constraintTop_toTopOf="@+id/bankNameDone" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/acNo"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bankNameDone" />
+
+        <TextView
+            android:id="@+id/accNoDone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:paddingStart="5dp"
+            android:text="TextView"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView8"
+            app:layout_constraintTop_toTopOf="@+id/textView8" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/addBankDone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_de_active_light_blue"
+        android:gravity="center"
+        android:padding="3dp"
+        android:visibility="gone"
+        android:text="@string/addBank"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/bankDetailsDoneLayout"
+        app:layout_constraintStart_toStartOf="@+id/bankDetailsDoneLayout"
+        app:layout_constraintTop_toBottomOf="@+id/bankDetailsDoneLayout" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/addTrucksDone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/shadow_file"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/profile_registration_truck_details"
+        app:layout_constraintStart_toStartOf="@+id/profile_registration_truck_details"
+        app:layout_constraintTop_toBottomOf="@+id/profile_registration_truck_details">
+
+        <TextView
+            android:id="@+id/vehicleNo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:drawableStart="@drawable/success"
+            android:text="TextView"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/editVehicleNo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/editVehicleNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:drawableStart="@drawable/ic_edit"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="@string/edit"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/vehicleNo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/vehicleNo" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/addTruck"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/button_de_active_light_blue"
+        android:gravity="center"
+        android:padding="3dp"
+        android:text="@string/addTruck"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addTrucksDone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
