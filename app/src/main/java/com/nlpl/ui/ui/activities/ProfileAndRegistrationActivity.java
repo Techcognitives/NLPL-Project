@@ -146,6 +146,15 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         }
         if (isPersonalDetailsDone && isBankDetailsDone && isAddTrucksDone && isAddDriversDone){
         }
+
+        addCompany.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileAndRegistrationActivity.this, CompanyDetailsActivity.class);
+                startActivity(intent);
+            }
+        });
+
         personalDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
