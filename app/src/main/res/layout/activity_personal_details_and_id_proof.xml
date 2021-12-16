@@ -133,7 +133,7 @@
         tools:ignore="Autofill" />
 
     <Button
-        android:id="@+id/personal_details_id_proof_ok"
+        android:id="@+id/personal_details_id_proof_ok_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -142,6 +142,7 @@
         android:text="@string/ok"
         android:textAllCaps="false"
         android:enabled="false"
+        android:onClick="onClickPersonalProof"
         android:textColor="@color/background"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -221,6 +222,7 @@
             android:buttonTint="@color/button_blue"
             android:paddingStart="0dp"
             android:paddingEnd="5dp"
+            android:onClick="onClickRadioPersonal"
             android:text="@string/truck_owner"
             android:textColor="@color/black"
             android:textSize="17sp"
@@ -237,6 +239,7 @@
             android:layout_height="wrap_content"
             android:buttonTint="@color/button_blue"
             android:text="@string/driver"
+            android:onClick="onClickRadioPersonal"
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="@+id/personal_details_id_proof_truck_owner"
             app:layout_constraintEnd_toStartOf="@+id/personal_details_id_proof_broker"
@@ -250,6 +253,7 @@
             android:buttonTint="@color/button_blue"
             android:text="@string/broker"
             android:textSize="17sp"
+            android:onClick="onClickRadioPersonal"
             app:layout_constraintBottom_toBottomOf="@+id/personal_details_id_proof_driver"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/personal_details_id_proof_driver"
@@ -294,6 +298,7 @@
             android:layout_marginBottom="5dp"
             android:buttonTint="@color/button_blue"
             android:text="@string/yes"
+            android:onClick="onClickRadioPersonal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.045"
@@ -342,7 +347,7 @@
         android:layout_height="0dp"
         android:background="@color/background"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/personal_details_id_proof_ok"
+        app:layout_constraintBottom_toTopOf="@+id/personal_details_id_proof_ok_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_pan_view">

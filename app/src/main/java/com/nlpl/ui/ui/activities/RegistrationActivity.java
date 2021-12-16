@@ -107,6 +107,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         actionBarTitle.setText("Registration");
         actionBarBackButton.setVisibility(View.GONE);
+        //------------------------------------------------------------------------------------------
 
         name = (EditText) findViewById(R.id.registration_edit_name);
         pinCode = (EditText) findViewById(R.id.registration_pin_code_edit);
