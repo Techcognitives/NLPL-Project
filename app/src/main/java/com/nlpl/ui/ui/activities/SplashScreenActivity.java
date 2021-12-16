@@ -29,7 +29,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             @Override
             public void run() {
 //------------------------------------ Go to the Sign in Screen ------------------------------------
-                Intent intent = new Intent(SplashScreenActivity.this, LogInActivity.class);
+                Intent intent = new Intent(SplashScreenActivity.this, PersonalDetailsAndIdProofActivity.class);
                 startActivity(intent);
                 SplashScreenActivity.this.finish();
             }

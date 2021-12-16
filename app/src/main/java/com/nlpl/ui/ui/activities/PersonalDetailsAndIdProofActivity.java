@@ -88,19 +88,29 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         //------------------------------------------------------------------------------------------
         personalAddressButton = (Button) findViewById(R.id.personal_details_id_proof_personal_address_button);
+        personalView = (View) findViewById(R.id.personal_details_id_proof_personal_view);
+        //------------------------------------------------------------------------------------------
         panAndAadharButton = (Button) findViewById(R.id.personal_details_id_proof_pan_aadhar);
-
+        panView = (View) findViewById(R.id.personal_details_id_proof_pan_view);
         //------------------------------------------------------------------------------------------
     }
 
     public void onClickPersonalOrAadhar(View view) {
         switch (view.getId()) {
             case R.id.personal_details_id_proof_personal_address_button:
+                personalAddressButton.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
+                personalView.setBackgroundColor(getResources().getColor(R.color.dark_blue));
 
-
+                panAndAadharButton.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+                panView.setBackgroundColor(getResources().getColor(R.color.medium_blue));
                 break;
 
             case R.id.personal_details_id_proof_pan_aadhar:
+                panAndAadharButton.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
+                panView.setBackgroundColor(getResources().getColor(R.color.dark_blue));
+
+                personalAddressButton.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+                personalView.setBackgroundColor(getResources().getColor(R.color.medium_blue));
                 break;
         }
     }
