@@ -41,8 +41,10 @@ public class RegistrationActivity extends AppCompatActivity {
     int parentID;
     String mobile;
 
-    EditText name, pinCode, address;
+    EditText name, pinCode, address, mobileNoEdit;
+    TextView series;
     Button okButton;
+    View personalAndAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,11 +111,14 @@ public class RegistrationActivity extends AppCompatActivity {
         actionBarBackButton.setVisibility(View.GONE);
         //------------------------------------------------------------------------------------------
 
-        name = (EditText) findViewById(R.id.registration_edit_name);
-        pinCode = (EditText) findViewById(R.id.registration_pin_code_edit);
-        address = (EditText) findViewById(R.id.registration_address_edit);
-        selectStateText = (TextView) findViewById(R.id.registration_select_state);
-        selectDistrictText = (TextView) findViewById(R.id.registration_select_city);
+        personalAndAddress = (View) findViewById(R.id.registration_personal_and_address);
+        name = (EditText) personalAndAddress.findViewById(R.id.registration_edit_name);
+        pinCode = (EditText) personalAndAddress.findViewById(R.id.registration_pin_code_edit);
+        address = (EditText) personalAndAddress.findViewById(R.id.registration_address_edit);
+        mobileNoEdit = (EditText) personalAndAddress.findViewById(R.id.registration_mobile_no_edit);
+        series = (TextView) personalAndAddress.findViewById(R.id.registration_prefix);
+        selectStateText = (TextView) personalAndAddress.findViewById(R.id.registration_select_state);
+        selectDistrictText = (TextView) personalAndAddress.findViewById(R.id.registration_select_city);
         okButton = (Button) findViewById(R.id.registration_ok);
 
         name.addTextChangedListener(registrationWatcher);
@@ -121,6 +126,9 @@ public class RegistrationActivity extends AppCompatActivity {
         selectDistrictText.addTextChangedListener(registrationWatcher);
         pinCode.addTextChangedListener(registrationWatcher);
         address.addTextChangedListener(registrationWatcher);
+
+        mobileNoEdit.setVisibility(View.GONE);
+        series.setVisibility(View.GONE);
 
         name.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
@@ -133,10 +141,10 @@ public class RegistrationActivity extends AppCompatActivity {
 //            okButton.setBackground(getDrawable(R.drawable.button_de_active));
 //        }
 
-        ownerButton = (RadioButton) findViewById(R.id.registration_truck_owner);
-        driverButton = (RadioButton) findViewById(R.id.registration_driver);
-        brokerButton = (RadioButton) findViewById(R.id.registration_broker);
-        customerButton = (RadioButton) findViewById(R.id.registration_customer);
+        ownerButton = (RadioButton) personalAndAddress.findViewById(R.id.registration_truck_owner);
+        driverButton = (RadioButton) personalAndAddress.findViewById(R.id.registration_driver);
+        brokerButton = (RadioButton) personalAndAddress.findViewById(R.id.registration_broker);
+        customerButton = (RadioButton) personalAndAddress.findViewById(R.id.registration_customer);
 
         name.setOnClickListener(new View.OnClickListener() {
             @Override
