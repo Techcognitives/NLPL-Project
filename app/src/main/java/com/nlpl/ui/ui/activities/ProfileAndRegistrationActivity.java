@@ -21,7 +21,7 @@ import com.nlpl.R;
 public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
     View action_bar;
-    TextView driverNameDone, editDriverName, addDriver, addTruck, vehicleNoDone, vehicleEditDone, addBankDetails, editBankDetails, addBankDone, bankNameDone, accNoDone, editPersonalDetails, actionBarTitle, language, addCompany, phoneDone, nameDone, firmDone, firmName, addressDone;
+    TextView  driverNameDone, editDriverName, addDriver, addTruck, vehicleNoDone, vehicleEditDone, addBankDetails, editBankDetails, addBankDone, bankNameDone, accNoDone, editPersonalDetails, actionBarTitle, language, addCompany, phoneDone, nameDone, firmDone, firmName, addressDone;
     ImageView actionBarBackButton;
     Dialog languageDialog;
 
@@ -297,6 +297,70 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        vehicleEditDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
+                intent.putExtra("mobile3", mobile);
+                intent.putExtra("name3", name);
+                intent.putExtra("address", address);
+                intent.putExtra("pinCode", pinCode);
+                intent.putExtra("city", city);
+                intent.putExtra("bankName", bankName);
+                intent.putExtra("accNo", accNo);
+                intent.putExtra("vehicleNo", vehicleNo);
+                intent.putExtra("driverName", driverName);
+                intent.putExtra("isPersonal", isPersonalDetailsDone);
+                intent.putExtra("isBank", isBankDetailsDone);
+                intent.putExtra("isTrucks", isAddTrucksDone);
+                intent.putExtra("isDriver", isAddDriversDone);
+                startActivity(intent);
+            }
+        });
+
+        addDriver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileAndRegistrationActivity.this, DriverDetailsActivity.class);
+                intent.putExtra("mobile3", mobile);
+                intent.putExtra("name3", name);
+                intent.putExtra("address", address);
+                intent.putExtra("pinCode", pinCode);
+                intent.putExtra("city", city);
+                intent.putExtra("bankName", bankName);
+                intent.putExtra("accNo", accNo);
+                intent.putExtra("vehicleNo", vehicleNo);
+                intent.putExtra("driverName", driverName);
+                intent.putExtra("isPersonal", isPersonalDetailsDone);
+                intent.putExtra("isBank", isBankDetailsDone);
+                intent.putExtra("isTrucks", isAddTrucksDone);
+                intent.putExtra("isDriver", isAddDriversDone);
+                startActivity(intent);
+            }
+        });
+
+        editDriverName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileAndRegistrationActivity.this, DriverDetailsActivity.class);
+                intent.putExtra("mobile3", mobile);
+                intent.putExtra("name3", name);
+                intent.putExtra("address", address);
+                intent.putExtra("pinCode", pinCode);
+                intent.putExtra("city", city);
+                intent.putExtra("bankName", bankName);
+                intent.putExtra("accNo", accNo);
+                intent.putExtra("vehicleNo", vehicleNo);
+                intent.putExtra("driverName", driverName);
+                intent.putExtra("isPersonal", isPersonalDetailsDone);
+                intent.putExtra("isBank", isBankDetailsDone);
+                intent.putExtra("isTrucks", isAddTrucksDone);
+                intent.putExtra("isDriver", isAddDriversDone);
+                startActivity(intent);
+            }
+        });
+
 
         personalDetails.setOnClickListener(new View.OnClickListener() {
             @Override
