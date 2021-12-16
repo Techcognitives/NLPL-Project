@@ -35,6 +35,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     ImageView actionBarBackButton;
     Dialog languageDialog;
 
+    View personalAndAddressView;
     Button personalAddressButton;
     View personalView;
     RadioButton ownerButton, driverButton, brokerButton, customerButton;
@@ -47,8 +48,9 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     EditText name, pinCode, address, mobileEdit;
     Button okButton;
 
+    View panAndAadharView;
     Button panAndAadharButton;
-    View panView, proofView;
+    View panView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,22 +111,23 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         actionBarBackButton.setVisibility(View.GONE);
 
         //------------------------------------------------------------------------------------------
+        personalAndAddressView = (View) findViewById(R.id.personal_details_id_proof_personal_and_address_layout);
         personalAddressButton = (Button) findViewById(R.id.personal_details_id_proof_personal_address_button);
         personalView = (View) findViewById(R.id.personal_details_id_proof_personal_view);
         //------------------------------------------------------------------------------------------
+        panAndAadharView = (View) findViewById(R.id.personal_details_id_proof_pan_and_aadhar_layout);
         panAndAadharButton = (Button) findViewById(R.id.personal_details_id_proof_pan_aadhar);
         panView = (View) findViewById(R.id.personal_details_id_proof_pan_view);
-        proofView = (View) findViewById(R.id.personal_details_id_proof_layout_registration_pan_aadhar);
         //------------------------------------------------------------------------------------------
 
         //------------------------------------------------------------------------------------------
-        name = (EditText) findViewById(R.id.personal_details_id_proof_personal_name);
-        pinCode = (EditText) findViewById(R.id.personal_details_id_proof_pin_code_edit);
-        address = (EditText) findViewById(R.id.personal_details_id_proof_address_edit);
-        mobileEdit = (EditText) findViewById(R.id.personal_details_id_proof_mobile_number);
-        series = (TextView) findViewById(R.id.personal_details_id_proof_series);
-        selectStateText = (TextView) findViewById(R.id.personal_details_id_proof_select_state);
-        selectDistrictText = (TextView) findViewById(R.id.personal_details_id_proof_select_city);
+        name = (EditText) personalAndAddressView.findViewById(R.id.registration_edit_name);
+        pinCode = (EditText) personalAndAddressView.findViewById(R.id.registration_pin_code_edit);
+        address = (EditText) personalAndAddressView.findViewById(R.id.registration_address_edit);
+        mobileEdit = (EditText) personalAndAddressView.findViewById(R.id.registration_mobile_no_edit);
+        series = (TextView) personalAndAddressView.findViewById(R.id.registration_prefix);
+        selectStateText = (TextView) personalAndAddressView.findViewById(R.id.registration_select_state);
+        selectDistrictText = (TextView) personalAndAddressView.findViewById(R.id.registration_select_city);
         okButton = (Button) findViewById(R.id.personal_details_id_proof_ok_button);
 
         name.addTextChangedListener(proofAndPersonalWatcher);
@@ -145,10 +148,10 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 //            okButton.setBackground(getDrawable(R.drawable.button_de_active));
 //        }
 
-        ownerButton = (RadioButton) findViewById(R.id.personal_details_id_proof_truck_owner);
-        driverButton = (RadioButton) findViewById(R.id.personal_details_id_proof_driver);
-        brokerButton = (RadioButton) findViewById(R.id.personal_details_id_proof_broker);
-        customerButton = (RadioButton) findViewById(R.id.personal_details_id_proof_customer);
+        ownerButton = (RadioButton) personalAndAddressView.findViewById(R.id.registration_truck_owner);
+        driverButton = (RadioButton) personalAndAddressView.findViewById(R.id.registration_driver);
+        brokerButton = (RadioButton) personalAndAddressView.findViewById(R.id.registration_broker);
+        customerButton = (RadioButton) personalAndAddressView.findViewById(R.id.registration_customer);
 
         name.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -432,20 +435,21 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             case R.id.personal_details_id_proof_personal_address_button:
                 personalAddressButton.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
                 personalView.setBackgroundColor(getResources().getColor(R.color.dark_blue));
+                personalAndAddressView.setVisibility(View.VISIBLE);
 
                 panAndAadharButton.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
                 panView.setBackgroundColor(getResources().getColor(R.color.medium_blue));
-                proofView.setVisibility(View.GONE);
+                panAndAadharView.setVisibility(View.GONE);
                 break;
 
             case R.id.personal_details_id_proof_pan_aadhar:
                 panAndAadharButton.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
                 panView.setBackgroundColor(getResources().getColor(R.color.dark_blue));
+                panAndAadharView.setVisibility(View.VISIBLE);
 
                 personalAddressButton.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
                 personalView.setBackgroundColor(getResources().getColor(R.color.medium_blue));
-
-
+                personalAndAddressView.setVisibility(View.GONE);
                 break;
         }
     }

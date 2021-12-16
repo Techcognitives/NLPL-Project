@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".ui.ui.activities.RegistrationActivity">
 
     <include
@@ -15,93 +16,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/registration_name"
-        android:layout_width="0dp"
+    <include
+        android:id="@+id/registration_personal_and_address"
+        layout="@layout/personal_and_address"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="0dp"
-        android:text="@string/name"
-        android:textColor="@color/black"
-        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registration_action_bar" />
-
-    <TextView
-        android:id="@+id/registration_prefix"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:background="@drawable/mobile_number_left"
-        android:paddingStart="15dp"
-        android:paddingTop="15dp"
-        android:paddingEnd="0dp"
-        android:paddingBottom="15dp"
-        android:text="@string/mobNo"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/registration_mobile_no_edit"
-        app:layout_constraintEnd_toStartOf="@+id/registration_mobile_no_edit"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/registration_mobile_no_edit" />
-
-    <EditText
-        android:id="@+id/registration_mobile_no_edit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/mobile_number_right"
-        android:hint="@string/edit_number_hint"
-        android:inputType="number"
-        android:maxLength="10"
-        android:paddingStart="5dp"
-        android:paddingTop="15dp"
-        android:paddingEnd="15dp"
-        android:paddingBottom="15dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/hint"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/registration_prefix"
-        app:layout_constraintTop_toBottomOf="@+id/registration_edit_name"
-        tools:ignore="Autofill" />
-
-    <EditText
-        android:id="@+id/registration_edit_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/edit_text_border"
-        android:ems="10"
-        android:hint="@string/name_hint"
-        android:inputType="textPersonName"
-        android:padding="20dp"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registration_name" />
-
-    <TextView
-        android:id="@+id/registration_location"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="0dp"
-        android:text="@string/location"
-        android:textColor="@color/black"
-        android:textSize="22sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registration_mobile_no_edit" />
 
     <Button
         android:id="@+id/registration_ok"
@@ -110,206 +32,16 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/button_de_active"
-        android:text="@string/ok"
-        android:onClick="onClickRegistration"
-        android:textAllCaps="false"
         android:enabled="false"
+        android:onClick="onClickRegistration"
+        android:text="@string/ok"
+        android:textAllCaps="false"
         android:textColor="@color/background"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
-
-    <TextView
-        android:id="@+id/registration_select_city"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edit_text_border"
-        android:drawableEnd="@drawable/ic_down"
-        android:drawableTint="@color/black"
-        android:hint="@string/select_city"
-        android:padding="20dp"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/registration_address_edit"
-        app:layout_constraintEnd_toStartOf="@+id/registration_pin_code_edit"
-        app:layout_constraintStart_toEndOf="@+id/registration_select_state"
-        app:layout_constraintTop_toBottomOf="@+id/registration_location" />
-
-    <TextView
-        android:id="@+id/registration_select_state"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:background="@drawable/edit_text_border"
-        android:drawableEnd="@drawable/ic_down"
-        android:drawableTint="@color/black"
-        android:hint="@string/select_state"
-        android:padding="20dp"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/registration_select_city"
-        app:layout_constraintEnd_toStartOf="@+id/registration_select_city"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/registration_select_city" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/edit_text_border_small"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registration_address_edit">
-
-
-        <TextView
-            android:id="@+id/registration_sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/underline"
-            android:text="@string/are_u_sp"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/registration_truck_owner"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.081"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <RadioButton
-            android:id="@+id/registration_truck_owner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="5dp"
-            android:buttonTint="@color/button_blue"
-            android:onClick="onRadioClick"
-            android:paddingStart="0dp"
-            android:paddingEnd="5dp"
-            android:text="@string/truck_owner"
-            android:textColor="@color/black"
-            android:textSize="17sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/registration_driver"
-            app:layout_constraintHorizontal_bias="0.14"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registration_sp"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <RadioButton
-            android:id="@+id/registration_driver"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:buttonTint="@color/button_blue"
-            android:onClick="onRadioClick"
-            android:text="@string/driver"
-            android:textSize="17sp"
-            app:layout_constraintBottom_toBottomOf="@+id/registration_truck_owner"
-            app:layout_constraintEnd_toStartOf="@+id/registration_broker"
-            app:layout_constraintStart_toEndOf="@+id/registration_truck_owner"
-            app:layout_constraintTop_toTopOf="@+id/registration_truck_owner" />
-
-        <RadioButton
-            android:id="@+id/registration_broker"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:buttonTint="@color/button_blue"
-            android:onClick="onRadioClick"
-            android:text="@string/broker"
-            android:textSize="17sp"
-            app:layout_constraintBottom_toBottomOf="@+id/registration_driver"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/registration_driver"
-            app:layout_constraintTop_toTopOf="@+id/registration_driver" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/edit_text_border_small"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
-
-        <TextView
-            android:id="@+id/registration_text_customer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/underline"
-            android:text="@string/customer"
-            android:paddingStart="0dp"
-            android:paddingEnd="150dp"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/registration_customer"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <RadioButton
-            android:id="@+id/registration_customer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:buttonTint="@color/button_blue"
-            android:onClick="onRadioClick"
-            android:text="@string/yes"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.045"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registration_text_customer"
-            app:layout_constraintVertical_bias="0.091" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <EditText
-        android:id="@+id/registration_pin_code_edit"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/edit_text_border"
-        android:ems="10"
-        android:hint="@string/pin_code"
-        android:inputType="number"
-        android:maxLength="6"
-        android:padding="20dp"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/registration_select_city"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/registration_select_city"
-        app:layout_constraintTop_toTopOf="@+id/registration_select_city"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <EditText
-        android:id="@+id/registration_address_edit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edit_text_border"
-        android:ems="10"
-        android:hint="@string/address"
-        android:inputType="textPersonName"
-        android:padding="20dp"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/registration_pin_code_edit"
-        app:layout_constraintStart_toStartOf="@+id/registration_select_state"
-        app:layout_constraintTop_toBottomOf="@+id/registration_select_city" />
-
+        app:layout_constraintTop_toBottomOf="@+id/registration_personal_and_address" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

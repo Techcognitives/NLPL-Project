@@ -75,63 +75,6 @@
         app:layout_constraintStart_toStartOf="@+id/personal_details_id_proof_pan_aadhar"
         app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_pan_aadhar" />
 
-    <EditText
-        android:id="@+id/personal_details_id_proof_personal_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/edit_text_border"
-        android:ems="10"
-        android:hint="@string/name_hint"
-        android:inputType="textPersonName"
-        android:padding="20dp"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_personal_view" />
-
-    <TextView
-        android:id="@+id/personal_details_id_proof_series"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:background="@drawable/mobile_number_left"
-        android:paddingStart="15dp"
-        android:paddingTop="15dp"
-        android:paddingEnd="0dp"
-        android:paddingBottom="15dp"
-        android:text="@string/mobNo"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/personal_details_id_proof_mobile_number"
-        app:layout_constraintEnd_toStartOf="@+id/personal_details_id_proof_mobile_number"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/personal_details_id_proof_mobile_number" />
-
-    <EditText
-        android:id="@+id/personal_details_id_proof_mobile_number"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/mobile_number_right"
-        android:hint="@string/edit_number_hint"
-        android:inputType="number"
-        android:maxLength="10"
-        android:paddingStart="5dp"
-        android:paddingTop="15dp"
-        android:paddingEnd="15dp"
-        android:paddingBottom="15dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/hint"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/personal_details_id_proof_series"
-        app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_personal_name"
-        tools:ignore="Autofill" />
-
     <Button
         android:id="@+id/personal_details_id_proof_ok_button"
         android:layout_width="match_parent"
@@ -139,245 +82,51 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/button_de_active"
-        android:text="@string/ok"
-        android:textAllCaps="false"
         android:enabled="false"
         android:onClick="onClickPersonalProof"
+        android:text="@string/ok"
+        android:textAllCaps="false"
         android:textColor="@color/background"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_customer_constrain" />
-
-    <TextView
-        android:id="@+id/personal_details_id_proof_select_city"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edit_text_border"
-        android:drawableEnd="@drawable/ic_down"
-        android:drawableTint="@color/black"
-        android:hint="@string/select_city"
-        android:padding="20dp"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/personal_details_id_proof_address_edit"
-        app:layout_constraintEnd_toStartOf="@+id/personal_details_id_proof_pin_code_edit"
-        app:layout_constraintStart_toEndOf="@+id/personal_details_id_proof_select_state"
-        app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_location_text" />
-
-    <TextView
-        android:id="@+id/personal_details_id_proof_select_state"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:background="@drawable/edit_text_border"
-        android:drawableEnd="@drawable/ic_down"
-        android:drawableTint="@color/black"
-        android:hint="@string/select_state"
-        android:padding="20dp"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/personal_details_id_proof_select_city"
-        app:layout_constraintEnd_toStartOf="@+id/personal_details_id_proof_select_city"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/personal_details_id_proof_select_city" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/personal_details_id_proof_sp_constrain"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/edit_text_border_small"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_address_edit">
-
-
-        <TextView
-            android:id="@+id/personal_details_id_proof_sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/underline"
-            android:text="@string/are_u_sp"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/personal_details_id_proof_truck_owner"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.081"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <RadioButton
-            android:id="@+id/personal_details_id_proof_truck_owner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="5dp"
-            android:buttonTint="@color/button_blue"
-            android:paddingStart="0dp"
-            android:paddingEnd="5dp"
-            android:onClick="onClickRadioPersonal"
-            android:text="@string/truck_owner"
-            android:textColor="@color/black"
-            android:textSize="17sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/personal_details_id_proof_driver"
-            app:layout_constraintHorizontal_bias="0.14"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_sp"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <RadioButton
-            android:id="@+id/personal_details_id_proof_driver"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:buttonTint="@color/button_blue"
-            android:text="@string/driver"
-            android:onClick="onClickRadioPersonal"
-            android:textSize="17sp"
-            app:layout_constraintBottom_toBottomOf="@+id/personal_details_id_proof_truck_owner"
-            app:layout_constraintEnd_toStartOf="@+id/personal_details_id_proof_broker"
-            app:layout_constraintStart_toEndOf="@+id/personal_details_id_proof_truck_owner"
-            app:layout_constraintTop_toTopOf="@+id/personal_details_id_proof_truck_owner" />
-
-        <RadioButton
-            android:id="@+id/personal_details_id_proof_broker"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:buttonTint="@color/button_blue"
-            android:text="@string/broker"
-            android:textSize="17sp"
-            android:onClick="onClickRadioPersonal"
-            app:layout_constraintBottom_toBottomOf="@+id/personal_details_id_proof_driver"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/personal_details_id_proof_driver"
-            app:layout_constraintTop_toTopOf="@+id/personal_details_id_proof_driver" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/personal_details_id_proof_customer_constrain"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/edit_text_border_small"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_sp_constrain">
-
-        <TextView
-            android:id="@+id/personal_details_id_proof_text_customer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/underline"
-            android:paddingStart="0dp"
-            android:paddingEnd="150dp"
-            android:text="@string/customer"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/personal_details_id_proof_customer"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <RadioButton
-            android:id="@+id/personal_details_id_proof_customer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:buttonTint="@color/button_blue"
-            android:text="@string/yes"
-            android:onClick="onClickRadioPersonal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.045"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_text_customer"
-            app:layout_constraintVertical_bias="0.091" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <EditText
-        android:id="@+id/personal_details_id_proof_pin_code_edit"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/edit_text_border"
-        android:ems="10"
-        android:hint="@string/pin_code"
-        android:inputType="number"
-        android:maxLength="6"
-        android:padding="20dp"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/personal_details_id_proof_select_city"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/personal_details_id_proof_select_city"
-        app:layout_constraintTop_toTopOf="@+id/personal_details_id_proof_select_city"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <EditText
-        android:id="@+id/personal_details_id_proof_address_edit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edit_text_border"
-        android:ems="10"
-        android:hint="@string/address"
-        android:inputType="textPersonName"
-        android:padding="20dp"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/personal_details_id_proof_pin_code_edit"
-        app:layout_constraintStart_toStartOf="@+id/personal_details_id_proof_select_state"
-        app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_select_city" />
+        app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_constrain_pan_aadhar_upload" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/personal_details_id_proof_constrain_pan_aadhar_upload"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:background="@color/background"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/personal_details_id_proof_ok_button"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_pan_view">
 
         <include
-            android:id="@+id/personal_details_id_proof_layout_registration_pan_aadhar"
-            layout="@layout/activity_personal_details"
+            android:id="@+id/personal_details_id_proof_personal_and_address_layout"
+            layout="@layout/personal_and_address"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <include
+            android:id="@+id/personal_details_id_proof_pan_and_aadhar_layout"
+            layout="@layout/pan_and_aadhar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/personal_details_id_proof_location_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="0dp"
-        android:text="@string/location"
-        android:textColor="@color/black"
-        android:textSize="22sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_mobile_number" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
