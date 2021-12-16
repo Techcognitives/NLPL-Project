@@ -42,6 +42,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     private int GET_FROM_GALLERY1=1;
     private int GET_FROM_GALLERY2=2;
 
+    View panAndAadharView;
+
     String vehicleNo, mobile, name, address, pinCode,city, idProof, bankName, accNo;
     Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, isPanUploaded=false, isFrontUploaded=false, isBackUploaded=false;
 
@@ -130,20 +132,22 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             }
         });
 
-        panCardText = findViewById(R.id.pancard1);
-        frontText = findViewById(R.id.frontText);
-        backText = findViewById(R.id.profile_registration_name_text);
-        uploadPAN = findViewById(R.id.uploadPan);
-        uploadF = findViewById(R.id.uploadF);
-        uploadB = findViewById(R.id.uploadB);
-        imgPAN = findViewById(R.id.imagePan);
-        imgF = findViewById(R.id.imageF);
-        imgB = findViewById(R.id.imageB);
-        editPAN = findViewById(R.id.edit1);
-        editFront = findViewById(R.id.editFront);
-        editBack = findViewById(R.id.editBack);
-        radioAadhar = findViewById(R.id.radioAadhar);
-        radioVoter = findViewById(R.id.radioVoter);
+        panAndAadharView = (View) findViewById(R.id.personal_details_pan_and_aadhar);
+
+        panCardText = panAndAadharView.findViewById(R.id.pancard1);
+        frontText = panAndAadharView.findViewById(R.id.frontText);
+        backText = panAndAadharView.findViewById(R.id.profile_registration_name_text);
+        uploadPAN = panAndAadharView.findViewById(R.id.uploadPan);
+        uploadF = panAndAadharView.findViewById(R.id.uploadF);
+        uploadB = panAndAadharView.findViewById(R.id.uploadB);
+        imgPAN = panAndAadharView.findViewById(R.id.imagePan);
+        imgF = panAndAadharView.findViewById(R.id.imageF);
+        imgB = panAndAadharView.findViewById(R.id.imageB);
+        editPAN = panAndAadharView.findViewById(R.id.edit1);
+        editFront = panAndAadharView.findViewById(R.id.editFront);
+        editBack = panAndAadharView.findViewById(R.id.editBack);
+        radioAadhar = panAndAadharView.findViewById(R.id.radioAadhar);
+        radioVoter = panAndAadharView.findViewById(R.id.radioVoter);
         okPersonalDetails = findViewById(R.id.okPersonalDetails);
 
         if (isPersonalDetailsDone){
