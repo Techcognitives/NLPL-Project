@@ -9,7 +9,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/ejdcnjeknsd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/dashboard_logo"
@@ -17,7 +17,7 @@
         tools:layout_editor_absoluteY="269dp" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/duyewudscknjds"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/profile_logo"
@@ -25,7 +25,7 @@
         tools:layout_editor_absoluteY="232dp" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/fuhefhueusi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="192dp"
@@ -33,10 +33,53 @@
         app:srcCompat="@drawable/track_image" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/dscufsd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="258dp"
         tools:layout_editor_absoluteY="370dp"
         app:srcCompat="@drawable/track_load_image" />
+
+    <TextView
+        android:id="@+id/fhuedfrcjberd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Profile"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/dhuejsfcb"
+        app:layout_constraintEnd_toStartOf="@+id/dhuejsfcb"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/dhuejsfcb" />
+
+    <TextView
+        android:id="@+id/dhuejsfcb"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Truck and Load"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/fuhhiedsfcjb"
+        app:layout_constraintStart_toEndOf="@+id/fhuedfrcjberd"
+        tools:layout_editor_absoluteY="518dp" />
+
+    <TextView
+        android:id="@+id/fuhhiedsfcjb"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Dashboard"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/dhuejsfcb"
+        app:layout_constraintEnd_toStartOf="@+id/dfuhcisdekcf"
+        app:layout_constraintStart_toEndOf="@+id/dhuejsfcb"
+        app:layout_constraintTop_toTopOf="@+id/dhuejsfcb" />
+
+    <TextView
+        android:id="@+id/dfuhcisdekcf"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="track"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/fuhhiedsfcjb"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fuhhiedsfcjb"
+        app:layout_constraintTop_toTopOf="@+id/fuhhiedsfcjb" />
 </androidx.constraintlayout.widget.ConstraintLayout>
