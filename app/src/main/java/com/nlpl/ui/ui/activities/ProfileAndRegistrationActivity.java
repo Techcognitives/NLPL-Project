@@ -349,6 +349,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
                         bankDone.setVisibility(View.GONE);
                         addBankDone.setVisibility(View.GONE);
+
                     }else {
                         getIsBankDetailsDoneVisible = true;
                         bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_down_personal, 0);
