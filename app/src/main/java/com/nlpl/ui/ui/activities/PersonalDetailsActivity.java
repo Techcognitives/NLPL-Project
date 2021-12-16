@@ -42,7 +42,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     private int GET_FROM_GALLERY1=1;
     private int GET_FROM_GALLERY2=2;
 
-    String mobile, name, idProof;
+    String mobile, name, address, pinCode,city, idProof;
     Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, isPanUploaded=false, isFrontUploaded=false, isBackUploaded=false;
 
     @Override
@@ -54,6 +54,9 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         if (bundle != null) {
             mobile = bundle.getString("mobile3");
             name = bundle.getString("name3");
+            address = bundle.getString("address");
+            pinCode = bundle.getString("pinCode");
+            city = bundle.getString("city");
             isPersonalDetailsDone = bundle.getBoolean("isPersonal");
             isBankDetailsDone = bundle.getBoolean("isBank");
             isAddTrucksDone = bundle.getBoolean("isTrucks");
@@ -139,6 +142,20 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         radioAadhar = findViewById(R.id.radioAadhar);
         radioVoter = findViewById(R.id.radioVoter);
         okPersonalDetails = findViewById(R.id.okPersonalDetails);
+
+        if (isPersonalDetailsDone){
+            panCardText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
+            uploadPAN.setVisibility(View.INVISIBLE);
+            editPAN.setVisibility(View.VISIBLE);
+
+            frontText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
+            uploadF.setVisibility(View.INVISIBLE);
+            editFront.setVisibility(View.VISIBLE);
+
+            backText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
+            uploadB.setVisibility(View.INVISIBLE);
+            editBack.setVisibility(View.VISIBLE);
+        }
 
         uploadPAN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -328,6 +345,9 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                     Intent i8 = new Intent(PersonalDetailsActivity.this, ProfileAndRegistrationActivity.class);
                     i8.putExtra("mobile2", mobile);
                     i8.putExtra("name2", name);
+                    i8.putExtra("address", address);
+                    i8.putExtra("pinCode", pinCode);
+                    i8.putExtra("city", city);
                     i8.putExtra("isPersonal", true);
                     i8.putExtra("isBank", isBankDetailsDone);
                     i8.putExtra("isTrucks", isAddTrucksDone);

@@ -497,6 +497,9 @@ public class RegistrationActivity extends AppCompatActivity {
                     i8.putExtra("name2", name.getText().toString());
                     i8.putExtra("isPersonal", false);
                     i8.putExtra("isBank", false);
+                    i8.putExtra("address", address.getText().toString());
+                    i8.putExtra("pinCode", pinCode.getText().toString());
+                    i8.putExtra("city", selectDistrictText.getText().toString());
                     i8.putExtra("isTrucks", false);
                     i8.putExtra("isDriver", false);
                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
