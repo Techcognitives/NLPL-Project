@@ -38,17 +38,17 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     Button personalAddressButton;
     View personalView;
     RadioButton ownerButton, driverButton, brokerButton, customerButton;
-    TextView selectStateText, selectDistrictText;
+    TextView selectStateText, selectDistrictText, series;
     ArrayAdapter<CharSequence> selectStateArray, selectDistrictArray, selectStateUnionCode;
     Dialog selectStateDialog, selectDistrictDialog;
     String selectedDistrict, selectedState, role;
     int parentID;
     String mobile;
-    EditText name, pinCode, address;
+    EditText name, pinCode, address, mobileEdit;
     Button okButton;
 
     Button panAndAadharButton;
-    View panView;
+    View panView, proofView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,12 +114,15 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
         panAndAadharButton = (Button) findViewById(R.id.personal_details_id_proof_pan_aadhar);
         panView = (View) findViewById(R.id.personal_details_id_proof_pan_view);
+        proofView = (View) findViewById(R.id.personal_details_id_proof_layout_registration_pan_aadhar);
         //------------------------------------------------------------------------------------------
 
         //------------------------------------------------------------------------------------------
         name = (EditText) findViewById(R.id.personal_details_id_proof_personal_name);
         pinCode = (EditText) findViewById(R.id.personal_details_id_proof_pin_code_edit);
         address = (EditText) findViewById(R.id.personal_details_id_proof_address_edit);
+        mobileEdit = (EditText) findViewById(R.id.personal_details_id_proof_mobile_number);
+        series = (TextView) findViewById(R.id.personal_details_id_proof_series);
         selectStateText = (TextView) findViewById(R.id.personal_details_id_proof_select_state);
         selectDistrictText = (TextView) findViewById(R.id.personal_details_id_proof_select_city);
         okButton = (Button) findViewById(R.id.personal_details_id_proof_ok_button);
@@ -129,6 +132,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         selectDistrictText.addTextChangedListener(proofAndPersonalWatcher);
         pinCode.addTextChangedListener(proofAndPersonalWatcher);
         address.addTextChangedListener(proofAndPersonalWatcher);
+        mobileEdit.addTextChangedListener(proofAndPersonalWatcher);
 
         name.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
@@ -431,6 +435,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
                 panAndAadharButton.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
                 panView.setBackgroundColor(getResources().getColor(R.color.medium_blue));
+                proofView.setVisibility(View.GONE);
                 break;
 
             case R.id.personal_details_id_proof_pan_aadhar:
@@ -439,6 +444,8 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
                 personalAddressButton.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
                 personalView.setBackgroundColor(getResources().getColor(R.color.medium_blue));
+
+
                 break;
         }
     }
@@ -562,10 +569,19 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             String cityWatcher = selectDistrictText.getText().toString().trim();
             String pinCodeWatcher = pinCode.getText().toString().trim();
             String addressWatcher = address.getText().toString().trim();
+            String mobileWatcher = mobileEdit.getText().toString().trim();
             boolean owner = ownerButton.isChecked();
             boolean driver = driverButton.isChecked();
             boolean broker = brokerButton.isChecked();
             boolean customer = customerButton.isChecked();
+
+            if (mobileWatcher.length()==10){
+                mobileEdit.setBackground(getResources().getDrawable(R.drawable.mobile_number_right));
+                series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left));
+            }else{
+                mobileEdit.setBackground(getResources().getDrawable(R.drawable.mobile_number_right_red));
+                series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left_red));
+            }
 
             if (pinCodeWatcher.length() != 6){
                 pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));

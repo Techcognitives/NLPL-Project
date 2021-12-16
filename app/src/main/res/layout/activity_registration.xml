@@ -30,6 +30,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registration_action_bar" />
 
+    <TextView
+        android:id="@+id/registration_prefix"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/mobile_number_left"
+        android:paddingStart="15dp"
+        android:paddingTop="15dp"
+        android:paddingEnd="0dp"
+        android:paddingBottom="15dp"
+        android:text="@string/mobNo"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/registration_mobile_no_edit"
+        app:layout_constraintEnd_toStartOf="@+id/registration_mobile_no_edit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/registration_mobile_no_edit" />
+
+    <EditText
+        android:id="@+id/registration_mobile_no_edit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/mobile_number_right"
+        android:hint="@string/edit_number_hint"
+        android:inputType="number"
+        android:maxLength="10"
+        android:paddingStart="5dp"
+        android:paddingTop="15dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="15dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/hint"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/registration_prefix"
+        app:layout_constraintTop_toBottomOf="@+id/registration_edit_name"
+        tools:ignore="Autofill" />
+
     <EditText
         android:id="@+id/registration_edit_name"
         android:layout_width="0dp"
@@ -59,8 +99,9 @@
         android:textColor="@color/black"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registration_edit_name" />
+        app:layout_constraintTop_toBottomOf="@+id/registration_mobile_no_edit" />
 
     <Button
         android:id="@+id/registration_ok"
