@@ -166,10 +166,12 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         selectDistrictText = (TextView) personalAndAddressView.findViewById(R.id.registration_select_city);
         okButton = (Button) findViewById(R.id.personal_details_id_proof_ok_button);
 
+        String s = mobile.substring(3,13);
+
         name.setText(personName);
         pinCode.setText(pinCodeBundle);
         address.setText(addressBundle);
-        mobileEdit.setText(mobile);
+        mobileEdit.setText(s);
 
         name.addTextChangedListener(proofAndPersonalWatcher);
         selectStateText.addTextChangedListener(proofAndPersonalWatcher);
@@ -674,7 +676,8 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
                     Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, ProfileAndRegistrationActivity.class);
-                    i8.putExtra("mobile2", mobileEdit.getText().toString());
+                    String mobileInt = "+91"+mobileEdit.getText().toString();
+                    i8.putExtra("mobile2", mobileInt);
                     i8.putExtra("name2", name.getText().toString());
                     i8.putExtra("address", address.getText().toString());
                     i8.putExtra("pinCode", pinCode.getText().toString());
