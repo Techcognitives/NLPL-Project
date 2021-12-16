@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/black"
     tools:context=".ui.ui.activities.SplashScreenActivity">
 
     <TextView
@@ -34,11 +34,11 @@
         app:layout_constraintStart_toStartOf="@+id/textView12"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
-    <TextView
+    <ImageView
         android:id="@+id/textView6"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Find YourTruck"
+        android:src="@drawable/logo"
         android:textColor="@color/button_blue"
         android:textAlignment="center"
         android:textSize="30sp"
