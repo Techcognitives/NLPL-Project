@@ -69,7 +69,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
     String vehicleNo, city, idProof, bankName, accNo;
     Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, isPanUploaded=false, isFrontUploaded=false, isBackUploaded=false;
-
     String personName, addressBundle, pinCodeBundle, bankName2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
