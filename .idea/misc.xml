@@ -20,6 +20,7 @@
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/drawable/button_de_active_light_blue.xml" value="0.37447916666666664" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/drawable/button_de_active_medium_small.xml" value="0.3592592592592593" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/drawable/button_personal_details.xml" value="0.37447916666666664" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/drawable/dashboard_logo.xml" value="0.3592592592592593" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/drawable/driver.xml" value="0.37864583333333335" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/drawable/driver_success.xml" value="0.37864583333333335" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/drawable/edit_text_border.xml" value="0.37447916666666664" />
@@ -30,7 +31,11 @@
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/drawable/personal_details_buttons_active.xml" value="0.37447916666666664" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/drawable/personal_details_buttons_de_active.xml" value="0.3592592592592593" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/drawable/personal_success.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/drawable/profile.xml" value="0.3592592592592593" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/drawable/shadow_file.xml" value="0.37447916666666664" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/drawable/shadow_small.xml" value="0.21875" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/drawable/track_load_logo.xml" value="0.3592592592592593" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/drawable/track_logo.xml" value="0.3592592592592593" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/drawable/truck.xml" value="0.37864583333333335" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/drawable/truck_success.xml" value="0.37864583333333335" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/activity_bank_details.xml" value="0.3625" />
@@ -44,6 +49,7 @@
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/activity_registration.xml" value="0.3625" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/activity_splash_screen.xml" value="0.23052536231884058" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/activity_vehicle_details.xml" value="0.3625" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/bottom_nav_bar.xml" value="0.25679347826086957" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/pan_and_aadhar.xml" value="0.24728260869565216" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/personal_and_address.xml" value="0.24728260869565216" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL/app/src/main/res/drawable-v24/border.xml" value="0.37864583333333335" />
