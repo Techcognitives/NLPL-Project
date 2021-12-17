@@ -26,7 +26,19 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
+import com.nlpl.model.UserRequest;
+import com.nlpl.model.UserResponse;
+import com.nlpl.services.UserService;
+import com.nlpl.utils.ApiClient;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -500,6 +512,7 @@ public class RegistrationActivity extends AppCompatActivity {
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
+                    saveUser(createRequest());
                     dialogInterface.dismiss();
                     Intent i8 = new Intent(RegistrationActivity.this, ProfileAndRegistrationActivity.class);
                     i8.putExtra("mobile2", mobile);
@@ -578,4 +591,35 @@ public class RegistrationActivity extends AppCompatActivity {
             return null;
         }
     };
+
+    //--------------------------------------create User in API -------------------------------------
+    public UserRequest createRequest() {
+        UserRequest userRequest = new UserRequest();
+        userRequest.setName(name.getText().toString());
+        userRequest.setPhone_number(mobile);
+        userRequest.setAddress(address.getText().toString());
+        userRequest.setUser_type("SP");
+        userRequest.setPin_code(pinCode.getText().toString());
+        userRequest.setPreferred_location(selectDistrictText.getText().toString());
+        userRequest.setState_code(selectStateText.getText().toString());
+        return userRequest;
+    }
+
+    public void saveUser(UserRequest userRequest) {
+        Call<UserResponse> userResponseCall = ApiClient.getUserService().saveUser(userRequest);
+        userResponseCall.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                UserResponse userResponse = response.body();
+//                Log.i("Message UserCreated:", userResponse.getData().getPhone_number());
+                Log.i("Msg Success", String.valueOf(userResponse));
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+
+            }
+        });
+    }
+    //----------------------------------------------------------------------------------------------
 }
