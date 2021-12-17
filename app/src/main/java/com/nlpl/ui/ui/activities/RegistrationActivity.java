@@ -512,6 +512,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     i8.putExtra("bankName", "null");
                     i8.putExtra("accNo", "null");
                     i8.putExtra("vehicleNo", "vehicleNo");
+                    i8.putExtra("driverName", "driverName");
                     i8.putExtra("isTrucks", false);
                     i8.putExtra("isDriver", false);
                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

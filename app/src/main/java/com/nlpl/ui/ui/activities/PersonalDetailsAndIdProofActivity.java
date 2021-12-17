@@ -67,7 +67,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     private int GET_FROM_GALLERY1=1;
     private int GET_FROM_GALLERY2=2;
 
-    String vehicleNo, city, idProof, bankName, accNo;
+    String driverName, vehicleNo, city, idProof, bankName, accNo;
     Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, isPanUploaded=false, isFrontUploaded=false, isBackUploaded=false;
 
     String personName, addressBundle, pinCodeBundle, bankName2;
@@ -86,6 +86,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             bankName2 = bundle.getString("bankName");
             accNo = bundle.getString("accNo");
             vehicleNo = bundle.getString("vehicleNo");
+            driverName = bundle.getString("driverName");
             isPersonalDetailsDone = bundle.getBoolean("isPersonal");
             isBankDetailsDone = bundle.getBoolean("isBank");
             isAddTrucksDone = bundle.getBoolean("isTrucks");
@@ -685,6 +686,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                     i8.putExtra("bankName", bankName);
                     i8.putExtra("accNo", accNo);
                     i8.putExtra("vehicleNo", vehicleNo);
+                    i8.putExtra("driverName", driverName);
                     i8.putExtra("isPersonal", true);
                     i8.putExtra("isBank", isBankDetailsDone);
                     i8.putExtra("isTrucks", isAddTrucksDone);

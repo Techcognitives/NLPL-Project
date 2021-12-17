@@ -147,12 +147,28 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
             bankDone.setVisibility(View.GONE);
             addBankDone.setVisibility(View.GONE);
+            if (isBankDetailsDone){
+                bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
+            }else {
+                bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
+            }
 
             vehicleDone.setVisibility(View.GONE);
             addTruck.setVisibility(View.GONE);
-
+            if (isAddTrucksDone){
+                addTrucks.setText(" My Trucks");
+                addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
+            }else {
+                addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck, 0, R.drawable.ic_right, 0);
+            }
             driverDone.setVisibility(View.GONE);
             addDriver.setVisibility(View.GONE);
+            if (isAddDriversDone){
+                addDrivers.setText(" My Drivers");
+                addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
+            }else {
+                addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
+            }
 
             getIsPersonalDetailsDoneVisible = true;
             personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_down_personal, 0);
@@ -168,12 +184,28 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
             personal_done.setVisibility(View.GONE);
             addCompany.setVisibility(View.GONE);
+            if (isPersonalDetailsDone){
+                personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
+            }else {
+                personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
+            }
 
             vehicleDone.setVisibility(View.GONE);
             addTruck.setVisibility(View.GONE);
-
+            if (isAddTrucksDone){
+                addTrucks.setText(" My Trucks");
+                addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
+            }else {
+                addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck, 0, R.drawable.ic_right, 0);
+            }
             driverDone.setVisibility(View.GONE);
             addDriver.setVisibility(View.GONE);
+            if (isAddDriversDone){
+                addDrivers.setText(" My Drivers");
+                addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
+            }else {
+                addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
+            }
 
             getIsBankDetailsDoneVisible = true;
             bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_down_personal, 0);
@@ -182,16 +214,35 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             bankNameDone.setText(bankName);
             accNoDone.setText(accNo);
         }
+
         if (isAddTrucksDone){
 
-            personal_done.setVisibility(View.GONE);
-            addCompany.setVisibility(View.GONE);
+            addTrucks.setText(" My Trucks");
 
             bankDone.setVisibility(View.GONE);
             addBankDone.setVisibility(View.GONE);
+            if (isBankDetailsDone){
+                bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
+            }else {
+                bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
+            }
+
+            personal_done.setVisibility(View.GONE);
+            addCompany.setVisibility(View.GONE);
+            if (isPersonalDetailsDone){
+                personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
+            }else {
+                personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
+            }
 
             driverDone.setVisibility(View.GONE);
             addDriver.setVisibility(View.GONE);
+            if (isAddDriversDone){
+                addDrivers.setText(" My Drivers");
+                addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
+            }else {
+                addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
+            }
 
             getIsAddTrucksDoneVisible = true;
             addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_down_personal, 0);
@@ -199,23 +250,43 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             addTruck.setVisibility(View.VISIBLE);
             vehicleNoDone.setText(vehicleNo);
         }
+
         if (isAddDriversDone){
 
-            personal_done.setVisibility(View.GONE);
-            addCompany.setVisibility(View.GONE);
+            addDrivers.setText(" My Drivers");
 
             bankDone.setVisibility(View.GONE);
             addBankDone.setVisibility(View.GONE);
+            if (isBankDetailsDone){
+                bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
+            }else {
+                bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
+            }
 
             vehicleDone.setVisibility(View.GONE);
             addTruck.setVisibility(View.GONE);
+            if (isAddTrucksDone){
+                addTrucks.setText(" My Trucks");
+                addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
+            }else {
+                addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck, 0, R.drawable.ic_right, 0);
+            }
 
-            addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
+            personal_done.setVisibility(View.GONE);
+            addCompany.setVisibility(View.GONE);
+            if (isPersonalDetailsDone){
+                personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
+            }else {
+                personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
+            }
+
+            addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_down_personal, 0);
             getIsAddDriversDoneVisible = true;
             driverDone.setVisibility(View.VISIBLE);
             addDriver.setVisibility(View.VISIBLE);
             driverNameDone.setText(driverName);
         }
+
         if (isPersonalDetailsDone && isBankDetailsDone && isAddTrucksDone && isAddDriversDone){
         }
 
@@ -461,6 +532,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (isAddTrucksDone){
+                    addTrucks.setText(" My Trucks");
                     if (getIsAddTrucksDoneVisible){
                         getIsAddTrucksDoneVisible = false;
                         addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
@@ -500,6 +572,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (isAddDriversDone){
+                    addDrivers.setText(" My Drivers");
                     if (getIsAddDriversDoneVisible){
                         addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
                         getIsAddDriversDoneVisible = false;
