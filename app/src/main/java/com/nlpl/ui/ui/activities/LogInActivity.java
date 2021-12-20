@@ -144,7 +144,8 @@ public class LogInActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-
+        FirebaseUser mFireBaseUser = mFireAuth.getCurrentUser();
+        mobileNoFirebase = mFireBaseUser.getPhoneNumber();
 
         //------------------------------get user details by mobile Number---------------------------------
         //-----------------------------------Get User Details---------------------------------------
@@ -164,9 +165,6 @@ public class LogInActivity extends AppCompatActivity {
                         arrayMobileNo.add(mobileNoAPI);
                         Log.i("user Id:", userId);
                         Log.i("mobileNo:",mobileNoAPI);
-
-                        FirebaseUser mFireBaseUser = mFireAuth.getCurrentUser();
-                        mobileNoFirebase = mFireBaseUser.getPhoneNumber();
 
                         if (mFireBaseUser != null){
                             Log.i("Phone", mFireBaseUser.getPhoneNumber());
