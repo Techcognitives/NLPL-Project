@@ -46,7 +46,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
     int GET_FROM_GALLERY=0;
     ImageView driverLicenseImage;
 
-    String driverName2, vehicleNo, mobile, name,address, pinCode, city, bankName, accNo;
+    String driverName2, vehicleNo, mobile, name,address, pinCode, city, bankName, accNo, role;
     Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, isDLUploaded=false;
 
     @Override
@@ -69,6 +69,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
             isBankDetailsDone = bundle.getBoolean("isBank");
             isAddTrucksDone = bundle.getBoolean("isTrucks");
             isAddDriversDone = bundle.getBoolean("isDriver");
+            role = bundle.getString("role");
             Log.i("Mobile No", mobile);
             Log.i("Name", name);
         }
@@ -247,6 +248,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                         i8.putExtra("isBank", isBankDetailsDone);
                         i8.putExtra("isTrucks", isAddTrucksDone);
                         i8.putExtra("isDriver", true);
+                        i8.putExtra("role", role);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);
                         overridePendingTransition(0, 0);

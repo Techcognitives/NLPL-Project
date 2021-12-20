@@ -16,4 +16,6 @@
     <color name="medium_blue">#8FC6F4</color>
     <color name="red">#F32013</color>
     <color name="dark_blue">#6221EE</color>
+    <color name="nav_unselected_blue">#054ED6</color>
+    <color name="nav_selected_blue">#218DEA</color>
 </resources>

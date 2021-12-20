@@ -41,7 +41,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     EditText vehicleNumberEdit;
     ImageView openType, closedType, tarpaulinType, imgRC, imgI;
     TextView openText, closedText, tarpaulinText;
-    String bodyTypeSelected;
+    String bodyTypeSelected, role;
 
     Button uploadRC, uploadInsurance, okVehicleDetails;
     TextView textRC, editRC;
@@ -72,6 +72,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             isBankDetailsDone = bundle.getBoolean("isBank");
             isAddTrucksDone = bundle.getBoolean("isTrucks");
             isAddDriversDone = bundle.getBoolean("isDriver");
+            role = bundle.getString("role");
             Log.i("Mobile No", mobile);
             Log.i("Name", name);
         }
@@ -328,6 +329,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                     i8.putExtra("isBank", isBankDetailsDone);
                     i8.putExtra("isTrucks", true);
                     i8.putExtra("isDriver", isAddDriversDone);
+                    i8.putExtra("role", role);
                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i8);
                     overridePendingTransition(0, 0);

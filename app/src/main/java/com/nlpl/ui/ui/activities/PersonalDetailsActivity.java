@@ -44,7 +44,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
     View panAndAadharView;
 
-    String driverName, vehicleNo, mobile, name, address, pinCode,city, idProof, bankName, accNo;
+    String driverName, vehicleNo, mobile, name, address, pinCode,city, idProof, bankName, accNo, role;
     Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, isPanUploaded=false, isFrontUploaded=false, isBackUploaded=false;
 
     @Override
@@ -67,6 +67,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             isBankDetailsDone = bundle.getBoolean("isBank");
             isAddTrucksDone = bundle.getBoolean("isTrucks");
             isAddDriversDone = bundle.getBoolean("isDriver");
+            role = bundle.getString("role");
             Log.i("Mobile No", mobile);
             Log.i("Name", name);
         }
@@ -364,6 +365,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                     i8.putExtra("isBank", isBankDetailsDone);
                     i8.putExtra("isTrucks", isAddTrucksDone);
                     i8.putExtra("isDriver",isAddDriversDone);
+                    i8.putExtra("role", role);
                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i8);
                     overridePendingTransition(0, 0);

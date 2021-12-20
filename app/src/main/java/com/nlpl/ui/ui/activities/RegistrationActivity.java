@@ -180,27 +180,12 @@ public class RegistrationActivity extends AppCompatActivity {
                 selectStateDialog.show();
                 selectStateDialog.setCancelable(false);
                 ListView stateList = (ListView) selectStateDialog.findViewById(R.id.list_state);
-                EditText searchState = (EditText) selectStateDialog.findViewById(R.id.search_state);
 
                 selectStateArray = ArrayAdapter.createFromResource(RegistrationActivity.this, R.array.array_indian_states, R.layout.custom_list_row);
                 selectStateUnionCode = ArrayAdapter.createFromResource(RegistrationActivity.this, R.array.array_indian_states_union_territory_codes, R.layout.custom_list_row);
 
                 stateList.setAdapter(selectStateArray);
 
-                searchState.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        selectStateArray.getFilter().filter(s);
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                    }
-                });
 
                 stateList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -218,7 +203,6 @@ public class RegistrationActivity extends AppCompatActivity {
                         selectDistrictDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         selectDistrictDialog.show();
                         ListView districtList = (ListView) selectDistrictDialog.findViewById(R.id.list_state);
-                        EditText searchDistrict = (EditText) selectDistrictDialog.findViewById(R.id.search_state);
 
                         if (parentID == R.id.list_state) {
                             switch (selectedState) {
@@ -384,21 +368,6 @@ public class RegistrationActivity extends AppCompatActivity {
                                 selectedDistrict = selectDistrictArray.getItem(i).toString();
                             }
                         });
-
-                        searchDistrict.addTextChangedListener(new TextWatcher() {
-                            @Override
-                            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                            }
-
-                            @Override
-                            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                selectDistrictArray.getFilter().filter(s);
-                            }
-
-                            @Override
-                            public void afterTextChanged(Editable s) {
-                            }
-                        });
                     }
                 });
             }
@@ -472,7 +441,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 driverButton.setChecked(false);
                 brokerButton.setChecked(false);
                 customerButton.setChecked(true);
-                role = "Owner";
+                role = "Customer";
 
                 break;
         }
@@ -515,6 +484,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     i8.putExtra("driverName", "driverName");
                     i8.putExtra("isTrucks", false);
                     i8.putExtra("isDriver", false);
+                    i8.putExtra("role", role);
                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i8);
                     overridePendingTransition(0, 0);

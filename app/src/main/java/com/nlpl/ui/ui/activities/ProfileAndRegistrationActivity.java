@@ -25,8 +25,11 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     ImageView actionBarBackButton;
     Dialog languageDialog;
 
+    View bottomNav;
+    TextView truckLoadText;
+
     Button personalDetails, bankDetails, addTrucks, addDrivers;
-    String driverName, mobile, name, address, pinCode, city, bankName, accNo, vehicleNo;
+    String driverName, mobile, name, address, pinCode, city, bankName, accNo, vehicleNo, role;
     TextView nameTitle, mobileText;
     ConstraintLayout personal_done, bankDone, vehicleDone, driverDone;
 
@@ -51,8 +54,10 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             isBankDetailsDone = bundle.getBoolean("isBank");
             isAddTrucksDone = bundle.getBoolean("isTrucks");
             isAddDriversDone = bundle.getBoolean("isDriver");
+            role = bundle.getString("role");
             Log.i("Mobile No", mobile);
             Log.i("Name", name);
+            Log.i("Role", role);
         }
 
         action_bar = findViewById(R.id.profile_registration_action_bar);
@@ -107,6 +112,15 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
         actionBarTitle.setText("My Profile");
         actionBarBackButton.setVisibility(View.GONE);
+
+        bottomNav = (View) findViewById(R.id.profile_registration_bottom_nav_bar);
+        truckLoadText = (TextView) bottomNav.findViewById(R.id.dhuejsfcb);
+
+        if (role.equals("Customer")){
+            truckLoadText.setText("Post a Load");
+        }else{
+            truckLoadText.setText("Post a Trip");
+        }
 
         personalDetails = findViewById(R.id.profile_registration_personal_details_button);
         bankDetails = findViewById(R.id.profile_registration_bank_details_button);
@@ -315,6 +329,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 intent.putExtra("isBank", isBankDetailsDone);
                 intent.putExtra("isTrucks", isAddTrucksDone);
                 intent.putExtra("isDriver", isAddDriversDone);
+                intent.putExtra("role", role);
                 startActivity(intent);
             }
         });
@@ -336,6 +351,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 intent.putExtra("isBank", isBankDetailsDone);
                 intent.putExtra("isTrucks", isAddTrucksDone);
                 intent.putExtra("isDriver", isAddDriversDone);
+                intent.putExtra("role", role);
                 startActivity(intent);
             }
         });
@@ -357,6 +373,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 intent.putExtra("isBank", isBankDetailsDone);
                 intent.putExtra("isTrucks", isAddTrucksDone);
                 intent.putExtra("isDriver", isAddDriversDone);
+                intent.putExtra("role", role);
                 startActivity(intent);
             }
         });
@@ -378,6 +395,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 intent.putExtra("isBank", isBankDetailsDone);
                 intent.putExtra("isTrucks", isAddTrucksDone);
                 intent.putExtra("isDriver", isAddDriversDone);
+                intent.putExtra("role", role);
                 startActivity(intent);
             }
         });
@@ -399,6 +417,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 intent.putExtra("isBank", isBankDetailsDone);
                 intent.putExtra("isTrucks", isAddTrucksDone);
                 intent.putExtra("isDriver", isAddDriversDone);
+                intent.putExtra("role", role);
                 startActivity(intent);
             }
         });
@@ -420,6 +439,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 intent.putExtra("isBank", isBankDetailsDone);
                 intent.putExtra("isTrucks", isAddTrucksDone);
                 intent.putExtra("isDriver", isAddDriversDone);
+                intent.putExtra("role", role);
                 startActivity(intent);
             }
         });
@@ -441,6 +461,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 intent.putExtra("isBank", isBankDetailsDone);
                 intent.putExtra("isTrucks", isAddTrucksDone);
                 intent.putExtra("isDriver", isAddDriversDone);
+                intent.putExtra("role", role);
                 startActivity(intent);
             }
         });
@@ -481,6 +502,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     intent.putExtra("isBank", isBankDetailsDone);
                     intent.putExtra("isTrucks", isAddTrucksDone);
                     intent.putExtra("isDriver", isAddDriversDone);
+                    intent.putExtra("role", role);
                     startActivity(intent);
 //                finish();
                 }
@@ -521,6 +543,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     intent.putExtra("isBank", isBankDetailsDone);
                     intent.putExtra("isTrucks", isAddTrucksDone);
                     intent.putExtra("isDriver", isAddDriversDone);
+                    intent.putExtra("role", role);
                     startActivity(intent);
 //                finish();
                 }
@@ -561,6 +584,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     intent.putExtra("isBank", isBankDetailsDone);
                     intent.putExtra("isTrucks", isAddTrucksDone);
                     intent.putExtra("isDriver", isAddDriversDone);
+                    intent.putExtra("role", role);
                     startActivity(intent);
 //                finish();
                 }
@@ -601,6 +625,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     intent.putExtra("isBank", isBankDetailsDone);
                     intent.putExtra("isTrucks", isAddTrucksDone);
                     intent.putExtra("isDriver", isAddDriversDone);
+                    intent.putExtra("role", role);
                     startActivity(intent);
 //                finish();
                 }

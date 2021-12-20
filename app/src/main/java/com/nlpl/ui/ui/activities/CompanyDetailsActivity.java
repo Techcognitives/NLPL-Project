@@ -163,27 +163,11 @@ public class CompanyDetailsActivity extends AppCompatActivity {
                 selectStateDialog.show();
                 selectStateDialog.setCancelable(false);
                 ListView stateList = (ListView) selectStateDialog.findViewById(R.id.list_state);
-                EditText searchState = (EditText) selectStateDialog.findViewById(R.id.search_state);
 
                 selectStateArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this, R.array.array_indian_states, R.layout.custom_list_row);
                 selectStateUnionCode = ArrayAdapter.createFromResource(CompanyDetailsActivity.this, R.array.array_indian_states_union_territory_codes, R.layout.custom_list_row);
 
                 stateList.setAdapter(selectStateArray);
-
-                searchState.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        selectStateArray.getFilter().filter(s);
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                    }
-                });
 
                 stateList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -201,7 +185,6 @@ public class CompanyDetailsActivity extends AppCompatActivity {
                         selectDistrictDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         selectDistrictDialog.show();
                         ListView districtList = (ListView) selectDistrictDialog.findViewById(R.id.list_state);
-                        EditText searchDistrict = (EditText) selectDistrictDialog.findViewById(R.id.search_state);
 
                         if (parentID == R.id.list_state) {
                             switch (selectedState) {
@@ -366,21 +349,6 @@ public class CompanyDetailsActivity extends AppCompatActivity {
                                 selectedDistrict = selectDistrictArray.getItem(i).toString();
                             }
                         });
-
-                        searchDistrict.addTextChangedListener(new TextWatcher() {
-                            @Override
-                            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                            }
-
-                            @Override
-                            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                selectDistrictArray.getFilter().filter(s);
-                            }
-
-                            @Override
-                            public void afterTextChanged(Editable s) {
-                            }
-                        });
                     }
                 });
             }
@@ -453,5 +421,6 @@ public class CompanyDetailsActivity extends AppCompatActivity {
     };
 
     public void onClickCompanyDetailsOK(View view) {
+        CompanyDetailsActivity.this.finish();
     }
 }

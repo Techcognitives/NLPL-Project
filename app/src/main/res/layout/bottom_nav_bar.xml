@@ -3,83 +3,116 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/action_bar_constrain"
-    android:background="@color/button_blue">
-
+    android:layout_height="wrap_content"
+    android:background="@color/background"
+    android:id="@+id/action_bar_constrain">
 
     <ImageView
         android:id="@+id/ejdcnjeknsd"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/dashboard_logo"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="269dp" />
+        android:paddingTop="5dp"
+        android:background="@color/nav_unselected_blue"
+        app:layout_constraintBottom_toTopOf="@+id/fuhhiedsfcjb"
+        app:layout_constraintEnd_toEndOf="@+id/fuhhiedsfcjb"
+        app:layout_constraintStart_toEndOf="@+id/dhuejsfcb"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/dashboard_logo" />
 
     <ImageView
         android:id="@+id/duyewudscknjds"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/profile_logo"
-        tools:layout_editor_absoluteX="101dp"
-        tools:layout_editor_absoluteY="232dp" />
+        android:paddingTop="5dp"
+        android:background="@color/nav_selected_blue"
+        app:layout_constraintBottom_toTopOf="@+id/fhuedfrcjberd"
+        app:layout_constraintEnd_toEndOf="@+id/fhuedfrcjberd"
+        app:layout_constraintStart_toStartOf="@+id/fhuedfrcjberd"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/profile_logo" />
 
     <ImageView
         android:id="@+id/fuhefhueusi"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="192dp"
-        tools:layout_editor_absoluteY="189dp"
-        app:srcCompat="@drawable/track_image" />
+        android:paddingTop="5dp"
+        android:background="@color/nav_unselected_blue"
+        app:layout_constraintBottom_toTopOf="@+id/dhuejsfcb"
+        app:layout_constraintEnd_toEndOf="@+id/dhuejsfcb"
+        app:layout_constraintStart_toEndOf="@+id/fhuedfrcjberd"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/track_load_logo" />
 
     <ImageView
         android:id="@+id/dscufsd"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="258dp"
-        tools:layout_editor_absoluteY="370dp"
-        app:srcCompat="@drawable/track_load_image" />
+        android:paddingTop="5dp"
+        android:background="@color/nav_unselected_blue"
+        app:layout_constraintBottom_toTopOf="@+id/dfuhcisdekcf"
+        app:layout_constraintEnd_toEndOf="@+id/dfuhcisdekcf"
+        app:layout_constraintStart_toEndOf="@+id/fuhhiedsfcjb"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/track_logo" />
 
     <TextView
         android:id="@+id/fhuedfrcjberd"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/nav_selected_blue"
+        android:paddingBottom="10dp"
         android:text="Profile"
+        android:textStyle="bold"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/dhuejsfcb"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/dhuejsfcb"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/dhuejsfcb" />
+        app:layout_constraintTop_toBottomOf="@+id/duyewudscknjds" />
 
     <TextView
         android:id="@+id/dhuejsfcb"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Truck and Load"
+        android:text="Post a Load"
         android:textAlignment="center"
+        android:textColor="@color/white"
+        android:paddingBottom="10dp"
+        android:textSize="15sp"
+        android:background="@color/nav_unselected_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/fuhhiedsfcjb"
         app:layout_constraintStart_toEndOf="@+id/fhuedfrcjberd"
-        tools:layout_editor_absoluteY="518dp" />
+        app:layout_constraintTop_toBottomOf="@+id/fuhefhueusi" />
 
     <TextView
         android:id="@+id/fuhhiedsfcjb"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/nav_unselected_blue"
+        android:paddingBottom="10dp"
         android:text="Dashboard"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/dhuejsfcb"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/dfuhcisdekcf"
         app:layout_constraintStart_toEndOf="@+id/dhuejsfcb"
-        app:layout_constraintTop_toTopOf="@+id/dhuejsfcb" />
+        app:layout_constraintTop_toBottomOf="@+id/ejdcnjeknsd" />
 
     <TextView
         android:id="@+id/dfuhcisdekcf"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/nav_unselected_blue"
+        android:paddingBottom="10dp"
         android:text="track"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/fuhhiedsfcjb"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/fuhhiedsfcjb"
-        app:layout_constraintTop_toTopOf="@+id/fuhhiedsfcjb" />
+        app:layout_constraintTop_toBottomOf="@+id/dscufsd" />
 </androidx.constraintlayout.widget.ConstraintLayout>

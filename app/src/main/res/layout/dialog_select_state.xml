@@ -28,23 +28,6 @@
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="16dp" />
 
-    <EditText
-        android:id="@+id/search_state"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_border_small"
-        android:hint="Search..."
-        android:textColorHint="@color/black"
-        android:textColor="@color/button_blue"
-        android:layout_margin="10dp"
-        android:paddingLeft="10dp"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
-        android:textSize="15sp"
-        android:singleLine="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="16dp" />
-
     <ListView
         android:id="@+id/list_state"
         android:layout_width="match_parent"

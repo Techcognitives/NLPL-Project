@@ -31,7 +31,7 @@ public class BankDetailsActivity extends AppCompatActivity {
     ImageView actionBarBackButton;
     Dialog languageDialog;
 
-    String driverName, vehicleNo, mobile, name, address, pinCode, city, bankName2, accNo;
+    String driverName, vehicleNo, mobile, name, address, pinCode, city, bankName2, accNo, role;
     Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone;
 
     EditText bankName, accountNo, reAccount, ifscCode;
@@ -57,6 +57,7 @@ public class BankDetailsActivity extends AppCompatActivity {
             isBankDetailsDone = bundle.getBoolean("isBank");
             isAddTrucksDone = bundle.getBoolean("isTrucks");
             isAddDriversDone = bundle.getBoolean("isDriver");
+            role = bundle.getString("role");
             Log.i("Mobile No", mobile);
             Log.i("Name", name);
         }
@@ -163,6 +164,7 @@ public class BankDetailsActivity extends AppCompatActivity {
                     i8.putExtra("isBank", true);
                     i8.putExtra("isTrucks", isAddTrucksDone);
                     i8.putExtra("isDriver", isAddDriversDone);
+                    i8.putExtra("role", role);
                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i8);
                     overridePendingTransition(0, 0);
