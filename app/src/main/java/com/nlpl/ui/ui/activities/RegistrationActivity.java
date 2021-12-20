@@ -26,19 +26,14 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.UserRequest;
 import com.nlpl.model.UserResponse;
-import com.nlpl.services.UserService;
 import com.nlpl.utils.ApiClient;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -136,7 +131,7 @@ public class RegistrationActivity extends AppCompatActivity {
         name.addTextChangedListener(registrationWatcher);
         selectStateText.addTextChangedListener(registrationWatcher);
         selectDistrictText.addTextChangedListener(registrationWatcher);
-        pinCode.addTextChangedListener(registrationWatcher);
+        pinCode.addTextChangedListener(pinCodeWatcher);
         address.addTextChangedListener(registrationWatcher);
 
         mobileNoEdit.setVisibility(View.GONE);
@@ -186,7 +181,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 pinCode.setCursorVisible(false);
                 address.setCursorVisible(false);
                 selectStateDialog = new Dialog(RegistrationActivity.this);
-                selectStateDialog.setContentView(R.layout.dialog_select_state);
+                selectStateDialog.setContentView(R.layout.dialog_spinner);
 //                dialog.getWindow().setLayout(1000,3000);
                 selectStateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 selectStateDialog.show();
@@ -210,7 +205,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
                         selectedState = selectStateArray.getItem(i).toString();
                         selectDistrictDialog = new Dialog(RegistrationActivity.this);
-                        selectDistrictDialog.setContentView(R.layout.dialog_select_state);
+                        selectDistrictDialog.setContentView(R.layout.dialog_spinner);
 //                dialog.getWindow().setLayout(1000,3000);
                         selectDistrictDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         selectDistrictDialog.show();
@@ -528,12 +523,6 @@ public class RegistrationActivity extends AppCompatActivity {
             boolean broker = brokerButton.isChecked();
             boolean customer = customerButton.isChecked();
 
-            if (pinCodeWatcher.length() != 6){
-                pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
-            }else{
-                pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
-            }
-
             if (!nameWatcher.isEmpty() && !pinCodeWatcher.isEmpty() && !addressWatcher.isEmpty() && !stateWatcher.isEmpty() && pinCodeWatcher.length()==6 && !cityWatcher.isEmpty() && (owner || driver || broker || customer)) {
                 okButton.setEnabled(true);
                 okButton.setBackgroundResource((R.drawable.button_active));
@@ -548,6 +537,30 @@ public class RegistrationActivity extends AppCompatActivity {
 
         }
     };
+
+    private TextWatcher pinCodeWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String pinCodeWatcher = pinCode.getText().toString().trim();
+
+            if (pinCodeWatcher.length() != 6){
+                pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+            }else{
+                pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+
     private String blockCharacterSet ="~#^|$%&*!+@₹_-()':;?/={}";
 
     private InputFilter filter = new InputFilter() {
