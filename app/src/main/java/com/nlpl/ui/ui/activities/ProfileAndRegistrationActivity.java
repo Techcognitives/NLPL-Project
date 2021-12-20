@@ -35,7 +35,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
     private RequestQueue mQueue;
     View action_bar;
-    TextView  driverNameDone, editDriverName, addDriver, addTruck, vehicleNoDone, vehicleEditDone, addBankDetails, editBankDetails, addBankDone, bankNameDone, accNoDone, editPersonalDetails, actionBarTitle, language, addCompany, phoneDone, nameDone, firmDone, firmName, addressDone;
+    TextView driverNameDone, editDriverName, addDriver, addTruck, vehicleNoDone, vehicleEditDone, addBankDetails, editBankDetails, addBankDone, bankNameDone, accNoDone, editPersonalDetails, actionBarTitle, language, addCompany, phoneDone, nameDone, firmDone, firmName, addressDone;
     ImageView actionBarBackButton;
     Dialog languageDialog;
 
@@ -50,7 +50,8 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     TextView nameTitle, mobileText;
     ConstraintLayout personal_done, bankDone, vehicleDone, driverDone;
 
-    Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, getIsPersonalDetailsDoneVisible=false, getIsBankDetailsDoneVisible = false, getIsAddTrucksDoneVisible = false, getIsAddDriversDoneVisible = false;
+    Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, getIsPersonalDetailsDoneVisible = false, getIsBankDetailsDoneVisible = false, getIsAddTrucksDoneVisible = false, getIsAddDriversDoneVisible = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,16 +83,16 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         mQueue = Volley.newRequestQueue(ProfileAndRegistrationActivity.this); //To Select Specialty and Credentials
 
         //-----------------------------------Get User Details---------------------------------------
-        String url = getString(R.string.baseURL)+"/user/get";
+        String url = getString(R.string.baseURL) + "/user/get";
         Log.i("URL at Profile:", url);
 
-        JsonObjectRequest request =new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
                     JSONArray jsonArray = response.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject data =jsonArray.getJSONObject(i);
+                        JSONObject data = jsonArray.getJSONObject(i);
                         userId = data.getString("user_id");
                         arrayUserId.add(userId);
                         Log.i("user Id:", userId);
@@ -108,9 +109,9 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         });
         mQueue.add(request);
 
-                //------------------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------------------
 
-                action_bar = findViewById(R.id.profile_registration_action_bar);
+        action_bar = findViewById(R.id.profile_registration_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
         language = (TextView) action_bar.findViewById(R.id.action_bar_language_selector);
@@ -166,9 +167,9 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         bottomNav = (View) findViewById(R.id.profile_registration_bottom_nav_bar);
         truckLoadText = (TextView) bottomNav.findViewById(R.id.dhuejsfcb);
 
-        if (role.equals("Customer")){
+        if (role.equals("Customer")) {
             truckLoadText.setText("Post a Load");
-        }else{
+        } else {
             truckLoadText.setText("Post a Trip");
         }
 
@@ -203,34 +204,34 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         mobileText = (TextView) findViewById(R.id.profile_registration_mobile_text);
 
         String hello = getString(R.string.hello);
-        nameTitle.setText(hello+" "+name+"!");
-        String s = mobile.substring(3,13);
-        mobileText.setText("+91 "+s);
+        nameTitle.setText(hello + " " + name + "!");
+        String s = mobile.substring(2, 12);
+        mobileText.setText("+91 " + s);
 
-        if (isPersonalDetailsDone){
+        if (isPersonalDetailsDone) {
 
             bankDone.setVisibility(View.GONE);
             addBankDone.setVisibility(View.GONE);
-            if (isBankDetailsDone){
+            if (isBankDetailsDone) {
                 bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
-            }else {
+            } else {
                 bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
             }
 
             vehicleDone.setVisibility(View.GONE);
             addTruck.setVisibility(View.GONE);
-            if (isAddTrucksDone){
+            if (isAddTrucksDone) {
                 addTrucks.setText(" My Trucks");
                 addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
-            }else {
+            } else {
                 addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck, 0, R.drawable.ic_right, 0);
             }
             driverDone.setVisibility(View.GONE);
             addDriver.setVisibility(View.GONE);
-            if (isAddDriversDone){
+            if (isAddDriversDone) {
                 addDrivers.setText(" My Drivers");
                 addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
-            }else {
+            } else {
                 addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
             }
 
@@ -238,36 +239,36 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_down_personal, 0);
             personal_done.setVisibility(View.VISIBLE);
             addCompany.setVisibility(View.VISIBLE);
-            phoneDone.setText("+91 "+s);
+            phoneDone.setText("+91 " + s);
             nameDone.setText(name);
-            addressDone.setText(address+", "+city+" "+pinCode);
+            addressDone.setText(address + ", " + city + " " + pinCode);
 
         }
 
-        if (isBankDetailsDone){
+        if (isBankDetailsDone) {
 
             personal_done.setVisibility(View.GONE);
             addCompany.setVisibility(View.GONE);
-            if (isPersonalDetailsDone){
+            if (isPersonalDetailsDone) {
                 personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
-            }else {
+            } else {
                 personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
             }
 
             vehicleDone.setVisibility(View.GONE);
             addTruck.setVisibility(View.GONE);
-            if (isAddTrucksDone){
+            if (isAddTrucksDone) {
                 addTrucks.setText(" My Trucks");
                 addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
-            }else {
+            } else {
                 addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck, 0, R.drawable.ic_right, 0);
             }
             driverDone.setVisibility(View.GONE);
             addDriver.setVisibility(View.GONE);
-            if (isAddDriversDone){
+            if (isAddDriversDone) {
                 addDrivers.setText(" My Drivers");
                 addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
-            }else {
+            } else {
                 addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
             }
 
@@ -279,32 +280,32 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             accNoDone.setText(accNo);
         }
 
-        if (isAddTrucksDone){
+        if (isAddTrucksDone) {
 
             addTrucks.setText(" My Trucks");
 
             bankDone.setVisibility(View.GONE);
             addBankDone.setVisibility(View.GONE);
-            if (isBankDetailsDone){
+            if (isBankDetailsDone) {
                 bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
-            }else {
+            } else {
                 bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
             }
 
             personal_done.setVisibility(View.GONE);
             addCompany.setVisibility(View.GONE);
-            if (isPersonalDetailsDone){
+            if (isPersonalDetailsDone) {
                 personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
-            }else {
+            } else {
                 personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
             }
 
             driverDone.setVisibility(View.GONE);
             addDriver.setVisibility(View.GONE);
-            if (isAddDriversDone){
+            if (isAddDriversDone) {
                 addDrivers.setText(" My Drivers");
                 addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
-            }else {
+            } else {
                 addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
             }
 
@@ -315,32 +316,32 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             vehicleNoDone.setText(vehicleNo);
         }
 
-        if (isAddDriversDone){
+        if (isAddDriversDone) {
 
             addDrivers.setText(" My Drivers");
 
             bankDone.setVisibility(View.GONE);
             addBankDone.setVisibility(View.GONE);
-            if (isBankDetailsDone){
+            if (isBankDetailsDone) {
                 bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
-            }else {
+            } else {
                 bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
             }
 
             vehicleDone.setVisibility(View.GONE);
             addTruck.setVisibility(View.GONE);
-            if (isAddTrucksDone){
+            if (isAddTrucksDone) {
                 addTrucks.setText(" My Trucks");
                 addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
-            }else {
+            } else {
                 addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck, 0, R.drawable.ic_right, 0);
             }
 
             personal_done.setVisibility(View.GONE);
             addCompany.setVisibility(View.GONE);
-            if (isPersonalDetailsDone){
+            if (isPersonalDetailsDone) {
                 personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
-            }else {
+            } else {
                 personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
             }
 
@@ -351,7 +352,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             driverNameDone.setText(driverName);
         }
 
-        if (isPersonalDetailsDone && isBankDetailsDone && isAddTrucksDone && isAddDriversDone){
+        if (isPersonalDetailsDone && isBankDetailsDone && isAddTrucksDone && isAddDriversDone) {
         }
 
         addCompany.setOnClickListener(new View.OnClickListener() {
@@ -521,23 +522,23 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (isPersonalDetailsDone){
-                    if (getIsPersonalDetailsDoneVisible){
+                if (isPersonalDetailsDone) {
+                    if (getIsPersonalDetailsDoneVisible) {
                         personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
                         personal_done.setVisibility(View.GONE);
                         addCompany.setVisibility(View.GONE);
-                        getIsPersonalDetailsDoneVisible= false;
-                    }else {
+                        getIsPersonalDetailsDoneVisible = false;
+                    } else {
                         personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_down_personal, 0);
                         personal_done.setVisibility(View.VISIBLE);
                         addCompany.setVisibility(View.VISIBLE);
                         getIsPersonalDetailsDoneVisible = true;
-                        phoneDone.setText("+91 "+s);
+                        phoneDone.setText("+91 " + s);
                         nameDone.setText(name);
-                        addressDone.setText(address+", "+city+" "+pinCode);
+                        addressDone.setText(address + ", " + city + " " + pinCode);
                     }
 
-                }else {
+                } else {
                     Intent intent = new Intent(ProfileAndRegistrationActivity.this, PersonalDetailsActivity.class);
                     intent.putExtra("mobile3", mobile);
                     intent.putExtra("name3", name);
@@ -563,14 +564,14 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (isBankDetailsDone){
-                    if (getIsBankDetailsDoneVisible){
+                if (isBankDetailsDone) {
+                    if (getIsBankDetailsDoneVisible) {
                         getIsBankDetailsDoneVisible = false;
                         bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
                         bankDone.setVisibility(View.GONE);
                         addBankDone.setVisibility(View.GONE);
 
-                    }else {
+                    } else {
                         getIsBankDetailsDoneVisible = true;
                         bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_down_personal, 0);
                         bankDone.setVisibility(View.VISIBLE);
@@ -578,7 +579,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         bankNameDone.setText(bankName);
                         accNoDone.setText(accNo);
                     }
-                }else {
+                } else {
                     Intent intent = new Intent(ProfileAndRegistrationActivity.this, BankDetailsActivity.class);
                     intent.putExtra("mobile3", mobile);
                     intent.putExtra("name3", name);
@@ -604,22 +605,22 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (isAddTrucksDone){
+                if (isAddTrucksDone) {
                     addTrucks.setText(" My Trucks");
-                    if (getIsAddTrucksDoneVisible){
+                    if (getIsAddTrucksDoneVisible) {
                         getIsAddTrucksDoneVisible = false;
                         addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
                         vehicleDone.setVisibility(View.GONE);
                         addTruck.setVisibility(View.GONE);
                         vehicleNoDone.setText(vehicleNo);
-                    }else {
+                    } else {
                         getIsAddTrucksDoneVisible = true;
                         addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_down_personal, 0);
                         vehicleDone.setVisibility(View.VISIBLE);
                         addTruck.setVisibility(View.VISIBLE);
                         vehicleNoDone.setText(vehicleNo);
                     }
-                }else {
+                } else {
                     Intent intent = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
                     intent.putExtra("mobile3", mobile);
                     intent.putExtra("name3", name);
@@ -645,22 +646,22 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (isAddDriversDone){
+                if (isAddDriversDone) {
                     addDrivers.setText(" My Drivers");
-                    if (getIsAddDriversDoneVisible){
+                    if (getIsAddDriversDoneVisible) {
                         addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
                         getIsAddDriversDoneVisible = false;
                         driverDone.setVisibility(View.GONE);
                         addDriver.setVisibility(View.GONE);
                         driverNameDone.setText(driverName);
-                    }else {
+                    } else {
                         addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_down_personal, 0);
                         getIsAddDriversDoneVisible = true;
                         driverDone.setVisibility(View.VISIBLE);
                         addDriver.setVisibility(View.VISIBLE);
                         driverNameDone.setText(driverName);
                     }
-                }else {
+                } else {
                     Intent intent = new Intent(ProfileAndRegistrationActivity.this, DriverDetailsActivity.class);
                     intent.putExtra("mobile3", mobile);
                     intent.putExtra("name3", name);
