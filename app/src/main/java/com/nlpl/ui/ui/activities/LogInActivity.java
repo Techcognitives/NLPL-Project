@@ -43,6 +43,7 @@ public class LogInActivity extends AppCompatActivity {
     Button getStarted;
     String role, roleAPI, cityAPI, city, pinCode, pinCodeAPI, phone, mobile, userId, mobileNoAPI, mobileNoFirebase, userIdAPI, name, nameAPI, addressAPI, address, isRegistrationDoneAPI, isRegistrationDone;
 
+
     ArrayList<String> arrayUserId, arrayMobileNo;
     private FirebaseAuth mFireAuth;
 
