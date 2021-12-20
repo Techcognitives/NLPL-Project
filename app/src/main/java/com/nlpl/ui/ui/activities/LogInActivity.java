@@ -18,16 +18,31 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.nlpl.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 public class LogInActivity extends AppCompatActivity {
 
+    private RequestQueue mQueue;
     EditText mobileNo;
     TextView series;
     Button getStarted;
-    String mobile;
+    String mobile, userId, mobileNoAPI, mobileNoFirebase;
+
+    ArrayList<String> arrayUserId, arrayMobileNo;
 
     private FirebaseAuth mFireAuth;
 
@@ -45,6 +60,9 @@ public class LogInActivity extends AppCompatActivity {
         mobileNo.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
+        mQueue = Volley.newRequestQueue(LogInActivity.this); //To Select Specialty and Credentials
+        arrayUserId = new ArrayList<>();
+        arrayMobileNo = new ArrayList<>();
 
         getStarted.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,18 +144,56 @@ public class LogInActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        FirebaseUser mFireBaseUser = mFireAuth.getCurrentUser();
-        if (mFireBaseUser != null){
-            Log.i("Phone", mFireBaseUser.getPhoneNumber());
-            Intent i8 = new Intent(LogInActivity.this, RegistrationActivity.class);
-            i8.putExtra("mobile1", mFireBaseUser.getPhoneNumber());
-            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i8);
-            overridePendingTransition(0, 0);
-            LogInActivity.this.finish();
-        }else{
-            Log.i("New User", "New User");
-        }
+
+
+        //------------------------------get user details by mobile Number---------------------------------
+        //-----------------------------------Get User Details---------------------------------------
+        String url = getString(R.string.baseURL)+"/user/get";
+        Log.i("URL at Profile:", url);
+
+        JsonObjectRequest request =new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray jsonArray = response.getJSONArray("data");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject data =jsonArray.getJSONObject(i);
+                        userId = data.getString("user_id");
+                        mobileNoAPI = data.getString("phone_number");
+                        arrayUserId.add(userId);
+                        arrayMobileNo.add(mobileNoAPI);
+                        Log.i("user Id:", userId);
+                        Log.i("mobileNo:",mobileNoAPI);
+
+                        FirebaseUser mFireBaseUser = mFireAuth.getCurrentUser();
+                        mobileNoFirebase = mFireBaseUser.getPhoneNumber();
+
+                        if (mFireBaseUser != null){
+                            Log.i("Phone", mFireBaseUser.getPhoneNumber());
+                            Intent i8 = new Intent(LogInActivity.this, RegistrationActivity.class);
+                            i8.putExtra("mobile1", mFireBaseUser.getPhoneNumber());
+                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(i8);
+                            overridePendingTransition(0, 0);
+                            LogInActivity.this.finish();
+                        }else{
+                            Log.i("New User", "New User");
+                        }
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        mQueue.add(request);
+
+        //------------------------------------------------------------------------------------------------
 
     }
 

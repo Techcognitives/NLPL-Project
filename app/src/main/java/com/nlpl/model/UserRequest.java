@@ -2,6 +2,7 @@ package com.nlpl.model;
 
 public class UserRequest {
     String name, phone_number, user_type, preferred_location, address, state_code, pin_code;
+    int isRegistration_done;
 
     public UserRequest() {
         this.name = name;
@@ -10,7 +11,16 @@ public class UserRequest {
         this.preferred_location = preferred_location;
         this.address = address;
         this.state_code = state_code;
+        this.isRegistration_done = isRegistration_done;
         this.pin_code = pin_code;
+    }
+
+    public int getIsRegistration_done() {
+        return isRegistration_done;
+    }
+
+    public void setIsRegistration_done(int isRegistration_done) {
+        this.isRegistration_done = isRegistration_done;
     }
 
     public String getName() {

@@ -456,7 +456,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 driverButton.setChecked(false);
                 brokerButton.setChecked(false);
                 customerButton.setChecked(false);
-                role = "Truck Owner";
+                role = "SP";
 
                 break;
 
@@ -465,7 +465,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 driverButton.setChecked(true);
                 brokerButton.setChecked(false);
                 customerButton.setChecked(false);
-                role = "Driver";
+                role = "SP";
 
 
                 break;
@@ -475,7 +475,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 driverButton.setChecked(false);
                 brokerButton.setChecked(true);
                 customerButton.setChecked(false);
-                role = "Broker";
+                role = "SP";
 
                 break;
 
@@ -484,7 +484,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 driverButton.setChecked(false);
                 brokerButton.setChecked(false);
                 customerButton.setChecked(true);
-                role = "Owner";
+                role = "customer";
 
                 break;
         }
@@ -598,7 +598,8 @@ public class RegistrationActivity extends AppCompatActivity {
         userRequest.setName(name.getText().toString());
         userRequest.setPhone_number(mobile);
         userRequest.setAddress(address.getText().toString());
-        userRequest.setUser_type("SP");
+        userRequest.setUser_type(role);
+        userRequest.setIsRegistration_done(1);
         userRequest.setPin_code(pinCode.getText().toString());
         userRequest.setPreferred_location(selectDistrictText.getText().toString());
         userRequest.setState_code(selectStateText.getText().toString());

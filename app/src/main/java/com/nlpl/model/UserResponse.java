@@ -31,9 +31,10 @@ public class UserResponse {
         private String address;
         private String state_code;
         private String pin_code;
+        private int isRegistration_done;
 
 
-        public Data(String name, String phone_number, String user_type, String preferred_location, String address, String state_code, String pin_code, String user_id ) {
+        public Data(String name, String phone_number, String user_type, String preferred_location, String address, String state_code, String pin_code, String user_id, int isRegistration_done ) {
             this.user_id = user_id;
             this.name = name;
             this.phone_number = phone_number;
@@ -42,6 +43,23 @@ public class UserResponse {
             this.address = address;
             this.state_code = state_code;
             this.pin_code = pin_code;
+            this.isRegistration_done = isRegistration_done;
+        }
+
+        public String getUser_id() {
+            return user_id;
+        }
+
+        public void setUser_id(String user_id) {
+            this.user_id = user_id;
+        }
+
+        public int getIsRegistration_done() {
+            return isRegistration_done;
+        }
+
+        public void setIsRegistration_done(int isRegistration_done) {
+            this.isRegistration_done = isRegistration_done;
         }
 
         public String getName() {
