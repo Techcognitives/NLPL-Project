@@ -13,7 +13,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.NLPL">
+        android:theme="@style/Theme.NLPL"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".ui.ui.activities.PersonalDetailsAndIdProofActivity"
             android:theme="@style/Theme.Design.Light.NoActionBar"

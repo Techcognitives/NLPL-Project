@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.Dialog;
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -16,10 +17,23 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
+    private RequestQueue mQueue;
     View action_bar;
     TextView  driverNameDone, editDriverName, addDriver, addTruck, vehicleNoDone, vehicleEditDone, addBankDetails, editBankDetails, addBankDone, bankNameDone, accNoDone, editPersonalDetails, actionBarTitle, language, addCompany, phoneDone, nameDone, firmDone, firmName, addressDone;
     ImageView actionBarBackButton;
@@ -27,6 +41,9 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
     View bottomNav;
     TextView truckLoadText;
+
+    String userId;
+    ArrayList<String> arrayUserId;
 
     Button personalDetails, bankDetails, addTrucks, addDrivers;
     String driverName, mobile, name, address, pinCode, city, bankName, accNo, vehicleNo, role;
@@ -60,7 +77,40 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             Log.i("Role", role);
         }
 
-        action_bar = findViewById(R.id.profile_registration_action_bar);
+        arrayUserId = new ArrayList<>();
+
+        mQueue = Volley.newRequestQueue(ProfileAndRegistrationActivity.this); //To Select Specialty and Credentials
+
+        //-----------------------------------Get User Details---------------------------------------
+        String url = getString(R.string.baseURL)+"/user/get";
+        Log.i("URL at Profile:", url);
+
+        JsonObjectRequest request =new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray jsonArray = response.getJSONArray("data");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject data =jsonArray.getJSONObject(i);
+                        userId = data.getString("user_id");
+                        arrayUserId.add(userId);
+                        Log.i("user Id:", userId);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        mQueue.add(request);
+
+                //------------------------------------------------------------------------------------------
+
+                action_bar = findViewById(R.id.profile_registration_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
         language = (TextView) action_bar.findViewById(R.id.action_bar_language_selector);
