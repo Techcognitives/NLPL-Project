@@ -225,7 +225,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 pinCode.setCursorVisible(false);
                 address.setCursorVisible(false);
                 selectStateDialog = new Dialog(PersonalDetailsAndIdProofActivity.this);
-                selectStateDialog.setContentView(R.layout.dialog_select_state);
+                selectStateDialog.setContentView(R.layout.dialog_spinner);
 //                dialog.getWindow().setLayout(1000,3000);
                 selectStateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 selectStateDialog.show();
@@ -248,7 +248,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
                         selectedState = selectStateArray.getItem(i).toString();
                         selectDistrictDialog = new Dialog(PersonalDetailsAndIdProofActivity.this);
-                        selectDistrictDialog.setContentView(R.layout.dialog_select_state);
+                        selectDistrictDialog.setContentView(R.layout.dialog_spinner);
 //                dialog.getWindow().setLayout(1000,3000);
                         selectDistrictDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         selectDistrictDialog.show();
