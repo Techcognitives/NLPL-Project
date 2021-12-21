@@ -67,7 +67,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     private int GET_FROM_GALLERY1=1;
     private int GET_FROM_GALLERY2=2;
 
-    String driverName, vehicleNo, city, idProof, bankName, accNo;
+    String userId, driverName, vehicleNo, city, idProof, bankName, accNo;
     Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, isPanUploaded=false, isFrontUploaded=false, isBackUploaded=false;
     String personName, addressBundle, pinCodeBundle, bankName2;
     @Override
@@ -82,6 +82,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             addressBundle = bundle.getString("address");
             pinCodeBundle = bundle.getString("pinCode");
             city = bundle.getString("city");
+            userId = bundle.getString("userId");
             bankName2 = bundle.getString("bankName");
             accNo = bundle.getString("accNo");
             vehicleNo = bundle.getString("vehicleNo");
@@ -651,6 +652,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                     i8.putExtra("address", address.getText().toString());
                     i8.putExtra("pinCode", pinCode.getText().toString());
                     i8.putExtra("city", selectStateText.getText().toString());
+                    i8.putExtra("userId", userId);
                     i8.putExtra("bankName", bankName);
                     i8.putExtra("accNo", accNo);
                     i8.putExtra("vehicleNo", vehicleNo);

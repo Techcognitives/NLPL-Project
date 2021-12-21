@@ -31,7 +31,7 @@ public class BankDetailsActivity extends AppCompatActivity {
     ImageView actionBarBackButton;
     Dialog languageDialog;
 
-    String driverName, vehicleNo, mobile, name, address, pinCode, city, bankName2, accNo, role;
+    String userId, driverName, vehicleNo, mobile, name, address, pinCode, city, bankName2, accNo, role;
     Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone;
 
     EditText bankName, accountNo, reAccount, ifscCode;
@@ -49,6 +49,7 @@ public class BankDetailsActivity extends AppCompatActivity {
             address = bundle.getString("address");
             pinCode = bundle.getString("pinCode");
             city = bundle.getString("city");
+            userId = bundle.getString("userId");
             bankName2 = bundle.getString("bankName");
             accNo = bundle.getString("accNo");
             vehicleNo = bundle.getString("vehicleNo");
@@ -156,6 +157,7 @@ public class BankDetailsActivity extends AppCompatActivity {
                     i8.putExtra("address", address);
                     i8.putExtra("pinCode", pinCode);
                     i8.putExtra("city", city);
+                    i8.putExtra("userId", userId);
                     i8.putExtra("bankName", bankName.getText().toString());
                     i8.putExtra("accNo", accountNo.getText().toString());
                     i8.putExtra("vehicleNo", vehicleNo);

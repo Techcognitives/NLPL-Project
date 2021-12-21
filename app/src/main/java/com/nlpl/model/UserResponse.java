@@ -32,9 +32,10 @@ public class UserResponse {
         private String state_code;
         private String pin_code;
         private int isRegistration_done;
+        private String preferred_language;
 
 
-        public Data(String name, String phone_number, String user_type, String preferred_location, String address, String state_code, String pin_code, String user_id, int isRegistration_done ) {
+        public Data( String user_id, String name, String phone_number, String user_type, String preferred_location, String address, String state_code, String pin_code, int isRegistration_done,  String preferred_language ) {
             this.user_id = user_id;
             this.name = name;
             this.phone_number = phone_number;
@@ -44,6 +45,15 @@ public class UserResponse {
             this.state_code = state_code;
             this.pin_code = pin_code;
             this.isRegistration_done = isRegistration_done;
+            this.preferred_language = preferred_language;
+        }
+
+        public String getPreferred_language() {
+            return preferred_language;
+        }
+
+        public void setPreferred_language(String preferred_language) {
+            this.preferred_language = preferred_language;
         }
 
         public String getUser_id() {

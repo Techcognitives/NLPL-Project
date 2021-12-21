@@ -43,7 +43,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     TextView truckLoadText;
 
     String userId;
-    ArrayList<String> arrayUserId;
 
     Button personalDetails, bankDetails, addTrucks, addDrivers;
     String driverName, mobile, name, address, pinCode, city, bankName, accNo, vehicleNo, role;
@@ -64,6 +63,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             address = bundle.getString("address");
             pinCode = bundle.getString("pinCode");
             city = bundle.getString("city");
+            userId = bundle.getString("userId");
             bankName = bundle.getString("bankName");
             accNo = bundle.getString("accNo");
             vehicleNo = bundle.getString("vehicleNo");
@@ -77,39 +77,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             Log.i("Name", name);
             Log.i("Role", role);
         }
-
-        arrayUserId = new ArrayList<>();
-
-        mQueue = Volley.newRequestQueue(ProfileAndRegistrationActivity.this); //To Select Specialty and Credentials
-
-        //-----------------------------------Get User Details---------------------------------------
-        String url = getString(R.string.baseURL) + "/user/get";
-        Log.i("URL at Profile:", url);
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray jsonArray = response.getJSONArray("data");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject data = jsonArray.getJSONObject(i);
-                        userId = data.getString("user_id");
-                        arrayUserId.add(userId);
-                        Log.i("user Id:", userId);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        mQueue.add(request);
-
-        //------------------------------------------------------------------------------------------
 
         action_bar = findViewById(R.id.profile_registration_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
@@ -372,6 +339,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 intent.putExtra("address", address);
                 intent.putExtra("pinCode", pinCode);
                 intent.putExtra("city", city);
+                intent.putExtra("userId", userId);
                 intent.putExtra("bankName", bankName);
                 intent.putExtra("accNo", accNo);
                 intent.putExtra("vehicleNo", vehicleNo);
@@ -394,6 +362,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 intent.putExtra("address", address);
                 intent.putExtra("pinCode", pinCode);
                 intent.putExtra("city", city);
+                intent.putExtra("userId", userId);
                 intent.putExtra("bankName", bankName);
                 intent.putExtra("accNo", accNo);
                 intent.putExtra("vehicleNo", vehicleNo);
@@ -416,6 +385,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 intent.putExtra("address", address);
                 intent.putExtra("pinCode", pinCode);
                 intent.putExtra("city", city);
+                intent.putExtra("userId", userId);
                 intent.putExtra("bankName", bankName);
                 intent.putExtra("accNo", accNo);
                 intent.putExtra("vehicleNo", vehicleNo);
@@ -438,6 +408,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 intent.putExtra("address", address);
                 intent.putExtra("pinCode", pinCode);
                 intent.putExtra("city", city);
+                intent.putExtra("userId", userId);
                 intent.putExtra("bankName", bankName);
                 intent.putExtra("accNo", accNo);
                 intent.putExtra("vehicleNo", vehicleNo);
@@ -460,6 +431,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 intent.putExtra("address", address);
                 intent.putExtra("pinCode", pinCode);
                 intent.putExtra("city", city);
+                intent.putExtra("userId", userId);
                 intent.putExtra("bankName", bankName);
                 intent.putExtra("accNo", accNo);
                 intent.putExtra("vehicleNo", vehicleNo);
@@ -482,6 +454,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 intent.putExtra("address", address);
                 intent.putExtra("pinCode", pinCode);
                 intent.putExtra("city", city);
+                intent.putExtra("userId", userId);
                 intent.putExtra("bankName", bankName);
                 intent.putExtra("accNo", accNo);
                 intent.putExtra("vehicleNo", vehicleNo);
@@ -504,6 +477,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 intent.putExtra("address", address);
                 intent.putExtra("pinCode", pinCode);
                 intent.putExtra("city", city);
+                intent.putExtra("userId", userId);
                 intent.putExtra("bankName", bankName);
                 intent.putExtra("accNo", accNo);
                 intent.putExtra("vehicleNo", vehicleNo);
@@ -545,6 +519,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     intent.putExtra("address", address);
                     intent.putExtra("pinCode", pinCode);
                     intent.putExtra("city", city);
+                    intent.putExtra("userId", userId);
                     intent.putExtra("bankName", bankName);
                     intent.putExtra("accNo", accNo);
                     intent.putExtra("vehicleNo", vehicleNo);
@@ -586,6 +561,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     intent.putExtra("address", address);
                     intent.putExtra("pinCode", pinCode);
                     intent.putExtra("city", city);
+                    intent.putExtra("userId", userId);
                     intent.putExtra("bankName", bankName);
                     intent.putExtra("accNo", accNo);
                     intent.putExtra("vehicleNo", vehicleNo);
@@ -627,6 +603,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     intent.putExtra("address", address);
                     intent.putExtra("pinCode", pinCode);
                     intent.putExtra("city", city);
+                    intent.putExtra("userId", userId);
                     intent.putExtra("bankName", bankName);
                     intent.putExtra("accNo", accNo);
                     intent.putExtra("vehicleNo", vehicleNo);
@@ -668,6 +645,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     intent.putExtra("address", address);
                     intent.putExtra("pinCode", pinCode);
                     intent.putExtra("city", city);
+                    intent.putExtra("userId", userId);
                     intent.putExtra("bankName", bankName);
                     intent.putExtra("accNo", accNo);
                     intent.putExtra("vehicleNo", vehicleNo);

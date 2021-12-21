@@ -1,7 +1,7 @@
 package com.nlpl.model;
 
 public class UserRequest {
-    String name, phone_number, user_type, preferred_location, address, state_code, pin_code;
+    String name, phone_number, user_type, preferred_location, address, state_code, pin_code, preferred_language;
     int isRegistration_done;
 
     public UserRequest() {
@@ -13,6 +13,15 @@ public class UserRequest {
         this.state_code = state_code;
         this.isRegistration_done = isRegistration_done;
         this.pin_code = pin_code;
+        this.preferred_language = preferred_language;
+    }
+
+    public String getPreferred_language() {
+        return preferred_language;
+    }
+
+    public void setPreferred_language(String preferred_language) {
+        this.preferred_language = preferred_language;
     }
 
     public int getIsRegistration_done() {

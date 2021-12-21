@@ -449,7 +449,6 @@ public class RegistrationActivity extends AppCompatActivity {
                 brokerButton.setChecked(false);
                 customerButton.setChecked(true);
                 role = "Customer";
-                role = "customer";
 
                 break;
         }
@@ -477,7 +476,7 @@ public class RegistrationActivity extends AppCompatActivity {
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    saveUser(createRequest());
+                    saveUser(createUser());
                     dialogInterface.dismiss();
                     Intent i8 = new Intent(RegistrationActivity.this, ProfileAndRegistrationActivity.class);
                     i8.putExtra("mobile2", mobile);
@@ -577,13 +576,14 @@ public class RegistrationActivity extends AppCompatActivity {
     };
 
     //--------------------------------------create User in API -------------------------------------
-    public UserRequest createRequest() {
+    public UserRequest createUser() {
         UserRequest userRequest = new UserRequest();
         userRequest.setName(name.getText().toString());
         userRequest.setPhone_number(mobile);
         userRequest.setAddress(address.getText().toString());
         userRequest.setUser_type(role);
         userRequest.setIsRegistration_done(1);
+        userRequest.setPreferred_language(language.getText().toString());
         userRequest.setPin_code(pinCode.getText().toString());
         userRequest.setPreferred_location(selectDistrictText.getText().toString());
         userRequest.setState_code(selectStateText.getText().toString());

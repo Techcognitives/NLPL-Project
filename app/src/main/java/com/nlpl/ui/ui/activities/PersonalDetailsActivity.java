@@ -44,7 +44,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
     View panAndAadharView;
 
-    String driverName, vehicleNo, mobile, name, address, pinCode,city, idProof, bankName, accNo, role;
+    String userId, driverName, vehicleNo, mobile, name, address, pinCode,city, idProof, bankName, accNo, role;
     Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, isPanUploaded=false, isFrontUploaded=false, isBackUploaded=false;
 
     @Override
@@ -59,6 +59,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             address = bundle.getString("address");
             pinCode = bundle.getString("pinCode");
             city = bundle.getString("city");
+            userId = bundle.getString("userId");
             bankName = bundle.getString("bankName");
             accNo = bundle.getString("accNo");
             vehicleNo = bundle.getString("vehicleNo");
@@ -357,6 +358,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                     i8.putExtra("address", address);
                     i8.putExtra("pinCode", pinCode);
                     i8.putExtra("city", city);
+                    i8.putExtra("userId", userId);
                     i8.putExtra("bankName", bankName);
                     i8.putExtra("accNo", accNo);
                     i8.putExtra("vehicleNo", vehicleNo);
