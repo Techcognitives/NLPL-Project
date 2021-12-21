@@ -1,5 +1,7 @@
 package com.nlpl.utils;
 
+import com.nlpl.services.AddTruckService;
+import com.nlpl.services.BankService;
 import com.nlpl.services.UserService;
 
 import okhttp3.OkHttpClient;
@@ -32,5 +34,13 @@ public class ApiClient {
     public static UserService getUserService() {
         UserService userService = getRetrofit().create(UserService.class);
         return userService;
+    }
+    public static BankService getBankService() {
+        BankService bankService = getRetrofit().create(BankService.class);
+        return bankService;
+    }
+    public static AddTruckService addTruckService() {
+        AddTruckService addTruckService = getRetrofit().create(AddTruckService.class);
+        return addTruckService;
     }
 }

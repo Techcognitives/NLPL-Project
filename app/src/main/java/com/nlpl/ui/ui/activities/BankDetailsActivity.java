@@ -23,6 +23,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nlpl.R;
+import com.nlpl.model.BankRequest;
+import com.nlpl.model.BankResponse;
+import com.nlpl.model.UserRequest;
+import com.nlpl.model.UserResponse;
+import com.nlpl.services.BankService;
+import com.nlpl.utils.ApiClient;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BankDetailsActivity extends AppCompatActivity {
 
@@ -144,12 +154,14 @@ public class BankDetailsActivity extends AppCompatActivity {
 
     public void onClickBankDetailsOk(View view) {
         if (accountNo.getText().toString().equals(reAccount.getText().toString())) {
+            saveBank(createBankAcc());
             reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
             AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
             my_alert.setTitle("Bank Details added successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
+
                     dialogInterface.dismiss();
                     Intent i8 = new Intent(BankDetailsActivity.this, ProfileAndRegistrationActivity.class);
                     i8.putExtra("mobile2", mobile);
@@ -225,6 +237,33 @@ public class BankDetailsActivity extends AppCompatActivity {
         }
     };
 
+    //--------------------------------------create Bank Details in API -------------------------------------
+    public BankRequest createBankAcc() {
+        BankRequest bankRequest = new BankRequest();
+        bankRequest.setUser_id(userId);
+        bankRequest.setAccountholder_name(name);
+        bankRequest.setAccount_number(accountNo.getText().toString());
+        bankRequest.setRe_enter_acc_num(reAccount.getText().toString());
+        bankRequest.setIFSI_CODE(ifscCode.getText().toString());
+        bankRequest.setIsBankDetails_Given("1");
+        return bankRequest;
+    }
+
+    public void saveBank(BankRequest bankRequest) {
+        Call<BankResponse> bankResponseCall = ApiClient.getBankService().saveBank(bankRequest);
+       bankResponseCall.enqueue(new Callback<BankResponse>() {
+           @Override
+           public void onResponse(Call<BankResponse> call, Response<BankResponse> response) {
+           }
+
+           @Override
+           public void onFailure(Call<BankResponse> call, Throwable t) {
+
+           }
+       });
+    }
+    //-----------------------------------------------------------------------------------------------------
+
     private String blockCharacterSet ="~#^|$%&*!+@₹_-()':;?/={}";
 
     private InputFilter filter = new InputFilter() {
@@ -243,7 +282,7 @@ public class BankDetailsActivity extends AppCompatActivity {
     public void onAccCheck(View view) {
         if (accountNo.getText().toString().equals(reAccount.getText().toString())) {
             reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
-        }else {
+        } else {
             reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
             AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
             my_alert.setTitle("Account number does not match");

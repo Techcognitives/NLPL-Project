@@ -27,9 +27,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nlpl.R;
+import com.nlpl.model.AddTruckRequest;
+import com.nlpl.model.AddTruckResponse;
+import com.nlpl.model.BankRequest;
+import com.nlpl.model.BankResponse;
+import com.nlpl.utils.ApiClient;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class VehicleDetailsActivity extends AppCompatActivity {
 
@@ -310,6 +319,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     public void onClickVehicleDetailsOk(View view) {
         String vehicleNum = vehicleNumberEdit.getText().toString();
         if (!vehicleNum.isEmpty()&&isRcUploaded&&isInsurance&&truckSelected) {
+            saveTruck(createTruck());
             AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
             my_alert.setTitle("Vehicle Details added successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -340,12 +350,36 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             });
             my_alert.show();
 
-
         }else{
             okVehicleDetails.setBackground(getResources().getDrawable(R.drawable.button_de_active));
 
         }
     }
+
+    //--------------------------------------create Bank Details in API -------------------------------------
+    public AddTruckRequest createTruck() {
+        AddTruckRequest addTruckRequest = new AddTruckRequest();
+        addTruckRequest.setUser_id(userId);
+        addTruckRequest.setVehicle_no(vehicleNumberEdit.getText().toString());
+        addTruckRequest.setVehicle_body_type(bodyTypeSelected);
+        return addTruckRequest;
+    }
+
+    public void saveTruck(AddTruckRequest addTruckRequest) {
+        Call<AddTruckResponse> addTruckResponseCall = ApiClient.addTruckService().saveTruck(addTruckRequest);
+        addTruckResponseCall.enqueue(new Callback<AddTruckResponse>() {
+            @Override
+            public void onResponse(Call<AddTruckResponse> call, Response<AddTruckResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<AddTruckResponse> call, Throwable t) {
+
+            }
+        });
+    }
+    //-----------------------------------------------------------------------------------------------------
 
     private TextWatcher vehicleTextWatecher = new TextWatcher() {
         @Override

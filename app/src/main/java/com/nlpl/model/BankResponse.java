@@ -11,13 +11,13 @@ public class BankResponse {
         this.success = success;
     }
 
-    private UserResponse.Data data;
+    private BankResponse.Data data;
 
-    public UserResponse.Data getData() {
+    public BankResponse.Data getData() {
         return data;
     }
 
-    public void setData(UserResponse.Data data) {
+    public void setData(BankResponse.Data data) {
         this.data = data;
     }
 

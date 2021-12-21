@@ -469,14 +469,14 @@ public class RegistrationActivity extends AppCompatActivity {
         if (!nameWatcher.isEmpty() && !pinCodeWatcher.isEmpty() && !addressWatcher.isEmpty() && !stateWatcher.isEmpty() && pinCodeWatcher.length()==6 && !cityWatcher.isEmpty() && (owner || driver || broker || customer)) {
             okButton.setEnabled(true);
             okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-
+            saveUser(createUser());
             AlertDialog.Builder my_alert = new AlertDialog.Builder(RegistrationActivity.this);
             my_alert.setTitle("Registration Successful");
             my_alert.setMessage("Welcome to Find YourTruck\n\nPlease update your profile and explore the platform benefits.");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    saveUser(createUser());
+
                     dialogInterface.dismiss();
                     Intent i8 = new Intent(RegistrationActivity.this, ProfileAndRegistrationActivity.class);
                     i8.putExtra("mobile2", mobile);
