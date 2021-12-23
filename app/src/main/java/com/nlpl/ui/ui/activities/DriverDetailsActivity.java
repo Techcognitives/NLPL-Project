@@ -27,11 +27,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nlpl.R;
+import com.nlpl.model.AddDriverRequest;
+import com.nlpl.model.AddDriverResponse;
+import com.nlpl.model.AddTruckRequest;
+import com.nlpl.model.AddTruckResponse;
+import com.nlpl.utils.ApiClient;
 
 import org.w3c.dom.Text;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DriverDetailsActivity extends AppCompatActivity {
 
@@ -228,6 +237,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 my_alert.show();
 
             } else {
+                saveDriver(createDriver());
                 AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
                 my_alert.setTitle("Driver Details added successfully");
                 my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -258,11 +268,36 @@ public class DriverDetailsActivity extends AppCompatActivity {
                     }
                 });
                 my_alert.show();
-
-
             }
         }
     }
+
+
+
+    //--------------------------------------create Driver Details in API -------------------------------------
+    public AddDriverRequest createDriver() {
+        AddDriverRequest addDriverRequest = new AddDriverRequest();
+        addDriverRequest.setUser_id(userId);
+        addDriverRequest.setDriver_name(driverName.getText().toString());
+        addDriverRequest.setDriver_number(driverMobile.getText().toString());
+        return addDriverRequest;
+    }
+
+    public void saveDriver(AddDriverRequest addDriverRequest) {
+        Call<AddDriverResponse> addDriverResponseCall = ApiClient.addDriverService().saveDriver(addDriverRequest);
+        addDriverResponseCall.enqueue(new Callback<AddDriverResponse>() {
+            @Override
+            public void onResponse(Call<AddDriverResponse> call, Response<AddDriverResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<AddDriverResponse> call, Throwable t) {
+
+            }
+        });
+    }
+    //-----------------------------------------------------------------------------------------------------
 
     private TextWatcher driverWatcher = new TextWatcher() {
         @Override

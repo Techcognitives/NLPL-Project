@@ -2,9 +2,10 @@ package com.nlpl.ui.ui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
-import android.app.DownloadManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -19,11 +20,16 @@ import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
+import com.nlpl.model.BankModel;
+import com.nlpl.model.DriverModel;
+import com.nlpl.model.TruckModel;
+import com.nlpl.ui.ui.adapters.BanksAdapter;
+import com.nlpl.ui.ui.adapters.DriversAdapter;
+import com.nlpl.ui.ui.adapters.TrucksAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,8 +40,20 @@ import java.util.ArrayList;
 public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
     private RequestQueue mQueue;
+    private ArrayList<TruckModel> truckList = new ArrayList<>();
+    private TrucksAdapter truckListAdapter;
+    private RecyclerView truckListRecyclerView;
+
+    private ArrayList<DriverModel> driverList = new ArrayList<>();
+    private DriversAdapter driverListAdapter;
+    private RecyclerView driverListRecyclerView;
+
+    private ArrayList<BankModel> bankList = new ArrayList<>();
+    private BanksAdapter bankListAdapter;
+    private RecyclerView bankListRecyclerView;
+
     View action_bar;
-    TextView driverNameDone, editDriverName, addDriver, addTruck, vehicleNoDone, vehicleEditDone, addBankDetails, editBankDetails, addBankDone, bankNameDone, accNoDone, editPersonalDetails, actionBarTitle, language, addCompany, phoneDone, nameDone, firmDone, firmName, addressDone;
+    TextView addDriver, addTruck, addBankDetails, addBankDone, bankNameDone, accNoDone, editPersonalDetails, actionBarTitle, language, addCompany, phoneDone, nameDone, firmDone, firmName, addressDone;
     ImageView actionBarBackButton;
     Dialog languageDialog;
 
@@ -156,15 +174,10 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         accNoDone = findViewById(R.id.accNoDone);
         bankDone = findViewById(R.id.bankDetailsDoneLayout);
         addBankDone = findViewById(R.id.addBankDone);
-        editBankDetails = findViewById(R.id.editBankDetailsDone);
         addBankDetails = findViewById(R.id.addBankDone);
         vehicleDone = findViewById(R.id.addTrucksDone);
-        vehicleNoDone = findViewById(R.id.vehicleNo);
-        vehicleEditDone = findViewById(R.id.editVehicleNo);
         addTruck = findViewById(R.id.addTruck);
         driverDone = findViewById(R.id.driverDone);
-        driverNameDone = findViewById(R.id.driverNameDone);
-        editDriverName = findViewById(R.id.editDriverNameDone);
         addDriver = findViewById(R.id.addDriverDone);
 
         nameTitle = (TextView) findViewById(R.id.profile_registration_name_text);
@@ -241,10 +254,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
             getIsBankDetailsDoneVisible = true;
             bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_down_personal, 0);
-            bankDone.setVisibility(View.VISIBLE);
-            addBankDone.setVisibility(View.VISIBLE);
-            bankNameDone.setText(bankName);
-            accNoDone.setText(accNo);
+
         }
 
         if (isAddTrucksDone) {
@@ -280,7 +290,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_down_personal, 0);
             vehicleDone.setVisibility(View.VISIBLE);
             addTruck.setVisibility(View.VISIBLE);
-            vehicleNoDone.setText(vehicleNo);
         }
 
         if (isAddDriversDone) {
@@ -316,7 +325,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             getIsAddDriversDoneVisible = true;
             driverDone.setVisibility(View.VISIBLE);
             addDriver.setVisibility(View.VISIBLE);
-            driverNameDone.setText(driverName);
         }
 
         if (isPersonalDetailsDone && isBankDetailsDone && isAddTrucksDone && isAddDriversDone) {
@@ -334,29 +342,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ProfileAndRegistrationActivity.this, PersonalDetailsAndIdProofActivity.class);
-                intent.putExtra("mobile3", mobile);
-                intent.putExtra("name3", name);
-                intent.putExtra("address", address);
-                intent.putExtra("pinCode", pinCode);
-                intent.putExtra("city", city);
-                intent.putExtra("userId", userId);
-                intent.putExtra("bankName", bankName);
-                intent.putExtra("accNo", accNo);
-                intent.putExtra("vehicleNo", vehicleNo);
-                intent.putExtra("driverName", driverName);
-                intent.putExtra("isPersonal", isPersonalDetailsDone);
-                intent.putExtra("isBank", isBankDetailsDone);
-                intent.putExtra("isTrucks", isAddTrucksDone);
-                intent.putExtra("isDriver", isAddDriversDone);
-                intent.putExtra("role", role);
-                startActivity(intent);
-            }
-        });
-
-        editBankDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ProfileAndRegistrationActivity.this, BankDetailsActivity.class);
                 intent.putExtra("mobile3", mobile);
                 intent.putExtra("name3", name);
                 intent.putExtra("address", address);
@@ -422,53 +407,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             }
         });
 
-        vehicleEditDone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
-                intent.putExtra("mobile3", mobile);
-                intent.putExtra("name3", name);
-                intent.putExtra("address", address);
-                intent.putExtra("pinCode", pinCode);
-                intent.putExtra("city", city);
-                intent.putExtra("userId", userId);
-                intent.putExtra("bankName", bankName);
-                intent.putExtra("accNo", accNo);
-                intent.putExtra("vehicleNo", vehicleNo);
-                intent.putExtra("driverName", driverName);
-                intent.putExtra("isPersonal", isPersonalDetailsDone);
-                intent.putExtra("isBank", isBankDetailsDone);
-                intent.putExtra("isTrucks", isAddTrucksDone);
-                intent.putExtra("isDriver", isAddDriversDone);
-                intent.putExtra("role", role);
-                startActivity(intent);
-            }
-        });
-
         addDriver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ProfileAndRegistrationActivity.this, DriverDetailsActivity.class);
-                intent.putExtra("mobile3", mobile);
-                intent.putExtra("name3", name);
-                intent.putExtra("address", address);
-                intent.putExtra("pinCode", pinCode);
-                intent.putExtra("city", city);
-                intent.putExtra("userId", userId);
-                intent.putExtra("bankName", bankName);
-                intent.putExtra("accNo", accNo);
-                intent.putExtra("vehicleNo", vehicleNo);
-                intent.putExtra("driverName", driverName);
-                intent.putExtra("isPersonal", isPersonalDetailsDone);
-                intent.putExtra("isBank", isBankDetailsDone);
-                intent.putExtra("isTrucks", isAddTrucksDone);
-                intent.putExtra("isDriver", isAddDriversDone);
-                intent.putExtra("role", role);
-                startActivity(intent);
-            }
-        });
-
-        editDriverName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ProfileAndRegistrationActivity.this, DriverDetailsActivity.class);
@@ -588,13 +527,13 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
                         vehicleDone.setVisibility(View.GONE);
                         addTruck.setVisibility(View.GONE);
-                        vehicleNoDone.setText(vehicleNo);
+
                     } else {
                         getIsAddTrucksDoneVisible = true;
                         addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_down_personal, 0);
                         vehicleDone.setVisibility(View.VISIBLE);
                         addTruck.setVisibility(View.VISIBLE);
-                        vehicleNoDone.setText(vehicleNo);
+
                     }
                 } else {
                     Intent intent = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
@@ -630,13 +569,11 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         getIsAddDriversDoneVisible = false;
                         driverDone.setVisibility(View.GONE);
                         addDriver.setVisibility(View.GONE);
-                        driverNameDone.setText(driverName);
                     } else {
                         addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_down_personal, 0);
                         getIsAddDriversDoneVisible = true;
                         driverDone.setVisibility(View.VISIBLE);
                         addDriver.setVisibility(View.VISIBLE);
-                        driverNameDone.setText(driverName);
                     }
                 } else {
                     Intent intent = new Intent(ProfileAndRegistrationActivity.this, DriverDetailsActivity.class);
@@ -660,6 +597,260 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //---------------------------- Get Truck Details -------------------------------------------
+        truckListRecyclerView = (RecyclerView) findViewById(R.id.trucks_list_view);
+        mQueue = Volley.newRequestQueue(ProfileAndRegistrationActivity.this);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager.setReverseLayout(true);
+        truckListRecyclerView.setLayoutManager(linearLayoutManager);
+        truckListRecyclerView.setHasFixedSize(true);
+
+        truckListAdapter = new TrucksAdapter(ProfileAndRegistrationActivity.this, truckList);
+        truckListRecyclerView.setAdapter(truckListAdapter);
+
+        getTruckList();
+        //------------------------------------------------------------------------------------------
+
+        //---------------------------- Get Driver Details -------------------------------------------
+        driverListRecyclerView = (RecyclerView) findViewById(R.id.driver_list_view);
+
+        LinearLayoutManager linearLayoutManagerDriver = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManagerDriver.setReverseLayout(true);
+        driverListRecyclerView.setLayoutManager(linearLayoutManagerDriver);
+        driverListRecyclerView.setHasFixedSize(true);
+
+        driverListAdapter = new DriversAdapter(ProfileAndRegistrationActivity.this, driverList);
+        driverListRecyclerView.setAdapter(driverListAdapter);
+
+        getDriverDetailsList();
+        //------------------------------------------------------------------------------------------
+
+        //---------------------------- Get Bank Details -------------------------------------------
+        bankListRecyclerView = (RecyclerView) findViewById(R.id.bank_list_view);
+
+        LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManagerBank.setReverseLayout(true);
+        bankListRecyclerView.setLayoutManager(linearLayoutManagerBank);
+        bankListRecyclerView.setHasFixedSize(true);
+
+        bankListAdapter = new BanksAdapter(ProfileAndRegistrationActivity.this, bankList);
+        bankListRecyclerView.setAdapter(bankListAdapter);
+
+        getBankDetailsList();
+        //------------------------------------------------------------------------------------------
+    }
+
+    private void getUserDetails(){
+
+        String url = "http://65.2.3.41:8080"+"/patient";
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray jsonArray = response.getJSONArray("data");
+                    JSONObject data = jsonArray.getJSONObject(jsonArray.length()-1);
+                    String name = data.getString("name");
+                    Log.i("Name: ", name);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        mQueue.add(request);
+
+    }
+
+    public void getTruckList(){
+        //---------------------------- Get Truck Details -------------------------------------------
+        String url1 = getString(R.string.baseURL) + "/truck/" + userId;
+        Log.i("URL: ", url1);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    truckList = new ArrayList<>();
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+                        TruckModel model = new TruckModel();
+                        model.setUser_id(obj.getString("user_id"));
+                        model.setVehicle_no(obj.getString("vehicle_no"));
+                        model.setVehicle_body_type(obj.getString("vehicle_body_type"));
+                        model.setRc_book(obj.getString("rc_book"));
+                        model.setVehicle_insurance(obj.getString("vehicle_insurance"));
+                        model.setTruck_id(obj.getString("truck_id"));
+                        truckList.add(model);
+                    }
+                    if (truckList.size() > 0) {
+                        truckListAdapter.updateData(truckList);
+                    }else{
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+       //-------------------------------------------------------------------------------------------
+    }
+
+    public void getDriverDetailsList(){
+        //---------------------------- Get Driver Details ------------------------------------------
+        String url1 = getString(R.string.baseURL) + "/driver/" + userId;
+        Log.i("URL: ", url1);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    driverList = new ArrayList<>();
+                    JSONArray driverLists = response.getJSONArray("data");
+                    for (int i = 0; i < driverLists.length(); i++) {
+                        JSONObject obj = driverLists.getJSONObject(i);
+                        DriverModel modelDriver = new DriverModel();
+                        modelDriver.setUser_id(obj.getString("user_id"));
+                        modelDriver.setDriver_id(obj.getString("driver_id"));
+                        modelDriver.setDriver_name(obj.getString("driver_name"));
+                        modelDriver.setUpload_lc(obj.getString("upload_lc"));
+                        modelDriver.setDriver_number(obj.getString("driver_number"));
+                        driverList.add(modelDriver);
+                    }
+                    if (driverList.size() > 0) {
+                        driverListAdapter.updateData(driverList);
+                    }else{
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+        //-------------------------------------------------------------------------------------------
+    }
+
+    public void getBankDetailsList(){
+        //---------------------------- Get Truck Details -------------------------------------------
+        String url1 = getString(R.string.baseURL) + "/bank/" + userId;
+        Log.i("URL: ", url1);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    bankList = new ArrayList<>();
+                    JSONArray bankLists = response.getJSONArray("data");
+                    for (int i = 0; i < bankLists.length(); i++) {
+                        JSONObject obj = bankLists.getJSONObject(i);
+                        BankModel modelBank = new BankModel();
+                        modelBank.setUser_id(obj.getString("user_id"));
+                        modelBank.setAccountholder_name(obj.getString("accountholder_name"));
+                        modelBank.setAccount_number(obj.getString("account_number"));
+                        modelBank.setRe_enter_acc_num(obj.getString("re_enter_acc_num"));
+                        modelBank.setIFSI_CODE(obj.getString("IFSI_CODE"));
+                        bankList.add(modelBank);
+                    }
+                    if (bankList.size() > 0) {
+                        bankListAdapter.updateData(bankList);
+                    }else{
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+        //-------------------------------------------------------------------------------------------
+    }
+
+    public void getTruckDetails(TruckModel obj) {
+        Intent intent = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
+        intent.putExtra("mobile3", mobile);
+        intent.putExtra("name3", name);
+        intent.putExtra("address", address);
+        intent.putExtra("pinCode", pinCode);
+        intent.putExtra("city", city);
+        intent.putExtra("userId", userId);
+        intent.putExtra("bankName", bankName);
+        intent.putExtra("accNo", accNo);
+        intent.putExtra("vehicleNo", vehicleNo);
+        intent.putExtra("driverName", driverName);
+        intent.putExtra("isPersonal", isPersonalDetailsDone);
+        intent.putExtra("isBank", isBankDetailsDone);
+        intent.putExtra("isTrucks", isAddTrucksDone);
+        intent.putExtra("isDriver", isAddDriversDone);
+        intent.putExtra("role", role);
+        startActivity(intent);
+    }
+
+    public void getDriverDetails(DriverModel obj) {
+        Intent intent = new Intent(ProfileAndRegistrationActivity.this, DriverDetailsActivity.class);
+        intent.putExtra("mobile3", mobile);
+        intent.putExtra("name3", name);
+        intent.putExtra("address", address);
+        intent.putExtra("pinCode", pinCode);
+        intent.putExtra("city", city);
+        intent.putExtra("userId", userId);
+        intent.putExtra("bankName", bankName);
+        intent.putExtra("accNo", accNo);
+        intent.putExtra("vehicleNo", vehicleNo);
+        intent.putExtra("driverName", driverName);
+        intent.putExtra("isPersonal", isPersonalDetailsDone);
+        intent.putExtra("isBank", isBankDetailsDone);
+        intent.putExtra("isTrucks", isAddTrucksDone);
+        intent.putExtra("isDriver", isAddDriversDone);
+        intent.putExtra("role", role);
+        startActivity(intent);
+    }
+
+    public void getBankDetails(BankModel obj) {
+        Intent intent = new Intent(ProfileAndRegistrationActivity.this, BankDetailsActivity.class);
+        intent.putExtra("mobile3", mobile);
+        intent.putExtra("name3", name);
+        intent.putExtra("address", address);
+        intent.putExtra("pinCode", pinCode);
+        intent.putExtra("city", city);
+        intent.putExtra("userId", userId);
+        intent.putExtra("bankName", bankName);
+        intent.putExtra("accNo", accNo);
+        intent.putExtra("vehicleNo", vehicleNo);
+        intent.putExtra("driverName", driverName);
+        intent.putExtra("isPersonal", isPersonalDetailsDone);
+        intent.putExtra("isBank", isBankDetailsDone);
+        intent.putExtra("isTrucks", isAddTrucksDone);
+        intent.putExtra("isDriver", isAddDriversDone);
+        intent.putExtra("role", role);
+        startActivity(intent);
     }
 
     public void onClickProfileAndRegister(View view) {

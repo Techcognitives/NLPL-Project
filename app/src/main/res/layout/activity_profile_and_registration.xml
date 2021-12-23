@@ -278,68 +278,21 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/shadow_small"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/profile_registration_bank_details_button"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/profile_registration_bank_details_button"
         app:layout_constraintTop_toBottomOf="@+id/profile_registration_bank_details_button">
 
-        <TextView
-            android:id="@+id/bankNameDone"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/bank_list_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:drawableStart="@drawable/success"
-            android:text="TextView"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toStartOf="@+id/editBankDetailsDone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/editBankDetailsDone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:drawableStart="@drawable/ic_edit"
-            android:paddingLeft="10dp"
-            android:paddingEnd="10dp"
-            android:text="@string/edit"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/bankNameDone"
-            app:layout_constraintTop_toTopOf="@+id/bankNameDone" />
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/acNo"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bankNameDone" />
-
-        <TextView
-            android:id="@+id/accNoDone"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:paddingStart="5dp"
-            android:text="TextView"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView8"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView8"
-            app:layout_constraintTop_toTopOf="@+id/textView8" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
@@ -362,42 +315,19 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/shadow_small"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/profile_registration_truck_details"
         app:layout_constraintStart_toStartOf="@+id/profile_registration_truck_details"
         app:layout_constraintTop_toBottomOf="@+id/profile_registration_truck_details">
 
-        <TextView
-            android:id="@+id/vehicleNo"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/trucks_list_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:drawableStart="@drawable/success"
-            android:text="TextView"
-            android:textColor="@color/black"
-            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/editVehicleNo"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/editVehicleNo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:drawableStart="@drawable/ic_edit"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:text="@string/edit"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/vehicleNo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/vehicleNo" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -423,43 +353,20 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/shadow_small"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/profile_registration_driver_details"
         app:layout_constraintStart_toStartOf="@+id/profile_registration_driver_details"
         app:layout_constraintTop_toBottomOf="@+id/profile_registration_driver_details">
 
-        <TextView
-            android:id="@+id/driverNameDone"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/driver_list_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:drawableStart="@drawable/success"
-            android:text="TextView"
-            android:textColor="@color/black"
-            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/editDriverNameDone"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/editDriverNameDone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:drawableStart="@drawable/ic_edit"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:text="@string/edit"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/driverNameDone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/driverNameDone"
-            app:layout_constraintTop_toTopOf="@+id/driverNameDone" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView

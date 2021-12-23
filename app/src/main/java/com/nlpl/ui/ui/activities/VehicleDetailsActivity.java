@@ -356,7 +356,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         }
     }
 
-    //--------------------------------------create Bank Details in API -------------------------------------
+    //--------------------------------------create vehicle Details in API -------------------------------------
     public AddTruckRequest createTruck() {
         AddTruckRequest addTruckRequest = new AddTruckRequest();
         addTruckRequest.setUser_id(userId);

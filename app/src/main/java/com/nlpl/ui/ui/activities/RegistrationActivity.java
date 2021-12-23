@@ -61,7 +61,7 @@ public class RegistrationActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             mobile = bundle.getString("mobile1");
-            Log.i("Mobile No", mobile);
+            Log.i("Mobile No Registration", mobile);
         }
 
         action_bar = (View) findViewById(R.id.registration_action_bar);

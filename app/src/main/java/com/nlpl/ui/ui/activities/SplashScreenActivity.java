@@ -30,7 +30,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     private static int SPLASH_SCREEN = 2000; //Delay for Animation
     String mobileNoFirebase, role, roleAPI, cityAPI, city, pinCode, pinCodeAPI, phone, userId, mobileNoAPI, userIdAPI, name, nameAPI, addressAPI, address, isRegistrationDoneAPI, isRegistrationDone;
     private FirebaseAuth mFireAuth;
-    ArrayList<String> arrayUserId, arrayMobileNo;
+    ArrayList<String> arrayUserId, arrayMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
     private RequestQueue mQueue;
 
     @Override
@@ -45,6 +45,12 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onStart();
         arrayUserId = new ArrayList<>();
         arrayMobileNo = new ArrayList<>();
+        arrayAddress = new ArrayList<>();
+        arrayCity = new ArrayList<>();
+        arrayPinCode = new ArrayList<>();
+        arrayName = new ArrayList<>();
+        arrayRole = new ArrayList<>();
+        arrayRegDone = new ArrayList<>();
         mQueue = Volley.newRequestQueue(SplashScreenActivity.this); //To Select Specialty and Credentials
 
         //------------------------------------- Handler for Animation --------------------------------------
@@ -65,7 +71,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 String url = getString(R.string.baseURL)+"/user/get";
                 Log.i("URL at Profile:", url);
 
-                JsonObjectRequest request =new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
@@ -85,6 +91,13 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                                 arrayUserId.add(userIdAPI);
                                 arrayMobileNo.add(mobileNoAPI);
+                                arrayAddress.add(addressAPI);
+                                arrayRegDone.add(isRegistrationDoneAPI);
+                                arrayName.add(nameAPI);
+                                arrayRole.add(roleAPI);
+                                arrayCity.add(cityAPI);
+                                arrayPinCode.add(pinCodeAPI);
+                            }
 
                        /* Log.i("user Id:", userIdAPI);
                         Log.i("mobileNo:",mobileNoAPI);
@@ -95,54 +108,57 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                                 for (int j = 0; j < arrayMobileNo.size(); j++) {
                                     if (arrayMobileNo.get(j).equals(mobileNoFirebase)) {
-                                        userId = userIdAPI;
-                                        name = nameAPI;
-                                        phone = mobileNoAPI;
-                                        address = addressAPI;
-                                        pinCode = pinCodeAPI;
-                                        city = cityAPI;
-                                        role = roleAPI;
-                                        isRegistrationDone = isRegistrationDoneAPI;
-                                        Log.i("userIDAPI:", userId);
-                                        Log.i("userName", name);
-                                        Log.i("isregDone:", isRegistrationDone);
+//                                        if (mobileNoAPI.length() == 12) {
+                                            userId = arrayUserId.get(j);
+                                            name = arrayName.get(j);
+                                            phone = arrayMobileNo.get(j);
+                                            address = arrayAddress.get(j);
+                                            pinCode = arrayPinCode.get(j);
+                                            city = arrayCity.get(j);
+                                            role = arrayRole.get(j);
+                                            isRegistrationDone = arrayRegDone.get(j);
+                                            Log.i("userIDAPI:", userId);
+                                            Log.i("userName", name);
+                                            Log.i("isregDone:", isRegistrationDone);
+                                            Log.i("Mobile No API Matches", phone);
 
 
-                                        if (isRegistrationDone.equals("1")) {
-                                            Intent i8 = new Intent(SplashScreenActivity.this, ProfileAndRegistrationActivity.class);
-                                            i8.putExtra("mobile2", phone);
-                                            i8.putExtra("name2", name);
-                                            i8.putExtra("address", address);
-                                            i8.putExtra("pinCode", pinCode);
-                                            i8.putExtra("userId", userId);
-                                            i8.putExtra("city", city);
-                                            i8.putExtra("bankName", "bankName");
-                                            i8.putExtra("accNo", "accNo");
-                                            i8.putExtra("vehicleNo", "vehicleNo");
-                                            i8.putExtra("driverName", "driverName");
-                                            i8.putExtra("isPersonal", false);
-                                            i8.putExtra("isBank", false);
-                                            i8.putExtra("isTrucks", false);
-                                            i8.putExtra("isDriver",false);
-                                            i8.putExtra("role", role);
-                                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                            startActivity(i8);
-                                            overridePendingTransition(0, 0);
-                                            finish();
+                                            if (isRegistrationDone.equals("1")) {
+                                                Intent i8 = new Intent(SplashScreenActivity.this, ProfileAndRegistrationActivity.class);
+                                                i8.putExtra("mobile2", phone);
+                                                i8.putExtra("name2", name);
+                                                i8.putExtra("address", address);
+                                                i8.putExtra("pinCode", pinCode);
+                                                i8.putExtra("userId", userId);
+                                                i8.putExtra("city", city);
+                                                i8.putExtra("bankName", "bankName");
+                                                i8.putExtra("accNo", "accNo");
+                                                i8.putExtra("vehicleNo", "vehicleNo");
+                                                i8.putExtra("driverName", "driverName");
+                                                i8.putExtra("isPersonal", false);
+                                                i8.putExtra("isBank", false);
+                                                i8.putExtra("isTrucks", false);
+                                                i8.putExtra("isDriver", false);
+                                                i8.putExtra("role", role);
+                                                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                startActivity(i8);
+                                                overridePendingTransition(0, 0);
+                                                finish();
 
-                                        } else {
-                                            Intent i8 = new Intent(SplashScreenActivity.this, RegistrationActivity.class);
-                                            i8.putExtra("mobile1", phone);
-                                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                            startActivity(i8);
-                                            overridePendingTransition(0, 0);
-                                            finish();
-                                        }
+                                            } else {
+                                                Intent i8 = new Intent(SplashScreenActivity.this, RegistrationActivity.class);
+                                                i8.putExtra("mobile1", phone);
+                                                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                startActivity(i8);
+                                                overridePendingTransition(0, 0);
+                                                finish();
+                                            }
 
+                                        }else {
+                                        Log.i("mobile no not equal", mobileNoAPI);
                                     }
-                                }
-
-                            }
+                                    }
+//                                }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
