@@ -76,8 +76,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            mobile = bundle.getString("mobile2");
-            name = bundle.getString("name2");
             address = bundle.getString("address");
             pinCode = bundle.getString("pinCode");
             city = bundle.getString("city");
@@ -91,8 +89,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             isAddTrucksDone = bundle.getBoolean("isTrucks");
             isAddDriversDone = bundle.getBoolean("isDriver");
             role = bundle.getString("role");
-            Log.i("Mobile No", mobile);
-            Log.i("Name", name);
             Log.i("Role", role);
         }
 
@@ -183,10 +179,10 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         nameTitle = (TextView) findViewById(R.id.profile_registration_name_text);
         mobileText = (TextView) findViewById(R.id.profile_registration_mobile_text);
 
-        String hello = getString(R.string.hello);
-        nameTitle.setText(hello + " " + name + "!");
-        String s = mobile.substring(2, 12);
-        mobileText.setText("+91 " + s);
+
+        mQueue = Volley.newRequestQueue(ProfileAndRegistrationActivity.this);
+        getUserDetails();
+
 
         if (isPersonalDetailsDone) {
 
@@ -219,7 +215,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_down_personal, 0);
             personal_done.setVisibility(View.VISIBLE);
             addCompany.setVisibility(View.VISIBLE);
-            phoneDone.setText("+91 " + s);
             nameDone.setText(name);
             addressDone.setText(address + ", " + city + " " + pinCode);
 
@@ -446,7 +441,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         personal_done.setVisibility(View.VISIBLE);
                         addCompany.setVisibility(View.VISIBLE);
                         getIsPersonalDetailsDoneVisible = true;
-                        phoneDone.setText("+91 " + s);
                         nameDone.setText(name);
                         addressDone.setText(address + ", " + city + " " + pinCode);
                     }
@@ -600,7 +594,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
         //---------------------------- Get Truck Details -------------------------------------------
         truckListRecyclerView = (RecyclerView) findViewById(R.id.trucks_list_view);
-        mQueue = Volley.newRequestQueue(ProfileAndRegistrationActivity.this);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setReverseLayout(true);
@@ -639,20 +632,28 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         bankListRecyclerView.setAdapter(bankListAdapter);
 
         getBankDetailsList();
+
         //------------------------------------------------------------------------------------------
     }
 
     private void getUserDetails(){
 
-        String url = "http://65.2.3.41:8080"+"/patient";
+        String url = getString(R.string.baseURL) + "/user/" + userId;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    JSONArray jsonArray = response.getJSONArray("data");
-                    JSONObject data = jsonArray.getJSONObject(jsonArray.length()-1);
-                    String name = data.getString("name");
-                    Log.i("Name: ", name);
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+                        name =  obj.getString("name");
+                        mobile = obj.getString("phone_number");
+
+                        String hello = getString(R.string.hello);
+                        nameTitle.setText(hello + " " + name + "!");
+                        String s1 = mobile.substring(2, 12);
+                        mobileText.setText("+91 " + s1);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
