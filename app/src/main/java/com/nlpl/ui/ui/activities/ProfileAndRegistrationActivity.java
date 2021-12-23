@@ -656,8 +656,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
         }, new com.android.volley.Response.ErrorListener() {
             @Override
