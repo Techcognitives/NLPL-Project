@@ -60,7 +60,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     private RecyclerView bankListRecyclerView;
 
     private boolean isRecExpanded = false;
-    boolean isPersonalDetailsDone = false, isBankDetailsDone = true, isTruckDetailsDone = true, isDriverDetailsDone = true;
+    boolean isPersonalDetailsDone = true, isBankDetailsDone = true, isTruckDetailsDone = true, isDriverDetailsDone = true;
 
     private static String BASE_URL = "http://65.2.3.41:8080";
     private UserService userService;

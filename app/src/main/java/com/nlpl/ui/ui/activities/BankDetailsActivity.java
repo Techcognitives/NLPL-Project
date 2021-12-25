@@ -3,12 +3,16 @@ package com.nlpl.ui.ui.activities;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -30,6 +34,9 @@ import com.nlpl.model.UserResponse;
 import com.nlpl.services.BankService;
 import com.nlpl.utils.ApiClient;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,6 +53,11 @@ public class BankDetailsActivity extends AppCompatActivity {
 
     EditText bankName, accountNo, reAccount, ifscCode;
     Button okButton;
+
+    Button uploadCC;
+    TextView textCC, editCC;
+    int GET_FROM_GALLERY=0;
+    ImageView cancelledCheckImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,7 +162,66 @@ public class BankDetailsActivity extends AppCompatActivity {
         reAccount.addTextChangedListener(bankDetailsWatcher);
         ifscCode.addTextChangedListener(bankDetailsWatcher);
 
+        uploadCC = findViewById(R.id.bank_details_canceled_check_upload);
+        editCC = findViewById(R.id.bank_details_edit_canceled_check);
+        textCC = findViewById(R.id.bank_details_canceled_check_text);
+        cancelledCheckImage = (ImageView) findViewById(R.id.bank_details_canceled_check_image);
+
+        uploadCC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+            }
+        });
+
+        editCC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+            }
+        });
+
     }
+
+    //-----------------------------------------------upload Image------------------------------------------------------------
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //Detects request code for PAN
+        if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
+
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
+            my_alert.setTitle("Canceled Check uploaded successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            my_alert.show();
+
+            textCC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadCC.setVisibility(View.INVISIBLE);
+            editCC.setVisibility(View.VISIBLE);
+
+
+            Uri selectedImage = data.getData();
+            cancelledCheckImage.setImageURI(selectedImage);
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+
+
 
     public void onClickBankDetailsOk(View view) {
         if (accountNo.getText().toString().equals(reAccount.getText().toString())) {
