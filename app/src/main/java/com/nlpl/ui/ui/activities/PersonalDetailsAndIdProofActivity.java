@@ -62,7 +62,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     TextView panCardText, editPAN, editBack, editFront, frontText, backText;
     Button uploadPAN, uploadF, uploadB;
     ImageView imgPAN, imgF, imgB;
-    RadioButton radioAadhar, radioVoter;
+
     private int GET_FROM_GALLERY=0;
     private int GET_FROM_GALLERY1=1;
     private int GET_FROM_GALLERY2=2;
@@ -168,19 +168,12 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         selectDistrictText = (TextView) personalAndAddressView.findViewById(R.id.registration_select_city);
         okButton = (Button) findViewById(R.id.personal_details_id_proof_ok_button);
 
-        String s = mobile.substring(3,13);
-
-        name.setText(personName);
-        pinCode.setText(pinCodeBundle);
-        address.setText(addressBundle);
-        mobileEdit.setText(s);
-
         name.addTextChangedListener(proofAndPersonalWatcher);
         selectStateText.addTextChangedListener(proofAndPersonalWatcher);
         selectDistrictText.addTextChangedListener(proofAndPersonalWatcher);
-        pinCode.addTextChangedListener(proofAndPersonalWatcher);
+        pinCode.addTextChangedListener(pinCodeWatcher);
         address.addTextChangedListener(proofAndPersonalWatcher);
-        mobileEdit.addTextChangedListener(proofAndPersonalWatcher);
+        mobileEdit.addTextChangedListener(mobileNumberTextWatcher);
 
         name.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
@@ -450,8 +443,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         editPAN = panAndAadharView.findViewById(R.id.edit1);
         editFront = panAndAadharView.findViewById(R.id.editFront);
         editBack = panAndAadharView.findViewById(R.id.editBack);
-        radioAadhar = panAndAadharView.findViewById(R.id.radioAadhar);
-        radioVoter = panAndAadharView.findViewById(R.id.radioVoter);
 
 //        if (isPersonalDetailsDone){
 //            panCardText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
@@ -505,32 +496,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY2);
-            }
-        });
-
-        radioVoter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                radioAadhar.setChecked(false);
-                radioVoter.setChecked(true);
-                frontText.setText("Voter ID Front");
-                backText.setText("Voter ID Back");
-                imgF.setImageDrawable(getDrawable(R.drawable.voter_id_front));
-                imgB.setImageDrawable(getDrawable(R.drawable.voter_id_back));
-                idProof = "voter";
-            }
-        });
-
-        radioAadhar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                radioAadhar.setChecked(true);
-                radioVoter.setChecked(false);
-                frontText.setText("Aadhar Front");
-                backText.setText("Aadhar Back");
-                imgF.setImageDrawable(getDrawable(R.drawable.aadhar_card_front));
-                imgB.setImageDrawable(getDrawable(R.drawable.aadhar_card_back));
-                idProof = "aadhar";
             }
         });
         //------------------------------------------------------------------------------------------
@@ -701,12 +666,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left_red));
             }
 
-            if (pinCodeWatcher.length() != 6){
-                pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
-            }else{
-                pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
-            }
-
             if (!nameWatcher.isEmpty() && !pinCodeWatcher.isEmpty() && !addressWatcher.isEmpty() && !stateWatcher.isEmpty() && pinCodeWatcher.length()==6 && !cityWatcher.isEmpty() && (owner || driver || broker || customer)) {
                 okButton.setEnabled(true);
                 okButton.setBackgroundResource((R.drawable.button_active));
@@ -736,9 +695,56 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             return null;
         }
     };
+
+    private TextWatcher pinCodeWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String pinCodeWatcher = pinCode.getText().toString().trim();
+
+            if (pinCodeWatcher.length() != 6){
+                pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+            }else{
+                pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+
+    private TextWatcher mobileNumberTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String mobileNoWatcher = mobileEdit.getText().toString().trim();
+
+            if (mobileNoWatcher.length() == 10){
+                mobileEdit.setBackground(getResources().getDrawable(R.drawable.mobile_number_right));
+                series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left));
+            }else{
+                mobileEdit.setBackground(getResources().getDrawable(R.drawable.mobile_number_right_red));
+                series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left_red));
+            }
+        }
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
     //----------------------------------------------------------------------------------------------
 
-    //-----------------------------------------------upload Image------------------------------------------------------------
+    //-------------------------------upload Image---------------------------------------------------
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

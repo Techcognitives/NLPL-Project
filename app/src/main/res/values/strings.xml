@@ -979,8 +979,8 @@
     <string name="mobNo">+91</string>
     <string name="personalDetails"><p>   </p>Personal Details</string>
     <string name="BankDetails"><p>   </p>Bank Details</string>
-    <string name="AddTrucks"><p>   </p>Add Trucks</string>
-    <string name="AddDrivers"><p>   </p>Add Drivers</string>
+    <string name="AddTrucks"><p>   </p>My Trucks</string>
+    <string name="AddDrivers"><p>   </p>My Drivers</string>
     //----------------------------------------------------------------------------------------------
 
     //---------------------------------------Personal Details Activity------------------------------
@@ -1021,7 +1021,7 @@
     //----------------------------------------------------------------------------------------------
 
     //---------------------------------------Driver Details Activity--------------------------------
-    <string name="DriverName">Driver Name</string>
+    <string name="DriverName">Driver Name, Number &amp; Email</string>
     <string name="EnterDriverName">Enter Driver Name</string>
     <string name="UploadDriverLicense">Upload Driver License</string>
     <string name="DriverLicense">Driver License</string>

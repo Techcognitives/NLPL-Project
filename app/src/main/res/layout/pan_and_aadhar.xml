@@ -7,7 +7,6 @@
     android:id="@+id/action_bar_constrain"
     android:background="@color/white">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/driver_details_driver_license_constrain"
         android:layout_width="0dp"
@@ -109,61 +108,32 @@
         android:id="@+id/textView17"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:paddingStart="20dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:text="@string/UploadAny"
+        android:text="@string/Aadhar"
         android:textColor="#000000"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/radioAadhar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/driver_details_driver_license_constrain" />
-
-    <RadioButton
-        android:id="@+id/radioAadhar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:buttonTint="@color/button_blue"
-        android:checked="true"
-        android:paddingEnd="10dp"
-        android:text="@string/Aadhar"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
-        app:layout_constraintEnd_toStartOf="@+id/radioVoter"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView17" />
-
-    <RadioButton
-        android:id="@+id/radioVoter"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:buttonTint="@color/button_blue"
-        android:text="@string/VoterId"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/radioAadhar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.241"
-        app:layout_constraintStart_toEndOf="@+id/radioAadhar"
-        app:layout_constraintTop_toTopOf="@+id/radioAadhar" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/shadow_file"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioAadhar">
+        app:layout_constraintTop_toBottomOf="@+id/textView17">
 
         <ImageView
             android:id="@+id/imageF"
@@ -220,10 +190,10 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:drawableStart="@drawable/ic_edit"
+            android:padding="10dp"
             android:text="@string/edit"
             android:textColor="#000000"
             android:textSize="18sp"
-            android:padding="10dp"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/frontText"
             app:layout_constraintEnd_toEndOf="parent"
@@ -239,7 +209,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/shadow_file"
         app:layout_constraintEnd_toEndOf="parent"

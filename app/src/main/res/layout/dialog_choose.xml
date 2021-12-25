@@ -3,7 +3,79 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_gravity="bottom"
+    android:paddingBottom="50dp"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
     android:background="@drawable/language_selector_top_corners"
     android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/dialog_choose_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="0dp"
+        android:text="Choose any of the following"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/dialog_choose_camera_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edit_text_border"
+        android:padding="30dp"
+        app:layout_constraintEnd_toStartOf="@+id/dialog__choose_photo_lirary_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_choose_title"
+        app:srcCompat="@drawable/ic_camera" />
+
+    <ImageView
+        android:id="@+id/dialog__choose_photo_lirary_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/edit_text_border"
+        android:padding="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dialog_choose_camera_image"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_choose_title"
+        app:srcCompat="@drawable/ic_photo_library" />
+
+    <TextView
+        android:id="@+id/dialog_camera_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Camera"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/dialog_choose_camera_image"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toStartOf="@+id/dialog_choose_camera_image"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_choose_camera_image"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/dialog_photo_library_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Photo Library"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/dialog__choose_photo_lirary_image"
+        app:layout_constraintStart_toStartOf="@+id/dialog__choose_photo_lirary_image"
+        app:layout_constraintTop_toBottomOf="@+id/dialog__choose_photo_lirary_image" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

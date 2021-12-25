@@ -49,15 +49,15 @@
         android:id="@+id/driver_details_driver_license_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingStart="20dp"
         android:layout_marginTop="20dp"
+        android:paddingStart="20dp"
         android:text="@string/UploadDriverLicense"
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/driver_details_mobile_number_edit" />
+        app:layout_constraintTop_toBottomOf="@+id/driver_details_email_edit" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/driver_details_driver_license_constrain"
@@ -196,5 +196,22 @@
         app:layout_constraintStart_toEndOf="@+id/driver_details_mobile_prefix"
         app:layout_constraintTop_toBottomOf="@+id/driver_details_driver_name_edit"
         tools:ignore="Autofill" />
+
+    <EditText
+        android:id="@+id/driver_details_email_edit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/edit_text_border"
+        android:ems="10"
+        android:hint="Enter Driver Email"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/driver_details_mobile_number_edit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

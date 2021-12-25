@@ -38,6 +38,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
     EditText companyName, pinCode, address, gstNumber, panNumber;
     Button okButton;
     TextView selectStateText, selectDistrictText;
+    String companyType = "Proprietary";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +114,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
         panNumber.addTextChangedListener(companyWatcher);
         selectStateText.addTextChangedListener(companyWatcher);
         selectDistrictText.addTextChangedListener(companyWatcher);
-        pinCode.addTextChangedListener(companyWatcher);
+        pinCode.addTextChangedListener(pinCodeWatcher);
         address.addTextChangedListener(companyWatcher);
 
         companyName.requestFocus();
@@ -382,12 +383,6 @@ public class CompanyDetailsActivity extends AppCompatActivity {
             String gstNumberWatcher = gstNumber.getText().toString().trim();
             String panNumberWatcher = panNumber.getText().toString().trim();
 
-            if (pinCodeWatcher.length() != 6){
-                pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
-            }else{
-                pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
-            }
-
             if (!nameWatcher.isEmpty() && !gstNumberWatcher.isEmpty() && !panNumberWatcher.isEmpty() && !pinCodeWatcher.isEmpty() && !addressWatcher.isEmpty() && pinCodeWatcher.length()==6 && !stateWatcher.isEmpty() && !cityWatcher.isEmpty()) {
                 okButton.setEnabled(true);
                 okButton.setBackgroundResource((R.drawable.button_active));
@@ -421,4 +416,43 @@ public class CompanyDetailsActivity extends AppCompatActivity {
     public void onClickCompanyDetailsOK(View view) {
         CompanyDetailsActivity.this.finish();
     }
+
+    public void onClickCompanyRadio(View view) {
+        switch (view.getId()) {
+            case R.id.company_details_proprietary_radio_button:
+                companyType = "Proprietary";
+                break;
+
+            case R.id.company_details_partnership_radio_button:
+                companyType = "Partnership";
+                break;
+
+            case R.id.company_details_pvt_ltd_radio_button:
+                companyType = "Pvt. Ltd.";
+                break;
+        }
+    }
+
+    private TextWatcher pinCodeWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String pinCodeWatcher = pinCode.getText().toString().trim();
+
+            if (pinCodeWatcher.length() != 6){
+                pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+            }else{
+                pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
 }

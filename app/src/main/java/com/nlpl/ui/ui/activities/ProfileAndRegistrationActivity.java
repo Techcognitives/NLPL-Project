@@ -27,6 +27,8 @@ import com.nlpl.R;
 import com.nlpl.model.BankModel;
 import com.nlpl.model.DriverModel;
 import com.nlpl.model.TruckModel;
+import com.nlpl.model.UserUpdate;
+import com.nlpl.services.UserService;
 import com.nlpl.ui.ui.adapters.BanksAdapter;
 import com.nlpl.ui.ui.adapters.DriversAdapter;
 import com.nlpl.ui.ui.adapters.TrucksAdapter;
@@ -36,6 +38,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
@@ -52,8 +59,14 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     private BanksAdapter bankListAdapter;
     private RecyclerView bankListRecyclerView;
 
+    private boolean isRecExpanded = false;
+    boolean isPersonalDetailsDone = false, isBankDetailsDone = true, isTruckDetailsDone = true, isDriverDetailsDone = true;
+
+    private static String BASE_URL = "http://65.2.3.41:8080";
+    private UserService userService;
+
     View action_bar;
-    TextView addDriver, addTruck, addBankDetails, addBankDone, bankNameDone, accNoDone, editPersonalDetails, actionBarTitle, language, addCompany, phoneDone, nameDone, firmDone, firmName, addressDone;
+    TextView addDriver, addTruck, addBankDetails, accNoDone, editPersonalDetails, actionBarTitle, language, addCompany, phoneDone, nameDone, firmName, addressDone;
     ImageView actionBarBackButton;
     Dialog languageDialog;
 
@@ -67,8 +80,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     TextView nameTitle, mobileText;
     ConstraintLayout personal_done, bankDone, vehicleDone, driverDone;
 
-    Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, getIsPersonalDetailsDoneVisible = false, getIsBankDetailsDoneVisible = false, getIsAddTrucksDoneVisible = false, getIsAddDriversDoneVisible = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,20 +87,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            address = bundle.getString("address");
-            pinCode = bundle.getString("pinCode");
-            city = bundle.getString("city");
             userId = bundle.getString("userId");
-            bankName = bundle.getString("bankName");
-            accNo = bundle.getString("accNo");
-            vehicleNo = bundle.getString("vehicleNo");
-            driverName = bundle.getString("driverName");
-            isPersonalDetailsDone = bundle.getBoolean("isPersonal");
-            isBankDetailsDone = bundle.getBoolean("isBank");
-            isAddTrucksDone = bundle.getBoolean("isTrucks");
-            isAddDriversDone = bundle.getBoolean("isDriver");
-            role = bundle.getString("role");
-            Log.i("Role", role);
         }
 
         action_bar = findViewById(R.id.profile_registration_action_bar);
@@ -148,12 +146,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         bottomNav = (View) findViewById(R.id.profile_registration_bottom_nav_bar);
         truckLoadText = (TextView) bottomNav.findViewById(R.id.dhuejsfcb);
 
-        if (role.equals("Customer")) {
-            truckLoadText.setText("Post a Load");
-        } else {
-            truckLoadText.setText("Post a Trip");
-        }
-
         personalDetails = findViewById(R.id.profile_registration_personal_details_button);
         bankDetails = findViewById(R.id.profile_registration_bank_details_button);
         addTrucks = findViewById(R.id.profile_registration_truck_details);
@@ -162,14 +154,11 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         addCompany = findViewById(R.id.add_company);
         phoneDone = findViewById(R.id.phone_done);
         nameDone = findViewById(R.id.name_done);
-        firmDone = findViewById(R.id.firm_done);
         firmName = findViewById(R.id.firm_name_done);
         addressDone = findViewById(R.id.address_done);
         editPersonalDetails = findViewById(R.id.editPersonalDetails);
-        bankNameDone = findViewById(R.id.bankNameDone);
         accNoDone = findViewById(R.id.accNoDone);
         bankDone = findViewById(R.id.bankDetailsDoneLayout);
-        addBankDone = findViewById(R.id.addBankDone);
         addBankDetails = findViewById(R.id.addBankDone);
         vehicleDone = findViewById(R.id.addTrucksDone);
         addTruck = findViewById(R.id.addTruck);
@@ -183,414 +172,12 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         mQueue = Volley.newRequestQueue(ProfileAndRegistrationActivity.this);
         getUserDetails();
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-        if (isPersonalDetailsDone) {
-
-            bankDone.setVisibility(View.GONE);
-            addBankDone.setVisibility(View.GONE);
-            if (isBankDetailsDone) {
-                bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
-            } else {
-                bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
-            }
-
-            vehicleDone.setVisibility(View.GONE);
-            addTruck.setVisibility(View.GONE);
-            if (isAddTrucksDone) {
-                addTrucks.setText(" My Trucks");
-                addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
-            } else {
-                addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck, 0, R.drawable.ic_right, 0);
-            }
-            driverDone.setVisibility(View.GONE);
-            addDriver.setVisibility(View.GONE);
-            if (isAddDriversDone) {
-                addDrivers.setText(" My Drivers");
-                addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
-            } else {
-                addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
-            }
-
-            getIsPersonalDetailsDoneVisible = true;
-            personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_down_personal, 0);
-            personal_done.setVisibility(View.VISIBLE);
-            addCompany.setVisibility(View.VISIBLE);
-            nameDone.setText(name);
-            addressDone.setText(address + ", " + city + " " + pinCode);
-
-        }
-
-        if (isBankDetailsDone) {
-
-            personal_done.setVisibility(View.GONE);
-            addCompany.setVisibility(View.GONE);
-            if (isPersonalDetailsDone) {
-                personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
-            } else {
-                personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
-            }
-
-            vehicleDone.setVisibility(View.GONE);
-            addTruck.setVisibility(View.GONE);
-            if (isAddTrucksDone) {
-                addTrucks.setText(" My Trucks");
-                addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
-            } else {
-                addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck, 0, R.drawable.ic_right, 0);
-            }
-            driverDone.setVisibility(View.GONE);
-            addDriver.setVisibility(View.GONE);
-            if (isAddDriversDone) {
-                addDrivers.setText(" My Drivers");
-                addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
-            } else {
-                addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
-            }
-
-            getIsBankDetailsDoneVisible = true;
-            bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_down_personal, 0);
-
-        }
-
-        if (isAddTrucksDone) {
-
-            addTrucks.setText(" My Trucks");
-
-            bankDone.setVisibility(View.GONE);
-            addBankDone.setVisibility(View.GONE);
-            if (isBankDetailsDone) {
-                bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
-            } else {
-                bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
-            }
-
-            personal_done.setVisibility(View.GONE);
-            addCompany.setVisibility(View.GONE);
-            if (isPersonalDetailsDone) {
-                personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
-            } else {
-                personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
-            }
-
-            driverDone.setVisibility(View.GONE);
-            addDriver.setVisibility(View.GONE);
-            if (isAddDriversDone) {
-                addDrivers.setText(" My Drivers");
-                addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
-            } else {
-                addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
-            }
-
-            getIsAddTrucksDoneVisible = true;
-            addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_down_personal, 0);
-            vehicleDone.setVisibility(View.VISIBLE);
-            addTruck.setVisibility(View.VISIBLE);
-        }
-
-        if (isAddDriversDone) {
-
-            addDrivers.setText(" My Drivers");
-
-            bankDone.setVisibility(View.GONE);
-            addBankDone.setVisibility(View.GONE);
-            if (isBankDetailsDone) {
-                bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
-            } else {
-                bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
-            }
-
-            vehicleDone.setVisibility(View.GONE);
-            addTruck.setVisibility(View.GONE);
-            if (isAddTrucksDone) {
-                addTrucks.setText(" My Trucks");
-                addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
-            } else {
-                addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck, 0, R.drawable.ic_right, 0);
-            }
-
-            personal_done.setVisibility(View.GONE);
-            addCompany.setVisibility(View.GONE);
-            if (isPersonalDetailsDone) {
-                personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
-            } else {
-                personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
-            }
-
-            addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_down_personal, 0);
-            getIsAddDriversDoneVisible = true;
-            driverDone.setVisibility(View.VISIBLE);
-            addDriver.setVisibility(View.VISIBLE);
-        }
-
-        if (isPersonalDetailsDone && isBankDetailsDone && isAddTrucksDone && isAddDriversDone) {
-        }
-
-        addCompany.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ProfileAndRegistrationActivity.this, CompanyDetailsActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        editPersonalDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ProfileAndRegistrationActivity.this, PersonalDetailsAndIdProofActivity.class);
-                intent.putExtra("mobile3", mobile);
-                intent.putExtra("name3", name);
-                intent.putExtra("address", address);
-                intent.putExtra("pinCode", pinCode);
-                intent.putExtra("city", city);
-                intent.putExtra("userId", userId);
-                intent.putExtra("bankName", bankName);
-                intent.putExtra("accNo", accNo);
-                intent.putExtra("vehicleNo", vehicleNo);
-                intent.putExtra("driverName", driverName);
-                intent.putExtra("isPersonal", isPersonalDetailsDone);
-                intent.putExtra("isBank", isBankDetailsDone);
-                intent.putExtra("isTrucks", isAddTrucksDone);
-                intent.putExtra("isDriver", isAddDriversDone);
-                intent.putExtra("role", role);
-                startActivity(intent);
-            }
-        });
-
-        addBankDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ProfileAndRegistrationActivity.this, BankDetailsActivity.class);
-                intent.putExtra("mobile3", mobile);
-                intent.putExtra("name3", name);
-                intent.putExtra("address", address);
-                intent.putExtra("pinCode", pinCode);
-                intent.putExtra("city", city);
-                intent.putExtra("userId", userId);
-                intent.putExtra("bankName", bankName);
-                intent.putExtra("accNo", accNo);
-                intent.putExtra("vehicleNo", vehicleNo);
-                intent.putExtra("driverName", driverName);
-                intent.putExtra("isPersonal", isPersonalDetailsDone);
-                intent.putExtra("isBank", isBankDetailsDone);
-                intent.putExtra("isTrucks", isAddTrucksDone);
-                intent.putExtra("isDriver", isAddDriversDone);
-                intent.putExtra("role", role);
-                startActivity(intent);
-            }
-        });
-
-        addTruck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
-                intent.putExtra("mobile3", mobile);
-                intent.putExtra("name3", name);
-                intent.putExtra("address", address);
-                intent.putExtra("pinCode", pinCode);
-                intent.putExtra("city", city);
-                intent.putExtra("userId", userId);
-                intent.putExtra("bankName", bankName);
-                intent.putExtra("accNo", accNo);
-                intent.putExtra("vehicleNo", vehicleNo);
-                intent.putExtra("driverName", driverName);
-                intent.putExtra("isPersonal", isPersonalDetailsDone);
-                intent.putExtra("isBank", isBankDetailsDone);
-                intent.putExtra("isTrucks", isAddTrucksDone);
-                intent.putExtra("isDriver", isAddDriversDone);
-                intent.putExtra("role", role);
-                startActivity(intent);
-            }
-        });
-
-        addDriver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ProfileAndRegistrationActivity.this, DriverDetailsActivity.class);
-                intent.putExtra("mobile3", mobile);
-                intent.putExtra("name3", name);
-                intent.putExtra("address", address);
-                intent.putExtra("pinCode", pinCode);
-                intent.putExtra("city", city);
-                intent.putExtra("userId", userId);
-                intent.putExtra("bankName", bankName);
-                intent.putExtra("accNo", accNo);
-                intent.putExtra("vehicleNo", vehicleNo);
-                intent.putExtra("driverName", driverName);
-                intent.putExtra("isPersonal", isPersonalDetailsDone);
-                intent.putExtra("isBank", isBankDetailsDone);
-                intent.putExtra("isTrucks", isAddTrucksDone);
-                intent.putExtra("isDriver", isAddDriversDone);
-                intent.putExtra("role", role);
-                startActivity(intent);
-            }
-        });
-
-
-        personalDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (isPersonalDetailsDone) {
-                    if (getIsPersonalDetailsDoneVisible) {
-                        personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
-                        personal_done.setVisibility(View.GONE);
-                        addCompany.setVisibility(View.GONE);
-                        getIsPersonalDetailsDoneVisible = false;
-                    } else {
-                        personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_down_personal, 0);
-                        personal_done.setVisibility(View.VISIBLE);
-                        addCompany.setVisibility(View.VISIBLE);
-                        getIsPersonalDetailsDoneVisible = true;
-                        nameDone.setText(name);
-                        addressDone.setText(address + ", " + city + " " + pinCode);
-                    }
-
-                } else {
-                    Intent intent = new Intent(ProfileAndRegistrationActivity.this, PersonalDetailsActivity.class);
-                    intent.putExtra("mobile3", mobile);
-                    intent.putExtra("name3", name);
-                    intent.putExtra("address", address);
-                    intent.putExtra("pinCode", pinCode);
-                    intent.putExtra("city", city);
-                    intent.putExtra("userId", userId);
-                    intent.putExtra("bankName", bankName);
-                    intent.putExtra("accNo", accNo);
-                    intent.putExtra("vehicleNo", vehicleNo);
-                    intent.putExtra("driverName", driverName);
-                    intent.putExtra("isPersonal", isPersonalDetailsDone);
-                    intent.putExtra("isBank", isBankDetailsDone);
-                    intent.putExtra("isTrucks", isAddTrucksDone);
-                    intent.putExtra("isDriver", isAddDriversDone);
-                    intent.putExtra("role", role);
-                    startActivity(intent);
-//                finish();
-                }
-            }
-        });
-
-        bankDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (isBankDetailsDone) {
-                    if (getIsBankDetailsDoneVisible) {
-                        getIsBankDetailsDoneVisible = false;
-                        bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
-                        bankDone.setVisibility(View.GONE);
-                        addBankDone.setVisibility(View.GONE);
-
-                    } else {
-                        getIsBankDetailsDoneVisible = true;
-                        bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_down_personal, 0);
-                        bankDone.setVisibility(View.VISIBLE);
-                        addBankDone.setVisibility(View.VISIBLE);
-                        bankNameDone.setText(bankName);
-                        accNoDone.setText(accNo);
-                    }
-                } else {
-                    Intent intent = new Intent(ProfileAndRegistrationActivity.this, BankDetailsActivity.class);
-                    intent.putExtra("mobile3", mobile);
-                    intent.putExtra("name3", name);
-                    intent.putExtra("address", address);
-                    intent.putExtra("pinCode", pinCode);
-                    intent.putExtra("city", city);
-                    intent.putExtra("userId", userId);
-                    intent.putExtra("bankName", bankName);
-                    intent.putExtra("accNo", accNo);
-                    intent.putExtra("vehicleNo", vehicleNo);
-                    intent.putExtra("driverName", driverName);
-                    intent.putExtra("isPersonal", isPersonalDetailsDone);
-                    intent.putExtra("isBank", isBankDetailsDone);
-                    intent.putExtra("isTrucks", isAddTrucksDone);
-                    intent.putExtra("isDriver", isAddDriversDone);
-                    intent.putExtra("role", role);
-                    startActivity(intent);
-//                finish();
-                }
-            }
-        });
-
-        addTrucks.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (isAddTrucksDone) {
-                    addTrucks.setText(" My Trucks");
-                    if (getIsAddTrucksDoneVisible) {
-                        getIsAddTrucksDoneVisible = false;
-                        addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
-                        vehicleDone.setVisibility(View.GONE);
-                        addTruck.setVisibility(View.GONE);
-
-                    } else {
-                        getIsAddTrucksDoneVisible = true;
-                        addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_down_personal, 0);
-                        vehicleDone.setVisibility(View.VISIBLE);
-                        addTruck.setVisibility(View.VISIBLE);
-
-                    }
-                } else {
-                    Intent intent = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
-                    intent.putExtra("mobile3", mobile);
-                    intent.putExtra("name3", name);
-                    intent.putExtra("address", address);
-                    intent.putExtra("pinCode", pinCode);
-                    intent.putExtra("city", city);
-                    intent.putExtra("userId", userId);
-                    intent.putExtra("bankName", bankName);
-                    intent.putExtra("accNo", accNo);
-                    intent.putExtra("vehicleNo", vehicleNo);
-                    intent.putExtra("driverName", driverName);
-                    intent.putExtra("isPersonal", isPersonalDetailsDone);
-                    intent.putExtra("isBank", isBankDetailsDone);
-                    intent.putExtra("isTrucks", isAddTrucksDone);
-                    intent.putExtra("isDriver", isAddDriversDone);
-                    intent.putExtra("role", role);
-                    startActivity(intent);
-//                finish();
-                }
-            }
-        });
-
-        addDrivers.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (isAddDriversDone) {
-                    addDrivers.setText(" My Drivers");
-                    if (getIsAddDriversDoneVisible) {
-                        addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
-                        getIsAddDriversDoneVisible = false;
-                        driverDone.setVisibility(View.GONE);
-                        addDriver.setVisibility(View.GONE);
-                    } else {
-                        addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_down_personal, 0);
-                        getIsAddDriversDoneVisible = true;
-                        driverDone.setVisibility(View.VISIBLE);
-                        addDriver.setVisibility(View.VISIBLE);
-                    }
-                } else {
-                    Intent intent = new Intent(ProfileAndRegistrationActivity.this, DriverDetailsActivity.class);
-                    intent.putExtra("mobile3", mobile);
-                    intent.putExtra("name3", name);
-                    intent.putExtra("address", address);
-                    intent.putExtra("pinCode", pinCode);
-                    intent.putExtra("city", city);
-                    intent.putExtra("userId", userId);
-                    intent.putExtra("bankName", bankName);
-                    intent.putExtra("accNo", accNo);
-                    intent.putExtra("vehicleNo", vehicleNo);
-                    intent.putExtra("driverName", driverName);
-                    intent.putExtra("isPersonal", isPersonalDetailsDone);
-                    intent.putExtra("isBank", isBankDetailsDone);
-                    intent.putExtra("isTrucks", isAddTrucksDone);
-                    intent.putExtra("isDriver", isAddDriversDone);
-                    intent.putExtra("role", role);
-                    startActivity(intent);
-//                finish();
-                }
-            }
-        });
+        userService = retrofit.create(UserService.class);
 
         //---------------------------- Get Truck Details -------------------------------------------
         truckListRecyclerView = (RecyclerView) findViewById(R.id.trucks_list_view);
@@ -636,7 +223,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
     }
 
-    private void getUserDetails(){
+    private void getUserDetails() {
 
         String url = getString(R.string.baseURL) + "/user/" + userId;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -646,13 +233,58 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     JSONArray truckLists = response.getJSONArray("data");
                     for (int i = 0; i < truckLists.length(); i++) {
                         JSONObject obj = truckLists.getJSONObject(i);
-                        name =  obj.getString("name");
+                        name = obj.getString("name");
                         mobile = obj.getString("phone_number");
+                        address = obj.getString("address");
+                        city = obj.getString("preferred_location");
+                        pinCode = obj.getString("pin_code");
+                        role = obj.getString("user_type");
+
+//                        Boolean isPersonalDetailsDone = obj.getBoolean("isPersonal_dt_Added");
+//                        Boolean isFirmDetailsDone = obj.getBoolean("isCompany_added");
+//                        Boolean isBankDetailsDone = obj.getBoolean("isBankDetails_Given");
+//                        Boolean isTruckDetailsDone = obj.getBoolean("isTruck_added");
+//                        Boolean isDriverDetailsDone = obj.getBoolean("isDriver_added");
+
+                        if (isPersonalDetailsDone) {
+                            personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
+                        } else {
+                            personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
+                        }
+
+                        if (isBankDetailsDone) {
+                            bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
+                        } else {
+                            bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
+                        }
+
+                        if (isTruckDetailsDone) {
+                            addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
+                        } else {
+                            addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck, 0, R.drawable.ic_right, 0);
+                        }
+
+                        if (isDriverDetailsDone) {
+                            addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
+                        } else {
+                            addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
+                        }
 
                         String hello = getString(R.string.hello);
                         nameTitle.setText(hello + " " + name + "!");
                         String s1 = mobile.substring(2, 12);
                         mobileText.setText("+91 " + s1);
+
+                        nameDone.setText(" " + name);
+                        phoneDone.setText(" Phone: +91 " + s1);
+                        firmName.setText(" Firm Name: " + "Not Available");
+                        addressDone.setText(" Address: " + address + ", " + city + " " + pinCode);
+
+                        if (role.equals("Customer")) {
+                            truckLoadText.setText("Post a Load");
+                        } else {
+                            truckLoadText.setText("Post a Trip");
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -669,9 +301,9 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
     }
 
-    public void getTruckList(){
+    public void getTruckList() {
         //---------------------------- Get Truck Details -------------------------------------------
-        String url1 = getString(R.string.baseURL) + "/truck/" + userId;
+        String url1 = getString(R.string.baseURL) + "/truck/3";
         Log.i("URL: ", url1);
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -693,7 +325,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     }
                     if (truckList.size() > 0) {
                         truckListAdapter.updateData(truckList);
-                    }else{
+                    } else {
 
                     }
 
@@ -708,12 +340,12 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             }
         });
         mQueue.add(request);
-       //-------------------------------------------------------------------------------------------
+        //-------------------------------------------------------------------------------------------
     }
 
-    public void getDriverDetailsList(){
+    public void getDriverDetailsList() {
         //---------------------------- Get Driver Details ------------------------------------------
-        String url1 = getString(R.string.baseURL) + "/driver/" + userId;
+        String url1 = getString(R.string.baseURL) + "/driver/userId/" + userId;
         Log.i("URL: ", url1);
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -734,7 +366,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     }
                     if (driverList.size() > 0) {
                         driverListAdapter.updateData(driverList);
-                    }else{
+                    } else {
 
                     }
 
@@ -752,7 +384,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         //-------------------------------------------------------------------------------------------
     }
 
-    public void getBankDetailsList(){
+    public void getBankDetailsList() {
         //---------------------------- Get Truck Details -------------------------------------------
         String url1 = getString(R.string.baseURL) + "/bank/" + userId;
         Log.i("URL: ", url1);
@@ -775,7 +407,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     }
                     if (bankList.size() > 0) {
                         bankListAdapter.updateData(bankList);
-                    }else{
+                    } else {
                     }
 
                 } catch (JSONException e) {
@@ -804,11 +436,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         intent.putExtra("accNo", accNo);
         intent.putExtra("vehicleNo", vehicleNo);
         intent.putExtra("driverName", driverName);
-        intent.putExtra("isPersonal", isPersonalDetailsDone);
-        intent.putExtra("isBank", isBankDetailsDone);
-        intent.putExtra("isTrucks", isAddTrucksDone);
-        intent.putExtra("isDriver", isAddDriversDone);
-        intent.putExtra("role", role);
+
         startActivity(intent);
     }
 
@@ -824,11 +452,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         intent.putExtra("accNo", accNo);
         intent.putExtra("vehicleNo", vehicleNo);
         intent.putExtra("driverName", driverName);
-        intent.putExtra("isPersonal", isPersonalDetailsDone);
-        intent.putExtra("isBank", isBankDetailsDone);
-        intent.putExtra("isTrucks", isAddTrucksDone);
-        intent.putExtra("isDriver", isAddDriversDone);
-        intent.putExtra("role", role);
+
         startActivity(intent);
     }
 
@@ -844,25 +468,273 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         intent.putExtra("accNo", accNo);
         intent.putExtra("vehicleNo", vehicleNo);
         intent.putExtra("driverName", driverName);
-        intent.putExtra("isPersonal", isPersonalDetailsDone);
-        intent.putExtra("isBank", isBankDetailsDone);
-        intent.putExtra("isTrucks", isAddTrucksDone);
-        intent.putExtra("isDriver", isAddDriversDone);
-        intent.putExtra("role", role);
+
         startActivity(intent);
     }
 
+    //-------------------------------------- Update Type -----------------------------------------------
+    private void updateUserDetails() {
+
+//------------------------------------- Update Type ------------------------------------------------
+        UserUpdate userUpdate = new UserUpdate("" + userId, null, null, null, "paid", null, null, null, null, null, null, null, null, null, null, null, null);
+
+        Call<UserUpdate> call = userService.updateUserDetails("" + userId, userUpdate);
+
+        call.enqueue(new Callback<UserUpdate>() {
+            @Override
+            public void onResponse(Call<UserUpdate> call, retrofit2.Response<UserUpdate> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UserUpdate> call, Throwable t) {
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
     public void onClickProfileAndRegister(View view) {
-        Log.i("Status Personal", String.valueOf(isPersonalDetailsDone));
-        Log.i("Status Bank", String.valueOf(isBankDetailsDone));
-        Log.i("Status Truck", String.valueOf(isAddTrucksDone));
-        Log.i("Status Driver", String.valueOf(isAddDriversDone));
-        if (isPersonalDetailsDone && isBankDetailsDone && isAddTrucksDone && isAddDriversDone) {
-            Intent i8 = new Intent(ProfileAndRegistrationActivity.this, RazorPayActivity.class);
-            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i8);
-            overridePendingTransition(0, 0);
-//        ProfileAndRegistrationActivity.this.finish();
+        switch (view.getId()) {
+            case R.id.profile_registration_personal_details_button:
+                if (isPersonalDetailsDone) {
+                    if (isRecExpanded) {
+                        personal_done.setVisibility(View.GONE);
+                        addCompany.setVisibility(View.GONE);
+                        personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
+                        isRecExpanded = false;
+                    } else {
+                        personal_done.setVisibility(View.VISIBLE);
+                        addCompany.setVisibility(View.VISIBLE);
+                        bankDone.setVisibility(View.GONE);
+                        vehicleDone.setVisibility(View.GONE);
+                        driverDone.setVisibility(View.GONE);
+                        addBankDetails.setVisibility(View.GONE);
+                        addTruck.setVisibility(View.GONE);
+                        personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_down_personal, 0);
+
+                        if (isBankDetailsDone) {
+                            bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
+                        } else {
+                            bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
+                        }
+                        if (isTruckDetailsDone) {
+                            addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
+                        } else {
+                            addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck, 0, R.drawable.ic_right, 0);
+                        }
+
+                        if (isDriverDetailsDone) {
+                            addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
+                        } else {
+                            addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
+                        }
+
+                        isRecExpanded = true;
+                    }
+                } else {
+                    personal_done.setVisibility(View.GONE);
+                    addCompany.setVisibility(View.GONE);
+                    personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
+
+                    Intent intent = new Intent(ProfileAndRegistrationActivity.this, PersonalDetailsActivity.class);
+                    intent.putExtra("mobile3", mobile);
+                    intent.putExtra("name3", name);
+                    intent.putExtra("address", address);
+                    intent.putExtra("pinCode", pinCode);
+                    intent.putExtra("city", city);
+                    intent.putExtra("userId", userId);
+                    intent.putExtra("bankName", bankName);
+                    intent.putExtra("accNo", accNo);
+                    intent.putExtra("vehicleNo", vehicleNo);
+                    intent.putExtra("driverName", driverName);
+
+                    startActivity(intent);
+                }
+                break;
+
+            case R.id.profile_registration_bank_details_button:
+                if (isBankDetailsDone) {
+                    if (isRecExpanded) {
+                        bankDone.setVisibility(View.GONE);
+                        addBankDetails.setVisibility(View.GONE);
+                        bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
+                        isRecExpanded = false;
+                    } else {
+                        bankDone.setVisibility(View.VISIBLE);
+                        addBankDetails.setVisibility(View.VISIBLE);
+                        personal_done.setVisibility(View.GONE);
+                        vehicleDone.setVisibility(View.GONE);
+                        driverDone.setVisibility(View.GONE);
+                        addCompany.setVisibility(View.GONE);
+                        addTruck.setVisibility(View.GONE);
+                        bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_down_personal, 0);
+
+                        if (isPersonalDetailsDone) {
+                            personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
+                        } else {
+                            personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
+                        }
+
+                        if (isTruckDetailsDone) {
+                            addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
+                        } else {
+                            addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck, 0, R.drawable.ic_right, 0);
+                        }
+
+                        if (isDriverDetailsDone) {
+                            addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
+                        } else {
+                            addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
+                        }
+
+                        isRecExpanded = true;
+                    }
+                } else {
+                    bankDone.setVisibility(View.GONE);
+                    addBankDetails.setVisibility(View.GONE);
+                    bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
+
+                    Intent intent = new Intent(ProfileAndRegistrationActivity.this, BankDetailsActivity.class);
+                    intent.putExtra("mobile3", mobile);
+                    intent.putExtra("name3", name);
+                    intent.putExtra("address", address);
+                    intent.putExtra("pinCode", pinCode);
+                    intent.putExtra("city", city);
+                    intent.putExtra("userId", userId);
+                    intent.putExtra("bankName", bankName);
+                    intent.putExtra("accNo", accNo);
+                    intent.putExtra("vehicleNo", vehicleNo);
+                    intent.putExtra("driverName", driverName);
+
+                    startActivity(intent);
+                }
+                break;
+
+            case R.id.profile_registration_truck_details:
+                if (isTruckDetailsDone) {
+                    if (isRecExpanded) {
+                        vehicleDone.setVisibility(View.GONE);
+                        addTruck.setVisibility(View.GONE);
+                        addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
+                        isRecExpanded = false;
+                    } else {
+                        vehicleDone.setVisibility(View.VISIBLE);
+                        addTruck.setVisibility(View.VISIBLE);
+                        personal_done.setVisibility(View.GONE);
+                        bankDone.setVisibility(View.GONE);
+                        driverDone.setVisibility(View.GONE);
+                        addCompany.setVisibility(View.GONE);
+                        addBankDetails.setVisibility(View.GONE);
+                        addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_down_personal, 0);
+
+                        if (isPersonalDetailsDone) {
+                            personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
+                        } else {
+                            personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
+                        }
+
+                        if (isBankDetailsDone) {
+                            bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
+                        } else {
+                            bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
+                        }
+
+                        if (isDriverDetailsDone) {
+                            addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
+                        } else {
+                            addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
+                        }
+
+                        isRecExpanded = true;
+                    }
+                } else {
+
+                }
+
+                break;
+
+            case R.id.profile_registration_driver_details:
+                if (isDriverDetailsDone) {
+
+                    if (isRecExpanded) {
+                        driverDone.setVisibility(View.GONE);
+                        addDriver.setVisibility(View.GONE);
+                        addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
+                        isRecExpanded = false;
+                    } else {
+                        driverDone.setVisibility(View.VISIBLE);
+                        addDriver.setVisibility(View.VISIBLE);
+                        personal_done.setVisibility(View.GONE);
+                        bankDone.setVisibility(View.GONE);
+                        vehicleDone.setVisibility(View.GONE);
+                        addCompany.setVisibility(View.GONE);
+                        addBankDetails.setVisibility(View.GONE);
+                        addTruck.setVisibility(View.GONE);
+                        addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_down_personal, 0);
+
+                        if (isPersonalDetailsDone) {
+                            personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
+                        } else {
+                            personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
+                        }
+
+                        if (isBankDetailsDone) {
+                            bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
+                        } else {
+                            bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
+                        }
+
+                        if (isTruckDetailsDone) {
+                            addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
+                        } else {
+                            addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck, 0, R.drawable.ic_right, 0);
+                        }
+                        isRecExpanded = true;
+                    }
+                } else {
+
+                    driverDone.setVisibility(View.GONE);
+                    addDriver.setVisibility(View.GONE);
+                    addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
+
+                    Intent intent = new Intent(ProfileAndRegistrationActivity.this, DriverDetailsActivity.class);
+                    intent.putExtra("mobile3", mobile);
+                    intent.putExtra("name3", name);
+                    intent.putExtra("address", address);
+                    intent.putExtra("pinCode", pinCode);
+                    intent.putExtra("city", city);
+                    intent.putExtra("userId", userId);
+                    intent.putExtra("bankName", bankName);
+                    intent.putExtra("accNo", accNo);
+                    intent.putExtra("vehicleNo", vehicleNo);
+                    intent.putExtra("driverName", driverName);
+
+                    startActivity(intent);
+                }
+                break;
+
+            case R.id.editPersonalDetails:
+
+                Intent intent = new Intent(ProfileAndRegistrationActivity.this, PersonalDetailsAndIdProofActivity.class);
+                intent.putExtra("mobile3", mobile);
+                intent.putExtra("name3", name);
+                intent.putExtra("address", address);
+                intent.putExtra("pinCode", pinCode);
+                intent.putExtra("city", city);
+                intent.putExtra("userId", userId);
+                intent.putExtra("bankName", bankName);
+                intent.putExtra("accNo", accNo);
+                intent.putExtra("vehicleNo", vehicleNo);
+                intent.putExtra("driverName", driverName);
+
+                startActivity(intent);
+                break;
+
+            case R.id.add_company:
+                Intent intent1 = new Intent(ProfileAndRegistrationActivity.this, CompanyDetailsActivity.class);
+                startActivity(intent1);
+                break;
         }
     }
 }

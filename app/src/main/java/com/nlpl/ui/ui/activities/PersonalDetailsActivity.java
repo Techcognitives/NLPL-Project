@@ -32,20 +32,19 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     View action_bar;
     TextView actionBarTitle, language;
     ImageView actionBarBackButton;
-    Dialog languageDialog;
+    Dialog languageDialog, chooseDialog;
 
     TextView panCardText, editPAN, editBack, editFront, frontText, backText;
     Button uploadPAN, uploadF, uploadB, okPersonalDetails;
     ImageView imgPAN, imgF, imgB;
-    RadioButton radioAadhar, radioVoter;
-    private int GET_FROM_GALLERY=0;
-    private int GET_FROM_GALLERY1=1;
-    private int GET_FROM_GALLERY2=2;
+    private int GET_FROM_GALLERY = 0;
+    private int GET_FROM_GALLERY1 = 1;
+    private int GET_FROM_GALLERY2 = 2;
 
     View panAndAadharView;
 
-    String userId, driverName, vehicleNo, mobile, name, address, pinCode,city, idProof, bankName, accNo, role;
-    Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, isPanUploaded=false, isFrontUploaded=false, isBackUploaded=false;
+    String userId, driverName, vehicleNo, mobile, name, address, pinCode, city, idProof, bankName, accNo, role;
+    Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, isPanUploaded = false, isFrontUploaded = false, isBackUploaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +72,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             Log.i("Name", name);
         }
 
-        if (isPanUploaded && isFrontUploaded && isBackUploaded){
+        if (isPanUploaded && isFrontUploaded && isBackUploaded) {
             okPersonalDetails.setBackgroundResource((R.drawable.button_active));
         }
 
@@ -149,20 +148,18 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         editPAN = panAndAadharView.findViewById(R.id.edit1);
         editFront = panAndAadharView.findViewById(R.id.editFront);
         editBack = panAndAadharView.findViewById(R.id.editBack);
-        radioAadhar = panAndAadharView.findViewById(R.id.radioAadhar);
-        radioVoter = panAndAadharView.findViewById(R.id.radioVoter);
         okPersonalDetails = findViewById(R.id.okPersonalDetails);
 
-        if (isPersonalDetailsDone){
-            panCardText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
+        if (isPersonalDetailsDone) {
+            panCardText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadPAN.setVisibility(View.INVISIBLE);
             editPAN.setVisibility(View.VISIBLE);
 
-            frontText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
+            frontText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadF.setVisibility(View.INVISIBLE);
             editFront.setVisibility(View.VISIBLE);
 
-            backText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
+            backText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadB.setVisibility(View.INVISIBLE);
             editBack.setVisibility(View.VISIBLE);
         }
@@ -170,67 +167,210 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         uploadPAN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+                chooseDialog = new Dialog(PersonalDetailsActivity.this);
+                chooseDialog.setContentView(R.layout.dialog_choose);
+                chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+                lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                lp2.gravity = Gravity.BOTTOM;
+
+                chooseDialog.show();
+                chooseDialog.getWindow().setAttributes(lp2);
+
+                ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
+                ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
+
+                camera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+
+                gallery.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+                    }
+                });
+
             }
         });
 
         editPAN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+                chooseDialog = new Dialog(PersonalDetailsActivity.this);
+                chooseDialog.setContentView(R.layout.dialog_choose);
+                chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+                lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                lp2.gravity = Gravity.BOTTOM;
+
+                chooseDialog.show();
+                chooseDialog.getWindow().setAttributes(lp2);
+
+                ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
+                ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
+
+                camera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+
+                gallery.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+                    }
+                });
             }
         });
 
         uploadF.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY1);
+                chooseDialog = new Dialog(PersonalDetailsActivity.this);
+                chooseDialog.setContentView(R.layout.dialog_choose);
+                chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+                lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                lp2.gravity = Gravity.BOTTOM;
+
+                chooseDialog.show();
+                chooseDialog.getWindow().setAttributes(lp2);
+
+                ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
+                ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
+
+                camera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+
+                gallery.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY1);
+                    }
+                });
             }
         });
 
         editFront.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY1);
+                chooseDialog = new Dialog(PersonalDetailsActivity.this);
+                chooseDialog.setContentView(R.layout.dialog_choose);
+                chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+                lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                lp2.gravity = Gravity.BOTTOM;
+
+                chooseDialog.show();
+                chooseDialog.getWindow().setAttributes(lp2);
+
+                ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
+                ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
+
+                camera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+
+                gallery.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY1);
+                    }
+                });
             }
         });
 
         uploadB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY2);
+                chooseDialog = new Dialog(PersonalDetailsActivity.this);
+                chooseDialog.setContentView(R.layout.dialog_choose);
+                chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+                lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                lp2.gravity = Gravity.BOTTOM;
+
+                chooseDialog.show();
+                chooseDialog.getWindow().setAttributes(lp2);
+
+                ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
+                ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
+
+                camera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+
+                gallery.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY2);
+                    }
+                });
             }
         });
         editBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY2);
-            }
-        });
+                chooseDialog = new Dialog(PersonalDetailsActivity.this);
+                chooseDialog.setContentView(R.layout.dialog_choose);
+                chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        radioVoter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                radioAadhar.setChecked(false);
-                radioVoter.setChecked(true);
-                frontText.setText("Voter ID Front");
-                backText.setText("Voter ID Back");
-                imgF.setImageDrawable(getDrawable(R.drawable.voter_id_front));
-                imgB.setImageDrawable(getDrawable(R.drawable.voter_id_back));
-                idProof = "voter";
-            }
-        });
+                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+                lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                lp2.gravity = Gravity.BOTTOM;
 
-        radioAadhar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                radioAadhar.setChecked(true);
-                radioVoter.setChecked(false);
-                frontText.setText("Aadhar Front");
-                backText.setText("Aadhar Back");
-                imgF.setImageDrawable(getDrawable(R.drawable.aadhar_card_front));
-                imgB.setImageDrawable(getDrawable(R.drawable.aadhar_card_back));
-                idProof = "aadhar";
+                chooseDialog.show();
+                chooseDialog.getWindow().setAttributes(lp2);
+
+                ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
+                ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
+
+                camera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+
+                gallery.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY2);
+                    }
+                });
             }
         });
     }
@@ -241,7 +381,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         //Detects request code for PAN
-        if(requestCode==GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
+        if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
 
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
             my_alert.setTitle("PAN Card Uploaded Successfully");
@@ -253,12 +393,12 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             });
             my_alert.show();
 
-            panCardText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
+            panCardText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadPAN.setVisibility(View.INVISIBLE);
             editPAN.setVisibility(View.VISIBLE);
             isPanUploaded = true;
 
-            if (isPanUploaded && isFrontUploaded && isBackUploaded){
+            if (isPanUploaded && isFrontUploaded && isBackUploaded) {
                 okPersonalDetails.setBackgroundResource(R.drawable.button_active);
             }
 
@@ -274,7 +414,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-        }else if (requestCode==GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK){
+        } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
 
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
             my_alert.setTitle("Uploaded Successfully");
@@ -286,12 +426,12 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             });
             my_alert.show();
 
-            frontText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
+            frontText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadF.setVisibility(View.INVISIBLE);
             editFront.setVisibility(View.VISIBLE);
             isFrontUploaded = true;
 
-            if (isPanUploaded && isFrontUploaded && isBackUploaded){
+            if (isPanUploaded && isFrontUploaded && isBackUploaded) {
                 okPersonalDetails.setBackgroundResource(R.drawable.button_active);
             }
 
@@ -307,7 +447,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-        }else if (requestCode==GET_FROM_GALLERY2 && resultCode == Activity.RESULT_OK){
+        } else if (requestCode == GET_FROM_GALLERY2 && resultCode == Activity.RESULT_OK) {
 
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
             my_alert.setTitle("Uploaded Successfully");
@@ -319,12 +459,12 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             });
             my_alert.show();
 
-            backText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
+            backText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadB.setVisibility(View.INVISIBLE);
             editBack.setVisibility(View.VISIBLE);
             isBackUploaded = true;
 
-            if (isPanUploaded && isFrontUploaded && isBackUploaded){
+            if (isPanUploaded && isFrontUploaded && isBackUploaded) {
                 okPersonalDetails.setBackgroundResource(R.drawable.button_active);
             }
 
@@ -345,7 +485,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     //-------------------------------------------------------------------------------------------------------------------
 
     public void onClickOKPersonal(View view) {
-        if (isPanUploaded && isFrontUploaded && isBackUploaded){
+        if (isPanUploaded && isFrontUploaded && isBackUploaded) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
             my_alert.setTitle("Personal Details added successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -366,7 +506,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                     i8.putExtra("isPersonal", true);
                     i8.putExtra("isBank", isBankDetailsDone);
                     i8.putExtra("isTrucks", isAddTrucksDone);
-                    i8.putExtra("isDriver",isAddDriversDone);
+                    i8.putExtra("isDriver", isAddDriversDone);
                     i8.putExtra("role", role);
                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i8);
