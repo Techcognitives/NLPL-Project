@@ -43,7 +43,6 @@ import org.w3c.dom.Text;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import jp.wasabeef.blurry.Blurry;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -381,30 +380,39 @@ public class BankDetailsActivity extends AppCompatActivity {
     }
 
     public void onClickBankDetailsChoose(View view) {
-        TextView canceledText = (TextView) findViewById(R.id.bank_details_cancelled_check_text);
-        if (Build.VERSION.SDK_INT >= 11) {
-            canceledText.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-            textCC.setLayerType(View.LAYER_TYPE_SOFTWARE, null );
-            uploadCC.setLayerType(View.LAYER_TYPE_SOFTWARE, null );
-        }
-        float radius = canceledText.getTextSize() / 3;
-        BlurMaskFilter filter = new BlurMaskFilter(radius, BlurMaskFilter.Blur.NORMAL);
+        ImageView canceledCheckBlurImage = (ImageView) findViewById(R.id.bank_details_blur_image_canceled_check);
+        ImageView accountDetailsBlurImage = (ImageView) findViewById(R.id.bank_details_blur_image_account_details);
 
         switch (view.getId()) {
             case R.id.bank_details_cancelled_check_radio_button:
                 canceledCheckRadioButton.setChecked(true);
                 acDetailsRadioButton.setChecked(false);
-                uploadCC.setEnabled(false);
-//                Blurry.with(BankDetailsActivity.this).capture(view).into();
+
+                bankName.setEnabled(false);
+                accountNo.setEnabled(false);
+                reAccount.setEnabled(false);
+                ifscCode.setEnabled(false);
+
+                canceledCheckBlurImage.setVisibility(View.GONE);
+                accountDetailsBlurImage.setVisibility(View.VISIBLE);
+
+                uploadCC.setEnabled(true);
                 break;
+
             case R.id.bank_details_ac_details_radio_button:
                 canceledCheckRadioButton.setChecked(false);
                 acDetailsRadioButton.setChecked(true);
-                canceledText.getPaint().setMaskFilter(filter);
-                textCC.getPaint().setMaskFilter(filter);
-                uploadCC.getPaint().setMaskFilter(filter);
+
+                bankName.setEnabled(true);
+                accountNo.setEnabled(true);
+                reAccount.setEnabled(true);
+                ifscCode.setEnabled(true);
+
+                canceledCheckBlurImage.setVisibility(View.VISIBLE);
+                accountDetailsBlurImage.setVisibility(View.GONE);
+
                 uploadCC.setEnabled(false);
-                Blurry.with(BankDetailsActivity.this).capture(view).into(cancelledCheckImage);
+                editCC.setVisibility(View.GONE);
                 break;
         }
     }
