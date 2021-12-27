@@ -41,6 +41,7 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.nlpl.R;
+import com.nlpl.ui.ui.adapters.OTPReceiver;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,7 +53,7 @@ import java.util.concurrent.TimeUnit;
 
 public class OtpCodeActivity extends AppCompatActivity {
 
-    TextView countdown, otpTitle, reSendOtp, copyOTP;
+    TextView countdown, otpTitle, reSendOtp;
     String mobile, otpId;
     EditText otp1, otp2, otp3, otp4, otp5, otp6;
     Button otpButton;
@@ -77,7 +78,6 @@ public class OtpCodeActivity extends AppCompatActivity {
         otpTitle = findViewById(R.id.otp_text);
         otpButton = findViewById(R.id.otp_button);
         requestPermissions();
-        copyOTP = (TextView) findViewById(R.id.copy_otp);
 //        reSendOtp = findViewById(R.id.resend_otp);
         String enterCode = getString(R.string.enter_code);
         String s = mobile.substring(3,13);
@@ -115,12 +115,6 @@ public class OtpCodeActivity extends AppCompatActivity {
         arrayRole = new ArrayList<>();
         arrayRegDone = new ArrayList<>();
 
-//        copyOTP.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                new OTPReceiver().setEditText_otp(otpEdit, otpButton);
-//            }
-//        });
 
 //        final ProgressDialog dialog = ProgressDialog.show(this, "Fetching OTP", "Please wait....", true);
 //        new Thread(new Runnable() {
@@ -296,6 +290,8 @@ public class OtpCodeActivity extends AppCompatActivity {
 
             }
         });
+
+        new OTPReceiver().setEditText_otp(otp1, otp2, otp3, otp4, otp5, otp6);
     }
 
     private void setCountdown() {

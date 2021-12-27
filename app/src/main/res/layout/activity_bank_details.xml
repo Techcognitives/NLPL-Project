@@ -19,7 +19,6 @@
         android:id="@+id/bank_details_person_name_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:inputType="textCapCharacters"
         android:paddingStart="20dp"
         android:text="@string/NameWithStar"
         android:textColor="@color/black"
@@ -181,33 +180,36 @@
         app:layout_constraintTop_toBottomOf="@+id/udbxewhbewsndhu">
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/bank_details_cancelled_check_radio_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:buttonTint="@color/button_blue"
             android:text="Upload a Canceled Check"
+            android:onClick="onClickBankDetailsChoose"
+            android:checked="true"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/radioButton2"
+            app:layout_constraintEnd_toStartOf="@+id/bank_details_ac_details_radio_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/bank_details_ac_details_radio_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:buttonTint="@color/button_blue"
             android:text="Enter A/C Details"
+            android:onClick="onClickBankDetailsChoose"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/radioButton"
+            app:layout_constraintStart_toEndOf="@+id/bank_details_cancelled_check_radio_button"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/dhbxbhxnh"
+        android:id="@+id/bank_details_cancelled_check_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -230,7 +232,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dhbxbhxnh">
+        app:layout_constraintTop_toBottomOf="@+id/bank_details_cancelled_check_text">
 
         <ImageView
             android:id="@+id/bank_details_canceled_check_image"
@@ -241,7 +243,7 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/image_view_border"
             android:padding="2dp"
-            android:src="@drawable/rc_book"
+            android:src="@drawable/check"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/bank_details_canceled_check_text"
             app:layout_constraintStart_toStartOf="parent"

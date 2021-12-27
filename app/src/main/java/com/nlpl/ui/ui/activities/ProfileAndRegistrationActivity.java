@@ -99,6 +99,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         language.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                updateUserDetails();
                 languageDialog = new Dialog(ProfileAndRegistrationActivity.this);
                 languageDialog.setContentView(R.layout.dialog_language);
                 languageDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

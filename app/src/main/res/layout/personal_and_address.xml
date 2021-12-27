@@ -119,7 +119,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="2dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/edit_text_border"
         android:drawableEnd="@drawable/ic_down"
         android:drawableTint="@color/black"
@@ -129,16 +129,14 @@
         android:padding="10dp"
         android:singleLine="true"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/registration_address_edit"
-        app:layout_constraintEnd_toStartOf="@+id/registration_pin_code_edit"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/registration_select_state"
-        app:layout_constraintTop_toBottomOf="@+id/registration_location" />
+        app:layout_constraintTop_toBottomOf="@+id/registration_address_edit" />
 
     <TextView
         android:id="@+id/registration_select_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
         android:layout_marginEnd="2dp"
         android:background="@drawable/edit_text_border"
         android:drawableEnd="@drawable/ic_down"
@@ -148,7 +146,7 @@
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/registration_select_city"
         app:layout_constraintEnd_toStartOf="@+id/registration_select_city"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/registration_pin_code_edit"
         app:layout_constraintTop_toTopOf="@+id/registration_select_city" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -156,14 +154,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/edit_text_border_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registration_address_edit">
+        app:layout_constraintTop_toBottomOf="@+id/registration_select_city">
 
 
         <TextView
@@ -263,7 +261,8 @@
         android:id="@+id/registration_pin_code_edit"
         android:layout_width="87dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="5dp"
         android:background="@drawable/edit_text_border"
         android:ems="10"
         android:hint="@string/pin_code"
@@ -272,8 +271,8 @@
         android:padding="12dp"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/registration_select_city"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/registration_select_city"
+        app:layout_constraintEnd_toStartOf="@+id/registration_select_state"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/registration_select_city"
         app:layout_constraintVertical_bias="1.0" />
 
@@ -281,17 +280,20 @@
         android:id="@+id/registration_address_edit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/edit_text_border"
         android:ems="10"
-        android:maxLines="2"
-        android:lines="2"
         android:hint="@string/address"
         android:inputType="textMultiLine"
+        android:lines="2"
+        android:maxLines="2"
         android:padding="10dp"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/registration_pin_code_edit"
-        app:layout_constraintStart_toStartOf="@+id/registration_select_state"
-        app:layout_constraintTop_toBottomOf="@+id/registration_select_city" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registration_location" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

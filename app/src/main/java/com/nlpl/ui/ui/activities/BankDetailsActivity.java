@@ -8,9 +8,11 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BlurMaskFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -24,6 +26,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.nlpl.R;
@@ -34,9 +38,12 @@ import com.nlpl.model.UserResponse;
 import com.nlpl.services.BankService;
 import com.nlpl.utils.ApiClient;
 
+import org.w3c.dom.Text;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import jp.wasabeef.blurry.Blurry;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -58,6 +65,8 @@ public class BankDetailsActivity extends AppCompatActivity {
     TextView textCC, editCC;
     int GET_FROM_GALLERY=0;
     ImageView cancelledCheckImage;
+
+    RadioButton canceledCheckRadioButton, acDetailsRadioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,7 +159,6 @@ public class BankDetailsActivity extends AppCompatActivity {
         okButton = (Button) findViewById(R.id.bank_details_ok_button);
         okButton.setEnabled(false);
 
-
         bankName.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
@@ -167,6 +175,9 @@ public class BankDetailsActivity extends AppCompatActivity {
         textCC = findViewById(R.id.bank_details_canceled_check_text);
         cancelledCheckImage = (ImageView) findViewById(R.id.bank_details_canceled_check_image);
 
+        canceledCheckRadioButton = (RadioButton) findViewById(R.id.bank_details_cancelled_check_radio_button);
+        acDetailsRadioButton = (RadioButton) findViewById(R.id.bank_details_ac_details_radio_button);
+
         uploadCC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -181,7 +192,7 @@ public class BankDetailsActivity extends AppCompatActivity {
             }
         });
 
-    }
+        }
 
     //-----------------------------------------------upload Image------------------------------------------------------------
     @Override
@@ -367,5 +378,34 @@ public class BankDetailsActivity extends AppCompatActivity {
             my_alert.show();
         }
 
+    }
+
+    public void onClickBankDetailsChoose(View view) {
+        TextView canceledText = (TextView) findViewById(R.id.bank_details_cancelled_check_text);
+        if (Build.VERSION.SDK_INT >= 11) {
+            canceledText.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+            textCC.setLayerType(View.LAYER_TYPE_SOFTWARE, null );
+            uploadCC.setLayerType(View.LAYER_TYPE_SOFTWARE, null );
+        }
+        float radius = canceledText.getTextSize() / 3;
+        BlurMaskFilter filter = new BlurMaskFilter(radius, BlurMaskFilter.Blur.NORMAL);
+
+        switch (view.getId()) {
+            case R.id.bank_details_cancelled_check_radio_button:
+                canceledCheckRadioButton.setChecked(true);
+                acDetailsRadioButton.setChecked(false);
+                uploadCC.setEnabled(false);
+//                Blurry.with(BankDetailsActivity.this).capture(view).into();
+                break;
+            case R.id.bank_details_ac_details_radio_button:
+                canceledCheckRadioButton.setChecked(false);
+                acDetailsRadioButton.setChecked(true);
+                canceledText.getPaint().setMaskFilter(filter);
+                textCC.getPaint().setMaskFilter(filter);
+                uploadCC.getPaint().setMaskFilter(filter);
+                uploadCC.setEnabled(false);
+                Blurry.with(BankDetailsActivity.this).capture(view).into(cancelledCheckImage);
+                break;
+        }
     }
 }
