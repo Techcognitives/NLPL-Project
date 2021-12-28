@@ -48,6 +48,22 @@ public class UserResponse {
             this.preferred_language = preferred_language;
         }
 
+        @Override
+        public String toString() {
+            return "Data{" +
+                    "user_id='" + user_id + '\'' +
+                    ", name='" + name + '\'' +
+                    ", phone_number='" + phone_number + '\'' +
+                    ", user_type='" + user_type + '\'' +
+                    ", preferred_location='" + preferred_location + '\'' +
+                    ", address='" + address + '\'' +
+                    ", state_code='" + state_code + '\'' +
+                    ", pin_code='" + pin_code + '\'' +
+                    ", isRegistration_done=" + isRegistration_done +
+                    ", preferred_language='" + preferred_language + '\'' +
+                    '}';
+        }
+
         public String getPreferred_language() {
             return preferred_language;
         }

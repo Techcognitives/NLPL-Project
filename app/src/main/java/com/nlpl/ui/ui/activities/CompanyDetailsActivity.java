@@ -1,8 +1,11 @@
 package com.nlpl.ui.ui.activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -20,9 +23,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.nlpl.R;
+import com.nlpl.model.CompanyRequest;
+import com.nlpl.model.CompanyResponse;
+import com.nlpl.model.CompanyUpdate;
+import com.nlpl.model.UserRequest;
+import com.nlpl.model.UserResponse;
+import com.nlpl.model.UserUpdate;
+import com.nlpl.services.CompanyService;
+import com.nlpl.services.UserService;
+import com.nlpl.utils.ApiClient;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CompanyDetailsActivity extends AppCompatActivity {
 
@@ -38,12 +57,29 @@ public class CompanyDetailsActivity extends AppCompatActivity {
     EditText companyName, pinCode, address, gstNumber, panNumber;
     Button okButton;
     TextView selectStateText, selectDistrictText;
-    String companyType = "Proprietary";
+    String companyType = "Proprietary", userId;
+
+    private static String BASE_URL = "http://13.234.163.179:3000";
+    private CompanyService companyService;
+
+    RadioButton proprietaryRadioButton, partnershipRadioButton, pvtLtdRadioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_details);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            userId = bundle.getString("userId");
+        }
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        companyService = retrofit.create(CompanyService.class);
 
         action_bar = findViewById(R.id.company_details_action_bar);
 
@@ -108,6 +144,9 @@ public class CompanyDetailsActivity extends AppCompatActivity {
         selectStateText = (TextView) findViewById(R.id.company_details_select_state);
         selectDistrictText = (TextView) findViewById(R.id.company_details_select_city);
         okButton = (Button) findViewById(R.id.company_details_ok_button);
+        proprietaryRadioButton = (RadioButton) findViewById(R.id.company_details_proprietary_radio_button);
+        partnershipRadioButton = (RadioButton) findViewById(R.id.company_details_partnership_radio_button);
+        pvtLtdRadioButton = (RadioButton) findViewById(R.id.company_details_pvt_ltd_radio_button);
 
         companyName.addTextChangedListener(companyWatcher);
         gstNumber.addTextChangedListener(companyWatcher);
@@ -383,7 +422,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
             String gstNumberWatcher = gstNumber.getText().toString().trim();
             String panNumberWatcher = panNumber.getText().toString().trim();
 
-            if (!nameWatcher.isEmpty() && !gstNumberWatcher.isEmpty() && !panNumberWatcher.isEmpty() && !pinCodeWatcher.isEmpty() && !addressWatcher.isEmpty() && pinCodeWatcher.length()==6 && !stateWatcher.isEmpty() && !cityWatcher.isEmpty()) {
+            if (!nameWatcher.isEmpty() && !gstNumberWatcher.isEmpty() && !panNumberWatcher.isEmpty() && !pinCodeWatcher.isEmpty() && !addressWatcher.isEmpty() && pinCodeWatcher.length() == 6 && !stateWatcher.isEmpty() && !cityWatcher.isEmpty()) {
                 okButton.setEnabled(true);
                 okButton.setBackgroundResource((R.drawable.button_active));
             } else {
@@ -414,20 +453,51 @@ public class CompanyDetailsActivity extends AppCompatActivity {
     };
 
     public void onClickCompanyDetailsOK(View view) {
-        CompanyDetailsActivity.this.finish();
+//        saveCompany(createCompany());
+        updateCompanyDetails();
+
+        AlertDialog.Builder my_alert = new AlertDialog.Builder(CompanyDetailsActivity.this);
+        my_alert.setTitle("Company Details added Successfully");
+        my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                Intent i8 = new Intent(CompanyDetailsActivity.this, ProfileAndRegistrationActivity.class);
+                i8.putExtra("userId", userId);
+                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i8);
+                overridePendingTransition(0, 0);
+                finish();
+            }
+        });
+        my_alert.show();
+
+
     }
 
     public void onClickCompanyRadio(View view) {
         switch (view.getId()) {
             case R.id.company_details_proprietary_radio_button:
+                proprietaryRadioButton.setChecked(true);
+                partnershipRadioButton.setChecked(false);
+                pvtLtdRadioButton.setChecked(false);
+
                 companyType = "Proprietary";
                 break;
 
             case R.id.company_details_partnership_radio_button:
+                proprietaryRadioButton.setChecked(false);
+                partnershipRadioButton.setChecked(true);
+                pvtLtdRadioButton.setChecked(false);
+
                 companyType = "Partnership";
                 break;
 
             case R.id.company_details_pvt_ltd_radio_button:
+                proprietaryRadioButton.setChecked(false);
+                partnershipRadioButton.setChecked(false);
+                pvtLtdRadioButton.setChecked(true);
+
                 companyType = "Pvt. Ltd.";
                 break;
         }
@@ -443,9 +513,9 @@ public class CompanyDetailsActivity extends AppCompatActivity {
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             String pinCodeWatcher = pinCode.getText().toString().trim();
 
-            if (pinCodeWatcher.length() != 6){
+            if (pinCodeWatcher.length() != 6) {
                 pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
-            }else{
+            } else {
                 pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
             }
         }
@@ -455,4 +525,59 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 
         }
     };
+
+    //--------------------------------------create User in API -------------------------------------
+    public CompanyRequest createCompany() {
+        CompanyRequest companyRequest = new CompanyRequest();
+        companyRequest.setCompany_name(companyName.getText().toString());
+        companyRequest.setCompany_gst_no(gstNumber.getText().toString());
+        companyRequest.setCompany_pan(panNumber.getText().toString());
+        companyRequest.setComp_state(selectStateText.getText().toString());
+        companyRequest.setComp_city(selectDistrictText.getText().toString());
+//        companyRequest.setCompany_type(companyType);
+        companyRequest.setComp_zip(pinCode.getText().toString());
+        companyRequest.setComp_add(address.getText().toString());
+        companyRequest.setUser_id(userId);
+        return companyRequest;
+    }
+
+    public void saveCompany(CompanyRequest companyRequest) {
+        Call<CompanyResponse> companyResponseCall = ApiClient.getCompanyService().saveCompany(companyRequest);
+        companyResponseCall.enqueue(new Callback<CompanyResponse>() {
+            @Override
+            public void onResponse(Call<CompanyResponse> call, Response<CompanyResponse> response) {
+                CompanyResponse companyResponse = response.body();
+//                Log.i("Message UserCreated:", userResponse.getData().getPhone_number());
+                Log.i("Company Msg Success", String.valueOf(companyResponse.getData().getCompany_id()));
+            }
+
+            @Override
+            public void onFailure(Call<CompanyResponse> call, Throwable t) {
+
+            }
+        });
+    }
+    //----------------------------------------------------------------------------------------------
+
+    //-------------------------------------- Update Type -----------------------------------------------
+    private void updateCompanyDetails() {
+
+//------------------------------------- Update Type ------------------------------------------------
+        CompanyUpdate companyUpdate = new CompanyUpdate("HCL", "gst3456", "pan78238", "HR", "Maldives", "Himalaya", ""+userId, "489023");
+
+        Call<CompanyUpdate> call = companyService.updateCompanyDetails("41e69305-7260-4b01-8892-a0f4f7daec71", companyUpdate);
+
+        call.enqueue(new Callback<CompanyUpdate>() {
+            @Override
+            public void onResponse(Call<CompanyUpdate> call, retrofit2.Response<CompanyUpdate> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<CompanyUpdate> call, Throwable t) {
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
 }

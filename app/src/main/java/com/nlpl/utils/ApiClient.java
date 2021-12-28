@@ -3,6 +3,7 @@ package com.nlpl.utils;
 import com.nlpl.services.AddDriverService;
 import com.nlpl.services.AddTruckService;
 import com.nlpl.services.BankService;
+import com.nlpl.services.CompanyService;
 import com.nlpl.services.UserService;
 
 import okhttp3.OkHttpClient;
@@ -47,5 +48,9 @@ public class ApiClient {
     public static AddDriverService addDriverService() {
         AddDriverService addDriverService = getRetrofit().create(AddDriverService.class);
         return addDriverService;
+    }
+    public static CompanyService getCompanyService() {
+        CompanyService companyService = getRetrofit().create(CompanyService.class);
+        return companyService;
     }
 }

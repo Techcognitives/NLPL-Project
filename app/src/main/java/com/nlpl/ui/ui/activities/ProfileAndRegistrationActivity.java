@@ -88,6 +88,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             userId = bundle.getString("userId");
+            Log.i("UserId PandR", userId);
         }
 
         action_bar = findViewById(R.id.profile_registration_action_bar);
@@ -473,7 +474,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //-------------------------------------- Update Type -----------------------------------------------
+    //-------------------------------- Update User Details -----------------------------------------
     private void updateUserDetails() {
 
 //------------------------------------- Update Type ------------------------------------------------
@@ -734,6 +735,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
             case R.id.add_company:
                 Intent intent1 = new Intent(ProfileAndRegistrationActivity.this, CompanyDetailsActivity.class);
+                intent1.putExtra("userId", userId);
                 startActivity(intent1);
                 break;
         }

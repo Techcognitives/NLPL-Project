@@ -46,7 +46,7 @@ public class RegistrationActivity extends AppCompatActivity {
     Dialog selectStateDialog, selectDistrictDialog, languageDialog;
     String selectedDistrict, selectedState, role;
     int parentID;
-    String mobile;
+    String mobile, userId;
 
     EditText name, pinCode, address, mobileNoEdit;
     TextView series;
@@ -62,6 +62,8 @@ public class RegistrationActivity extends AppCompatActivity {
         if (bundle != null) {
             mobile = bundle.getString("mobile1");
             Log.i("Mobile No Registration", mobile);
+            userId = bundle.getString("userId");
+            Log.i("UserId Registration", userId);
         }
 
         action_bar = (View) findViewById(R.id.registration_action_bar);
@@ -479,20 +481,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
                     dialogInterface.dismiss();
                     Intent i8 = new Intent(RegistrationActivity.this, ProfileAndRegistrationActivity.class);
-                    i8.putExtra("mobile2", mobile);
-                    i8.putExtra("name2", name.getText().toString());
-                    i8.putExtra("isPersonal", false);
-                    i8.putExtra("isBank", false);
-                    i8.putExtra("address", address.getText().toString());
-                    i8.putExtra("pinCode", pinCode.getText().toString());
-                    i8.putExtra("city", selectDistrictText.getText().toString());
-                    i8.putExtra("bankName", "null");
-                    i8.putExtra("accNo", "null");
-                    i8.putExtra("vehicleNo", "vehicleNo");
-                    i8.putExtra("driverName", "driverName");
-                    i8.putExtra("isTrucks", false);
-                    i8.putExtra("isDriver", false);
-                    i8.putExtra("role", role);
+                    i8.putExtra("userId", userId);
                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i8);
                     overridePendingTransition(0, 0);
@@ -595,8 +584,10 @@ public class RegistrationActivity extends AppCompatActivity {
         userResponseCall.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                UserResponse userResponse = response.body();
 //                Log.i("Message UserCreated:", userResponse.getData().getPhone_number());
+                UserResponse userResponse = response.body();
+//                userId = userResponse.getData().getUser_id();
+
                 Log.i("Msg Success", String.valueOf(userResponse));
             }
 

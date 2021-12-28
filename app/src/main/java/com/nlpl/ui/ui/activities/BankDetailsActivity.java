@@ -388,7 +388,7 @@ public class BankDetailsActivity extends AppCompatActivity {
                 canceledCheckRadioButton.setChecked(true);
                 acDetailsRadioButton.setChecked(false);
 
-                bankName.setEnabled(false);
+                bankName.setClickable(false);
                 accountNo.setEnabled(false);
                 reAccount.setEnabled(false);
                 ifscCode.setEnabled(false);
