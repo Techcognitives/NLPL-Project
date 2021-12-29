@@ -40,9 +40,13 @@ public class BanksAdapter extends RecyclerView.Adapter<BanksAdapter.BankViewHold
         Log.i("File Name:", name1);
 
         String accNumber = obj.getAccount_number();
+        String ifsiNumber = obj.getIFSI_CODE();
 
-        holder.list_title.setText(" " + name1);
-        holder.list_acc_no.setText(accNumber);
+        holder.list_bank_name.setText(" Bank of Baroda");
+        holder.list_acc_no.setText(" A/C No: " + accNumber);
+        holder.list_acc_holder_name.setText(" A/C Name: " + name1);
+        holder.list_ifsi.setText(" IFSI: "+ ifsiNumber);
+
 //--------------------------------------------------------------------------------------------------
         holder.list_edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,14 +67,16 @@ public class BanksAdapter extends RecyclerView.Adapter<BanksAdapter.BankViewHold
     }
 
     public class BankViewHolder extends RecyclerView.ViewHolder {
-        private TextView list_title, list_acc_no, list_edit;
+        private TextView list_acc_holder_name, list_acc_no, list_edit, list_bank_name, list_ifsi;
 
         public BankViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            list_title = itemView.findViewById(R.id.bankNameDone);
-            list_acc_no = itemView.findViewById(R.id.accNoDone);
-            list_edit = itemView.findViewById(R.id.editBankDetailsDone);
+            list_acc_holder_name = itemView.findViewById(R.id.bank_list_account_holder_name_text);
+            list_acc_no = itemView.findViewById(R.id.bank_list_account_number_text);
+            list_edit = itemView.findViewById(R.id.bank_list_edit_bank_details_text);
+            list_bank_name = itemView.findViewById(R.id.bank_list_bank_name);
+            list_ifsi = itemView.findViewById(R.id.bank_list_ifsi_text);
         }
 
     }

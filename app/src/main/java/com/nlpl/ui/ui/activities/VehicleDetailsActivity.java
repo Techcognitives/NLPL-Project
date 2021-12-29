@@ -26,12 +26,21 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.AddTruckRequest;
 import com.nlpl.model.AddTruckResponse;
 import com.nlpl.model.BankRequest;
 import com.nlpl.model.BankResponse;
 import com.nlpl.utils.ApiClient;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -58,8 +67,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     int GET_FROM_GALLERY = 0;
     int GET_FROM_GALLERY1 = 1;
 
-    String userId, driverName, vehicleNo, mobile, name, address,pinCode, city, bankName, accNo;
-    Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, isRcUploaded=false, isInsurance=false, truckSelected=false;
+    String userId, truckId, vehicleNumberAPI, vehicleTypeAPI;
+    Boolean isEdit, isRcUploaded=false, isInsurance=false, truckSelected=false;
+    private RequestQueue mQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,25 +78,10 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            mobile = bundle.getString("mobile3");
-            name = bundle.getString("name3");
-            address = bundle.getString("address");
-            pinCode = bundle.getString("pinCode");
-            city = bundle.getString("city");
             userId = bundle.getString("userId");
-            bankName = bundle.getString("bankName");
-            accNo = bundle.getString("accNo");
-            vehicleNo = bundle.getString("vehicleNo");
-            driverName = bundle.getString("driverName");
-            isPersonalDetailsDone = bundle.getBoolean("isPersonal");
-            isBankDetailsDone = bundle.getBoolean("isBank");
-            isAddTrucksDone = bundle.getBoolean("isTrucks");
-            isAddDriversDone = bundle.getBoolean("isDriver");
-            role = bundle.getString("role");
-            Log.i("Mobile No", mobile);
-            Log.i("Name", name);
+            isEdit = bundle.getBoolean("isEdit");
+            truckId = bundle.getString("truckId");
         }
-
 
         action_bar = findViewById(R.id.vehicle_details_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
@@ -171,6 +166,11 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         vehicleNumberEdit.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         vehicleNumberEdit.setFilters(new InputFilter[] { filter });
+
+        mQueue = Volley.newRequestQueue(VehicleDetailsActivity.this);
+        if (isEdit){
+            getVehicleDetails();
+        }
 
         uploadRC.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -319,7 +319,12 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     public void onClickVehicleDetailsOk(View view) {
         String vehicleNum = vehicleNumberEdit.getText().toString();
         if (!vehicleNum.isEmpty()&&isRcUploaded&&isInsurance&&truckSelected) {
-            saveTruck(createTruck());
+            if (isEdit){
+
+            }else{
+                saveTruck(createTruck());
+            }
+
             AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
             my_alert.setTitle("Vehicle Details added successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -327,21 +332,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
                     Intent i8 = new Intent(VehicleDetailsActivity.this, ProfileAndRegistrationActivity.class);
-                    i8.putExtra("mobile2", mobile);
-                    i8.putExtra("name2", name);
-                    i8.putExtra("address", address);
-                    i8.putExtra("pinCode", pinCode);
-                    i8.putExtra("city", city);
                     i8.putExtra("userId", userId);
-                    i8.putExtra("bankName", bankName);
-                    i8.putExtra("accNo", accNo);
-                    i8.putExtra("vehicleNo", vehicleNumberEdit.getText().toString());
-                    i8.putExtra("driverName", driverName);
-                    i8.putExtra("isPersonal", isPersonalDetailsDone);
-                    i8.putExtra("isBank", isBankDetailsDone);
-                    i8.putExtra("isTrucks", true);
-                    i8.putExtra("isDriver", isAddDriversDone);
-                    i8.putExtra("role", role);
                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i8);
                     overridePendingTransition(0, 0);
@@ -418,6 +409,64 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             return null;
         }
     };
+
+    private void getVehicleDetails() {
+
+        String url = getString(R.string.baseURL) + "/truck/" + truckId;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+                        vehicleNumberAPI = obj.getString("vehicle_no");
+                        vehicleTypeAPI = obj.getString("vehicle_body_type");
+
+                        vehicleNumberEdit.setText(vehicleNumberAPI);
+
+                        if (vehicleTypeAPI.equals("Open")){
+                            openType.setBackgroundResource(R.drawable.image_view_border_selected);
+                            closedType.setBackgroundResource(R.drawable.image_view_border);
+                            tarpaulinType.setBackgroundResource(R.drawable.image_view_border);
+                            openText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+                            closedText.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                            tarpaulinText.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                            bodyTypeSelected = "Open";
+                        }else if (vehicleTypeAPI.equals("Closed")){
+                            openType.setBackgroundResource(R.drawable.image_view_border);
+                            closedType.setBackgroundResource(R.drawable.image_view_border_selected);
+                            tarpaulinType.setBackgroundResource(R.drawable.image_view_border);
+                            openText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                            closedText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
+                            tarpaulinText.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                            bodyTypeSelected = "Closed";
+                        }else if (vehicleTypeAPI.equals("Tarpaulin")){
+                            openType.setBackgroundResource(R.drawable.image_view_border);
+                            closedType.setBackgroundResource(R.drawable.image_view_border);
+                            tarpaulinType.setBackgroundResource(R.drawable.image_view_border_selected);
+                            openText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                            closedText.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                            tarpaulinText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
+                            bodyTypeSelected = "Tarpaulin";
+                        }else{
+
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        mQueue.add(request);
+
+    }
 
 
 }

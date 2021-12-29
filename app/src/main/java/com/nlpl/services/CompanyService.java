@@ -15,6 +15,6 @@ public interface CompanyService {
     @POST("/company/create")
     Call<CompanyResponse> saveCompany(@Body CompanyRequest companyRequest);
 
-    @PUT("/company/")
-    Call<CompanyUpdate> updateCompanyDetails(@Query("id") String id, @Body CompanyUpdate companyUpdate);
+    @PUT("/company/41e69305-7260-4b01-8892-a0f4f7daec71")
+    Call<CompanyUpdate> updateCompanyDetails(@Body CompanyUpdate companyUpdate);
 }

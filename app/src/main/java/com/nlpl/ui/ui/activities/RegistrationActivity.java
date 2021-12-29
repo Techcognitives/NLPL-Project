@@ -422,7 +422,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 driverButton.setChecked(false);
                 brokerButton.setChecked(false);
                 customerButton.setChecked(false);
-                role = "SP";
+                role = "Owner";
 
                 break;
 
@@ -431,8 +431,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 driverButton.setChecked(true);
                 brokerButton.setChecked(false);
                 customerButton.setChecked(false);
-                role = "SP";
-
+                role = "Driver";
 
                 break;
 
@@ -441,7 +440,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 driverButton.setChecked(false);
                 brokerButton.setChecked(true);
                 customerButton.setChecked(false);
-                role = "SP";
+                role = "Broker";
 
                 break;
 

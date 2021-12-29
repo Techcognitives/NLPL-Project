@@ -6,6 +6,15 @@ public class BankModel {
     private String account_number;
     private String re_enter_acc_num;
     private String IFSI_CODE;
+    private String bank_id;
+
+    public String getBank_id() {
+        return bank_id;
+    }
+
+    public void setBank_id(String bank_id) {
+        this.bank_id = bank_id;
+    }
 
     public String getUser_id() {
         return user_id;

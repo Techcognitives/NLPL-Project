@@ -26,6 +26,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.AddDriverRequest;
 import com.nlpl.model.AddDriverResponse;
@@ -33,6 +38,9 @@ import com.nlpl.model.AddTruckRequest;
 import com.nlpl.model.AddTruckResponse;
 import com.nlpl.utils.ApiClient;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.FileNotFoundException;
@@ -52,11 +60,13 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
     Button uploadDL, okDriverDetails;
     TextView textDL, editDL, series;
-    int GET_FROM_GALLERY=0;
+    int GET_FROM_GALLERY = 0;
     ImageView driverLicenseImage;
 
-    String userId, driverName2, vehicleNo, mobile, name,address, pinCode, city, bankName, accNo, role;
-    Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, isDLUploaded=false;
+    private RequestQueue mQueue;
+
+    String userId, driverId, driverNameAPI, driverNumberAPI, driverEmailAPI;
+    Boolean isDLUploaded = false, isEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,23 +75,9 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            mobile = bundle.getString("mobile3");
-            name = bundle.getString("name3");
-            address = bundle.getString("address");
-            pinCode = bundle.getString("pinCode");
-            city = bundle.getString("city");
             userId = bundle.getString("userId");
-            bankName = bundle.getString("bankName");
-            accNo = bundle.getString("accNo");
-            vehicleNo = bundle.getString("vehicleNo");
-            driverName2 = bundle.getString("driverName");
-            isPersonalDetailsDone = bundle.getBoolean("isPersonal");
-            isBankDetailsDone = bundle.getBoolean("isBank");
-            isAddTrucksDone = bundle.getBoolean("isTrucks");
-            isAddDriversDone = bundle.getBoolean("isDriver");
-            role = bundle.getString("role");
-            Log.i("Mobile No", mobile);
-            Log.i("Name", name);
+            isEdit = bundle.getBoolean("isEdit");
+            driverId = bundle.getString("driverId");
         }
 
         action_bar = findViewById(R.id.driver_details_action_bar);
@@ -89,8 +85,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
         language = (TextView) action_bar.findViewById(R.id.action_bar_language_selector);
         driverMobile = findViewById(R.id.driver_details_mobile_number_edit);
-        driverName=findViewById(R.id.driver_details_driver_name_edit);
-        okDriverDetails=findViewById(R.id.driver_details_ok_button);
+        driverName = findViewById(R.id.driver_details_driver_name_edit);
+        okDriverDetails = findViewById(R.id.driver_details_ok_button);
         series = (TextView) findViewById(R.id.driver_details_mobile_prefix);
 
         driverName.addTextChangedListener(driverWatcher);
@@ -98,7 +94,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         driverName.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        driverName.setFilters(new InputFilter[] { filter });
+        driverName.setFilters(new InputFilter[]{filter});
 
         language.setText(getString(R.string.english));
         language.setOnClickListener(new View.OnClickListener() {
@@ -158,6 +154,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
         textDL = findViewById(R.id.driver_details_driver_license_text_image);
         driverLicenseImage = (ImageView) findViewById(R.id.driver_details_driver_license_image);
 
+        mQueue = Volley.newRequestQueue(DriverDetailsActivity.this);
+        if (isEdit) {
+            getDriverDetails();
+        }
 
         uploadDL.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,11 +197,11 @@ public class DriverDetailsActivity extends AppCompatActivity {
             uploadDL.setVisibility(View.INVISIBLE);
             editDL.setVisibility(View.VISIBLE);
 
-            isDLUploaded=true;
+            isDLUploaded = true;
             String driverMobileText = driverMobile.getText().toString();
             String driverNameText = driverName.getText().toString();
 
-            if (!driverNameText.isEmpty()&&!driverMobileText.isEmpty() && isDLUploaded  ){
+            if (!driverNameText.isEmpty() && !driverMobileText.isEmpty() && isDLUploaded) {
                 okDriverDetails.setBackgroundResource(R.drawable.button_active);
             }
             Uri selectedImage = data.getData();
@@ -223,7 +223,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         String driverMobileText = driverMobile.getText().toString();
         String driverNameText = driverName.getText().toString();
 
-        if (!driverNameText.isEmpty()&&!driverMobileText.isEmpty() && isDLUploaded) {
+        if (!driverNameText.isEmpty() && !driverMobileText.isEmpty() && isDLUploaded) {
             if (driverMobileText.length() != 10) {
                 AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
                 my_alert.setTitle("Invalid Mobile Number");
@@ -237,7 +237,12 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 my_alert.show();
 
             } else {
-                saveDriver(createDriver());
+                if (isEdit) {
+
+                } else {
+                    saveDriver(createDriver());
+                }
+
                 AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
                 my_alert.setTitle("Driver Details added successfully");
                 my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -246,21 +251,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                         dialogInterface.dismiss();
 
                         Intent i8 = new Intent(DriverDetailsActivity.this, ProfileAndRegistrationActivity.class);
-                        i8.putExtra("mobile2", mobile);
-                        i8.putExtra("name2", name);
-                        i8.putExtra("address", address);
-                        i8.putExtra("pinCode", pinCode);
-                        i8.putExtra("city", city);
                         i8.putExtra("userId", userId);
-                        i8.putExtra("bankName", bankName);
-                        i8.putExtra("accNo", accNo);
-                        i8.putExtra("vehicleNo", vehicleNo);
-                        i8.putExtra("driverName", driverName.getText().toString());
-                        i8.putExtra("isPersonal", isPersonalDetailsDone);
-                        i8.putExtra("isBank", isBankDetailsDone);
-                        i8.putExtra("isTrucks", isAddTrucksDone);
-                        i8.putExtra("isDriver", true);
-                        i8.putExtra("role", role);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);
                         overridePendingTransition(0, 0);
@@ -273,13 +264,12 @@ public class DriverDetailsActivity extends AppCompatActivity {
     }
 
 
-
     //--------------------------------------create Driver Details in API -------------------------------------
     public AddDriverRequest createDriver() {
         AddDriverRequest addDriverRequest = new AddDriverRequest();
         addDriverRequest.setUser_id(userId);
         addDriverRequest.setDriver_name(driverName.getText().toString());
-        addDriverRequest.setDriver_number(driverMobile.getText().toString());
+        addDriverRequest.setDriver_number("91"+driverMobile.getText().toString());
         return addDriverRequest;
     }
 
@@ -309,10 +299,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             String mobileNoWatcher = driverMobile.getText().toString().trim();
 
-            if (mobileNoWatcher.length()==10){
+            if (mobileNoWatcher.length() == 10) {
                 driverMobile.setBackground(getResources().getDrawable(R.drawable.mobile_number_right));
                 series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left));
-            }else{
+            } else {
                 driverMobile.setBackground(getResources().getDrawable(R.drawable.mobile_number_right_red));
                 series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left_red));
             }
@@ -324,7 +314,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         }
     };
 
-    private String blockCharacterSet ="~#^|$%&*!+@₹_-()':;?/={}";
+    private String blockCharacterSet = "~#^|$%&*!+@₹_-()':;?/={}";
 
     private InputFilter filter = new InputFilter() {
 
@@ -338,4 +328,38 @@ public class DriverDetailsActivity extends AppCompatActivity {
             return null;
         }
     };
+
+    private void getDriverDetails() {
+
+        String url = getString(R.string.baseURL) + "/driver/driverId/" + driverId;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+                        driverNameAPI = obj.getString("driver_name");
+                        driverNumberAPI = obj.getString("driver_number");
+
+                        driverName.setText(driverNameAPI);
+
+                        String s1 = driverNumberAPI.substring(2, 12);
+                        driverMobile.setText(s1);
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        mQueue.add(request);
+
+    }
 }

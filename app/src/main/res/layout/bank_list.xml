@@ -6,21 +6,35 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/bankNameDone"
+        android:id="@+id/bank_list_bank_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
-        android:drawableStart="@drawable/success"
+        android:drawableStart="@drawable/success_small"
         android:text="@string/name"
         android:textColor="#000000"
         android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/editBankDetailsDone"
+        app:layout_constraintEnd_toStartOf="@+id/bank_list_edit_bank_details_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/editBankDetailsDone"
+        android:id="@+id/bank_list_account_holder_name_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:paddingStart="5dp"
+        android:text="@string/name"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bank_list_account_number_text" />
+
+    <TextView
+        android:id="@+id/bank_list_edit_bank_details_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
@@ -30,36 +44,37 @@
         android:text="@string/edit"
         android:textColor="#000000"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/bankNameDone"
+        app:layout_constraintBottom_toBottomOf="@+id/bank_list_bank_name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bankNameDone"
-        app:layout_constraintTop_toTopOf="@+id/bankNameDone" />
+        app:layout_constraintStart_toEndOf="@+id/bank_list_bank_name"
+        app:layout_constraintTop_toTopOf="@+id/bank_list_bank_name" />
 
     <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:text="@string/acNo"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/accNoDone"
-        app:layout_constraintStart_toStartOf="@+id/bankNameDone"
-        app:layout_constraintTop_toBottomOf="@+id/bankNameDone" />
-
-    <TextView
-        android:id="@+id/accNoDone"
+        android:id="@+id/bank_list_account_number_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="20dp"
         android:paddingStart="5dp"
         android:text="@string/AccountNumber"
         android:textColor="@color/black"
         android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/bank_list_edit_bank_details_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bank_list_bank_name" />
+
+    <TextView
+        android:id="@+id/bank_list_ifsi_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:paddingStart="5dp"
+        android:text="@string/IFSC"
+        android:textColor="#000000"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/editBankDetailsDone"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/bankNameDone"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bank_list_account_holder_name_text" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

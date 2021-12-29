@@ -78,7 +78,7 @@ public class OtpCodeActivity extends AppCompatActivity {
         otpTitle = findViewById(R.id.otp_text);
         otpButton = findViewById(R.id.otp_button);
         requestPermissions();
-//        reSendOtp = findViewById(R.id.resend_otp);
+        reSendOtp = findViewById(R.id.resend_otp);
         String enterCode = getString(R.string.enter_code);
         String s = mobile.substring(3,13);
         mobileNoFirebase = mobile.substring(1,13);
@@ -155,13 +155,13 @@ public class OtpCodeActivity extends AppCompatActivity {
             }
         });
 
-//        reSendOtp.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                initiateOtp();
-//                setCountdown();
-//            }
-//        });
+        reSendOtp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                initiateOtp();
+                setCountdown();
+            }
+        });
     }
 
     private void setupOTPInputs() {

@@ -30,6 +30,11 @@ import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.BankRequest;
 import com.nlpl.model.BankResponse;
@@ -38,6 +43,9 @@ import com.nlpl.model.UserResponse;
 import com.nlpl.services.BankService;
 import com.nlpl.utils.ApiClient;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.FileNotFoundException;
@@ -64,8 +72,11 @@ public class BankDetailsActivity extends AppCompatActivity {
     TextView textCC, editCC;
     int GET_FROM_GALLERY=0;
     ImageView cancelledCheckImage;
+    Boolean isEdit;
 
     RadioButton canceledCheckRadioButton, acDetailsRadioButton;
+    String bankId;
+    private RequestQueue mQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,23 +85,9 @@ public class BankDetailsActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            mobile = bundle.getString("mobile3");
-            name = bundle.getString("name3");
-            address = bundle.getString("address");
-            pinCode = bundle.getString("pinCode");
-            city = bundle.getString("city");
             userId = bundle.getString("userId");
-            bankName2 = bundle.getString("bankName");
-            accNo = bundle.getString("accNo");
-            vehicleNo = bundle.getString("vehicleNo");
-            driverName = bundle.getString("driverName");
-            isPersonalDetailsDone = bundle.getBoolean("isPersonal");
-            isBankDetailsDone = bundle.getBoolean("isBank");
-            isAddTrucksDone = bundle.getBoolean("isTrucks");
-            isAddDriversDone = bundle.getBoolean("isDriver");
-            role = bundle.getString("role");
-            Log.i("Mobile No", mobile);
-            Log.i("Name", name);
+            isEdit = bundle.getBoolean("isEdit");
+            bankId = bundle.getString("bankDetailsID");
         }
 
         action_bar = findViewById(R.id.bank_details_action_bar);
@@ -157,6 +154,11 @@ public class BankDetailsActivity extends AppCompatActivity {
         ifscCode = (EditText) findViewById(R.id.bank_details_ifsc_edit);
         okButton = (Button) findViewById(R.id.bank_details_ok_button);
         okButton.setEnabled(false);
+
+        mQueue = Volley.newRequestQueue(BankDetailsActivity.this);
+        if (isEdit){
+//        getBankDetails();
+        }
 
         bankName.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
@@ -235,7 +237,12 @@ public class BankDetailsActivity extends AppCompatActivity {
 
     public void onClickBankDetailsOk(View view) {
         if (accountNo.getText().toString().equals(reAccount.getText().toString())) {
-            saveBank(createBankAcc());
+            if (isEdit){
+
+            }else{
+                saveBank(createBankAcc());
+            }
+
             reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
             AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
             my_alert.setTitle("Bank Details added successfully");
@@ -245,21 +252,7 @@ public class BankDetailsActivity extends AppCompatActivity {
 
                     dialogInterface.dismiss();
                     Intent i8 = new Intent(BankDetailsActivity.this, ProfileAndRegistrationActivity.class);
-                    i8.putExtra("mobile2", mobile);
-                    i8.putExtra("name2", name);
-                    i8.putExtra("address", address);
-                    i8.putExtra("pinCode", pinCode);
-                    i8.putExtra("city", city);
                     i8.putExtra("userId", userId);
-                    i8.putExtra("bankName", bankName.getText().toString());
-                    i8.putExtra("accNo", accountNo.getText().toString());
-                    i8.putExtra("vehicleNo", vehicleNo);
-                    i8.putExtra("driverName", driverName);
-                    i8.putExtra("isPersonal", isPersonalDetailsDone);
-                    i8.putExtra("isBank", true);
-                    i8.putExtra("isTrucks", isAddTrucksDone);
-                    i8.putExtra("isDriver", isAddDriversDone);
-                    i8.putExtra("role", role);
                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i8);
                     overridePendingTransition(0, 0);
@@ -415,5 +408,39 @@ public class BankDetailsActivity extends AppCompatActivity {
                 editCC.setVisibility(View.GONE);
                 break;
         }
+    }
+
+    private void getBankDetails() {
+
+        String url = getString(R.string.baseURL) + "/user/" + userId;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+//                        nameAPI = obj.getString("name");
+//                        mobileAPI = obj.getString("phone_number");
+//                        addressAPI = obj.getString("address");
+//                        stateAPI = obj.getString("state_code");
+//                        cityAPI = obj.getString("preferred_location");
+//                        pinCodeAPI = obj.getString("pin_code");
+//                        roleAPI = obj.getString("user_type");
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        mQueue.add(request);
+
     }
 }

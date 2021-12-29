@@ -30,7 +30,16 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -51,7 +60,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     Dialog selectStateDialog, selectDistrictDialog;
     String selectedDistrict, selectedState, role;
     int parentID;
-    String mobile;
     EditText name, pinCode, address, mobileEdit;
     Button okButton;
 //--------------------------------------------------------------------------------------------------
@@ -59,17 +67,20 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     Button panAndAadharButton;
     View panView;
 
-    TextView panCardText, editPAN, editBack, editFront, frontText, backText;
     Button uploadPAN, uploadF, uploadB;
+
+    TextView panCardText, editPAN, editBack, editFront, frontText, backText;
     ImageView imgPAN, imgF, imgB;
+
+    String nameAPI, mobileAPI, addressAPI, pinCodeAPI, roleAPI, cityAPI, stateAPI;
 
     private int GET_FROM_GALLERY=0;
     private int GET_FROM_GALLERY1=1;
     private int GET_FROM_GALLERY2=2;
 
-    String userId, driverName, vehicleNo, city, idProof, bankName, accNo;
-    Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, isPanUploaded=false, isFrontUploaded=false, isBackUploaded=false;
-    String personName, addressBundle, pinCodeBundle, bankName2;
+    private RequestQueue mQueue;
+    String userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,22 +88,8 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            mobile = bundle.getString("mobile3");
-            personName = bundle.getString("name3");
-            addressBundle = bundle.getString("address");
-            pinCodeBundle = bundle.getString("pinCode");
-            city = bundle.getString("city");
             userId = bundle.getString("userId");
-            bankName2 = bundle.getString("bankName");
-            accNo = bundle.getString("accNo");
-            vehicleNo = bundle.getString("vehicleNo");
-            driverName = bundle.getString("driverName");
-            isPersonalDetailsDone = bundle.getBoolean("isPersonal");
-            isBankDetailsDone = bundle.getBoolean("isBank");
-            isAddTrucksDone = bundle.getBoolean("isTrucks");
-            isAddDriversDone = bundle.getBoolean("isDriver");
-            role = bundle.getString("role");
-            Log.i("Mobile No", mobile);
+            Log.i("Mobile No", userId);
         }
 
         action_bar = findViewById(R.id.personal_details_id_proof_action_bar);
@@ -146,8 +143,12 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         });
 
         actionBarTitle.setText("Personal Details");
-        actionBarBackButton.setVisibility(View.GONE);
-
+        actionBarBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PersonalDetailsAndIdProofActivity.this.finish();
+            }
+        });
         //------------------------------------------------------------------------------------------
         personalAndAddressView = (View) findViewById(R.id.personal_details_id_proof_personal_and_address_layout);
         personalAddressButton = (Button) findViewById(R.id.personal_details_id_proof_personal_address_button);
@@ -185,6 +186,9 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 //        }else if (name.getText().toString().isEmpty() || selectStateText.getText().toString().isEmpty() || selectDistrictText.getText().toString().isEmpty() || role == null) {
 //            okButton.setBackground(getDrawable(R.drawable.button_de_active));
 //        }
+
+        mQueue = Volley.newRequestQueue(PersonalDetailsAndIdProofActivity.this);
+        getUserDetails();
 
         ownerButton = (RadioButton) personalAndAddressView.findViewById(R.id.registration_truck_owner);
         driverButton = (RadioButton) personalAndAddressView.findViewById(R.id.registration_driver);
@@ -458,24 +462,10 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 //            editBack.setVisibility(View.VISIBLE);
 //        }
 
-        uploadPAN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
-            }
-        });
-
         editPAN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
-            }
-        });
-
-        uploadF.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY1);
             }
         });
 
@@ -486,12 +476,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             }
         });
 
-        uploadB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY2);
-            }
-        });
         editBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -532,28 +516,13 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         pinCode.setCursorVisible(false);
         address.setCursorVisible(false);
 
-        String nameWatcher = name.getText().toString().trim();
-        String stateWatcher = selectStateText.getText().toString().trim();
-        String cityWatcher = selectDistrictText.getText().toString().trim();
-        String pinCodeWatcher = pinCode.getText().toString().trim();
-        String addressWatcher = address.getText().toString().trim();
-
-        //--------------------------------------------------------------------------------------
-        if (!nameWatcher.isEmpty() && !pinCodeWatcher.isEmpty() && !addressWatcher.isEmpty() && pinCodeWatcher.length()==6 && !stateWatcher.isEmpty() && !cityWatcher.isEmpty()) {
-            okButton.setEnabled(true);
-            okButton.setBackgroundResource((R.drawable.button_active));
-        } else {
-            okButton.setBackground(getResources().getDrawable(R.drawable.button_de_active));
-        }
-        //--------------------------------------------------------------------------------------
-
         switch (view.getId()) {
             case R.id.registration_truck_owner:
                 ownerButton.setChecked(true);
                 driverButton.setChecked(false);
                 brokerButton.setChecked(false);
                 customerButton.setChecked(false);
-                role = "Truck Owner";
+                role = "Owner";
 
                 break;
 
@@ -589,44 +558,14 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
     public void onClickPersonalProof(View view) {
 
-        String nameWatcher = name.getText().toString().trim();
-        String stateWatcher = selectStateText.getText().toString().trim();
-        String cityWatcher = selectDistrictText.getText().toString().trim();
-        String pinCodeWatcher = pinCode.getText().toString().trim();
-        String addressWatcher = address.getText().toString().trim();
-        boolean owner = ownerButton.isChecked();
-        boolean driver = driverButton.isChecked();
-        boolean broker = brokerButton.isChecked();
-        boolean customer = customerButton.isChecked();
-
-        if (!nameWatcher.isEmpty() && !pinCodeWatcher.isEmpty() && !addressWatcher.isEmpty() && !stateWatcher.isEmpty() && pinCodeWatcher.length()==6 && !cityWatcher.isEmpty() && (owner || driver || broker || customer)) {
-            okButton.setEnabled(true);
-            okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
-            my_alert.setTitle("Registration Successful");
-            my_alert.setMessage("Welcome to Find YourTruck\n\nPlease update your profile and explore the platform benefits.");
+            my_alert.setTitle("Details updated Successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
                     Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, ProfileAndRegistrationActivity.class);
-                    String mobileInt = "+91"+mobileEdit.getText().toString();
-                    i8.putExtra("mobile2", mobileInt);
-                    i8.putExtra("name2", name.getText().toString());
-                    i8.putExtra("address", address.getText().toString());
-                    i8.putExtra("pinCode", pinCode.getText().toString());
-                    i8.putExtra("city", selectStateText.getText().toString());
                     i8.putExtra("userId", userId);
-                    i8.putExtra("bankName", bankName);
-                    i8.putExtra("accNo", accNo);
-                    i8.putExtra("vehicleNo", vehicleNo);
-                    i8.putExtra("driverName", driverName);
-                    i8.putExtra("isPersonal", true);
-                    i8.putExtra("isBank", isBankDetailsDone);
-                    i8.putExtra("isTrucks", isAddTrucksDone);
-                    i8.putExtra("isDriver",isAddDriversDone);
-                    i8.putExtra("role", role);
                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i8);
                     overridePendingTransition(0, 0);
@@ -635,7 +574,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             });
             my_alert.show();
 
-        }
 //            RegistrationActivity.this.finish();
     }
 
@@ -657,22 +595,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             boolean driver = driverButton.isChecked();
             boolean broker = brokerButton.isChecked();
             boolean customer = customerButton.isChecked();
-
-            if (mobileWatcher.length()==10){
-                mobileEdit.setBackground(getResources().getDrawable(R.drawable.mobile_number_right));
-                series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left));
-            }else{
-                mobileEdit.setBackground(getResources().getDrawable(R.drawable.mobile_number_right_red));
-                series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left_red));
-            }
-
-            if (!nameWatcher.isEmpty() && !pinCodeWatcher.isEmpty() && !addressWatcher.isEmpty() && !stateWatcher.isEmpty() && pinCodeWatcher.length()==6 && !cityWatcher.isEmpty() && (owner || driver || broker || customer)) {
-                okButton.setEnabled(true);
-                okButton.setBackgroundResource((R.drawable.button_active));
-            } else {
-                okButton.setEnabled(false);
-                okButton.setBackground(getResources().getDrawable(R.drawable.button_de_active));
-            }
         }
 
         @Override
@@ -680,6 +602,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         }
     };
+
 
     private String blockCharacterSet ="~#^|$%&*!+@₹_-()':;?/={}";
 
@@ -765,11 +688,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             panCardText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
             uploadPAN.setVisibility(View.INVISIBLE);
             editPAN.setVisibility(View.VISIBLE);
-            isPanUploaded = true;
-
-            if (isPanUploaded && isFrontUploaded && isBackUploaded){
-                okButton.setBackgroundResource(R.drawable.button_active);
-            }
 
             Uri selectedImage = data.getData();
             imgPAN.setImageURI(selectedImage);
@@ -798,11 +716,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             frontText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
             uploadF.setVisibility(View.INVISIBLE);
             editFront.setVisibility(View.VISIBLE);
-            isFrontUploaded = true;
-
-            if (isPanUploaded && isFrontUploaded && isBackUploaded){
-                okButton.setBackgroundResource(R.drawable.button_active);
-            }
 
             Uri selectedImage = data.getData();
             imgF.setImageURI(selectedImage);
@@ -831,11 +744,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             backText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
             uploadB.setVisibility(View.INVISIBLE);
             editBack.setVisibility(View.VISIBLE);
-            isBackUploaded = true;
-
-            if (isPanUploaded && isFrontUploaded && isBackUploaded){
-                okButton.setBackgroundResource(R.drawable.button_active);
-            }
 
             Uri selectedImage = data.getData();
             imgB.setImageURI(selectedImage);
@@ -852,5 +760,78 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         }
     }
     //-------------------------------------------------------------------------------------------------------------------
+
+    private void getUserDetails() {
+
+        String url = getString(R.string.baseURL) + "/user/" + userId;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+                        nameAPI = obj.getString("name");
+                        mobileAPI = obj.getString("phone_number");
+                        addressAPI = obj.getString("address");
+                        stateAPI = obj.getString("state_code");
+                        cityAPI = obj.getString("preferred_location");
+                        pinCodeAPI = obj.getString("pin_code");
+                        roleAPI = obj.getString("user_type");
+
+                        name.setText(nameAPI);
+
+                        String s1 = mobileAPI.substring(2, 12);
+                        mobileEdit.setText(s1);
+
+                        address.setText(addressAPI);
+                        pinCode.setText(pinCodeAPI);
+                        selectStateText.setText(stateAPI);
+                        selectDistrictText.setText(cityAPI);
+
+                        if (roleAPI.equals("Customer")){
+                            customerButton.setChecked(true);
+                            ownerButton.setChecked(false);
+                            driverButton.setChecked(false);
+                            brokerButton.setChecked(false);
+
+                        }else if (roleAPI.equals("Owner")){
+                            customerButton.setChecked(false);
+                            ownerButton.setChecked(true);
+                            driverButton.setChecked(false);
+                            brokerButton.setChecked(false);
+
+                        }else if (roleAPI.equals("Driver")){
+                            customerButton.setChecked(false);
+                            ownerButton.setChecked(false);
+                            driverButton.setChecked(true);
+                            brokerButton.setChecked(false);
+
+                        }else if (roleAPI.equals("Broker")){
+                            customerButton.setChecked(false);
+                            ownerButton.setChecked(false);
+                            driverButton.setChecked(false);
+                            brokerButton.setChecked(true);
+
+                        }else{
+
+                        }
+
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        mQueue.add(request);
+
+    }
 
 }

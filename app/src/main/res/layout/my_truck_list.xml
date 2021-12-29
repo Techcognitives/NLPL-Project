@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
-        android:drawableStart="@drawable/success"
+        android:drawableStart="@drawable/success_small"
         android:text="TextView"
         android:textColor="@color/black"
         android:textSize="14sp"

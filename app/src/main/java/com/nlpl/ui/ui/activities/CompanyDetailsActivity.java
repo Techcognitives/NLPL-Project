@@ -565,12 +565,13 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 //------------------------------------- Update Type ------------------------------------------------
         CompanyUpdate companyUpdate = new CompanyUpdate("HCL", "gst3456", "pan78238", "HR", "Maldives", "Himalaya", ""+userId, "489023");
 
-        Call<CompanyUpdate> call = companyService.updateCompanyDetails("41e69305-7260-4b01-8892-a0f4f7daec71", companyUpdate);
+        Call<CompanyUpdate> call = companyService.updateCompanyDetails(companyUpdate);
 
         call.enqueue(new Callback<CompanyUpdate>() {
             @Override
             public void onResponse(Call<CompanyUpdate> call, retrofit2.Response<CompanyUpdate> response) {
-
+                CompanyUpdate companyUpdate1 = response.body();
+                Log.i("Updated", String.valueOf(companyUpdate1));
             }
 
             @Override

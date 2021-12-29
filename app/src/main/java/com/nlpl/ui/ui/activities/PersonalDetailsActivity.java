@@ -53,23 +53,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            mobile = bundle.getString("mobile3");
-            name = bundle.getString("name3");
-            address = bundle.getString("address");
-            pinCode = bundle.getString("pinCode");
-            city = bundle.getString("city");
             userId = bundle.getString("userId");
-            bankName = bundle.getString("bankName");
-            accNo = bundle.getString("accNo");
-            vehicleNo = bundle.getString("vehicleNo");
-            driverName = bundle.getString("driverName");
-            isPersonalDetailsDone = bundle.getBoolean("isPersonal");
-            isBankDetailsDone = bundle.getBoolean("isBank");
-            isAddTrucksDone = bundle.getBoolean("isTrucks");
-            isAddDriversDone = bundle.getBoolean("isDriver");
-            role = bundle.getString("role");
-            Log.i("Mobile No", mobile);
-            Log.i("Name", name);
         }
 
         if (isPanUploaded && isFrontUploaded && isBackUploaded) {
@@ -493,21 +477,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
                     Intent i8 = new Intent(PersonalDetailsActivity.this, ProfileAndRegistrationActivity.class);
-                    i8.putExtra("mobile2", mobile);
-                    i8.putExtra("name2", name);
-                    i8.putExtra("address", address);
-                    i8.putExtra("pinCode", pinCode);
-                    i8.putExtra("city", city);
                     i8.putExtra("userId", userId);
-                    i8.putExtra("bankName", bankName);
-                    i8.putExtra("accNo", accNo);
-                    i8.putExtra("vehicleNo", vehicleNo);
-                    i8.putExtra("driverName", driverName);
-                    i8.putExtra("isPersonal", true);
-                    i8.putExtra("isBank", isBankDetailsDone);
-                    i8.putExtra("isTrucks", isAddTrucksDone);
-                    i8.putExtra("isDriver", isAddDriversDone);
-                    i8.putExtra("role", role);
                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i8);
                     overridePendingTransition(0, 0);

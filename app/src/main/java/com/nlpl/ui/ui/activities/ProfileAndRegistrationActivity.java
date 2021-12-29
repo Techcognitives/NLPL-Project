@@ -76,9 +76,11 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     String userId;
 
     Button personalDetails, bankDetails, addTrucks, addDrivers;
-    String driverName, mobile, name, address, pinCode, city, bankName, accNo, vehicleNo, role;
-    TextView nameTitle, mobileText;
+    String mobile, name, address, pinCode, city, role;
+    TextView nameTitle, mobileText, emailIdTextView, officeAddressTextView;
     ConstraintLayout personal_done, bankDone, vehicleDone, driverDone;
+
+    String companyName, companyAddress, companyCity, companyZip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +102,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         language.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateUserDetails();
                 languageDialog = new Dialog(ProfileAndRegistrationActivity.this);
                 languageDialog.setContentView(R.layout.dialog_language);
                 languageDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -159,7 +160,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         firmName = findViewById(R.id.firm_name_done);
         addressDone = findViewById(R.id.address_done);
         editPersonalDetails = findViewById(R.id.editPersonalDetails);
-        accNoDone = findViewById(R.id.accNoDone);
+        accNoDone = findViewById(R.id.bank_list_account_number_text);
         bankDone = findViewById(R.id.bankDetailsDoneLayout);
         addBankDetails = findViewById(R.id.addBankDone);
         vehicleDone = findViewById(R.id.addTrucksDone);
@@ -169,10 +170,12 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
         nameTitle = (TextView) findViewById(R.id.profile_registration_name_text);
         mobileText = (TextView) findViewById(R.id.profile_registration_mobile_text);
-
+        emailIdTextView = (TextView) findViewById(R.id.profile_and_registration_email_id_text);
+        officeAddressTextView = (TextView) findViewById(R.id.profile_and_registration_office_address_text);
 
         mQueue = Volley.newRequestQueue(ProfileAndRegistrationActivity.this);
         getUserDetails();
+        getCompanyDetails();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -279,7 +282,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
                         nameDone.setText(" " + name);
                         phoneDone.setText(" Phone: +91 " + s1);
-                        firmName.setText(" Firm Name: " + "Not Available");
+                        emailIdTextView.setText(" Email Id");
                         addressDone.setText(" Address: " + address + ", " + city + " " + pinCode);
 
                         if (role.equals("Customer")) {
@@ -305,7 +308,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
     public void getTruckList() {
         //---------------------------- Get Truck Details -------------------------------------------
-        String url1 = getString(R.string.baseURL) + "/truck/3";
+        String url1 = getString(R.string.baseURL) + "/truck/truckbyuserID/"+userId;
         Log.i("URL: ", url1);
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -387,7 +390,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     }
 
     public void getBankDetailsList() {
-        //---------------------------- Get Truck Details -------------------------------------------
+        //---------------------------- Get Bank Details -------------------------------------------
         String url1 = getString(R.string.baseURL) + "/bank/" + userId;
         Log.i("URL: ", url1);
 
@@ -426,50 +429,73 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         //-------------------------------------------------------------------------------------------
     }
 
+    public void getCompanyDetails() {
+        //---------------------------- Get Company Details -------------------------------------------
+        String url1 = getString(R.string.baseURL) + "/company/41e69305-7260-4b01-8892-a0f4f7daec71";
+        Log.i("URL: ", url1);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray companyDetails = response.getJSONArray("data");
+                    for (int i = 0; i < companyDetails.length(); i++) {
+                        JSONObject data = companyDetails.getJSONObject(i);
+                        companyName = data.getString("company_name");
+                        companyAddress = data.getString("comp_add");
+                        companyCity = data.getString("comp_city");
+                        companyZip = data.getString("comp_zip");
+                    }
+
+                    if (companyName == null){
+                        firmName.setVisibility(View.GONE);
+                        officeAddressTextView.setVisibility(View.GONE);
+                        addCompany.setVisibility(View.VISIBLE);
+                    }else{
+                        firmName.setVisibility(View.VISIBLE);
+                        officeAddressTextView.setVisibility(View.VISIBLE);
+                        addCompany.setVisibility(View.GONE);
+                        firmName.setText(" Firm Name: "+companyName);
+                        officeAddressTextView.setText(" Office Address: "+companyAddress+", "+companyCity+" "+companyZip);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+        //-------------------------------------------------------------------------------------------
+    }
+
     public void getTruckDetails(TruckModel obj) {
         Intent intent = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
-        intent.putExtra("mobile3", mobile);
-        intent.putExtra("name3", name);
-        intent.putExtra("address", address);
-        intent.putExtra("pinCode", pinCode);
-        intent.putExtra("city", city);
         intent.putExtra("userId", userId);
-        intent.putExtra("bankName", bankName);
-        intent.putExtra("accNo", accNo);
-        intent.putExtra("vehicleNo", vehicleNo);
-        intent.putExtra("driverName", driverName);
+        intent.putExtra("isEdit",true);
+        intent.putExtra("truckId", obj.getTruck_id());
 
         startActivity(intent);
     }
 
     public void getDriverDetails(DriverModel obj) {
         Intent intent = new Intent(ProfileAndRegistrationActivity.this, DriverDetailsActivity.class);
-        intent.putExtra("mobile3", mobile);
-        intent.putExtra("name3", name);
-        intent.putExtra("address", address);
-        intent.putExtra("pinCode", pinCode);
-        intent.putExtra("city", city);
         intent.putExtra("userId", userId);
-        intent.putExtra("bankName", bankName);
-        intent.putExtra("accNo", accNo);
-        intent.putExtra("vehicleNo", vehicleNo);
-        intent.putExtra("driverName", driverName);
+        intent.putExtra("isEdit",true);
+        intent.putExtra("driverId", obj.getDriver_id());
 
         startActivity(intent);
     }
 
     public void getBankDetails(BankModel obj) {
         Intent intent = new Intent(ProfileAndRegistrationActivity.this, BankDetailsActivity.class);
-        intent.putExtra("mobile3", mobile);
-        intent.putExtra("name3", name);
-        intent.putExtra("address", address);
-        intent.putExtra("pinCode", pinCode);
-        intent.putExtra("city", city);
         intent.putExtra("userId", userId);
-        intent.putExtra("bankName", bankName);
-        intent.putExtra("accNo", accNo);
-        intent.putExtra("vehicleNo", vehicleNo);
-        intent.putExtra("driverName", driverName);
+        intent.putExtra("isEdit",true);
+        intent.putExtra("bankDetailsID", obj.getBank_id());
 
         startActivity(intent);
     }
@@ -502,12 +528,12 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 if (isPersonalDetailsDone) {
                     if (isRecExpanded) {
                         personal_done.setVisibility(View.GONE);
-                        addCompany.setVisibility(View.GONE);
+//                        addCompany.setVisibility(View.GONE);
                         personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
                         isRecExpanded = false;
                     } else {
                         personal_done.setVisibility(View.VISIBLE);
-                        addCompany.setVisibility(View.VISIBLE);
+//                        addCompany.setVisibility(View.VISIBLE);
                         bankDone.setVisibility(View.GONE);
                         vehicleDone.setVisibility(View.GONE);
                         driverDone.setVisibility(View.GONE);
@@ -536,20 +562,11 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     }
                 } else {
                     personal_done.setVisibility(View.GONE);
-                    addCompany.setVisibility(View.GONE);
+//                    addCompany.setVisibility(View.GONE);
                     personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
 
                     Intent intent = new Intent(ProfileAndRegistrationActivity.this, PersonalDetailsActivity.class);
-                    intent.putExtra("mobile3", mobile);
-                    intent.putExtra("name3", name);
-                    intent.putExtra("address", address);
-                    intent.putExtra("pinCode", pinCode);
-                    intent.putExtra("city", city);
                     intent.putExtra("userId", userId);
-                    intent.putExtra("bankName", bankName);
-                    intent.putExtra("accNo", accNo);
-                    intent.putExtra("vehicleNo", vehicleNo);
-                    intent.putExtra("driverName", driverName);
 
                     startActivity(intent);
                 }
@@ -568,7 +585,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         personal_done.setVisibility(View.GONE);
                         vehicleDone.setVisibility(View.GONE);
                         driverDone.setVisibility(View.GONE);
-                        addCompany.setVisibility(View.GONE);
+//                        addCompany.setVisibility(View.GONE);
                         addTruck.setVisibility(View.GONE);
                         bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_down_personal, 0);
 
@@ -598,16 +615,8 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
 
                     Intent intent = new Intent(ProfileAndRegistrationActivity.this, BankDetailsActivity.class);
-                    intent.putExtra("mobile3", mobile);
-                    intent.putExtra("name3", name);
-                    intent.putExtra("address", address);
-                    intent.putExtra("pinCode", pinCode);
-                    intent.putExtra("city", city);
+                    intent.putExtra("isEdit",false);
                     intent.putExtra("userId", userId);
-                    intent.putExtra("bankName", bankName);
-                    intent.putExtra("accNo", accNo);
-                    intent.putExtra("vehicleNo", vehicleNo);
-                    intent.putExtra("driverName", driverName);
 
                     startActivity(intent);
                 }
@@ -626,7 +635,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         personal_done.setVisibility(View.GONE);
                         bankDone.setVisibility(View.GONE);
                         driverDone.setVisibility(View.GONE);
-                        addCompany.setVisibility(View.GONE);
+//                        addCompany.setVisibility(View.GONE);
                         addBankDetails.setVisibility(View.GONE);
                         addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_down_personal, 0);
 
@@ -651,7 +660,10 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         isRecExpanded = true;
                     }
                 } else {
-
+                    Intent intent2 = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
+                    intent2.putExtra("userId", userId);
+                    intent2.putExtra("isEdit",false);
+                    startActivity(intent2);
                 }
 
                 break;
@@ -670,7 +682,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         personal_done.setVisibility(View.GONE);
                         bankDone.setVisibility(View.GONE);
                         vehicleDone.setVisibility(View.GONE);
-                        addCompany.setVisibility(View.GONE);
+//                        addCompany.setVisibility(View.GONE);
                         addBankDetails.setVisibility(View.GONE);
                         addTruck.setVisibility(View.GONE);
                         addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_down_personal, 0);
@@ -701,17 +713,8 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
 
                     Intent intent = new Intent(ProfileAndRegistrationActivity.this, DriverDetailsActivity.class);
-                    intent.putExtra("mobile3", mobile);
-                    intent.putExtra("name3", name);
-                    intent.putExtra("address", address);
-                    intent.putExtra("pinCode", pinCode);
-                    intent.putExtra("city", city);
                     intent.putExtra("userId", userId);
-                    intent.putExtra("bankName", bankName);
-                    intent.putExtra("accNo", accNo);
-                    intent.putExtra("vehicleNo", vehicleNo);
-                    intent.putExtra("driverName", driverName);
-
+                    intent.putExtra("isEdit", false);
                     startActivity(intent);
                 }
                 break;
@@ -719,17 +722,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             case R.id.editPersonalDetails:
 
                 Intent intent = new Intent(ProfileAndRegistrationActivity.this, PersonalDetailsAndIdProofActivity.class);
-                intent.putExtra("mobile3", mobile);
-                intent.putExtra("name3", name);
-                intent.putExtra("address", address);
-                intent.putExtra("pinCode", pinCode);
-                intent.putExtra("city", city);
                 intent.putExtra("userId", userId);
-                intent.putExtra("bankName", bankName);
-                intent.putExtra("accNo", accNo);
-                intent.putExtra("vehicleNo", vehicleNo);
-                intent.putExtra("driverName", driverName);
-
                 startActivity(intent);
                 break;
 
@@ -737,6 +730,27 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 Intent intent1 = new Intent(ProfileAndRegistrationActivity.this, CompanyDetailsActivity.class);
                 intent1.putExtra("userId", userId);
                 startActivity(intent1);
+                break;
+
+            case R.id.addBankDone:
+                Intent intent2 = new Intent(ProfileAndRegistrationActivity.this, BankDetailsActivity.class);
+                intent2.putExtra("userId", userId);
+                intent2.putExtra("isEdit",false);
+                startActivity(intent2);
+                break;
+
+            case R.id.addTruck:
+                Intent intent3 = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
+                intent3.putExtra("userId", userId);
+                intent3.putExtra("isEdit",false);
+                startActivity(intent3);
+                break;
+
+            case R.id.addDriverDone:
+                Intent intent4 = new Intent(ProfileAndRegistrationActivity.this, DriverDetailsActivity.class);
+                intent4.putExtra("userId", userId);
+                intent4.putExtra("isEdit",false);
+                startActivity(intent4);
                 break;
         }
     }
