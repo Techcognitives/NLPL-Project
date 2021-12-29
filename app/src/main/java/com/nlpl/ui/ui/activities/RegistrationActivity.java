@@ -52,6 +52,7 @@ public class RegistrationActivity extends AppCompatActivity {
     TextView series;
     Button okButton;
     View personalAndAddress;
+    Boolean isNew;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +64,7 @@ public class RegistrationActivity extends AppCompatActivity {
             mobile = bundle.getString("mobile1");
             Log.i("Mobile No Registration", mobile);
             userId = bundle.getString("userId");
-            Log.i("UserId Registration", userId);
+            isNew = bundle.getBoolean("isNew");
         }
 
         action_bar = (View) findViewById(R.id.registration_action_bar);
@@ -585,7 +586,7 @@ public class RegistrationActivity extends AppCompatActivity {
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
 //                Log.i("Message UserCreated:", userResponse.getData().getPhone_number());
                 UserResponse userResponse = response.body();
-//                userId = userResponse.getData().getUser_id();
+                userId = String.valueOf(userResponse.getData().getUser_id());
 
                 Log.i("Msg Success", String.valueOf(userResponse));
             }

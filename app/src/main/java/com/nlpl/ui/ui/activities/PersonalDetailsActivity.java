@@ -44,7 +44,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     View panAndAadharView;
 
     String userId, driverName, vehicleNo, mobile, name, address, pinCode, city, idProof, bankName, accNo, role;
-    Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, isPanUploaded = false, isFrontUploaded = false, isBackUploaded = false;
+    Boolean isPersonalDetailsDone = false, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, isPanUploaded = false, isFrontUploaded = false, isBackUploaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

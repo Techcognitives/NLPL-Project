@@ -322,7 +322,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         TruckModel model = new TruckModel();
                         model.setUser_id(obj.getString("user_id"));
                         model.setVehicle_no(obj.getString("vehicle_no"));
-                        model.setVehicle_body_type(obj.getString("vehicle_body_type"));
+//                        model.setVehicle_body_type(obj.getString("vehicle_body_type"));
                         model.setRc_book(obj.getString("rc_book"));
                         model.setVehicle_insurance(obj.getString("vehicle_insurance"));
                         model.setTruck_id(obj.getString("truck_id"));

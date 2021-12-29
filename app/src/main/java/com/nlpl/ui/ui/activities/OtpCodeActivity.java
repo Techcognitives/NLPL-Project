@@ -446,6 +446,12 @@ public class OtpCodeActivity extends AppCompatActivity {
 
                                             }else {
                                                 Log.i("mobile no not equal", mobileNoAPI);
+                                                Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
+                                                i8.putExtra("mobile1", mobileNoFirebase);
+                                                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                startActivity(i8);
+                                                overridePendingTransition(0, 0);
+                                                finish();
                                             }
                                         }
 //                                }
@@ -526,4 +532,6 @@ public class OtpCodeActivity extends AppCompatActivity {
     public void onClickBack(View view) {
         OtpCodeActivity.this.finish();
     }
+
+
 }

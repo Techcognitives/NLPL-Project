@@ -10,6 +10,6 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 public interface AddDriverService {
-    @POST("/truck/addtruck")
+    @POST("driver/addDriver")
     Call<AddDriverResponse> saveDriver(@Body AddDriverRequest addDriverRequest);
 }
