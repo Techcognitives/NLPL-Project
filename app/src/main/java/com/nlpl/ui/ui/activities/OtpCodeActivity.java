@@ -191,15 +191,16 @@ public class OtpCodeActivity extends AppCompatActivity {
                                             Log.i("isregDone:", isRegistrationDone);
                                             Log.i("Mobile No API Matches", phone);
 
-                                            Intent i8 = new Intent(OtpCodeActivity.this, ProfileAndRegistrationActivity.class);
-                                            i8.putExtra("mobile2", phone);
-                                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                            startActivity(i8);
-                                            overridePendingTransition(0, 0);
-                                            finish();
+                                            if (isRegistrationDone.equals(1)) {
 
-                                        }else {
-                                            Log.i("mobile no not equal", mobileNoAPI);
+                                                Intent i8 = new Intent(OtpCodeActivity.this, ProfileAndRegistrationActivity.class);
+                                                i8.putExtra("mobile2", phone);
+                                                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                startActivity(i8);
+                                                overridePendingTransition(0, 0);
+                                                finish();
+                                            } else {
+//                                            Log.i("mobile no not equal", mobileNoAPI);
                                             Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
                                             i8.putExtra("mobile1", mobileNoFirebase);
                                             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -207,6 +208,7 @@ public class OtpCodeActivity extends AppCompatActivity {
                                             overridePendingTransition(0, 0);
                                             finish();
                                         }
+                                    }
                                     }
 //
                                 } catch (JSONException e) {

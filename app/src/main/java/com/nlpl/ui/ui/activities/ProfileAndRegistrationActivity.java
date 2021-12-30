@@ -89,7 +89,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            mobile = bundle.getString("mobile1");
+            mobile = bundle.getString("mobile2");
             Log.i("Mobile No Registration", mobile);
         }
 
@@ -206,7 +206,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                             Log.i("userIDAPI:", userId);
 
                             getCompanyDetails();
-                            getUserDetails();
+                            getUserDetails(userId);
 
                             //---------------------------- Get Truck Details -------------------------------------------
                             truckListRecyclerView = (RecyclerView) findViewById(R.id.trucks_list_view);
@@ -219,7 +219,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                             truckListAdapter = new TrucksAdapter(ProfileAndRegistrationActivity.this, truckList);
                             truckListRecyclerView.setAdapter(truckListAdapter);
 
-                            getTruckList();
+                            getTruckList(userId);
                             //------------------------------------------------------------------------------------------
 
                             //---------------------------- Get Driver Details -------------------------------------------
@@ -233,7 +233,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                             driverListAdapter = new DriversAdapter(ProfileAndRegistrationActivity.this, driverList);
                             driverListRecyclerView.setAdapter(driverListAdapter);
 
-                            getDriverDetailsList();
+                            getDriverDetailsList(userId);
                             //------------------------------------------------------------------------------------------
 
                             //---------------------------- Get Bank Details -------------------------------------------
@@ -247,7 +247,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                             bankListAdapter = new BanksAdapter(ProfileAndRegistrationActivity.this, bankList);
                             bankListRecyclerView.setAdapter(bankListAdapter);
 
-                            getBankDetailsList();
+                            getBankDetailsList(userId);
 
                             //------------------------------------------------------------------------------------------
 
@@ -270,7 +270,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
     }
 
-    private void getUserDetails() {
+    private void getUserDetails(String userId) {
 
         String url = getString(R.string.baseURL) + "/user/" + userId;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -349,7 +349,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
     }
 
-    public void getTruckList() {
+    public void getTruckList(String userId) {
         //---------------------------- Get Truck Details -------------------------------------------
         String url1 = getString(R.string.baseURL) + "/truck/truckbyuserID/"+userId;
         Log.i("URL: ", url1);
@@ -391,7 +391,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         //-------------------------------------------------------------------------------------------
     }
 
-    public void getDriverDetailsList() {
+    public void getDriverDetailsList(String userId) {
         //---------------------------- Get Driver Details ------------------------------------------
         String url1 = getString(R.string.baseURL) + "/driver/userId/" + userId;
         Log.i("URL: ", url1);
@@ -432,7 +432,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         //-------------------------------------------------------------------------------------------
     }
 
-    public void getBankDetailsList() {
+    public void getBankDetailsList(String userId) {
         //---------------------------- Get Bank Details -------------------------------------------
         String url1 = getString(R.string.baseURL) + "/bank/" + userId;
         Log.i("URL: ", url1);
