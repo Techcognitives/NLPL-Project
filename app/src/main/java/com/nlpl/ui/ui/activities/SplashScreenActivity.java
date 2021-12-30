@@ -136,7 +136,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                                     } else {
                                                 Intent i8 = new Intent(SplashScreenActivity.this, RegistrationActivity.class);
-                                                i8.putExtra("mobile1", phone);
+                                                i8.putExtra("mobile1", mobileNoFirebase);
                                                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                 startActivity(i8);
                                                 overridePendingTransition(0, 0);
