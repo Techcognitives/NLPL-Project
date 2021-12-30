@@ -46,13 +46,12 @@ public class RegistrationActivity extends AppCompatActivity {
     Dialog selectStateDialog, selectDistrictDialog, languageDialog;
     String selectedDistrict, selectedState, role;
     int parentID;
-    String mobile, userId;
+    String mobile;
 
     EditText name, pinCode, address, mobileNoEdit;
     TextView series;
     Button okButton;
     View personalAndAddress;
-    Boolean isNew;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +62,6 @@ public class RegistrationActivity extends AppCompatActivity {
         if (bundle != null) {
             mobile = bundle.getString("mobile1");
             Log.i("Mobile No Registration", mobile);
-            userId = bundle.getString("userId");
-            isNew = bundle.getBoolean("isNew");
         }
 
         action_bar = (View) findViewById(R.id.registration_action_bar);
@@ -478,10 +475,9 @@ public class RegistrationActivity extends AppCompatActivity {
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-
                     dialogInterface.dismiss();
                     Intent i8 = new Intent(RegistrationActivity.this, ProfileAndRegistrationActivity.class);
-                    i8.putExtra("userId", userId);
+                    i8.putExtra("mobile1", mobile);
                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i8);
                     overridePendingTransition(0, 0);
@@ -586,8 +582,6 @@ public class RegistrationActivity extends AppCompatActivity {
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
 //                Log.i("Message UserCreated:", userResponse.getData().getPhone_number());
                 UserResponse userResponse = response.body();
-                userId = String.valueOf(userResponse.getData().getUser_id());
-
                 Log.i("Msg Success", String.valueOf(userResponse));
             }
 

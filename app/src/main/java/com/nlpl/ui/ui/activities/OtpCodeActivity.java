@@ -129,29 +129,112 @@ public class OtpCodeActivity extends AppCompatActivity {
 //            }
 //        }).start();
 
-        initiateOtp();
+//        initiateOtp();
         setCountdown();
 
         otpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                otp = otp1.getText().toString() + otp2.getText().toString() + otp3.getText().toString() + otp4.getText().toString() + otp5.getText().toString() + otp6.getText().toString();
+//                otp = otp1.getText().toString() + otp2.getText().toString() + otp3.getText().toString() + otp4.getText().toString() + otp5.getText().toString() + otp6.getText().toString();
 
-//                Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
-//                i8.putExtra("mobile1", mobile);
-//                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                startActivity(i8);
-//                overridePendingTransition(0, 0);
-//                OtpCodeActivity.this.finish();
+                AlertDialog.Builder my_alert = new AlertDialog.Builder(OtpCodeActivity.this);
+                my_alert.setTitle("OTP validated successfully");
+                my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
-                if (otp1.getText().toString().isEmpty() || otp2.getText().toString().isEmpty() || otp3.getText().toString().isEmpty() || otp4.getText().toString().isEmpty() || otp5.getText().toString().isEmpty() || otp6.getText().toString().isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Field is blank", Toast.LENGTH_LONG).show();
-                } else {
-                    Log.i("OTP", otp);
-                    Log.i("OTP ID", otpId);
-                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpId, otp);
-                    signInWithPhoneAuthCredential(credential);
-                }
+                        //------------------------------get user details by mobile Number---------------------------------
+                        //-----------------------------------Get User Details---------------------------------------
+                        String url = getString(R.string.baseURL)+"/user/get";
+                        Log.i("URL at Profile:", url);
+
+                        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    JSONArray jsonArray = response.getJSONArray("data");
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject data = jsonArray.getJSONObject(i);
+                                        userIdAPI = data.getString("user_id");
+                                        mobileNoAPI = data.getString("phone_number");
+                                        pinCodeAPI = data.getString("pin_code");
+                                        nameAPI = data.getString("name");
+                                        roleAPI = data.getString("user_type");
+                                        cityAPI = data.getString("preferred_location");
+
+                                        addressAPI = data.getString("address");
+
+                                        isRegistrationDoneAPI = data.getString("isRegistration_done");
+
+                                        arrayUserId.add(userIdAPI);
+                                        arrayMobileNo.add(mobileNoAPI);
+                                        arrayAddress.add(addressAPI);
+                                        arrayRegDone.add(isRegistrationDoneAPI);
+                                        arrayName.add(nameAPI);
+                                        arrayRole.add(roleAPI);
+                                        arrayCity.add(cityAPI);
+                                        arrayPinCode.add(pinCodeAPI);
+                                    }
+
+                                    for (int j = 0; j < arrayMobileNo.size(); j++) {
+                                        if (arrayMobileNo.get(j).equals(mobileNoFirebase)) {
+                                            userId = arrayUserId.get(j);
+                                            name = arrayName.get(j);
+                                            phone = arrayMobileNo.get(j);
+                                            address = arrayAddress.get(j);
+                                            pinCode = arrayPinCode.get(j);
+                                            city = arrayCity.get(j);
+                                            role = arrayRole.get(j);
+                                            isRegistrationDone = arrayRegDone.get(j);
+                                            Log.i("userIDAPI:", userId);
+                                            Log.i("userName", name);
+                                            Log.i("isregDone:", isRegistrationDone);
+                                            Log.i("Mobile No API Matches", phone);
+
+                                            Intent i8 = new Intent(OtpCodeActivity.this, ProfileAndRegistrationActivity.class);
+                                            i8.putExtra("mobile2", phone);
+                                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            startActivity(i8);
+                                            overridePendingTransition(0, 0);
+                                            finish();
+
+                                        }else {
+                                            Log.i("mobile no not equal", mobileNoAPI);
+                                            Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
+                                            i8.putExtra("mobile1", mobileNoFirebase);
+                                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            startActivity(i8);
+                                            overridePendingTransition(0, 0);
+                                            finish();
+                                        }
+                                    }
+//
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                            }
+                        });
+                        mQueue.add(request);
+
+                        //------------------------------------------------------------------------------------------------
+                        dialogInterface.dismiss();
+
+                    }
+                });
+                my_alert.show();
+//                if (otp1.getText().toString().isEmpty() || otp2.getText().toString().isEmpty() || otp3.getText().toString().isEmpty() || otp4.getText().toString().isEmpty() || otp5.getText().toString().isEmpty() || otp6.getText().toString().isEmpty()) {
+//                    Toast.makeText(getApplicationContext(), "Field is blank", Toast.LENGTH_LONG).show();
+//                } else {
+//                    Log.i("OTP", otp);
+//                    Log.i("OTP ID", otpId);
+//                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpId, otp);
+//                    signInWithPhoneAuthCredential(credential);
+//                }
             }
         });
 
@@ -398,7 +481,7 @@ public class OtpCodeActivity extends AppCompatActivity {
 
                                         for (int j = 0; j < arrayMobileNo.size(); j++) {
                                             if (arrayMobileNo.get(j).equals(mobileNoFirebase)) {
-//                                        if (mobileNoAPI.length() == 12) {
+//
                                                 userId = arrayUserId.get(j);
                                                 name = arrayName.get(j);
                                                 phone = arrayMobileNo.get(j);
@@ -412,8 +495,6 @@ public class OtpCodeActivity extends AppCompatActivity {
                                                 Log.i("isregDone:", isRegistrationDone);
                                                 Log.i("Mobile No API Matches", phone);
 
-
-                                                if (isRegistrationDone.equals("1")) {
                                                     Intent i8 = new Intent(OtpCodeActivity.this, ProfileAndRegistrationActivity.class);
                                                     i8.putExtra("mobile2", phone);
                                                     i8.putExtra("name2", name);
@@ -435,15 +516,6 @@ public class OtpCodeActivity extends AppCompatActivity {
                                                     overridePendingTransition(0, 0);
                                                     finish();
 
-                                                } else {
-                                                    Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
-                                                    i8.putExtra("mobile1", phone);
-                                                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                    startActivity(i8);
-                                                    overridePendingTransition(0, 0);
-                                                    finish();
-                                                }
-
                                             }else {
                                                 Log.i("mobile no not equal", mobileNoAPI);
                                                 Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
@@ -454,7 +526,7 @@ public class OtpCodeActivity extends AppCompatActivity {
                                                 finish();
                                             }
                                         }
-//                                }
+//
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }

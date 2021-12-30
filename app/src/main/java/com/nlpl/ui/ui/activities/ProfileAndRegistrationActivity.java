@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
@@ -70,7 +71,9 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     View bottomNav;
     TextView truckLoadText;
 
-    String userId;
+    String userId, userIdAPI, nameAPI, addressAPI, pinCodeAPI, cityAPI, roleAPI, isRegistrationDoneAPI, isRegistrationDone, phone, mobileNoAPI;
+    ArrayList<String> arrayUserId, arrayMobileNo,  arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
+
 
     Button personalDetails, bankDetails, addTrucks, addDrivers;
     String mobile, name, address, pinCode, city, role;
@@ -86,14 +89,23 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            userId = bundle.getString("userId");
-            Log.i("UserId PandR", userId);
+            mobile = bundle.getString("mobile1");
+            Log.i("Mobile No Registration", mobile);
         }
 
         action_bar = findViewById(R.id.profile_registration_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
         language = (TextView) action_bar.findViewById(R.id.action_bar_language_selector);
+
+        arrayUserId = new ArrayList<>();
+        arrayMobileNo = new ArrayList<>();
+        arrayAddress = new ArrayList<>();
+        arrayCity = new ArrayList<>();
+        arrayPinCode = new ArrayList<>();
+        arrayName = new ArrayList<>();
+        arrayRole = new ArrayList<>();
+        arrayRegDone = new ArrayList<>();
 
         language.setText(getString(R.string.english));
         language.setOnClickListener(new View.OnClickListener() {
@@ -171,51 +183,91 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         officeAddressTextView = (TextView) findViewById(R.id.profile_and_registration_office_address_text);
 
         mQueue = Volley.newRequestQueue(ProfileAndRegistrationActivity.this);
-        getUserDetails();
-        getCompanyDetails();
 
-        //---------------------------- Get Truck Details -------------------------------------------
-        truckListRecyclerView = (RecyclerView) findViewById(R.id.trucks_list_view);
+        //------------------------------get user details by mobile Number---------------------------------
+        //-----------------------------------Get User Details---------------------------------------
+        String url = getString(R.string.baseURL)+"/user/get";
+        Log.i("URL at Profile:", url);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-        linearLayoutManager.setReverseLayout(true);
-        truckListRecyclerView.setLayoutManager(linearLayoutManager);
-        truckListRecyclerView.setHasFixedSize(true);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray jsonArray = response.getJSONArray("data");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject data = jsonArray.getJSONObject(i);
+                        userIdAPI = data.getString("user_id");
+                        arrayUserId.add(userIdAPI);
+                    }
 
-        truckListAdapter = new TrucksAdapter(ProfileAndRegistrationActivity.this, truckList);
-        truckListRecyclerView.setAdapter(truckListAdapter);
+                    for (int j = 0; j < arrayMobileNo.size(); j++) {
+                        if (arrayMobileNo.get(j).equals(mobile)) {
+                            userId = arrayUserId.get(j);
+                            Log.i("userIDAPI:", userId);
 
-        getTruckList();
-        //------------------------------------------------------------------------------------------
+                            getCompanyDetails();
+                            getUserDetails();
 
-        //---------------------------- Get Driver Details -------------------------------------------
-        driverListRecyclerView = (RecyclerView) findViewById(R.id.driver_list_view);
+                            //---------------------------- Get Truck Details -------------------------------------------
+                            truckListRecyclerView = (RecyclerView) findViewById(R.id.trucks_list_view);
 
-        LinearLayoutManager linearLayoutManagerDriver = new LinearLayoutManager(getApplicationContext());
-        linearLayoutManagerDriver.setReverseLayout(true);
-        driverListRecyclerView.setLayoutManager(linearLayoutManagerDriver);
-        driverListRecyclerView.setHasFixedSize(true);
+                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+                            linearLayoutManager.setReverseLayout(true);
+                            truckListRecyclerView.setLayoutManager(linearLayoutManager);
+                            truckListRecyclerView.setHasFixedSize(true);
 
-        driverListAdapter = new DriversAdapter(ProfileAndRegistrationActivity.this, driverList);
-        driverListRecyclerView.setAdapter(driverListAdapter);
+                            truckListAdapter = new TrucksAdapter(ProfileAndRegistrationActivity.this, truckList);
+                            truckListRecyclerView.setAdapter(truckListAdapter);
 
-        getDriverDetailsList();
-        //------------------------------------------------------------------------------------------
+                            getTruckList();
+                            //------------------------------------------------------------------------------------------
 
-        //---------------------------- Get Bank Details -------------------------------------------
-        bankListRecyclerView = (RecyclerView) findViewById(R.id.bank_list_view);
+                            //---------------------------- Get Driver Details -------------------------------------------
+                            driverListRecyclerView = (RecyclerView) findViewById(R.id.driver_list_view);
 
-        LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(getApplicationContext());
-        linearLayoutManagerBank.setReverseLayout(true);
-        bankListRecyclerView.setLayoutManager(linearLayoutManagerBank);
-        bankListRecyclerView.setHasFixedSize(true);
+                            LinearLayoutManager linearLayoutManagerDriver = new LinearLayoutManager(getApplicationContext());
+                            linearLayoutManagerDriver.setReverseLayout(true);
+                            driverListRecyclerView.setLayoutManager(linearLayoutManagerDriver);
+                            driverListRecyclerView.setHasFixedSize(true);
 
-        bankListAdapter = new BanksAdapter(ProfileAndRegistrationActivity.this, bankList);
-        bankListRecyclerView.setAdapter(bankListAdapter);
+                            driverListAdapter = new DriversAdapter(ProfileAndRegistrationActivity.this, driverList);
+                            driverListRecyclerView.setAdapter(driverListAdapter);
 
-        getBankDetailsList();
+                            getDriverDetailsList();
+                            //------------------------------------------------------------------------------------------
 
-        //------------------------------------------------------------------------------------------
+                            //---------------------------- Get Bank Details -------------------------------------------
+                            bankListRecyclerView = (RecyclerView) findViewById(R.id.bank_list_view);
+
+                            LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(getApplicationContext());
+                            linearLayoutManagerBank.setReverseLayout(true);
+                            bankListRecyclerView.setLayoutManager(linearLayoutManagerBank);
+                            bankListRecyclerView.setHasFixedSize(true);
+
+                            bankListAdapter = new BanksAdapter(ProfileAndRegistrationActivity.this, bankList);
+                            bankListRecyclerView.setAdapter(bankListAdapter);
+
+                            getBankDetailsList();
+
+                            //------------------------------------------------------------------------------------------
+
+                        }
+                    }
+//
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        mQueue.add(request);
+
+        //------------------------------------------------------------------------------------------------
+
     }
 
     private void getUserDetails() {
@@ -293,6 +345,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         });
 
         mQueue.add(request);
+
 
     }
 
