@@ -26,6 +26,8 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.nlpl.R;
 import com.nlpl.model.CompanyRequest;
 import com.nlpl.model.CompanyResponse;
@@ -74,12 +76,14 @@ public class CompanyDetailsActivity extends AppCompatActivity {
             userId = bundle.getString("userId");
         }
 
+        Gson gson = new GsonBuilder().serializeNulls().create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
         companyService = retrofit.create(CompanyService.class);
+        updateCompanyDetails();
 
         action_bar = findViewById(R.id.company_details_action_bar);
 
@@ -453,8 +457,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
     };
 
     public void onClickCompanyDetailsOK(View view) {
-//        saveCompany(createCompany());
-        updateCompanyDetails();
+        saveCompany(createCompany());
 
         AlertDialog.Builder my_alert = new AlertDialog.Builder(CompanyDetailsActivity.this);
         my_alert.setTitle("Company Details added Successfully");
@@ -565,18 +568,22 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 //------------------------------------- Update Type ------------------------------------------------
         CompanyUpdate companyUpdate = new CompanyUpdate("HCL", "gst3456", "pan78238", "HR", "Maldives", "Himalaya", ""+userId, "489023");
 
-        Call<CompanyUpdate> call = companyService.updateCompanyDetails(companyUpdate);
+        Call<CompanyUpdate> call = companyService.updateCompanyDetails("3",companyUpdate);
 
         call.enqueue(new Callback<CompanyUpdate>() {
             @Override
             public void onResponse(Call<CompanyUpdate> call, retrofit2.Response<CompanyUpdate> response) {
-                CompanyUpdate companyUpdate1 = response.body();
-                Log.i("Updated", String.valueOf(companyUpdate1));
+                if (response.isSuccessful()) {
+                    CompanyUpdate companyUpdate1 = response.body();
+                    Log.i("Updated", String.valueOf(companyUpdate1));
+                }else{
+                    Log.i("Not Successful", "Company Details Update");
+                }
             }
 
             @Override
             public void onFailure(Call<CompanyUpdate> call, Throwable t) {
-
+                Log.i("Not Successful", "Company Details Update");
             }
         });
 //--------------------------------------------------------------------------------------------------

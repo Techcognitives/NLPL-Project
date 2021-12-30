@@ -36,6 +36,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
+import com.nlpl.model.UserUpdate;
+import com.nlpl.services.UserService;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,6 +45,11 @@ import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
@@ -62,7 +69,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     int parentID;
     EditText name, pinCode, address, mobileEdit;
     Button okButton;
-//--------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------
     View panAndAadharView;
     Button panAndAadharButton;
     View panView;
@@ -74,9 +81,12 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
     String nameAPI, mobileAPI, addressAPI, pinCodeAPI, roleAPI, cityAPI, stateAPI;
 
-    private int GET_FROM_GALLERY=0;
-    private int GET_FROM_GALLERY1=1;
-    private int GET_FROM_GALLERY2=2;
+    private int GET_FROM_GALLERY = 0;
+    private int GET_FROM_GALLERY1 = 1;
+    private int GET_FROM_GALLERY2 = 2;
+
+    private static String BASE_URL = "http://65.2.3.41:8080";
+    private UserService userService;
 
     private RequestQueue mQueue;
     String userId;
@@ -176,10 +186,17 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         address.addTextChangedListener(proofAndPersonalWatcher);
         mobileEdit.addTextChangedListener(mobileNumberTextWatcher);
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        userService = retrofit.create(UserService.class);
+
         name.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-        name.setFilters(new InputFilter[] { filter });
+        name.setFilters(new InputFilter[]{filter});
 
 //        if (!name.getText().toString().isEmpty() && !selectStateText.getText().toString().isEmpty() && !selectDistrictText.getText().toString().isEmpty() && role != null){
 //            okButton.setBackground(getDrawable(R.drawable.button_active));
@@ -557,22 +574,23 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     }
 
     public void onClickPersonalProof(View view) {
+        updateUserDetails();
 
-            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
-            my_alert.setTitle("Details updated Successfully");
-            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                    Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, ProfileAndRegistrationActivity.class);
-                    i8.putExtra("userId", userId);
-                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i8);
-                    overridePendingTransition(0, 0);
-                    PersonalDetailsAndIdProofActivity.this.finish();
-                }
-            });
-            my_alert.show();
+        AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
+        my_alert.setTitle("Details updated Successfully");
+        my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, ProfileAndRegistrationActivity.class);
+                i8.putExtra("userId", userId);
+                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i8);
+                overridePendingTransition(0, 0);
+                PersonalDetailsAndIdProofActivity.this.finish();
+            }
+        });
+        my_alert.show();
 
 //            RegistrationActivity.this.finish();
     }
@@ -604,7 +622,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     };
 
 
-    private String blockCharacterSet ="~#^|$%&*!+@₹_-()':;?/={}";
+    private String blockCharacterSet = "~#^|$%&*!+@₹_-()':;?/={}";
 
     private InputFilter filter = new InputFilter() {
 
@@ -629,9 +647,9 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             String pinCodeWatcher = pinCode.getText().toString().trim();
 
-            if (pinCodeWatcher.length() != 6){
+            if (pinCodeWatcher.length() != 6) {
                 pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
-            }else{
+            } else {
                 pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
             }
         }
@@ -652,14 +670,15 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             String mobileNoWatcher = mobileEdit.getText().toString().trim();
 
-            if (mobileNoWatcher.length() == 10){
+            if (mobileNoWatcher.length() == 10) {
                 mobileEdit.setBackground(getResources().getDrawable(R.drawable.mobile_number_right));
                 series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left));
-            }else{
+            } else {
                 mobileEdit.setBackground(getResources().getDrawable(R.drawable.mobile_number_right_red));
                 series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left_red));
             }
         }
+
         @Override
         public void afterTextChanged(Editable editable) {
 
@@ -673,7 +692,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         //Detects request code for PAN
-        if(requestCode==GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
+        if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
 
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
             my_alert.setTitle("PAN Card Uploaded Successfully");
@@ -685,7 +704,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             });
             my_alert.show();
 
-            panCardText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
+            panCardText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadPAN.setVisibility(View.INVISIBLE);
             editPAN.setVisibility(View.VISIBLE);
 
@@ -701,7 +720,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-        }else if (requestCode==GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK){
+        } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
 
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
             my_alert.setTitle("Uploaded Successfully");
@@ -713,7 +732,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             });
             my_alert.show();
 
-            frontText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
+            frontText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadF.setVisibility(View.INVISIBLE);
             editFront.setVisibility(View.VISIBLE);
 
@@ -729,7 +748,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-        }else if (requestCode==GET_FROM_GALLERY2 && resultCode == Activity.RESULT_OK){
+        } else if (requestCode == GET_FROM_GALLERY2 && resultCode == Activity.RESULT_OK) {
 
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
             my_alert.setTitle("Uploaded Successfully");
@@ -741,7 +760,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             });
             my_alert.show();
 
-            backText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
+            backText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadB.setVisibility(View.INVISIBLE);
             editBack.setVisibility(View.VISIBLE);
 
@@ -789,31 +808,31 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                         selectStateText.setText(stateAPI);
                         selectDistrictText.setText(cityAPI);
 
-                        if (roleAPI.equals("Customer")){
+                        if (roleAPI.equals("Customer")) {
                             customerButton.setChecked(true);
                             ownerButton.setChecked(false);
                             driverButton.setChecked(false);
                             brokerButton.setChecked(false);
 
-                        }else if (roleAPI.equals("Owner")){
+                        } else if (roleAPI.equals("Owner")) {
                             customerButton.setChecked(false);
                             ownerButton.setChecked(true);
                             driverButton.setChecked(false);
                             brokerButton.setChecked(false);
 
-                        }else if (roleAPI.equals("Driver")){
+                        } else if (roleAPI.equals("Driver")) {
                             customerButton.setChecked(false);
                             ownerButton.setChecked(false);
                             driverButton.setChecked(true);
                             brokerButton.setChecked(false);
 
-                        }else if (roleAPI.equals("Broker")){
+                        } else if (roleAPI.equals("Broker")) {
                             customerButton.setChecked(false);
                             ownerButton.setChecked(false);
                             driverButton.setChecked(false);
                             brokerButton.setChecked(true);
 
-                        }else{
+                        } else {
 
                         }
 
@@ -832,6 +851,28 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         mQueue.add(request);
 
+    }
+
+    //-------------------------------- Update User Details -----------------------------------------
+    private void updateUserDetails() {
+
+//------------------------------------- Update Type ------------------------------------------------
+        UserUpdate userUpdate = new UserUpdate("" + userId, "Abhi Gotad","918796543114", "", "paid", null, null, null, 1, null, null, null, 0, 1, 0, 1, 0, "abhijeetgotad@gmail.com");
+
+        Call<UserUpdate> call = userService.updateUserDetails("" + userId, userUpdate);
+
+        call.enqueue(new Callback<UserUpdate>() {
+            @Override
+            public void onResponse(Call<UserUpdate> call, retrofit2.Response<UserUpdate> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UserUpdate> call, Throwable t) {
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
     }
 
 }

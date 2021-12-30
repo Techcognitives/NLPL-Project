@@ -62,9 +62,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     private boolean isRecExpanded = false;
     boolean isPersonalDetailsDone = true, isBankDetailsDone = true, isTruckDetailsDone = true, isDriverDetailsDone = true;
 
-    private static String BASE_URL = "http://65.2.3.41:8080";
-    private UserService userService;
-
     View action_bar;
     TextView addDriver, addTruck, addBankDetails, accNoDone, editPersonalDetails, actionBarTitle, language, addCompany, phoneDone, nameDone, firmName, addressDone;
     ImageView actionBarBackButton;
@@ -176,13 +173,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         mQueue = Volley.newRequestQueue(ProfileAndRegistrationActivity.this);
         getUserDetails();
         getCompanyDetails();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        userService = retrofit.create(UserService.class);
 
         //---------------------------- Get Truck Details -------------------------------------------
         truckListRecyclerView = (RecyclerView) findViewById(R.id.trucks_list_view);
@@ -498,28 +488,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         intent.putExtra("bankDetailsID", obj.getBank_id());
 
         startActivity(intent);
-    }
-
-    //-------------------------------- Update User Details -----------------------------------------
-    private void updateUserDetails() {
-
-//------------------------------------- Update Type ------------------------------------------------
-        UserUpdate userUpdate = new UserUpdate("" + userId, null, null, null, "paid", null, null, null, null, null, null, null, null, null, null, null, null);
-
-        Call<UserUpdate> call = userService.updateUserDetails("" + userId, userUpdate);
-
-        call.enqueue(new Callback<UserUpdate>() {
-            @Override
-            public void onResponse(Call<UserUpdate> call, retrofit2.Response<UserUpdate> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<UserUpdate> call, Throwable t) {
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
     }
 
     public void onClickProfileAndRegister(View view) {

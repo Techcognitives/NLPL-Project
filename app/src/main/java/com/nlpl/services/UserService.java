@@ -8,6 +8,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface UserService {
@@ -15,6 +16,6 @@ public interface UserService {
     @POST("/user/create")
     Call<UserResponse> saveUser(@Body UserRequest userRequest);
 
-    @PUT("/user/")
-    Call<UserUpdate> updateUserDetails(@Query("id") String id, @Body UserUpdate userUpdate);
+    @PUT("/user/{userId}")
+    Call<UserUpdate> updateUserDetails(@Path("userId") String userId, @Body UserUpdate userUpdate);
 }

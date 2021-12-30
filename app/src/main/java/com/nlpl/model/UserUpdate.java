@@ -4,7 +4,7 @@ public class UserUpdate {
 
     private String user_id;
     private String name;
-    private int phone_number;
+    private String phone_number;
     private String user_type;
     private String preferred_location;
     private String address;
@@ -19,8 +19,9 @@ public class UserUpdate {
     private int isBankDetails_Given;
     private int isCompany_added;
     private int isPersonal_dt_Added;
+    private String email_id;
 
-    public UserUpdate(String user_id, String name, Integer phone_number, String user_type, String preferred_location, String address, String state_code, String pin_code, Object isRegistration_done, String preferred_language, String upload_aadhar, String upload_pan, Object isTruck_added, Object isDriver_added, Object isBankDetails_Given, Object isCompany_added, Object isPersonal_dt_Added) {
+    public UserUpdate(String user_id, String name, String phone_number, String user_type, String preferred_location, String address, String state_code, String pin_code, int isRegistration_done, String preferred_language, String upload_aadhar, String upload_pan, int isTruck_added, int isDriver_added, int isBankDetails_Given, int isCompany_added, int isPersonal_dt_Added, String email_id) {
         this.user_id = user_id;
         this.name = name;
         this.phone_number = phone_number;
@@ -29,15 +30,16 @@ public class UserUpdate {
         this.address = address;
         this.state_code = state_code;
         this.pin_code = pin_code;
-        this.isRegistration_done = (int) isRegistration_done;
+        this.isRegistration_done = isRegistration_done;
         this.preferred_language = preferred_language;
         this.upload_aadhar = upload_aadhar;
         this.upload_pan = upload_pan;
-        this.isTruck_added = (int) isTruck_added;
-        this.isDriver_added = (int) isDriver_added;
-        this.isBankDetails_Given = (int) isBankDetails_Given;
-        this.isCompany_added = (int) isCompany_added;
-        this.isPersonal_dt_Added = (int) isPersonal_dt_Added;
+        this.isTruck_added = isTruck_added;
+        this.isDriver_added = isDriver_added;
+        this.isBankDetails_Given = isBankDetails_Given;
+        this.isCompany_added = isCompany_added;
+        this.isPersonal_dt_Added = isPersonal_dt_Added;
+        this.email_id = email_id;
     }
 
     @Override
@@ -45,7 +47,7 @@ public class UserUpdate {
         return "UserUpdate{" +
                 "user_id='" + user_id + '\'' +
                 ", name='" + name + '\'' +
-                ", phone_number='" + phone_number + '\'' +
+                ", phone_number=" + phone_number +
                 ", user_type='" + user_type + '\'' +
                 ", preferred_location='" + preferred_location + '\'' +
                 ", address='" + address + '\'' +
@@ -60,6 +62,7 @@ public class UserUpdate {
                 ", isBankDetails_Given=" + isBankDetails_Given +
                 ", isCompany_added=" + isCompany_added +
                 ", isPersonal_dt_Added=" + isPersonal_dt_Added +
+                ", email_id='" + email_id + '\'' +
                 '}';
     }
 
@@ -79,11 +82,11 @@ public class UserUpdate {
         this.name = name;
     }
 
-    public int getPhone_number() {
+    public String getPhone_number() {
         return phone_number;
     }
 
-    public void setPhone_number(int phone_number) {
+    public void setPhone_number(String phone_number) {
         this.phone_number = phone_number;
     }
 
@@ -197,5 +200,13 @@ public class UserUpdate {
 
     public void setIsPersonal_dt_Added(int isPersonal_dt_Added) {
         this.isPersonal_dt_Added = isPersonal_dt_Added;
+    }
+
+    public String getEmail_id() {
+        return email_id;
+    }
+
+    public void setEmail_id(String email_id) {
+        this.email_id = email_id;
     }
 }
