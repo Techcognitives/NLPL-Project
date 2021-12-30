@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/action_bar_constrain"
-    android:background="@color/button_blue">
+    android:background="@color/redDark">
 
     <TextView
         android:id="@+id/action_bar_title"
