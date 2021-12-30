@@ -32,11 +32,7 @@ import com.nlpl.R;
 import com.nlpl.model.CompanyRequest;
 import com.nlpl.model.CompanyResponse;
 import com.nlpl.model.CompanyUpdate;
-import com.nlpl.model.UserRequest;
-import com.nlpl.model.UserResponse;
-import com.nlpl.model.UserUpdate;
 import com.nlpl.services.CompanyService;
-import com.nlpl.services.UserService;
 import com.nlpl.utils.ApiClient;
 
 import retrofit2.Call;

@@ -999,7 +999,7 @@
     //----------------------------------------------------------------------------------------------
 
     //---------------------------------------Bank Details Activity----------------------------------
-    <string name="NameWithStar">Account Name*</string>
+    <string name="NameWithStar">Bank Name*</string>
     <string name="Bank_name_hint">Enter Bank Name</string>
     <string name="AccountNumber">Account Number*</string>
     <string name="ReEnterAcc">Re-Enter Account Number*</string>

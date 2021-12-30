@@ -28,8 +28,6 @@ import com.nlpl.R;
 import com.nlpl.model.BankModel;
 import com.nlpl.model.DriverModel;
 import com.nlpl.model.TruckModel;
-import com.nlpl.model.UserUpdate;
-import com.nlpl.services.UserService;
 import com.nlpl.ui.ui.adapters.BanksAdapter;
 import com.nlpl.ui.ui.adapters.DriversAdapter;
 import com.nlpl.ui.ui.adapters.TrucksAdapter;
@@ -39,11 +37,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
@@ -183,6 +176,11 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         officeAddressTextView = (TextView) findViewById(R.id.profile_and_registration_office_address_text);
 
         mQueue = Volley.newRequestQueue(ProfileAndRegistrationActivity.this);
+        getUserDetails();
+        getCompanyDetails();
+
+        //---------------------------- Get Truck Details -------------------------------------------
+        truckListRecyclerView = (RecyclerView) findViewById(R.id.trucks_list_view);
 
         //------------------------------get user details by mobile Number---------------------------------
         //-----------------------------------Get User Details---------------------------------------

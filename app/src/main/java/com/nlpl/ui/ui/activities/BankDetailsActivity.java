@@ -62,8 +62,7 @@ public class BankDetailsActivity extends AppCompatActivity {
     ImageView actionBarBackButton;
     Dialog languageDialog;
 
-    String userId, driverName, vehicleNo, mobile, name, address, pinCode, city, bankName2, accNo, role;
-    Boolean isPersonalDetailsDone, isBankDetailsDone, isAddTrucksDone, isAddDriversDone;
+    String userId, name;
 
     EditText bankName, accountNo, reAccount, ifscCode;
     Button okButton;

@@ -36,7 +36,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
-import com.nlpl.model.UserUpdate;
+import com.nlpl.model.UpdateUserName;
+import com.nlpl.services.UserService;
 import com.nlpl.services.UserService;
 
 import org.json.JSONArray;
@@ -45,6 +46,12 @@ import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -69,7 +76,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     int parentID;
     EditText name, pinCode, address, mobileEdit;
     Button okButton;
-    //--------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
     View panAndAadharView;
     Button panAndAadharButton;
     View panView;
@@ -85,7 +92,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     private int GET_FROM_GALLERY1 = 1;
     private int GET_FROM_GALLERY2 = 2;
 
-    private static String BASE_URL = "http://65.2.3.41:8080";
     private UserService userService;
 
     private RequestQueue mQueue;
@@ -187,7 +193,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         mobileEdit.addTextChangedListener(mobileNumberTextWatcher);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(getString(R.string.baseURL))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -574,7 +580,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     }
 
     public void onClickPersonalProof(View view) {
-        updateUserDetails();
+        updateUserName();
 
         AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
         my_alert.setTitle("Details updated Successfully");
@@ -583,7 +589,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
                 Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, ProfileAndRegistrationActivity.class);
-                i8.putExtra("userId", userId);
+                i8.putExtra("mobile2", mobileAPI);
                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i8);
                 overridePendingTransition(0, 0);
@@ -620,7 +626,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         }
     };
-
 
     private String blockCharacterSet = "~#^|$%&*!+@₹_-()':;?/={}";
 
@@ -848,27 +853,28 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 error.printStackTrace();
             }
         });
-
         mQueue.add(request);
-
     }
 
     //-------------------------------- Update User Details -----------------------------------------
-    private void updateUserDetails() {
+    private void updateUserName() {
 
 //------------------------------------- Update Type ------------------------------------------------
-        UserUpdate userUpdate = new UserUpdate("" + userId, "Abhi Gotad","918796543114", "", "paid", null, null, null, 1, null, null, null, 0, 1, 0, 1, 0, "abhijeetgotad@gmail.com");
+        UpdateUserName updateUserName = new UpdateUserName("Abhi Gotad");
 
-        Call<UserUpdate> call = userService.updateUserDetails("" + userId, userUpdate);
+        Call<UpdateUserName> call = userService.updateUserName("" + userId, updateUserName);
 
-        call.enqueue(new Callback<UserUpdate>() {
+        call.enqueue(new Callback<UpdateUserName>() {
             @Override
-            public void onResponse(Call<UserUpdate> call, retrofit2.Response<UserUpdate> response) {
-
+            public void onResponse(Call<UpdateUserName> call, Response<UpdateUserName> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "UserName");
+                }
             }
 
             @Override
-            public void onFailure(Call<UserUpdate> call, Throwable t) {
+            public void onFailure(Call<UpdateUserName> call, Throwable t) {
+                Log.i("Not Successful", "UserName");
 
             }
         });
