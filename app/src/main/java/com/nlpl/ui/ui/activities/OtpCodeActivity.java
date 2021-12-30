@@ -60,7 +60,7 @@ public class OtpCodeActivity extends AppCompatActivity {
     String mobileNoFirebase, otp, userId, userIdAPI, name, nameAPI, phone, isRegistrationDone, isRegistrationDoneAPI, pinCode, pinCodeAPI, address, addressAPI, mobileNoAPI, cityAPI, city, roleAPI, role;
     FirebaseAuth mAuth;
     private RequestQueue mQueue;
-    ArrayList<String> arrayUserId, arrayMobileNo,  arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
+    ArrayList<String> arrayUserId, arrayMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
 
 
     @Override
@@ -80,9 +80,9 @@ public class OtpCodeActivity extends AppCompatActivity {
         requestPermissions();
         reSendOtp = findViewById(R.id.resend_otp);
         String enterCode = getString(R.string.enter_code);
-        String s = mobile.substring(3,13);
-        mobileNoFirebase = mobile.substring(1,13);
-        otpTitle.setText(enterCode + "+91 "+s);
+        String s = mobile.substring(3, 13);
+        mobileNoFirebase = mobile.substring(1, 13);
+        otpTitle.setText(enterCode + "+91 " + s);
 
         otp1 = (EditText) findViewById(R.id.enter_otp_1);
         otp2 = (EditText) findViewById(R.id.enter_otp_2);
@@ -145,7 +145,7 @@ public class OtpCodeActivity extends AppCompatActivity {
 
                         //------------------------------get user details by mobile Number---------------------------------
                         //-----------------------------------Get User Details---------------------------------------
-                        String url = getString(R.string.baseURL)+"/user/get";
+                        String url = getString(R.string.baseURL) + "/user/get";
                         Log.i("URL at Profile:", url);
 
                         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -161,9 +161,7 @@ public class OtpCodeActivity extends AppCompatActivity {
                                         nameAPI = data.getString("name");
                                         roleAPI = data.getString("user_type");
                                         cityAPI = data.getString("preferred_location");
-
                                         addressAPI = data.getString("address");
-
                                         isRegistrationDoneAPI = data.getString("isRegistration_done");
 
                                         arrayUserId.add(userIdAPI);
@@ -186,30 +184,36 @@ public class OtpCodeActivity extends AppCompatActivity {
                                             city = arrayCity.get(j);
                                             role = arrayRole.get(j);
                                             isRegistrationDone = arrayRegDone.get(j);
-                                            Log.i("userIDAPI:", userId);
-                                            Log.i("userName", name);
-                                            Log.i("isregDone:", isRegistrationDone);
-                                            Log.i("Mobile No API Matches", phone);
-
-                                            if (isRegistrationDone.equals(1)) {
-
-                                                Intent i8 = new Intent(OtpCodeActivity.this, ProfileAndRegistrationActivity.class);
-                                                i8.putExtra("mobile2", phone);
-                                                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                startActivity(i8);
-                                                overridePendingTransition(0, 0);
-                                                finish();
-                                            } else {
-//                                            Log.i("mobile no not equal", mobileNoAPI);
-                                            Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
-                                            i8.putExtra("mobile1", mobileNoFirebase);
-                                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                            startActivity(i8);
-                                            overridePendingTransition(0, 0);
-                                            finish();
                                         }
                                     }
+
+                                    Log.i("isregDone:", isRegistrationDone);
+
+
+                                    if (isRegistrationDone.equals("1")) {
+
+                                        Log.i("userIDAPI:", userId);
+                                        Log.i("userName", name);
+                                        Log.i("isregDone:", isRegistrationDone);
+                                        Log.i("Mobile No API Matches", phone);
+
+                                        Intent i8 = new Intent(OtpCodeActivity.this, ProfileAndRegistrationActivity.class);
+                                        i8.putExtra("mobile2", phone);
+                                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(i8);
+                                        overridePendingTransition(0, 0);
+                                        finish();
+
+                                    } else {
+//                                            Log.i("mobile no not equal", mobileNoAPI);
+                                        Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
+                                        i8.putExtra("mobile1", phone);
+                                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(i8);
+                                        overridePendingTransition(0, 0);
+                                        finish();
                                     }
+
 //
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -443,7 +447,7 @@ public class OtpCodeActivity extends AppCompatActivity {
 
                             //------------------------------get user details by mobile Number---------------------------------
                             //-----------------------------------Get User Details---------------------------------------
-                            String url = getString(R.string.baseURL)+"/user/get";
+                            String url = getString(R.string.baseURL) + "/user/get";
                             Log.i("URL at Profile:", url);
 
                             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -497,28 +501,28 @@ public class OtpCodeActivity extends AppCompatActivity {
                                                 Log.i("isregDone:", isRegistrationDone);
                                                 Log.i("Mobile No API Matches", phone);
 
-                                                    Intent i8 = new Intent(OtpCodeActivity.this, ProfileAndRegistrationActivity.class);
-                                                    i8.putExtra("mobile2", phone);
-                                                    i8.putExtra("name2", name);
-                                                    i8.putExtra("address", address);
-                                                    i8.putExtra("pinCode", pinCode);
-                                                    i8.putExtra("userId", userId);
-                                                    i8.putExtra("city", city);
-                                                    i8.putExtra("bankName", "bankName");
-                                                    i8.putExtra("accNo", "accNo");
-                                                    i8.putExtra("vehicleNo", "vehicleNo");
-                                                    i8.putExtra("driverName", "driverName");
-                                                    i8.putExtra("isPersonal", false);
-                                                    i8.putExtra("isBank", false);
-                                                    i8.putExtra("isTrucks", false);
-                                                    i8.putExtra("isDriver", false);
-                                                    i8.putExtra("role", role);
-                                                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                    startActivity(i8);
-                                                    overridePendingTransition(0, 0);
-                                                    finish();
+                                                Intent i8 = new Intent(OtpCodeActivity.this, ProfileAndRegistrationActivity.class);
+                                                i8.putExtra("mobile2", phone);
+                                                i8.putExtra("name2", name);
+                                                i8.putExtra("address", address);
+                                                i8.putExtra("pinCode", pinCode);
+                                                i8.putExtra("userId", userId);
+                                                i8.putExtra("city", city);
+                                                i8.putExtra("bankName", "bankName");
+                                                i8.putExtra("accNo", "accNo");
+                                                i8.putExtra("vehicleNo", "vehicleNo");
+                                                i8.putExtra("driverName", "driverName");
+                                                i8.putExtra("isPersonal", false);
+                                                i8.putExtra("isBank", false);
+                                                i8.putExtra("isTrucks", false);
+                                                i8.putExtra("isDriver", false);
+                                                i8.putExtra("role", role);
+                                                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                startActivity(i8);
+                                                overridePendingTransition(0, 0);
+                                                finish();
 
-                                            }else {
+                                            } else {
                                                 Log.i("mobile no not equal", mobileNoAPI);
                                                 Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
                                                 i8.putExtra("mobile1", mobileNoFirebase);
@@ -588,10 +592,10 @@ public class OtpCodeActivity extends AppCompatActivity {
             String otpEdit5 = otp5.getText().toString().trim();
             String otpEdit6 = otp6.getText().toString().trim();
 
-            if (!otpEdit1.isEmpty() && !otpEdit2.isEmpty() && !otpEdit3.isEmpty() && !otpEdit4.isEmpty() && !otpEdit5.isEmpty() && !otpEdit6.isEmpty()){
+            if (!otpEdit1.isEmpty() && !otpEdit2.isEmpty() && !otpEdit3.isEmpty() && !otpEdit4.isEmpty() && !otpEdit5.isEmpty() && !otpEdit6.isEmpty()) {
                 otpButton.setEnabled(true);
                 otpButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            }else {
+            } else {
                 otpButton.setBackground(getResources().getDrawable(R.drawable.button_de_active));
                 otpButton.setEnabled(false);
             }

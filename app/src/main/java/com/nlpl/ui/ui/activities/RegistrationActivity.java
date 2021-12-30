@@ -477,7 +477,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
                     Intent i8 = new Intent(RegistrationActivity.this, ProfileAndRegistrationActivity.class);
-                    i8.putExtra("mobile1", mobile);
+                    i8.putExtra("mobile2", mobile);
                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i8);
                     overridePendingTransition(0, 0);
