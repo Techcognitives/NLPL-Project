@@ -267,7 +267,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         mQueue.add(request);
 
         //------------------------------------------------------------------------------------------------
-
     }
 
     private void getUserDetails() {
