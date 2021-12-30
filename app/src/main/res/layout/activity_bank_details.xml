@@ -332,6 +332,7 @@
         android:id="@+id/bank_details_blur_image_account_details"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/bank_details_ok_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
