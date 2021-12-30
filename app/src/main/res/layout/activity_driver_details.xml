@@ -64,7 +64,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/shadow_file"
         app:layout_constraintEnd_toEndOf="parent"
@@ -115,7 +115,6 @@
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/driver_details_driver_license_text_image"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/driver_details_driver_license_text_image"
             app:layout_constraintTop_toTopOf="@+id/driver_details_driver_license_text_image" />
 
         <Button
@@ -134,7 +133,6 @@
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/driver_details_driver_license_text_image"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/driver_details_driver_license_text_image"
             app:layout_constraintTop_toTopOf="@+id/driver_details_driver_license_text_image"
             app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
