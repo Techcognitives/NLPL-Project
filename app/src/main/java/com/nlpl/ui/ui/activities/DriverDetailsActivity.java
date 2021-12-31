@@ -90,6 +90,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
             mobile = bundle.getString("mobile");
         }
 
+
         action_bar = findViewById(R.id.driver_details_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);

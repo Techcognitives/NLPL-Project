@@ -487,7 +487,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
     public void getCompanyDetails() {
         //---------------------------- Get Company Details -------------------------------------------
-        String url1 = getString(R.string.baseURL) + "/company/41e69305-7260-4b01-8892-a0f4f7daec71";
+        String url1 = getString(R.string.baseURL) + "/company/get"+userId;
         Log.i("URL: ", url1);
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
