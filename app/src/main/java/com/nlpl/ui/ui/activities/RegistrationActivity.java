@@ -48,7 +48,7 @@ public class RegistrationActivity extends AppCompatActivity {
     int parentID;
     String mobile;
 
-    EditText name, pinCode, address, mobileNoEdit;
+    EditText name, pinCode, address, mobileNoEdit, email_id;
     TextView series;
     Button okButton;
     View personalAndAddress;
@@ -68,6 +68,7 @@ public class RegistrationActivity extends AppCompatActivity {
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
         language = (TextView) action_bar.findViewById(R.id.action_bar_language_selector);
+
 
         language.setText(getString(R.string.english));
         language.setOnClickListener(new View.OnClickListener() {
@@ -127,6 +128,7 @@ public class RegistrationActivity extends AppCompatActivity {
         selectStateText = (TextView) personalAndAddress.findViewById(R.id.registration_select_state);
         selectDistrictText = (TextView) personalAndAddress.findViewById(R.id.registration_select_city);
         okButton = (Button) findViewById(R.id.registration_ok);
+        email_id = findViewById(R.id.registration_email_id_edit);
 
         name.addTextChangedListener(registrationWatcher);
         selectStateText.addTextChangedListener(registrationWatcher);
@@ -565,8 +567,9 @@ public class RegistrationActivity extends AppCompatActivity {
         UserRequest userRequest = new UserRequest();
         userRequest.setName(name.getText().toString());
         userRequest.setPhone_number(mobile);
-        userRequest.setAddress(address.getText().toString());
+        userRequest.setAddress(address.getText().toString()+" "+selectDistrictText.getText().toString()+" "+selectStateText.getText().toString());
         userRequest.setUser_type(role);
+        userRequest.setEmail_id(email_id.getText().toString());
         userRequest.setIsRegistration_done(1);
         userRequest.setPreferred_language(language.getText().toString());
         userRequest.setPin_code(pinCode.getText().toString());

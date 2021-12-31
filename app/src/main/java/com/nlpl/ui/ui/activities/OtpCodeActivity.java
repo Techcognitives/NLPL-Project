@@ -184,9 +184,10 @@ public class OtpCodeActivity extends AppCompatActivity {
                                             city = arrayCity.get(j);
                                             role = arrayRole.get(j);
                                             isRegistrationDone = arrayRegDone.get(j);
+                                        }
+                                    }
 
-
-                                            if (isRegistrationDone.equals("1")) {
+                                            if (isRegistrationDone!=null) {
 
                                                 Log.i("userIDAPI:", userId);
                                                 Log.i("userName", name);
@@ -203,22 +204,12 @@ public class OtpCodeActivity extends AppCompatActivity {
                                             } else {
 //                                            Log.i("mobile no not equal", mobileNoAPI);
                                                 Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
-                                                i8.putExtra("mobile1", phone);
+                                                i8.putExtra("mobile1", mobileNoFirebase);
                                                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                 startActivity(i8);
                                                 overridePendingTransition(0, 0);
                                                 finish();
                                             }
-                                        }else {
-                                            Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
-                                            i8.putExtra("mobile1", mobileNoFirebase);
-                                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                            startActivity(i8);
-                                            overridePendingTransition(0, 0);
-                                            finish();
-                                        }
-                                    }
-
 //
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -468,9 +459,7 @@ public class OtpCodeActivity extends AppCompatActivity {
                                             nameAPI = data.getString("name");
                                             roleAPI = data.getString("user_type");
                                             cityAPI = data.getString("preferred_location");
-
                                             addressAPI = data.getString("address");
-
                                             isRegistrationDoneAPI = data.getString("isRegistration_done");
 
                                             arrayUserId.add(userIdAPI);
@@ -483,16 +472,8 @@ public class OtpCodeActivity extends AppCompatActivity {
                                             arrayPinCode.add(pinCodeAPI);
                                         }
 
-                       /* Log.i("user Id:", userIdAPI);
-                        Log.i("mobileNo:",mobileNoAPI);
-                        Log.i("NameAPI:",nameAPI);
-                        Log.i("addressAPI:",addressAPI);
-                        Log.i("iaRegDone:",isRegistrationDoneAPI);*/
-//                                Log.i("arrayOfMobileNoAPI", String.valueOf(arrayMobileNo));
-
                                         for (int j = 0; j < arrayMobileNo.size(); j++) {
                                             if (arrayMobileNo.get(j).equals(mobileNoFirebase)) {
-//
                                                 userId = arrayUserId.get(j);
                                                 name = arrayName.get(j);
                                                 phone = arrayMobileNo.get(j);
@@ -501,41 +482,31 @@ public class OtpCodeActivity extends AppCompatActivity {
                                                 city = arrayCity.get(j);
                                                 role = arrayRole.get(j);
                                                 isRegistrationDone = arrayRegDone.get(j);
-                                                Log.i("userIDAPI:", userId);
-                                                Log.i("userName", name);
-                                                Log.i("isregDone:", isRegistrationDone);
-                                                Log.i("Mobile No API Matches", phone);
-
-                                                Intent i8 = new Intent(OtpCodeActivity.this, ProfileAndRegistrationActivity.class);
-                                                i8.putExtra("mobile2", phone);
-                                                i8.putExtra("name2", name);
-                                                i8.putExtra("address", address);
-                                                i8.putExtra("pinCode", pinCode);
-                                                i8.putExtra("userId", userId);
-                                                i8.putExtra("city", city);
-                                                i8.putExtra("bankName", "bankName");
-                                                i8.putExtra("accNo", "accNo");
-                                                i8.putExtra("vehicleNo", "vehicleNo");
-                                                i8.putExtra("driverName", "driverName");
-                                                i8.putExtra("isPersonal", false);
-                                                i8.putExtra("isBank", false);
-                                                i8.putExtra("isTrucks", false);
-                                                i8.putExtra("isDriver", false);
-                                                i8.putExtra("role", role);
-                                                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                startActivity(i8);
-                                                overridePendingTransition(0, 0);
-                                                finish();
-
-                                            } else {
-                                                Log.i("mobile no not equal", mobileNoAPI);
-                                                Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
-                                                i8.putExtra("mobile1", mobileNoFirebase);
-                                                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                startActivity(i8);
-                                                overridePendingTransition(0, 0);
-                                                finish();
                                             }
+                                        }
+
+                                        if (isRegistrationDone!=null) {
+
+                                            Log.i("userIDAPI:", userId);
+                                            Log.i("userName", name);
+                                            Log.i("isregDone:", isRegistrationDone);
+                                            Log.i("Mobile No API Matches", phone);
+
+                                            Intent i8 = new Intent(OtpCodeActivity.this, ProfileAndRegistrationActivity.class);
+                                            i8.putExtra("mobile2", phone);
+                                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            startActivity(i8);
+                                            overridePendingTransition(0, 0);
+                                            finish();
+
+                                        } else {
+//                                            Log.i("mobile no not equal", mobileNoAPI);
+                                            Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
+                                            i8.putExtra("mobile1", mobileNoFirebase);
+                                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            startActivity(i8);
+                                            overridePendingTransition(0, 0);
+                                            finish();
                                         }
 //
                                     } catch (JSONException e) {
@@ -551,13 +522,12 @@ public class OtpCodeActivity extends AppCompatActivity {
                             mQueue.add(request);
 
                             //------------------------------------------------------------------------------------------------
+
                             dialogInterface.dismiss();
 
                         }
                     });
                     my_alert.show();
-
-
                 } else {
                     AlertDialog.Builder my_alert = new AlertDialog.Builder(OtpCodeActivity.this);
                     my_alert.setTitle("Invalid OTP");

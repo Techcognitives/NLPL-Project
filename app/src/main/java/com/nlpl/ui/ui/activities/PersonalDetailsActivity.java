@@ -13,7 +13,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.FileUtils;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
@@ -32,6 +31,7 @@ import com.nlpl.model.UserRequest;
 import com.nlpl.model.UserResponse;
 import com.nlpl.services.ImageUploadService;
 import com.nlpl.utils.ApiClient;
+import com.nlpl.utils.FileUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -350,6 +350,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             }
 
             Uri selectedImage = data.getData();
+            uploadImage(selectedImage);
             imgPAN.setImageURI(selectedImage);
             Bitmap bitmap = null;
             try {
@@ -383,36 +384,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             }
 
             Uri selectedImage = data.getData();
+            uploadImage(selectedImage);
             imgF.setImageURI(selectedImage);
-            Bitmap bitmap = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        } else if (requestCode == GET_FROM_GALLERY2 && resultCode == Activity.RESULT_OK) {
-
-            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
-            my_alert.setTitle("Uploaded Successfully");
-            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            });
-            my_alert.show();
-
-            backText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-
-            if (isPanUploaded && isFrontUploaded ) {
-                okPersonalDetails.setBackgroundResource(R.drawable.button_active);
-            }
-
-            Uri selectedImage = data.getData();
             Bitmap bitmap = null;
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
@@ -470,29 +443,42 @@ public class PersonalDetailsActivity extends AppCompatActivity {
            }
        });
     }
-//
-//    @NonNull
-//    private MultipartBody.Part prepareFilePart(String partName, Uri fileUri) {
-//
-//    }
 
-//
-//    private void uploadImage(Bitmap bitmap) {
-//
-//        MultipartBody.Part body = prepareFilePart("image", Uri.fromFile(bitmap));
-//
-//        Call<UploadImageResponse> call = ApiClient.getImageUploadService().uploadImage(userId,bitmap);
-//       call.enqueue(new Callback<UploadImageResponse>() {
-//           @Override
-//           public void onResponse(Call<UploadImageResponse> call, Response<UploadImageResponse> response) {
-//
-//           }
-//
-//           @Override
-//           public void onFailure(Call<UploadImageResponse> call, Throwable t) {
-//
-//           }
-//       });
-//    }
+    @NonNull
+    private MultipartBody.Part prepareFilePart(String partName, Uri fileUri) {
+
+        Log.i("file uri: ", String.valueOf(fileUri));
+        // use the FileUtils to get the actual file by uri
+        File file = FileUtils.getFile(this, fileUri);
+
+        // create RequestBody instance from file
+        RequestBody requestFile = RequestBody.create(MediaType.parse("mp3"), file);
+
+        // MultipartBody.Part is used to send also the actual file name
+        return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
+    }
+
+
+    private void uploadImage(Uri selectedImg) {
+
+        File file = new File(selectedImg.getPath());
+//        File file = new File(getExternalFilesDir("/").getAbsolutePath(), file);
+
+        MultipartBody.Part body = prepareFilePart("file", Uri.fromFile(file));
+
+        Call<UploadImageResponse> call = ApiClient.getImageUploadService().uploadImage(userId,body);
+        call.enqueue(new Callback<UploadImageResponse>() {
+           @Override
+           public void onResponse(Call<UploadImageResponse> call, Response<UploadImageResponse> response) {
+                Log.i("successful:", "success");
+           }
+
+           @Override
+           public void onFailure(Call<UploadImageResponse> call, Throwable t) {
+               t.printStackTrace();
+                Log.i("failed:","failed");
+           }
+       });
+    }
     //----------------------------------------------------------------------------------------------
 }

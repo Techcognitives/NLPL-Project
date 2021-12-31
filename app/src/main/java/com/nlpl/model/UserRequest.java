@@ -1,7 +1,7 @@
 package com.nlpl.model;
 
 public class UserRequest {
-    String name, phone_number, user_type, preferred_location, address, state_code, pin_code, preferred_language;
+    String name, phone_number, user_type, preferred_location, address, state_code, pin_code, preferred_language, email_id;
     int isRegistration_done;
 
     public UserRequest() {
@@ -14,6 +14,15 @@ public class UserRequest {
         this.isRegistration_done = isRegistration_done;
         this.pin_code = pin_code;
         this.preferred_language = preferred_language;
+        this.email_id = email_id;
+    }
+
+    public String getEmail_id() {
+        return email_id;
+    }
+
+    public void setEmail_id(String email_id) {
+        this.email_id = email_id;
     }
 
     public String getPreferred_language() {

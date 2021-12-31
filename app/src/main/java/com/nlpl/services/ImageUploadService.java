@@ -1,6 +1,7 @@
 package com.nlpl.services;
 
 import com.nlpl.model.ImageResponse;
+import com.nlpl.model.UploadImageResponse;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -13,6 +14,6 @@ import retrofit2.http.Query;
 
 public interface ImageUploadService {
     @Multipart
-    @PATCH("/updateImage/{userId}")
-    Call<ImageResponse> uploadImage(@Path("user_id") String userId, @Part MultipartBody.Part image);
+    @PATCH("imgbucket/updateImage/{userId}/pan")
+    Call<UploadImageResponse> uploadImage(@Path("userId") String userId, @Part MultipartBody.Part file);
 }

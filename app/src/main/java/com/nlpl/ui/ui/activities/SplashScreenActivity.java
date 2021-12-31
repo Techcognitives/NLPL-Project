@@ -70,49 +70,39 @@ public class SplashScreenActivity extends AppCompatActivity {
                 mobileNoFirebase= mobileNoFirebase.substring(1,13);
                 Log.i("Mobile Number for JSON", mobileNoFirebase);
 
-                //------------------------------get user details by mobile Number---------------------------------
-                //-----------------------------------Get User Details---------------------------------------
-                String url = getString(R.string.baseURL)+"/user/get";
-                Log.i("URL at Profile:", url);
+                    //------------------------------get user details by mobile Number---------------------------------
+                    //-----------------------------------Get User Details---------------------------------------
+                    String url = getString(R.string.baseURL) + "/user/get";
+                    Log.i("URL at Profile:", url);
 
-                JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("data");
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject data = jsonArray.getJSONObject(i);
-                                userIdAPI = data.getString("user_id");
-                                mobileNoAPI = data.getString("phone_number");
-                                pinCodeAPI = data.getString("pin_code");
-                                nameAPI = data.getString("name");
-                                roleAPI = data.getString("user_type");
-                                cityAPI = data.getString("preferred_location");
+                    JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                JSONArray jsonArray = response.getJSONArray("data");
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject data = jsonArray.getJSONObject(i);
+                                    userIdAPI = data.getString("user_id");
+                                    mobileNoAPI = data.getString("phone_number");
+                                    pinCodeAPI = data.getString("pin_code");
+                                    nameAPI = data.getString("name");
+                                    roleAPI = data.getString("user_type");
+                                    cityAPI = data.getString("preferred_location");
+                                    addressAPI = data.getString("address");
+                                    isRegistrationDoneAPI = data.getString("isRegistration_done");
 
-                                addressAPI = data.getString("address");
-
-                                isRegistrationDoneAPI = data.getString("isRegistration_done");
-
-                                arrayUserId.add(userIdAPI);
-                                arrayMobileNo.add(mobileNoAPI);
-                                arrayAddress.add(addressAPI);
-                                arrayRegDone.add(isRegistrationDoneAPI);
-                                arrayName.add(nameAPI);
-                                arrayRole.add(roleAPI);
-                                arrayCity.add(cityAPI);
-                                arrayPinCode.add(pinCodeAPI);
-                            }
-
-                       /* Log.i("user Id:", userIdAPI);
-                        Log.i("mobileNo:",mobileNoAPI);
-                        Log.i("NameAPI:",nameAPI);
-                        Log.i("addressAPI:",addressAPI);
-                        Log.i("iaRegDone:",isRegistrationDoneAPI);*/
-//                                Log.i("arrayOfMobileNoAPI", String.valueOf(arrayMobileNo));
+                                    arrayUserId.add(userIdAPI);
+                                    arrayMobileNo.add(mobileNoAPI);
+                                    arrayAddress.add(addressAPI);
+                                    arrayRegDone.add(isRegistrationDoneAPI);
+                                    arrayName.add(nameAPI);
+                                    arrayRole.add(roleAPI);
+                                    arrayCity.add(cityAPI);
+                                    arrayPinCode.add(pinCodeAPI);
+                                }
 
                                 for (int j = 0; j < arrayMobileNo.size(); j++) {
                                     if (arrayMobileNo.get(j).equals(mobileNoFirebase)) {
-//
                                         userId = arrayUserId.get(j);
                                         name = arrayName.get(j);
                                         phone = arrayMobileNo.get(j);
@@ -121,43 +111,46 @@ public class SplashScreenActivity extends AppCompatActivity {
                                         city = arrayCity.get(j);
                                         role = arrayRole.get(j);
                                         isRegistrationDone = arrayRegDone.get(j);
-                                        Log.i("userIDAPI:", userId);
-                                        Log.i("userName", name);
-                                        Log.i("isregDone:", isRegistrationDone);
-                                        Log.i("Mobile No API Matches", phone);
-
-
-                                        Intent i8 = new Intent(SplashScreenActivity.this, ProfileAndRegistrationActivity.class);
-                                        i8.putExtra("mobile2", phone);
-                                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(i8);
-                                        overridePendingTransition(0, 0);
-                                        finish();
-
-                                    } else {
-                                                Intent i8 = new Intent(SplashScreenActivity.this, RegistrationActivity.class);
-                                                i8.putExtra("mobile1", mobileNoFirebase);
-                                                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                startActivity(i8);
-                                                overridePendingTransition(0, 0);
-                                                finish();
-                                            }
-
                                     }
+                                }
+
+                                if (isRegistrationDone!=null) {
+
+                                    Log.i("userIDAPI:", userId);
+                                    Log.i("userName", name);
+                                    Log.i("isregDone:", isRegistrationDone);
+                                    Log.i("Mobile No API Matches", phone);
+
+                                    Intent i8 = new Intent(SplashScreenActivity.this, ProfileAndRegistrationActivity.class);
+                                    i8.putExtra("mobile2", phone);
+                                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(i8);
+                                    overridePendingTransition(0, 0);
+                                    finish();
+
+                                } else {
+//                                            Log.i("mobile no not equal", mobileNoAPI);
+                                    Intent i8 = new Intent(SplashScreenActivity.this, RegistrationActivity.class);
+                                    i8.putExtra("mobile1", mobileNoFirebase);
+                                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(i8);
+                                    overridePendingTransition(0, 0);
+                                    finish();
+                                }
 //
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
 
-                    }
-                });
-                mQueue.add(request);
+                        }
+                    });
+                    mQueue.add(request);
 
-                //------------------------------------------------------------------------------------------------
+                    //------------------------------------------------------------------------------------------------
 
                 }else {
                     Intent intent = new Intent(SplashScreenActivity.this, LogInActivity.class);

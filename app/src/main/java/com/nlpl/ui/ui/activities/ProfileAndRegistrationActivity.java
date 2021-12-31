@@ -69,7 +69,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
 
     Button personalDetails, bankDetails, addTrucks, addDrivers;
-    String mobile, name, address, pinCode, city, role;
+    String mobile, name, address, pinCode, city, role, emial;
     TextView nameTitle, mobileText, emailIdTextView, officeAddressTextView;
     ConstraintLayout personal_done, bankDone, vehicleDone, driverDone;
 
@@ -285,6 +285,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         city = obj.getString("preferred_location");
                         pinCode = obj.getString("pin_code");
                         role = obj.getString("user_type");
+                        emial = obj.getString("email_id");
 
 //                        Boolean isPersonalDetailsDone = obj.getBoolean("isPersonal_dt_Added");
 //                        Boolean isFirmDetailsDone = obj.getBoolean("isCompany_added");
@@ -323,7 +324,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
                         nameDone.setText(" " + name);
                         phoneDone.setText(" Phone: +91 " + s1);
-                        emailIdTextView.setText(" Email Id");
+                        emailIdTextView.setText(" Email Id: "+emial);
                         addressDone.setText(" Address: " + address + ", " + city + " " + pinCode);
 
                         if (role.equals("Customer")) {
