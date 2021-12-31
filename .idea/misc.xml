@@ -5,6 +5,9 @@
       <map>
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/drawable/edit_text_border.xml" value="0.2203125" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/drawable/edit_text_border_small.xml" value="0.2203125" />
+        <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/drawable/ic_baseline_menu_24.xml" value="0.2203125" />
+        <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/drawable/ic_camera.xml" value="0.2203125" />
+        <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/drawable/ic_photo_library.xml" value="0.2203125" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/action_bar.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/activity_bank_details.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/activity_company_details.xml" value="0.1716485507246377" />
@@ -18,6 +21,7 @@
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/activity_vehicle_details.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/bottom_nav_bar.xml" value="0.1716485507246377" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/custom_list_row.xml" value="0.1716485507246377" />
+        <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/dialog_choose.xml" value="0.192481884057971" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/dialog_language.xml" value="0.1716485507246377" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/dialog_spinner.xml" value="0.1716485507246377" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/my_truck_list.xml" value="0.1716485507246377" />

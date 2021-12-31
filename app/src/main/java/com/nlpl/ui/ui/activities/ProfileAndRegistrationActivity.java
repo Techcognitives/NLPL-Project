@@ -176,14 +176,15 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         officeAddressTextView = (TextView) findViewById(R.id.profile_and_registration_office_address_text);
 
         mQueue = Volley.newRequestQueue(ProfileAndRegistrationActivity.this);
+        getUserDetails();
+        getCompanyDetails();
 
         //---------------------------- Get Truck Details -------------------------------------------
         truckListRecyclerView = (RecyclerView) findViewById(R.id.trucks_list_view);
 
         //------------------------------get user details by mobile Number---------------------------------
         //-----------------------------------Get User Details---------------------------------------
-        String BASE_URL = getString(R.string.baseURL);
-        String url = BASE_URL +"/user/get";
+        String url = getString(R.string.baseURL)+"/user/get";
         Log.i("URL at Profile:", url);
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -486,7 +487,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
     public void getCompanyDetails() {
         //---------------------------- Get Company Details -------------------------------------------
-        String url1 = getString(R.string.baseURL) + "/company/get/" + userId;
+        String url1 = getString(R.string.baseURL) + "/company/41e69305-7260-4b01-8892-a0f4f7daec71";
         Log.i("URL: ", url1);
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -533,7 +534,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         intent.putExtra("userId", userId);
         intent.putExtra("isEdit",true);
         intent.putExtra("truckId", obj.getTruck_id());
-        intent.putExtra("mobile", phone);
 
         startActivity(intent);
     }

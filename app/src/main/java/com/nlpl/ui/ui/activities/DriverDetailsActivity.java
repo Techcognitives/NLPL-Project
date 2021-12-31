@@ -64,10 +64,11 @@ public class DriverDetailsActivity extends AppCompatActivity {
     ImageView actionBarBackButton;
     Dialog languageDialog;
 
-    Button uploadDL, okDriverDetails;
+    Button uploadDL, okDriverDetails, uploadSelfie;
     TextView textDL, editDL, series;
     int GET_FROM_GALLERY = 0;
-    ImageView driverLicenseImage;
+    int CAMERA_PIC_REQUEST = 1;
+    ImageView driverLicenseImage, driverSelfieImg;
 
     private RequestQueue mQueue;
     private UserService userService;
@@ -168,14 +169,24 @@ public class DriverDetailsActivity extends AppCompatActivity {
         });
 
         uploadDL = findViewById(R.id.driver_details_upload_driver_license);
+        uploadSelfie = findViewById(R.id.upload_driver_selfie);
         editDL = findViewById(R.id.driver_details_edit_driver_license);
         textDL = findViewById(R.id.driver_details_driver_license_text_image);
         driverLicenseImage = (ImageView) findViewById(R.id.driver_details_driver_license_image);
+        driverSelfieImg = findViewById(R.id.driver_selfie_img);
 
         mQueue = Volley.newRequestQueue(DriverDetailsActivity.this);
         if (isEdit) {
             getDriverDetails();
         }
+
+        uploadSelfie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
+            }
+        });
 
         uploadDL.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -293,6 +304,19 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+        } else  if (requestCode == CAMERA_PIC_REQUEST) {
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
+            my_alert.setTitle("Driving Selfie uploaded successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            my_alert.show();
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            driverSelfieImg.setImageBitmap(image);
         }
     }
 

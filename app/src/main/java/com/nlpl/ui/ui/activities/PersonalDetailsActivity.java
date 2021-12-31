@@ -57,7 +57,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     ImageView actionBarBackButton;
     Dialog languageDialog, chooseDialog;
 
-    TextView panCardText, editPAN, editFront, frontText, backText;
+    TextView panCardText, editPAN, editFront, frontText;
     Button uploadPAN, uploadF,  okPersonalDetails;
     ImageView imgPAN, imgF;
     private int GET_FROM_GALLERY = 0;
@@ -149,7 +149,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
         panCardText = panAndAadharView.findViewById(R.id.pancard1);
         frontText = panAndAadharView.findViewById(R.id.frontText);
-        backText = panAndAadharView.findViewById(R.id.profile_registration_name_text);
         uploadPAN = panAndAadharView.findViewById(R.id.uploadPan);
         uploadF = panAndAadharView.findViewById(R.id.uploadF);
         imgPAN = panAndAadharView.findViewById(R.id.imagePan);
@@ -167,9 +166,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             frontText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadF.setVisibility(View.INVISIBLE);
             editFront.setVisibility(View.VISIBLE);
-
-            backText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-
 
         uploadPAN.setOnClickListener(new View.OnClickListener() {
             @Override
