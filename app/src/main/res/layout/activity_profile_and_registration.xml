@@ -7,7 +7,6 @@
     android:textAlignment="center"
     tools:context=".ui.ui.activities.ProfileAndRegistrationActivity">
 
-
     <include
         android:id="@+id/profile_registration_action_bar"
         layout="@layout/action_bar"

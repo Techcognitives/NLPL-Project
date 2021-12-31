@@ -553,11 +553,14 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     if (isRecExpanded) {
                         personal_done.setVisibility(View.GONE);
 //                        addCompany.setVisibility(View.GONE);
+                        firmName.setVisibility(View.GONE);
+                        officeAddressTextView.setVisibility(View.GONE);
+                        addCompany.setVisibility(View.GONE);
                         personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
                         isRecExpanded = false;
                     } else {
                         personal_done.setVisibility(View.VISIBLE);
-//                        addCompany.setVisibility(View.VISIBLE);
+                        addCompany.setVisibility(View.VISIBLE);
                         bankDone.setVisibility(View.GONE);
                         vehicleDone.setVisibility(View.GONE);
                         driverDone.setVisibility(View.GONE);
@@ -602,6 +605,9 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     if (isRecExpanded) {
                         bankDone.setVisibility(View.GONE);
                         addBankDetails.setVisibility(View.GONE);
+                        firmName.setVisibility(View.GONE);
+                        officeAddressTextView.setVisibility(View.GONE);
+                        addCompany.setVisibility(View.GONE);
                         bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
                         isRecExpanded = false;
                     } else {
@@ -612,6 +618,9 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         driverDone.setVisibility(View.GONE);
 //                        addCompany.setVisibility(View.GONE);
                         addTruck.setVisibility(View.GONE);
+                        firmName.setVisibility(View.GONE);
+                        officeAddressTextView.setVisibility(View.GONE);
+                        addCompany.setVisibility(View.GONE);
                         bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_down_personal, 0);
 
                         if (isPersonalDetailsDone != null) {
@@ -653,6 +662,9 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     if (isRecExpanded) {
                         vehicleDone.setVisibility(View.GONE);
                         addTruck.setVisibility(View.GONE);
+                        firmName.setVisibility(View.GONE);
+                        officeAddressTextView.setVisibility(View.GONE);
+                        addCompany.setVisibility(View.GONE);
                         addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
                         isRecExpanded = false;
                     } else {
@@ -663,6 +675,9 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         driverDone.setVisibility(View.GONE);
 //                        addCompany.setVisibility(View.GONE);
                         addBankDetails.setVisibility(View.GONE);
+                        firmName.setVisibility(View.GONE);
+                        officeAddressTextView.setVisibility(View.GONE);
+                        addCompany.setVisibility(View.GONE);
                         addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_down_personal, 0);
 
                         if (isPersonalDetailsDone != null) {
@@ -702,6 +717,9 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     if (isRecExpanded) {
                         driverDone.setVisibility(View.GONE);
                         addDriver.setVisibility(View.GONE);
+                        firmName.setVisibility(View.GONE);
+                        officeAddressTextView.setVisibility(View.GONE);
+                        addCompany.setVisibility(View.GONE);
                         addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
                         isRecExpanded = false;
                     } else {
@@ -713,6 +731,9 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 //                        addCompany.setVisibility(View.GONE);
                         addBankDetails.setVisibility(View.GONE);
                         addTruck.setVisibility(View.GONE);
+                        firmName.setVisibility(View.GONE);
+                        officeAddressTextView.setVisibility(View.GONE);
+                        addCompany.setVisibility(View.GONE);
                         addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_down_personal, 0);
 
                         if (isPersonalDetailsDone != null) {
