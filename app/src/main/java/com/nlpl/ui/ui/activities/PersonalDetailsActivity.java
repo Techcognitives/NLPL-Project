@@ -1,5 +1,6 @@
 package com.nlpl.ui.ui.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +13,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.FileUtils;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
@@ -23,9 +25,24 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.nlpl.R;
+import com.nlpl.model.ImageRequest;
+import com.nlpl.model.ImageResponse;
+import com.nlpl.model.UploadImageResponse;
+import com.nlpl.model.UserRequest;
+import com.nlpl.model.UserResponse;
+import com.nlpl.services.ImageUploadService;
+import com.nlpl.utils.ApiClient;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PersonalDetailsActivity extends AppCompatActivity {
 
@@ -34,17 +51,17 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     ImageView actionBarBackButton;
     Dialog languageDialog, chooseDialog;
 
-    TextView panCardText, editPAN, editBack, editFront, frontText, backText;
-    Button uploadPAN, uploadF, uploadB, okPersonalDetails;
-    ImageView imgPAN, imgF, imgB;
+    TextView panCardText, editPAN, editFront, frontText, backText;
+    Button uploadPAN, uploadF,  okPersonalDetails;
+    ImageView imgPAN, imgF;
     private int GET_FROM_GALLERY = 0;
     private int GET_FROM_GALLERY1 = 1;
     private int GET_FROM_GALLERY2 = 2;
 
     View panAndAadharView;
 
-    String userId, driverName, vehicleNo, mobile, name, address, pinCode, city, idProof, bankName, accNo, role;
-    Boolean isPersonalDetailsDone = false, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, isPanUploaded = false, isFrontUploaded = false, isBackUploaded = false;
+    String userId, driverName, vehicleNo, mobile, bankName, accNo, role, img_type;
+    Boolean isPersonalDetailsDone = false, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, isPanUploaded = false, isFrontUploaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +84,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 //            Log.i("Name", name);
         }
 
-        if (isPanUploaded && isFrontUploaded && isBackUploaded) {
+        if (isPanUploaded && isFrontUploaded ) {
             okPersonalDetails.setBackgroundResource((R.drawable.button_active));
         }
 
@@ -136,13 +153,10 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         backText = panAndAadharView.findViewById(R.id.profile_registration_name_text);
         uploadPAN = panAndAadharView.findViewById(R.id.uploadPan);
         uploadF = panAndAadharView.findViewById(R.id.uploadF);
-        uploadB = panAndAadharView.findViewById(R.id.uploadB);
         imgPAN = panAndAadharView.findViewById(R.id.imagePan);
         imgF = panAndAadharView.findViewById(R.id.imageF);
-        imgB = panAndAadharView.findViewById(R.id.imageB);
         editPAN = panAndAadharView.findViewById(R.id.edit1);
         editFront = panAndAadharView.findViewById(R.id.editFront);
-        editBack = panAndAadharView.findViewById(R.id.editBack);
         okPersonalDetails = findViewById(R.id.okPersonalDetails);
 
         if (isPersonalDetailsDone) {
@@ -155,13 +169,13 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             editFront.setVisibility(View.VISIBLE);
 
             backText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-            uploadB.setVisibility(View.INVISIBLE);
-            editBack.setVisibility(View.VISIBLE);
         }
 
         uploadPAN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                img_type = "pan";
+                saveImage(imageRequest());
                 chooseDialog = new Dialog(PersonalDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
                 chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -198,6 +212,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         editPAN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                img_type = "pan";
+                saveImage(imageRequest());
                 chooseDialog = new Dialog(PersonalDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
                 chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -233,6 +249,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         uploadF.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                img_type = "aadhar";
+                saveImage(imageRequest());
                 chooseDialog = new Dialog(PersonalDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
                 chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -268,6 +286,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         editFront.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                img_type = "aadhar";
+                saveImage(imageRequest());
                 chooseDialog = new Dialog(PersonalDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
                 chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -300,74 +320,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             }
         });
 
-        uploadB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                chooseDialog = new Dialog(PersonalDetailsActivity.this);
-                chooseDialog.setContentView(R.layout.dialog_choose);
-                chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-                lp2.copyFrom(chooseDialog.getWindow().getAttributes());
-                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                lp2.gravity = Gravity.BOTTOM;
-
-                chooseDialog.show();
-                chooseDialog.getWindow().setAttributes(lp2);
-
-                ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
-                ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
-
-                camera.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                    }
-                });
-
-                gallery.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY2);
-                    }
-                });
-            }
-        });
-        editBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                chooseDialog = new Dialog(PersonalDetailsActivity.this);
-                chooseDialog.setContentView(R.layout.dialog_choose);
-                chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-                lp2.copyFrom(chooseDialog.getWindow().getAttributes());
-                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                lp2.gravity = Gravity.BOTTOM;
-
-                chooseDialog.show();
-                chooseDialog.getWindow().setAttributes(lp2);
-
-                ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
-                ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
-
-                camera.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                    }
-                });
-
-                gallery.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY2);
-                    }
-                });
-            }
-        });
     }
 
     //-----------------------------------------------upload Image------------------------------------------------------------
@@ -393,7 +345,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             editPAN.setVisibility(View.VISIBLE);
             isPanUploaded = true;
 
-            if (isPanUploaded && isFrontUploaded && isBackUploaded) {
+            if (isPanUploaded && isFrontUploaded ) {
                 okPersonalDetails.setBackgroundResource(R.drawable.button_active);
             }
 
@@ -426,7 +378,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             editFront.setVisibility(View.VISIBLE);
             isFrontUploaded = true;
 
-            if (isPanUploaded && isFrontUploaded && isBackUploaded) {
+            if (isPanUploaded && isFrontUploaded ) {
                 okPersonalDetails.setBackgroundResource(R.drawable.button_active);
             }
 
@@ -455,16 +407,12 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             my_alert.show();
 
             backText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-            uploadB.setVisibility(View.INVISIBLE);
-            editBack.setVisibility(View.VISIBLE);
-            isBackUploaded = true;
 
-            if (isPanUploaded && isFrontUploaded && isBackUploaded) {
+            if (isPanUploaded && isFrontUploaded ) {
                 okPersonalDetails.setBackgroundResource(R.drawable.button_active);
             }
 
             Uri selectedImage = data.getData();
-            imgB.setImageURI(selectedImage);
             Bitmap bitmap = null;
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
@@ -480,7 +428,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     //-------------------------------------------------------------------------------------------------------------------
 
     public void onClickOKPersonal(View view) {
-        if (isPanUploaded && isFrontUploaded && isBackUploaded) {
+        if (isPanUploaded && isFrontUploaded ) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
             my_alert.setTitle("Personal Details added successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -489,20 +437,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                     dialogInterface.dismiss();
                     Intent i8 = new Intent(PersonalDetailsActivity.this, ProfileAndRegistrationActivity.class);
                     i8.putExtra("mobile2", mobile);
-                    i8.putExtra("name2", name);
-                    i8.putExtra("address", address);
-                    i8.putExtra("pinCode", pinCode);
-                    i8.putExtra("city", city);
-                    i8.putExtra("userId", userId);
-                    i8.putExtra("bankName", bankName);
-                    i8.putExtra("accNo", accNo);
-                    i8.putExtra("vehicleNo", vehicleNo);
-                    i8.putExtra("driverName", driverName);
-                    i8.putExtra("isPersonal", true);
-                    i8.putExtra("isBank", isBankDetailsDone);
-                    i8.putExtra("isTrucks", isAddTrucksDone);
-                    i8.putExtra("isDriver", isAddDriversDone);
-                    i8.putExtra("role", role);
                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i8);
                     overridePendingTransition(0, 0);
@@ -510,8 +444,55 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 }
             });
             my_alert.show();
-
-
         }
     }
+
+
+    //--------------------------------------create User in API -------------------------------------
+    public ImageRequest imageRequest() {
+        ImageRequest imageRequest = new ImageRequest();
+        imageRequest.setUser_id(userId);
+        imageRequest.setImage_type(img_type);
+        return imageRequest;
+    }
+
+    public void saveImage(ImageRequest imageRequest) {
+        Call<ImageResponse> imageResponseCall = ApiClient.getImageService().saveImage(imageRequest);
+       imageResponseCall.enqueue(new Callback<ImageResponse>() {
+           @Override
+           public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
+
+           }
+
+           @Override
+           public void onFailure(Call<ImageResponse> call, Throwable t) {
+
+           }
+       });
+    }
+//
+//    @NonNull
+//    private MultipartBody.Part prepareFilePart(String partName, Uri fileUri) {
+//
+//    }
+
+//
+//    private void uploadImage(Bitmap bitmap) {
+//
+//        MultipartBody.Part body = prepareFilePart("image", Uri.fromFile(bitmap));
+//
+//        Call<UploadImageResponse> call = ApiClient.getImageUploadService().uploadImage(userId,bitmap);
+//       call.enqueue(new Callback<UploadImageResponse>() {
+//           @Override
+//           public void onResponse(Call<UploadImageResponse> call, Response<UploadImageResponse> response) {
+//
+//           }
+//
+//           @Override
+//           public void onFailure(Call<UploadImageResponse> call, Throwable t) {
+//
+//           }
+//       });
+//    }
+    //----------------------------------------------------------------------------------------------
 }

@@ -988,6 +988,8 @@
     <string name="Upload">Upload</string>
     <string name="UploadAny">Upload any of the following</string>
     <string name="Aadhar">Aadhar Card</string>
+    <string name="uploadAadhar">Upload Aadhar Card</string>
+    <string name="uploadpan">Upload PAN Card</string>
     <string name="VoterId">Voter ID</string>
     <string name="AadharFront">Aadhar Front</string>
     <string name="AadharBack">Aadhar Back</string>

@@ -251,7 +251,7 @@ public class BankDetailsActivity extends AppCompatActivity {
 
                     dialogInterface.dismiss();
                     Intent i8 = new Intent(BankDetailsActivity.this, ProfileAndRegistrationActivity.class);
-                    i8.putExtra("userId", userId);
+                    i8.putExtra("mobile2", userId);
                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i8);
                     overridePendingTransition(0, 0);
@@ -419,13 +419,6 @@ public class BankDetailsActivity extends AppCompatActivity {
                     JSONArray truckLists = response.getJSONArray("data");
                     for (int i = 0; i < truckLists.length(); i++) {
                         JSONObject obj = truckLists.getJSONObject(i);
-//                        nameAPI = obj.getString("name");
-//                        mobileAPI = obj.getString("phone_number");
-//                        addressAPI = obj.getString("address");
-//                        stateAPI = obj.getString("state_code");
-//                        cityAPI = obj.getString("preferred_location");
-//                        pinCodeAPI = obj.getString("pin_code");
-//                        roleAPI = obj.getString("user_type");
 
                     }
                 } catch (JSONException e) {

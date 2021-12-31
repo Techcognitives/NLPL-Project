@@ -184,34 +184,39 @@ public class OtpCodeActivity extends AppCompatActivity {
                                             city = arrayCity.get(j);
                                             role = arrayRole.get(j);
                                             isRegistrationDone = arrayRegDone.get(j);
-                                        }
-                                    }
-
-                                    Log.i("isregDone:", isRegistrationDone);
 
 
-                                    if (isRegistrationDone.equals("1")) {
+                                            if (isRegistrationDone.equals("1")) {
 
-                                        Log.i("userIDAPI:", userId);
-                                        Log.i("userName", name);
-                                        Log.i("isregDone:", isRegistrationDone);
-                                        Log.i("Mobile No API Matches", phone);
+                                                Log.i("userIDAPI:", userId);
+                                                Log.i("userName", name);
+                                                Log.i("isregDone:", isRegistrationDone);
+                                                Log.i("Mobile No API Matches", phone);
 
-                                        Intent i8 = new Intent(OtpCodeActivity.this, ProfileAndRegistrationActivity.class);
-                                        i8.putExtra("mobile2", phone);
-                                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(i8);
-                                        overridePendingTransition(0, 0);
-                                        finish();
+                                                Intent i8 = new Intent(OtpCodeActivity.this, ProfileAndRegistrationActivity.class);
+                                                i8.putExtra("mobile2", phone);
+                                                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                startActivity(i8);
+                                                overridePendingTransition(0, 0);
+                                                finish();
 
-                                    } else {
+                                            } else {
 //                                            Log.i("mobile no not equal", mobileNoAPI);
-                                        Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
-                                        i8.putExtra("mobile1", phone);
-                                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(i8);
-                                        overridePendingTransition(0, 0);
-                                        finish();
+                                                Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
+                                                i8.putExtra("mobile1", phone);
+                                                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                startActivity(i8);
+                                                overridePendingTransition(0, 0);
+                                                finish();
+                                            }
+                                        }else {
+                                            Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
+                                            i8.putExtra("mobile1", mobileNoFirebase);
+                                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            startActivity(i8);
+                                            overridePendingTransition(0, 0);
+                                            finish();
+                                        }
                                     }
 
 //

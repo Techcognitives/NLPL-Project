@@ -1,9 +1,13 @@
 package com.nlpl.utils;
 
+import com.nlpl.model.ImageRequest;
+import com.nlpl.model.UploadImageResponse;
 import com.nlpl.services.AddDriverService;
 import com.nlpl.services.AddTruckService;
 import com.nlpl.services.BankService;
 import com.nlpl.services.CompanyService;
+import com.nlpl.services.ImageService;
+import com.nlpl.services.ImageUploadService;
 import com.nlpl.services.UserService;
 
 import okhttp3.OkHttpClient;
@@ -52,5 +56,14 @@ public class ApiClient {
     public static CompanyService getCompanyService() {
         CompanyService companyService = getRetrofit().create(CompanyService.class);
         return companyService;
+    }
+
+    public static ImageService getImageService() {
+        ImageService imageService = getRetrofit().create(ImageService.class);
+        return imageService;
+    }
+    public static ImageUploadService getImageUploadService() {
+        ImageUploadService imageUploadService = getRetrofit().create(ImageUploadService.class);
+        return imageUploadService;
     }
 }

@@ -81,9 +81,9 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     Button panAndAadharButton;
     View panView;
 
-    Button uploadPAN, uploadF, uploadB;
+    Button uploadPAN, uploadF;
 
-    TextView panCardText, editPAN, editBack, editFront, frontText, backText;
+    TextView panCardText, editPAN, editFront, frontText, backText;
     ImageView imgPAN, imgF, imgB;
 
     String nameAPI, mobileAPI, addressAPI, pinCodeAPI, roleAPI, cityAPI, stateAPI;
@@ -463,13 +463,10 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         backText = panAndAadharView.findViewById(R.id.profile_registration_name_text);
         uploadPAN = panAndAadharView.findViewById(R.id.uploadPan);
         uploadF = panAndAadharView.findViewById(R.id.uploadF);
-        uploadB = panAndAadharView.findViewById(R.id.uploadB);
         imgPAN = panAndAadharView.findViewById(R.id.imagePan);
         imgF = panAndAadharView.findViewById(R.id.imageF);
-        imgB = panAndAadharView.findViewById(R.id.imageB);
         editPAN = panAndAadharView.findViewById(R.id.edit1);
         editFront = panAndAadharView.findViewById(R.id.editFront);
-        editBack = panAndAadharView.findViewById(R.id.editBack);
 
 //        if (isPersonalDetailsDone){
 //            panCardText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
@@ -481,7 +478,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 //            editFront.setVisibility(View.VISIBLE);
 //
 //            backText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
-//            uploadB.setVisibility(View.INVISIBLE);
 //            editBack.setVisibility(View.VISIBLE);
 //        }
 
@@ -499,12 +495,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             }
         });
 
-        editBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY2);
-            }
-        });
         //------------------------------------------------------------------------------------------
     }
 
@@ -766,8 +756,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             my_alert.show();
 
             backText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-            uploadB.setVisibility(View.INVISIBLE);
-            editBack.setVisibility(View.VISIBLE);
 
             Uri selectedImage = data.getData();
             imgB.setImageURI(selectedImage);
