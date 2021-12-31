@@ -1026,7 +1026,7 @@
     <string name="DriverName">Driver Name, Number &amp; Email</string>
     <string name="EnterDriverName">Enter Driver Name</string>
     <string name="UploadDriverLicense">Upload Driver License</string>
-    <string name="UploadDriverSelfie">photo - Selfie</string>
+    <string name="UploadDriverSelfie">Photo - Selfie</string>
     <string name="DriverLicense">Driver License</string>
     <string name="TakePhoto">Take a Photo</string>
     <string name="camera">Camera</string>
