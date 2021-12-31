@@ -175,9 +175,6 @@ public class BankDetailsActivity extends AppCompatActivity {
 //        getBankDetails();
         }
 
-        bankName.requestFocus();
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-
         bankName.setFilters(new InputFilter[] { filter });
         ifscCode.setFilters(new InputFilter[] { filter });
 
@@ -193,6 +190,11 @@ public class BankDetailsActivity extends AppCompatActivity {
 
         canceledCheckRadioButton = (RadioButton) findViewById(R.id.bank_details_cancelled_check_radio_button);
         acDetailsRadioButton = (RadioButton) findViewById(R.id.bank_details_ac_details_radio_button);
+
+        bankName.setEnabled(false);
+        accountNo.setEnabled(false);
+        reAccount.setEnabled(false);
+        ifscCode.setEnabled(false);
 
         uploadCC.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -474,7 +476,7 @@ public class BankDetailsActivity extends AppCompatActivity {
                 canceledCheckRadioButton.setChecked(true);
                 acDetailsRadioButton.setChecked(false);
 
-                bankName.setClickable(false);
+                bankName.setEnabled(false);
                 accountNo.setEnabled(false);
                 reAccount.setEnabled(false);
                 ifscCode.setEnabled(false);
@@ -489,6 +491,10 @@ public class BankDetailsActivity extends AppCompatActivity {
                 canceledCheckRadioButton.setChecked(false);
                 acDetailsRadioButton.setChecked(true);
 
+                bankName.requestFocus();
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+                bankName.setFocusable(true);
                 bankName.setEnabled(true);
                 accountNo.setEnabled(true);
                 reAccount.setEnabled(true);
