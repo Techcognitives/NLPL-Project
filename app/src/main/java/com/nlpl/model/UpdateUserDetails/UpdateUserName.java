@@ -1,4 +1,4 @@
-package com.nlpl.model;
+package com.nlpl.model.UpdateUserDetails;
 
 public class UpdateUserName {
 

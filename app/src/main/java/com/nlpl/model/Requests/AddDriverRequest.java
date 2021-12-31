@@ -1,4 +1,4 @@
-package com.nlpl.model;
+package com.nlpl.model.Requests;
 
 public class AddDriverRequest {
     String user_id, driver_name, driver_number;

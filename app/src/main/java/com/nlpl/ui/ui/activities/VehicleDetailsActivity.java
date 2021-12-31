@@ -32,10 +32,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
-import com.nlpl.model.AddTruckRequest;
-import com.nlpl.model.AddTruckResponse;
-import com.nlpl.model.BankRequest;
-import com.nlpl.model.BankResponse;
+import com.nlpl.model.Requests.AddTruckRequest;
+import com.nlpl.model.Responses.AddTruckResponse;
+import com.nlpl.model.UpdateTruckDetails.UpdateTruckRcBook;
+import com.nlpl.model.UpdateTruckDetails.UpdateTruckType;
+import com.nlpl.model.UpdateTruckDetails.UpdateTruckVehicleInsurance;
+import com.nlpl.model.UpdateTruckDetails.UpdateTruckVehicleNumber;
+import com.nlpl.model.UpdateUserDetails.UpdateUserIsTruckAdded;
+import com.nlpl.services.AddTruckService;
+import com.nlpl.services.UserService;
 import com.nlpl.utils.ApiClient;
 
 import org.json.JSONArray;
@@ -48,6 +53,8 @@ import java.io.IOException;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class VehicleDetailsActivity extends AppCompatActivity {
 
@@ -59,13 +66,16 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     EditText vehicleNumberEdit;
     ImageView openType, closedType, tarpaulinType, imgRC, imgI;
     TextView openText, closedText, tarpaulinText;
-    String bodyTypeSelected, role;
+    String bodyTypeSelected, mobile;
 
     Button uploadRC, uploadInsurance, okVehicleDetails;
     TextView textRC, editRC;
     TextView textInsurance, editInsurance;
     int GET_FROM_GALLERY = 0;
     int GET_FROM_GALLERY1 = 1;
+
+    private UserService userService;
+    private AddTruckService addTruckService;
 
     String userId, truckId, vehicleNumberAPI, vehicleTypeAPI;
     Boolean isEdit, isRcUploaded=false, isInsurance=false, truckSelected=false;
@@ -81,6 +91,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             userId = bundle.getString("userId");
             isEdit = bundle.getBoolean("isEdit");
             truckId = bundle.getString("truckId");
+            mobile = bundle.getString("mobile");
         }
 
         action_bar = findViewById(R.id.vehicle_details_action_bar);
@@ -159,6 +170,14 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         imgRC = findViewById(R.id.vehicle_details_rc_image);
         imgI = findViewById(R.id.vehicle_details_insurance_image);
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.baseURL))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        userService = retrofit.create(UserService.class);
+        addTruckService = retrofit.create(AddTruckService.class);
+
         okVehicleDetails= findViewById(R.id.vehicle_details_ok_button);
 
         vehicleNumberEdit.addTextChangedListener(vehicleTextWatecher);
@@ -175,30 +194,152 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         uploadRC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Dialog chooseDialog;
+                chooseDialog = new Dialog(VehicleDetailsActivity.this);
+                chooseDialog.setContentView(R.layout.dialog_choose);
+                chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+                lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                lp2.gravity = Gravity.BOTTOM;
+
+                chooseDialog.show();
+                chooseDialog.getWindow().setAttributes(lp2);
+
+                ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
+                ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
+
+                camera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        chooseDialog.dismiss();
+                    }
+                });
+
+                gallery.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+                        chooseDialog.dismiss();
+                    }
+                });
+
+
             }
         });
 
         editRC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+                Dialog chooseDialog;
+                chooseDialog = new Dialog(VehicleDetailsActivity.this);
+                chooseDialog.setContentView(R.layout.dialog_choose);
+                chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+                lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                lp2.gravity = Gravity.BOTTOM;
+
+                chooseDialog.show();
+                chooseDialog.getWindow().setAttributes(lp2);
+
+                ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
+                ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
+
+                camera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        chooseDialog.dismiss();
+                    }
+                });
+
+                gallery.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+                        chooseDialog.dismiss();
+                    }
+                });
+
             }
         });
 
         uploadInsurance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Dialog chooseDialog;
+                chooseDialog = new Dialog(VehicleDetailsActivity.this);
+                chooseDialog.setContentView(R.layout.dialog_choose);
+                chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY1);
+                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+                lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                lp2.gravity = Gravity.BOTTOM;
+
+                chooseDialog.show();
+                chooseDialog.getWindow().setAttributes(lp2);
+
+                ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
+                ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
+
+                camera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        chooseDialog.dismiss();
+                    }
+                });
+
+                gallery.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY1);
+                        chooseDialog.dismiss();
+                    }
+                });
+
             }
         });
 
         editInsurance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY1);
+                Dialog chooseDialog;
+                chooseDialog = new Dialog(VehicleDetailsActivity.this);
+                chooseDialog.setContentView(R.layout.dialog_choose);
+                chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+                lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                lp2.gravity = Gravity.BOTTOM;
+
+                chooseDialog.show();
+                chooseDialog.getWindow().setAttributes(lp2);
+
+                ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
+                ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
+
+                camera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        chooseDialog.dismiss();
+                    }
+                });
+
+                gallery.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY1);
+                        chooseDialog.dismiss();
+                    }
+                });
             }
         });
     }
@@ -321,6 +462,13 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         if (!vehicleNum.isEmpty()&&isRcUploaded&&isInsurance&&truckSelected) {
             if (isEdit){
 
+                if (vehicleNumberEdit.getText().toString() != null){
+                    updateTruckNumber();
+                }
+                if (bodyTypeSelected != null){
+                    updateTruckType();
+                }
+
             }else{
                 saveTruck(createTruck());
             }
@@ -330,9 +478,10 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
+                    updateUserIsTruckAdded();
                     dialogInterface.dismiss();
                     Intent i8 = new Intent(VehicleDetailsActivity.this, ProfileAndRegistrationActivity.class);
-                    i8.putExtra("userId", userId);
+                    i8.putExtra("mobile2", mobile);
                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i8);
                     overridePendingTransition(0, 0);
@@ -468,5 +617,124 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
     }
 
+    //-------------------------------- Update User is Truck Added ----------------------------------
+    private void updateUserIsTruckAdded() {
+
+        UpdateUserIsTruckAdded updateUserIsTruckAdded = new UpdateUserIsTruckAdded("1");
+
+        Call<UpdateUserIsTruckAdded> call = userService.updateUserIsTruckAdded("" + userId, updateUserIsTruckAdded);
+
+        call.enqueue(new Callback<UpdateUserIsTruckAdded>() {
+            @Override
+            public void onResponse(Call<UpdateUserIsTruckAdded> call, Response<UpdateUserIsTruckAdded> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Truck Added");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserIsTruckAdded> call, Throwable t) {
+                Log.i("Not Successful", "User is Truck Added");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //-------------------------------- Update User is Truck Added ----------------------------------
+    private void updateTruckNumber() {
+
+        UpdateTruckVehicleNumber updateTruckVehicleNumber = new UpdateTruckVehicleNumber(vehicleNumberEdit.getText().toString());
+
+        Call<UpdateTruckVehicleNumber> call = addTruckService.updateTruckVehicleNumber("" + truckId, updateTruckVehicleNumber);
+
+        call.enqueue(new Callback<UpdateTruckVehicleNumber>() {
+            @Override
+            public void onResponse(Call<UpdateTruckVehicleNumber> call, Response<UpdateTruckVehicleNumber> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Truck Added");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateTruckVehicleNumber> call, Throwable t) {
+                Log.i("Not Successful", "User is Truck Added");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //-------------------------------- Update User is Truck Added ----------------------------------
+    private void updateTruckRcBook() {
+
+        UpdateTruckRcBook updateTruckRcBook = new UpdateTruckRcBook("1");
+
+        Call<UpdateTruckRcBook> call = addTruckService.updateTruckRcBook("" + truckId, updateTruckRcBook);
+
+        call.enqueue(new Callback<UpdateTruckRcBook>() {
+            @Override
+            public void onResponse(Call<UpdateTruckRcBook> call, Response<UpdateTruckRcBook> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Truck Added");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateTruckRcBook> call, Throwable t) {
+                Log.i("Not Successful", "User is Truck Added");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //-------------------------------- Update User is Truck Added ----------------------------------
+    private void updateTruckInsurance() {
+
+        UpdateTruckVehicleInsurance updateTruckVehicleInsurance = new UpdateTruckVehicleInsurance("1");
+
+        Call<UpdateTruckVehicleInsurance> call = addTruckService.updateTruckVehicleInsurance("" + truckId, updateTruckVehicleInsurance);
+
+        call.enqueue(new Callback<UpdateTruckVehicleInsurance>() {
+            @Override
+            public void onResponse(Call<UpdateTruckVehicleInsurance> call, Response<UpdateTruckVehicleInsurance> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Truck Added");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateTruckVehicleInsurance> call, Throwable t) {
+                Log.i("Not Successful", "User is Truck Added");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //-------------------------------- Update User is Truck Added ----------------------------------
+    private void updateTruckType() {
+
+        UpdateTruckType updateTruckType = new UpdateTruckType(bodyTypeSelected);
+
+        Call<UpdateTruckType> call = addTruckService.updateTruckVehicleType("" + truckId, updateTruckType);
+
+        call.enqueue(new Callback<UpdateTruckType>() {
+            @Override
+            public void onResponse(Call<UpdateTruckType> call, Response<UpdateTruckType> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Truck Added");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateTruckType> call, Throwable t) {
+                Log.i("Not Successful", "User is Truck Added");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
 
 }

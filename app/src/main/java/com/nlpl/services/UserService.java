@@ -1,8 +1,22 @@
 package com.nlpl.services;
 
-import com.nlpl.model.UserRequest;
-import com.nlpl.model.UserResponse;
-import com.nlpl.model.UpdateUserName;
+import com.nlpl.model.Requests.UserRequest;
+import com.nlpl.model.Responses.UserResponse;
+import com.nlpl.model.UpdateUserDetails.UpdateUserAddress;
+import com.nlpl.model.UpdateUserDetails.UpdateUserEmailId;
+import com.nlpl.model.UpdateUserDetails.UpdateUserIsBankDetailsGiven;
+import com.nlpl.model.UpdateUserDetails.UpdateUserIsCompanyAdded;
+import com.nlpl.model.UpdateUserDetails.UpdateUserIsDriverAdded;
+import com.nlpl.model.UpdateUserDetails.UpdateUserIsPersonalDetailsAdded;
+import com.nlpl.model.UpdateUserDetails.UpdateUserIsRegistrationDone;
+import com.nlpl.model.UpdateUserDetails.UpdateUserIsTruckAdded;
+import com.nlpl.model.UpdateUserDetails.UpdateUserName;
+import com.nlpl.model.UpdateUserDetails.UpdateUserPhoneNumber;
+import com.nlpl.model.UpdateUserDetails.UpdateUserPinCode;
+import com.nlpl.model.UpdateUserDetails.UpdateUserPreferredLanguage;
+import com.nlpl.model.UpdateUserDetails.UpdateUserPreferredLocation;
+import com.nlpl.model.UpdateUserDetails.UpdateUserStateCode;
+import com.nlpl.model.UpdateUserDetails.UpdateUserType;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -17,4 +31,46 @@ public interface UserService {
 
     @PUT("/user/{userId}")
     Call<UpdateUserName> updateUserName(@Path("userId") String userId, @Body UpdateUserName updateUserName);
+
+    @PUT("/user/{userId}")
+    Call<UpdateUserPhoneNumber> updateUserPhoneNumber(@Path("userId") String userId, @Body UpdateUserPhoneNumber updateUserPhoneNumber);
+
+    @PUT("/user/{userId}")
+    Call<UpdateUserType> updateUserType(@Path("userId") String userId, @Body UpdateUserType updateUserType);
+
+    @PUT("/user/{userId}")
+    Call<UpdateUserPreferredLocation> updateUserPreferredLocation(@Path("userId") String userId, @Body UpdateUserPreferredLocation updateUserPreferredLocation);
+
+    @PUT("/user/{userId}")
+    Call<UpdateUserIsRegistrationDone> updateUserIsRegistrationDone(@Path("userId") String userId, @Body UpdateUserIsRegistrationDone updateUserIsRegistrationDone);
+
+    @PUT("/user/{userId}")
+    Call<UpdateUserPreferredLanguage> updateUserPreferredLanguage(@Path("userId") String userId, @Body UpdateUserPreferredLanguage updateUserPreferredLanguage);
+
+    @PUT("/user/{userId}")
+    Call<UpdateUserAddress> updateUserAddress(@Path("userId") String userId, @Body UpdateUserAddress updateUserAddress);
+
+    @PUT("/user/{userId}")
+    Call<UpdateUserStateCode> updateUserStateCode(@Path("userId") String userId, @Body UpdateUserStateCode updateUserStateCode);
+
+    @PUT("/user/{userId}")
+    Call<UpdateUserPinCode> updateUserPinCode(@Path("userId") String userId, @Body UpdateUserPinCode updateUserPinCode);
+
+    @PUT("/user/{userId}")
+    Call<UpdateUserIsTruckAdded> updateUserIsTruckAdded(@Path("userId") String userId, @Body UpdateUserIsTruckAdded updateUserIsTruckAdded);
+
+    @PUT("/user/{userId}")
+    Call<UpdateUserIsDriverAdded> updateUserIsDriverAdded(@Path("userId") String userId, @Body UpdateUserIsDriverAdded updateUserIsDriverAdded);
+
+    @PUT("/user/{userId}")
+    Call<UpdateUserIsBankDetailsGiven> updateUserIsBankDetailsGiven(@Path("userId") String userId, @Body UpdateUserIsBankDetailsGiven updateUserIsBankDetailsGiven);
+
+    @PUT("/user/{userId}")
+    Call<UpdateUserIsCompanyAdded> updateUserIsCompanyAdded(@Path("userId") String userId, @Body UpdateUserIsCompanyAdded updateUserIsCompanyAdded);
+
+    @PUT("/user/{userId}")
+    Call<UpdateUserIsPersonalDetailsAdded> updateUserIsPersonalDetailsAdded(@Path("userId") String userId, @Body UpdateUserIsPersonalDetailsAdded updateUserIsPersonalDetailsAdded);
+
+    @PUT("/user/{userId}")
+    Call<UpdateUserEmailId> updateUserEmailId(@Path("userId") String userId, @Body UpdateUserEmailId updateUserEmailId);
 }

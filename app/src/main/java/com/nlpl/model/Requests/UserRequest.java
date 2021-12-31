@@ -1,4 +1,4 @@
-package com.nlpl.model;
+package com.nlpl.model.Requests;
 
 public class UserRequest {
     String name, phone_number, user_type, preferred_location, address, state_code, pin_code, preferred_language, email_id;

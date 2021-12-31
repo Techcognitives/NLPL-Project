@@ -27,8 +27,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.nlpl.R;
-import com.nlpl.model.UserRequest;
-import com.nlpl.model.UserResponse;
+import com.nlpl.model.Requests.UserRequest;
+import com.nlpl.model.Responses.UserResponse;
 import com.nlpl.utils.ApiClient;
 
 import retrofit2.Call;
@@ -211,6 +211,8 @@ public class RegistrationActivity extends AppCompatActivity {
 //                dialog.getWindow().setLayout(1000,3000);
                         selectDistrictDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         selectDistrictDialog.show();
+                        TextView title = selectDistrictDialog.findViewById(R.id.dialog_spinner_title);
+                        title.setText("Select City");
                         ListView districtList = (ListView) selectDistrictDialog.findViewById(R.id.list_state);
 
                         if (parentID == R.id.list_state) {

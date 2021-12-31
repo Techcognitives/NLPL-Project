@@ -24,11 +24,11 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.nlpl.R;
+import com.nlpl.model.UpdateUserDetails.UpdateUserIsPersonalDetailsAdded;
+import com.nlpl.services.UserService;
 import com.nlpl.model.ImageRequest;
 import com.nlpl.model.ImageResponse;
 import com.nlpl.model.UploadImageResponse;
-import com.nlpl.model.UserRequest;
-import com.nlpl.model.UserResponse;
 import com.nlpl.services.ImageUploadService;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.FileUtils;
@@ -36,6 +36,12 @@ import com.nlpl.utils.FileUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -60,8 +66,11 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
     View panAndAadharView;
 
-    String userId, driverName, vehicleNo, mobile, bankName, accNo, role, img_type;
-    Boolean isPersonalDetailsDone = false, isBankDetailsDone, isAddTrucksDone, isAddDriversDone, isPanUploaded = false, isFrontUploaded = false;
+    private UserService userService;
+
+    String userId, driverName, vehicleNo, mobile, name, address, pinCode, city, idProof, bankName, accNo, role;
+    Boolean isPanUploaded = false, isFrontUploaded = false, isBackUploaded = false;
+    String img_type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,17 +80,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             userId = bundle.getString("userId");
-            bankName = bundle.getString("bankName");
-            accNo = bundle.getString("accNo");
-            vehicleNo = bundle.getString("vehicleNo");
-            driverName = bundle.getString("driverName");
-            isPersonalDetailsDone = bundle.getBoolean("isPersonal");
-            isBankDetailsDone = bundle.getBoolean("isBank");
-            isAddTrucksDone = bundle.getBoolean("isTrucks");
-            isAddDriversDone = bundle.getBoolean("isDriver");
-            role = bundle.getString("role");
-//            Log.i("Mobile No", mobile);
-//            Log.i("Name", name);
+            mobile = bundle.getString("mobile");
         }
 
         if (isPanUploaded && isFrontUploaded ) {
@@ -159,17 +158,18 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         editFront = panAndAadharView.findViewById(R.id.editFront);
         okPersonalDetails = findViewById(R.id.okPersonalDetails);
 
-        if (isPersonalDetailsDone) {
-            panCardText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-            uploadPAN.setVisibility(View.INVISIBLE);
-            editPAN.setVisibility(View.VISIBLE);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.baseURL))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
+        userService = retrofit.create(UserService.class);
             frontText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadF.setVisibility(View.INVISIBLE);
             editFront.setVisibility(View.VISIBLE);
 
             backText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-        }
+
 
         uploadPAN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -195,7 +195,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 camera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        chooseDialog.dismiss();
                     }
                 });
 
@@ -203,6 +203,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+                        chooseDialog.dismiss();
                     }
                 });
 
@@ -233,7 +234,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 camera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        chooseDialog.dismiss();
                     }
                 });
 
@@ -241,6 +242,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+                        chooseDialog.dismiss();
                     }
                 });
             }
@@ -270,13 +272,14 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 camera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        chooseDialog.dismiss();
                     }
                 });
 
                 gallery.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        chooseDialog.dismiss();
                         startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY1);
                     }
                 });
@@ -307,18 +310,20 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 camera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        chooseDialog.dismiss();
                     }
                 });
 
                 gallery.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        chooseDialog.dismiss();
                         startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY1);
                     }
                 });
             }
         });
+
 
     }
 
@@ -479,6 +484,30 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 Log.i("failed:","failed");
            }
        });
+    }
+
+    //-------------------------------- Update User is Personal Details -----------------------------
+    private void updateUserIsPersonalDetailsAdded() {
+
+        UpdateUserIsPersonalDetailsAdded updateUserIsPersonalDetailsAdded = new UpdateUserIsPersonalDetailsAdded("1");
+
+        Call<UpdateUserIsPersonalDetailsAdded> call = userService.updateUserIsPersonalDetailsAdded("" + userId, updateUserIsPersonalDetailsAdded);
+
+        call.enqueue(new Callback<UpdateUserIsPersonalDetailsAdded>() {
+            @Override
+            public void onResponse(Call<UpdateUserIsPersonalDetailsAdded> call, Response<UpdateUserIsPersonalDetailsAdded> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Personal Details");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserIsPersonalDetailsAdded> call, Throwable t) {
+                Log.i("Not Successful", "User is Personal Details");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
     }
     //----------------------------------------------------------------------------------------------
 }

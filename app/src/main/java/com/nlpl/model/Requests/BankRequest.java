@@ -1,4 +1,4 @@
-package com.nlpl.model;
+package com.nlpl.model.Requests;
 
 public class BankRequest {
     String user_id, accountholder_name, account_number, re_enter_acc_num, IFSI_CODE, isBankDetails_Given;

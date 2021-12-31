@@ -32,16 +32,20 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
-import com.nlpl.model.AddDriverRequest;
-import com.nlpl.model.AddDriverResponse;
-import com.nlpl.model.AddTruckRequest;
-import com.nlpl.model.AddTruckResponse;
+import com.nlpl.model.Requests.AddDriverRequest;
+import com.nlpl.model.Responses.AddDriverResponse;
+import com.nlpl.model.UpdateDriverDetails.UpdateDriverEmailId;
+import com.nlpl.model.UpdateDriverDetails.UpdateDriverName;
+import com.nlpl.model.UpdateDriverDetails.UpdateDriverNumber;
+import com.nlpl.model.UpdateDriverDetails.UpdateDriverUploadLicense;
+import com.nlpl.model.UpdateUserDetails.UpdateUserIsDriverAdded;
+import com.nlpl.services.AddDriverService;
+import com.nlpl.services.UserService;
 import com.nlpl.utils.ApiClient;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -49,12 +53,14 @@ import java.io.IOException;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DriverDetailsActivity extends AppCompatActivity {
 
     View action_bar;
     TextView actionBarTitle, language;
-    EditText driverName, driverMobile;
+    EditText driverName, driverMobile, driverEmailId;
     ImageView actionBarBackButton;
     Dialog languageDialog;
 
@@ -64,8 +70,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
     ImageView driverLicenseImage;
 
     private RequestQueue mQueue;
+    private UserService userService;
+    private AddDriverService addDriverService;
 
-    String userId, driverId, driverNameAPI, driverNumberAPI, driverEmailAPI;
+    String userId, driverId, driverNameAPI, driverNumberAPI, driverEmailAPI, mobile;
     Boolean isDLUploaded = false, isEdit;
 
     @Override
@@ -78,6 +86,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
             userId = bundle.getString("userId");
             isEdit = bundle.getBoolean("isEdit");
             driverId = bundle.getString("driverId");
+            mobile = bundle.getString("mobile");
         }
 
         action_bar = findViewById(R.id.driver_details_action_bar);
@@ -88,6 +97,15 @@ public class DriverDetailsActivity extends AppCompatActivity {
         driverName = findViewById(R.id.driver_details_driver_name_edit);
         okDriverDetails = findViewById(R.id.driver_details_ok_button);
         series = (TextView) findViewById(R.id.driver_details_mobile_prefix);
+        driverEmailId = (EditText) findViewById(R.id.driver_details_email_edit);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.baseURL))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        userService = retrofit.create(UserService.class);
+        addDriverService = retrofit.create(AddDriverService.class);
 
         driverName.addTextChangedListener(driverWatcher);
         driverMobile.addTextChangedListener(driverWatcher);
@@ -162,15 +180,74 @@ public class DriverDetailsActivity extends AppCompatActivity {
         uploadDL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Dialog chooseDialog;
+                chooseDialog = new Dialog(DriverDetailsActivity.this);
+                chooseDialog.setContentView(R.layout.dialog_choose);
+                chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+                lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                lp2.gravity = Gravity.BOTTOM;
+
+                chooseDialog.show();
+                chooseDialog.getWindow().setAttributes(lp2);
+
+                ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
+                ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
+
+                camera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        chooseDialog.dismiss();
+                    }
+                });
+
+                gallery.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+                        chooseDialog.dismiss();
+                    }
+                });
             }
         });
 
         editDL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+                Dialog chooseDialog;
+                chooseDialog = new Dialog(DriverDetailsActivity.this);
+                chooseDialog.setContentView(R.layout.dialog_choose);
+                chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+                lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                lp2.gravity = Gravity.BOTTOM;
+
+                chooseDialog.show();
+                chooseDialog.getWindow().setAttributes(lp2);
+
+                ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
+                ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
+
+                camera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        chooseDialog.dismiss();
+                    }
+                });
+
+                gallery.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+                        chooseDialog.dismiss();
+                    }
+                });
             }
         });
     }
@@ -237,11 +314,23 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 my_alert.show();
 
             } else {
+                updateUserIsDriverAdded();
+
                 if (isEdit) {
+                    if (driverName.getText().toString() != null){
+                        updateDriverName();
+                    }
+                    if (driverMobile.getText().toString() != null){
+                        updateDriverNumber();
+                    }
+                    if (driverEmailId.getText().toString() != null){
+                        updateDriverEmailId();
+                    }
 
                 } else {
                     saveDriver(createDriver());
                 }
+
 
                 AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
                 my_alert.setTitle("Driver Details added successfully");
@@ -252,6 +341,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
                         Intent i8 = new Intent(DriverDetailsActivity.this, ProfileAndRegistrationActivity.class);
                         i8.putExtra("userId", userId);
+                        i8.putExtra("mobile2", mobile);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);
                         overridePendingTransition(0, 0);
@@ -269,7 +359,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         AddDriverRequest addDriverRequest = new AddDriverRequest();
         addDriverRequest.setUser_id(userId);
         addDriverRequest.setDriver_name(driverName.getText().toString());
-        addDriverRequest.setDriver_number("91"+driverMobile.getText().toString());
+        addDriverRequest.setDriver_number("91" + driverMobile.getText().toString());
         return addDriverRequest;
     }
 
@@ -341,12 +431,16 @@ public class DriverDetailsActivity extends AppCompatActivity {
                         JSONObject obj = truckLists.getJSONObject(i);
                         driverNameAPI = obj.getString("driver_name");
                         driverNumberAPI = obj.getString("driver_number");
+                        driverEmailAPI = obj.getString("driver_emailId");
 
                         driverName.setText(driverNameAPI);
 
                         String s1 = driverNumberAPI.substring(2, 12);
                         driverMobile.setText(s1);
 
+                        if (driverEmailAPI != null) {
+                            driverEmailId.setText(driverEmailAPI);
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -362,4 +456,126 @@ public class DriverDetailsActivity extends AppCompatActivity {
         mQueue.add(request);
 
     }
+
+    //-------------------------------- Update User is Driver Added ---------------------------------
+    private void updateUserIsDriverAdded() {
+
+        UpdateUserIsDriverAdded updateUserIsDriverAdded = new UpdateUserIsDriverAdded("1");
+
+        Call<UpdateUserIsDriverAdded> call = userService.updateUserIsDriverAdded("" + userId, updateUserIsDriverAdded);
+
+        call.enqueue(new Callback<UpdateUserIsDriverAdded>() {
+            @Override
+            public void onResponse(Call<UpdateUserIsDriverAdded> call, Response<UpdateUserIsDriverAdded> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Driver Added");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserIsDriverAdded> call, Throwable t) {
+                Log.i("Not Successful", "User is Driver Added");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //-------------------------------- Update User is Driver Added ---------------------------------
+    private void updateDriverName() {
+
+        UpdateDriverName updateDriverName = new UpdateDriverName(driverName.getText().toString());
+
+        Call<UpdateDriverName> call = addDriverService.updateDriverName("" + driverId, updateDriverName);
+
+        call.enqueue(new Callback<UpdateDriverName>() {
+            @Override
+            public void onResponse(Call<UpdateDriverName> call, Response<UpdateDriverName> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Driver Added");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateDriverName> call, Throwable t) {
+                Log.i("Not Successful", "User is Driver Added");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //-------------------------------- Update User is Driver Added ---------------------------------
+    private void updateDriverUploadLc() {
+
+        UpdateDriverUploadLicense updateDriverUploadLicense = new UpdateDriverUploadLicense(uploadDL.getText().toString());
+
+        Call<UpdateDriverUploadLicense> call = addDriverService.updateDriverUploadLicense("" + driverId, updateDriverUploadLicense);
+
+        call.enqueue(new Callback<UpdateDriverUploadLicense>() {
+            @Override
+            public void onResponse(Call<UpdateDriverUploadLicense> call, Response<UpdateDriverUploadLicense> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Driver Added");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateDriverUploadLicense> call, Throwable t) {
+                Log.i("Not Successful", "User is Driver Added");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //-------------------------------- Update User is Driver Added ---------------------------------
+    private void updateDriverNumber() {
+
+        UpdateDriverNumber updateDriverNumber = new UpdateDriverNumber(driverMobile.getText().toString());
+
+        Call<UpdateDriverNumber> call = addDriverService.updateDriverNumber("" + driverId, updateDriverNumber);
+
+        call.enqueue(new Callback<UpdateDriverNumber>() {
+            @Override
+            public void onResponse(Call<UpdateDriverNumber> call, Response<UpdateDriverNumber> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Driver Added");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateDriverNumber> call, Throwable t) {
+                Log.i("Not Successful", "User is Driver Added");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //-------------------------------- Update User is Driver Added ---------------------------------
+    private void updateDriverEmailId() {
+
+        UpdateDriverEmailId updateDriverEmailId = new UpdateDriverEmailId(driverEmailId.getText().toString());
+
+        Call<UpdateDriverEmailId> call = addDriverService.updateDriverEmailId("" + driverId, updateDriverEmailId);
+
+        call.enqueue(new Callback<UpdateDriverEmailId>() {
+            @Override
+            public void onResponse(Call<UpdateDriverEmailId> call, Response<UpdateDriverEmailId> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Driver Added");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateDriverEmailId> call, Throwable t) {
+                Log.i("Not Successful", "User is Driver Added");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+
 }

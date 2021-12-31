@@ -29,9 +29,9 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nlpl.R;
-import com.nlpl.model.CompanyRequest;
-import com.nlpl.model.CompanyResponse;
-import com.nlpl.model.CompanyUpdate;
+import com.nlpl.model.Requests.CompanyRequest;
+import com.nlpl.model.Responses.CompanyResponse;
+import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyName;
 import com.nlpl.services.CompanyService;
 import com.nlpl.utils.ApiClient;
 
@@ -55,7 +55,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
     EditText companyName, pinCode, address, gstNumber, panNumber;
     Button okButton;
     TextView selectStateText, selectDistrictText;
-    String companyType = "Proprietary", userId;
+    String companyType = "Proprietary", userId, mobile;
 
     private static String BASE_URL = "http://13.234.163.179:3000";
     private CompanyService companyService;
@@ -70,6 +70,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             userId = bundle.getString("userId");
+            mobile = bundle.getString("mobile");
         }
 
         Gson gson = new GsonBuilder().serializeNulls().create();
@@ -79,7 +80,6 @@ public class CompanyDetailsActivity extends AppCompatActivity {
                 .build();
 
         companyService = retrofit.create(CompanyService.class);
-        updateCompanyDetails();
 
         action_bar = findViewById(R.id.company_details_action_bar);
 
@@ -222,6 +222,8 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 //                dialog.getWindow().setLayout(1000,3000);
                         selectDistrictDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         selectDistrictDialog.show();
+                        TextView title = selectDistrictDialog.findViewById(R.id.dialog_spinner_title);
+                        title.setText("Select City");
                         ListView districtList = (ListView) selectDistrictDialog.findViewById(R.id.list_state);
 
                         if (parentID == R.id.list_state) {
@@ -462,7 +464,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
                 Intent i8 = new Intent(CompanyDetailsActivity.this, ProfileAndRegistrationActivity.class);
-                i8.putExtra("userId", userId);
+                i8.putExtra("mobile2", mobile);
                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i8);
                 overridePendingTransition(0, 0);
@@ -562,23 +564,23 @@ public class CompanyDetailsActivity extends AppCompatActivity {
     private void updateCompanyDetails() {
 
 //------------------------------------- Update Type ------------------------------------------------
-        CompanyUpdate companyUpdate = new CompanyUpdate("HCL", "gst3456", "pan78238", "HR", "Maldives", "Himalaya", ""+userId, "489023");
+        UpdateCompanyName updateCompanyName = new UpdateCompanyName("HCL");
 
-        Call<CompanyUpdate> call = companyService.updateCompanyDetails("3",companyUpdate);
+        Call<UpdateCompanyName> call = companyService.updateCompanyName("", updateCompanyName);
 
-        call.enqueue(new Callback<CompanyUpdate>() {
+        call.enqueue(new Callback<UpdateCompanyName>() {
             @Override
-            public void onResponse(Call<CompanyUpdate> call, retrofit2.Response<CompanyUpdate> response) {
+            public void onResponse(Call<UpdateCompanyName> call, retrofit2.Response<UpdateCompanyName> response) {
                 if (response.isSuccessful()) {
-                    CompanyUpdate companyUpdate1 = response.body();
-                    Log.i("Updated", String.valueOf(companyUpdate1));
+                    UpdateCompanyName updateCompanyName1 = response.body();
+                    Log.i("Updated", String.valueOf(updateCompanyName1));
                 }else{
                     Log.i("Not Successful", "Company Details Update");
                 }
             }
 
             @Override
-            public void onFailure(Call<CompanyUpdate> call, Throwable t) {
+            public void onFailure(Call<UpdateCompanyName> call, Throwable t) {
                 Log.i("Not Successful", "Company Details Update");
             }
         });

@@ -36,8 +36,21 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
-import com.nlpl.model.UpdateUserName;
-import com.nlpl.services.UserService;
+import com.nlpl.model.UpdateUserDetails.UpdateUserAddress;
+import com.nlpl.model.UpdateUserDetails.UpdateUserEmailId;
+import com.nlpl.model.UpdateUserDetails.UpdateUserIsBankDetailsGiven;
+import com.nlpl.model.UpdateUserDetails.UpdateUserIsCompanyAdded;
+import com.nlpl.model.UpdateUserDetails.UpdateUserIsDriverAdded;
+import com.nlpl.model.UpdateUserDetails.UpdateUserIsPersonalDetailsAdded;
+import com.nlpl.model.UpdateUserDetails.UpdateUserIsRegistrationDone;
+import com.nlpl.model.UpdateUserDetails.UpdateUserIsTruckAdded;
+import com.nlpl.model.UpdateUserDetails.UpdateUserName;
+import com.nlpl.model.UpdateUserDetails.UpdateUserPhoneNumber;
+import com.nlpl.model.UpdateUserDetails.UpdateUserPinCode;
+import com.nlpl.model.UpdateUserDetails.UpdateUserPreferredLanguage;
+import com.nlpl.model.UpdateUserDetails.UpdateUserPreferredLocation;
+import com.nlpl.model.UpdateUserDetails.UpdateUserStateCode;
+import com.nlpl.model.UpdateUserDetails.UpdateUserType;
 import com.nlpl.services.UserService;
 
 import org.json.JSONArray;
@@ -50,11 +63,6 @@ import java.io.IOException;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -74,7 +82,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     Dialog selectStateDialog, selectDistrictDialog;
     String selectedDistrict, selectedState, role;
     int parentID;
-    EditText name, pinCode, address, mobileEdit;
+    EditText name, pinCode, address, mobileEdit, emailIdEdit;
     Button okButton;
     //----------------------------------------------------------------------------------------------
     View panAndAadharView;
@@ -86,7 +94,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     TextView panCardText, editPAN, editFront, frontText, backText;
     ImageView imgPAN, imgF, imgB;
 
-    String nameAPI, mobileAPI, addressAPI, pinCodeAPI, roleAPI, cityAPI, stateAPI;
+    String nameAPI, mobileAPI, addressAPI, pinCodeAPI, roleAPI, cityAPI, stateAPI, emailAPI;
 
     private int GET_FROM_GALLERY = 0;
     private int GET_FROM_GALLERY1 = 1;
@@ -95,7 +103,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     private UserService userService;
 
     private RequestQueue mQueue;
-    String userId;
+    String userId, mobileString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +114,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         if (bundle != null) {
             userId = bundle.getString("userId");
             Log.i("Mobile No", userId);
+            mobileString = bundle.getString("mobile");
         }
 
         action_bar = findViewById(R.id.personal_details_id_proof_action_bar);
@@ -177,6 +186,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         //------------------------------------------------------------------------------------------
         name = (EditText) personalAndAddressView.findViewById(R.id.registration_edit_name);
+        emailIdEdit = (EditText) personalAndAddressView.findViewById(R.id.registration_email_id_edit);
         pinCode = (EditText) personalAndAddressView.findViewById(R.id.registration_pin_code_edit);
         address = (EditText) personalAndAddressView.findViewById(R.id.registration_address_edit);
         mobileEdit = (EditText) personalAndAddressView.findViewById(R.id.registration_mobile_no_edit);
@@ -273,6 +283,8 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 //                dialog.getWindow().setLayout(1000,3000);
                         selectDistrictDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         selectDistrictDialog.show();
+                        TextView title = selectDistrictDialog.findViewById(R.id.dialog_spinner_title);
+                        title.setText("Select City");
                         ListView districtList = (ListView) selectDistrictDialog.findViewById(R.id.list_state);
 
                         if (parentID == R.id.list_state) {
@@ -484,14 +496,76 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         editPAN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+                Dialog chooseDialog;
+                chooseDialog = new Dialog(PersonalDetailsAndIdProofActivity.this);
+                chooseDialog.setContentView(R.layout.dialog_choose);
+                chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+                lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                lp2.gravity = Gravity.BOTTOM;
+
+                chooseDialog.show();
+                chooseDialog.getWindow().setAttributes(lp2);
+
+                ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
+                ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
+
+                camera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        chooseDialog.dismiss();
+                    }
+                });
+
+                gallery.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+                        chooseDialog.dismiss();
+                    }
+                });
+
             }
         });
 
         editFront.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY1);
+                Dialog chooseDialog;
+                chooseDialog = new Dialog(PersonalDetailsAndIdProofActivity.this);
+                chooseDialog.setContentView(R.layout.dialog_choose);
+                chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+                lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                lp2.gravity = Gravity.BOTTOM;
+
+                chooseDialog.show();
+                chooseDialog.getWindow().setAttributes(lp2);
+
+                ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
+                ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
+
+                camera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        chooseDialog.dismiss();
+                    }
+                });
+
+                gallery.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY1);
+                        chooseDialog.dismiss();
+                    }
+                });
+
             }
         });
 
@@ -570,7 +644,38 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     }
 
     public void onClickPersonalProof(View view) {
-        updateUserName();
+
+        if (name.getText().toString() != null) {
+            updateUserName();
+        }
+
+        if (emailIdEdit.getText().toString() != null) {
+            updateUserEmailId();
+        }
+
+        if (mobileEdit.getText().toString() != null) {
+            updateUserPhoneNumber();
+        }
+
+        if (address.getText().toString() != null) {
+            updateUserAddress();
+        }
+
+        if (pinCode.getText().toString() != null) {
+            updateUserPinCode();
+        }
+
+        if (selectStateText.getText().toString() != null) {
+            updateUserStateCode();
+        }
+
+        if (selectDistrictText.getText().toString() != null) {
+            updateUserPreferredLocation();
+        }
+
+        if (role != null) {
+            updateUserType();
+        }
 
         AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
         my_alert.setTitle("Details updated Successfully");
@@ -790,11 +895,18 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                         cityAPI = obj.getString("preferred_location");
                         pinCodeAPI = obj.getString("pin_code");
                         roleAPI = obj.getString("user_type");
+                        emailAPI = obj.getString("email_id");
+                        Log.i("EmailId", emailAPI);
 
+                        role = roleAPI;
                         name.setText(nameAPI);
 
                         String s1 = mobileAPI.substring(2, 12);
                         mobileEdit.setText(s1);
+
+                        if (emailAPI != null) {
+                            emailIdEdit.setText(emailAPI);
+                        }
 
                         address.setText(addressAPI);
                         pinCode.setText(pinCodeAPI);
@@ -844,11 +956,10 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         mQueue.add(request);
     }
 
-    //-------------------------------- Update User Details -----------------------------------------
+    //-------------------------------- Update User Name --------------------------------------------
     private void updateUserName() {
 
-//------------------------------------- Update Type ------------------------------------------------
-        UpdateUserName updateUserName = new UpdateUserName("Abhi Gotad");
+        UpdateUserName updateUserName = new UpdateUserName(name.getText().toString());
 
         Call<UpdateUserName> call = userService.updateUserName("" + userId, updateUserName);
 
@@ -869,4 +980,339 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 //--------------------------------------------------------------------------------------------------
     }
 
+    //-------------------------------- Update User Phone Number ------------------------------------
+    private void updateUserPhoneNumber() {
+
+        UpdateUserPhoneNumber updateUserPhoneNumber = new UpdateUserPhoneNumber("91" + mobileEdit.getText().toString());
+
+        Call<UpdateUserPhoneNumber> call = userService.updateUserPhoneNumber("" + userId, updateUserPhoneNumber);
+
+        call.enqueue(new Callback<UpdateUserPhoneNumber>() {
+            @Override
+            public void onResponse(Call<UpdateUserPhoneNumber> call, Response<UpdateUserPhoneNumber> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "PhoneNumber");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserPhoneNumber> call, Throwable t) {
+                Log.i("Not Successful", "PhoneNumber");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //-------------------------------- Update User Type --------------------------------------------
+    private void updateUserType() {
+
+        UpdateUserType updateUserType = new UpdateUserType(role);
+
+        Call<UpdateUserType> call = userService.updateUserType("" + userId, updateUserType);
+
+        call.enqueue(new Callback<UpdateUserType>() {
+            @Override
+            public void onResponse(Call<UpdateUserType> call, Response<UpdateUserType> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "UserType");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserType> call, Throwable t) {
+                Log.i("Not Successful", "UserType");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //-------------------------------- Update User Preferred Language ------------------------------
+    private void updateUserPreferredLanguage() {
+
+        UpdateUserPreferredLanguage updateUserPreferredLanguage = new UpdateUserPreferredLanguage(mobileEdit.getText().toString());
+
+        Call<UpdateUserPreferredLanguage> call = userService.updateUserPreferredLanguage("" + userId, updateUserPreferredLanguage);
+
+        call.enqueue(new Callback<UpdateUserPreferredLanguage>() {
+            @Override
+            public void onResponse(Call<UpdateUserPreferredLanguage> call, Response<UpdateUserPreferredLanguage> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User Preferred Language");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserPreferredLanguage> call, Throwable t) {
+                Log.i("Not Successful", "User Preferred Language");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //---------------------------- Update User is Registration Done --------------------------------
+    private void updateUserIsRegistrationDone() {
+
+        UpdateUserIsRegistrationDone updateUserIsRegistrationDone = new UpdateUserIsRegistrationDone(mobileEdit.getText().toString());
+
+        Call<UpdateUserIsRegistrationDone> call = userService.updateUserIsRegistrationDone("" + userId, updateUserIsRegistrationDone);
+
+        call.enqueue(new Callback<UpdateUserIsRegistrationDone>() {
+            @Override
+            public void onResponse(Call<UpdateUserIsRegistrationDone> call, Response<UpdateUserIsRegistrationDone> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Registration Done");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserIsRegistrationDone> call, Throwable t) {
+                Log.i("Not Successful", "User is Registration Done");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //------------------------------------ Update User Address -------------------------------------
+    private void updateUserAddress() {
+
+        UpdateUserAddress updateUserAddress = new UpdateUserAddress(address.getText().toString());
+
+        Call<UpdateUserAddress> call = userService.updateUserAddress("" + userId, updateUserAddress);
+
+        call.enqueue(new Callback<UpdateUserAddress>() {
+            @Override
+            public void onResponse(Call<UpdateUserAddress> call, Response<UpdateUserAddress> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User Address");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserAddress> call, Throwable t) {
+                Log.i("Not Successful", "UserAddress");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //-------------------------------- Update User Preferred Location ------------------------------
+    private void updateUserPreferredLocation() {
+
+        UpdateUserPreferredLocation updateUserPreferredLocation = new UpdateUserPreferredLocation(selectDistrictText.getText().toString());
+
+        Call<UpdateUserPreferredLocation> call = userService.updateUserPreferredLocation("" + userId, updateUserPreferredLocation);
+
+        call.enqueue(new Callback<UpdateUserPreferredLocation>() {
+            @Override
+            public void onResponse(Call<UpdateUserPreferredLocation> call, Response<UpdateUserPreferredLocation> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User Preferred Location");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserPreferredLocation> call, Throwable t) {
+                Log.i("Not Successful", "User Preferred Location");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //-------------------------------- Update User State Code --------------------------------------
+    private void updateUserStateCode() {
+
+        UpdateUserStateCode updateUserStateCode = new UpdateUserStateCode(selectStateText.getText().toString());
+
+        Call<UpdateUserStateCode> call = userService.updateUserStateCode("" + userId, updateUserStateCode);
+
+        call.enqueue(new Callback<UpdateUserStateCode>() {
+            @Override
+            public void onResponse(Call<UpdateUserStateCode> call, Response<UpdateUserStateCode> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User State Code");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserStateCode> call, Throwable t) {
+                Log.i("Not Successful", "User State Code");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //-------------------------------- Update User Pin Code ----------------------------------------
+    private void updateUserPinCode() {
+
+        UpdateUserPinCode updateUserStateCode = new UpdateUserPinCode(pinCode.getText().toString());
+
+        Call<UpdateUserPinCode> call = userService.updateUserPinCode("" + userId, updateUserStateCode);
+
+        call.enqueue(new Callback<UpdateUserPinCode>() {
+            @Override
+            public void onResponse(Call<UpdateUserPinCode> call, Response<UpdateUserPinCode> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User Pin Code");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserPinCode> call, Throwable t) {
+                Log.i("Not Successful", "User Pin Code");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //-------------------------------- Update User is Truck Added ----------------------------------
+    private void updateUserIsTruckAdded() {
+
+        UpdateUserIsTruckAdded updateUserIsTruckAdded = new UpdateUserIsTruckAdded(mobileEdit.getText().toString());
+
+        Call<UpdateUserIsTruckAdded> call = userService.updateUserIsTruckAdded("" + userId, updateUserIsTruckAdded);
+
+        call.enqueue(new Callback<UpdateUserIsTruckAdded>() {
+            @Override
+            public void onResponse(Call<UpdateUserIsTruckAdded> call, Response<UpdateUserIsTruckAdded> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Truck Added");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserIsTruckAdded> call, Throwable t) {
+                Log.i("Not Successful", "User is Truck Added");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //-------------------------------- Update User is Driver Added ---------------------------------
+    private void updateUserIsDriverAdded() {
+
+        UpdateUserIsDriverAdded updateUserIsDriverAdded = new UpdateUserIsDriverAdded(mobileEdit.getText().toString());
+
+        Call<UpdateUserIsDriverAdded> call = userService.updateUserIsDriverAdded("" + userId, updateUserIsDriverAdded);
+
+        call.enqueue(new Callback<UpdateUserIsDriverAdded>() {
+            @Override
+            public void onResponse(Call<UpdateUserIsDriverAdded> call, Response<UpdateUserIsDriverAdded> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Driver Added");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserIsDriverAdded> call, Throwable t) {
+                Log.i("Not Successful", "User is Driver Added");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //-------------------------------- Update User is Bank Added -----------------------------------
+    private void updateUserIsBankDetailsGiven() {
+
+        UpdateUserIsBankDetailsGiven updateUserIsDriverAdded = new UpdateUserIsBankDetailsGiven(mobileEdit.getText().toString());
+
+        Call<UpdateUserIsBankDetailsGiven> call = userService.updateUserIsBankDetailsGiven("" + userId, updateUserIsDriverAdded);
+
+        call.enqueue(new Callback<UpdateUserIsBankDetailsGiven>() {
+            @Override
+            public void onResponse(Call<UpdateUserIsBankDetailsGiven> call, Response<UpdateUserIsBankDetailsGiven> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Bank Added");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserIsBankDetailsGiven> call, Throwable t) {
+                Log.i("Not Successful", "User is Bank Added");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //-------------------------------- Update User is Company Added -------------------------------
+    private void updateUserIsCompanyAdded() {
+
+        UpdateUserIsCompanyAdded updateUserIsCompanyAdded = new UpdateUserIsCompanyAdded(mobileEdit.getText().toString());
+
+        Call<UpdateUserIsCompanyAdded> call = userService.updateUserIsCompanyAdded("" + userId, updateUserIsCompanyAdded);
+
+        call.enqueue(new Callback<UpdateUserIsCompanyAdded>() {
+            @Override
+            public void onResponse(Call<UpdateUserIsCompanyAdded> call, Response<UpdateUserIsCompanyAdded> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Company Added");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserIsCompanyAdded> call, Throwable t) {
+                Log.i("Not Successful", "User is Company Added");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //-------------------------------- Update User is Personal Details -----------------------------
+    private void updateUserIsPersonalDetailsAdded() {
+
+        UpdateUserIsPersonalDetailsAdded updateUserIsPersonalDetailsAdded = new UpdateUserIsPersonalDetailsAdded(mobileEdit.getText().toString());
+
+        Call<UpdateUserIsPersonalDetailsAdded> call = userService.updateUserIsPersonalDetailsAdded("" + userId, updateUserIsPersonalDetailsAdded);
+
+        call.enqueue(new Callback<UpdateUserIsPersonalDetailsAdded>() {
+            @Override
+            public void onResponse(Call<UpdateUserIsPersonalDetailsAdded> call, Response<UpdateUserIsPersonalDetailsAdded> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Personal Details");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserIsPersonalDetailsAdded> call, Throwable t) {
+                Log.i("Not Successful", "User is Personal Details");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //-------------------------------- Update User Email Id ----------------------------------------
+    private void updateUserEmailId() {
+
+        UpdateUserEmailId updateUserEmailId = new UpdateUserEmailId(emailIdEdit.getText().toString());
+
+        Call<UpdateUserEmailId> call = userService.updateUserEmailId("" + userId, updateUserEmailId);
+
+        call.enqueue(new Callback<UpdateUserEmailId>() {
+            @Override
+            public void onResponse(Call<UpdateUserEmailId> call, Response<UpdateUserEmailId> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User Email Id");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserEmailId> call, Throwable t) {
+                Log.i("Not Successful", "User Email Id");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
 }

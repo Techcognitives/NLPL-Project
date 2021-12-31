@@ -1,4 +1,4 @@
-package com.nlpl.model;
+package com.nlpl.model.Requests;
 
 public class AddTruckRequest {
     String user_id, vehicle_no, vehicle_body_type;
