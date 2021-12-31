@@ -24,6 +24,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -80,6 +81,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     String userId, truckId, vehicleNumberAPI, vehicleTypeAPI;
     Boolean isEdit, isRcUploaded=false, isInsurance=false, truckSelected=false;
     private RequestQueue mQueue;
+
+    RadioButton openSelected, closeSelected, tarpaulinSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,6 +172,14 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         editInsurance = (TextView) findViewById(R.id.vehicle_details_edit_insurance);
         imgRC = findViewById(R.id.vehicle_details_rc_image);
         imgI = findViewById(R.id.vehicle_details_insurance_image);
+
+        openSelected = findViewById(R.id.open_radio_btn);
+        closedText = findViewById(R.id.closed_radio_btn);
+        tarpaulinSelected = findViewById(R.id.tarpaulin_radio_btn);
+
+        openSelected.setChecked(false);
+        closeSelected.setChecked(false);
+        tarpaulinSelected.setChecked(false);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.baseURL))
@@ -354,6 +365,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             case R.id.vehicle_details_open_type:
                 openType.setBackgroundResource(R.drawable.image_view_border_selected);
                 closedType.setBackgroundResource(R.drawable.image_view_border);
+                openSelected.setChecked(true);
+                closeSelected.setChecked(false);
+                tarpaulinSelected.setChecked(false);
                 tarpaulinType.setBackgroundResource(R.drawable.image_view_border);
                 openText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
                 closedText.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
@@ -364,6 +378,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             case R.id.vehicle_details_closed_type:
                 openType.setBackgroundResource(R.drawable.image_view_border);
                 closedType.setBackgroundResource(R.drawable.image_view_border_selected);
+                openSelected.setChecked(false);
+                closeSelected.setChecked(true);
+                tarpaulinSelected.setChecked(false);
                 tarpaulinType.setBackgroundResource(R.drawable.image_view_border);
                 openText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 closedText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
@@ -374,6 +391,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             case R.id.vehicle_details_tarpaulin_type:
                 openType.setBackgroundResource(R.drawable.image_view_border);
                 closedType.setBackgroundResource(R.drawable.image_view_border);
+                openSelected.setChecked(false);
+                closeSelected.setChecked(false);
+                tarpaulinSelected.setChecked(true);
                 tarpaulinType.setBackgroundResource(R.drawable.image_view_border_selected);
                 openText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 closedText.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
