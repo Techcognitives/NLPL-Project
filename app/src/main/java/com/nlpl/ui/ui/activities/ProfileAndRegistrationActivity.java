@@ -325,7 +325,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
                         nameDone.setText(" " + name);
                         phoneDone.setText(" Phone: +91 " + s1);
-                        emailIdTextView.setText(" "+emailIdAPI);
+                        emailIdTextView.setText(" Email: "+emailIdAPI);
                         addressDone.setText(" Address: " + address + ", " + city + " " + pinCode);
 
                         if (role.equals("Customer")) {
