@@ -54,7 +54,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     private RecyclerView bankListRecyclerView;
 
     private boolean isRecExpanded = false;
-    int isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
+    String isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
 
     View action_bar;
     TextView addDriver, addTruck, addBankDetails, accNoDone, editPersonalDetails, actionBarTitle, language, addCompany, phoneDone, nameDone, firmName, addressDone;
@@ -288,46 +288,34 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
                         emailIdAPI = obj.getString("email_id");
 
-                        isPersonalDetailsDone = obj.getInt("isPersonal_dt_added");
-                        isFirmDetailsDone = obj.getInt("isCompany_added");
-                        isBankDetailsDone = obj.getInt("isBankDetails_given");
-                        isTruckDetailsDone = obj.getInt("isTruck_added");
-                        isDriverDetailsDone = obj.getInt("isDriver_added");
+                        isPersonalDetailsDone = obj.getString("isPersonal_dt_added");
+                        isFirmDetailsDone = obj.getString("isCompany_added");
+                        isBankDetailsDone = obj.getString("isBankDetails_given");
+                        isTruckDetailsDone = obj.getString("isTruck_added");
+                        isDriverDetailsDone = obj.getString("isDriver_added");
 
-                        if (isPersonalDetailsDone == 1) {
+                        if (isPersonalDetailsDone != null) {
                             personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
                         } else {
                             personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
                         }
 
-                        if (isBankDetailsDone == 1) {
+                        if (isBankDetailsDone != null) {
                             bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
                         } else {
                             bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
                         }
 
-                        if (isTruckDetailsDone == 1) {
+                        if (isTruckDetailsDone != null) {
                             addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
                         } else {
                             addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck, 0, R.drawable.ic_right, 0);
                         }
 
-                        if (isDriverDetailsDone == 1) {
+                        if (isDriverDetailsDone != null) {
                             addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
                         } else {
                             addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
-                        }
-
-                        if (isFirmDetailsDone != 1) {
-                            firmName.setVisibility(View.GONE);
-                            officeAddressTextView.setVisibility(View.GONE);
-                            addCompany.setVisibility(View.VISIBLE);
-                        }else{
-                            firmName.setVisibility(View.VISIBLE);
-                            officeAddressTextView.setVisibility(View.VISIBLE);
-                            addCompany.setVisibility(View.GONE);
-                            firmName.setText(" Firm Name: "+companyName);
-                            officeAddressTextView.setText(" Office Address: "+companyAddress+", "+companyCity+" "+companyZip);
                         }
 
                         String hello = getString(R.string.hello);
@@ -487,7 +475,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
     public void getCompanyDetails() {
         //---------------------------- Get Company Details -------------------------------------------
-        String url1 = getString(R.string.baseURL) + "/company/get"+userId;
+        String url1 = getString(R.string.baseURL) + "/company/get/"+userId;
         Log.i("URL: ", url1);
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -561,7 +549,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     public void onClickProfileAndRegister(View view) {
         switch (view.getId()) {
             case R.id.profile_registration_personal_details_button:
-                if (isPersonalDetailsDone == 1) {
+                if (isPersonalDetailsDone != null) {
                     if (isRecExpanded) {
                         personal_done.setVisibility(View.GONE);
 //                        addCompany.setVisibility(View.GONE);
@@ -577,18 +565,18 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         addTruck.setVisibility(View.GONE);
                         personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_down_personal, 0);
 
-                        if (isBankDetailsDone == 1) {
+                        if (isBankDetailsDone != null) {
                             bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
                         } else {
                             bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
                         }
-                        if (isTruckDetailsDone == 1) {
+                        if (isTruckDetailsDone != null) {
                             addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
                         } else {
                             addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck, 0, R.drawable.ic_right, 0);
                         }
 
-                        if (isDriverDetailsDone == 1) {
+                        if (isDriverDetailsDone != null) {
                             addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
                         } else {
                             addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
@@ -610,7 +598,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 break;
 
             case R.id.profile_registration_bank_details_button:
-                if (isBankDetailsDone == 1) {
+                if (isBankDetailsDone != null) {
                     if (isRecExpanded) {
                         bankDone.setVisibility(View.GONE);
                         addBankDetails.setVisibility(View.GONE);
@@ -626,19 +614,19 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         addTruck.setVisibility(View.GONE);
                         bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_down_personal, 0);
 
-                        if (isPersonalDetailsDone == 1) {
+                        if (isPersonalDetailsDone != null) {
                             personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
                         } else {
                             personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
                         }
 
-                        if (isTruckDetailsDone == 1) {
+                        if (isTruckDetailsDone != null) {
                             addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
                         } else {
                             addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck, 0, R.drawable.ic_right, 0);
                         }
 
-                        if (isDriverDetailsDone == 1) {
+                        if (isDriverDetailsDone != null) {
                             addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
                         } else {
                             addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
@@ -661,7 +649,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 break;
 
             case R.id.profile_registration_truck_details:
-                if (isTruckDetailsDone == 1) {
+                if (isTruckDetailsDone != null) {
                     if (isRecExpanded) {
                         vehicleDone.setVisibility(View.GONE);
                         addTruck.setVisibility(View.GONE);
@@ -677,19 +665,19 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         addBankDetails.setVisibility(View.GONE);
                         addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_down_personal, 0);
 
-                        if (isPersonalDetailsDone == 1) {
+                        if (isPersonalDetailsDone != null) {
                             personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
                         } else {
                             personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
                         }
 
-                        if (isBankDetailsDone == 1) {
+                        if (isBankDetailsDone != null) {
                             bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
                         } else {
                             bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
                         }
 
-                        if (isDriverDetailsDone == 1) {
+                        if (isDriverDetailsDone != null) {
                             addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
                         } else {
                             addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
@@ -709,7 +697,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 break;
 
             case R.id.profile_registration_driver_details:
-                if (isDriverDetailsDone == 1) {
+                if (isDriverDetailsDone != null) {
 
                     if (isRecExpanded) {
                         driverDone.setVisibility(View.GONE);
@@ -727,19 +715,19 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         addTruck.setVisibility(View.GONE);
                         addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_down_personal, 0);
 
-                        if (isPersonalDetailsDone == 1) {
+                        if (isPersonalDetailsDone != null) {
                             personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
                         } else {
                             personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
                         }
 
-                        if (isBankDetailsDone == 1) {
+                        if (isBankDetailsDone != null) {
                             bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
                         } else {
                             bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
                         }
 
-                        if (isTruckDetailsDone == 1) {
+                        if (isTruckDetailsDone != null) {
                             addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
                         } else {
                             addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck, 0, R.drawable.ic_right, 0);
