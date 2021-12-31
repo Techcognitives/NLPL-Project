@@ -6,20 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.ui.activities.DriverDetailsActivity">
 
-    <TextView
-        android:id="@+id/driver_details_driver_license_text2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:paddingStart="20dp"
-        android:text="@string/UploadDriverLicense"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/driver_details_driver_license_constrain" />
-
     <include
         android:id="@+id/driver_details_action_bar"
         layout="@layout/action_bar"
@@ -167,7 +153,8 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/driver_details_driver_license_constrain" />
 
     <TextView
         android:id="@+id/driver_details_mobile_prefix"
@@ -224,73 +211,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/driver_details_mobile_number_edit" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/driver_details_driver_license_constrain"
-        app:layout_constraintStart_toStartOf="@+id/driver_details_driver_license_constrain"
-        app:layout_constraintTop_toBottomOf="@+id/driver_details_driver_license_text2">
-
-        <TextView
-            android:id="@+id/driver_details_edit_driver_license2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_edit"
-            android:padding="10dp"
-            android:text="@string/edit"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/driver_selfie_text"
-            app:layout_constraintEnd_toEndOf="@+id/upload_driver_selfie"
-            app:layout_constraintTop_toTopOf="@+id/driver_selfie_text" />
-
-        <Button
-            android:id="@+id/upload_driver_selfie"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/all_rounded_small"
-            android:backgroundTint="@color/button_blue"
-            android:drawableStart="@drawable/ic_upload"
-            android:padding="10dp"
-            android:text="@string/Upload"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/driver_selfie_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/driver_selfie_text" />
-
-        <TextView
-            android:id="@+id/driver_selfie_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="@string/DriverLicense"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/driver_selfie_img"
-            app:layout_constraintEnd_toStartOf="@+id/upload_driver_selfie"
-            app:layout_constraintStart_toEndOf="@+id/driver_selfie_img"
-            app:layout_constraintTop_toTopOf="@+id/driver_selfie_img" />
-
-        <ImageView
-            android:id="@+id/driver_selfie_img"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/image_view_border"
-            android:padding="2dp"
-            android:src="@drawable/driving_license"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

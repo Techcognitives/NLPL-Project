@@ -435,10 +435,14 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
                         driverName.setText(driverNameAPI);
 
-                        String s1 = driverNumberAPI.substring(2, 12);
-                        driverMobile.setText(s1);
+                        if (driverNumberAPI != null) {
+//                            String s1 = driverNumberAPI.substring(2, 12);
+                            driverMobile.setText(driverNumberAPI);
+                        }
 
-                        if (driverEmailAPI != null) {
+                        if (driverEmailAPI == null) {
+
+                        }else{
                             driverEmailId.setText(driverEmailAPI);
                         }
                     }
