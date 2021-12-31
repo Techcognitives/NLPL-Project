@@ -152,7 +152,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             }
         });
 
-        vehicleNumberEdit = (EditText) findViewById(R.id.vehicle_details_vehicle_number_edit);
+        vehicleNumberEdit = (EditText) findViewById(R.id.vehicle_details_select_model);
         openType = (ImageView) findViewById(R.id.vehicle_details_open_type);
         closedType = (ImageView) findViewById(R.id.vehicle_details_closed_type);
         tarpaulinType = (ImageView) findViewById(R.id.vehicle_details_tarpaulin_type);
