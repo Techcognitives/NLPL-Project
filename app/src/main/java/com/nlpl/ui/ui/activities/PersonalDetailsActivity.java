@@ -57,7 +57,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     ImageView imgPAN, imgF;
     private int GET_FROM_GALLERY = 0;
     private int GET_FROM_GALLERY1 = 1;
-    private int CAMERA_PIC_REQUEST = 1;
+    private int CAMERA_PIC_REQUEST = 3;
     private int CAMERA_PIC_REQUEST1 = 2;
 
     View panAndAadharView;
@@ -112,9 +112,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 .build();
 
         userService = retrofit.create(UserService.class);
-            frontText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-            uploadF.setVisibility(View.INVISIBLE);
-            editFront.setVisibility(View.VISIBLE);
+            uploadF.setVisibility(View.VISIBLE);
+            editFront.setVisibility(View.INVISIBLE);
 
         uploadPAN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -308,7 +307,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             }
 
             Uri selectedImage = data.getData();
-            uploadImage(selectedImage);
+//            uploadImage(selectedImage);
             imgPAN.setImageURI(selectedImage);
             Bitmap bitmap = null;
             try {
@@ -342,7 +341,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             }
 
             Uri selectedImage = data.getData();
-            uploadImage(selectedImage);
+//            uploadImage(selectedImage);
             imgF.setImageURI(selectedImage);
             Bitmap bitmap = null;
             try {
@@ -405,6 +404,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
     public void onClickOKPersonal(View view) {
         if (isPanUploaded && isFrontUploaded ) {
+            updateUserIsPersonalDetailsAdded();
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
             my_alert.setTitle("Personal Details added successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {

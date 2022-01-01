@@ -139,7 +139,7 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:background="@drawable/shadow_small"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_registration_personal_details_button">
@@ -272,7 +272,7 @@
         android:text="@string/add_company"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/personal_done"
         app:layout_constraintStart_toStartOf="@+id/personal_done"
         app:layout_constraintTop_toBottomOf="@+id/personal_done" />

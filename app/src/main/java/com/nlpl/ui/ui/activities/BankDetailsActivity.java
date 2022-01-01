@@ -125,7 +125,7 @@ public class BankDetailsActivity extends AppCompatActivity {
 
         mQueue = Volley.newRequestQueue(BankDetailsActivity.this);
         if (isEdit){
-//        getBankDetails();
+        getBankDetails();
         }
 
         bankName.setFilters(new InputFilter[] { filter });
@@ -385,7 +385,7 @@ public class BankDetailsActivity extends AppCompatActivity {
     public BankRequest createBankAcc() {
         BankRequest bankRequest = new BankRequest();
         bankRequest.setUser_id(userId);
-        bankRequest.setAccountholder_name(name);
+        bankRequest.setAccountholder_name(bankName.getText().toString());
         bankRequest.setAccount_number(accountNo.getText().toString());
         bankRequest.setRe_enter_acc_num(reAccount.getText().toString());
         bankRequest.setIFSI_CODE(ifscCode.getText().toString());
@@ -494,7 +494,10 @@ public class BankDetailsActivity extends AppCompatActivity {
                     JSONArray truckLists = response.getJSONArray("data");
                     for (int i = 0; i < truckLists.length(); i++) {
                         JSONObject obj = truckLists.getJSONObject(i);
-
+                        bankName.setText(obj.getString("accountholder_name"));
+                        accountNo.setText(obj.getString("account_number"));
+                        reAccount.setText(obj.getString("re_enter_acc_num"));
+                        ifscCode.setText(obj.getString("IFSI_CODE"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
