@@ -1,4 +1,4 @@
-package com.nlpl.model;
+package com.nlpl.model.ModelForRecyclerView;
 
 public class BankModel {
     private String user_id;

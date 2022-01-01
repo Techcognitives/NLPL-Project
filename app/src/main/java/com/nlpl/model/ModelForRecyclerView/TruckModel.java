@@ -1,4 +1,4 @@
-package com.nlpl.model;
+package com.nlpl.model.ModelForRecyclerView;
 
 public class TruckModel {
     private String user_id;

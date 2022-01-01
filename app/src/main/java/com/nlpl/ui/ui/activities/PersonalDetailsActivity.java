@@ -20,16 +20,14 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.nlpl.R;
 import com.nlpl.model.UpdateUserDetails.UpdateUserIsPersonalDetailsAdded;
 import com.nlpl.services.UserService;
-import com.nlpl.model.ImageRequest;
-import com.nlpl.model.ImageResponse;
-import com.nlpl.model.UploadImageResponse;
-import com.nlpl.services.ImageUploadService;
+import com.nlpl.model.Requests.ImageRequest;
+import com.nlpl.model.Responses.ImageResponse;
+import com.nlpl.model.Responses.UploadImageResponse;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.FileUtils;
 
@@ -46,9 +44,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class PersonalDetailsActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.nlpl.model;
+package com.nlpl.model.Responses;
 
 public class ImageResponse {
     private String success;

@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nlpl.R;
-import com.nlpl.model.BankModel;
+import com.nlpl.model.ModelForRecyclerView.BankModel;
 import com.nlpl.ui.ui.activities.ProfileAndRegistrationActivity;
 
 import java.util.ArrayList;

@@ -32,7 +32,9 @@ import com.nlpl.R;
 import com.nlpl.model.Requests.CompanyRequest;
 import com.nlpl.model.Responses.CompanyResponse;
 import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyName;
+import com.nlpl.model.UpdateUserDetails.UpdateUserIsCompanyAdded;
 import com.nlpl.services.CompanyService;
+import com.nlpl.services.UserService;
 import com.nlpl.utils.ApiClient;
 
 import retrofit2.Call;
@@ -58,6 +60,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 
     private static String BASE_URL = "http://13.234.163.179:3000";
     private CompanyService companyService;
+    private UserService userService;
 
     RadioButton proprietaryRadioButton, partnershipRadioButton, pvtLtdRadioButton;
 
@@ -79,6 +82,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
                 .build();
 
         companyService = retrofit.create(CompanyService.class);
+        userService = retrofit.create(UserService.class);
 
         action_bar = findViewById(R.id.company_details_action_bar);
 
@@ -408,7 +412,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 
     public void onClickCompanyDetailsOK(View view) {
         saveCompany(createCompany());
-
+        updateUserIsCompanyAdded();
         AlertDialog.Builder my_alert = new AlertDialog.Builder(CompanyDetailsActivity.this);
         my_alert.setTitle("Company Details added Successfully");
         my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -534,6 +538,30 @@ public class CompanyDetailsActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<UpdateCompanyName> call, Throwable t) {
                 Log.i("Not Successful", "Company Details Update");
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //-------------------------------- Update User is Company Added -------------------------------
+    private void updateUserIsCompanyAdded() {
+
+        UpdateUserIsCompanyAdded updateUserIsCompanyAdded = new UpdateUserIsCompanyAdded("1");
+
+        Call<UpdateUserIsCompanyAdded> call = userService.updateUserIsCompanyAdded("" + userId, updateUserIsCompanyAdded);
+
+        call.enqueue(new Callback<UpdateUserIsCompanyAdded>() {
+            @Override
+            public void onResponse(Call<UpdateUserIsCompanyAdded> call, Response<UpdateUserIsCompanyAdded> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Company Added");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserIsCompanyAdded> call, Throwable t) {
+                Log.i("Not Successful", "User is Company Added");
+
             }
         });
 //--------------------------------------------------------------------------------------------------

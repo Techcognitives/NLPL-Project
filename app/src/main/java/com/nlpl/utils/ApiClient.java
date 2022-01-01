@@ -1,7 +1,5 @@
 package com.nlpl.utils;
 
-import com.nlpl.model.ImageRequest;
-import com.nlpl.model.UploadImageResponse;
 import com.nlpl.services.AddDriverService;
 import com.nlpl.services.AddTruckService;
 import com.nlpl.services.BankService;
