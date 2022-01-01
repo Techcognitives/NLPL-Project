@@ -59,10 +59,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DriverDetailsActivity extends AppCompatActivity {
 
     View action_bar;
-    TextView actionBarTitle, language;
+    TextView actionBarTitle;
     EditText driverName, driverMobile, driverEmailId;
     ImageView actionBarBackButton;
-    Dialog languageDialog;
 
     Button uploadDL, okDriverDetails, uploadSelfie;
     TextView textDL, editDL, series, textDS, editDS;
@@ -95,7 +94,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
         action_bar = findViewById(R.id.driver_details_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
-        language = (TextView) action_bar.findViewById(R.id.action_bar_language_selector);
         driverMobile = findViewById(R.id.driver_details_mobile_number_edit);
         driverName = findViewById(R.id.driver_details_driver_name_edit);
         okDriverDetails = findViewById(R.id.driver_details_ok_button);
@@ -116,51 +114,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
         driverName.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         driverName.setFilters(new InputFilter[]{filter});
-
-        language.setText(getString(R.string.english));
-        language.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                languageDialog = new Dialog(DriverDetailsActivity.this);
-                languageDialog.setContentView(R.layout.dialog_language);
-                languageDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-                lp2.copyFrom(languageDialog.getWindow().getAttributes());
-                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                lp2.gravity = Gravity.BOTTOM;
-
-                languageDialog.show();
-                languageDialog.getWindow().setAttributes(lp2);
-
-                TextView english = languageDialog.findViewById(R.id.english);
-                TextView marathi = languageDialog.findViewById(R.id.marathi);
-                TextView hindi = languageDialog.findViewById(R.id.hindi);
-
-                english.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        language.setText(getString(R.string.english));
-                    }
-                });
-
-                marathi.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        language.setText(getString(R.string.marathi));
-                    }
-                });
-
-                hindi.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        language.setText(getString(R.string.hindi));
-                    }
-                });
-
-            }
-        });
 
         actionBarTitle.setText("Driver Details");
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
