@@ -67,7 +67,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     String userId, userIdAPI, phone, mobileNoAPI;
     ArrayList<String> arrayUserId, arrayMobileNo,  arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
 
-
     Button personalDetails, bankDetails, addTrucks, addDrivers;
     String mobile, name, address, pinCode, city, role, emailIdAPI;
     TextView nameTitle, mobileText, emailIdTextView, officeAddressTextView;
