@@ -62,10 +62,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class BankDetailsActivity extends AppCompatActivity {
 
     View action_bar;
-    TextView actionBarTitle, language;
+    TextView actionBarTitle;
     ImageView actionBarBackButton;
-    Dialog languageDialog;
-
     String userId, name;
 
     EditText bankName, accountNo, reAccount, ifscCode;
@@ -74,6 +72,7 @@ public class BankDetailsActivity extends AppCompatActivity {
     Button uploadCC;
     TextView textCC, editCC;
     int GET_FROM_GALLERY=0;
+    int CAMERA_PIC_REQUEST1 = 1;
     ImageView cancelledCheckImage;
     Boolean isEdit;
 
@@ -100,52 +99,6 @@ public class BankDetailsActivity extends AppCompatActivity {
         action_bar = findViewById(R.id.bank_details_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
-        language = (TextView) action_bar.findViewById(R.id.action_bar_language_selector);
-
-        language.setText(getString(R.string.english));
-        language.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                languageDialog = new Dialog(BankDetailsActivity.this);
-                languageDialog.setContentView(R.layout.dialog_language);
-                languageDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-                lp2.copyFrom(languageDialog.getWindow().getAttributes());
-                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                lp2.gravity = Gravity.BOTTOM;
-
-                languageDialog.show();
-                languageDialog.getWindow().setAttributes(lp2);
-
-                TextView english = languageDialog.findViewById(R.id.english);
-                TextView marathi = languageDialog.findViewById(R.id.marathi);
-                TextView hindi = languageDialog.findViewById(R.id.hindi);
-
-                english.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        language.setText(getString(R.string.english));
-                    }
-                });
-
-                marathi.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        language.setText(getString(R.string.marathi));
-                    }
-                });
-
-                hindi.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        language.setText(getString(R.string.hindi));
-                    }
-                });
-
-            }
-        });
 
         actionBarTitle.setText("Bank Details");
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
@@ -175,9 +128,6 @@ public class BankDetailsActivity extends AppCompatActivity {
 //        getBankDetails();
         }
 
-        bankName.requestFocus();
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-
         bankName.setFilters(new InputFilter[] { filter });
         ifscCode.setFilters(new InputFilter[] { filter });
 
@@ -193,6 +143,11 @@ public class BankDetailsActivity extends AppCompatActivity {
 
         canceledCheckRadioButton = (RadioButton) findViewById(R.id.bank_details_cancelled_check_radio_button);
         acDetailsRadioButton = (RadioButton) findViewById(R.id.bank_details_ac_details_radio_button);
+
+        bankName.setEnabled(false);
+        accountNo.setEnabled(false);
+        reAccount.setEnabled(false);
+        ifscCode.setEnabled(false);
 
         uploadCC.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,6 +172,8 @@ public class BankDetailsActivity extends AppCompatActivity {
                 camera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
                         chooseDialog.dismiss();
                     }
                 });
@@ -255,6 +212,8 @@ public class BankDetailsActivity extends AppCompatActivity {
                 camera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
                         chooseDialog.dismiss();
                     }
                 });
@@ -306,6 +265,24 @@ public class BankDetailsActivity extends AppCompatActivity {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+        } else if (requestCode == CAMERA_PIC_REQUEST1){
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
+            my_alert.setTitle("Canceled Check uploaded successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            my_alert.show();
+
+            textCC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadCC.setVisibility(View.INVISIBLE);
+            editCC.setVisibility(View.VISIBLE);
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            cancelledCheckImage.setImageBitmap(image);
+
         }
     }
 
@@ -474,7 +451,7 @@ public class BankDetailsActivity extends AppCompatActivity {
                 canceledCheckRadioButton.setChecked(true);
                 acDetailsRadioButton.setChecked(false);
 
-                bankName.setClickable(false);
+                bankName.setEnabled(false);
                 accountNo.setEnabled(false);
                 reAccount.setEnabled(false);
                 ifscCode.setEnabled(false);
@@ -489,6 +466,10 @@ public class BankDetailsActivity extends AppCompatActivity {
                 canceledCheckRadioButton.setChecked(false);
                 acDetailsRadioButton.setChecked(true);
 
+                bankName.requestFocus();
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+                bankName.setFocusable(true);
                 bankName.setEnabled(true);
                 accountNo.setEnabled(true);
                 reAccount.setEnabled(true);

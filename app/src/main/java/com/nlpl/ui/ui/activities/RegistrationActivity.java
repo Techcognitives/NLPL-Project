@@ -39,11 +39,11 @@ public class RegistrationActivity extends AppCompatActivity {
 
     RadioButton ownerButton, driverButton, brokerButton, customerButton;
     View action_bar;
-    TextView actionBarTitle, selectStateText, selectDistrictText, language;
+    TextView actionBarTitle, selectStateText, selectDistrictText;
     ImageView actionBarBackButton;
 
     ArrayAdapter<CharSequence> selectStateArray, selectDistrictArray, selectStateUnionCode;
-    Dialog selectStateDialog, selectDistrictDialog, languageDialog;
+    Dialog selectStateDialog, selectDistrictDialog;
     String selectedDistrict, selectedState, role;
     int parentID;
     String mobile;
@@ -67,54 +67,6 @@ public class RegistrationActivity extends AppCompatActivity {
         action_bar = (View) findViewById(R.id.registration_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
-        language = (TextView) action_bar.findViewById(R.id.action_bar_language_selector);
-
-
-        language.setText(getString(R.string.english));
-        language.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                languageDialog = new Dialog(RegistrationActivity.this);
-                languageDialog.setContentView(R.layout.dialog_language);
-                languageDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-                lp2.copyFrom(languageDialog.getWindow().getAttributes());
-                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                lp2.gravity = Gravity.BOTTOM;
-
-                languageDialog.show();
-                languageDialog.getWindow().setAttributes(lp2);
-
-                TextView english = languageDialog.findViewById(R.id.english);
-                TextView marathi = languageDialog.findViewById(R.id.marathi);
-                TextView hindi = languageDialog.findViewById(R.id.hindi);
-
-                english.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        language.setText(getString(R.string.english));
-                    }
-                });
-
-                marathi.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        language.setText(getString(R.string.marathi));
-                    }
-                });
-
-                hindi.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        language.setText(getString(R.string.hindi));
-                    }
-                });
-
-            }
-        });
-
         actionBarTitle.setText("Registration");
         actionBarBackButton.setVisibility(View.GONE);
         //------------------------------------------------------------------------------------------
@@ -475,7 +427,7 @@ public class RegistrationActivity extends AppCompatActivity {
             saveUser(createUser());
             AlertDialog.Builder my_alert = new AlertDialog.Builder(RegistrationActivity.this);
             my_alert.setTitle("Registration Successful");
-            my_alert.setMessage("Welcome to Find YourTruck\n\nPlease update your profile and explore the platform benefits.");
+            my_alert.setMessage("Welcome to " +getString(R.string.app_name)+"\n\nPlease update your profile and explore the platform benefits.");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -573,7 +525,6 @@ public class RegistrationActivity extends AppCompatActivity {
         userRequest.setUser_type(role);
         userRequest.setEmail_id(email_id.getText().toString());
         userRequest.setIsRegistration_done(1);
-        userRequest.setPreferred_language(language.getText().toString());
         userRequest.setPin_code(pinCode.getText().toString());
         userRequest.setPreferred_location(selectDistrictText.getText().toString());
         userRequest.setState_code(selectStateText.getText().toString());

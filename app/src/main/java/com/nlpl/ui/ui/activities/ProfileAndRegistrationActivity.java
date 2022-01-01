@@ -53,13 +53,12 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     private BanksAdapter bankListAdapter;
     private RecyclerView bankListRecyclerView;
 
-    private boolean isRecExpanded = false;
-    String isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
+    private boolean isRecExpanded = true;
+    String isPersonalDetailsDone = null, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
 
     View action_bar;
-    TextView addDriver, addTruck, addBankDetails, accNoDone, editPersonalDetails, actionBarTitle, language, addCompany, phoneDone, nameDone, firmName, addressDone;
+    TextView accHolderName, addDriver, addTruck, addBankDetails, accNoDone, editPersonalDetails, actionBarTitle,  addCompany, phoneDone, nameDone, firmName, addressDone;
     ImageView actionBarBackButton;
-    Dialog languageDialog;
 
     View bottomNav;
     TextView truckLoadText;
@@ -88,7 +87,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         action_bar = findViewById(R.id.profile_registration_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
-        language = (TextView) action_bar.findViewById(R.id.action_bar_language_selector);
 
         arrayUserId = new ArrayList<>();
         arrayMobileNo = new ArrayList<>();
@@ -98,51 +96,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         arrayName = new ArrayList<>();
         arrayRole = new ArrayList<>();
         arrayRegDone = new ArrayList<>();
-
-        language.setText(getString(R.string.english));
-        language.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                languageDialog = new Dialog(ProfileAndRegistrationActivity.this);
-                languageDialog.setContentView(R.layout.dialog_language);
-                languageDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-                lp2.copyFrom(languageDialog.getWindow().getAttributes());
-                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                lp2.gravity = Gravity.BOTTOM;
-
-                languageDialog.show();
-                languageDialog.getWindow().setAttributes(lp2);
-
-                TextView english = languageDialog.findViewById(R.id.english);
-                TextView marathi = languageDialog.findViewById(R.id.marathi);
-                TextView hindi = languageDialog.findViewById(R.id.hindi);
-
-                english.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        language.setText(getString(R.string.english));
-                    }
-                });
-
-                marathi.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        language.setText(getString(R.string.marathi));
-                    }
-                });
-
-                hindi.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        language.setText(getString(R.string.hindi));
-                    }
-                });
-
-            }
-        });
 
         actionBarTitle.setText("My Profile");
         actionBarBackButton.setVisibility(View.GONE);
@@ -177,6 +130,11 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         mQueue = Volley.newRequestQueue(ProfileAndRegistrationActivity.this);
         getUserDetails();
         getCompanyDetails();
+
+        personal_done.setVisibility(View.GONE);
+        bankDone.setVisibility(View.GONE);
+        vehicleDone.setVisibility(View.GONE);
+        driverDone.setVisibility(View.GONE);
 
         //---------------------------- Get Truck Details -------------------------------------------
         truckListRecyclerView = (RecyclerView) findViewById(R.id.trucks_list_view);
@@ -295,25 +253,25 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
                         if (isPersonalDetailsDone != null) {
                             personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
-                        } else {
+                        } else if (isPersonalDetailsDone == null){
                             personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
                         }
 
                         if (isBankDetailsDone != null) {
                             bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
-                        } else {
+                        } else if (isBankDetailsDone == null){
                             bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
                         }
 
                         if (isTruckDetailsDone != null) {
                             addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
-                        } else {
+                        } else if (isTruckDetailsDone == null){
                             addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck, 0, R.drawable.ic_right, 0);
                         }
 
                         if (isDriverDetailsDone != null) {
                             addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
-                        } else {
+                        } else if (isDriverDetailsDone == null){
                             addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
                         }
 
@@ -345,7 +303,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         });
 
         mQueue.add(request);
-
 
     }
 
@@ -569,24 +526,24 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
                         if (isBankDetailsDone != null) {
                             bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
-                        } else {
+                        } else if (isBankDetailsDone == null){
                             bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
                         }
                         if (isTruckDetailsDone != null) {
                             addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
-                        } else {
+                        } else if (isTruckDetailsDone == null){
                             addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck, 0, R.drawable.ic_right, 0);
                         }
 
                         if (isDriverDetailsDone != null) {
                             addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
-                        } else {
+                        } else if (isDriverDetailsDone == null){
                             addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
                         }
 
                         isRecExpanded = true;
                     }
-                } else {
+                } else if (isPersonalDetailsDone==null){
                     personal_done.setVisibility(View.GONE);
 //                    addCompany.setVisibility(View.GONE);
                     personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
@@ -624,25 +581,25 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
                         if (isPersonalDetailsDone != null) {
                             personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
-                        } else {
+                        } else if (isPersonalDetailsDone == null){
                             personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
                         }
 
                         if (isTruckDetailsDone != null) {
                             addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
-                        } else {
+                        } else if (isTruckDetailsDone == null){
                             addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck, 0, R.drawable.ic_right, 0);
                         }
 
                         if (isDriverDetailsDone != null) {
                             addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
-                        } else {
+                        } else if (isDriverDetailsDone == null){
                             addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
                         }
 
                         isRecExpanded = true;
                     }
-                } else {
+                } else if (isBankDetailsDone == null){
                     bankDone.setVisibility(View.GONE);
                     addBankDetails.setVisibility(View.GONE);
                     bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
@@ -681,25 +638,25 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
                         if (isPersonalDetailsDone != null) {
                             personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
-                        } else {
+                        } else if (isPersonalDetailsDone == null){
                             personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
                         }
 
                         if (isBankDetailsDone != null) {
                             bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
-                        } else {
+                        } else if (isBankDetailsDone==null){
                             bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
                         }
 
                         if (isDriverDetailsDone != null) {
                             addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
-                        } else {
+                        } else if (isDriverDetailsDone==null){
                             addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
                         }
 
                         isRecExpanded = true;
                     }
-                } else {
+                } else if (isTruckDetailsDone==null){
                     Intent intent2 = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
                     intent2.putExtra("userId", userId);
                     intent2.putExtra("isEdit",false);
@@ -737,24 +694,24 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
                         if (isPersonalDetailsDone != null) {
                             personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
-                        } else {
+                        } else if (isPersonalDetailsDone==null){
                             personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
                         }
 
                         if (isBankDetailsDone != null) {
                             bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
-                        } else {
+                        } else if (isBankDetailsDone==null){
                             bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
                         }
 
                         if (isTruckDetailsDone != null) {
                             addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
-                        } else {
+                        } else if (isTruckDetailsDone==null){
                             addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck, 0, R.drawable.ic_right, 0);
                         }
                         isRecExpanded = true;
                     }
-                } else {
+                } else if (isDriverDetailsDone==null){
 
                     driverDone.setVisibility(View.GONE);
                     addDriver.setVisibility(View.GONE);

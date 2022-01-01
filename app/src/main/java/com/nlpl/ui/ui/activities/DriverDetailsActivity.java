@@ -59,15 +59,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DriverDetailsActivity extends AppCompatActivity {
 
     View action_bar;
-    TextView actionBarTitle, language;
+    TextView actionBarTitle;
     EditText driverName, driverMobile, driverEmailId;
     ImageView actionBarBackButton;
-    Dialog languageDialog;
 
     Button uploadDL, okDriverDetails, uploadSelfie;
-    TextView textDL, editDL, series;
+    TextView textDL, editDL, series, textDS, editDS;
     int GET_FROM_GALLERY = 0;
     int CAMERA_PIC_REQUEST = 1;
+    int CAMERA_PIC_REQUEST1 = 3;
     ImageView driverLicenseImage, driverSelfieImg;
 
     private RequestQueue mQueue;
@@ -94,7 +94,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
         action_bar = findViewById(R.id.driver_details_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
-        language = (TextView) action_bar.findViewById(R.id.action_bar_language_selector);
         driverMobile = findViewById(R.id.driver_details_mobile_number_edit);
         driverName = findViewById(R.id.driver_details_driver_name_edit);
         okDriverDetails = findViewById(R.id.driver_details_ok_button);
@@ -116,51 +115,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         driverName.setFilters(new InputFilter[]{filter});
 
-        language.setText(getString(R.string.english));
-        language.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                languageDialog = new Dialog(DriverDetailsActivity.this);
-                languageDialog.setContentView(R.layout.dialog_language);
-                languageDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-                lp2.copyFrom(languageDialog.getWindow().getAttributes());
-                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                lp2.gravity = Gravity.BOTTOM;
-
-                languageDialog.show();
-                languageDialog.getWindow().setAttributes(lp2);
-
-                TextView english = languageDialog.findViewById(R.id.english);
-                TextView marathi = languageDialog.findViewById(R.id.marathi);
-                TextView hindi = languageDialog.findViewById(R.id.hindi);
-
-                english.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        language.setText(getString(R.string.english));
-                    }
-                });
-
-                marathi.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        language.setText(getString(R.string.marathi));
-                    }
-                });
-
-                hindi.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        language.setText(getString(R.string.hindi));
-                    }
-                });
-
-            }
-        });
-
         actionBarTitle.setText("Driver Details");
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,6 +129,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
         textDL = findViewById(R.id.driver_details_driver_license_text_image);
         driverLicenseImage = (ImageView) findViewById(R.id.driver_details_driver_license_image);
         driverSelfieImg = findViewById(R.id.driver_selfie_img);
+        textDS = findViewById(R.id.driver_selfie_text);
+        editDS = findViewById(R.id.driver_details_edit_selfie_text);
 
         mQueue = Volley.newRequestQueue(DriverDetailsActivity.this);
         if (isEdit) {
@@ -182,6 +138,14 @@ public class DriverDetailsActivity extends AppCompatActivity {
         }
 
         uploadSelfie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
+            }
+        });
+
+        editDS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
@@ -212,6 +176,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 camera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
                         chooseDialog.dismiss();
                     }
                 });
@@ -249,6 +215,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 camera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
                         chooseDialog.dismiss();
                     }
                 });
@@ -307,7 +275,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
             }
         } else  if (requestCode == CAMERA_PIC_REQUEST) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
-            my_alert.setTitle("Driving Selfie uploaded successfully");
+            my_alert.setTitle("Driver Selfie uploaded successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -316,8 +284,38 @@ public class DriverDetailsActivity extends AppCompatActivity {
             });
             my_alert.show();
 
+            textDS.setText("Selfie Uploaded");
+            textDS.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadSelfie.setVisibility(View.INVISIBLE);
+            editDS.setVisibility(View.VISIBLE);
+
             Bitmap image = (Bitmap) data.getExtras().get("data");
             driverSelfieImg.setImageBitmap(image);
+        } else  if (requestCode == CAMERA_PIC_REQUEST1) {
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
+            my_alert.setTitle("Driving License uploaded successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            my_alert.show();
+
+            textDL.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadDL.setVisibility(View.INVISIBLE);
+            editDL.setVisibility(View.VISIBLE);
+
+            isDLUploaded = true;
+            String driverMobileText = driverMobile.getText().toString();
+            String driverNameText = driverName.getText().toString();
+
+            if (!driverNameText.isEmpty() && !driverMobileText.isEmpty() && isDLUploaded) {
+                okDriverDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            driverLicenseImage.setImageBitmap(image);
         }
     }
 

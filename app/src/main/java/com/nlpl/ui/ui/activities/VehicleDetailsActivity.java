@@ -24,6 +24,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -59,9 +60,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class VehicleDetailsActivity extends AppCompatActivity {
 
     View action_bar;
-    TextView actionBarTitle, language;
+    TextView actionBarTitle;
     ImageView actionBarBackButton;
-    Dialog languageDialog;
 
     EditText vehicleNumberEdit;
     ImageView openType, closedType, tarpaulinType, imgRC, imgI;
@@ -81,6 +81,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     Boolean isEdit, isRcUploaded=false, isInsurance=false, truckSelected=false;
     private RequestQueue mQueue;
 
+    RadioButton openSelected, closeSelected, tarpaulinSelected;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,53 +99,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         action_bar = findViewById(R.id.vehicle_details_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
-        language = (TextView) action_bar.findViewById(R.id.action_bar_language_selector);
-
-        language.setText(getString(R.string.english));
-        language.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                languageDialog = new Dialog(VehicleDetailsActivity.this);
-                languageDialog.setContentView(R.layout.dialog_language);
-                languageDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-                lp2.copyFrom(languageDialog.getWindow().getAttributes());
-                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                lp2.gravity = Gravity.BOTTOM;
-
-                languageDialog.show();
-                languageDialog.getWindow().setAttributes(lp2);
-
-                TextView english = languageDialog.findViewById(R.id.english);
-                TextView marathi = languageDialog.findViewById(R.id.marathi);
-                TextView hindi = languageDialog.findViewById(R.id.hindi);
-
-                english.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        language.setText(getString(R.string.english));
-                    }
-                });
-
-                marathi.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        language.setText(getString(R.string.marathi));
-                    }
-                });
-
-                hindi.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        language.setText(getString(R.string.hindi));
-                    }
-                });
-
-            }
-        });
-
         actionBarTitle.setText("Vehicle Details");
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,7 +107,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             }
         });
 
-        vehicleNumberEdit = (EditText) findViewById(R.id.vehicle_details_vehicle_number_edit);
+        vehicleNumberEdit = (EditText) findViewById(R.id.vehicle_details_select_model);
         openType = (ImageView) findViewById(R.id.vehicle_details_open_type);
         closedType = (ImageView) findViewById(R.id.vehicle_details_closed_type);
         tarpaulinType = (ImageView) findViewById(R.id.vehicle_details_tarpaulin_type);
@@ -169,6 +124,14 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         editInsurance = (TextView) findViewById(R.id.vehicle_details_edit_insurance);
         imgRC = findViewById(R.id.vehicle_details_rc_image);
         imgI = findViewById(R.id.vehicle_details_insurance_image);
+
+        openSelected = findViewById(R.id.open_radio_btn);
+        closedText = findViewById(R.id.closed_radio_btn);
+        tarpaulinSelected = findViewById(R.id.tarpaulin_radio_btn);
+
+        openSelected.setChecked(false);
+        closeSelected.setChecked(false);
+        tarpaulinSelected.setChecked(false);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.baseURL))
@@ -354,6 +317,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             case R.id.vehicle_details_open_type:
                 openType.setBackgroundResource(R.drawable.image_view_border_selected);
                 closedType.setBackgroundResource(R.drawable.image_view_border);
+                openSelected.setChecked(true);
+                closeSelected.setChecked(false);
+                tarpaulinSelected.setChecked(false);
                 tarpaulinType.setBackgroundResource(R.drawable.image_view_border);
                 openText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
                 closedText.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
@@ -364,6 +330,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             case R.id.vehicle_details_closed_type:
                 openType.setBackgroundResource(R.drawable.image_view_border);
                 closedType.setBackgroundResource(R.drawable.image_view_border_selected);
+                openSelected.setChecked(false);
+                closeSelected.setChecked(true);
+                tarpaulinSelected.setChecked(false);
                 tarpaulinType.setBackgroundResource(R.drawable.image_view_border);
                 openText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 closedText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
@@ -374,6 +343,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             case R.id.vehicle_details_tarpaulin_type:
                 openType.setBackgroundResource(R.drawable.image_view_border);
                 closedType.setBackgroundResource(R.drawable.image_view_border);
+                openSelected.setChecked(false);
+                closeSelected.setChecked(false);
+                tarpaulinSelected.setChecked(true);
                 tarpaulinType.setBackgroundResource(R.drawable.image_view_border_selected);
                 openText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 closedText.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);

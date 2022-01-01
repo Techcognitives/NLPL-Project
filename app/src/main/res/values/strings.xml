@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Find YourTruck</string>
+    <string name="app_name">FindYourTruck</string>
 
     <string-array name="array_indian_states">
         <item>Andaman and Nicobar Islands</item>
@@ -1013,20 +1013,27 @@
 
     //-------------------------------- Vehicle Details Activity ------------------------------------
     <string name="vehicle_number">Vehicle Number</string>
+    <string name="vehicle_details">Vehicle Details</string>
     <string name="body_type">Vehicle Body Type</string>
     <string name="open">Open</string>
     <string name="closed">Closed</string>
     <string name="tarpaulin">Tarpaulin</string>
     <string name="vehicle_number_edit">Enter Vehicle Number"</string>
-    <string name="rc_book">RC Book</string>
+    <string name="rc_book">Upload RC Book</string>
+    <string name="rc_front">RC Front</string>
+    <string name="uploadInsurance">Upload Insurance</string>
     <string name="insurance">Insurance</string>
+    <string name="selectModel">Select Model</string>
+    <string name="Ft">Ft.</string>
+    <string name="Capacity">Capacity</string>
+
     //----------------------------------------------------------------------------------------------
 
     //---------------------------------------Driver Details Activity--------------------------------
     <string name="DriverName">Driver Name, Number &amp; Email</string>
     <string name="EnterDriverName">Enter Driver Name</string>
     <string name="UploadDriverLicense">Upload Driver License</string>
-    <string name="UploadDriverSelfie">photo - Selfie</string>
+    <string name="UploadDriverSelfie">Photo - Selfie</string>
     <string name="DriverLicense">Driver License</string>
     <string name="TakePhoto">Take a Photo</string>
     <string name="camera">Camera</string>

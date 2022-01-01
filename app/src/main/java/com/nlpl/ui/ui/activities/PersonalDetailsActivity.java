@@ -53,16 +53,17 @@ import retrofit2.Response;
 public class PersonalDetailsActivity extends AppCompatActivity {
 
     View action_bar;
-    TextView actionBarTitle, language;
+    TextView actionBarTitle;
     ImageView actionBarBackButton;
-    Dialog languageDialog, chooseDialog;
+    Dialog  chooseDialog;
 
     TextView panCardText, editPAN, editFront, frontText;
     Button uploadPAN, uploadF,  okPersonalDetails;
     ImageView imgPAN, imgF;
     private int GET_FROM_GALLERY = 0;
     private int GET_FROM_GALLERY1 = 1;
-    private int GET_FROM_GALLERY2 = 2;
+    private int CAMERA_PIC_REQUEST = 1;
+    private int CAMERA_PIC_REQUEST1 = 2;
 
     View panAndAadharView;
 
@@ -90,53 +91,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         action_bar = findViewById(R.id.personal_details_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
-        language = (TextView) action_bar.findViewById(R.id.action_bar_language_selector);
-
-        language.setText(getString(R.string.english));
-        language.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                languageDialog = new Dialog(PersonalDetailsActivity.this);
-                languageDialog.setContentView(R.layout.dialog_language);
-                languageDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-                lp2.copyFrom(languageDialog.getWindow().getAttributes());
-                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                lp2.gravity = Gravity.BOTTOM;
-
-                languageDialog.show();
-                languageDialog.getWindow().setAttributes(lp2);
-
-                TextView english = languageDialog.findViewById(R.id.english);
-                TextView marathi = languageDialog.findViewById(R.id.marathi);
-                TextView hindi = languageDialog.findViewById(R.id.hindi);
-
-                english.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        language.setText(getString(R.string.english));
-                    }
-                });
-
-                marathi.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        language.setText(getString(R.string.marathi));
-                    }
-                });
-
-                hindi.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        language.setText(getString(R.string.hindi));
-                    }
-                });
-
-            }
-        });
-
         actionBarTitle.setText("Personal Details");
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,6 +145,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 camera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
                         chooseDialog.dismiss();
                     }
                 });
@@ -230,6 +186,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 camera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
                         chooseDialog.dismiss();
                     }
                 });
@@ -268,6 +226,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 camera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
                         chooseDialog.dismiss();
                     }
                 });
@@ -306,6 +266,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 camera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
                         chooseDialog.dismiss();
                     }
                 });
@@ -366,7 +328,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
 
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
-            my_alert.setTitle("Uploaded Successfully");
+            my_alert.setTitle("Aadhar Card Uploaded Successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -397,6 +359,51 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+        } else  if (requestCode == CAMERA_PIC_REQUEST) {
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
+            my_alert.setTitle("PAN Card Uploaded Successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            my_alert.show();
+
+            panCardText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadPAN.setVisibility(View.INVISIBLE);
+            editPAN.setVisibility(View.VISIBLE);
+            isPanUploaded = true;
+
+            if (isPanUploaded && isFrontUploaded ) {
+                okPersonalDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            imgPAN.setImageBitmap(image);
+
+        } else  if (requestCode == CAMERA_PIC_REQUEST1) {
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
+            my_alert.setTitle("Aadhar Card Uploaded Successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            my_alert.show();
+
+            frontText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadF.setVisibility(View.INVISIBLE);
+            editFront.setVisibility(View.VISIBLE);
+            isFrontUploaded = true;
+
+            if (isPanUploaded && isFrontUploaded ) {
+                okPersonalDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            imgF.setImageBitmap(image);
         }
     }
     //-------------------------------------------------------------------------------------------------------------------
