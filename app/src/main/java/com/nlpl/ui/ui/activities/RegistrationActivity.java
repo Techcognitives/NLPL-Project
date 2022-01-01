@@ -475,7 +475,7 @@ public class RegistrationActivity extends AppCompatActivity {
             saveUser(createUser());
             AlertDialog.Builder my_alert = new AlertDialog.Builder(RegistrationActivity.this);
             my_alert.setTitle("Registration Successful");
-            my_alert.setMessage("Welcome to Find YourTruck\n\nPlease update your profile and explore the platform benefits.");
+            my_alert.setMessage("Welcome to " +getString(R.string.app_name)+"\n\nPlease update your profile and explore the platform benefits.");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {

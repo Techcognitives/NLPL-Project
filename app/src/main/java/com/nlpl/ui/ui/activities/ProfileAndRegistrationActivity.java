@@ -53,8 +53,8 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     private BanksAdapter bankListAdapter;
     private RecyclerView bankListRecyclerView;
 
-    private boolean isRecExpanded = false;
-    String isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
+    private boolean isRecExpanded = true;
+    String isPersonalDetailsDone = null, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
 
     View action_bar;
     TextView addDriver, addTruck, addBankDetails, accNoDone, editPersonalDetails, actionBarTitle, language, addCompany, phoneDone, nameDone, firmName, addressDone;

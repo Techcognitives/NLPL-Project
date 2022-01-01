@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Find YourTruck</string>
+    <string name="app_name">FindYourTruck</string>
 
     <string-array name="array_indian_states">
         <item>Andaman and Nicobar Islands</item>

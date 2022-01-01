@@ -74,6 +74,7 @@ public class BankDetailsActivity extends AppCompatActivity {
     Button uploadCC;
     TextView textCC, editCC;
     int GET_FROM_GALLERY=0;
+    int CAMERA_PIC_REQUEST1 = 1;
     ImageView cancelledCheckImage;
     Boolean isEdit;
 
@@ -219,6 +220,8 @@ public class BankDetailsActivity extends AppCompatActivity {
                 camera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
                         chooseDialog.dismiss();
                     }
                 });
@@ -257,6 +260,8 @@ public class BankDetailsActivity extends AppCompatActivity {
                 camera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
                         chooseDialog.dismiss();
                     }
                 });
@@ -308,6 +313,24 @@ public class BankDetailsActivity extends AppCompatActivity {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+        } else if (requestCode == CAMERA_PIC_REQUEST1){
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
+            my_alert.setTitle("Canceled Check uploaded successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            my_alert.show();
+
+            textCC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadCC.setVisibility(View.INVISIBLE);
+            editCC.setVisibility(View.VISIBLE);
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            cancelledCheckImage.setImageBitmap(image);
+
         }
     }
 
