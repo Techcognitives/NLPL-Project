@@ -239,7 +239,7 @@ public class BankDetailsActivity extends AppCompatActivity {
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
 
             AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
-            my_alert.setTitle("Canceled Check uploaded successfully");
+            my_alert.setTitle("Cancelled cheque uploaded successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {

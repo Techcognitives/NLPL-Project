@@ -563,36 +563,36 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 }
                 break;
 
-            case R.id.profile_registration_truck_details:
-                if (isTruckDetailsDone.equals("1")){
-                    getTruckList();
-                    if (isRecExpanded){
-                        isRecExpanded=false;
-
-                        vehicleDone.setVisibility(View.VISIBLE);
-                        addTruck.setVisibility(View.VISIBLE);
-
-                        bankDone.setVisibility(View.GONE);
-                        addBankDetails.setVisibility(View.GONE);
-                        personal_done.setVisibility(View.GONE);
-                        driverDone.setVisibility(View.GONE);
-                        addCompany.setVisibility(View.GONE);
-                        addDriver.setVisibility(View.GONE);
-                    } else {
-                        isRecExpanded=true;
-                        vehicleDone.setVisibility(View.GONE);
-                        addTruck.setVisibility(View.GONE);
-                    }
-
-                } else {
-                    Intent intent2 = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
-                    intent2.putExtra("userId", userId);
-                    intent2.putExtra("isEdit",false);
-                    intent2.putExtra("mobile", phone);
-                    startActivity(intent2);
-                }
-
-                break;
+//            case R.id.profile_registration_truck_details:
+//                if (isTruckDetailsDone.equals("1")){
+//                    getTruckList();
+//                    if (isRecExpanded){
+//                        isRecExpanded=false;
+//
+//                        vehicleDone.setVisibility(View.VISIBLE);
+//                        addTruck.setVisibility(View.VISIBLE);
+//
+//                        bankDone.setVisibility(View.GONE);
+//                        addBankDetails.setVisibility(View.GONE);
+//                        personal_done.setVisibility(View.GONE);
+//                        driverDone.setVisibility(View.GONE);
+//                        addCompany.setVisibility(View.GONE);
+//                        addDriver.setVisibility(View.GONE);
+//                    } else {
+//                        isRecExpanded=true;
+//                        vehicleDone.setVisibility(View.GONE);
+//                        addTruck.setVisibility(View.GONE);
+//                    }
+//
+//                } else {
+//                    Intent intent2 = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
+//                    intent2.putExtra("userId", userId);
+//                    intent2.putExtra("isEdit",false);
+//                    intent2.putExtra("mobile", phone);
+//                    startActivity(intent2);
+//                }
+//
+//                break;
 
             case R.id.profile_registration_driver_details:
                 getDriverDetailsList();
