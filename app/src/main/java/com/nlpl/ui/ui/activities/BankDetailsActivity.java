@@ -486,18 +486,20 @@ public class BankDetailsActivity extends AppCompatActivity {
 
     private void getBankDetails() {
 
-        String url = getString(R.string.baseURL) + "/user/" + userId;
+        String url = getString(R.string.baseURL) + "/bank/" + userId;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
                     JSONArray truckLists = response.getJSONArray("data");
                     for (int i = 0; i < truckLists.length(); i++) {
+
                         JSONObject obj = truckLists.getJSONObject(i);
                         bankName.setText(obj.getString("accountholder_name"));
                         accountNo.setText(obj.getString("account_number"));
                         reAccount.setText(obj.getString("re_enter_acc_num"));
                         ifscCode.setText(obj.getString("IFSI_CODE"));
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

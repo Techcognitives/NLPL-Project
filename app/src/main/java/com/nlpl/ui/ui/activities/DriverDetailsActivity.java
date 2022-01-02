@@ -383,6 +383,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         addDriverRequest.setUser_id(userId);
         addDriverRequest.setDriver_name(driverName.getText().toString());
         addDriverRequest.setDriver_number("91" + driverMobile.getText().toString());
+        addDriverRequest.setDriver_emailId(driverEmailId.getText().toString());
         return addDriverRequest;
     }
 

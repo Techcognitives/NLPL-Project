@@ -50,7 +50,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     private BanksAdapter bankListAdapter;
     private RecyclerView bankListRecyclerView;
 
-    private boolean isRecExpanded = true;
+    private boolean isPersonalExpanded = false, isBankExpanded = false, isTruckExpanded= false, isDriverExpanded = false;
     String isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
 
     View action_bar;
@@ -500,17 +500,22 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.profile_registration_personal_details_button:
                 if (isPersonalDetailsDone.equals("1")) {
-                    if (isRecExpanded) {
-                        isRecExpanded = false;
+                    if (isPersonalExpanded==false) {
+                        isPersonalExpanded = true;
 
                         personal_done.setVisibility(View.VISIBLE);
 
-                        bankDone.setVisibility(View.GONE);
-                        addBankDetails.setVisibility(View.GONE);
-                        vehicleDone.setVisibility(View.GONE);
-                        driverDone.setVisibility(View.GONE);
-                        addTruck.setVisibility(View.GONE);
-                        addDriver.setVisibility(View.GONE);
+                        if (isBankExpanded||isTruckExpanded||isDriverExpanded) {
+                            isBankExpanded=false;
+                            isTruckExpanded=false;
+                            isDriverExpanded=false;
+                            bankDone.setVisibility(View.GONE);
+                            addBankDetails.setVisibility(View.GONE);
+                            vehicleDone.setVisibility(View.GONE);
+                            driverDone.setVisibility(View.GONE);
+                            addTruck.setVisibility(View.GONE);
+                            addDriver.setVisibility(View.GONE);
+                        }
 
                         if (isFirmDetailsDone.equals("1")) {
                             getCompanyDetails();
@@ -523,7 +528,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                             addCompany.setVisibility(View.VISIBLE);
                         }
                     } else {
-                        isRecExpanded = true;
+                        isPersonalExpanded = false;
                         personal_done.setVisibility(View.GONE);
                     }
                 } else {
@@ -537,20 +542,26 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             case R.id.profile_registration_bank_details_button:
                 if (isBankDetailsDone.equals("1")) {
                     getBankDetailsList();
-                    if (isRecExpanded){
-                        isRecExpanded=false;
+                    if (isBankExpanded==false){
+                        isBankExpanded=true;
 
                         bankDone.setVisibility(View.VISIBLE);
                         addBankDetails.setVisibility(View.VISIBLE);
 
-                        personal_done.setVisibility(View.GONE);
-                        vehicleDone.setVisibility(View.GONE);
-                        driverDone.setVisibility(View.GONE);
-                        addCompany.setVisibility(View.GONE);
-                        addTruck.setVisibility(View.GONE);
-                        addDriver.setVisibility(View.GONE);
+                        if (isPersonalExpanded||isDriverExpanded||isTruckExpanded) {
+                            isPersonalExpanded=false;
+                            isTruckExpanded=false;
+                            isDriverExpanded=false;
+                            personal_done.setVisibility(View.GONE);
+                            vehicleDone.setVisibility(View.GONE);
+                            driverDone.setVisibility(View.GONE);
+                            addCompany.setVisibility(View.GONE);
+                            addTruck.setVisibility(View.GONE);
+                            addDriver.setVisibility(View.GONE);
+                        }
+
                     } else{
-                        isRecExpanded=true;
+                        isBankExpanded=false;
                         bankDone.setVisibility(View.GONE);
                         addBankDetails.setVisibility(View.GONE);
                     }
@@ -566,20 +577,26 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 //            case R.id.profile_registration_truck_details:
 //                if (isTruckDetailsDone.equals("1")){
 //                    getTruckList();
-//                    if (isRecExpanded){
-//                        isRecExpanded=false;
+//                    if (isTruckExpanded==false){
+//                        isTruckExpanded=true;
 //
 //                        vehicleDone.setVisibility(View.VISIBLE);
 //                        addTruck.setVisibility(View.VISIBLE);
 //
-//                        bankDone.setVisibility(View.GONE);
-//                        addBankDetails.setVisibility(View.GONE);
-//                        personal_done.setVisibility(View.GONE);
-//                        driverDone.setVisibility(View.GONE);
-//                        addCompany.setVisibility(View.GONE);
-//                        addDriver.setVisibility(View.GONE);
+//                        if (isPersonalExpanded||isBankExpanded||isTruckExpanded) {
+//            isPersonalExpanded=false;
+//            isBankExpanded=false;
+//            isDriverExpanded=false;
+//                            bankDone.setVisibility(View.GONE);
+//                            addBankDetails.setVisibility(View.GONE);
+//                            personal_done.setVisibility(View.GONE);
+//                            driverDone.setVisibility(View.GONE);
+//                            addCompany.setVisibility(View.GONE);
+//                            addDriver.setVisibility(View.GONE);
+//                        }
+//
 //                    } else {
-//                        isRecExpanded=true;
+//                        isTruckExpanded=false;
 //                        vehicleDone.setVisibility(View.GONE);
 //                        addTruck.setVisibility(View.GONE);
 //                    }
@@ -597,20 +614,25 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             case R.id.profile_registration_driver_details:
                 getDriverDetailsList();
                 if (isDriverDetailsDone.equals("1")){
-                    if (isRecExpanded){
-                        isRecExpanded=false;
+                    if (isDriverExpanded==false){
+                        isDriverExpanded=true;
 
                         driverDone.setVisibility(View.VISIBLE);
                         addDriver.setVisibility(View.VISIBLE);
 
-                        bankDone.setVisibility(View.GONE);
-                        addBankDetails.setVisibility(View.GONE);
-                        personal_done.setVisibility(View.GONE);
-                        vehicleDone.setVisibility(View.GONE);
-                        addCompany.setVisibility(View.GONE);
-                        addTruck.setVisibility(View.GONE);
+                        if (isPersonalExpanded||isTruckExpanded||isBankExpanded) {
+                            isBankExpanded=false;
+                            isTruckExpanded=false;
+                            isPersonalExpanded=false;
+                            bankDone.setVisibility(View.GONE);
+                            addBankDetails.setVisibility(View.GONE);
+                            personal_done.setVisibility(View.GONE);
+                            vehicleDone.setVisibility(View.GONE);
+                            addCompany.setVisibility(View.GONE);
+                            addTruck.setVisibility(View.GONE);
+                        }
                     } else {
-                        isRecExpanded=true;
+                        isDriverExpanded=false;
 
                         driverDone.setVisibility(View.GONE);
                         addDriver.setVisibility(View.GONE);
