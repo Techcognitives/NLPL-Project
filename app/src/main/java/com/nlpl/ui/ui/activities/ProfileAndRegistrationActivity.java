@@ -1,10 +1,12 @@
 package com.nlpl.ui.ui.activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,18 +50,18 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     private BanksAdapter bankListAdapter;
     private RecyclerView bankListRecyclerView;
 
-    private boolean isRecExpanded = true;
-    String isPersonalDetailsDone = null, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
+    private boolean isPersonalExpanded = false, isBankExpanded = false, isTruckExpanded= false, isDriverExpanded = false;
+    String isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
 
     View action_bar;
-    TextView accHolderName, addDriver, addTruck, addBankDetails, accNoDone, editPersonalDetails, actionBarTitle,  addCompany, phoneDone, nameDone, firmName, addressDone;
+    TextView accHolderName, addDriver, addTruck, addBankDetails, accNoDone, editPersonalDetails, actionBarTitle, addCompany, phoneDone, nameDone, firmName, addressDone;
     ImageView actionBarBackButton;
 
     View bottomNav;
     TextView truckLoadText;
 
     String userId, userIdAPI, phone, mobileNoAPI;
-    ArrayList<String> arrayUserId, arrayMobileNo,  arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
+    ArrayList<String> arrayUserId, arrayMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
 
     Button personalDetails, bankDetails, addTrucks, addDrivers;
     String mobile, name, address, pinCode, city, role, emailIdAPI;
@@ -123,20 +125,19 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         officeAddressTextView = (TextView) findViewById(R.id.profile_and_registration_office_address_text);
 
         mQueue = Volley.newRequestQueue(ProfileAndRegistrationActivity.this);
-        getUserDetails();
-        getCompanyDetails();
 
         personal_done.setVisibility(View.GONE);
         bankDone.setVisibility(View.GONE);
         vehicleDone.setVisibility(View.GONE);
         driverDone.setVisibility(View.GONE);
+        addCompany.setVisibility(View.GONE);
 
         //---------------------------- Get Truck Details -------------------------------------------
         truckListRecyclerView = (RecyclerView) findViewById(R.id.trucks_list_view);
 
         //------------------------------get user details by mobile Number---------------------------------
         //-----------------------------------Get User Details---------------------------------------
-        String url = getString(R.string.baseURL)+"/user/get";
+        String url = getString(R.string.baseURL) + "/user/get";
         Log.i("URL at Profile:", url);
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -159,51 +160,46 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         }
                     }
 
-                            getCompanyDetails();
-                            getUserDetails();
+                    getUserDetails();
 
-                            //---------------------------- Get Truck Details -------------------------------------------
-                            truckListRecyclerView = (RecyclerView) findViewById(R.id.trucks_list_view);
+                    //---------------------------- Get Truck Details -------------------------------------------
+                    truckListRecyclerView = (RecyclerView) findViewById(R.id.trucks_list_view);
 
-                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-                            linearLayoutManager.setReverseLayout(true);
-                            truckListRecyclerView.setLayoutManager(linearLayoutManager);
-                            truckListRecyclerView.setHasFixedSize(true);
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+                    linearLayoutManager.setReverseLayout(true);
+                    truckListRecyclerView.setLayoutManager(linearLayoutManager);
+                    truckListRecyclerView.setHasFixedSize(true);
 
-                            truckListAdapter = new TrucksAdapter(ProfileAndRegistrationActivity.this, truckList);
-                            truckListRecyclerView.setAdapter(truckListAdapter);
+                    truckListAdapter = new TrucksAdapter(ProfileAndRegistrationActivity.this, truckList);
+                    truckListRecyclerView.setAdapter(truckListAdapter);
 
-                            getTruckList();
-                            //------------------------------------------------------------------------------------------
+                    //------------------------------------------------------------------------------------------
 
-                            //---------------------------- Get Driver Details -------------------------------------------
-                            driverListRecyclerView = (RecyclerView) findViewById(R.id.driver_list_view);
+                    //---------------------------- Get Driver Details -------------------------------------------
+                    driverListRecyclerView = (RecyclerView) findViewById(R.id.driver_list_view);
 
-                            LinearLayoutManager linearLayoutManagerDriver = new LinearLayoutManager(getApplicationContext());
-                            linearLayoutManagerDriver.setReverseLayout(true);
-                            driverListRecyclerView.setLayoutManager(linearLayoutManagerDriver);
-                            driverListRecyclerView.setHasFixedSize(true);
+                    LinearLayoutManager linearLayoutManagerDriver = new LinearLayoutManager(getApplicationContext());
+                    linearLayoutManagerDriver.setReverseLayout(true);
+                    driverListRecyclerView.setLayoutManager(linearLayoutManagerDriver);
+                    driverListRecyclerView.setHasFixedSize(true);
 
-                            driverListAdapter = new DriversAdapter(ProfileAndRegistrationActivity.this, driverList);
-                            driverListRecyclerView.setAdapter(driverListAdapter);
+                    driverListAdapter = new DriversAdapter(ProfileAndRegistrationActivity.this, driverList);
+                    driverListRecyclerView.setAdapter(driverListAdapter);
 
-                            getDriverDetailsList();
-                            //------------------------------------------------------------------------------------------
+                    //------------------------------------------------------------------------------------------
 
-                            //---------------------------- Get Bank Details -------------------------------------------
-                            bankListRecyclerView = (RecyclerView) findViewById(R.id.bank_list_view);
+                    //---------------------------- Get Bank Details -------------------------------------------
+                    bankListRecyclerView = (RecyclerView) findViewById(R.id.bank_list_view);
 
-                            LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(getApplicationContext());
-                            linearLayoutManagerBank.setReverseLayout(true);
-                            bankListRecyclerView.setLayoutManager(linearLayoutManagerBank);
-                            bankListRecyclerView.setHasFixedSize(true);
+                    LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(getApplicationContext());
+                    linearLayoutManagerBank.setReverseLayout(true);
+                    bankListRecyclerView.setLayoutManager(linearLayoutManagerBank);
+                    bankListRecyclerView.setHasFixedSize(true);
 
-                            bankListAdapter = new BanksAdapter(ProfileAndRegistrationActivity.this, bankList);
-                            bankListRecyclerView.setAdapter(bankListAdapter);
+                    bankListAdapter = new BanksAdapter(ProfileAndRegistrationActivity.this, bankList);
+                    bankListRecyclerView.setAdapter(bankListAdapter);
 
-                            getBankDetailsList();
-
-                            //------------------------------------------------------------------------------------------
+                    //------------------------------------------------------------------------------------------
 
 //
                 } catch (JSONException e) {
@@ -246,39 +242,50 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         isTruckDetailsDone = obj.getString("isTruck_added");
                         isDriverDetailsDone = obj.getString("isDriver_added");
 
-                        if (isPersonalDetailsDone != null) {
-                            personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
-                        } else if (isPersonalDetailsDone == null){
-                            personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
-                        }
-
-                        if (isBankDetailsDone != null) {
-                            bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
-                        } else if (isBankDetailsDone == null){
-                            bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
-                        }
-
-                        if (isTruckDetailsDone != null) {
-                            addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
-                        } else if (isTruckDetailsDone == null){
-                            addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck, 0, R.drawable.ic_right, 0);
-                        }
-
-                        if (isDriverDetailsDone != null) {
-                            addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
-                        } else if (isDriverDetailsDone == null){
-                            addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
-                        }
-
+                        //-------------------------------------Personal details ---- -------------------------------------
                         String hello = getString(R.string.hello);
-                        nameTitle.setText(hello+" "+name+"!");
+                        nameTitle.setText(hello + " " + name + "!");
                         String s1 = mobile.substring(2, 12);
                         mobileText.setText("+91 " + s1);
 
                         nameDone.setText(" " + name);
                         phoneDone.setText(" Phone: +91 " + s1);
-                        emailIdTextView.setText(" Email: "+emailIdAPI);
+                        emailIdTextView.setText(" Email: " + emailIdAPI);
                         addressDone.setText(" Address: " + address + ", " + city + " " + pinCode);
+
+                        //-----------------------------Check all Done or not-----------------------------------------
+                        if (isPersonalDetailsDone.equals("1")) {
+                            personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
+                        } else {
+                            personal_done.setVisibility(View.GONE);
+                            addCompany.setVisibility(View.GONE);
+                            personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
+                        }
+
+                        if (isBankDetailsDone.equals("1")) {
+                            bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
+                        } else {
+                            bankDone.setVisibility(View.GONE);
+                            addBankDetails.setVisibility(View.GONE);
+                            bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
+                        }
+
+                        if (isTruckDetailsDone.equals("1")) {
+                            addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
+                        } else {
+                            vehicleDone.setVisibility(View.GONE);
+                            addTruck.setVisibility(View.GONE);
+                            addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck, 0, R.drawable.ic_right, 0);
+                        }
+
+                        if (isDriverDetailsDone.equals("1")) {
+                            addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
+                        } else {
+                            driverDone.setVisibility(View.GONE);
+                            addDriver.setVisibility(View.GONE);
+                            addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
+                        }
+                        //--------------------------------------------------------------------------------------------------------
 
                         if (role.equals("Customer")) {
                             truckLoadText.setText("Post a Load");
@@ -303,7 +310,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
     public void getTruckList() {
         //---------------------------- Get Truck Details -------------------------------------------
-        String url1 = getString(R.string.baseURL) + "/truck/truckbyuserID/"+userId;
+        String url1 = getString(R.string.baseURL) + "/truck/truckbyuserID/" + userId;
         Log.i("URL: ", url1);
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -426,7 +433,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
     public void getCompanyDetails() {
         //---------------------------- Get Company Details -------------------------------------------
-        String url1 = getString(R.string.baseURL) + "/company/get/"+userId;
+        String url1 = getString(R.string.baseURL) + "/company/get/" + userId;
         Log.i("URL: ", url1);
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -442,17 +449,9 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         companyZip = data.getString("comp_zip");
                     }
 
-                    if (companyName == null){
-                        firmName.setVisibility(View.GONE);
-                        officeAddressTextView.setVisibility(View.GONE);
-                        addCompany.setVisibility(View.VISIBLE);
-                    }else{
-                        firmName.setVisibility(View.VISIBLE);
-                        officeAddressTextView.setVisibility(View.VISIBLE);
-                        addCompany.setVisibility(View.GONE);
-                        firmName.setText(" Firm Name: "+companyName);
-                        officeAddressTextView.setText(" Office Address: "+companyAddress+", "+companyCity+" "+companyZip);
-                    }
+                    firmName.setText(" Firm Name: " + companyName);
+                    officeAddressTextView.setText(" Office Address: " + companyAddress + ", " + " " + companyCity + ", " + companyZip);
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -471,7 +470,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     public void getTruckDetails(TruckModel obj) {
         Intent intent = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
         intent.putExtra("userId", userId);
-        intent.putExtra("isEdit",true);
+        intent.putExtra("isEdit", true);
         intent.putExtra("truckId", obj.getTruck_id());
 
         startActivity(intent);
@@ -480,7 +479,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     public void getDriverDetails(DriverModel obj) {
         Intent intent = new Intent(ProfileAndRegistrationActivity.this, DriverDetailsActivity.class);
         intent.putExtra("userId", userId);
-        intent.putExtra("isEdit",true);
+        intent.putExtra("isEdit", true);
         intent.putExtra("driverId", obj.getDriver_id());
         intent.putExtra("mobile", phone);
 
@@ -490,7 +489,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     public void getBankDetails(BankModel obj) {
         Intent intent = new Intent(ProfileAndRegistrationActivity.this, BankDetailsActivity.class);
         intent.putExtra("userId", userId);
-        intent.putExtra("isEdit",true);
+        intent.putExtra("isEdit", true);
         intent.putExtra("bankDetailsID", obj.getBank_id());
         intent.putExtra("mobile", phone);
 
@@ -500,229 +499,155 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     public void onClickProfileAndRegister(View view) {
         switch (view.getId()) {
             case R.id.profile_registration_personal_details_button:
-                if (isPersonalDetailsDone != null) {
-                    if (isRecExpanded) {
-                        personal_done.setVisibility(View.GONE);
-//                        addCompany.setVisibility(View.GONE);
+                if (isPersonalDetailsDone.equals("1")) {
+                    if (isPersonalExpanded==false) {
+                        isPersonalExpanded = true;
 
-                        firmName.setVisibility(View.GONE);
-                        officeAddressTextView.setVisibility(View.GONE);
-                        addCompany.setVisibility(View.GONE);
-                        personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
-                        isRecExpanded = false;
-                    } else {
                         personal_done.setVisibility(View.VISIBLE);
-                        addCompany.setVisibility(View.VISIBLE);
-                        bankDone.setVisibility(View.GONE);
-                        vehicleDone.setVisibility(View.GONE);
-                        driverDone.setVisibility(View.GONE);
-                        addBankDetails.setVisibility(View.GONE);
-                        addTruck.setVisibility(View.GONE);
-                        personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_down_personal, 0);
 
-                        if (isBankDetailsDone != null) {
-                            bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
-                        } else if (isBankDetailsDone == null){
-                            bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
-                        }
-                        if (isTruckDetailsDone != null) {
-                            addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
-                        } else if (isTruckDetailsDone == null){
-                            addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck, 0, R.drawable.ic_right, 0);
+                        if (isBankExpanded||isTruckExpanded||isDriverExpanded) {
+                            isBankExpanded=false;
+                            isTruckExpanded=false;
+                            isDriverExpanded=false;
+                            bankDone.setVisibility(View.GONE);
+                            addBankDetails.setVisibility(View.GONE);
+                            vehicleDone.setVisibility(View.GONE);
+                            driverDone.setVisibility(View.GONE);
+                            addTruck.setVisibility(View.GONE);
+                            addDriver.setVisibility(View.GONE);
                         }
 
-                        if (isDriverDetailsDone != null) {
-                            addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
-                        } else if (isDriverDetailsDone == null){
-                            addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
+                        if (isFirmDetailsDone.equals("1")) {
+                            getCompanyDetails();
+                            firmName.setVisibility(View.VISIBLE);
+                            officeAddressTextView.setVisibility(View.VISIBLE);
+                            addCompany.setVisibility(View.GONE);
+                        } else {
+                            firmName.setVisibility(View.GONE);
+                            officeAddressTextView.setVisibility(View.GONE);
+                            addCompany.setVisibility(View.VISIBLE);
                         }
-
-                        isRecExpanded = true;
+                    } else {
+                        isPersonalExpanded = false;
+                        personal_done.setVisibility(View.GONE);
                     }
-                } else if (isPersonalDetailsDone==null){
-                    personal_done.setVisibility(View.GONE);
-//                    addCompany.setVisibility(View.GONE);
-                    personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
-
+                } else {
                     Intent intent = new Intent(ProfileAndRegistrationActivity.this, PersonalDetailsActivity.class);
                     intent.putExtra("userId", userId);
                     intent.putExtra("mobile", phone);
-
                     startActivity(intent);
                 }
                 break;
 
             case R.id.profile_registration_bank_details_button:
-                if (isBankDetailsDone != null) {
-                    if (isRecExpanded) {
-                        bankDone.setVisibility(View.GONE);
-                        addBankDetails.setVisibility(View.GONE);
-                        firmName.setVisibility(View.GONE);
-                        officeAddressTextView.setVisibility(View.GONE);
-                        addCompany.setVisibility(View.GONE);
-                        bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
-                        isRecExpanded = false;
-                    } else {
+                if (isBankDetailsDone.equals("1")) {
+                    getBankDetailsList();
+                    if (isBankExpanded==false){
+                        isBankExpanded=true;
+
                         bankDone.setVisibility(View.VISIBLE);
                         addBankDetails.setVisibility(View.VISIBLE);
-                        personal_done.setVisibility(View.GONE);
-                        vehicleDone.setVisibility(View.GONE);
-                        driverDone.setVisibility(View.GONE);
-//                        addCompany.setVisibility(View.GONE);
-                        addTruck.setVisibility(View.GONE);
-                        firmName.setVisibility(View.GONE);
-                        officeAddressTextView.setVisibility(View.GONE);
-                        addCompany.setVisibility(View.GONE);
-                        bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_down_personal, 0);
 
-                        if (isPersonalDetailsDone != null) {
-                            personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
-                        } else if (isPersonalDetailsDone == null){
-                            personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
+                        if (isPersonalExpanded||isDriverExpanded||isTruckExpanded) {
+                            isPersonalExpanded=false;
+                            isTruckExpanded=false;
+                            isDriverExpanded=false;
+                            personal_done.setVisibility(View.GONE);
+                            vehicleDone.setVisibility(View.GONE);
+                            driverDone.setVisibility(View.GONE);
+                            addCompany.setVisibility(View.GONE);
+                            addTruck.setVisibility(View.GONE);
+                            addDriver.setVisibility(View.GONE);
                         }
 
-                        if (isTruckDetailsDone != null) {
-                            addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
-                        } else if (isTruckDetailsDone == null){
-                            addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck, 0, R.drawable.ic_right, 0);
-                        }
-
-                        if (isDriverDetailsDone != null) {
-                            addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
-                        } else if (isDriverDetailsDone == null){
-                            addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
-                        }
-
-                        isRecExpanded = true;
+                    } else{
+                        isBankExpanded=false;
+                        bankDone.setVisibility(View.GONE);
+                        addBankDetails.setVisibility(View.GONE);
                     }
-                } else if (isBankDetailsDone == null){
-                    bankDone.setVisibility(View.GONE);
-                    addBankDetails.setVisibility(View.GONE);
-                    bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
-
+                } else {
                     Intent intent = new Intent(ProfileAndRegistrationActivity.this, BankDetailsActivity.class);
                     intent.putExtra("isEdit",false);
                     intent.putExtra("userId", userId);
                     intent.putExtra("mobile", phone);
-
                     startActivity(intent);
                 }
                 break;
 
-            case R.id.profile_registration_truck_details:
-                if (isTruckDetailsDone != null) {
-                    if (isRecExpanded) {
-                        vehicleDone.setVisibility(View.GONE);
-                        addTruck.setVisibility(View.GONE);
-                        firmName.setVisibility(View.GONE);
-                        officeAddressTextView.setVisibility(View.GONE);
-                        addCompany.setVisibility(View.GONE);
-                        addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
-                        isRecExpanded = false;
-                    } else {
-                        vehicleDone.setVisibility(View.VISIBLE);
-                        addTruck.setVisibility(View.VISIBLE);
-                        personal_done.setVisibility(View.GONE);
-                        bankDone.setVisibility(View.GONE);
-                        driverDone.setVisibility(View.GONE);
-//                        addCompany.setVisibility(View.GONE);
-                        addBankDetails.setVisibility(View.GONE);
-                        firmName.setVisibility(View.GONE);
-                        officeAddressTextView.setVisibility(View.GONE);
-                        addCompany.setVisibility(View.GONE);
-                        addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_down_personal, 0);
-
-                        if (isPersonalDetailsDone != null) {
-                            personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
-                        } else if (isPersonalDetailsDone == null){
-                            personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
-                        }
-
-                        if (isBankDetailsDone != null) {
-                            bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
-                        } else if (isBankDetailsDone==null){
-                            bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
-                        }
-
-                        if (isDriverDetailsDone != null) {
-                            addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
-                        } else if (isDriverDetailsDone==null){
-                            addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
-                        }
-
-                        isRecExpanded = true;
-                    }
-                } else if (isTruckDetailsDone==null){
-                    Intent intent2 = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
-                    intent2.putExtra("userId", userId);
-                    intent2.putExtra("isEdit",false);
-                    intent2.putExtra("mobile", phone);
-
-                    startActivity(intent2);
-                }
-
-                break;
+//            case R.id.profile_registration_truck_details:
+//                if (isTruckDetailsDone.equals("1")){
+//                    getTruckList();
+//                    if (isTruckExpanded==false){
+//                        isTruckExpanded=true;
+//
+//                        vehicleDone.setVisibility(View.VISIBLE);
+//                        addTruck.setVisibility(View.VISIBLE);
+//
+//                        if (isPersonalExpanded||isBankExpanded||isTruckExpanded) {
+//            isPersonalExpanded=false;
+//            isBankExpanded=false;
+//            isDriverExpanded=false;
+//                            bankDone.setVisibility(View.GONE);
+//                            addBankDetails.setVisibility(View.GONE);
+//                            personal_done.setVisibility(View.GONE);
+//                            driverDone.setVisibility(View.GONE);
+//                            addCompany.setVisibility(View.GONE);
+//                            addDriver.setVisibility(View.GONE);
+//                        }
+//
+//                    } else {
+//                        isTruckExpanded=false;
+//                        vehicleDone.setVisibility(View.GONE);
+//                        addTruck.setVisibility(View.GONE);
+//                    }
+//
+//                } else {
+//                    Intent intent2 = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
+//                    intent2.putExtra("userId", userId);
+//                    intent2.putExtra("isEdit",false);
+//                    intent2.putExtra("mobile", phone);
+//                    startActivity(intent2);
+//                }
+//
+//                break;
 
             case R.id.profile_registration_driver_details:
-                if (isDriverDetailsDone != null) {
+                getDriverDetailsList();
+                if (isDriverDetailsDone.equals("1")){
+                    if (isDriverExpanded==false){
+                        isDriverExpanded=true;
 
-                    if (isRecExpanded) {
-                        driverDone.setVisibility(View.GONE);
-                        addDriver.setVisibility(View.GONE);
-                        firmName.setVisibility(View.GONE);
-                        officeAddressTextView.setVisibility(View.GONE);
-                        addCompany.setVisibility(View.GONE);
-                        addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
-                        isRecExpanded = false;
-                    } else {
                         driverDone.setVisibility(View.VISIBLE);
                         addDriver.setVisibility(View.VISIBLE);
-                        personal_done.setVisibility(View.GONE);
-                        bankDone.setVisibility(View.GONE);
-                        vehicleDone.setVisibility(View.GONE);
-//                        addCompany.setVisibility(View.GONE);
-                        addBankDetails.setVisibility(View.GONE);
-                        addTruck.setVisibility(View.GONE);
-                        firmName.setVisibility(View.GONE);
-                        officeAddressTextView.setVisibility(View.GONE);
-                        addCompany.setVisibility(View.GONE);
-                        addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_down_personal, 0);
 
-                        if (isPersonalDetailsDone != null) {
-                            personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
-                        } else if (isPersonalDetailsDone==null){
-                            personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal, 0, R.drawable.ic_right, 0);
+                        if (isPersonalExpanded||isTruckExpanded||isBankExpanded) {
+                            isBankExpanded=false;
+                            isTruckExpanded=false;
+                            isPersonalExpanded=false;
+                            bankDone.setVisibility(View.GONE);
+                            addBankDetails.setVisibility(View.GONE);
+                            personal_done.setVisibility(View.GONE);
+                            vehicleDone.setVisibility(View.GONE);
+                            addCompany.setVisibility(View.GONE);
+                            addTruck.setVisibility(View.GONE);
                         }
+                    } else {
+                        isDriverExpanded=false;
 
-                        if (isBankDetailsDone != null) {
-                            bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
-                        } else if (isBankDetailsDone==null){
-                            bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank, 0, R.drawable.ic_right, 0);
-                        }
-
-                        if (isTruckDetailsDone != null) {
-                            addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
-                        } else if (isTruckDetailsDone==null){
-                            addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck, 0, R.drawable.ic_right, 0);
-                        }
-                        isRecExpanded = true;
+                        driverDone.setVisibility(View.GONE);
+                        addDriver.setVisibility(View.GONE);
                     }
-                } else if (isDriverDetailsDone==null){
-
-                    driverDone.setVisibility(View.GONE);
-                    addDriver.setVisibility(View.GONE);
-                    addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
-
+                } else {
                     Intent intent = new Intent(ProfileAndRegistrationActivity.this, DriverDetailsActivity.class);
                     intent.putExtra("userId", userId);
                     intent.putExtra("isEdit", false);
                     intent.putExtra("mobile", phone);
                     startActivity(intent);
                 }
+
                 break;
 
             case R.id.editPersonalDetails:
-
                 Intent intent = new Intent(ProfileAndRegistrationActivity.this, PersonalDetailsAndIdProofActivity.class);
                 intent.putExtra("userId", userId);
                 intent.putExtra("mobile", phone);
@@ -745,14 +670,14 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 startActivity(intent2);
                 break;
 
-            case R.id.addTruck:
-                Intent intent3 = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
-                intent3.putExtra("userId", userId);
-                intent3.putExtra("isEdit",false);
-                intent3.putExtra("mobile", phone);
-                startActivity(intent3);
-                break;
-
+//            case R.id.addTruck:
+//                Intent intent3 = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
+//                intent3.putExtra("userId", userId);
+//                intent3.putExtra("isEdit",false);
+//                intent3.putExtra("mobile", phone);
+//                startActivity(intent3);
+//                break;
+//
             case R.id.addDriverDone:
                 Intent intent4 = new Intent(ProfileAndRegistrationActivity.this, DriverDetailsActivity.class);
                 intent4.putExtra("userId", userId);

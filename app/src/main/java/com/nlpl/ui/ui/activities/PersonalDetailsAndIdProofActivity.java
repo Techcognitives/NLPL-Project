@@ -97,7 +97,8 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
     private int GET_FROM_GALLERY = 0;
     private int GET_FROM_GALLERY1 = 1;
-    private int GET_FROM_GALLERY2 = 2;
+    int CAMERA_PIC_REQUEST1 = 5;
+    int CAMERA_PIC_REQUEST2 = 15;
 
     private UserService userService;
 
@@ -432,6 +433,11 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         editPAN = panAndAadharView.findViewById(R.id.edit1);
         editFront = panAndAadharView.findViewById(R.id.editFront);
 
+        uploadPAN.setVisibility(View.INVISIBLE);
+        editPAN.setVisibility(View.VISIBLE);
+        uploadF.setVisibility(View.INVISIBLE);
+        editFront.setVisibility(View.VISIBLE);
+
 //        if (isPersonalDetailsDone){
 //            panCardText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
 //            uploadPAN.setVisibility(View.INVISIBLE);
@@ -468,6 +474,8 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 camera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
                         chooseDialog.dismiss();
                     }
                 });
@@ -506,6 +514,8 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 camera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST2);
                         chooseDialog.dismiss();
                     }
                 });
@@ -775,7 +785,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
 
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
-            my_alert.setTitle("Uploaded Successfully");
+            my_alert.setTitle("Aadhar Card Uploaded Successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -800,10 +810,9 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-        } else if (requestCode == GET_FROM_GALLERY2 && resultCode == Activity.RESULT_OK) {
-
+        } else  if (requestCode == CAMERA_PIC_REQUEST1) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
-            my_alert.setTitle("Uploaded Successfully");
+            my_alert.setTitle("PAN Card Uploaded Successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -812,20 +821,30 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             });
             my_alert.show();
 
-            backText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            panCardText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadPAN.setVisibility(View.INVISIBLE);
+            editPAN.setVisibility(View.VISIBLE);
 
-            Uri selectedImage = data.getData();
-            imgB.setImageURI(selectedImage);
-            Bitmap bitmap = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            imgPAN.setImageBitmap(image);
+
+        } else  if (requestCode == CAMERA_PIC_REQUEST2) {
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
+            my_alert.setTitle("Aadhar Card Uploaded Successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            my_alert.show();
+
+            frontText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadF.setVisibility(View.INVISIBLE);
+            editFront.setVisibility(View.VISIBLE);
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            imgF.setImageBitmap(image);
         }
     }
     //-------------------------------------------------------------------------------------------------------------------

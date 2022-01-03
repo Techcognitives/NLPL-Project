@@ -1,12 +1,21 @@
 package com.nlpl.model.Requests;
 
 public class AddDriverRequest {
-    String user_id, driver_name, driver_number;
+    String user_id, driver_name, driver_number, driver_emailId;
 
     public AddDriverRequest() {
         this.user_id = user_id;
         this.driver_name = driver_name ;
         this.driver_number = driver_number;
+        this.driver_emailId = driver_emailId;
+    }
+
+    public String getDriver_emailId() {
+        return driver_emailId;
+    }
+
+    public void setDriver_emailId(String driver_emailId) {
+        this.driver_emailId = driver_emailId;
     }
 
     public String getUser_id() {

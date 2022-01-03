@@ -125,7 +125,7 @@ public class BankDetailsActivity extends AppCompatActivity {
 
         mQueue = Volley.newRequestQueue(BankDetailsActivity.this);
         if (isEdit){
-//        getBankDetails();
+        getBankDetails();
         }
 
         bankName.setFilters(new InputFilter[] { filter });
@@ -239,7 +239,7 @@ public class BankDetailsActivity extends AppCompatActivity {
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
 
             AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
-            my_alert.setTitle("Canceled Check uploaded successfully");
+            my_alert.setTitle("Cancelled cheque uploaded successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -385,7 +385,7 @@ public class BankDetailsActivity extends AppCompatActivity {
     public BankRequest createBankAcc() {
         BankRequest bankRequest = new BankRequest();
         bankRequest.setUser_id(userId);
-        bankRequest.setAccountholder_name(name);
+        bankRequest.setAccountholder_name(bankName.getText().toString());
         bankRequest.setAccount_number(accountNo.getText().toString());
         bankRequest.setRe_enter_acc_num(reAccount.getText().toString());
         bankRequest.setIFSI_CODE(ifscCode.getText().toString());
@@ -486,14 +486,19 @@ public class BankDetailsActivity extends AppCompatActivity {
 
     private void getBankDetails() {
 
-        String url = getString(R.string.baseURL) + "/user/" + userId;
+        String url = getString(R.string.baseURL) + "/bank/" + userId;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
                     JSONArray truckLists = response.getJSONArray("data");
                     for (int i = 0; i < truckLists.length(); i++) {
+
                         JSONObject obj = truckLists.getJSONObject(i);
+                        bankName.setText(obj.getString("accountholder_name"));
+                        accountNo.setText(obj.getString("account_number"));
+                        reAccount.setText(obj.getString("re_enter_acc_num"));
+                        ifscCode.setText(obj.getString("IFSI_CODE"));
 
                     }
                 } catch (JSONException e) {
