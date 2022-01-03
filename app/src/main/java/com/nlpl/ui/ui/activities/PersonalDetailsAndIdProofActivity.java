@@ -8,9 +8,11 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -59,6 +61,8 @@ import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -103,7 +107,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     private UserService userService;
 
     private RequestQueue mQueue;
-    String userId, mobileString;
+    String userId, mobileString, panImageURL, aadharImageURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -432,6 +436,9 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         imgF = panAndAadharView.findViewById(R.id.imageF);
         editPAN = panAndAadharView.findViewById(R.id.edit1);
         editFront = panAndAadharView.findViewById(R.id.editFront);
+
+        new DownloadImageTask(imgPAN).execute(panImageURL);
+        new DownloadImageTask(imgF).execute(aadharImageURL);
 
         uploadPAN.setVisibility(View.INVISIBLE);
         editPAN.setVisibility(View.VISIBLE);
@@ -1285,5 +1292,64 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             }
         });
 //--------------------------------------------------------------------------------------------------
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urlDisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urlDisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
+    }
+
+    private void getImageURL() {
+
+        String url = getString(R.string.baseURL) + "/imgbucket/Images/4";
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray imageList = response.getJSONArray("data");
+                    for (int i = 0; i < imageList.length(); i++) {
+                        JSONObject obj = imageList.getJSONObject(i);
+                        String imageType = obj.getString("image_type");
+
+                        if (imageType.equals("adhar")){
+                            aadharImageURL = obj.getString("image_url");
+                        }
+
+                        if (imageType.equals("pan")){
+                            panImageURL = obj.getString("image_url");
+                        }
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
     }
 }
