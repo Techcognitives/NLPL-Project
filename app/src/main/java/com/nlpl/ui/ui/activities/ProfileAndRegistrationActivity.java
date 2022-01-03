@@ -504,6 +504,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     if (isRecExpanded) {
                         personal_done.setVisibility(View.GONE);
 //                        addCompany.setVisibility(View.GONE);
+
                         firmName.setVisibility(View.GONE);
                         officeAddressTextView.setVisibility(View.GONE);
                         addCompany.setVisibility(View.GONE);
