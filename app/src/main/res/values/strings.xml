@@ -993,7 +993,7 @@
     <string name="VoterId">Voter ID</string>
     <string name="AadharFront">Aadhar Front</string>
     <string name="AadharBack">Aadhar Back</string>
-    <string name="edit">Edit</string>
+    <string name="edit"> </string>
     <string name="acNo">A/C No: </string>
     <string name="addBank">+ Add Bank</string>
     <string name="addTruck">+ Add Truck</string>

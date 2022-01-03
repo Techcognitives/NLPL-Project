@@ -65,7 +65,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
     EditText vehicleNumberEdit;
     ImageView openType, closedType, tarpaulinType, imgRC, imgI;
-    TextView openText, closedText, tarpaulinText;
     String bodyTypeSelected, mobile;
 
     Button uploadRC, uploadInsurance, okVehicleDetails;
@@ -73,6 +72,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     TextView textInsurance, editInsurance;
     int GET_FROM_GALLERY = 0;
     int GET_FROM_GALLERY1 = 1;
+    int CAMERA_PIC_REQUEST1 = 2;
+    int CAMERA_PIC_REQUEST2 = 12;
 
     private UserService userService;
     private AddTruckService addTruckService;
@@ -111,9 +112,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         openType = (ImageView) findViewById(R.id.vehicle_details_open_type);
         closedType = (ImageView) findViewById(R.id.vehicle_details_closed_type);
         tarpaulinType = (ImageView) findViewById(R.id.vehicle_details_tarpaulin_type);
-        openText = (TextView) findViewById(R.id.vehicle_details_open_text);
-        closedText = (TextView) findViewById(R.id.vehicle_details_closed_text);
-        tarpaulinText = (TextView) findViewById(R.id.vehicle_details_tarpaulin_text);
 
         uploadRC = (Button) findViewById(R.id.vehicle_details_rc_upload);
         textRC = (TextView) findViewById(R.id.vehicle_details_rc_text);
@@ -126,7 +124,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         imgI = findViewById(R.id.vehicle_details_insurance_image);
 
         openSelected = findViewById(R.id.open_radio_btn);
-        closedText = findViewById(R.id.closed_radio_btn);
+        closeSelected = findViewById(R.id.closed_radio_btn);
         tarpaulinSelected = findViewById(R.id.tarpaulin_radio_btn);
 
         openSelected.setChecked(false);
@@ -177,6 +175,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 camera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
                         chooseDialog.dismiss();
                     }
                 });
@@ -216,6 +216,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 camera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
                         chooseDialog.dismiss();
                     }
                 });
@@ -254,6 +256,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 camera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST2);
                         chooseDialog.dismiss();
                     }
                 });
@@ -292,6 +296,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 camera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST2);
                         chooseDialog.dismiss();
                     }
                 });
@@ -321,9 +327,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 closeSelected.setChecked(false);
                 tarpaulinSelected.setChecked(false);
                 tarpaulinType.setBackgroundResource(R.drawable.image_view_border);
-                openText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-                closedText.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
-                tarpaulinText.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                 bodyTypeSelected = "Open";
                 break;
 
@@ -334,9 +337,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 closeSelected.setChecked(true);
                 tarpaulinSelected.setChecked(false);
                 tarpaulinType.setBackgroundResource(R.drawable.image_view_border);
-                openText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                closedText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
-                tarpaulinText.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                 bodyTypeSelected = "Closed";
                 break;
 
@@ -347,11 +347,49 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 closeSelected.setChecked(false);
                 tarpaulinSelected.setChecked(true);
                 tarpaulinType.setBackgroundResource(R.drawable.image_view_border_selected);
-                openText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                closedText.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
-                tarpaulinText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
                 bodyTypeSelected = "Tarpaulin";
                 break;
+
+        }
+    }
+
+    public void onClickRadioButtons(View view) {
+        truckSelected=true;
+        String vehicleNum = vehicleNumberEdit.getText().toString();
+        if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected ){
+            okVehicleDetails.setBackgroundResource(R.drawable.button_active);
+        }
+        switch (view.getId()) {
+            case R.id.open_radio_btn:
+                openType.setBackgroundResource(R.drawable.image_view_border_selected);
+                closedType.setBackgroundResource(R.drawable.image_view_border);
+                openSelected.setChecked(true);
+                closeSelected.setChecked(false);
+                tarpaulinSelected.setChecked(false);
+                tarpaulinType.setBackgroundResource(R.drawable.image_view_border);
+                bodyTypeSelected = "Open";
+                break;
+
+            case R.id.closed_radio_btn:
+                openType.setBackgroundResource(R.drawable.image_view_border);
+                closedType.setBackgroundResource(R.drawable.image_view_border_selected);
+                openSelected.setChecked(false);
+                closeSelected.setChecked(true);
+                tarpaulinSelected.setChecked(false);
+                tarpaulinType.setBackgroundResource(R.drawable.image_view_border);
+                bodyTypeSelected = "Closed";
+                break;
+
+            case R.id.tarpaulin_radio_btn:
+                openType.setBackgroundResource(R.drawable.image_view_border);
+                closedType.setBackgroundResource(R.drawable.image_view_border);
+                openSelected.setChecked(false);
+                closeSelected.setChecked(false);
+                tarpaulinSelected.setChecked(true);
+                tarpaulinType.setBackgroundResource(R.drawable.image_view_border_selected);
+                bodyTypeSelected = "Tarpaulin";
+                break;
+
         }
     }
 
@@ -426,6 +464,54 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+        }else  if (requestCode == CAMERA_PIC_REQUEST1) {
+
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
+            my_alert.setTitle("RC Uploaded Successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            my_alert.show();
+
+            textRC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadRC.setVisibility(View.INVISIBLE);
+            editRC.setVisibility(View.VISIBLE);
+
+            isRcUploaded=true;
+            String vehicleNum = vehicleNumberEdit.getText().toString();
+            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected ){
+                okVehicleDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            imgRC.setImageBitmap(image);
+
+        } else  if (requestCode == CAMERA_PIC_REQUEST2) {
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
+            my_alert.setTitle("Insurance Uploaded Successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            my_alert.show();
+            textInsurance.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadInsurance.setVisibility(View.INVISIBLE);
+            editInsurance.setVisibility(View.VISIBLE);
+
+            isInsurance=true;
+            String vehicleNum = vehicleNumberEdit.getText().toString();
+            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected ){
+                okVehicleDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            imgI.setImageBitmap(image);
+
         }
     }
 
@@ -550,25 +636,16 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                             openType.setBackgroundResource(R.drawable.image_view_border_selected);
                             closedType.setBackgroundResource(R.drawable.image_view_border);
                             tarpaulinType.setBackgroundResource(R.drawable.image_view_border);
-                            openText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-                            closedText.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
-                            tarpaulinText.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                             bodyTypeSelected = "Open";
                         }else if (vehicleTypeAPI.equals("Closed")){
                             openType.setBackgroundResource(R.drawable.image_view_border);
                             closedType.setBackgroundResource(R.drawable.image_view_border_selected);
                             tarpaulinType.setBackgroundResource(R.drawable.image_view_border);
-                            openText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                            closedText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
-                            tarpaulinText.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
                             bodyTypeSelected = "Closed";
                         }else if (vehicleTypeAPI.equals("Tarpaulin")){
                             openType.setBackgroundResource(R.drawable.image_view_border);
                             closedType.setBackgroundResource(R.drawable.image_view_border);
                             tarpaulinType.setBackgroundResource(R.drawable.image_view_border_selected);
-                            openText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                            closedText.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
-                            tarpaulinText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
                             bodyTypeSelected = "Tarpaulin";
                         }else{
 
