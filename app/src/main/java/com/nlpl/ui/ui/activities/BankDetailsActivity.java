@@ -1,13 +1,17 @@
 package com.nlpl.ui.ui.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -36,7 +40,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nlpl.R;
 import com.nlpl.model.Requests.BankRequest;
+import com.nlpl.model.Requests.ImageRequest;
 import com.nlpl.model.Responses.BankResponse;
+import com.nlpl.model.Responses.ImageResponse;
+import com.nlpl.model.Responses.UploadImageResponse;
 import com.nlpl.model.UpdateBankDetails.UpdateBankAccountHolderName;
 import com.nlpl.model.UpdateBankDetails.UpdateBankAccountNumber;
 import com.nlpl.model.UpdateBankDetails.UpdateBankIFSICode;
@@ -45,14 +52,20 @@ import com.nlpl.model.UpdateUserDetails.UpdateUserIsBankDetailsGiven;
 import com.nlpl.services.BankService;
 import com.nlpl.services.UserService;
 import com.nlpl.utils.ApiClient;
+import com.nlpl.utils.FileUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -64,7 +77,7 @@ public class BankDetailsActivity extends AppCompatActivity {
     View action_bar;
     TextView actionBarTitle;
     ImageView actionBarBackButton;
-    String userId, name;
+    String userId;
 
     EditText bankName, accountNo, reAccount, ifscCode;
     Button okButton;
@@ -77,7 +90,7 @@ public class BankDetailsActivity extends AppCompatActivity {
     Boolean isEdit, isImgUploaded=false;
 
     RadioButton canceledCheckRadioButton, acDetailsRadioButton;
-    String bankId, mobile;
+    String bankId, mobile, img_type;
     private RequestQueue mQueue;
 
     private UserService userService;
@@ -152,6 +165,8 @@ public class BankDetailsActivity extends AppCompatActivity {
         uploadCC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                img_type = "cheque";
+                saveImage(imageRequest());
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(BankDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
@@ -192,6 +207,8 @@ public class BankDetailsActivity extends AppCompatActivity {
         editCC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                img_type = "cheque";
+                saveImage(imageRequest());
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(BankDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
@@ -243,6 +260,8 @@ public class BankDetailsActivity extends AppCompatActivity {
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
+                    okButton.setEnabled(true);
+                    okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                     dialogInterface.dismiss();
                 }
             });
@@ -255,23 +274,26 @@ public class BankDetailsActivity extends AppCompatActivity {
             isImgUploaded = true;
 
             Uri selectedImage = data.getData();
-            cancelledCheckImage.setImageURI(selectedImage);
-            Bitmap bitmap = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            uploadImage(picturePath);
+
+            cancelledCheckImage.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+
         } else if (requestCode == CAMERA_PIC_REQUEST1){
+
             AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
             my_alert.setTitle("Cancelled cheque uploaded successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
+                    okButton.setEnabled(true);
+                    okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                     dialogInterface.dismiss();
                 }
             });
@@ -284,7 +306,11 @@ public class BankDetailsActivity extends AppCompatActivity {
             isImgUploaded = true;
 
             Bitmap image = (Bitmap) data.getExtras().get("data");
-            cancelledCheckImage.setImageBitmap(image);
+
+            String path = getRealPathFromURI(getImageUri(this,image));
+            cancelledCheckImage.setImageBitmap(BitmapFactory.decodeFile(path));
+
+            uploadImage(path);
 
         }
     }
@@ -292,61 +318,62 @@ public class BankDetailsActivity extends AppCompatActivity {
 
 
     public void onClickBankDetailsOk(View view) {
-        if (accountNo.getText().toString().equals(reAccount.getText().toString())) {
-            if (isEdit){
 
-                if (bankName.getText().toString() != null){
-                    updateBankAccountHolderName();
+            if (accountNo.getText().toString().equals(reAccount.getText().toString())) {
+                if (isEdit) {
+
+                    if (bankName.getText().toString() != null) {
+                        updateBankAccountHolderName();
+                    }
+
+                    if (accountNo.getText().toString() != null) {
+                        updateBankAccountNumber();
+                    }
+
+                    if (reAccount.getText().toString() != null) {
+                        updateBankReEnterAccountNumber();
+                    }
+
+                    if (ifscCode.getText().toString() != null) {
+                        updateBankIFSICode();
+                    }
+
+                } else {
+                    saveBank(createBankAcc());
                 }
 
-                if (accountNo.getText().toString() != null){
-                    updateBankAccountNumber();
-                }
+                reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+                AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
+                my_alert.setTitle("Bank Details added successfully");
+                my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
-                if (reAccount.getText().toString() != null){
-                    updateBankReEnterAccountNumber();
-                }
-
-                if (ifscCode.getText().toString() != null){
-                    updateBankIFSICode();
-                }
-
-            }else{
-                saveBank(createBankAcc());
+                        updateUserIsBankDetailsGiven();
+                        dialogInterface.dismiss();
+                        Intent i8 = new Intent(BankDetailsActivity.this, ProfileAndRegistrationActivity.class);
+                        i8.putExtra("mobile2", mobile);
+                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i8);
+                        overridePendingTransition(0, 0);
+                        BankDetailsActivity.this.finish();
+                    }
+                });
+                my_alert.show();
+            } else {
+                reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+                AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
+                my_alert.setTitle("Account number does not match");
+                my_alert.setMessage("Please enter correct account number as above.");
+                my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                my_alert.show();
             }
-
-            reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
-            AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
-            my_alert.setTitle("Bank Details added successfully");
-            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-
-                    updateUserIsBankDetailsGiven();
-                    dialogInterface.dismiss();
-                    Intent i8 = new Intent(BankDetailsActivity.this, ProfileAndRegistrationActivity.class);
-                    i8.putExtra("mobile2", mobile);
-                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i8);
-                    overridePendingTransition(0, 0);
-                    BankDetailsActivity.this.finish();
-                }
-            });
-            my_alert.show();
-        } else {
-            reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
-            AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
-            my_alert.setTitle("Account number does not match");
-            my_alert.setMessage("Please enter correct account number as above.");
-            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            });
-            my_alert.show();
         }
-    }
 
     private TextWatcher bankDetailsWatcher = new TextWatcher() {
         @Override
@@ -356,27 +383,28 @@ public class BankDetailsActivity extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            String bankName1 = bankName.getText().toString().trim();
-            String accNo1 = accountNo.getText().toString().trim();
-            String reAccNo1 = reAccount.getText().toString().trim();
-            String ifscCode1 = ifscCode.getText().toString().trim();
 
-            if (!bankName1.isEmpty() && !accNo1.isEmpty() && !reAccNo1.isEmpty() && !ifscCode1.isEmpty()) {
+               String bankName1 = bankName.getText().toString().trim();
+               String accNo1 = accountNo.getText().toString().trim();
+               String reAccNo1 = reAccount.getText().toString().trim();
+               String ifscCode1 = ifscCode.getText().toString().trim();
 
-                okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                okButton.setEnabled(true);
-            }else
-            {
-                okButton.setBackground(getResources().getDrawable(R.drawable.button_de_active));
-                okButton.setEnabled(false);
-            }
+               if (!bankName1.isEmpty() && !accNo1.isEmpty() && !reAccNo1.isEmpty() && !ifscCode1.isEmpty()) {
 
-            if (accNo1.equals(reAccNo1)){
-                reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
-            }else{
-                reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
-            }
-        }
+                   okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                   okButton.setEnabled(true);
+
+               } else {
+                   okButton.setBackground(getResources().getDrawable(R.drawable.button_de_active));
+                   okButton.setEnabled(false);
+               }
+
+               if (accNo1.equals(reAccNo1)) {
+                   reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+               } else {
+                   reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+               }
+           }
 
         @Override
         public void afterTextChanged(Editable editable) {
@@ -451,6 +479,7 @@ public class BankDetailsActivity extends AppCompatActivity {
 
         switch (view.getId()) {
             case R.id.bank_details_cancelled_check_radio_button:
+
                 canceledCheckRadioButton.setChecked(true);
                 acDetailsRadioButton.setChecked(false);
 
@@ -462,10 +491,24 @@ public class BankDetailsActivity extends AppCompatActivity {
                 canceledCheckBlurImage.setVisibility(View.GONE);
                 accountDetailsBlurImage.setVisibility(View.VISIBLE);
 
+                String bankName2 = bankName.getText().toString().trim();
+                String accNo2 = accountNo.getText().toString().trim();
+                String reAccNo2 = reAccount.getText().toString().trim();
+                String ifscCode2 = ifscCode.getText().toString().trim();
+
+                if (!bankName2.isEmpty() && !accNo2.isEmpty() && !reAccNo2.isEmpty() && !ifscCode2.isEmpty()){
+                    okButton.setEnabled(true);
+                    okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                }
+
                 if (isImgUploaded){
+                    okButton.setEnabled(true);
+                    okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                     editCC.setVisibility(View.VISIBLE);
                     uploadCC.setVisibility(View.INVISIBLE);
                 } else {
+                    okButton.setEnabled(false);
+                    okButton.setBackground(getResources().getDrawable(R.drawable.button_de_active));
                     uploadCC.setEnabled(true);
                     uploadCC.setVisibility(View.VISIBLE);
                     editCC.setVisibility(View.INVISIBLE);
@@ -488,7 +531,20 @@ public class BankDetailsActivity extends AppCompatActivity {
                 canceledCheckBlurImage.setVisibility(View.VISIBLE);
                 accountDetailsBlurImage.setVisibility(View.GONE);
 
+
+                String bankName1 = bankName.getText().toString().trim();
+                String accNo1 = accountNo.getText().toString().trim();
+                String reAccNo1 = reAccount.getText().toString().trim();
+                String ifscCode1 = ifscCode.getText().toString().trim();
+
+                if (!bankName1.isEmpty() && !accNo1.isEmpty() && !reAccNo1.isEmpty() && !ifscCode1.isEmpty()){
+                    okButton.setEnabled(true);
+                    okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                }
+
                 if (isImgUploaded){
+                    okButton.setEnabled(false);
+                    okButton.setBackground(getResources().getDrawable(R.drawable.button_de_active));
                     editCC.setVisibility(View.VISIBLE);
                     uploadCC.setVisibility(View.INVISIBLE);
                 } else {
@@ -503,7 +559,7 @@ public class BankDetailsActivity extends AppCompatActivity {
 
     private void getBankDetails() {
 
-        String url = getString(R.string.baseURL) + "/bank/" + userId;
+        String url = getString(R.string.baseURL) + "/bank/getBkByBkId/" + userId;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -648,4 +704,85 @@ public class BankDetailsActivity extends AppCompatActivity {
 //--------------------------------------------------------------------------------------------------
     }
 
+
+    //--------------------------------------create image in API -------------------------------------
+    public ImageRequest imageRequest() {
+        ImageRequest imageRequest = new ImageRequest();
+        imageRequest.setUser_id(userId);
+        imageRequest.setImage_type(img_type);
+        return imageRequest;
+    }
+
+    public void saveImage(ImageRequest imageRequest) {
+        Call<ImageResponse> imageResponseCall = ApiClient.getImageService().saveImage(imageRequest);
+        imageResponseCall.enqueue(new Callback<ImageResponse>() {
+            @Override
+            public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ImageResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    @NonNull
+    private MultipartBody.Part prepareFilePart(String partName, Uri fileUri) {
+
+        Log.i("file uri: ", String.valueOf(fileUri));
+        // use the FileUtils to get the actual file by uri
+        File file = FileUtils.getFile(this, fileUri);
+
+        // create RequestBody instance from file
+        RequestBody requestFile = RequestBody.create(MediaType.parse("mp3"), file);
+
+        // MultipartBody.Part is used to send also the actual file name
+        return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
+    }
+
+
+    private void uploadImage(String picPath) {
+
+        File file = new File(picPath);
+//        File file = new File(getExternalFilesDir("/").getAbsolutePath(), file);
+
+        MultipartBody.Part body = prepareFilePart("file", Uri.fromFile(file));
+
+        Call<UploadImageResponse> call = ApiClient.getImageUploadService().uploadImage(userId,img_type,body);
+        call.enqueue(new Callback<UploadImageResponse>() {
+            @Override
+            public void onResponse(Call<UploadImageResponse> call, Response<UploadImageResponse> response) {
+                Log.i("successful:", "success");
+            }
+
+            @Override
+            public void onFailure(Call<UploadImageResponse> call, Throwable t) {
+                t.printStackTrace();
+                Log.i("failed:","failed");
+            }
+        });
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    public String getRealPathFromURI(Uri uri) {
+        String path = "";
+        if (getContentResolver() != null) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            if (cursor != null) {
+                cursor.moveToFirst();
+                int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                path = cursor.getString(idx);
+                cursor.close();
+            }
+        }
+        return path;
+    }
 }

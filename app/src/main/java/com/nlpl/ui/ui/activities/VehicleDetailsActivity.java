@@ -1,13 +1,17 @@
 package com.nlpl.ui.ui.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -21,9 +25,12 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -34,7 +41,10 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.Requests.AddTruckRequest;
+import com.nlpl.model.Requests.ImageRequest;
 import com.nlpl.model.Responses.AddTruckResponse;
+import com.nlpl.model.Responses.ImageResponse;
+import com.nlpl.model.Responses.UploadImageResponse;
 import com.nlpl.model.UpdateTruckDetails.UpdateTruckRcBook;
 import com.nlpl.model.UpdateTruckDetails.UpdateTruckType;
 import com.nlpl.model.UpdateTruckDetails.UpdateTruckVehicleInsurance;
@@ -43,14 +53,22 @@ import com.nlpl.model.UpdateUserDetails.UpdateUserIsTruckAdded;
 import com.nlpl.services.AddTruckService;
 import com.nlpl.services.UserService;
 import com.nlpl.utils.ApiClient;
+import com.nlpl.utils.FileUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -64,8 +82,11 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     ImageView actionBarBackButton;
 
     EditText vehicleNumberEdit;
+    TextView selectModel, selectFt, selectCapacity;
     ImageView openType, closedType, tarpaulinType, imgRC, imgI;
-    String bodyTypeSelected, mobile;
+    String bodyTypeSelected, mobile, img_type;
+
+    Dialog selectModelDialog, selectFeetDialog, selectCapacityDialog;
 
     Button uploadRC, uploadInsurance, okVehicleDetails;
     TextView textRC, editRC;
@@ -78,11 +99,13 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     private UserService userService;
     private AddTruckService addTruckService;
 
-    String userId, truckId, vehicleNumberAPI, vehicleTypeAPI;
+    String userId, truckId, vehicleNumberAPI, vehicleTypeAPI, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI;
     Boolean isEdit, isRcUploaded=false, isInsurance=false, truckSelected=false;
     private RequestQueue mQueue;
 
     RadioButton openSelected, closeSelected, tarpaulinSelected;
+
+    ArrayList<String> arrayVehicleType, arrayTruckFt, arrayCapacity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +131,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             }
         });
 
-        vehicleNumberEdit = (EditText) findViewById(R.id.vehicle_details_select_model);
+        vehicleNumberEdit = (EditText) findViewById(R.id.vehicle_details_vehicle_number_edit2);
         openType = (ImageView) findViewById(R.id.vehicle_details_open_type);
         closedType = (ImageView) findViewById(R.id.vehicle_details_closed_type);
         tarpaulinType = (ImageView) findViewById(R.id.vehicle_details_tarpaulin_type);
@@ -126,6 +149,18 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         openSelected = findViewById(R.id.open_radio_btn);
         closeSelected = findViewById(R.id.closed_radio_btn);
         tarpaulinSelected = findViewById(R.id.tarpaulin_radio_btn);
+        selectModel = findViewById(R.id.vehicle_details_select_model);
+        selectFt = findViewById(R.id.vehicle_details_select_feet);
+        selectCapacity = findViewById(R.id.vehicle_details_select_capacity);
+
+        arrayCapacity = new ArrayList<>();
+        arrayVehicleType = new ArrayList<>();
+        arrayTruckFt = new ArrayList<>();
+
+        arrayVehicleType.add("Tata");
+        arrayVehicleType.add("Mahindra");
+        arrayVehicleType.add("Eicher");
+        arrayVehicleType.add("Other");
 
         openSelected.setChecked(false);
         closeSelected.setChecked(false);
@@ -152,9 +187,12 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             getVehicleDetails();
         }
 
+        getVehicleTypeList();
         uploadRC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                img_type = "rc";
+                saveImage(imageRequest());
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(VehicleDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
@@ -196,6 +234,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         editRC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                img_type = "rc";
+                saveImage(imageRequest());
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(VehicleDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
@@ -236,6 +276,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         uploadInsurance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                img_type = "insurance";
+                saveImage(imageRequest());
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(VehicleDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
@@ -276,6 +318,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         editInsurance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                img_type = "insurance";
+                saveImage(imageRequest());
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(VehicleDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
@@ -421,17 +465,17 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             }
 
             Uri selectedImage = data.getData();
-            imgRC.setImageURI(selectedImage);
-            Bitmap bitmap = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            uploadImage(picturePath);
+
+            imgRC.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+
         } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
             my_alert.setTitle("Insurance Uploaded Successfully");
@@ -453,17 +497,17 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             }
 
             Uri selectedImage = data.getData();
-            imgI.setImageURI(selectedImage);
-            Bitmap bitmap = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            uploadImage(picturePath);
+
+            imgI.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+
         }else  if (requestCode == CAMERA_PIC_REQUEST1) {
 
             AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
@@ -487,7 +531,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             }
 
             Bitmap image = (Bitmap) data.getExtras().get("data");
-            imgRC.setImageBitmap(image);
+            String path = getRealPathFromURI(getImageUri(this,image));
+            imgRC.setImageBitmap(BitmapFactory.decodeFile(path));
+            uploadImage(path);
 
         } else  if (requestCode == CAMERA_PIC_REQUEST2) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
@@ -510,7 +556,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             }
 
             Bitmap image = (Bitmap) data.getExtras().get("data");
-            imgI.setImageBitmap(image);
+            String path = getRealPathFromURI(getImageUri(this,image));
+            imgI.setImageBitmap(BitmapFactory.decodeFile(path));
+            uploadImage(path);
 
         }
     }
@@ -559,7 +607,10 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         AddTruckRequest addTruckRequest = new AddTruckRequest();
         addTruckRequest.setUser_id(userId);
         addTruckRequest.setVehicle_no(vehicleNumberEdit.getText().toString());
-        addTruckRequest.setVehicle_body_type(bodyTypeSelected);
+        addTruckRequest.setVehicle_type(bodyTypeSelected);
+        addTruckRequest.setTruck_type(selectModel.getText().toString());
+        addTruckRequest.setTruck_ft(selectFt.getText().toString());
+        addTruckRequest.setTruck_carrying_capacity(selectCapacity.getText().toString());
         return addTruckRequest;
     }
 
@@ -616,6 +667,42 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             return null;
         }
     };
+
+
+    private void getVehicleTypeList(){
+        String url = getString(R.string.baseURL) + "/trucktype/getAllTruckType";
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+                        vehicle_typeAPI = obj.getString("vehicle_type");
+                        truck_ftAPI = obj.getString("truck_ft");
+                        truck_carrying_capacityAPI = obj.getString("truck_carrying_capacity");
+
+                        arrayTruckFt.add(truck_ftAPI);
+                        arrayCapacity.add(truck_carrying_capacityAPI);
+
+                        Log.i("type:", vehicle_typeAPI);
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        mQueue.add(request);
+
+    }
 
     private void getVehicleDetails() {
 
@@ -786,4 +873,191 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 //--------------------------------------------------------------------------------------------------
     }
 
+    public void selectVehicleModelFeetCapacity(View view) {
+        switch (view.getId()){
+            case R.id.vehicle_details_select_model:
+
+                selectModelDialog = new Dialog(VehicleDetailsActivity.this);
+                selectModelDialog.setContentView(R.layout.dialog_spinner);
+                selectModelDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                selectModelDialog.show();
+
+                ListView modelList = (ListView) selectModelDialog.findViewById(R.id.list_state);
+                ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this,R.layout.custom_list_row, arrayVehicleType);
+                modelList.setAdapter(adapter1);
+
+                modelList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        selectModel.setText(adapter1.getItem(i));
+
+                        selectFeetDialog = new Dialog(VehicleDetailsActivity.this);
+                        selectFeetDialog.setContentView(R.layout.dialog_spinner);
+                        selectFeetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        selectFeetDialog.show();
+
+                        ListView capacityList = (ListView) selectFeetDialog.findViewById(R.id.list_state);
+                        ArrayAdapter<String> adapter3 = new ArrayAdapter<>(VehicleDetailsActivity.this,R.layout.custom_list_row, arrayTruckFt);
+                        capacityList.setAdapter(adapter3);
+
+                        capacityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                selectCapacity.setText(adapter3.getItem(i));
+
+                                selectCapacityDialog = new Dialog(VehicleDetailsActivity.this);
+                                selectCapacityDialog.setContentView(R.layout.dialog_spinner);
+                                selectCapacityDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                selectCapacityDialog.show();
+
+                                ListView capacityList = (ListView) selectCapacityDialog.findViewById(R.id.list_state);
+                                ArrayAdapter<String> adapter2 = new ArrayAdapter<>(VehicleDetailsActivity.this,R.layout.custom_list_row, arrayCapacity);
+                                capacityList.setAdapter(adapter2);
+
+                                capacityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                        selectCapacity.setText(adapter2.getItem(i));
+                                        selectCapacityDialog.dismiss();
+                                    }
+                                });
+
+                                selectFeetDialog.dismiss();
+                            }
+                        });
+
+
+                        selectModelDialog.dismiss();
+                    }
+                });
+
+                break;
+
+            case R.id.vehicle_details_select_feet:
+
+                selectFeetDialog = new Dialog(VehicleDetailsActivity.this);
+                selectFeetDialog.setContentView(R.layout.dialog_spinner);
+                selectFeetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                selectFeetDialog.show();
+
+                ListView feetList = (ListView) selectFeetDialog.findViewById(R.id.list_state);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.custom_list_row, arrayTruckFt);
+                feetList.setAdapter(adapter);
+
+                feetList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        selectFt.setText(adapter.getItem(i));
+                        selectFeetDialog.dismiss();
+
+                    }
+                });
+
+                break;
+
+            case R.id.vehicle_details_select_capacity:
+
+                selectCapacityDialog = new Dialog(VehicleDetailsActivity.this);
+                selectCapacityDialog.setContentView(R.layout.dialog_spinner);
+                selectCapacityDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                selectCapacityDialog.show();
+
+                ListView capacityList = (ListView) selectCapacityDialog.findViewById(R.id.list_state);
+                ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this,R.layout.custom_list_row, arrayCapacity);
+                capacityList.setAdapter(adapter2);
+
+                capacityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        selectCapacity.setText(adapter2.getItem(i));
+                        selectCapacityDialog.dismiss();
+                    }
+                });
+
+                break;
+
+        }
+    }
+
+
+    //--------------------------------------create image in API -------------------------------------
+    public ImageRequest imageRequest() {
+        ImageRequest imageRequest = new ImageRequest();
+        imageRequest.setUser_id(userId);
+        imageRequest.setImage_type(img_type);
+        return imageRequest;
+    }
+
+    public void saveImage(ImageRequest imageRequest) {
+        Call<ImageResponse> imageResponseCall = ApiClient.getImageService().saveImage(imageRequest);
+        imageResponseCall.enqueue(new Callback<ImageResponse>() {
+            @Override
+            public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ImageResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    @NonNull
+    private MultipartBody.Part prepareFilePart(String partName, Uri fileUri) {
+
+        Log.i("file uri: ", String.valueOf(fileUri));
+        // use the FileUtils to get the actual file by uri
+        File file = FileUtils.getFile(this, fileUri);
+
+        // create RequestBody instance from file
+        RequestBody requestFile = RequestBody.create(MediaType.parse("mp3"), file);
+
+        // MultipartBody.Part is used to send also the actual file name
+        return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
+    }
+
+
+    private void uploadImage(String picPath) {
+
+        File file = new File(picPath);
+//        File file = new File(getExternalFilesDir("/").getAbsolutePath(), file);
+
+        MultipartBody.Part body = prepareFilePart("file", Uri.fromFile(file));
+
+        Call<UploadImageResponse> call = ApiClient.getImageUploadService().uploadImage(userId,img_type,body);
+        call.enqueue(new Callback<UploadImageResponse>() {
+            @Override
+            public void onResponse(Call<UploadImageResponse> call, Response<UploadImageResponse> response) {
+                Log.i("successful:", "success");
+            }
+
+            @Override
+            public void onFailure(Call<UploadImageResponse> call, Throwable t) {
+                t.printStackTrace();
+                Log.i("failed:","failed");
+            }
+        });
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    public String getRealPathFromURI(Uri uri) {
+        String path = "";
+        if (getContentResolver() != null) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            if (cursor != null) {
+                cursor.moveToFirst();
+                int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                path = cursor.getString(idx);
+                cursor.close();
+            }
+        }
+        return path;
+    }
 }

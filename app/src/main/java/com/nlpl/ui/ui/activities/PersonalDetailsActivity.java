@@ -6,9 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -31,6 +34,7 @@ import com.nlpl.model.Responses.UploadImageResponse;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.FileUtils;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -307,18 +311,17 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             }
 
             Uri selectedImage = data.getData();
-//            uploadImage(selectedImage);
-            imgPAN.setImageURI(selectedImage);
-            Bitmap bitmap = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            uploadImage(picturePath);
+
+            imgPAN.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+
         } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
 
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
@@ -341,18 +344,17 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             }
 
             Uri selectedImage = data.getData();
-//            uploadImage(selectedImage);
-            imgF.setImageURI(selectedImage);
-            Bitmap bitmap = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            uploadImage(picturePath);
+
+            imgF.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+
         } else  if (requestCode == CAMERA_PIC_REQUEST) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
             my_alert.setTitle("PAN Card Uploaded Successfully");
@@ -374,7 +376,9 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             }
 
             Bitmap image = (Bitmap) data.getExtras().get("data");
-            imgPAN.setImageBitmap(image);
+            String path = getRealPathFromURI(getImageUri(this,image));
+            imgPAN.setImageBitmap(BitmapFactory.decodeFile(path));
+            uploadImage(path);
 
         } else  if (requestCode == CAMERA_PIC_REQUEST1) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
@@ -397,7 +401,9 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             }
 
             Bitmap image = (Bitmap) data.getExtras().get("data");
-            imgF.setImageBitmap(image);
+            String path = getRealPathFromURI(getImageUri(this,image));
+            imgF.setImageBitmap(BitmapFactory.decodeFile(path));
+            uploadImage(path);
         }
     }
     //-------------------------------------------------------------------------------------------------------------------
@@ -424,7 +430,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     }
 
 
-    //--------------------------------------create User in API -------------------------------------
+    //--------------------------------------create image in API -------------------------------------
     public ImageRequest imageRequest() {
         ImageRequest imageRequest = new ImageRequest();
         imageRequest.setUser_id(userId);
@@ -462,14 +468,14 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     }
 
 
-    private void uploadImage(Uri selectedImg) {
+    private void uploadImage(String picPath) {
 
-        File file = new File(selectedImg.getPath());
+        File file = new File(picPath);
 //        File file = new File(getExternalFilesDir("/").getAbsolutePath(), file);
 
         MultipartBody.Part body = prepareFilePart("file", Uri.fromFile(file));
 
-        Call<UploadImageResponse> call = ApiClient.getImageUploadService().uploadImage(userId,body);
+        Call<UploadImageResponse> call = ApiClient.getImageUploadService().uploadImage(userId,img_type,body);
         call.enqueue(new Callback<UploadImageResponse>() {
            @Override
            public void onResponse(Call<UploadImageResponse> call, Response<UploadImageResponse> response) {
@@ -506,6 +512,26 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             }
         });
 //--------------------------------------------------------------------------------------------------
+    }
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    public String getRealPathFromURI(Uri uri) {
+        String path = "";
+        if (getContentResolver() != null) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            if (cursor != null) {
+                cursor.moveToFirst();
+                int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                path = cursor.getString(idx);
+                cursor.close();
+            }
+        }
+        return path;
     }
     //----------------------------------------------------------------------------------------------
 }

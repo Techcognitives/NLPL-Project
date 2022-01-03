@@ -1,12 +1,15 @@
 package com.nlpl.ui.ui.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -38,6 +41,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
+import com.nlpl.model.Requests.ImageRequest;
+import com.nlpl.model.Responses.ImageResponse;
+import com.nlpl.model.Responses.UploadImageResponse;
 import com.nlpl.model.UpdateUserDetails.UpdateUserAddress;
 import com.nlpl.model.UpdateUserDetails.UpdateUserEmailId;
 import com.nlpl.model.UpdateUserDetails.UpdateUserIsBankDetailsGiven;
@@ -54,16 +60,23 @@ import com.nlpl.model.UpdateUserDetails.UpdateUserPreferredLocation;
 import com.nlpl.model.UpdateUserDetails.UpdateUserStateCode;
 import com.nlpl.model.UpdateUserDetails.UpdateUserType;
 import com.nlpl.services.UserService;
+import com.nlpl.utils.ApiClient;
+import com.nlpl.utils.FileUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -83,7 +96,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     TextView selectStateText, selectDistrictText, series;
     ArrayAdapter<CharSequence> selectStateArray, selectDistrictArray, selectStateUnionCode;
     Dialog selectStateDialog, selectDistrictDialog;
-    String selectedDistrict, selectedState, role;
+    String selectedDistrict, selectedState, role, img_type;
     int parentID;
     EditText name, pinCode, address, mobileEdit, emailIdEdit;
     Button okButton;
@@ -95,7 +108,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     Button uploadPAN, uploadF;
 
     TextView panCardText, editPAN, editFront, frontText, backText;
-    ImageView imgPAN, imgF, imgB;
+    ImageView imgPAN, imgF;
 
     String nameAPI, mobileAPI, addressAPI, pinCodeAPI, roleAPI, cityAPI, stateAPI, emailAPI;
 
@@ -461,6 +474,8 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         editPAN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                img_type = "pan";
+                saveImage(imageRequest());
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(PersonalDetailsAndIdProofActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
@@ -501,6 +516,8 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         editFront.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                img_type = "aadhar";
+                saveImage(imageRequest());
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(PersonalDetailsAndIdProofActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
@@ -778,17 +795,17 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             editPAN.setVisibility(View.VISIBLE);
 
             Uri selectedImage = data.getData();
-            imgPAN.setImageURI(selectedImage);
-            Bitmap bitmap = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            uploadImage(picturePath);
+
+            imgPAN.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+
         } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
 
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
@@ -806,17 +823,16 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             editFront.setVisibility(View.VISIBLE);
 
             Uri selectedImage = data.getData();
-            imgF.setImageURI(selectedImage);
-            Bitmap bitmap = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            uploadImage(picturePath);
+
+            imgF.setImageBitmap(BitmapFactory.decodeFile(picturePath));
         } else  if (requestCode == CAMERA_PIC_REQUEST1) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
             my_alert.setTitle("PAN Card Uploaded Successfully");
@@ -833,7 +849,9 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             editPAN.setVisibility(View.VISIBLE);
 
             Bitmap image = (Bitmap) data.getExtras().get("data");
-            imgPAN.setImageBitmap(image);
+            String path = getRealPathFromURI(getImageUri(this,image));
+            imgPAN.setImageBitmap(BitmapFactory.decodeFile(path));
+            uploadImage(path);
 
         } else  if (requestCode == CAMERA_PIC_REQUEST2) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
@@ -851,7 +869,9 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             editFront.setVisibility(View.VISIBLE);
 
             Bitmap image = (Bitmap) data.getExtras().get("data");
-            imgF.setImageBitmap(image);
+            String path = getRealPathFromURI(getImageUri(this,image));
+            imgF.setImageBitmap(BitmapFactory.decodeFile(path));
+            uploadImage(path);
         }
     }
     //-------------------------------------------------------------------------------------------------------------------
@@ -1331,11 +1351,11 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                         JSONObject obj = imageList.getJSONObject(i);
                         String imageType = obj.getString("image_type");
 
-                        if (imageType.equals("adhar")){
+                        if (imageType.equals("rc")){
                             aadharImageURL = obj.getString("image_url");
                         }
 
-                        if (imageType.equals("pan")){
+                        if (imageType.equals("rc")){
                             panImageURL = obj.getString("image_url");
                         }
 
@@ -1351,5 +1371,86 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             }
         });
         mQueue.add(request);
+    }
+
+    @NonNull
+    private MultipartBody.Part prepareFilePart(String partName, Uri fileUri) {
+
+        Log.i("file uri: ", String.valueOf(fileUri));
+        // use the FileUtils to get the actual file by uri
+        File file = FileUtils.getFile(this, fileUri);
+
+        // create RequestBody instance from file
+        RequestBody requestFile = RequestBody.create(MediaType.parse("mp3"), file);
+
+        // MultipartBody.Part is used to send also the actual file name
+        return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
+    }
+
+
+    //--------------------------------------create image in API -------------------------------------
+    public ImageRequest imageRequest() {
+        ImageRequest imageRequest = new ImageRequest();
+        imageRequest.setUser_id(userId);
+        imageRequest.setImage_type(img_type);
+        return imageRequest;
+    }
+
+    public void saveImage(ImageRequest imageRequest) {
+        Call<ImageResponse> imageResponseCall = ApiClient.getImageService().saveImage(imageRequest);
+        imageResponseCall.enqueue(new Callback<ImageResponse>() {
+            @Override
+            public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ImageResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void uploadImage(String picPath) {
+
+        File file = new File(picPath);
+//        File file = new File(getExternalFilesDir("/").getAbsolutePath(), file);
+
+        MultipartBody.Part body = prepareFilePart("file", Uri.fromFile(file));
+
+        Call<UploadImageResponse> call = ApiClient.getImageUploadService().uploadImage(userId,img_type,body);
+        call.enqueue(new Callback<UploadImageResponse>() {
+            @Override
+            public void onResponse(Call<UploadImageResponse> call, Response<UploadImageResponse> response) {
+                Log.i("successful:", "success");
+            }
+
+            @Override
+            public void onFailure(Call<UploadImageResponse> call, Throwable t) {
+                t.printStackTrace();
+                Log.i("failed:","failed");
+            }
+        });
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    public String getRealPathFromURI(Uri uri) {
+        String path = "";
+        if (getContentResolver() != null) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            if (cursor != null) {
+                cursor.moveToFirst();
+                int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                path = cursor.getString(idx);
+                cursor.close();
+            }
+        }
+        return path;
     }
 }
