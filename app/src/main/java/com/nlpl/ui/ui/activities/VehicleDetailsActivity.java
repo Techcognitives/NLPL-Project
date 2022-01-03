@@ -719,6 +719,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
                         vehicleNumberEdit.setText(vehicleNumberAPI);
 
+
                         if (vehicleTypeAPI.equals("Open")){
                             openType.setBackgroundResource(R.drawable.image_view_border_selected);
                             closedType.setBackgroundResource(R.drawable.image_view_border);
