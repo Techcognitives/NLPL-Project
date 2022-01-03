@@ -72,6 +72,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     TextView textInsurance, editInsurance;
     int GET_FROM_GALLERY = 0;
     int GET_FROM_GALLERY1 = 1;
+    int CAMERA_PIC_REQUEST1 = 2;
+    int CAMERA_PIC_REQUEST2 = 12;
 
     private UserService userService;
     private AddTruckService addTruckService;
@@ -173,6 +175,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 camera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
                         chooseDialog.dismiss();
                     }
                 });
@@ -212,6 +216,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 camera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
                         chooseDialog.dismiss();
                     }
                 });
@@ -250,6 +256,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 camera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST2);
                         chooseDialog.dismiss();
                     }
                 });
@@ -288,6 +296,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 camera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST2);
                         chooseDialog.dismiss();
                     }
                 });
@@ -454,6 +464,54 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+        }else  if (requestCode == CAMERA_PIC_REQUEST1) {
+
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
+            my_alert.setTitle("RC Uploaded Successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            my_alert.show();
+
+            textRC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadRC.setVisibility(View.INVISIBLE);
+            editRC.setVisibility(View.VISIBLE);
+
+            isRcUploaded=true;
+            String vehicleNum = vehicleNumberEdit.getText().toString();
+            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected ){
+                okVehicleDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            imgRC.setImageBitmap(image);
+
+        } else  if (requestCode == CAMERA_PIC_REQUEST2) {
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
+            my_alert.setTitle("Insurance Uploaded Successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            my_alert.show();
+            textInsurance.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadInsurance.setVisibility(View.INVISIBLE);
+            editInsurance.setVisibility(View.VISIBLE);
+
+            isInsurance=true;
+            String vehicleNum = vehicleNumberEdit.getText().toString();
+            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected ){
+                okVehicleDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            imgI.setImageBitmap(image);
+
         }
     }
 

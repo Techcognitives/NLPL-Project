@@ -74,7 +74,7 @@ public class BankDetailsActivity extends AppCompatActivity {
     int GET_FROM_GALLERY=0;
     int CAMERA_PIC_REQUEST1 = 1;
     ImageView cancelledCheckImage;
-    Boolean isEdit;
+    Boolean isEdit, isImgUploaded=false;
 
     RadioButton canceledCheckRadioButton, acDetailsRadioButton;
     String bankId, mobile;
@@ -252,6 +252,7 @@ public class BankDetailsActivity extends AppCompatActivity {
             uploadCC.setVisibility(View.INVISIBLE);
             editCC.setVisibility(View.VISIBLE);
 
+            isImgUploaded = true;
 
             Uri selectedImage = data.getData();
             cancelledCheckImage.setImageURI(selectedImage);
@@ -267,7 +268,7 @@ public class BankDetailsActivity extends AppCompatActivity {
             }
         } else if (requestCode == CAMERA_PIC_REQUEST1){
             AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
-            my_alert.setTitle("Canceled Check uploaded successfully");
+            my_alert.setTitle("Cancelled cheque uploaded successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -279,6 +280,8 @@ public class BankDetailsActivity extends AppCompatActivity {
             textCC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadCC.setVisibility(View.INVISIBLE);
             editCC.setVisibility(View.VISIBLE);
+
+            isImgUploaded = true;
 
             Bitmap image = (Bitmap) data.getExtras().get("data");
             cancelledCheckImage.setImageBitmap(image);
@@ -459,7 +462,14 @@ public class BankDetailsActivity extends AppCompatActivity {
                 canceledCheckBlurImage.setVisibility(View.GONE);
                 accountDetailsBlurImage.setVisibility(View.VISIBLE);
 
-                uploadCC.setEnabled(true);
+                if (isImgUploaded){
+                    editCC.setVisibility(View.VISIBLE);
+                    uploadCC.setVisibility(View.INVISIBLE);
+                } else {
+                    uploadCC.setEnabled(true);
+                    uploadCC.setVisibility(View.VISIBLE);
+                    editCC.setVisibility(View.INVISIBLE);
+                }
                 break;
 
             case R.id.bank_details_ac_details_radio_button:
@@ -478,8 +488,15 @@ public class BankDetailsActivity extends AppCompatActivity {
                 canceledCheckBlurImage.setVisibility(View.VISIBLE);
                 accountDetailsBlurImage.setVisibility(View.GONE);
 
-                uploadCC.setEnabled(false);
-                editCC.setVisibility(View.GONE);
+                if (isImgUploaded){
+                    editCC.setVisibility(View.VISIBLE);
+                    uploadCC.setVisibility(View.INVISIBLE);
+                } else {
+                    uploadCC.setEnabled(false);
+                    uploadCC.setVisibility(View.VISIBLE);
+                    editCC.setVisibility(View.INVISIBLE);
+                }
+
                 break;
         }
     }
