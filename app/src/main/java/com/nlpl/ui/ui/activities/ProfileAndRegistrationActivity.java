@@ -574,42 +574,42 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 }
                 break;
 
-//            case R.id.profile_registration_truck_details:
-//                if (isTruckDetailsDone.equals("1")){
-//                    getTruckList();
-//                    if (isTruckExpanded==false){
-//                        isTruckExpanded=true;
-//
-//                        vehicleDone.setVisibility(View.VISIBLE);
-//                        addTruck.setVisibility(View.VISIBLE);
-//
-//                        if (isPersonalExpanded||isBankExpanded||isTruckExpanded) {
-//            isPersonalExpanded=false;
-//            isBankExpanded=false;
-//            isDriverExpanded=false;
-//                            bankDone.setVisibility(View.GONE);
-//                            addBankDetails.setVisibility(View.GONE);
-//                            personal_done.setVisibility(View.GONE);
-//                            driverDone.setVisibility(View.GONE);
-//                            addCompany.setVisibility(View.GONE);
-//                            addDriver.setVisibility(View.GONE);
-//                        }
-//
-//                    } else {
-//                        isTruckExpanded=false;
-//                        vehicleDone.setVisibility(View.GONE);
-//                        addTruck.setVisibility(View.GONE);
-//                    }
-//
-//                } else {
-//                    Intent intent2 = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
-//                    intent2.putExtra("userId", userId);
-//                    intent2.putExtra("isEdit",false);
-//                    intent2.putExtra("mobile", phone);
-//                    startActivity(intent2);
-//                }
-//
-//                break;
+            case R.id.profile_registration_truck_details:
+                if (isTruckDetailsDone.equals("1")){
+                    getTruckList();
+                    if (isTruckExpanded==false){
+                        isTruckExpanded=true;
+
+                        vehicleDone.setVisibility(View.VISIBLE);
+                        addTruck.setVisibility(View.VISIBLE);
+
+                        if (isPersonalExpanded||isBankExpanded||isTruckExpanded) {
+            isPersonalExpanded=false;
+            isBankExpanded=false;
+            isDriverExpanded=false;
+                            bankDone.setVisibility(View.GONE);
+                            addBankDetails.setVisibility(View.GONE);
+                            personal_done.setVisibility(View.GONE);
+                            driverDone.setVisibility(View.GONE);
+                            addCompany.setVisibility(View.GONE);
+                            addDriver.setVisibility(View.GONE);
+                        }
+
+                    } else {
+                        isTruckExpanded=false;
+                        vehicleDone.setVisibility(View.GONE);
+                        addTruck.setVisibility(View.GONE);
+                    }
+
+                } else {
+                    Intent intent2 = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
+                    intent2.putExtra("userId", userId);
+                    intent2.putExtra("isEdit",false);
+                    intent2.putExtra("mobile", phone);
+                    startActivity(intent2);
+                }
+
+                break;
 
             case R.id.profile_registration_driver_details:
                 getDriverDetailsList();
@@ -670,14 +670,14 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 startActivity(intent2);
                 break;
 
-//            case R.id.addTruck:
-//                Intent intent3 = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
-//                intent3.putExtra("userId", userId);
-//                intent3.putExtra("isEdit",false);
-//                intent3.putExtra("mobile", phone);
-//                startActivity(intent3);
-//                break;
-//
+            case R.id.addTruck:
+                Intent intent3 = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
+                intent3.putExtra("userId", userId);
+                intent3.putExtra("isEdit",false);
+                intent3.putExtra("mobile", phone);
+                startActivity(intent3);
+                break;
+
             case R.id.addDriverDone:
                 Intent intent4 = new Intent(ProfileAndRegistrationActivity.this, DriverDetailsActivity.class);
                 intent4.putExtra("userId", userId);

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.ui.activities.VehicleDetailsActivity">
 
-    <EditText
+    <TextView
         android:id="@+id/vehicle_details_select_capacity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
         app:layout_constraintStart_toEndOf="@+id/vehicle_details_select_feet"
         app:layout_constraintTop_toTopOf="@+id/vehicle_details_select_feet" />
 
-    <EditText
+    <TextView
         android:id="@+id/vehicle_details_select_feet"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vehicle_details_action_bar" />
 
-    <EditText
+    <TextView
         android:id="@+id/vehicle_details_select_model"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -160,50 +160,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/vehicle_details_closed_type"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/vehicle_details_closed_type" />
-
-    <TextView
-        android:id="@+id/vehicle_details_open_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/open"
-        android:layout_marginTop="3dp"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/vehicle_details_open_type"
-        app:layout_constraintStart_toStartOf="@+id/vehicle_details_open_type"
-        app:layout_constraintTop_toBottomOf="@+id/vehicle_details_open_type" />
-
-    <TextView
-        android:id="@+id/vehicle_details_closed_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/closed"
-        android:layout_marginTop="3dp"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/vehicle_details_open_text"
-        app:layout_constraintEnd_toEndOf="@+id/vehicle_details_closed_type"
-        app:layout_constraintStart_toStartOf="@+id/vehicle_details_closed_type"
-        app:layout_constraintTop_toTopOf="@+id/vehicle_details_open_text" />
-
-    <TextView
-        android:id="@+id/vehicle_details_tarpaulin_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/tarpaulin"
-        android:layout_marginTop="3dp"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/vehicle_details_closed_text"
-        app:layout_constraintEnd_toEndOf="@+id/vehicle_details_tarpaulin_type"
-        app:layout_constraintStart_toStartOf="@+id/vehicle_details_tarpaulin_type"
-        app:layout_constraintTop_toTopOf="@+id/vehicle_details_closed_text" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/vehicle_details_rc_book_constrain"
@@ -423,6 +379,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:text="@string/open"
+        android:buttonTint="@color/button_blue"
+        android:onClick="onClickRadioButtons"
         app:layout_constraintEnd_toEndOf="@+id/vehicle_details_open_type"
         app:layout_constraintStart_toStartOf="@+id/vehicle_details_open_type"
         app:layout_constraintTop_toBottomOf="@+id/vehicle_details_open_type" />
@@ -432,6 +390,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/closed"
+        android:buttonTint="@color/button_blue"
+        android:onClick="onClickRadioButtons"
         app:layout_constraintBottom_toBottomOf="@+id/open_radio_btn"
         app:layout_constraintEnd_toEndOf="@+id/vehicle_details_closed_type"
         app:layout_constraintStart_toStartOf="@+id/vehicle_details_closed_type"
@@ -442,6 +402,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/tarpaulin"
+        android:buttonTint="@color/button_blue"
+        android:onClick="onClickRadioButtons"
         app:layout_constraintBottom_toBottomOf="@+id/closed_radio_btn"
         app:layout_constraintEnd_toEndOf="@+id/vehicle_details_tarpaulin_type"
         app:layout_constraintStart_toStartOf="@+id/vehicle_details_tarpaulin_type"
