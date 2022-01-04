@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.ui.activities.VehicleDetailsActivity">
 
+
     <TextView
         android:id="@+id/vehicle_details_select_capacity"
         android:layout_width="0dp"
