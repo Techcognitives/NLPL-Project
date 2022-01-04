@@ -125,6 +125,7 @@ public class BankDetailsActivity extends AppCompatActivity {
             }
         });
 
+
         bankName = (EditText) findViewById(R.id.bank_details_person_name_text_edit);
         accountNo = (EditText) findViewById(R.id.bank_details_account_number_edit);
         reAccount = (EditText) findViewById(R.id.bank_details_reenter_account_number_edit);
@@ -144,6 +145,17 @@ public class BankDetailsActivity extends AppCompatActivity {
 
         bankName.setFilters(new InputFilter[]{filter});
         ifscCode.setFilters(new InputFilter[]{filter});
+        if (isEdit){
+            okButton.setEnabled(true);
+            okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            uploadCC.setVisibility(View.INVISIBLE);
+            editCC.setVisibility(View.VISIBLE);
+            textCC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            getBankDetails();
+        }
+
+        bankName.setFilters(new InputFilter[] { filter });
+        ifscCode.setFilters(new InputFilter[] { filter });
 
         bankName.addTextChangedListener(bankDetailsWatcher);
         accountNo.addTextChangedListener(bankDetailsWatcher);
@@ -521,6 +533,11 @@ public class BankDetailsActivity extends AppCompatActivity {
                     okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 }
 
+                if (isEdit){
+                    uploadCC.setVisibility(View.INVISIBLE);
+                    editCC.setVisibility(View.VISIBLE);
+                }
+
                 if (isImgUploaded) {
                     okButton.setEnabled(true);
                     okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -553,6 +570,10 @@ public class BankDetailsActivity extends AppCompatActivity {
                 canceledCheckBlurImage.setVisibility(View.VISIBLE);
                 accountDetailsBlurImage.setVisibility(View.GONE);
 
+                if (isEdit){
+                    uploadCC.setVisibility(View.INVISIBLE);
+                    editCC.setVisibility(View.VISIBLE);
+                }
 
                 String bankName1 = bankName.getText().toString().trim();
                 String accNo1 = accountNo.getText().toString().trim();
