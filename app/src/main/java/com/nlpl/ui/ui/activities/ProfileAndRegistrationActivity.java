@@ -395,7 +395,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         model.setTruck_type(obj.getString("truck_type"));
                         model.setVehicle_type(obj.getString("vehicle_type"));
                         model.setTruck_ft(obj.getString("truck_ft"));
-                        model.setTruck_carrying_capacity("truck_carrying_capacity");
+                        model.setTruck_carrying_capacity(obj.getString("truck_carrying_capacity"));
                         model.setRc_book(obj.getString("rc_book"));
                         model.setVehicle_insurance(obj.getString("vehicle_insurance"));
                         model.setTruck_id(obj.getString("truck_id"));

@@ -57,7 +57,7 @@ public class OtpCodeActivity extends AppCompatActivity {
     String mobile, otpId;
     EditText otp1, otp2, otp3, otp4, otp5, otp6;
     Button otpButton;
-    String mobileNoFirebase,  userId, userIdAPI, name, nameAPI, phone, isRegistrationDone, isRegistrationDoneAPI, pinCode, pinCodeAPI, address, addressAPI, mobileNoAPI, cityAPI, city, roleAPI, role;
+    String mobileNoFirebase, otp, userId, userIdAPI, name, nameAPI, phone, isRegistrationDone, isRegistrationDoneAPI, pinCode, pinCodeAPI, address, addressAPI, mobileNoAPI, cityAPI, city, roleAPI, role;
     FirebaseAuth mAuth;
     private RequestQueue mQueue;
     ArrayList<String> arrayUserId, arrayMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
@@ -129,13 +129,13 @@ public class OtpCodeActivity extends AppCompatActivity {
 //            }
 //        }).start();
 
-//        initiateOtp();
+        initiateOtp();
         setCountdown();
 
         otpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                otp = otp1.getText().toString() + otp2.getText().toString() + otp3.getText().toString() + otp4.getText().toString() + otp5.getText().toString() + otp6.getText().toString();
+                otp = otp1.getText().toString() + otp2.getText().toString() + otp3.getText().toString() + otp4.getText().toString() + otp5.getText().toString() + otp6.getText().toString();
 
                 AlertDialog.Builder my_alert = new AlertDialog.Builder(OtpCodeActivity.this);
                 my_alert.setTitle("OTP validated successfully");
@@ -229,14 +229,14 @@ public class OtpCodeActivity extends AppCompatActivity {
                     }
                 });
                 my_alert.show();
-//                if (otp1.getText().toString().isEmpty() || otp2.getText().toString().isEmpty() || otp3.getText().toString().isEmpty() || otp4.getText().toString().isEmpty() || otp5.getText().toString().isEmpty() || otp6.getText().toString().isEmpty()) {
-//                    Toast.makeText(getApplicationContext(), "Field is blank", Toast.LENGTH_LONG).show();
-//                } else {
-//                    Log.i("OTP", otp);
-//                    Log.i("OTP ID", otpId);
-//                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpId, otp);
-//                    signInWithPhoneAuthCredential(credential);
-//                }
+                if (otp1.getText().toString().isEmpty() || otp2.getText().toString().isEmpty() || otp3.getText().toString().isEmpty() || otp4.getText().toString().isEmpty() || otp5.getText().toString().isEmpty() || otp6.getText().toString().isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Field is blank", Toast.LENGTH_LONG).show();
+                } else {
+                    Log.i("OTP", otp);
+                    Log.i("OTP ID", otpId);
+                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpId, otp);
+                    signInWithPhoneAuthCredential(credential);
+                }
             }
         });
 

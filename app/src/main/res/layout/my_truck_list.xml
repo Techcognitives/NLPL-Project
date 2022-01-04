@@ -13,6 +13,7 @@
         android:layout_marginTop="5dp"
         android:drawableStart="@drawable/success_small"
         android:text="TextView"
+        android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/my_truck_list_capacity"

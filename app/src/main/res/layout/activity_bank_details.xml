@@ -114,6 +114,7 @@
         android:layout_marginTop="10dp"
         android:paddingStart="20dp"
         android:text="@string/IFSC"
+        android:inputType="textCapCharacters"
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"

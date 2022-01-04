@@ -73,7 +73,7 @@
         android:background="@drawable/edit_text_border"
         android:ems="10"
         android:hint="@string/name_hint"
-        android:inputType="textPersonName"
+        android:inputType="textCapWords"
         android:padding="10dp"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"

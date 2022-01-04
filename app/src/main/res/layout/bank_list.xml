@@ -13,6 +13,7 @@
         android:layout_marginTop="5dp"
         android:drawableStart="@drawable/success_small"
         android:text="@string/name"
+        android:textStyle="bold"
         android:textColor="#000000"
         android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/bank_list_preview_bank_details"
