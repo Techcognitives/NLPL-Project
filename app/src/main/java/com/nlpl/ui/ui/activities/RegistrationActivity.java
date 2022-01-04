@@ -87,6 +87,32 @@ public class RegistrationActivity extends AppCompatActivity {
         selectDistrictText.addTextChangedListener(registrationWatcher);
         pinCode.addTextChangedListener(pinCodeWatcher);
         address.addTextChangedListener(registrationWatcher);
+        email_id.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                String email = email_id.getText().toString().trim();
+
+                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+                if (email.matches(emailPattern) && s.length() > 0) {
+                    email_id.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+                } else {
+                    email_id.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+                }
+
+            }
+        });
 
         mobileNoEdit.setVisibility(View.GONE);
         series.setVisibility(View.GONE);

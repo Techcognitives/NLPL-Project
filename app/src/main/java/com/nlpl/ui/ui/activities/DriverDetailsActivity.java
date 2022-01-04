@@ -29,6 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -123,6 +124,32 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         driverName.addTextChangedListener(driverWatcher);
         driverMobile.addTextChangedListener(driverWatcher);
+        driverEmailId.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                String email = driverEmailId.getText().toString().trim();
+
+                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+                if (email.matches(emailPattern) && s.length() > 0) {
+                    driverEmailId.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+                } else {
+                    driverEmailId.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+                }
+
+            }
+        });
 
         driverName.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
@@ -147,6 +174,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         mQueue = Volley.newRequestQueue(DriverDetailsActivity.this);
         if (isEdit) {
+            okDriverDetails.setBackgroundResource(R.drawable.button_active);
             uploadDL.setVisibility(View.INVISIBLE);
             uploadSelfie.setVisibility(View.INVISIBLE);
             editDS.setVisibility(View.VISIBLE);
@@ -290,8 +318,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
             }
 
             Uri selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-            Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
             cursor.moveToFirst();
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
@@ -301,7 +329,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
             driverLicenseImage.setImageURI(selectedImage);
 
-        } else  if (requestCode == CAMERA_PIC_REQUEST) {
+        } else if (requestCode == CAMERA_PIC_REQUEST) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
             my_alert.setTitle("Driver Selfie uploaded successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -318,12 +346,12 @@ public class DriverDetailsActivity extends AppCompatActivity {
             editDS.setVisibility(View.VISIBLE);
 
             Bitmap image = (Bitmap) data.getExtras().get("data");
-            String path = getRealPathFromURI(getImageUri(this,image));
+            String path = getRealPathFromURI(getImageUri(this, image));
             driverSelfieImg.setImageBitmap(BitmapFactory.decodeFile(path));
 
             uploadImage(path);
 
-        } else  if (requestCode == CAMERA_PIC_REQUEST1) {
+        } else if (requestCode == CAMERA_PIC_REQUEST1) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
             my_alert.setTitle("Driving License uploaded successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -347,7 +375,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
             }
 
             Bitmap image = (Bitmap) data.getExtras().get("data");
-            String path = getRealPathFromURI(getImageUri(this,image));
+            String path = getRealPathFromURI(getImageUri(this, image));
             driverLicenseImage.setImageBitmap(BitmapFactory.decodeFile(path));
 
             uploadImage(path);
@@ -501,7 +529,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
                         if (driverEmailAPI == null) {
 
-                        }else{
+                        } else {
                             driverEmailId.setText(driverEmailAPI);
                         }
                     }
@@ -686,7 +714,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         MultipartBody.Part body = prepareFilePart("file", Uri.fromFile(file));
 
-        Call<UploadImageResponse> call = ApiClient.getImageUploadService().uploadImage(userId,img_type,body);
+        Call<UploadImageResponse> call = ApiClient.getImageUploadService().uploadImage(userId, img_type, body);
         call.enqueue(new Callback<UploadImageResponse>() {
             @Override
             public void onResponse(Call<UploadImageResponse> call, Response<UploadImageResponse> response) {
@@ -696,7 +724,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<UploadImageResponse> call, Throwable t) {
                 t.printStackTrace();
-                Log.i("failed:","failed");
+                Log.i("failed:", "failed");
             }
         });
     }

@@ -41,6 +41,8 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.nlpl.R;
+import com.nlpl.model.UpdateUserDetails.UpdateUserPhoneNumber;
+import com.nlpl.services.UserService;
 import com.nlpl.ui.ui.adapters.OTPReceiver;
 
 import org.json.JSONArray;
@@ -51,6 +53,11 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class OtpCodeActivity extends AppCompatActivity {
 
     TextView countdown, otpTitle, reSendOtp;
@@ -60,8 +67,10 @@ public class OtpCodeActivity extends AppCompatActivity {
     String mobileNoFirebase, otp, userId, userIdAPI, name, nameAPI, phone, isRegistrationDone, isRegistrationDoneAPI, pinCode, pinCodeAPI, address, addressAPI, mobileNoAPI, cityAPI, city, roleAPI, role;
     FirebaseAuth mAuth;
     private RequestQueue mQueue;
+    private UserService userService;
     ArrayList<String> arrayUserId, arrayMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
-
+    Boolean isEditPhone;
+    String userIdBundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +81,8 @@ public class OtpCodeActivity extends AppCompatActivity {
         if (bundle != null) {
             mobile = bundle.getString("mobile");
             Log.i("Mobile No", mobile);
+            isEditPhone = bundle.getBoolean("isEditPhone");
+            userIdBundle = bundle.getString("userId");
         }
 
         countdown = findViewById(R.id.countdown);
@@ -80,6 +91,7 @@ public class OtpCodeActivity extends AppCompatActivity {
         requestPermissions();
         reSendOtp = findViewById(R.id.resend_otp);
         String enterCode = getString(R.string.enter_code);
+
         String s = mobile.substring(3, 13);
         mobileNoFirebase = mobile.substring(1, 13);
         otpTitle.setText(enterCode + "+91 " + s);
@@ -115,6 +127,13 @@ public class OtpCodeActivity extends AppCompatActivity {
         arrayRole = new ArrayList<>();
         arrayRegDone = new ArrayList<>();
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.baseURL))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        userService = retrofit.create(UserService.class);
+
 
 //        final ProgressDialog dialog = ProgressDialog.show(this, "Fetching OTP", "Please wait....", true);
 //        new Thread(new Runnable() {
@@ -129,7 +148,7 @@ public class OtpCodeActivity extends AppCompatActivity {
 //            }
 //        }).start();
 
-        initiateOtp();
+//        initiateOtp();
         setCountdown();
 
         otpButton.setOnClickListener(new View.OnClickListener() {
@@ -142,101 +161,32 @@ public class OtpCodeActivity extends AppCompatActivity {
                 my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        if (isEditPhone) {
+                            updateUserPhoneNumber(userIdBundle);
+                            Intent i8 = new Intent(OtpCodeActivity.this, ProfileAndRegistrationActivity.class);
+                            i8.putExtra("mobile2", mobileNoFirebase);
+                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(i8);
+                            overridePendingTransition(0, 0);
+                            finish();
 
-                        //------------------------------get user details by mobile Number---------------------------------
-                        //-----------------------------------Get User Details---------------------------------------
-                        String url = getString(R.string.baseURL) + "/user/get";
-                        Log.i("URL at Profile:", url);
+                        } else {
+                            checkPhoneInAPI(mobileNoFirebase);
+                        }
 
-                        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                try {
-                                    JSONArray jsonArray = response.getJSONArray("data");
-                                    for (int i = 0; i < jsonArray.length(); i++) {
-                                        JSONObject data = jsonArray.getJSONObject(i);
-                                        userIdAPI = data.getString("user_id");
-                                        mobileNoAPI = data.getString("phone_number");
-                                        pinCodeAPI = data.getString("pin_code");
-                                        nameAPI = data.getString("name");
-                                        roleAPI = data.getString("user_type");
-                                        cityAPI = data.getString("preferred_location");
-                                        addressAPI = data.getString("address");
-                                        isRegistrationDoneAPI = data.getString("isRegistration_done");
-
-                                        arrayUserId.add(userIdAPI);
-                                        arrayMobileNo.add(mobileNoAPI);
-                                        arrayAddress.add(addressAPI);
-                                        arrayRegDone.add(isRegistrationDoneAPI);
-                                        arrayName.add(nameAPI);
-                                        arrayRole.add(roleAPI);
-                                        arrayCity.add(cityAPI);
-                                        arrayPinCode.add(pinCodeAPI);
-                                    }
-
-                                    for (int j = 0; j < arrayMobileNo.size(); j++) {
-                                        if (arrayMobileNo.get(j).equals(mobileNoFirebase)) {
-                                            userId = arrayUserId.get(j);
-                                            name = arrayName.get(j);
-                                            phone = arrayMobileNo.get(j);
-                                            address = arrayAddress.get(j);
-                                            pinCode = arrayPinCode.get(j);
-                                            city = arrayCity.get(j);
-                                            role = arrayRole.get(j);
-                                            isRegistrationDone = arrayRegDone.get(j);
-                                        }
-                                    }
-
-                                            if (isRegistrationDone!=null) {
-
-                                                Log.i("userIDAPI:", userId);
-                                                Log.i("userName", name);
-                                                Log.i("isregDone:", isRegistrationDone);
-                                                Log.i("Mobile No API Matches", phone);
-
-                                                Intent i8 = new Intent(OtpCodeActivity.this, ProfileAndRegistrationActivity.class);
-                                                i8.putExtra("mobile2", phone);
-                                                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                startActivity(i8);
-                                                overridePendingTransition(0, 0);
-                                                finish();
-
-                                            } else {
-//                                            Log.i("mobile no not equal", mobileNoAPI);
-                                                Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
-                                                i8.putExtra("mobile1", mobileNoFirebase);
-                                                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                startActivity(i8);
-                                                overridePendingTransition(0, 0);
-                                                finish();
-                                            }
-//
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-
-                            }
-                        });
-                        mQueue.add(request);
-
-                        //------------------------------------------------------------------------------------------------
                         dialogInterface.dismiss();
 
                     }
                 });
                 my_alert.show();
-                if (otp1.getText().toString().isEmpty() || otp2.getText().toString().isEmpty() || otp3.getText().toString().isEmpty() || otp4.getText().toString().isEmpty() || otp5.getText().toString().isEmpty() || otp6.getText().toString().isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Field is blank", Toast.LENGTH_LONG).show();
-                } else {
-                    Log.i("OTP", otp);
-                    Log.i("OTP ID", otpId);
-                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpId, otp);
-                    signInWithPhoneAuthCredential(credential);
-                }
+//                if (otp1.getText().toString().isEmpty() || otp2.getText().toString().isEmpty() || otp3.getText().toString().isEmpty() || otp4.getText().toString().isEmpty() || otp5.getText().toString().isEmpty() || otp6.getText().toString().isEmpty()) {
+//                    Toast.makeText(getApplicationContext(), "Field is blank", Toast.LENGTH_LONG).show();
+//                } else {
+//                    Log.i("OTP", otp);
+//                    Log.i("OTP ID", otpId);
+//                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpId, otp);
+//                    signInWithPhoneAuthCredential(credential);
+//                }
             }
         });
 
@@ -440,89 +390,18 @@ public class OtpCodeActivity extends AppCompatActivity {
                     my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+                            if (isEditPhone) {
+                                updateUserPhoneNumber(mobileNoFirebase);
+                                Intent i8 = new Intent(OtpCodeActivity.this, ProfileAndRegistrationActivity.class);
+                                i8.putExtra("mobile2", mobileNoFirebase);
+                                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(i8);
+                                overridePendingTransition(0, 0);
+                                finish();
 
-                            //------------------------------get user details by mobile Number---------------------------------
-                            //-----------------------------------Get User Details---------------------------------------
-                            String url = getString(R.string.baseURL) + "/user/get";
-                            Log.i("URL at Profile:", url);
-
-                            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-                                @Override
-                                public void onResponse(JSONObject response) {
-                                    try {
-                                        JSONArray jsonArray = response.getJSONArray("data");
-                                        for (int i = 0; i < jsonArray.length(); i++) {
-                                            JSONObject data = jsonArray.getJSONObject(i);
-                                            userIdAPI = data.getString("user_id");
-                                            mobileNoAPI = data.getString("phone_number");
-                                            pinCodeAPI = data.getString("pin_code");
-                                            nameAPI = data.getString("name");
-                                            roleAPI = data.getString("user_type");
-                                            cityAPI = data.getString("preferred_location");
-                                            addressAPI = data.getString("address");
-                                            isRegistrationDoneAPI = data.getString("isRegistration_done");
-
-                                            arrayUserId.add(userIdAPI);
-                                            arrayMobileNo.add(mobileNoAPI);
-                                            arrayAddress.add(addressAPI);
-                                            arrayRegDone.add(isRegistrationDoneAPI);
-                                            arrayName.add(nameAPI);
-                                            arrayRole.add(roleAPI);
-                                            arrayCity.add(cityAPI);
-                                            arrayPinCode.add(pinCodeAPI);
-                                        }
-
-                                        for (int j = 0; j < arrayMobileNo.size(); j++) {
-                                            if (arrayMobileNo.get(j).equals(mobileNoFirebase)) {
-                                                userId = arrayUserId.get(j);
-                                                name = arrayName.get(j);
-                                                phone = arrayMobileNo.get(j);
-                                                address = arrayAddress.get(j);
-                                                pinCode = arrayPinCode.get(j);
-                                                city = arrayCity.get(j);
-                                                role = arrayRole.get(j);
-                                                isRegistrationDone = arrayRegDone.get(j);
-                                            }
-                                        }
-
-                                        if (isRegistrationDone!=null) {
-
-                                            Log.i("userIDAPI:", userId);
-                                            Log.i("userName", name);
-                                            Log.i("isregDone:", isRegistrationDone);
-                                            Log.i("Mobile No API Matches", phone);
-
-                                            Intent i8 = new Intent(OtpCodeActivity.this, ProfileAndRegistrationActivity.class);
-                                            i8.putExtra("mobile2", phone);
-                                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                            startActivity(i8);
-                                            overridePendingTransition(0, 0);
-                                            finish();
-
-                                        } else {
-//                                            Log.i("mobile no not equal", mobileNoAPI);
-                                            Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
-                                            i8.putExtra("mobile1", mobileNoFirebase);
-                                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                            startActivity(i8);
-                                            overridePendingTransition(0, 0);
-                                            finish();
-                                        }
-//
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }, new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-
-                                }
-                            });
-                            mQueue.add(request);
-
-                            //------------------------------------------------------------------------------------------------
-
+                            } else {
+                                checkMobileNumberWithOTP(mobileNoFirebase);
+                            }
                             dialogInterface.dismiss();
 
                         }
@@ -584,6 +463,202 @@ public class OtpCodeActivity extends AppCompatActivity {
 
     public void onClickBack(View view) {
         OtpCodeActivity.this.finish();
+    }
+
+    //-------------------------------- Update User Phone Number ------------------------------------
+    private void updateUserPhoneNumber(String getUserId) {
+
+        UpdateUserPhoneNumber updateUserPhoneNumber = new UpdateUserPhoneNumber(mobileNoFirebase);
+
+        Call<UpdateUserPhoneNumber> call = userService.updateUserPhoneNumber("" + getUserId, updateUserPhoneNumber);
+
+        call.enqueue(new Callback<UpdateUserPhoneNumber>() {
+            @Override
+            public void onResponse(Call<UpdateUserPhoneNumber> call, retrofit2.Response<UpdateUserPhoneNumber> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "PhoneNumber");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserPhoneNumber> call, Throwable t) {
+                Log.i("Not Successful", "PhoneNumber");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    private void checkPhoneInAPI(String getMobile) {
+        String receivedMobile = getMobile;
+        //------------------------------get user details by mobile Number---------------------------------
+        //-----------------------------------Get User Details---------------------------------------
+        String url = getString(R.string.baseURL) + "/user/get";
+        Log.i("URL at Profile:", url);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray jsonArray = response.getJSONArray("data");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject data = jsonArray.getJSONObject(i);
+                        userIdAPI = data.getString("user_id");
+                        mobileNoAPI = data.getString("phone_number");
+                        pinCodeAPI = data.getString("pin_code");
+                        nameAPI = data.getString("name");
+                        roleAPI = data.getString("user_type");
+                        cityAPI = data.getString("preferred_location");
+                        addressAPI = data.getString("address");
+                        isRegistrationDoneAPI = data.getString("isRegistration_done");
+
+                        arrayUserId.add(userIdAPI);
+                        arrayMobileNo.add(mobileNoAPI);
+                        arrayAddress.add(addressAPI);
+                        arrayRegDone.add(isRegistrationDoneAPI);
+                        arrayName.add(nameAPI);
+                        arrayRole.add(roleAPI);
+                        arrayCity.add(cityAPI);
+                        arrayPinCode.add(pinCodeAPI);
+                    }
+
+                    for (int j = 0; j < arrayMobileNo.size(); j++) {
+                        if (arrayMobileNo.get(j).equals(receivedMobile)) {
+                            userId = arrayUserId.get(j);
+                            name = arrayName.get(j);
+                            phone = arrayMobileNo.get(j);
+                            address = arrayAddress.get(j);
+                            pinCode = arrayPinCode.get(j);
+                            city = arrayCity.get(j);
+                            role = arrayRole.get(j);
+                            isRegistrationDone = arrayRegDone.get(j);
+                        }
+                    }
+
+                    if (isRegistrationDone != null) {
+
+                        Log.i("userIDAPI:", userId);
+                        Log.i("userName", name);
+                        Log.i("isregDone:", isRegistrationDone);
+                        Log.i("Mobile No API Matches", phone);
+
+                        Intent i8 = new Intent(OtpCodeActivity.this, ProfileAndRegistrationActivity.class);
+                        i8.putExtra("mobile2", phone);
+                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i8);
+                        overridePendingTransition(0, 0);
+                        finish();
+
+                    } else {
+//                                            Log.i("mobile no not equal", mobileNoAPI);
+                        Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
+                        i8.putExtra("mobile1", receivedMobile);
+                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i8);
+                        overridePendingTransition(0, 0);
+                        finish();
+                    }
+//
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        mQueue.add(request);
+
+        //------------------------------------------------------------------------------------------------
+
+    }
+
+    private void checkMobileNumberWithOTP(String mobileReceived) {
+        String getMobileReceived = mobileReceived;
+        //------------------------------get user details by mobile Number---------------------------------
+        //-----------------------------------Get User Details---------------------------------------
+        String url = getString(R.string.baseURL) + "/user/get";
+        Log.i("URL at Profile:", url);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray jsonArray = response.getJSONArray("data");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject data = jsonArray.getJSONObject(i);
+                        userIdAPI = data.getString("user_id");
+                        mobileNoAPI = data.getString("phone_number");
+                        pinCodeAPI = data.getString("pin_code");
+                        nameAPI = data.getString("name");
+                        roleAPI = data.getString("user_type");
+                        cityAPI = data.getString("preferred_location");
+                        addressAPI = data.getString("address");
+                        isRegistrationDoneAPI = data.getString("isRegistration_done");
+
+                        arrayUserId.add(userIdAPI);
+                        arrayMobileNo.add(mobileNoAPI);
+                        arrayAddress.add(addressAPI);
+                        arrayRegDone.add(isRegistrationDoneAPI);
+                        arrayName.add(nameAPI);
+                        arrayRole.add(roleAPI);
+                        arrayCity.add(cityAPI);
+                        arrayPinCode.add(pinCodeAPI);
+                    }
+
+                    for (int j = 0; j < arrayMobileNo.size(); j++) {
+                        if (arrayMobileNo.get(j).equals(getMobileReceived)) {
+                            userId = arrayUserId.get(j);
+                            name = arrayName.get(j);
+                            phone = arrayMobileNo.get(j);
+                            address = arrayAddress.get(j);
+                            pinCode = arrayPinCode.get(j);
+                            city = arrayCity.get(j);
+                            role = arrayRole.get(j);
+                            isRegistrationDone = arrayRegDone.get(j);
+                        }
+                    }
+
+                    if (isRegistrationDone != null) {
+
+                        Log.i("userIDAPI:", userId);
+                        Log.i("userName", name);
+                        Log.i("isregDone:", isRegistrationDone);
+                        Log.i("Mobile No API Matches", phone);
+
+                        Intent i8 = new Intent(OtpCodeActivity.this, ProfileAndRegistrationActivity.class);
+                        i8.putExtra("mobile2", phone);
+                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i8);
+                        overridePendingTransition(0, 0);
+                        finish();
+
+                    } else {
+//                                            Log.i("mobile no not equal", mobileNoAPI);
+                        Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
+                        i8.putExtra("mobile1", getMobileReceived);
+                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i8);
+                        overridePendingTransition(0, 0);
+                        finish();
+                    }
+//
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        mQueue.add(request);
+
+        //------------------------------------------------------------------------------------------------
+
     }
 
 

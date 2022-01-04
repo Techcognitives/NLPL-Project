@@ -52,6 +52,7 @@ public class LogInActivity extends AppCompatActivity {
                             dialogInterface.dismiss();
                             Intent i5 = new Intent(LogInActivity.this, OtpCodeActivity.class);
                             i5.putExtra("mobile", mobile);
+                            i5.putExtra("isEditPhone", false);
                             startActivity(i5);
                             overridePendingTransition(0, 0);
                         }

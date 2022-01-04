@@ -175,6 +175,32 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         pinCode.addTextChangedListener(pinCodeWatcher);
         address.addTextChangedListener(proofAndPersonalWatcher);
         mobileEdit.addTextChangedListener(mobileNumberTextWatcher);
+        emailIdEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                String email = emailIdEdit.getText().toString().trim();
+
+                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+                if (email.matches(emailPattern) && s.length() > 0) {
+                    emailIdEdit.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+                } else {
+                    emailIdEdit.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+                }
+
+            }
+        });
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.baseURL))
@@ -682,10 +708,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             updateUserEmailId();
         }
 
-        if (mobileEdit.getText().toString() != null) {
-            updateUserPhoneNumber();
-        }
-
         if (address.getText().toString() != null) {
             updateUserAddress();
         }
@@ -706,22 +728,47 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             updateUserType();
         }
 
-        AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
-        my_alert.setTitle("Details updated Successfully");
-        my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-                Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, ProfileAndRegistrationActivity.class);
-                i8.putExtra("mobile2", mobileAPI);
-                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i8);
-                overridePendingTransition(0, 0);
-                PersonalDetailsAndIdProofActivity.this.finish();
-            }
-        });
-        my_alert.show();
-
+        if (mobileString.equals(mobileEdit.getText().toString()) || mobileEdit.getText().toString().isEmpty()){
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
+            my_alert.setTitle("Details updated Successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                    Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, ProfileAndRegistrationActivity.class);
+                    i8.putExtra("mobile2", mobileAPI);
+                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i8);
+                    overridePendingTransition(0, 0);
+                    PersonalDetailsAndIdProofActivity.this.finish();
+                }
+            });
+            my_alert.show();
+        }else{
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
+            my_alert.setTitle("Do you really want to update your phone number?");
+            my_alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                    Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, OtpCodeActivity.class);
+                    i8.putExtra("mobile", "+91"+mobileEdit.getText().toString());
+                    i8.putExtra("isEditPhone", true);
+                    i8.putExtra("userId", userId);
+                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i8);
+                    overridePendingTransition(0, 0);
+                    PersonalDetailsAndIdProofActivity.this.finish();
+                }
+            });
+            my_alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            my_alert.show();
+        }
 //            RegistrationActivity.this.finish();
     }
 
