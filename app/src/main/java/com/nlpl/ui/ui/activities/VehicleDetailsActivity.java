@@ -896,6 +896,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 selectModelDialog.setContentView(R.layout.dialog_spinner);
                 selectModelDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 selectModelDialog.show();
+                TextView model_title = selectModelDialog.findViewById(R.id.dialog_spinner_title);
+                model_title.setText("Select Vehicle Model");
 
                 ListView modelList = (ListView) selectModelDialog.findViewById(R.id.list_state);
                 ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this,R.layout.custom_list_row, arrayVehicleType);
@@ -911,6 +913,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                         selectFeetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         selectFeetDialog.show();
 
+                        TextView feetTitle = selectFeetDialog.findViewById(R.id.dialog_spinner_title);
+                        feetTitle.setText("Select Vehicle Feet");
+
                         ListView capacityList = (ListView) selectFeetDialog.findViewById(R.id.list_state);
                         ArrayAdapter<String> adapter3 = new ArrayAdapter<>(VehicleDetailsActivity.this,R.layout.custom_list_row, arrayTruckFt);
                         capacityList.setAdapter(adapter3);
@@ -924,6 +929,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                                 selectCapacityDialog.setContentView(R.layout.dialog_spinner);
                                 selectCapacityDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                                 selectCapacityDialog.show();
+
+                                TextView capacity_title = selectCapacityDialog.findViewById(R.id.dialog_spinner_title);
+                                capacity_title.setText("Select Vehicle Capacity");
 
                                 ListView capacityList = (ListView) selectCapacityDialog.findViewById(R.id.list_state);
                                 ArrayAdapter<String> adapter2 = new ArrayAdapter<>(VehicleDetailsActivity.this,R.layout.custom_list_row, arrayCapacity);
@@ -955,6 +963,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 selectFeetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 selectFeetDialog.show();
 
+                TextView feetTitle = selectFeetDialog.findViewById(R.id.dialog_spinner_title);
+                feetTitle.setText("Select Vehicle Feet");
+
                 ListView feetList = (ListView) selectFeetDialog.findViewById(R.id.list_state);
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.custom_list_row, arrayTruckFt);
                 feetList.setAdapter(adapter);
@@ -976,6 +987,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 selectCapacityDialog.setContentView(R.layout.dialog_spinner);
                 selectCapacityDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 selectCapacityDialog.show();
+
+                TextView capacity_title = selectCapacityDialog.findViewById(R.id.dialog_spinner_title);
+                capacity_title.setText("Select Vehicle Capacity");
 
                 ListView capacityList = (ListView) selectCapacityDialog.findViewById(R.id.list_state);
                 ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this,R.layout.custom_list_row, arrayCapacity);
