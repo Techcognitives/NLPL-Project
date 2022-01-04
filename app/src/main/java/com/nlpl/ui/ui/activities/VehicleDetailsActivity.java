@@ -918,7 +918,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                         capacityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                selectCapacity.setText(adapter3.getItem(i));
+                                selectFt.setText(adapter3.getItem(i));
 
                                 selectCapacityDialog = new Dialog(VehicleDetailsActivity.this);
                                 selectCapacityDialog.setContentView(R.layout.dialog_spinner);
