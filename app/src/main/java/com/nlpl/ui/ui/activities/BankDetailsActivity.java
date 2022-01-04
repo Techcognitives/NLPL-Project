@@ -284,7 +284,7 @@ public class BankDetailsActivity extends AppCompatActivity {
 
             uploadImage(picturePath);
 
-            cancelledCheckImage.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            cancelledCheckImage.setImageURI(selectedImage);
 
         } else if (requestCode == CAMERA_PIC_REQUEST1){
 

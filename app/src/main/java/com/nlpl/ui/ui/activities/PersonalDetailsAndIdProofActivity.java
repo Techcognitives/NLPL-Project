@@ -853,7 +853,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
             uploadImage(picturePath);
 
-            imgPAN.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            imgPAN.setImageURI(selectedImage);
 
         } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
 
@@ -884,7 +884,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
             uploadImage(picturePath);
 
-            imgF.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            imgF.setImageURI(selectedImage);
         } else  if (requestCode == CAMERA_PIC_REQUEST1) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
             my_alert.setTitle("PAN Card Uploaded Successfully");

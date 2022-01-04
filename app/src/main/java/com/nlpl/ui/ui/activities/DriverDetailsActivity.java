@@ -293,7 +293,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
             uploadImage(picturePath);
 
-            driverLicenseImage.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            driverLicenseImage.setImageURI(selectedImage);
 
         } else  if (requestCode == CAMERA_PIC_REQUEST) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
