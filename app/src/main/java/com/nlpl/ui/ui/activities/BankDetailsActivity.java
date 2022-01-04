@@ -139,7 +139,10 @@ public class BankDetailsActivity extends AppCompatActivity {
         mQueue = Volley.newRequestQueue(BankDetailsActivity.this);
 
         if (isEdit){
-        getBankDetails();
+            uploadCC.setVisibility(View.INVISIBLE);
+            editCC.setVisibility(View.VISIBLE);
+            textCC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            getBankDetails();
         }
 
         bankName.setFilters(new InputFilter[] { filter });
