@@ -145,14 +145,6 @@ public class BankDetailsActivity extends AppCompatActivity {
 
         bankName.setFilters(new InputFilter[]{filter});
         ifscCode.setFilters(new InputFilter[]{filter});
-        if (isEdit){
-            okButton.setEnabled(true);
-            okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            uploadCC.setVisibility(View.INVISIBLE);
-            editCC.setVisibility(View.VISIBLE);
-            textCC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-            getBankDetails();
-        }
 
         bankName.setFilters(new InputFilter[] { filter });
         ifscCode.setFilters(new InputFilter[] { filter });
@@ -183,7 +175,10 @@ public class BankDetailsActivity extends AppCompatActivity {
         ifscCode.setEnabled(false);
 
         if (isEdit) {
+            isImgUploaded = true;
             getImageURL();
+            okButton.setEnabled(true);
+            okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
             uploadCC.setVisibility(View.INVISIBLE);
             editCC.setVisibility(View.VISIBLE);
             previewCancelledCheque.setVisibility(View.VISIBLE);
@@ -523,22 +518,12 @@ public class BankDetailsActivity extends AppCompatActivity {
                 canceledCheckBlurImage.setVisibility(View.GONE);
                 accountDetailsBlurImage.setVisibility(View.VISIBLE);
 
-                String bankName2 = bankName.getText().toString().trim();
-                String accNo2 = accountNo.getText().toString().trim();
-                String reAccNo2 = reAccount.getText().toString().trim();
-                String ifscCode2 = ifscCode.getText().toString().trim();
-
-                if (!bankName2.isEmpty() && !accNo2.isEmpty() && !reAccNo2.isEmpty() && !ifscCode2.isEmpty()) {
+                if (isEdit){
                     okButton.setEnabled(true);
                     okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                }
-
-                if (isEdit){
                     uploadCC.setVisibility(View.INVISIBLE);
                     editCC.setVisibility(View.VISIBLE);
-                }
-
-                if (isImgUploaded) {
+                } else if (isImgUploaded) {
                     okButton.setEnabled(true);
                     okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                     editCC.setVisibility(View.VISIBLE);
@@ -571,21 +556,32 @@ public class BankDetailsActivity extends AppCompatActivity {
                 accountDetailsBlurImage.setVisibility(View.GONE);
 
                 if (isEdit){
+
+                    String bankName1 = bankName.getText().toString().trim();
+                    String accNo1 = accountNo.getText().toString().trim();
+                    String reAccNo1 = reAccount.getText().toString().trim();
+                    String ifscCode1 = ifscCode.getText().toString().trim();
+
+                    if (!bankName1.isEmpty() && !accNo1.isEmpty() && !reAccNo1.isEmpty() && !ifscCode1.isEmpty()) {
+
+                        okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                        okButton.setEnabled(true);
+
+                    } else {
+                        okButton.setBackground(getResources().getDrawable(R.drawable.button_de_active));
+                        okButton.setEnabled(false);
+                    }
+
+                    if (accNo1.equals(reAccNo1)) {
+                        reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+                    } else {
+                        reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+                    }
+//                    okButton.setEnabled(true);
+//                    okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                     uploadCC.setVisibility(View.INVISIBLE);
                     editCC.setVisibility(View.VISIBLE);
-                }
-
-                String bankName1 = bankName.getText().toString().trim();
-                String accNo1 = accountNo.getText().toString().trim();
-                String reAccNo1 = reAccount.getText().toString().trim();
-                String ifscCode1 = ifscCode.getText().toString().trim();
-
-                if (!bankName1.isEmpty() && !accNo1.isEmpty() && !reAccNo1.isEmpty() && !ifscCode1.isEmpty()) {
-                    okButton.setEnabled(true);
-                    okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                }
-
-                if (isImgUploaded) {
+                } else if (isImgUploaded) {
                     okButton.setEnabled(false);
                     okButton.setBackground(getResources().getDrawable(R.drawable.button_de_active));
                     editCC.setVisibility(View.VISIBLE);
@@ -597,7 +593,6 @@ public class BankDetailsActivity extends AppCompatActivity {
                     editCC.setVisibility(View.INVISIBLE);
                     previewCancelledCheque.setVisibility(View.INVISIBLE);
                 }
-
                 break;
         }
     }

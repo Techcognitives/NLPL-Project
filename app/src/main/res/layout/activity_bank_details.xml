@@ -130,7 +130,7 @@
         android:layout_marginEnd="20dp"
         android:background="@drawable/edit_text_border"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="textCapCharacters"
         android:onClick="onAccCheck"
         android:padding="10dp"
         android:text=""
