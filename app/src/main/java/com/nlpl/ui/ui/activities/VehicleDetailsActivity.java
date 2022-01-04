@@ -506,7 +506,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
             uploadImage(picturePath);
 
-            imgI.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            imgI.setImageURI(selectedImage);
 
         }else  if (requestCode == CAMERA_PIC_REQUEST1) {
 
