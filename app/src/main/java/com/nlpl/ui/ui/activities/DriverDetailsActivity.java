@@ -147,6 +147,12 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         mQueue = Volley.newRequestQueue(DriverDetailsActivity.this);
         if (isEdit) {
+            uploadDL.setVisibility(View.INVISIBLE);
+            uploadSelfie.setVisibility(View.INVISIBLE);
+            editDS.setVisibility(View.VISIBLE);
+            editDL.setVisibility(View.VISIBLE);
+            textDS.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            textDL.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             getDriverDetails();
         }
 

@@ -184,6 +184,12 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
         mQueue = Volley.newRequestQueue(VehicleDetailsActivity.this);
         if (isEdit){
+            uploadRC.setVisibility(View.INVISIBLE);
+            uploadInsurance.setVisibility(View.INVISIBLE);
+            editInsurance.setVisibility(View.VISIBLE);
+            editRC.setVisibility(View.VISIBLE);
+            textRC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            textInsurance.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             getVehicleDetails();
         }
 
