@@ -3,7 +3,10 @@ package com.nlpl.model.ModelForRecyclerView;
 public class TruckModel {
     private String user_id;
     private String vehicle_no;
-    private String vehicle_body_type;
+    private String truck_type;
+    private String vehicle_type;
+    private String truck_ft;
+    private String truck_carrying_capacity;
     private String rc_book;
     private String vehicle_insurance;
     private String truck_id;
@@ -24,12 +27,36 @@ public class TruckModel {
         this.vehicle_no = vehicle_no;
     }
 
-    public String getVehicle_body_type() {
-        return vehicle_body_type;
+    public String getTruck_type() {
+        return truck_type;
     }
 
-    public void setVehicle_body_type(String vehicle_body_type) {
-        this.vehicle_body_type = vehicle_body_type;
+    public void setTruck_type(String truck_type) {
+        this.truck_type = truck_type;
+    }
+
+    public String getVehicle_type() {
+        return vehicle_type;
+    }
+
+    public void setVehicle_type(String vehicle_type) {
+        this.vehicle_type = vehicle_type;
+    }
+
+    public String getTruck_ft() {
+        return truck_ft;
+    }
+
+    public void setTruck_ft(String truck_ft) {
+        this.truck_ft = truck_ft;
+    }
+
+    public String getTruck_carrying_capacity() {
+        return truck_carrying_capacity;
+    }
+
+    public void setTruck_carrying_capacity(String truck_carrying_capacity) {
+        this.truck_carrying_capacity = truck_carrying_capacity;
     }
 
     public String getRc_book() {

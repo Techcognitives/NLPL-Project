@@ -36,35 +36,40 @@ public class OTPReceiver extends BroadcastReceiver {
         SmsMessage[] smsMessages = Telephony.Sms.Intents.getMessagesFromIntent(intent);
         for (SmsMessage smsMessage : smsMessages){
             String message_body = smsMessage.getMessageBody();
-            String otp = message_body.substring(0,6);
-            Log.i("OTP is", otp);
+            try{
+                String otp = message_body.substring(0,6);
+                Log.i("OTP is", otp);
 
-            String[] allName = otp.split("", 6);
-            nameSplit = new ArrayList<>();
-            for (String sepName : allName) {
-                Log.i("Sep Name", sepName);
-                nameSplit.add(sepName);
+                String[] allName = otp.split("", 6);
+                nameSplit = new ArrayList<>();
+                for (String sepName : allName) {
+                    Log.i("Sep Name", sepName);
+                    nameSplit.add(sepName);
+                }
+                String first = (String) nameSplit.get(0);
+                String second = (String) nameSplit.get(1);
+                String third = (String) nameSplit.get(2);
+                String fourth = (String) nameSplit.get(3);
+                String fifth = (String) nameSplit.get(4);
+                String sixth = (String) nameSplit.get(5);
+
+                Log.i("First OTP", first);
+                Log.i("Second OTP", second);
+                Log.i("Third OTP", third);
+                Log.i("Fourth OTP", fourth);
+                Log.i("Fifth OTP", fifth);
+                Log.i("Sixth OTP", sixth);
+
+                otp1.setText(first);
+                otp2.setText(second);
+                otp3.setText(third);
+                otp4.setText(fourth);
+                otp5.setText(fifth);
+                otp6.setText(sixth);
+            }catch (Exception e){
+                e.printStackTrace();
             }
-            String first = (String) nameSplit.get(0);
-            String second = (String) nameSplit.get(1);
-            String third = (String) nameSplit.get(2);
-            String fourth = (String) nameSplit.get(3);
-            String fifth = (String) nameSplit.get(4);
-            String sixth = (String) nameSplit.get(5);
 
-            Log.i("First OTP", first);
-            Log.i("Second OTP", second);
-            Log.i("Third OTP", third);
-            Log.i("Fourth OTP", fourth);
-            Log.i("Fifth OTP", fifth);
-            Log.i("Sixth OTP", sixth);
-
-            otp1.setText(first);
-            otp2.setText(second);
-            otp3.setText(third);
-            otp4.setText(fourth);
-            otp5.setText(fifth);
-            otp6.setText(sixth);
         }
     }
 }

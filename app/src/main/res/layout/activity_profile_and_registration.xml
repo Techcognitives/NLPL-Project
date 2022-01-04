@@ -153,7 +153,7 @@
             android:text="@string/name"
             android:textColor="#000000"
             android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@+id/editPersonalDetails"
+            app:layout_constraintEnd_toStartOf="@+id/profile_and_registration_preview_personal_details"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -162,17 +162,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:drawableStart="@drawable/ic_edit"
+            android:drawableStart="@drawable/ic_edit_small"
             android:onClick="onClickProfileAndRegister"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:text=""
             android:textColor="#000000"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/name_done"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_and_registration_preview_personal_details"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/name_done"
-            app:layout_constraintTop_toTopOf="@+id/name_done" />
+            app:layout_constraintStart_toEndOf="@+id/profile_and_registration_preview_personal_details"
+            app:layout_constraintTop_toTopOf="@+id/profile_and_registration_preview_personal_details" />
 
         <TextView
             android:id="@+id/phone_done"
@@ -257,6 +257,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/phone_done" />
+
+        <ImageView
+            android:id="@+id/profile_and_registration_preview_personal_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClickPreviewPersonalDetails"
+            app:layout_constraintBottom_toBottomOf="@+id/name_done"
+            app:layout_constraintEnd_toStartOf="@+id/editPersonalDetails"
+            app:layout_constraintStart_toEndOf="@+id/name_done"
+            app:layout_constraintTop_toTopOf="@+id/name_done"
+            app:srcCompat="@drawable/ic_preview" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

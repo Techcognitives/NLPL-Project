@@ -8,14 +8,6 @@ public class BankModel {
     private String IFSI_CODE;
     private String bank_id;
 
-    public String getBank_id() {
-        return bank_id;
-    }
-
-    public void setBank_id(String bank_id) {
-        this.bank_id = bank_id;
-    }
-
     public String getUser_id() {
         return user_id;
     }
@@ -54,5 +46,13 @@ public class BankModel {
 
     public void setIFSI_CODE(String IFSI_CODE) {
         this.IFSI_CODE = IFSI_CODE;
+    }
+
+    public String getBank_id() {
+        return bank_id;
+    }
+
+    public void setBank_id(String bank_id) {
+        this.bank_id = bank_id;
     }
 }

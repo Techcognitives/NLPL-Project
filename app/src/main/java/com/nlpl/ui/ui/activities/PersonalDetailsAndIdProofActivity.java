@@ -106,9 +106,11 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     View panView;
 
     Button uploadPAN, uploadF;
+    Dialog previewDialogPan, previewDialogAadhar;
+    Boolean isPanAdded = false, isAadharAdded = false;
 
     TextView panCardText, editPAN, editFront, frontText, backText;
-    ImageView imgPAN, imgF;
+    ImageView imgPAN, imgF, previewPan, previewAadhar;
 
     String nameAPI, mobileAPI, addressAPI, pinCodeAPI, roleAPI, cityAPI, stateAPI, emailAPI;
 
@@ -164,6 +166,8 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         selectStateText = (TextView) personalAndAddressView.findViewById(R.id.registration_select_state);
         selectDistrictText = (TextView) personalAndAddressView.findViewById(R.id.registration_select_city);
         okButton = (Button) findViewById(R.id.personal_details_id_proof_ok_button);
+        previewPan = (ImageView) panAndAadharView.findViewById(R.id.pan_aadhar_preview_pan);
+        previewAadhar = (ImageView) panAndAadharView.findViewById(R.id.pan_aadhar_preview_aadhar);
 
         name.addTextChangedListener(proofAndPersonalWatcher);
         selectStateText.addTextChangedListener(proofAndPersonalWatcher);
@@ -190,8 +194,45 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 //            okButton.setBackground(getDrawable(R.drawable.button_de_active));
 //        }
 
+        previewDialogPan = new Dialog(PersonalDetailsAndIdProofActivity.this);
+        previewDialogPan.setContentView(R.layout.dialog_preview_images);
+        previewDialogPan.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(previewDialogPan.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.gravity = Gravity.CENTER;
+
+        previewDialogAadhar = new Dialog(PersonalDetailsAndIdProofActivity.this);
+        previewDialogAadhar.setContentView(R.layout.dialog_preview_images);
+        previewDialogAadhar.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+        lp2.copyFrom(previewDialogAadhar.getWindow().getAttributes());
+        lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.gravity = Gravity.CENTER;
+
         mQueue = Volley.newRequestQueue(PersonalDetailsAndIdProofActivity.this);
+        getImageURL();
         getUserDetails();
+
+        previewPan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                previewDialogPan.show();
+                previewDialogPan.getWindow().setAttributes(lp);
+            }
+        });
+
+        previewAadhar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                previewDialogAadhar.show();
+                previewDialogAadhar.getWindow().setAttributes(lp2);
+            }
+        });
 
         ownerButton = (RadioButton) personalAndAddressView.findViewById(R.id.registration_truck_owner);
         driverButton = (RadioButton) personalAndAddressView.findViewById(R.id.registration_driver);
@@ -450,13 +491,15 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         editPAN = panAndAadharView.findViewById(R.id.edit1);
         editFront = panAndAadharView.findViewById(R.id.editFront);
 
-        new DownloadImageTask(imgPAN).execute(panImageURL);
-        new DownloadImageTask(imgF).execute(aadharImageURL);
-
         uploadPAN.setVisibility(View.INVISIBLE);
         editPAN.setVisibility(View.VISIBLE);
+        previewPan.setVisibility(View.VISIBLE);
+        previewAadhar.setVisibility(View.VISIBLE);
         uploadF.setVisibility(View.INVISIBLE);
         editFront.setVisibility(View.VISIBLE);
+
+        frontText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+        panCardText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
 
 //        if (isPersonalDetailsDone){
 //            panCardText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
@@ -785,6 +828,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
+                    isPanAdded = true;
                     dialogInterface.dismiss();
                 }
             });
@@ -793,8 +837,13 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             panCardText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadPAN.setVisibility(View.INVISIBLE);
             editPAN.setVisibility(View.VISIBLE);
+            previewPan.setVisibility(View.VISIBLE);
+            previewAadhar.setVisibility(View.VISIBLE);
 
             Uri selectedImage = data.getData();
+            ImageView editedPan = (ImageView) previewDialogPan.findViewById(R.id.dialog_preview_image_view);
+            editedPan.setImageURI(selectedImage);
+
             String[] filePathColumn = { MediaStore.Images.Media.DATA };
             Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
             cursor.moveToFirst();
@@ -813,6 +862,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
+                    isAadharAdded = true;
                     dialogInterface.dismiss();
                 }
             });
@@ -823,6 +873,8 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             editFront.setVisibility(View.VISIBLE);
 
             Uri selectedImage = data.getData();
+            ImageView editedAadhar = (ImageView) previewDialogAadhar.findViewById(R.id.dialog_preview_image_view);
+            editedAadhar.setImageURI(selectedImage);
             String[] filePathColumn = { MediaStore.Images.Media.DATA };
             Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
             cursor.moveToFirst();
@@ -839,6 +891,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
+                    isPanAdded = true;
                     dialogInterface.dismiss();
                 }
             });
@@ -847,18 +900,23 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             panCardText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadPAN.setVisibility(View.INVISIBLE);
             editPAN.setVisibility(View.VISIBLE);
+            previewPan.setVisibility(View.VISIBLE);
+            previewAadhar.setVisibility(View.VISIBLE);
 
             Bitmap image = (Bitmap) data.getExtras().get("data");
             String path = getRealPathFromURI(getImageUri(this,image));
+            ImageView editedPan = (ImageView) previewDialogPan.findViewById(R.id.dialog_preview_image_view);
+            editedPan.setImageBitmap(BitmapFactory.decodeFile(path));
             imgPAN.setImageBitmap(BitmapFactory.decodeFile(path));
             uploadImage(path);
 
-        } else  if (requestCode == CAMERA_PIC_REQUEST2) {
+        } else if (requestCode == CAMERA_PIC_REQUEST2) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
             my_alert.setTitle("Aadhar Card Uploaded Successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
+                    isAadharAdded = true;
                     dialogInterface.dismiss();
                 }
             });
@@ -869,6 +927,8 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             editFront.setVisibility(View.VISIBLE);
 
             Bitmap image = (Bitmap) data.getExtras().get("data");
+            ImageView editedAadhar = (ImageView) previewDialogAadhar.findViewById(R.id.dialog_preview_image_view);
+            editedAadhar.setImageBitmap(image);
             String path = getRealPathFromURI(getImageUri(this,image));
             imgF.setImageBitmap(BitmapFactory.decodeFile(path));
             uploadImage(path);
@@ -1351,14 +1411,24 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                         JSONObject obj = imageList.getJSONObject(i);
                         String imageType = obj.getString("image_type");
 
-                        if (imageType.equals("rc")){
+                        if (imageType.equals("adhar")) {
                             aadharImageURL = obj.getString("image_url");
+                            new DownloadImageTask(imgF).execute(aadharImageURL);
+
+                            if (isAadharAdded == false){
+                                new DownloadImageTask((ImageView) previewDialogAadhar.findViewById(R.id.dialog_preview_image_view)).execute(aadharImageURL);
+                            }
+
+                            Log.i("IMAGE AADHAR URL", aadharImageURL);
                         }
 
-                        if (imageType.equals("rc")){
+                        if (imageType.equals("pan")) {
                             panImageURL = obj.getString("image_url");
+                            new DownloadImageTask(imgPAN).execute(panImageURL);
+                            if (isPanAdded == false){
+                                new DownloadImageTask((ImageView) previewDialogPan.findViewById(R.id.dialog_preview_image_view)).execute(panImageURL);
+                            }
                         }
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

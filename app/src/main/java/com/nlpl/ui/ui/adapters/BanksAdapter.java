@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -55,6 +56,13 @@ public class BanksAdapter extends RecyclerView.Adapter<BanksAdapter.BankViewHold
                 activity.getBankDetails(obj);
             }
         });
+
+        holder.list_preview_bank_details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.onClickPreviewBankDetails(obj);
+            }
+        });
     }
 
     @Override
@@ -69,6 +77,7 @@ public class BanksAdapter extends RecyclerView.Adapter<BanksAdapter.BankViewHold
 
     public class BankViewHolder extends RecyclerView.ViewHolder {
         private TextView list_acc_holder_name, list_acc_no, list_edit, list_bank_name, list_ifsi;
+        private ImageView list_preview_bank_details;
 
         public BankViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -78,6 +87,7 @@ public class BanksAdapter extends RecyclerView.Adapter<BanksAdapter.BankViewHold
             list_edit = itemView.findViewById(R.id.bank_list_edit_bank_details_text);
             list_bank_name = itemView.findViewById(R.id.bank_list_bank_name);
             list_ifsi = itemView.findViewById(R.id.bank_list_ifsi_text);
+            list_preview_bank_details = itemView.findViewById(R.id.bank_list_preview_bank_details);
         }
 
     }

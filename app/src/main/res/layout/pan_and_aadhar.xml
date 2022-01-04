@@ -83,9 +83,20 @@
             app:layout_constraintBottom_toBottomOf="@+id/pancard1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/pancard1"
+            app:layout_constraintStart_toStartOf="@+id/uploadPan"
             app:layout_constraintTop_toTopOf="@+id/pancard1"
             app:layout_constraintVertical_bias="0.493" />
+
+        <ImageView
+            android:id="@+id/pan_aadhar_preview_pan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_preview"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/edit1"
+            app:layout_constraintEnd_toStartOf="@+id/edit1"
+            app:layout_constraintTop_toTopOf="@+id/edit1" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
@@ -199,6 +210,16 @@
             app:layout_constraintStart_toEndOf="@+id/frontText"
             app:layout_constraintTop_toTopOf="@+id/frontText"
             app:layout_constraintVertical_bias="0.505" />
+
+        <ImageView
+            android:id="@+id/pan_aadhar_preview_aadhar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_preview"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/editFront"
+            app:layout_constraintEnd_toStartOf="@+id/editFront"
+            app:layout_constraintTop_toTopOf="@+id/editFront" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -137,6 +137,7 @@ public class BankDetailsActivity extends AppCompatActivity {
         bankService = retrofit.create(BankService.class);
 
         mQueue = Volley.newRequestQueue(BankDetailsActivity.this);
+
         if (isEdit){
         getBankDetails();
         }
@@ -560,6 +561,7 @@ public class BankDetailsActivity extends AppCompatActivity {
     private void getBankDetails() {
 
         String url = getString(R.string.baseURL) + "/bank/getBkByBkId/" + userId;
+        Log.i("get Bank Detail URL", url);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -568,7 +570,9 @@ public class BankDetailsActivity extends AppCompatActivity {
                     for (int i = 0; i < truckLists.length(); i++) {
 
                         JSONObject obj = truckLists.getJSONObject(i);
-                        bankName.setText(obj.getString("accountholder_name"));
+                        String bankNAME = obj.getString("accountholder_name");
+                        Log.i("BANK NAME", bankNAME);
+                        bankName.setText(bankNAME);
                         accountNo.setText(obj.getString("account_number"));
                         reAccount.setText(obj.getString("re_enter_acc_num"));
                         ifscCode.setText(obj.getString("IFSI_CODE"));
