@@ -139,6 +139,8 @@ public class BankDetailsActivity extends AppCompatActivity {
         mQueue = Volley.newRequestQueue(BankDetailsActivity.this);
 
         if (isEdit){
+            okButton.setEnabled(true);
+            okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
             uploadCC.setVisibility(View.INVISIBLE);
             editCC.setVisibility(View.VISIBLE);
             textCC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
@@ -505,6 +507,11 @@ public class BankDetailsActivity extends AppCompatActivity {
                     okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 }
 
+                if (isEdit){
+                    uploadCC.setVisibility(View.INVISIBLE);
+                    editCC.setVisibility(View.VISIBLE);
+                }
+
                 if (isImgUploaded){
                     okButton.setEnabled(true);
                     okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -535,6 +542,10 @@ public class BankDetailsActivity extends AppCompatActivity {
                 canceledCheckBlurImage.setVisibility(View.VISIBLE);
                 accountDetailsBlurImage.setVisibility(View.GONE);
 
+                if (isEdit){
+                    uploadCC.setVisibility(View.INVISIBLE);
+                    editCC.setVisibility(View.VISIBLE);
+                }
 
                 String bankName1 = bankName.getText().toString().trim();
                 String accNo1 = accountNo.getText().toString().trim();

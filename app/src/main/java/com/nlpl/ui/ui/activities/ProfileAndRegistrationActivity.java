@@ -685,6 +685,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         intent.putExtra("userId", userId);
         intent.putExtra("isEdit", true);
         intent.putExtra("truckId", obj.getTruck_id());
+        intent.putExtra("mobile", phone);
 
         startActivity(intent);
     }
