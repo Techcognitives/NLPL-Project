@@ -45,10 +45,13 @@ import com.nlpl.model.Requests.ImageRequest;
 import com.nlpl.model.Responses.AddTruckResponse;
 import com.nlpl.model.Responses.ImageResponse;
 import com.nlpl.model.Responses.UploadImageResponse;
+import com.nlpl.model.UpdateTruckDetails.UpdateTruckCarryingCapacity;
+import com.nlpl.model.UpdateTruckDetails.UpdateTruckFeet;
 import com.nlpl.model.UpdateTruckDetails.UpdateTruckRcBook;
 import com.nlpl.model.UpdateTruckDetails.UpdateTruckType;
 import com.nlpl.model.UpdateTruckDetails.UpdateTruckVehicleInsurance;
 import com.nlpl.model.UpdateTruckDetails.UpdateTruckVehicleNumber;
+import com.nlpl.model.UpdateTruckDetails.UpdateVehicleType;
 import com.nlpl.model.UpdateUserDetails.UpdateUserIsTruckAdded;
 import com.nlpl.services.AddTruckService;
 import com.nlpl.services.UserService;
@@ -577,8 +580,17 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 if (vehicleNumberEdit.getText().toString() != null){
                     updateTruckNumber();
                 }
-                if (bodyTypeSelected != null){
+                if (selectModel.getText().toString() != null){
                     updateTruckType();
+                }
+                if (selectCapacity.getText().toString() != null){
+                    updateTruckCarryingCapacity();
+                }
+                if (bodyTypeSelected != null){
+                    updateVehicleType();
+                }
+                if (selectFt.getText().toString() != null){
+                    updateTruckFeet();
                 }
 
             }else{
@@ -873,9 +885,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     //-------------------------------- Update User is Truck Added ----------------------------------
     private void updateTruckType() {
 
-        UpdateTruckType updateTruckType = new UpdateTruckType(bodyTypeSelected);
+        UpdateTruckType updateTruckType = new UpdateTruckType(selectModel.getText().toString());
 
-        Call<UpdateTruckType> call = addTruckService.updateTruckVehicleType("" + truckId, updateTruckType);
+        Call<UpdateTruckType> call = addTruckService.updateTruckType("" + truckId, updateTruckType);
 
         call.enqueue(new Callback<UpdateTruckType>() {
             @Override
@@ -887,6 +899,77 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<UpdateTruckType> call, Throwable t) {
+                Log.i("Not Successful", "User is Truck Added");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //-------------------------------- Update User is Truck Added ----------------------------------
+    private void updateVehicleType() {
+
+        UpdateVehicleType updateVehicleType = new UpdateVehicleType(bodyTypeSelected);
+
+        Call<UpdateVehicleType> call = addTruckService.updateVehicleType("" + truckId, updateVehicleType);
+
+        call.enqueue(new Callback<UpdateVehicleType>() {
+            @Override
+            public void onResponse(Call<UpdateVehicleType> call, Response<UpdateVehicleType> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Truck Added");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateVehicleType> call, Throwable t) {
+                Log.i("Not Successful", "User is Truck Added");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //-------------------------------- Update User is Truck Added ----------------------------------
+    private void updateTruckFeet() {
+
+        UpdateTruckFeet updateTruckFeet = new UpdateTruckFeet(selectFt.getText().toString());
+
+        Call<UpdateTruckFeet> call = addTruckService.updateTruckFeet("" + truckId, updateTruckFeet);
+
+        call.enqueue(new Callback<UpdateTruckFeet>() {
+            @Override
+            public void onResponse(Call<UpdateTruckFeet> call, Response<UpdateTruckFeet> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Truck Added");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateTruckFeet> call, Throwable t) {
+                Log.i("Not Successful", "User is Truck Added");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    private void updateTruckCarryingCapacity() {
+
+        UpdateTruckCarryingCapacity updateTruckCarryingCapacity = new UpdateTruckCarryingCapacity(selectCapacity.getText().toString());
+
+        Call<UpdateTruckCarryingCapacity> call = addTruckService.updateTruckCarryingCapacity("" + truckId, updateTruckCarryingCapacity);
+
+        call.enqueue(new Callback<UpdateTruckCarryingCapacity>() {
+            @Override
+            public void onResponse(Call<UpdateTruckCarryingCapacity> call, Response<UpdateTruckCarryingCapacity> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Truck Added");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateTruckCarryingCapacity> call, Throwable t) {
                 Log.i("Not Successful", "User is Truck Added");
 
             }

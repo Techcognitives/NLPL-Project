@@ -268,7 +268,7 @@
             app:layout_constraintHorizontal_bias="0.228"
             app:layout_constraintStart_toEndOf="@+id/bank_details_canceled_check_image"
             app:layout_constraintTop_toTopOf="@+id/bank_details_canceled_check_image"
-            app:layout_constraintVertical_bias="0.506" />
+            app:layout_constraintVertical_bias="0.523" />
 
         <Button
             android:id="@+id/bank_details_canceled_check_upload"
@@ -283,11 +283,12 @@
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="14sp"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/bank_details_canceled_check_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/bank_details_canceled_check_text"
             app:layout_constraintTop_toTopOf="@+id/bank_details_canceled_check_text"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.555" />
 
         <TextView
             android:id="@+id/bank_details_edit_canceled_check"
@@ -299,12 +300,26 @@
             android:text="@string/edit"
             android:textColor="@color/black"
             android:textSize="14sp"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/bank_details_canceled_check_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.753"
+            app:layout_constraintHorizontal_bias="0.687"
             app:layout_constraintStart_toEndOf="@+id/bank_details_canceled_check_text"
-            app:layout_constraintTop_toTopOf="@+id/bank_details_canceled_check_text" />
+            app:layout_constraintTop_toTopOf="@+id/bank_details_canceled_check_text"
+            app:layout_constraintVertical_bias="0.6" />
+
+        <ImageView
+            android:id="@+id/bank_details_preview_cancelled_cheque_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:onClick="onClickPreviewCancelledCheque"
+            app:layout_constraintBottom_toBottomOf="@+id/bank_details_edit_canceled_check"
+            app:layout_constraintEnd_toStartOf="@+id/bank_details_edit_canceled_check"
+            app:layout_constraintTop_toTopOf="@+id/bank_details_edit_canceled_check"
+            app:layout_constraintVertical_bias="0.45"
+            app:srcCompat="@drawable/ic_preview" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView

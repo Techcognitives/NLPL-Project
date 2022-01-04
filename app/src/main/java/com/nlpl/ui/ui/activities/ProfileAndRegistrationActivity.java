@@ -438,7 +438,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         modelDriver.setUser_id(obj.getString("user_id"));
                         modelDriver.setDriver_id(obj.getString("driver_id"));
                         modelDriver.setDriver_name(obj.getString("driver_name"));
-                        modelDriver.setUpload_lc(obj.getString("upload_lc"));
+//                        modelDriver.setUpload_lc(obj.getString("upload_lc"));
                         modelDriver.setDriver_number(obj.getString("driver_number"));
                         modelDriver.setDriver_emailId(obj.getString("driver_emailId"));
                         driverList.add(modelDriver);
@@ -685,6 +685,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         intent.putExtra("userId", userId);
         intent.putExtra("isEdit", true);
         intent.putExtra("truckId", obj.getTruck_id());
+        intent.putExtra("mobile", phone);
 
         startActivity(intent);
     }
