@@ -11,20 +11,28 @@
     android:background="@drawable/edit_text_border"
     android:backgroundTint="@color/white">
 
-    <TextView
-        android:id="@+id/dialog_truck_details_tiitle"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="@string/AddTrucks"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/scrollView5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/dialog_truck_details_tiitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/AddTrucks"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
 
     <ScrollView
         android:id="@+id/scrollView5"
@@ -33,7 +41,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_truck_details_tiitle">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         <LinearLayout
             android:layout_width="match_parent"

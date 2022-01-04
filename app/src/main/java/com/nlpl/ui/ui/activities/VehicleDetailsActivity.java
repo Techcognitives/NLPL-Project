@@ -99,7 +99,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     private UserService userService;
     private AddTruckService addTruckService;
 
-    String userId, truckId, vehicleNumberAPI, vehicleTypeAPI, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI;
+    String userId, truckId, vehicleNumberAPI, vehicleTypeAPI, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI, truckModelAPI, truckFtAPI, truckCapacityAPI;
     Boolean isEdit, isRcUploaded=false, isInsurance=false, truckSelected=false;
     private RequestQueue mQueue;
 
@@ -474,7 +474,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
             uploadImage(picturePath);
 
-            imgRC.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            imgRC.setImageURI(selectedImage);
 
         } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
@@ -715,24 +715,38 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                     for (int i = 0; i < truckLists.length(); i++) {
                         JSONObject obj = truckLists.getJSONObject(i);
                         vehicleNumberAPI = obj.getString("vehicle_no");
-                        vehicleTypeAPI = obj.getString("vehicle_body_type");
+                        vehicleTypeAPI = obj.getString("vehicle_type");
+                        truckModelAPI = obj.getString("truck_type");
+                        truckFtAPI = obj.getString("truck_ft");
+                        truckCapacityAPI = obj.getString("truck_carrying_capacity");
 
                         vehicleNumberEdit.setText(vehicleNumberAPI);
-
+                        selectModel.setText(truckModelAPI);
+                        selectFt.setText(truckFtAPI);
+                        selectCapacity.setText(truckCapacityAPI);
 
                         if (vehicleTypeAPI.equals("Open")){
                             openType.setBackgroundResource(R.drawable.image_view_border_selected);
                             closedType.setBackgroundResource(R.drawable.image_view_border);
+                            openSelected.setChecked(true);
+                            closeSelected.setChecked(false);
+                            tarpaulinSelected.setChecked(false);
                             tarpaulinType.setBackgroundResource(R.drawable.image_view_border);
                             bodyTypeSelected = "Open";
                         }else if (vehicleTypeAPI.equals("Closed")){
                             openType.setBackgroundResource(R.drawable.image_view_border);
                             closedType.setBackgroundResource(R.drawable.image_view_border_selected);
+                            openSelected.setChecked(false);
+                            closeSelected.setChecked(true);
+                            tarpaulinSelected.setChecked(false);
                             tarpaulinType.setBackgroundResource(R.drawable.image_view_border);
                             bodyTypeSelected = "Closed";
                         }else if (vehicleTypeAPI.equals("Tarpaulin")){
                             openType.setBackgroundResource(R.drawable.image_view_border);
                             closedType.setBackgroundResource(R.drawable.image_view_border);
+                            openSelected.setChecked(false);
+                            closeSelected.setChecked(false);
+                            tarpaulinSelected.setChecked(true);
                             tarpaulinType.setBackgroundResource(R.drawable.image_view_border_selected);
                             bodyTypeSelected = "Tarpaulin";
                         }else{

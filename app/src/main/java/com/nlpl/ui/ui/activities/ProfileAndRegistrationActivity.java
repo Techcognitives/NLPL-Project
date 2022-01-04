@@ -747,6 +747,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                             addCompany.setVisibility(View.VISIBLE);
                         }
                     } else {
+                        addCompany.setVisibility(View.GONE);
                         personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
                         isPersonalExpanded = false;
                         personal_done.setVisibility(View.GONE);
