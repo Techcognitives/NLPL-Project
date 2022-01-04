@@ -474,7 +474,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
             uploadImage(picturePath);
 
-            imgRC.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            imgRC.setImageURI(selectedImage);
 
         } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
@@ -506,7 +506,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
             uploadImage(picturePath);
 
-            imgI.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            imgI.setImageURI(selectedImage);
 
         }else  if (requestCode == CAMERA_PIC_REQUEST1) {
 

@@ -560,7 +560,7 @@ public class BankDetailsActivity extends AppCompatActivity {
 
     private void getBankDetails() {
 
-        String url = getString(R.string.baseURL) + "/bank/getBkByBkId/" + userId;
+        String url = getString(R.string.baseURL) + "/bank/getBkByBkId/" + bankId;
         Log.i("get Bank Detail URL", url);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
