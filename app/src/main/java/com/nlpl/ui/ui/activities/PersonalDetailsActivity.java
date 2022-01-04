@@ -320,7 +320,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
             uploadImage(picturePath);
 
-            imgPAN.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            imgPAN.setImageURI(selectedImage);
 
         } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
 
@@ -353,7 +353,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
             uploadImage(picturePath);
 
-            imgF.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            imgF.setImageURI(selectedImage);
 
         } else  if (requestCode == CAMERA_PIC_REQUEST) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
