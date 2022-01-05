@@ -84,6 +84,7 @@
         android:background="@drawable/button_active"
         android:onClick="onClickPersonalProof"
         android:text="@string/ok"
+        android:enabled="false"
         android:textAllCaps="false"
         android:textColor="@color/background"
         android:textSize="18sp"

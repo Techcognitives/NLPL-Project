@@ -103,7 +103,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     private AddTruckService addTruckService;
 
     String userId, truckId, vehicleNumberAPI, vehicleTypeAPI, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI, truckModelAPI, truckFtAPI, truckCapacityAPI;
-    Boolean isEdit, isRcUploaded=false, isInsurance=false, truckSelected=false;
+    Boolean isEdit, isRcUploaded=false, isInsurance=false, truckSelected=false, isModelSelected = false;
     private RequestQueue mQueue;
 
     RadioButton openSelected, closeSelected, tarpaulinSelected;
@@ -178,6 +178,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         addTruckService = retrofit.create(AddTruckService.class);
 
         okVehicleDetails= findViewById(R.id.vehicle_details_ok_button);
+//        okVehicleDetails.setEnabled(false);
 
         vehicleNumberEdit.addTextChangedListener(vehicleTextWatecher);
 
@@ -187,10 +188,20 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
         mQueue = Volley.newRequestQueue(VehicleDetailsActivity.this);
         if (isEdit){
+            isRcUploaded = true;
+            isInsurance = true;
+            truckSelected = true;
+            isModelSelected = true;
+
+            okVehicleDetails.setEnabled(true);
+            okVehicleDetails.setBackgroundResource(R.drawable.button_active);
+
             uploadRC.setVisibility(View.INVISIBLE);
             uploadInsurance.setVisibility(View.INVISIBLE);
+
             editInsurance.setVisibility(View.VISIBLE);
             editRC.setVisibility(View.VISIBLE);
+
             textRC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             textInsurance.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             getVehicleDetails();
@@ -369,7 +380,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     public void onClickVehicle(View view) {
         truckSelected=true;
         String vehicleNum = vehicleNumberEdit.getText().toString();
-        if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected ){
+        if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected && isModelSelected ){
+            okVehicleDetails.setEnabled(true);
             okVehicleDetails.setBackgroundResource(R.drawable.button_active);
         }
         switch (view.getId()) {
@@ -402,14 +414,14 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 tarpaulinType.setBackgroundResource(R.drawable.image_view_border_selected);
                 bodyTypeSelected = "Tarpaulin";
                 break;
-
         }
     }
 
     public void onClickRadioButtons(View view) {
         truckSelected=true;
         String vehicleNum = vehicleNumberEdit.getText().toString();
-        if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected ){
+        if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected && isModelSelected  ){
+            okVehicleDetails.setEnabled(true);
             okVehicleDetails.setBackgroundResource(R.drawable.button_active);
         }
         switch (view.getId()) {
@@ -469,7 +481,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
             isRcUploaded=true;
             String vehicleNum = vehicleNumberEdit.getText().toString();
-            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected ){
+            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected && isModelSelected  ){
+                okVehicleDetails.setEnabled(true);
                 okVehicleDetails.setBackgroundResource(R.drawable.button_active);
             }
 
@@ -501,7 +514,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
             isInsurance=true;
             String vehicleNum = vehicleNumberEdit.getText().toString();
-            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected ){
+            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected && isModelSelected){
+                okVehicleDetails.setEnabled(true);
                 okVehicleDetails.setBackgroundResource(R.drawable.button_active);
             }
 
@@ -535,7 +549,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
             isRcUploaded=true;
             String vehicleNum = vehicleNumberEdit.getText().toString();
-            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected ){
+            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected && isModelSelected  ){
+                okVehicleDetails.setEnabled(true);
                 okVehicleDetails.setBackgroundResource(R.drawable.button_active);
             }
 
@@ -560,7 +575,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
             isInsurance=true;
             String vehicleNum = vehicleNumberEdit.getText().toString();
-            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected ){
+            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected && isModelSelected  ){
+                okVehicleDetails.setEnabled(true);
                 okVehicleDetails.setBackgroundResource(R.drawable.button_active);
             }
 
@@ -574,8 +590,11 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
     public void onClickVehicleDetailsOk(View view) {
         String vehicleNum = vehicleNumberEdit.getText().toString();
-        if (!vehicleNum.isEmpty()&&isRcUploaded&&isInsurance&&truckSelected) {
+        if (!vehicleNum.isEmpty()&&isRcUploaded&&isInsurance&&truckSelected && isModelSelected) {
             if (isEdit){
+
+                okVehicleDetails.setEnabled(true);
+                okVehicleDetails.setBackground(getResources().getDrawable(R.drawable.button_active));
 
                 if (vehicleNumberEdit.getText().toString() != null){
                     updateTruckNumber();
@@ -615,7 +634,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             my_alert.show();
 
         }else{
-            okVehicleDetails.setBackground(getResources().getDrawable(R.drawable.button_de_active));
+//            okVehicleDetails.setEnabled(false);
+//            okVehicleDetails.setBackground(getResources().getDrawable(R.drawable.button_de_active));
 
         }
     }
@@ -657,11 +677,12 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             String vehicleNum = vehicleNumberEdit.getText().toString().trim();
-            if (!vehicleNum.isEmpty()&&isRcUploaded&&isInsurance&&truckSelected) {
+            if (!vehicleNum.isEmpty()&&isRcUploaded&&isInsurance&&truckSelected&& isModelSelected) {
+                okVehicleDetails.setEnabled(true);
                 okVehicleDetails.setBackgroundResource((R.drawable.button_active));
             }else{
+                okVehicleDetails.setEnabled(false);
                 okVehicleDetails.setBackground(getResources().getDrawable(R.drawable.button_de_active));
-
             }
         }
 
@@ -980,11 +1001,11 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     public void selectVehicleModelFeetCapacity(View view) {
         switch (view.getId()){
             case R.id.vehicle_details_select_model:
-
                 selectModelDialog = new Dialog(VehicleDetailsActivity.this);
                 selectModelDialog.setContentView(R.layout.dialog_spinner);
                 selectModelDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 selectModelDialog.show();
+                selectModelDialog.setCancelable(false);
                 TextView model_title = selectModelDialog.findViewById(R.id.dialog_spinner_title);
                 model_title.setText("Select Vehicle Model");
 
@@ -996,50 +1017,64 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         selectModel.setText(adapter1.getItem(i));
+                        isModelSelected = true;
+                        String vehicleNum = vehicleNumberEdit.getText().toString().trim();
+                        if (!vehicleNum.isEmpty()&&isRcUploaded&&isInsurance&&truckSelected&& isModelSelected) {
+                            okVehicleDetails.setEnabled(true);
+                            okVehicleDetails.setBackgroundResource((R.drawable.button_active));
+                        }else{
+                            okVehicleDetails.setEnabled(false);
+                            okVehicleDetails.setBackground(getResources().getDrawable(R.drawable.button_de_active));
+                        }
+                        if (!isEdit) {
+                            selectFeetDialog = new Dialog(VehicleDetailsActivity.this);
+                            selectFeetDialog.setContentView(R.layout.dialog_spinner);
+                            selectFeetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                            selectFeetDialog.show();
+                            selectFeetDialog.setCancelable(false);
 
-                        selectFeetDialog = new Dialog(VehicleDetailsActivity.this);
-                        selectFeetDialog.setContentView(R.layout.dialog_spinner);
-                        selectFeetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                        selectFeetDialog.show();
+                            TextView feetTitle = selectFeetDialog.findViewById(R.id.dialog_spinner_title);
+                            feetTitle.setText("Select Vehicle Feet");
 
-                        TextView feetTitle = selectFeetDialog.findViewById(R.id.dialog_spinner_title);
-                        feetTitle.setText("Select Vehicle Feet");
+                            ListView capacityList = (ListView) selectFeetDialog.findViewById(R.id.list_state);
+                            ArrayAdapter<String> adapter3 = new ArrayAdapter<>(VehicleDetailsActivity.this, R.layout.custom_list_row, arrayTruckFt);
+                            capacityList.setAdapter(adapter3);
 
-                        ListView capacityList = (ListView) selectFeetDialog.findViewById(R.id.list_state);
-                        ArrayAdapter<String> adapter3 = new ArrayAdapter<>(VehicleDetailsActivity.this,R.layout.custom_list_row, arrayTruckFt);
-                        capacityList.setAdapter(adapter3);
+                            capacityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                    selectFt.setText(adapter3.getItem(i));
+                                    selectFeetDialog.dismiss();
 
-                        capacityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                selectFt.setText(adapter3.getItem(i));
+                                    selectCapacityDialog = new Dialog(VehicleDetailsActivity.this);
+                                    selectCapacityDialog.setContentView(R.layout.dialog_spinner);
+                                    selectCapacityDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                    selectCapacityDialog.show();
+                                    selectCapacityDialog.setCancelable(false);
 
-                                selectCapacityDialog = new Dialog(VehicleDetailsActivity.this);
-                                selectCapacityDialog.setContentView(R.layout.dialog_spinner);
-                                selectCapacityDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                                selectCapacityDialog.show();
+                                    TextView capacity_title = selectCapacityDialog.findViewById(R.id.dialog_spinner_title);
+                                    capacity_title.setText("Select Vehicle Capacity");
 
-                                TextView capacity_title = selectCapacityDialog.findViewById(R.id.dialog_spinner_title);
-                                capacity_title.setText("Select Vehicle Capacity");
+                                    ListView capacityList = (ListView) selectCapacityDialog.findViewById(R.id.list_state);
+                                    ArrayAdapter<String> adapter2 = new ArrayAdapter<>(VehicleDetailsActivity.this, R.layout.custom_list_row, arrayCapacity);
+                                    capacityList.setAdapter(adapter2);
 
-                                ListView capacityList = (ListView) selectCapacityDialog.findViewById(R.id.list_state);
-                                ArrayAdapter<String> adapter2 = new ArrayAdapter<>(VehicleDetailsActivity.this,R.layout.custom_list_row, arrayCapacity);
-                                capacityList.setAdapter(adapter2);
+                                    capacityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                            selectCapacity.setText(adapter2.getItem(i));
+                                            isModelSelected = true;
+                                            selectCapacityDialog.dismiss();
+                                        }
+                                    });
 
-                                capacityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                        selectCapacity.setText(adapter2.getItem(i));
-                                        selectCapacityDialog.dismiss();
-                                    }
-                                });
-
-                                selectFeetDialog.dismiss();
-                            }
-                        });
-
-
-                        selectModelDialog.dismiss();
+                                    selectFeetDialog.dismiss();
+                                    selectModelDialog.dismiss();
+                                }
+                            });
+                        } else {
+                            selectModelDialog.dismiss();
+                        }
                     }
                 });
 
@@ -1051,6 +1086,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 selectFeetDialog.setContentView(R.layout.dialog_spinner);
                 selectFeetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 selectFeetDialog.show();
+                selectFeetDialog.setCancelable(false);
 
                 TextView feetTitle = selectFeetDialog.findViewById(R.id.dialog_spinner_title);
                 feetTitle.setText("Select Vehicle Feet");
@@ -1064,7 +1100,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         selectFt.setText(adapter.getItem(i));
                         selectFeetDialog.dismiss();
-
                     }
                 });
 
@@ -1076,6 +1111,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 selectCapacityDialog.setContentView(R.layout.dialog_spinner);
                 selectCapacityDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 selectCapacityDialog.show();
+                selectCapacityDialog.setCancelable(false);
 
                 TextView capacity_title = selectCapacityDialog.findViewById(R.id.dialog_spinner_title);
                 capacity_title.setText("Select Vehicle Capacity");
@@ -1091,7 +1127,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                         selectCapacityDialog.dismiss();
                     }
                 });
-
                 break;
 
         }

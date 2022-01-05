@@ -222,6 +222,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     }
 
                     getUserDetails();
+                    getCompanyDetails();
 
                     //---------------------------- Get Truck Details -------------------------------------------
                     truckListRecyclerView = (RecyclerView) findViewById(R.id.trucks_list_view);
@@ -233,7 +234,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
                     truckListAdapter = new TrucksAdapter(ProfileAndRegistrationActivity.this, truckList);
                     truckListRecyclerView.setAdapter(truckListAdapter);
-
+                    getTruckList();
                     //------------------------------------------------------------------------------------------
 
                     //---------------------------- Get Driver Details -------------------------------------------
@@ -246,7 +247,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
                     driverListAdapter = new DriversAdapter(ProfileAndRegistrationActivity.this, driverList);
                     driverListRecyclerView.setAdapter(driverListAdapter);
-
+                    getDriverDetailsList();
                     //------------------------------------------------------------------------------------------
 
                     //---------------------------- Get Bank Details -------------------------------------------
@@ -259,7 +260,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
                     bankListAdapter = new BanksAdapter(ProfileAndRegistrationActivity.this, bankList);
                     bankListRecyclerView.setAdapter(bankListAdapter);
-
+                    getBankDetailsList();
                     //------------------------------------------------------------------------------------------
 
 //
@@ -738,7 +739,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         }
 
                         if (isFirmDetailsDone.equals("1")) {
-                            getCompanyDetails();
                             firmName.setVisibility(View.VISIBLE);
                             officeAddressTextView.setVisibility(View.VISIBLE);
                             addCompany.setVisibility(View.GONE);
@@ -763,7 +763,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
             case R.id.profile_registration_bank_details_button:
                 if (isBankDetailsDone.equals("1")) {
-                    getBankDetailsList();
                     if (isBankExpanded == false) {
                         isBankExpanded = true;
 
@@ -806,7 +805,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
             case R.id.profile_registration_truck_details:
                 if (isTruckDetailsDone.equals("1")) {
-                    getTruckList();
                     if (isTruckExpanded == false) {
                         isTruckExpanded = true;
 
@@ -819,7 +817,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                             personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
                             bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
 //                            addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.truck_success, 0, R.drawable.ic_right, 0);
-                            addTrucks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
+                            addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver_success, 0, R.drawable.ic_right, 0);
 
                             isPersonalExpanded = false;
                             isBankExpanded = false;
@@ -851,7 +849,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 break;
 
             case R.id.profile_registration_driver_details:
-                getDriverDetailsList();
                 if (isDriverDetailsDone.equals("1")) {
                     if (isDriverExpanded == false) {
                         isDriverExpanded = true;

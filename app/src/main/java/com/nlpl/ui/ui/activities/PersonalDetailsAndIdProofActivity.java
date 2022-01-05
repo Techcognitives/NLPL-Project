@@ -175,6 +175,9 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         pinCode.addTextChangedListener(pinCodeWatcher);
         address.addTextChangedListener(proofAndPersonalWatcher);
         mobileEdit.addTextChangedListener(mobileNumberTextWatcher);
+        emailIdEdit.addTextChangedListener(proofAndPersonalWatcher);
+
+
         emailIdEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -194,25 +197,37 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
                 if (email.matches(emailPattern) && s.length() > 0) {
-                    emailIdEdit.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
-                } else {
-                    emailIdEdit.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
-                }
 
+                emailIdEdit.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+            } else
+
+            {
+                okButton.setEnabled(false);
+                okButton.setBackground(getDrawable(R.drawable.button_de_active));
+                emailIdEdit.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
             }
-        });
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getString(R.string.baseURL))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        }
+    });
 
-        userService = retrofit.create(UserService.class);
+    Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl(getString(R.string.baseURL))
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+
+    userService =retrofit.create(UserService .class);
 
         name.requestFocus();
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-        name.setFilters(new InputFilter[]{filter});
+    getWindow().
+
+    setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+        name.setFilters(new InputFilter[]
+
+    {
+        filter
+    });
 
 //        if (!name.getText().toString().isEmpty() && !selectStateText.getText().toString().isEmpty() && !selectDistrictText.getText().toString().isEmpty() && role != null){
 //            okButton.setBackground(getDrawable(R.drawable.button_active));
@@ -220,302 +235,335 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 //            okButton.setBackground(getDrawable(R.drawable.button_de_active));
 //        }
 
-        previewDialogPan = new Dialog(PersonalDetailsAndIdProofActivity.this);
+    previewDialogPan =new
+
+    Dialog(PersonalDetailsAndIdProofActivity .this);
         previewDialogPan.setContentView(R.layout.dialog_preview_images);
-        previewDialogPan.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        previewDialogPan.getWindow().
 
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(previewDialogPan.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.gravity = Gravity.CENTER;
+    setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        previewDialogAadhar = new Dialog(PersonalDetailsAndIdProofActivity.this);
+    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(previewDialogPan.getWindow().
+
+    getAttributes());
+    lp.width =WindowManager.LayoutParams.MATCH_PARENT;
+    lp.height =WindowManager.LayoutParams.WRAP_CONTENT;
+    lp.gravity =Gravity.CENTER;
+
+    previewDialogAadhar =new
+
+    Dialog(PersonalDetailsAndIdProofActivity .this);
         previewDialogAadhar.setContentView(R.layout.dialog_preview_images);
-        previewDialogAadhar.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        previewDialogAadhar.getWindow().
 
-        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-        lp2.copyFrom(previewDialogAadhar.getWindow().getAttributes());
-        lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp2.gravity = Gravity.CENTER;
+    setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        mQueue = Volley.newRequestQueue(PersonalDetailsAndIdProofActivity.this);
-        getImageURL();
-        getUserDetails();
+    WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+        lp2.copyFrom(previewDialogAadhar.getWindow().
 
-        previewPan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                previewDialogPan.show();
-                previewDialogPan.getWindow().setAttributes(lp);
-            }
-        });
+    getAttributes());
+    lp2.width =WindowManager.LayoutParams.MATCH_PARENT;
+    lp2.height =WindowManager.LayoutParams.WRAP_CONTENT;
+    lp2.gravity =Gravity.CENTER;
 
-        previewAadhar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                previewDialogAadhar.show();
-                previewDialogAadhar.getWindow().setAttributes(lp2);
-            }
-        });
+    mQueue =Volley.newRequestQueue(PersonalDetailsAndIdProofActivity .this);
 
-        ownerButton = (RadioButton) personalAndAddressView.findViewById(R.id.registration_truck_owner);
-        driverButton = (RadioButton) personalAndAddressView.findViewById(R.id.registration_driver);
-        brokerButton = (RadioButton) personalAndAddressView.findViewById(R.id.registration_broker);
-        customerButton = (RadioButton) personalAndAddressView.findViewById(R.id.registration_customer);
+    getImageURL();
 
-        name.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                name.setCursorVisible(true);
-            }
-        });
+    getUserDetails();
 
-        pinCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pinCode.setCursorVisible(true);
-            }
-        });
+        previewPan.setOnClickListener(new View.OnClickListener()
 
-        address.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                address.setCursorVisible(true);
-            }
-        });
+    {
+        @Override
+        public void onClick (View view){
+        previewDialogPan.show();
+        previewDialogPan.getWindow().setAttributes(lp);
+    }
+    });
 
-        selectStateText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                name.setCursorVisible(false);
-                pinCode.setCursorVisible(false);
-                address.setCursorVisible(false);
-                selectStateDialog = new Dialog(PersonalDetailsAndIdProofActivity.this);
-                selectStateDialog.setContentView(R.layout.dialog_spinner);
+        previewAadhar.setOnClickListener(new View.OnClickListener()
+
+    {
+        @Override
+        public void onClick (View view){
+        previewDialogAadhar.show();
+        previewDialogAadhar.getWindow().setAttributes(lp2);
+    }
+    });
+
+        okButton.setEnabled(true);
+        okButton.setBackground(
+
+    getDrawable(R.drawable.button_active));
+
+    ownerButton =(RadioButton)personalAndAddressView.findViewById(R.id.registration_truck_owner);
+    driverButton =(RadioButton)personalAndAddressView.findViewById(R.id.registration_driver);
+    brokerButton =(RadioButton)personalAndAddressView.findViewById(R.id.registration_broker);
+    customerButton =(RadioButton)personalAndAddressView.findViewById(R.id.registration_customer);
+
+        name.setOnClickListener(new View.OnClickListener()
+
+    {
+        @Override
+        public void onClick (View view){
+        name.setCursorVisible(true);
+    }
+    });
+
+        pinCode.setOnClickListener(new View.OnClickListener()
+
+    {
+        @Override
+        public void onClick (View view){
+        pinCode.setCursorVisible(true);
+    }
+    });
+
+        address.setOnClickListener(new View.OnClickListener()
+
+    {
+        @Override
+        public void onClick (View view){
+        address.setCursorVisible(true);
+    }
+    });
+
+        selectStateText.setOnClickListener(new View.OnClickListener()
+
+    {
+        @Override
+        public void onClick (View view){
+        name.setCursorVisible(false);
+        pinCode.setCursorVisible(false);
+        address.setCursorVisible(false);
+        selectStateDialog = new Dialog(PersonalDetailsAndIdProofActivity.this);
+        selectStateDialog.setContentView(R.layout.dialog_spinner);
 //                dialog.getWindow().setLayout(1000,3000);
-                selectStateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                selectStateDialog.show();
-                selectStateDialog.setCancelable(false);
-                ListView stateList = (ListView) selectStateDialog.findViewById(R.id.list_state);
+        selectStateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        selectStateDialog.show();
+        selectStateDialog.setCancelable(false);
+        ListView stateList = (ListView) selectStateDialog.findViewById(R.id.list_state);
 
-                selectStateArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this, R.array.array_indian_states, R.layout.custom_list_row);
-                selectStateUnionCode = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this, R.array.array_indian_states_union_territory_codes, R.layout.custom_list_row);
+        selectStateArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this, R.array.array_indian_states, R.layout.custom_list_row);
+        selectStateUnionCode = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this, R.array.array_indian_states_union_territory_codes, R.layout.custom_list_row);
 
-                stateList.setAdapter(selectStateArray);
+        stateList.setAdapter(selectStateArray);
 
-                stateList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        stateList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
+                selectStateText.setText(selectStateUnionCode.getItem(i)); //Set Selected Credentials
+                selectStateDialog.dismiss();
+
+                parentID = parent.getId();
+                Log.i("ID", String.valueOf(parentID));
+
+                selectedState = selectStateArray.getItem(i).toString();
+                selectDistrictDialog = new Dialog(PersonalDetailsAndIdProofActivity.this);
+                selectDistrictDialog.setContentView(R.layout.dialog_spinner);
+//                dialog.getWindow().setLayout(1000,3000);
+                selectDistrictDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                selectDistrictDialog.show();
+                TextView title = selectDistrictDialog.findViewById(R.id.dialog_spinner_title);
+                title.setText("Select City");
+                ListView districtList = (ListView) selectDistrictDialog.findViewById(R.id.list_state);
+
+                if (parentID == R.id.list_state) {
+                    switch (selectedState) {
+                        case "Andhra Pradesh":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_andhra_pradesh_districts, R.layout.custom_list_row);
+                            break;
+                        case "Arunachal Pradesh":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_arunachal_pradesh_districts, R.layout.custom_list_row);
+                            break;
+                        case "Assam":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_assam_districts, R.layout.custom_list_row);
+                            break;
+                        case "Bihar":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_bihar_districts, R.layout.custom_list_row);
+                            break;
+                        case "Chhattisgarh":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_chhattisgarh_districts, R.layout.custom_list_row);
+                            break;
+                        case "Goa":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_goa_districts, R.layout.custom_list_row);
+                            break;
+                        case "Gujarat":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_gujarat_districts, R.layout.custom_list_row);
+                            break;
+                        case "Haryana":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_haryana_districts, R.layout.custom_list_row);
+                            break;
+                        case "Himachal Pradesh":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_himachal_pradesh_districts, R.layout.custom_list_row);
+                            break;
+                        case "Jharkhand":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_jharkhand_districts, R.layout.custom_list_row);
+                            break;
+                        case "Karnataka":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_karnataka_districts, R.layout.custom_list_row);
+                            break;
+                        case "Kerala":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_kerala_districts, R.layout.custom_list_row);
+                            break;
+                        case "Madhya Pradesh":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_madhya_pradesh_districts, R.layout.custom_list_row);
+                            break;
+                        case "Maharashtra":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_maharashtra_districts, R.layout.custom_list_row);
+                            break;
+                        case "Manipur":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_manipur_districts, R.layout.custom_list_row);
+                            break;
+                        case "Meghalaya":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_meghalaya_districts, R.layout.custom_list_row);
+                            break;
+                        case "Mizoram":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_mizoram_districts, R.layout.custom_list_row);
+                            break;
+                        case "Nagaland":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_nagaland_districts, R.layout.custom_list_row);
+                            break;
+                        case "Odisha":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_odisha_districts, R.layout.custom_list_row);
+                            break;
+                        case "Punjab":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_punjab_districts, R.layout.custom_list_row);
+                            break;
+                        case "Rajasthan":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_rajasthan_districts, R.layout.custom_list_row);
+                            break;
+                        case "Sikkim":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_sikkim_districts, R.layout.custom_list_row);
+                            break;
+                        case "Tamil Nadu":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_tamil_nadu_districts, R.layout.custom_list_row);
+                            break;
+                        case "Telangana":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_telangana_districts, R.layout.custom_list_row);
+                            break;
+                        case "Tripura":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_tripura_districts, R.layout.custom_list_row);
+                            break;
+                        case "Uttar Pradesh":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_uttar_pradesh_districts, R.layout.custom_list_row);
+                            break;
+                        case "Uttarakhand":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_uttarakhand_districts, R.layout.custom_list_row);
+                            break;
+                        case "West Bengal":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_west_bengal_districts, R.layout.custom_list_row);
+                            break;
+                        case "Andaman and Nicobar Islands":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_andaman_nicobar_districts, R.layout.custom_list_row);
+                            break;
+                        case "Chandigarh":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_chandigarh_districts, R.layout.custom_list_row);
+                            break;
+                        case "Dadra and Nagar Haveli":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_dadra_nagar_haveli_districts, R.layout.custom_list_row);
+                            break;
+                        case "Daman and Diu":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_daman_diu_districts, R.layout.custom_list_row);
+                            break;
+                        case "Delhi":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_delhi_districts, R.layout.custom_list_row);
+                            break;
+                        case "Jammu and Kashmir":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_jammu_kashmir_districts, R.layout.custom_list_row);
+                            break;
+                        case "Lakshadweep":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_lakshadweep_districts, R.layout.custom_list_row);
+                            break;
+                        case "Ladakh":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_ladakh_districts, R.layout.custom_list_row);
+                            break;
+                        case "Puducherry":
+                            selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
+                                    R.array.array_puducherry_districts, R.layout.custom_list_row);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                districtList.setAdapter(selectDistrictArray);
+
+                districtList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
-                        selectStateText.setText(selectStateUnionCode.getItem(i)); //Set Selected Credentials
-                        selectStateDialog.dismiss();
-
-                        parentID = parent.getId();
-                        Log.i("ID", String.valueOf(parentID));
-
-                        selectedState = selectStateArray.getItem(i).toString();
-                        selectDistrictDialog = new Dialog(PersonalDetailsAndIdProofActivity.this);
-                        selectDistrictDialog.setContentView(R.layout.dialog_spinner);
-//                dialog.getWindow().setLayout(1000,3000);
-                        selectDistrictDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                        selectDistrictDialog.show();
-                        TextView title = selectDistrictDialog.findViewById(R.id.dialog_spinner_title);
-                        title.setText("Select City");
-                        ListView districtList = (ListView) selectDistrictDialog.findViewById(R.id.list_state);
-
-                        if (parentID == R.id.list_state) {
-                            switch (selectedState) {
-                                case "Andhra Pradesh":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_andhra_pradesh_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Arunachal Pradesh":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_arunachal_pradesh_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Assam":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_assam_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Bihar":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_bihar_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Chhattisgarh":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_chhattisgarh_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Goa":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_goa_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Gujarat":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_gujarat_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Haryana":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_haryana_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Himachal Pradesh":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_himachal_pradesh_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Jharkhand":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_jharkhand_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Karnataka":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_karnataka_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Kerala":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_kerala_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Madhya Pradesh":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_madhya_pradesh_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Maharashtra":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_maharashtra_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Manipur":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_manipur_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Meghalaya":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_meghalaya_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Mizoram":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_mizoram_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Nagaland":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_nagaland_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Odisha":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_odisha_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Punjab":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_punjab_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Rajasthan":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_rajasthan_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Sikkim":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_sikkim_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Tamil Nadu":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_tamil_nadu_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Telangana":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_telangana_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Tripura":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_tripura_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Uttar Pradesh":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_uttar_pradesh_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Uttarakhand":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_uttarakhand_districts, R.layout.custom_list_row);
-                                    break;
-                                case "West Bengal":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_west_bengal_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Andaman and Nicobar Islands":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_andaman_nicobar_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Chandigarh":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_chandigarh_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Dadra and Nagar Haveli":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_dadra_nagar_haveli_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Daman and Diu":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_daman_diu_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Delhi":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_delhi_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Jammu and Kashmir":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_jammu_kashmir_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Lakshadweep":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_lakshadweep_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Ladakh":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_ladakh_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Puducherry":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this,
-                                            R.array.array_puducherry_districts, R.layout.custom_list_row);
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                        districtList.setAdapter(selectDistrictArray);
-
-                        districtList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                selectDistrictText.setText(selectDistrictArray.getItem(i)); //Set Selected Credentials
-                                selectDistrictDialog.dismiss();
-                                selectedDistrict = selectDistrictArray.getItem(i).toString();
-                            }
-                        });
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        selectDistrictText.setText(selectDistrictArray.getItem(i)); //Set Selected Credentials
+                        selectDistrictDialog.dismiss();
+                        selectedDistrict = selectDistrictArray.getItem(i).toString();
                     }
                 });
             }
         });
+    }
+    });
 
-        selectDistrictText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                name.setCursorVisible(false);
-                pinCode.setCursorVisible(false);
-                address.setCursorVisible(false);
-                if (!selectStateText.getText().toString().isEmpty()) {
-                    selectDistrictDialog.show();
-                }
-            }
-        });
-        //------------------------------------------------------------------------------------------
+        selectDistrictText.setOnClickListener(new View.OnClickListener()
 
-        //------------------------------------------------------------------------------------------
-        panCardText = panAndAadharView.findViewById(R.id.pancard1);
-        frontText = panAndAadharView.findViewById(R.id.frontText);
-        backText = panAndAadharView.findViewById(R.id.profile_registration_name_text);
-        uploadPAN = panAndAadharView.findViewById(R.id.uploadPan);
-        uploadF = panAndAadharView.findViewById(R.id.uploadF);
-        imgPAN = panAndAadharView.findViewById(R.id.imagePan);
-        imgF = panAndAadharView.findViewById(R.id.imageF);
-        editPAN = panAndAadharView.findViewById(R.id.edit1);
-        editFront = panAndAadharView.findViewById(R.id.editFront);
+    {
+        @Override
+        public void onClick (View view){
+        name.setCursorVisible(false);
+        pinCode.setCursorVisible(false);
+        address.setCursorVisible(false);
+        if (!selectStateText.getText().toString().isEmpty()) {
+            selectDistrictDialog.show();
+        }
+    }
+    });
+    //------------------------------------------------------------------------------------------
+
+    //------------------------------------------------------------------------------------------
+    panCardText =panAndAadharView.findViewById(R.id.pancard1);
+    frontText =panAndAadharView.findViewById(R.id.frontText);
+    backText =panAndAadharView.findViewById(R.id.profile_registration_name_text);
+    uploadPAN =panAndAadharView.findViewById(R.id.uploadPan);
+    uploadF =panAndAadharView.findViewById(R.id.uploadF);
+    imgPAN =panAndAadharView.findViewById(R.id.imagePan);
+    imgF =panAndAadharView.findViewById(R.id.imageF);
+    editPAN =panAndAadharView.findViewById(R.id.edit1);
+    editFront =panAndAadharView.findViewById(R.id.editFront);
 
         uploadPAN.setVisibility(View.INVISIBLE);
         editPAN.setVisibility(View.VISIBLE);
@@ -524,112 +572,125 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         uploadF.setVisibility(View.INVISIBLE);
         editFront.setVisibility(View.VISIBLE);
 
-        frontText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-        panCardText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+        frontText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
+        panCardText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
 
-//        if (isPersonalDetailsDone){
-//            panCardText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
-//            uploadPAN.setVisibility(View.INVISIBLE);
-//            editPAN.setVisibility(View.VISIBLE);
-//
-//            frontText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
-//            uploadF.setVisibility(View.INVISIBLE);
-//            editFront.setVisibility(View.VISIBLE);
-//
-//            backText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.success,0);
-//            editBack.setVisibility(View.VISIBLE);
-//        }
 
-        editPAN.setOnClickListener(new View.OnClickListener() {
+        editPAN.setOnClickListener(new View.OnClickListener()
+
+    {
+        @Override
+        public void onClick (View view){
+        img_type = "pan";
+        saveImage(imageRequest());
+        Dialog chooseDialog;
+        chooseDialog = new Dialog(PersonalDetailsAndIdProofActivity.this);
+        chooseDialog.setContentView(R.layout.dialog_choose);
+        chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+        lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+        lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.gravity = Gravity.BOTTOM;
+
+        chooseDialog.show();
+        chooseDialog.getWindow().setAttributes(lp2);
+
+        ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
+        ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
+
+        camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                img_type = "pan";
-                saveImage(imageRequest());
-                Dialog chooseDialog;
-                chooseDialog = new Dialog(PersonalDetailsAndIdProofActivity.this);
-                chooseDialog.setContentView(R.layout.dialog_choose);
-                chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-                lp2.copyFrom(chooseDialog.getWindow().getAttributes());
-                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                lp2.gravity = Gravity.BOTTOM;
-
-                chooseDialog.show();
-                chooseDialog.getWindow().setAttributes(lp2);
-
-                ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
-                ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
-
-                camera.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
-                        chooseDialog.dismiss();
-                    }
-                });
-
-                gallery.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
-                        chooseDialog.dismiss();
-                    }
-                });
-
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
+                chooseDialog.dismiss();
             }
         });
 
-        editFront.setOnClickListener(new View.OnClickListener() {
+        gallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                img_type = "aadhar";
-                saveImage(imageRequest());
-                Dialog chooseDialog;
-                chooseDialog = new Dialog(PersonalDetailsAndIdProofActivity.this);
-                chooseDialog.setContentView(R.layout.dialog_choose);
-                chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-                lp2.copyFrom(chooseDialog.getWindow().getAttributes());
-                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                lp2.gravity = Gravity.BOTTOM;
-
-                chooseDialog.show();
-                chooseDialog.getWindow().setAttributes(lp2);
-
-                ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
-                ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
-
-                camera.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST2);
-                        chooseDialog.dismiss();
-                    }
-                });
-
-                gallery.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY1);
-                        chooseDialog.dismiss();
-                    }
-                });
-
+                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+                chooseDialog.dismiss();
             }
         });
 
-        //------------------------------------------------------------------------------------------
     }
+    });
+
+        editFront.setOnClickListener(new View.OnClickListener()
+
+    {
+        @Override
+        public void onClick (View view){
+        img_type = "aadhar";
+        saveImage(imageRequest());
+        Dialog chooseDialog;
+        chooseDialog = new Dialog(PersonalDetailsAndIdProofActivity.this);
+        chooseDialog.setContentView(R.layout.dialog_choose);
+        chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+        lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+        lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.gravity = Gravity.BOTTOM;
+
+        chooseDialog.show();
+        chooseDialog.getWindow().setAttributes(lp2);
+
+        ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
+        ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
+
+        camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST2);
+                chooseDialog.dismiss();
+            }
+        });
+
+        gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY1);
+                chooseDialog.dismiss();
+            }
+        });
+
+    }
+    });
+
+    //------------------------------------------------------------------------------------------
+}
 
     public void onClickPersonalOrAadhar(View view) {
         switch (view.getId()) {
             case R.id.personal_details_id_proof_personal_address_button:
+
+                String nameWatcher = name.getText().toString().trim();
+                String stateWatcher = selectStateText.getText().toString().trim();
+                String cityWatcher = selectDistrictText.getText().toString().trim();
+                String pinCodeWatcher = pinCode.getText().toString().trim();
+                String addressWatcher = address.getText().toString().trim();
+                String mobileWatcher = mobileEdit.getText().toString().trim();
+                String emailIdWatcher = emailIdEdit.getText().toString().trim();
+                boolean owner = ownerButton.isChecked();
+                boolean driver = driverButton.isChecked();
+                boolean broker = brokerButton.isChecked();
+                boolean customer = customerButton.isChecked();
+
+                if (!nameWatcher.isEmpty() && !stateWatcher.isEmpty() && !cityWatcher.isEmpty() && !pinCodeWatcher.isEmpty() && !addressWatcher.isEmpty() && !mobileWatcher.isEmpty() && !emailIdWatcher.isEmpty()) {
+                    okButton.setEnabled(true);
+                    okButton.setBackground(getDrawable(R.drawable.button_active));
+                } else {
+                    okButton.setEnabled(false);
+                    okButton.setBackground(getDrawable(R.drawable.button_de_active));
+                }
+
                 personalAddressButton.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
                 personalView.setBackgroundColor(getResources().getColor(R.color.dark_blue));
                 personalAndAddressView.setVisibility(View.VISIBLE);
@@ -640,6 +701,10 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 break;
 
             case R.id.personal_details_id_proof_pan_aadhar:
+
+                okButton.setEnabled(true);
+                okButton.setBackground(getDrawable(R.drawable.button_active));
+
                 panAndAadharButton.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
                 panView.setBackgroundColor(getResources().getColor(R.color.dark_blue));
                 panAndAadharView.setVisibility(View.VISIBLE);
@@ -728,7 +793,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             updateUserType();
         }
 
-        if (mobileString.equals(mobileEdit.getText().toString()) || mobileEdit.getText().toString().isEmpty()){
+//        if (mobileString.equals(mobileEdit.getText().toString()) || mobileEdit.getText().toString().isEmpty()) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
             my_alert.setTitle("Details updated Successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -744,31 +809,31 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 }
             });
             my_alert.show();
-        }else{
-            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
-            my_alert.setTitle("Do you really want to update your phone number?");
-            my_alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                    Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, OtpCodeActivity.class);
-                    i8.putExtra("mobile", "+91"+mobileEdit.getText().toString());
-                    i8.putExtra("isEditPhone", true);
-                    i8.putExtra("userId", userId);
-                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i8);
-                    overridePendingTransition(0, 0);
-                    PersonalDetailsAndIdProofActivity.this.finish();
-                }
-            });
-            my_alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            });
-            my_alert.show();
-        }
+//        } else {
+//            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
+//            my_alert.setTitle("Do you really want to update your phone number?");
+//            my_alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialogInterface, int i) {
+//                    dialogInterface.dismiss();
+//                    Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, OtpCodeActivity.class);
+//                    i8.putExtra("mobile", "+91" + mobileEdit.getText().toString());
+//                    i8.putExtra("isEditPhone", true);
+//                    i8.putExtra("userId", userId);
+//                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    startActivity(i8);
+//                    overridePendingTransition(0, 0);
+//                    PersonalDetailsAndIdProofActivity.this.finish();
+//                }
+//            });
+//            my_alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialogInterface, int i) {
+//                    dialogInterface.dismiss();
+//                }
+//            });
+//            my_alert.show();
+//        }
 //            RegistrationActivity.this.finish();
     }
 
@@ -786,10 +851,20 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             String pinCodeWatcher = pinCode.getText().toString().trim();
             String addressWatcher = address.getText().toString().trim();
             String mobileWatcher = mobileEdit.getText().toString().trim();
+            String emailIdWatcher = emailIdEdit.getText().toString().trim();
             boolean owner = ownerButton.isChecked();
             boolean driver = driverButton.isChecked();
             boolean broker = brokerButton.isChecked();
             boolean customer = customerButton.isChecked();
+
+            if (!nameWatcher.isEmpty() && !stateWatcher.isEmpty() && !cityWatcher.isEmpty() && !pinCodeWatcher.isEmpty() && !addressWatcher.isEmpty() && !mobileWatcher.isEmpty() && !emailIdWatcher.isEmpty()) {
+                okButton.setEnabled(true);
+                okButton.setBackground(getDrawable(R.drawable.button_active));
+            } else {
+                okButton.setEnabled(false);
+                okButton.setBackground(getDrawable(R.drawable.button_de_active));
+            }
+
         }
 
         @Override
@@ -823,10 +898,14 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             String pinCodeWatcher = pinCode.getText().toString().trim();
 
-            if (pinCodeWatcher.length() != 6) {
-                pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
-            } else {
+            if (pinCodeWatcher.length() == 6) {
+                okButton.setEnabled(true);
+                okButton.setBackground(getDrawable(R.drawable.button_active));
                 pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+            } else {
+                okButton.setEnabled(false);
+                okButton.setBackground(getDrawable(R.drawable.button_de_active));
+                pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
             }
         }
 
@@ -847,9 +926,13 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             String mobileNoWatcher = mobileEdit.getText().toString().trim();
 
             if (mobileNoWatcher.length() == 10) {
+                okButton.setEnabled(true);
+                okButton.setBackground(getDrawable(R.drawable.button_active));
                 mobileEdit.setBackground(getResources().getDrawable(R.drawable.mobile_number_right));
                 series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left));
             } else {
+                okButton.setEnabled(false);
+                okButton.setBackground(getDrawable(R.drawable.button_de_active));
                 mobileEdit.setBackground(getResources().getDrawable(R.drawable.mobile_number_right_red));
                 series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left_red));
             }
@@ -891,8 +974,8 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             ImageView editedPan = (ImageView) previewDialogPan.findViewById(R.id.dialog_preview_image_view);
             editedPan.setImageURI(selectedImage);
 
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-            Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
             cursor.moveToFirst();
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
@@ -922,8 +1005,8 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             Uri selectedImage = data.getData();
             ImageView editedAadhar = (ImageView) previewDialogAadhar.findViewById(R.id.dialog_preview_image_view);
             editedAadhar.setImageURI(selectedImage);
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-            Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
             cursor.moveToFirst();
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
@@ -932,7 +1015,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             uploadImage(picturePath);
 
             imgF.setImageURI(selectedImage);
-        } else  if (requestCode == CAMERA_PIC_REQUEST1) {
+        } else if (requestCode == CAMERA_PIC_REQUEST1) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
             my_alert.setTitle("PAN Card Uploaded Successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -951,7 +1034,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             previewAadhar.setVisibility(View.VISIBLE);
 
             Bitmap image = (Bitmap) data.getExtras().get("data");
-            String path = getRealPathFromURI(getImageUri(this,image));
+            String path = getRealPathFromURI(getImageUri(this, image));
             ImageView editedPan = (ImageView) previewDialogPan.findViewById(R.id.dialog_preview_image_view);
             editedPan.setImageBitmap(BitmapFactory.decodeFile(path));
             imgPAN.setImageBitmap(BitmapFactory.decodeFile(path));
@@ -976,7 +1059,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             Bitmap image = (Bitmap) data.getExtras().get("data");
             ImageView editedAadhar = (ImageView) previewDialogAadhar.findViewById(R.id.dialog_preview_image_view);
             editedAadhar.setImageBitmap(image);
-            String path = getRealPathFromURI(getImageUri(this,image));
+            String path = getRealPathFromURI(getImageUri(this, image));
             imgF.setImageBitmap(BitmapFactory.decodeFile(path));
             uploadImage(path);
         }
@@ -1421,30 +1504,31 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 //--------------------------------------------------------------------------------------------------
     }
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
+private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+    ImageView bmImage;
 
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urlDisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urlDisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
+    public DownloadImageTask(ImageView bmImage) {
+        this.bmImage = bmImage;
     }
+
+    protected Bitmap doInBackground(String... urls) {
+        String urlDisplay = urls[0];
+        Bitmap mIcon11 = null;
+        try {
+            InputStream in = new java.net.URL(urlDisplay).openStream();
+            mIcon11 = BitmapFactory.decodeStream(in);
+        } catch (Exception e) {
+            Log.e("Error", e.getMessage());
+            e.printStackTrace();
+        }
+        return mIcon11;
+    }
+
+    protected void onPostExecute(Bitmap result) {
+        bmImage.setImageBitmap(result);
+    }
+
+}
 
     private void getImageURL() {
 
@@ -1462,7 +1546,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                             aadharImageURL = obj.getString("image_url");
                             new DownloadImageTask(imgF).execute(aadharImageURL);
 
-                            if (isAadharAdded == false){
+                            if (isAadharAdded == false) {
                                 new DownloadImageTask((ImageView) previewDialogAadhar.findViewById(R.id.dialog_preview_image_view)).execute(aadharImageURL);
                             }
 
@@ -1472,7 +1556,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                         if (imageType.equals("pan")) {
                             panImageURL = obj.getString("image_url");
                             new DownloadImageTask(imgPAN).execute(panImageURL);
-                            if (isPanAdded == false){
+                            if (isPanAdded == false) {
                                 new DownloadImageTask((ImageView) previewDialogPan.findViewById(R.id.dialog_preview_image_view)).execute(panImageURL);
                             }
                         }
@@ -1535,7 +1619,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         MultipartBody.Part body = prepareFilePart("file", Uri.fromFile(file));
 
-        Call<UploadImageResponse> call = ApiClient.getImageUploadService().uploadImage(userId,img_type,body);
+        Call<UploadImageResponse> call = ApiClient.getImageUploadService().uploadImage(userId, img_type, body);
         call.enqueue(new Callback<UploadImageResponse>() {
             @Override
             public void onResponse(Call<UploadImageResponse> call, Response<UploadImageResponse> response) {
@@ -1545,7 +1629,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<UploadImageResponse> call, Throwable t) {
                 t.printStackTrace();
-                Log.i("failed:","failed");
+                Log.i("failed:", "failed");
             }
         });
     }
