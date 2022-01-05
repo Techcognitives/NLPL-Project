@@ -708,7 +708,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         intent.putExtra("bankDetailsID", obj.getBank_id());
         Log.i("Bank Id in P and R", obj.getBank_id());
         intent.putExtra("mobile", phone);
-
         startActivity(intent);
     }
 
@@ -721,7 +720,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_down_personal, 0);
                         personal_done.setVisibility(View.VISIBLE);
 
-                        if (isBankExpanded || isTruckExpanded || isDriverExpanded) {
+                        if (isBankExpanded && isTruckExpanded && isDriverExpanded) {
 
 //                            personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
                             bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
@@ -771,7 +770,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         bankDone.setVisibility(View.VISIBLE);
                         addBankDetails.setVisibility(View.VISIBLE);
 
-                        if (isPersonalExpanded || isDriverExpanded || isTruckExpanded) {
+                        if (isPersonalExpanded && isDriverExpanded && isTruckExpanded) {
 
                             personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
 //                            bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
@@ -813,7 +812,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         vehicleDone.setVisibility(View.VISIBLE);
                         addTruck.setVisibility(View.VISIBLE);
 
-                        if (isPersonalExpanded || isBankExpanded || isTruckExpanded) {
+                        if (isPersonalExpanded && isBankExpanded && isTruckExpanded) {
 
                             personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
                             bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
@@ -857,7 +856,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         driverDone.setVisibility(View.VISIBLE);
                         addDriver.setVisibility(View.VISIBLE);
 
-                        if (isPersonalExpanded || isTruckExpanded || isBankExpanded) {
+                        if (isPersonalExpanded && isTruckExpanded && isBankExpanded) {
 
                             personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
                             bankDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bank_success, 0, R.drawable.ic_right, 0);
@@ -887,7 +886,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     intent.putExtra("mobile", phone);
                     startActivity(intent);
                 }
-
                 break;
 
             case R.id.editPersonalDetails:
