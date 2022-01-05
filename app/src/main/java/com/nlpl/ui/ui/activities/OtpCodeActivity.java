@@ -187,6 +187,7 @@ public class OtpCodeActivity extends AppCompatActivity {
 //                    Log.i("OTP ID", otpId);
 //                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpId, otp);
 //                    signInWithPhoneAuthCredential(credential);
+
 //                }
             }
         });
