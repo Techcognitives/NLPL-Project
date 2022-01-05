@@ -138,7 +138,7 @@
             android:id="@+id/driver_details_upload_driver_license"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/all_rounded_small"
             android:backgroundTint="@color/button_blue"
             android:drawableStart="@drawable/ic_upload"
@@ -150,8 +150,17 @@
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/driver_details_driver_license_text_image"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/driver_details_driver_license_text_image"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="@+id/driver_details_driver_license_text_image" />
+
+        <ImageView
+            android:id="@+id/driver_details_preview_driving_licensse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/driver_details_edit_driver_license"
+            app:layout_constraintEnd_toStartOf="@+id/driver_details_edit_driver_license"
+            app:layout_constraintTop_toTopOf="@+id/driver_details_edit_driver_license"
+            app:srcCompat="@drawable/ic_preview" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
@@ -266,7 +275,7 @@
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
-            android:visibility="visible"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/driver_selfie_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/driver_selfie_text" />
@@ -297,6 +306,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/driver_details_preview_selfie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/driver_details_edit_selfie_text"
+            app:layout_constraintEnd_toStartOf="@+id/driver_details_edit_selfie_text"
+            app:layout_constraintTop_toTopOf="@+id/driver_details_edit_selfie_text"
+            app:srcCompat="@drawable/ic_preview" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
