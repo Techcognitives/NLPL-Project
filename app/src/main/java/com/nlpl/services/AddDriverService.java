@@ -12,21 +12,22 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface AddDriverService {
     @POST("driver/addDriver")
     Call<AddDriverResponse> saveDriver(@Body AddDriverRequest addDriverRequest);
 
-    @PATCH("/driver/{driverId}")
+    @PUT("/driver/{driverId}")
     Call<UpdateDriverName> updateDriverName(@Path("driverId") String driverId, @Body UpdateDriverName updateDriverName);
 
-    @PATCH("/driver/{driverId}")
+    @PUT("/driver/{driverId}")
     Call<UpdateDriverUploadLicense> updateDriverUploadLicense(@Path("driverId") String driverId, @Body UpdateDriverUploadLicense updateDriverUploadLicense);
 
-    @PATCH("/driver/{driverId}")
+    @PUT("/driver/{driverId}")
     Call<UpdateDriverNumber> updateDriverNumber(@Path("driverId") String driverId, @Body UpdateDriverNumber updateDriverNumber);
 
-    @PATCH("/driver/{driverId}")
+    @PUT("/driver/{driverId}")
     Call<UpdateDriverEmailId> updateDriverEmailId(@Path("driverId") String driverId, @Body UpdateDriverEmailId updateDriverEmailId);
 }

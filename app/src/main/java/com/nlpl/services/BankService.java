@@ -12,21 +12,22 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface BankService {
     @POST("/bank/createAccount")
     Call<BankResponse> saveBank(@Body BankRequest bankRequest);
 
-    @PATCH("/bank/{bankId}")
+    @PUT("/bank/{bankId}")
     Call<UpdateBankAccountHolderName> updateBankAccountHolderName(@Path("bankId") String bankId, @Body UpdateBankAccountHolderName updateBankAccountHolderName);
 
-    @PATCH("/bank/{bankId}")
+    @PUT("/bank/{bankId}")
     Call<UpdateBankAccountNumber> updateBankAccountNumber(@Path("bankId") String bankId, @Body UpdateBankAccountNumber updateBankAccountNumber);
 
-    @PATCH("/bank/{bankId}")
+    @PUT("/bank/{bankId}")
     Call<UpdateBankReEnterAccountNumber> updateBankReEnterAccountNumber(@Path("bankId") String bankId, @Body UpdateBankReEnterAccountNumber updateBankReEnterAccountNumber);
 
-    @PATCH("/bank/{bankId}")
+    @PUT("/bank/{bankId}")
     Call<UpdateBankIFSICode> updateBankIFSICode(@Path("bankId") String bankId, @Body UpdateBankIFSICode updateBankIFSICode);
 }

@@ -15,31 +15,32 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface AddTruckService {
     @POST("/truck/addtruck")
     Call<AddTruckResponse> saveTruck(@Body AddTruckRequest addTruckRequest);
 
-    @PATCH("/truck/{truckId}")
+    @PUT("/truck/{truckId}")
     Call<UpdateTruckVehicleNumber> updateTruckVehicleNumber(@Path("truckId") String truckId, @Body UpdateTruckVehicleNumber updateTruckVehicleNumber);
 
-    @PATCH("/truck/{truckId}")
+    @PUT("/truck/{truckId}")
     Call<UpdateVehicleType> updateVehicleType(@Path("truckId") String truckId, @Body UpdateVehicleType updateVehicleType);
 
-    @PATCH("/truck/{truckId}")
+    @PUT("/truck/{truckId}")
     Call<UpdateTruckFeet> updateTruckFeet(@Path("truckId") String truckId, @Body UpdateTruckFeet updateTruckFeet);
 
-    @PATCH("/truck/{truckId}")
+    @PUT("/truck/{truckId}")
     Call<UpdateTruckCarryingCapacity> updateTruckCarryingCapacity(@Path("truckId") String truckId, @Body UpdateTruckCarryingCapacity updateTruckCarryingCapacity);
 
-    @PATCH("/truck/{truckId}")
+    @PUT("/truck/{truckId}")
     Call<UpdateTruckRcBook> updateTruckRcBook(@Path("truckId") String truckId, @Body UpdateTruckRcBook updateTruckRcBook);
 
-    @PATCH("/truck/{truckId}")
+    @PUT("/truck/{truckId}")
     Call<UpdateTruckVehicleInsurance> updateTruckVehicleInsurance(@Path("truckId") String truckId, @Body UpdateTruckVehicleInsurance updateTruckVehicleInsurance);
 
-    @PATCH("/truck/{truckId}")
+    @PUT("/truck/{truckId}")
     Call<UpdateTruckType> updateTruckType(@Path("truckId") String truckId, @Body UpdateTruckType updateTruckType);
 }
 
