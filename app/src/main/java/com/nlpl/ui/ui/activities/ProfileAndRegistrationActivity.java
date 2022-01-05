@@ -706,6 +706,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         intent.putExtra("userId", userId);
         intent.putExtra("isEdit", true);
         intent.putExtra("bankDetailsID", obj.getBank_id());
+        Log.i("Bank Id in P and R", obj.getBank_id());
         intent.putExtra("mobile", phone);
 
         startActivity(intent);

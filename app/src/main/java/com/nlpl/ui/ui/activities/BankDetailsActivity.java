@@ -145,8 +145,8 @@ public class BankDetailsActivity extends AppCompatActivity {
         bankName.setFilters(new InputFilter[]{filter});
         ifscCode.setFilters(new InputFilter[]{filter});
 
-        bankName.setFilters(new InputFilter[] { filter });
-        ifscCode.setFilters(new InputFilter[] { filter });
+        bankName.setFilters(new InputFilter[]{filter});
+        ifscCode.setFilters(new InputFilter[]{filter});
 
         bankName.addTextChangedListener(bankDetailsWatcher);
         accountNo.addTextChangedListener(bankDetailsWatcher);
@@ -174,6 +174,7 @@ public class BankDetailsActivity extends AppCompatActivity {
         ifscCode.setEnabled(false);
 
         if (isEdit) {
+            Log.i("Bank Id in Bank Details", bankId);
             isImgUploaded = true;
             getImageURL();
             okButton.setEnabled(true);
@@ -348,21 +349,10 @@ public class BankDetailsActivity extends AppCompatActivity {
         if (accountNo.getText().toString().equals(reAccount.getText().toString())) {
             if (isEdit) {
 
-                if (bankName.getText().toString() != null) {
-                    updateBankAccountHolderName();
-                }
-
-                if (accountNo.getText().toString() != null) {
-                    updateBankAccountNumber();
-                }
-
-                if (reAccount.getText().toString() != null) {
-                    updateBankReEnterAccountNumber();
-                }
-
-                if (ifscCode.getText().toString() != null) {
-                    updateBankIFSICode();
-                }
+                updateBankAccountHolderName();
+                updateBankAccountNumber();
+                updateBankReEnterAccountNumber();
+                updateBankIFSICode();
 
             } else {
                 saveBank(createBankAcc());
@@ -517,7 +507,7 @@ public class BankDetailsActivity extends AppCompatActivity {
                 canceledCheckBlurImage.setVisibility(View.GONE);
                 accountDetailsBlurImage.setVisibility(View.VISIBLE);
 
-                if (isEdit){
+                if (isEdit) {
                     okButton.setEnabled(true);
                     okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                     uploadCC.setVisibility(View.INVISIBLE);
@@ -554,7 +544,7 @@ public class BankDetailsActivity extends AppCompatActivity {
                 canceledCheckBlurImage.setVisibility(View.VISIBLE);
                 accountDetailsBlurImage.setVisibility(View.GONE);
 
-                if (isEdit){
+                if (isEdit) {
 
                     String bankName1 = bankName.getText().toString().trim();
                     String accNo1 = accountNo.getText().toString().trim();
