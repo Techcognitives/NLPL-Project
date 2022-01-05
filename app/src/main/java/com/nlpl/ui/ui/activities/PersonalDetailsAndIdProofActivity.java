@@ -816,14 +816,23 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
-                    Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, OtpCodeActivity.class);
-                    i8.putExtra("mobile", "+91" + mobileEdit.getText().toString());
-                    i8.putExtra("isEditPhone", true);
-                    i8.putExtra("userId", userId);
-                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i8);
-                    overridePendingTransition(0, 0);
-                    PersonalDetailsAndIdProofActivity.this.finish();
+                    AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
+                    my_alert.setTitle("OTP is sent to "+"+91" + mobileEdit.getText().toString());
+                    my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                            Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, OtpCodeActivity.class);
+                            i8.putExtra("mobile", "+91" + mobileEdit.getText().toString());
+                            i8.putExtra("isEditPhone", true);
+                            i8.putExtra("userId", userId);
+                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(i8);
+                            overridePendingTransition(0, 0);
+                            PersonalDetailsAndIdProofActivity.this.finish();
+                        }
+                    });
+                    my_alert.show();
                 }
             });
             my_alert.setNegativeButton("No", new DialogInterface.OnClickListener() {

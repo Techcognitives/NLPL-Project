@@ -179,6 +179,7 @@ public class OtpCodeActivity extends AppCompatActivity {
                     }
                 });
                 my_alert.show();
+
 //                if (otp1.getText().toString().isEmpty() || otp2.getText().toString().isEmpty() || otp3.getText().toString().isEmpty() || otp4.getText().toString().isEmpty() || otp5.getText().toString().isEmpty() || otp6.getText().toString().isEmpty()) {
 //                    Toast.makeText(getApplicationContext(), "Field is blank", Toast.LENGTH_LONG).show();
 //                } else {

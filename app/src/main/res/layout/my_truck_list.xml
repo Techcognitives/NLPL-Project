@@ -64,6 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Capacity"
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -76,12 +77,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Feet"
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/my_truck_list_capacity"
         app:layout_constraintEnd_toStartOf="@+id/my_truck_list_capacity"
         app:layout_constraintStart_toEndOf="@+id/my_truck_list_truck_type"
-        app:layout_constraintTop_toTopOf="@+id/my_truck_list_capacity" />
+        app:layout_constraintTop_toTopOf="@+id/my_truck_list_capacity"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/my_truck_list_truck_type"

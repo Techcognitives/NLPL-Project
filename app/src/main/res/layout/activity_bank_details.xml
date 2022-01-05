@@ -303,10 +303,10 @@
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/bank_details_canceled_check_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.687"
+            app:layout_constraintHorizontal_bias="0.692"
             app:layout_constraintStart_toEndOf="@+id/bank_details_canceled_check_text"
             app:layout_constraintTop_toTopOf="@+id/bank_details_canceled_check_text"
-            app:layout_constraintVertical_bias="0.6" />
+            app:layout_constraintVertical_bias="0.487" />
 
         <ImageView
             android:id="@+id/bank_details_preview_cancelled_cheque_image_view"

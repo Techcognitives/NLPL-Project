@@ -445,13 +445,13 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 updateUserIsDriverAdded();
 
                 if (isEdit) {
-                    if (driverName.getText().toString() != null){
+                    if (driverName.getText().toString() != null) {
                         updateDriverName();
                     }
-                    if (driverMobile.getText().toString() != null){
+                    if (driverMobile.getText().toString() != null) {
                         updateDriverNumber();
                     }
-                    if (driverEmailId.getText().toString() != null){
+                    if (driverEmailId.getText().toString() != null) {
                         updateDriverEmailId();
                     }
 
@@ -536,7 +536,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
     };
 
 
-    private  TextWatcher driverMobileWatcher = new TextWatcher() {
+    private TextWatcher driverMobileWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -706,7 +706,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
     //-------------------------------- Update User is Driver Added ---------------------------------
     private void updateDriverNumber() {
 
-        UpdateDriverNumber updateDriverNumber = new UpdateDriverNumber("91"+driverMobile.getText().toString());
+        UpdateDriverNumber updateDriverNumber = new UpdateDriverNumber("91" + driverMobile.getText().toString());
 
         Call<UpdateDriverNumber> call = addDriverService.updateDriverNumber("" + driverId, updateDriverNumber);
 
