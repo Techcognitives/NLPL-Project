@@ -91,6 +91,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
     String img_type, userId, driverId, driverNameAPI, driverNumberAPI, driverEmailAPI, mobile;
     Boolean isDLUploaded = false, isEdit, isSelfieUploaded = false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,8 +122,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
         userService = retrofit.create(UserService.class);
         addDriverService = retrofit.create(AddDriverService.class);
 
-        driverName.addTextChangedListener(driverWatcher);
-        driverMobile.addTextChangedListener(driverWatcher);
+        driverName.addTextChangedListener(driverNameWatcher);
+        driverMobile.addTextChangedListener(driverMobileWatcher);
 
         driverEmailId.addTextChangedListener(new TextWatcher() {
             @Override
@@ -146,6 +147,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                     String driverMobileText = driverMobile.getText().toString();
                     String driverNameText = driverName.getText().toString();
                     String driverEmailIdText = driverEmailId.getText().toString();
+
                     if (!driverNameText.isEmpty() && !driverMobileText.isEmpty() && !driverEmailIdText.isEmpty() && isDLUploaded && isSelfieUploaded) {
                         okDriverDetails.setEnabled(true);
                         okDriverDetails.setBackgroundResource(R.drawable.button_active);
@@ -183,6 +185,14 @@ public class DriverDetailsActivity extends AppCompatActivity {
         driverSelfieImg = findViewById(R.id.driver_selfie_img);
         textDS = findViewById(R.id.driver_selfie_text);
         editDS = findViewById(R.id.driver_details_edit_selfie_text);
+
+        String mobileNoWatcher = driverMobile.getText().toString().trim();
+        String nameWatcher = driverName.getText().toString().trim();
+        String emailWtacher = driverEmailId.getText().toString();
+        if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && !emailWtacher.isEmpty() && isDLUploaded && isSelfieUploaded) {
+            okDriverDetails.setEnabled(true);
+            okDriverDetails.setBackgroundResource(R.drawable.button_active);
+        }
 
         mQueue = Volley.newRequestQueue(DriverDetailsActivity.this);
         if (isEdit) {
@@ -325,11 +335,11 @@ public class DriverDetailsActivity extends AppCompatActivity {
             editDL.setVisibility(View.VISIBLE);
 
             isDLUploaded = true;
-            String driverMobileText = driverMobile.getText().toString();
-            String driverNameText = driverName.getText().toString();
-            String driverEmailIdText = driverEmailId.getText().toString();
+            String mobileNoWatcher = driverMobile.getText().toString();
+            String nameWatcher = driverName.getText().toString();
+            String emailWtacher = driverEmailId.getText().toString();
 
-            if (!driverNameText.isEmpty() && !driverMobileText.isEmpty() && !driverEmailIdText.isEmpty() && isDLUploaded && isSelfieUploaded) {
+            if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && !emailWtacher.isEmpty() && isDLUploaded && isSelfieUploaded) {
                 okDriverDetails.setEnabled(true);
                 okDriverDetails.setBackgroundResource(R.drawable.button_active);
             }
@@ -359,6 +369,15 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
             isSelfieUploaded = true;
 
+            String mobileNoWatcher = driverMobile.getText().toString();
+            String nameWatcher = driverName.getText().toString();
+            String emailWtacher = driverEmailId.getText().toString();
+
+            if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && !emailWtacher.isEmpty() && isDLUploaded && isSelfieUploaded) {
+                okDriverDetails.setEnabled(true);
+                okDriverDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
             textDS.setText("Selfie Uploaded");
             textDS.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadSelfie.setVisibility(View.INVISIBLE);
@@ -387,11 +406,11 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
             isDLUploaded = true;
 
-            String driverMobileText = driverMobile.getText().toString();
-            String driverNameText = driverName.getText().toString();
-            String driverEmailIdText = driverEmailId.getText().toString();
+            String mobileNoWatcher = driverMobile.getText().toString();
+            String nameWatcher = driverName.getText().toString();
+            String emailWtacher = driverEmailId.getText().toString();
 
-            if (!driverNameText.isEmpty() && !driverMobileText.isEmpty() && !driverEmailIdText.isEmpty() && isSelfieUploaded && isDLUploaded) {
+            if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && !emailWtacher.isEmpty() && isDLUploaded && isSelfieUploaded) {
                 okDriverDetails.setEnabled(true);
                 okDriverDetails.setBackgroundResource(R.drawable.button_active);
             }
@@ -489,7 +508,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
     }
     //-----------------------------------------------------------------------------------------------------
 
-    private TextWatcher driverWatcher = new TextWatcher() {
+    private TextWatcher driverNameWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -499,19 +518,11 @@ public class DriverDetailsActivity extends AppCompatActivity {
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             String mobileNoWatcher = driverMobile.getText().toString().trim();
             String nameWatcher = driverName.getText().toString().trim();
+            String emailWtacher = driverEmailId.getText().toString();
 
-            if (!nameWatcher.isEmpty()) {
-                if (mobileNoWatcher.length() == 10) {
-                    okDriverDetails.setEnabled(true);
-                    okDriverDetails.setBackgroundResource(R.drawable.button_active);
-                    driverMobile.setBackground(getResources().getDrawable(R.drawable.mobile_number_right));
-                    series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left));
-                } else {
-                    okDriverDetails.setEnabled(false);
-                    okDriverDetails.setBackgroundResource(R.drawable.button_de_active);
-                    driverMobile.setBackground(getResources().getDrawable(R.drawable.mobile_number_right_red));
-                    series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left_red));
-                }
+            if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && !emailWtacher.isEmpty() && isDLUploaded && isSelfieUploaded) {
+                okDriverDetails.setEnabled(true);
+                okDriverDetails.setBackgroundResource(R.drawable.button_active);
             } else {
                 okDriverDetails.setEnabled(false);
                 okDriverDetails.setBackgroundResource(R.drawable.button_de_active);
@@ -523,6 +534,45 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         }
     };
+
+
+    private  TextWatcher driverMobileWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String mobileNoWatcher = driverMobile.getText().toString().trim();
+            String nameWatcher = driverName.getText().toString().trim();
+            String emailWtacher = driverEmailId.getText().toString();
+            if (mobileNoWatcher.length() == 10) {
+                if (!nameWatcher.isEmpty() && !emailWtacher.isEmpty() && isDLUploaded && isSelfieUploaded) {
+                    okDriverDetails.setEnabled(true);
+                    okDriverDetails.setBackgroundResource(R.drawable.button_active);
+                } else {
+                    okDriverDetails.setEnabled(false);
+                    okDriverDetails.setBackgroundResource(R.drawable.button_de_active);
+                }
+
+
+                driverMobile.setBackground(getResources().getDrawable(R.drawable.mobile_number_right));
+                series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left));
+            } else {
+                okDriverDetails.setEnabled(false);
+                okDriverDetails.setBackgroundResource(R.drawable.button_de_active);
+                driverMobile.setBackground(getResources().getDrawable(R.drawable.mobile_number_right_red));
+                series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left_red));
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+
 
     private String blockCharacterSet = "~#^|$%&*!+@₹_-()':;?/={}";
 
