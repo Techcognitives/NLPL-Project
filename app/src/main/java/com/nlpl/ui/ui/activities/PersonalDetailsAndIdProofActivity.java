@@ -834,7 +834,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 //            });
 //            my_alert.show();
 //        }
-//            RegistrationActivity.this.finish();
     }
 
     private TextWatcher proofAndPersonalWatcher = new TextWatcher() {
