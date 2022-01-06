@@ -44,7 +44,9 @@ import com.nlpl.model.Requests.AddTruckRequest;
 import com.nlpl.model.Requests.ImageRequest;
 import com.nlpl.model.Responses.AddTruckResponse;
 import com.nlpl.model.Responses.ImageResponse;
+import com.nlpl.model.Responses.UploadDriverLicenseResponse;
 import com.nlpl.model.Responses.UploadImageResponse;
+import com.nlpl.model.Responses.UploadTruckRCResponse;
 import com.nlpl.model.UpdateTruckDetails.UpdateTruckCarryingCapacity;
 import com.nlpl.model.UpdateTruckDetails.UpdateTruckFeet;
 import com.nlpl.model.UpdateTruckDetails.UpdateTruckRcBook;
@@ -83,11 +85,13 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     View action_bar;
     TextView actionBarTitle;
     ImageView actionBarBackButton;
-
+    int requestCode;
+    int resultCode;
+    Intent data;
     EditText vehicleNumberEdit;
     TextView selectModel, selectFt, selectCapacity;
     ImageView openType, closedType, tarpaulinType, imgRC, imgI;
-    String bodyTypeSelected, mobile, img_type;
+    String bodyTypeSelected, mobile;
 
     Dialog selectModelDialog, selectFeetDialog, selectCapacityDialog;
 
@@ -211,8 +215,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         uploadRC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                img_type = "rc";
-                saveImage(imageRequest());
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(VehicleDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
@@ -254,8 +256,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         editRC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                img_type = "rc";
-                saveImage(imageRequest());
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(VehicleDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
@@ -296,8 +296,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         uploadInsurance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                img_type = "insurance";
-                saveImage(imageRequest());
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(VehicleDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
@@ -338,8 +336,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         editInsurance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                img_type = "insurance";
-                saveImage(imageRequest());
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(VehicleDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
@@ -462,6 +458,13 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        this.resultCode = resultCode;
+        this.requestCode = requestCode;
+        this.data = data;
+        imagePicker();
+    }
+
+    private String imagePicker(){
         //Detects request code for PAN
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
 
@@ -494,9 +497,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
 
-            uploadImage(picturePath);
-
             imgRC.setImageURI(selectedImage);
+            return picturePath;
 
         } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
@@ -527,9 +529,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
 
-            uploadImage(picturePath);
-
             imgI.setImageURI(selectedImage);
+            return picturePath;
 
         }else  if (requestCode == CAMERA_PIC_REQUEST1) {
 
@@ -557,7 +558,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             Bitmap image = (Bitmap) data.getExtras().get("data");
             String path = getRealPathFromURI(getImageUri(this,image));
             imgRC.setImageBitmap(BitmapFactory.decodeFile(path));
-            uploadImage(path);
+            return path;
 
         } else  if (requestCode == CAMERA_PIC_REQUEST2) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
@@ -583,9 +584,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             Bitmap image = (Bitmap) data.getExtras().get("data");
             String path = getRealPathFromURI(getImageUri(this,image));
             imgI.setImageBitmap(BitmapFactory.decodeFile(path));
-            uploadImage(path);
-
+            return path;
         }
+        return "";
     }
 
     public void onClickVehicleDetailsOk(View view) {
@@ -616,23 +617,31 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 saveTruck(createTruck());
             }
 
-            AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
-            my_alert.setTitle("Vehicle Details added successfully");
-            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    updateUserIsTruckAdded();
-                    dialogInterface.dismiss();
-                    Intent i8 = new Intent(VehicleDetailsActivity.this, ProfileAndRegistrationActivity.class);
-                    i8.putExtra("mobile2", mobile);
-                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i8);
-                    overridePendingTransition(0, 0);
-                    VehicleDetailsActivity.this.finish();
-                }
-            });
-            my_alert.show();
-
+            if (isEdit){
+                Intent i8 = new Intent(VehicleDetailsActivity.this, ProfileAndRegistrationActivity.class);
+                i8.putExtra("mobile2", mobile);
+                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i8);
+                overridePendingTransition(0, 0);
+                VehicleDetailsActivity.this.finish();
+            } else {
+                AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
+                my_alert.setTitle("Vehicle Details added successfully");
+                my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        updateUserIsTruckAdded();
+                        dialogInterface.dismiss();
+                        Intent i8 = new Intent(VehicleDetailsActivity.this, ProfileAndRegistrationActivity.class);
+                        i8.putExtra("mobile2", mobile);
+                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i8);
+                        overridePendingTransition(0, 0);
+                        VehicleDetailsActivity.this.finish();
+                    }
+                });
+                my_alert.show();
+            }
         }else{
 //            okVehicleDetails.setEnabled(false);
 //            okVehicleDetails.setBackground(getResources().getDrawable(R.drawable.button_de_active));
@@ -657,7 +666,11 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         addTruckResponseCall.enqueue(new Callback<AddTruckResponse>() {
             @Override
             public void onResponse(Call<AddTruckResponse> call, Response<AddTruckResponse> response) {
-
+                AddTruckResponse addTruckResponse = response.body();
+                String truckId = addTruckResponse.getData().getTruck_id();
+                String path2 = imagePicker();
+                Log.i("path of rc: ", path2);
+                uploadTruckRC(truckId, path2 );
             }
 
             @Override
@@ -667,6 +680,41 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         });
     }
     //-----------------------------------------------------------------------------------------------------
+
+    @NonNull
+    private MultipartBody.Part prepareFilePart(String partName, Uri fileUri) {
+
+        Log.i("file uri: ", String.valueOf(fileUri));
+        // use the FileUtils to get the actual file by uri
+        File file = FileUtils.getFile(this, fileUri);
+
+        // create RequestBody instance from file
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image"), file);
+
+        // MultipartBody.Part is used to send also the actual file name
+        return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
+    }
+
+    private void uploadTruckRC(String truckId,String picPath) {
+
+        File file = new File(picPath);
+//        File file = new File(getExternalFilesDir("/").getAbsolutePath(), file);
+
+        MultipartBody.Part body = prepareFilePart("rc", Uri.fromFile(file));
+
+        Call<UploadTruckRCResponse> call = ApiClient.getTruckRCService().uploadTruckRC(truckId,body);
+        call.enqueue(new Callback<UploadTruckRCResponse>() {
+            @Override
+            public void onResponse(Call<UploadTruckRCResponse> call, Response<UploadTruckRCResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UploadTruckRCResponse> call, Throwable t) {
+
+            }
+        });
+    }
 
     private TextWatcher vehicleTextWatecher = new TextWatcher() {
         @Override
@@ -1134,64 +1182,64 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
 
     //--------------------------------------create image in API -------------------------------------
-    public ImageRequest imageRequest() {
-        ImageRequest imageRequest = new ImageRequest();
-        imageRequest.setUser_id(userId);
-        imageRequest.setImage_type(img_type);
-        return imageRequest;
-    }
+//    public ImageRequest imageRequest() {
+//        ImageRequest imageRequest = new ImageRequest();
+//        imageRequest.setUser_id(userId);
+//        imageRequest.setImage_type(img_type);
+//        return imageRequest;
+//    }
+//
+//    public void saveImage(ImageRequest imageRequest) {
+//        Call<ImageResponse> imageResponseCall = ApiClient.getImageService().saveImage(imageRequest);
+//        imageResponseCall.enqueue(new Callback<ImageResponse>() {
+//            @Override
+//            public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ImageResponse> call, Throwable t) {
+//
+//            }
+//        });
+//    }
 
-    public void saveImage(ImageRequest imageRequest) {
-        Call<ImageResponse> imageResponseCall = ApiClient.getImageService().saveImage(imageRequest);
-        imageResponseCall.enqueue(new Callback<ImageResponse>() {
-            @Override
-            public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<ImageResponse> call, Throwable t) {
-
-            }
-        });
-    }
-
-    @NonNull
-    private MultipartBody.Part prepareFilePart(String partName, Uri fileUri) {
-
-        Log.i("file uri: ", String.valueOf(fileUri));
-        // use the FileUtils to get the actual file by uri
-        File file = FileUtils.getFile(this, fileUri);
-
-        // create RequestBody instance from file
-        RequestBody requestFile = RequestBody.create(MediaType.parse("mp3"), file);
-
-        // MultipartBody.Part is used to send also the actual file name
-        return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
-    }
+//    @NonNull
+//    private MultipartBody.Part prepareFilePart(String partName, Uri fileUri) {
+//
+//        Log.i("file uri: ", String.valueOf(fileUri));
+//        // use the FileUtils to get the actual file by uri
+//        File file = FileUtils.getFile(this, fileUri);
+//
+//        // create RequestBody instance from file
+//        RequestBody requestFile = RequestBody.create(MediaType.parse("mp3"), file);
+//
+//        // MultipartBody.Part is used to send also the actual file name
+//        return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
+//    }
 
 
-    private void uploadImage(String picPath) {
-
-        File file = new File(picPath);
-//        File file = new File(getExternalFilesDir("/").getAbsolutePath(), file);
-
-        MultipartBody.Part body = prepareFilePart("file", Uri.fromFile(file));
-
-        Call<UploadImageResponse> call = ApiClient.getImageUploadService().uploadImage(userId,img_type,body);
-        call.enqueue(new Callback<UploadImageResponse>() {
-            @Override
-            public void onResponse(Call<UploadImageResponse> call, Response<UploadImageResponse> response) {
-                Log.i("successful:", "success");
-            }
-
-            @Override
-            public void onFailure(Call<UploadImageResponse> call, Throwable t) {
-                t.printStackTrace();
-                Log.i("failed:","failed");
-            }
-        });
-    }
+//    private void uploadImage(String picPath) {
+//
+//        File file = new File(picPath);
+////        File file = new File(getExternalFilesDir("/").getAbsolutePath(), file);
+//
+//        MultipartBody.Part body = prepareFilePart("file", Uri.fromFile(file));
+//
+//        Call<UploadImageResponse> call = ApiClient.getImageUploadService().uploadImage(userId,img_type,body);
+//        call.enqueue(new Callback<UploadImageResponse>() {
+//            @Override
+//            public void onResponse(Call<UploadImageResponse> call, Response<UploadImageResponse> response) {
+//                Log.i("successful:", "success");
+//            }
+//
+//            @Override
+//            public void onFailure(Call<UploadImageResponse> call, Throwable t) {
+//                t.printStackTrace();
+//                Log.i("failed:","failed");
+//            }
+//        });
+//    }
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();

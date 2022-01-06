@@ -275,7 +275,7 @@
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/driver_selfie_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/driver_selfie_text" />

@@ -16,7 +16,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface BankService {
-    @POST("/bank/createAccount")
+    @POST("bank/createBankAcc")
     Call<BankResponse> saveBank(@Body BankRequest bankRequest);
 
     @PUT("/bank/{bankId}")

@@ -107,7 +107,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
     Button uploadPAN, uploadF;
     Dialog previewDialogPan, previewDialogAadhar;
-    Boolean isPanAdded = false, isAadharAdded = false;
+    Boolean isPanAdded = false, isAadharAdded = false, noChange = true;
 
     TextView panCardText, editPAN, editFront, frontText, backText;
     ImageView imgPAN, imgF, previewPan, previewAadhar;
@@ -217,11 +217,9 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
     userService =retrofit.create(UserService .class);
 
-        name.requestFocus();
+//        name.requestFocus();
 
-    getWindow().
-
-    setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+//    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         name.setFilters(new InputFilter[]
 
@@ -793,22 +791,15 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             updateUserType();
         }
 
-        if (mobileString.equals("91"+mobileEdit.getText().toString()) || mobileEdit.getText().toString().isEmpty()) {
-            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
-            my_alert.setTitle("Details updated Successfully");
-            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
+       if (mobileString.equals("91"+mobileEdit.getText().toString()) || mobileEdit.getText().toString().isEmpty()) {
+
                     Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, ProfileAndRegistrationActivity.class);
                     i8.putExtra("mobile2", mobileAPI);
                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i8);
                     overridePendingTransition(0, 0);
                     PersonalDetailsAndIdProofActivity.this.finish();
-                }
-            });
-            my_alert.show();
+
         } else {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
             my_alert.setTitle("Do you really want to update your phone number?");
@@ -872,7 +863,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 okButton.setEnabled(false);
                 okButton.setBackground(getDrawable(R.drawable.button_de_active));
             }
-
         }
 
         @Override
@@ -967,6 +957,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     isPanAdded = true;
+                    noChange = false;
                     dialogInterface.dismiss();
                 }
             });
@@ -1001,6 +992,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     isAadharAdded = true;
+                    noChange = false;
                     dialogInterface.dismiss();
                 }
             });
@@ -1030,6 +1022,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     isPanAdded = true;
+                    noChange = false;
                     dialogInterface.dismiss();
                 }
             });
@@ -1055,6 +1048,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     isAadharAdded = true;
+                    noChange = false;
                     dialogInterface.dismiss();
                 }
             });
