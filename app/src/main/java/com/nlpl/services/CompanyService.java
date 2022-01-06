@@ -45,5 +45,5 @@ public interface CompanyService {
     Call<UpdateCompanyAddress> updateCompanyAddress(@Path ("companyId") String companyId, @Body UpdateCompanyAddress updateCompanyAddress);
 
     @PUT("/company/{companyId}")
-    Call<UpdateCompanyType> updateCompanyAddress(@Path ("companyId") String companyId, @Body UpdateCompanyType updateCompanyType);
+    Call<UpdateCompanyType> updateCompanyType(@Path ("companyId") String companyId, @Body UpdateCompanyType updateCompanyType);
 }

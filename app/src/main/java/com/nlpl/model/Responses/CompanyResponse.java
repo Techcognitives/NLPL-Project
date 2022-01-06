@@ -23,9 +23,9 @@ public class CompanyResponse {
 
     public class Data {
 
-        private String company_id, company_name, company_gst_no, company_pan, comp_state, comp_city, comp_add, user_id, comp_zip;
+        private String company_id, company_name, company_gst_no, company_pan, comp_state, comp_city, comp_add, user_id, comp_zip, company_type;
 
-        public Data(String company_id, String company_name, String company_gst_no, String company_pan, String comp_state, String comp_city, String comp_add, String user_id, String comp_zip) {
+        public Data(String company_id, String company_name, String company_gst_no, String company_pan, String comp_state, String comp_city, String comp_add, String user_id, String comp_zip, String company_type) {
             this.company_id = company_id;
             this.company_name = company_name;
             this.company_gst_no = company_gst_no;
@@ -35,6 +35,7 @@ public class CompanyResponse {
             this.comp_add = comp_add;
             this.user_id = user_id;
             this.comp_zip = comp_zip;
+            this.company_type = company_type;
         }
 
         public String getCompany_id() {
@@ -107,6 +108,14 @@ public class CompanyResponse {
 
         public void setComp_zip(String comp_zip) {
             this.comp_zip = comp_zip;
+        }
+
+        public String getCompany_type() {
+            return company_type;
+        }
+
+        public void setCompany_type(String company_type) {
+            this.company_type = company_type;
         }
     }
 

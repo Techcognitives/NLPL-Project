@@ -42,7 +42,7 @@ public class BanksAdapter extends RecyclerView.Adapter<BanksAdapter.BankViewHold
 
         String accNumber = obj.getAccount_number();
         String ifsiNumber = obj.getIFSI_CODE();
-        String bankName = obj.getAccountholder_name();
+        String bankName = obj.getBank_name();
 
         holder.list_bank_name.setText(bankName);
         holder.list_acc_no.setText(" A/C No: " + accNumber);

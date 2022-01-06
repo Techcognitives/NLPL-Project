@@ -28,7 +28,7 @@
         <item>Meghalaya</item>
         <item>Mizoram</item>
         <item>Nagaland</item>
-        <item>Orissa</item>
+        <item>Odisha</item>
         <item>Puducherry</item>
         <item>Punjab</item>
         <item>Rajasthan</item>
@@ -50,7 +50,7 @@
         <item>CH/PB</item>
         <item>CG</item>
         <item>DD</item>
-        <item>DD</item>
+        <item>DD2</item>
         <item>DL</item>
         <item>GA</item>
         <item>GJ</item>
@@ -1020,7 +1020,7 @@
     <string name="tarpaulin">Tarpaulin</string>
     <string name="vehicle_number_edit">Enter Vehicle Number"</string>
     <string name="rc_book">Upload RC Book</string>
-    <string name="rc_front">RC Front</string>
+    <string name="rc_front">RC Book</string>
     <string name="uploadInsurance">Upload Insurance</string>
     <string name="insurance">Insurance</string>
     <string name="selectModel">Select Model</string>

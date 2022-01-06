@@ -222,6 +222,7 @@
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/vehicle_details_rc_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/vehicle_details_rc_text"
@@ -241,9 +242,20 @@
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/vehicle_details_rc_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.753"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/vehicle_details_rc_text"
-            app:layout_constraintTop_toTopOf="@+id/vehicle_details_rc_text" />
+            app:layout_constraintTop_toTopOf="@+id/vehicle_details_rc_text"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/vehicle_details_preview_rc_book_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClickPreviewRcBook"
+            app:layout_constraintBottom_toBottomOf="@+id/vehicle_details_edit_rc"
+            app:layout_constraintEnd_toStartOf="@+id/vehicle_details_edit_rc"
+            app:layout_constraintTop_toTopOf="@+id/vehicle_details_edit_rc"
+            app:srcCompat="@drawable/ic_preview" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
@@ -335,6 +347,7 @@
             android:drawableStart="@drawable/ic_upload"
             android:padding="10dp"
             android:text="@string/Upload"
+            android:visibility="visible"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
@@ -356,9 +369,20 @@
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/vehicle_details_insurance_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.753"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/vehicle_details_insurance_text"
-            app:layout_constraintTop_toTopOf="@+id/vehicle_details_insurance_text" />
+            app:layout_constraintTop_toTopOf="@+id/vehicle_details_insurance_text"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/vehicle_details_preview_insurance_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClickPreviewInsurance"
+            app:layout_constraintBottom_toBottomOf="@+id/vehicle_details_edit_insurance"
+            app:layout_constraintEnd_toStartOf="@+id/vehicle_details_edit_insurance"
+            app:layout_constraintTop_toTopOf="@+id/vehicle_details_edit_insurance"
+            app:srcCompat="@drawable/ic_preview" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView

@@ -56,6 +56,7 @@ import com.nlpl.model.UpdateUserDetails.UpdateUserIsTruckAdded;
 import com.nlpl.services.AddTruckService;
 import com.nlpl.services.UserService;
 import com.nlpl.utils.ApiClient;
+import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
 
 import org.json.JSONArray;
@@ -110,6 +111,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
     ArrayList<String> arrayVehicleType, arrayTruckFt, arrayCapacity;
 
+    Dialog previewDialogRcBook, previewDialogInsurance;
+    ImageView previewRcBook, previewInsurance, previewRcBookImageView, previewInsuranceImageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,6 +152,21 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         editInsurance = (TextView) findViewById(R.id.vehicle_details_edit_insurance);
         imgRC = findViewById(R.id.vehicle_details_rc_image);
         imgI = findViewById(R.id.vehicle_details_insurance_image);
+
+        previewDialogRcBook = new Dialog(VehicleDetailsActivity.this);
+        previewDialogRcBook.setContentView(R.layout.dialog_preview_images);
+        previewDialogRcBook.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        previewRcBook = (ImageView) previewDialogRcBook.findViewById(R.id.dialog_preview_image_view);
+
+        previewDialogInsurance = new Dialog(VehicleDetailsActivity.this);
+        previewDialogInsurance.setContentView(R.layout.dialog_preview_images);
+        previewDialogInsurance.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        previewInsurance = (ImageView) previewDialogInsurance.findViewById(R.id.dialog_preview_image_view);
+
+        previewRcBookImageView = (ImageView) findViewById(R.id.vehicle_details_preview_rc_book_image_view);
+        previewInsuranceImageView = (ImageView) findViewById(R.id.vehicle_details_preview_insurance_image_view);
 
         openSelected = findViewById(R.id.open_radio_btn);
         closeSelected = findViewById(R.id.closed_radio_btn);
@@ -188,6 +207,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
         mQueue = Volley.newRequestQueue(VehicleDetailsActivity.this);
         if (isEdit){
+            getImageURL();
             isRcUploaded = true;
             isInsurance = true;
             truckSelected = true;
@@ -201,6 +221,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
             editInsurance.setVisibility(View.VISIBLE);
             editRC.setVisibility(View.VISIBLE);
+            previewRcBook.setVisibility(View.VISIBLE);
+            previewInsurance.setVisibility(View.VISIBLE);
 
             textRC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             textInsurance.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
@@ -478,6 +500,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             textRC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadRC.setVisibility(View.INVISIBLE);
             editRC.setVisibility(View.VISIBLE);
+            previewRcBook.setVisibility(View.VISIBLE);
+            previewInsurance.setVisibility(View.VISIBLE);
 
             isRcUploaded=true;
             String vehicleNum = vehicleNumberEdit.getText().toString();
@@ -546,6 +570,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             textRC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadRC.setVisibility(View.INVISIBLE);
             editRC.setVisibility(View.VISIBLE);
+            previewRcBook.setVisibility(View.VISIBLE);
+            previewInsurance.setVisibility(View.VISIBLE);
 
             isRcUploaded=true;
             String vehicleNum = vehicleNumberEdit.getText().toString();
@@ -1212,5 +1238,68 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             }
         }
         return path;
+    }
+
+    public void onClickPreviewRcBook(View view) {
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(previewDialogRcBook.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        previewDialogRcBook.show();
+        previewDialogRcBook.getWindow().setAttributes(lp);
+    }
+
+    public void onClickPreviewInsurance(View view) {
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(previewDialogInsurance.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        previewDialogInsurance.show();
+        previewDialogInsurance.getWindow().setAttributes(lp);
+    }
+
+    private void getImageURL() {
+
+        String url = getString(R.string.baseURL) + "/imgbucket/Images/4";
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray imageList = response.getJSONArray("data");
+                    for (int i = 0; i < imageList.length(); i++) {
+                        JSONObject obj = imageList.getJSONObject(i);
+                        String imageType = obj.getString("image_type");
+
+                        String drivingLicenseURL, selfieURL;
+                        if (imageType.equals("rc")) {
+                            drivingLicenseURL = obj.getString("image_url");
+
+                            new DownloadImageTask(previewRcBook).execute(drivingLicenseURL);
+                            new DownloadImageTask(imgRC).execute(drivingLicenseURL);
+
+                        }
+
+                        if (imageType.equals("insurance")){
+                            selfieURL = obj.getString("image_url");
+                            new DownloadImageTask(previewInsurance).execute(selfieURL);
+                            new DownloadImageTask(imgI).execute(selfieURL);
+
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
     }
 }

@@ -34,6 +34,7 @@ import com.nlpl.model.ModelForRecyclerView.TruckModel;
 import com.nlpl.ui.ui.adapters.BanksAdapter;
 import com.nlpl.ui.ui.adapters.DriversAdapter;
 import com.nlpl.ui.ui.adapters.TrucksAdapter;
+import com.nlpl.utils.DownloadImageTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -408,6 +409,12 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
                     }
 
+                    if (truckList.size() > 5){
+
+                    }else{
+
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -480,6 +487,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         BankModel modelBank = new BankModel();
                         modelBank.setUser_id(obj.getString("user_id"));
                         modelBank.setAccountholder_name(obj.getString("accountholder_name"));
+                        modelBank.setBank_name(obj.getString("bank_name"));
                         modelBank.setAccount_number(obj.getString("account_number"));
                         modelBank.setRe_enter_acc_num(obj.getString("re_enter_acc_num"));
                         modelBank.setIFSI_CODE(obj.getString("IFSI_CODE"));
@@ -552,7 +560,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         previewDialogBankDetails.show();
         previewDialogBankDetails.getWindow().setAttributes(lp);
 
-        dialogBankDetailsBankName.setText(" Bank Name: " + obj.getAccountholder_name());
+        dialogBankDetailsBankName.setText(" Bank Name: " + obj.getBank_name());
         dialogBankDetailsBankAccountNumber.setText(" Account Number: " + obj.getAccount_number());
         dialogBankDetailsBankIFSICode.setText(" IFSI Code: " + obj.getIFSI_CODE());
     }
@@ -587,29 +595,12 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         previewDriverDetailsEmailId.setText(" Email Id: " + obj.getDriver_emailId());
     }
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urlDisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urlDisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
+    public void onClickEditCompanyDetails(View view) {
+        Intent intent1 = new Intent(ProfileAndRegistrationActivity.this, CompanyDetailsActivity.class);
+        intent1.putExtra("userId", userId);
+        intent1.putExtra("mobile", phone);
+        intent1.putExtra("isEdit", true);
+        startActivity(intent1);
     }
 
     private void getImageURL() {
@@ -627,44 +618,44 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
                         if (imageType.equals("adhar")) {
                             aadharImageURL = obj.getString("image_url");
-                            new ProfileAndRegistrationActivity.DownloadImageTask(previewAadharImage).execute(aadharImageURL);
+                            new DownloadImageTask(previewAadharImage).execute(aadharImageURL);
                             Log.i("IMAGE AADHAR URL", aadharImageURL);
                         }
 
                         if (imageType.equals("pan")) {
                             panImageURL = obj.getString("image_url");
                             Log.i("IMAGE PAN URL", panImageURL);
-                            new ProfileAndRegistrationActivity.DownloadImageTask(previewPanImage).execute(panImageURL);
+                            new DownloadImageTask(previewPanImage).execute(panImageURL);
                         }
 
                         if (imageType.equals("cheque")) {
                             cancelledChequeURL = obj.getString("image_url");
                             Log.i("IMAGE CHEQUE URL", cancelledChequeURL);
-                            new ProfileAndRegistrationActivity.DownloadImageTask(previewCancelledCheque).execute(cancelledChequeURL);
+                            new DownloadImageTask(previewCancelledCheque).execute(cancelledChequeURL);
                         }
 
                         if (imageType.equals("rc")) {
                             rcBookURL = obj.getString("image_url");
                             Log.i("IMAGE RC URL", rcBookURL);
-                            new ProfileAndRegistrationActivity.DownloadImageTask(previewRcBook).execute(rcBookURL);
+                            new DownloadImageTask(previewRcBook).execute(rcBookURL);
                         }
 
                         if (imageType.equals("insurance")) {
                             insuranceURL = obj.getString("image_url");
                             Log.i("IMAGE INSURANCE URL", insuranceURL);
-                            new ProfileAndRegistrationActivity.DownloadImageTask(previewInsurance).execute(insuranceURL);
+                            new DownloadImageTask(previewInsurance).execute(insuranceURL);
                         }
 
                         if (imageType.equals("dl")) {
                             drivingLicenseURL = obj.getString("image_url");
                             Log.i("IMAGE DL URL", drivingLicenseURL);
-                            new ProfileAndRegistrationActivity.DownloadImageTask(previewDrivingLicense).execute(drivingLicenseURL);
+                            new DownloadImageTask(previewDrivingLicense).execute(drivingLicenseURL);
                         }
 
                         if (imageType.equals("selfie")) {
                             selfieURL = obj.getString("image_url");
                             Log.i("IMAGE DL URL", selfieURL);
-                            new ProfileAndRegistrationActivity.DownloadImageTask(previewDriverSelfie).execute(selfieURL);
+                            new DownloadImageTask(previewDriverSelfie).execute(selfieURL);
                         }
 
                     }
@@ -899,6 +890,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 Intent intent1 = new Intent(ProfileAndRegistrationActivity.this, CompanyDetailsActivity.class);
                 intent1.putExtra("userId", userId);
                 intent1.putExtra("mobile", phone);
+                intent1.putExtra("isEdit", false);
                 startActivity(intent1);
                 break;
 

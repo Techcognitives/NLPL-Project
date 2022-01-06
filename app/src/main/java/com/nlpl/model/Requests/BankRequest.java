@@ -1,7 +1,7 @@
 package com.nlpl.model.Requests;
 
 public class BankRequest {
-    String user_id, accountholder_name, account_number, re_enter_acc_num, IFSI_CODE, isBankDetails_Given;
+    String user_id, accountholder_name, account_number, re_enter_acc_num, IFSI_CODE, isBankDetails_Given, bank_name;
 
     public BankRequest() {
         this.user_id = user_id;
@@ -10,6 +10,7 @@ public class BankRequest {
         this.re_enter_acc_num = re_enter_acc_num;
         this.IFSI_CODE = IFSI_CODE;
         this.isBankDetails_Given = isBankDetails_Given;
+        this.bank_name = bank_name;
     }
 
     public String getUser_id() {
@@ -58,5 +59,13 @@ public class BankRequest {
 
     public void setIsBankDetails_Given(String isBankDetails_Given) {
         this.isBankDetails_Given = isBankDetails_Given;
+    }
+
+    public String getBank_name() {
+        return bank_name;
+    }
+
+    public void setBank_name(String bank_name) {
+        this.bank_name = bank_name;
     }
 }

@@ -103,7 +103,7 @@
         android:id="@+id/registration_location"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:paddingStart="20dp"
         android:paddingEnd="0dp"
         android:text="@string/location"
@@ -150,7 +150,7 @@
         app:layout_constraintTop_toTopOf="@+id/registration_select_city" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/personal_registration_sp_constrain"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -281,7 +281,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/edit_text_border"
         android:ems="10"

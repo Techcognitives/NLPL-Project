@@ -45,7 +45,6 @@ public class RegistrationActivity extends AppCompatActivity {
     ArrayAdapter<CharSequence> selectStateArray, selectDistrictArray, selectStateUnionCode;
     Dialog selectStateDialog, selectDistrictDialog;
     String selectedDistrict, selectedState, role;
-    int parentID;
     String mobile;
 
     EditText name, pinCode, address, mobileNoEdit, email_id;
@@ -179,184 +178,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
                         selectStateText.setText(selectStateUnionCode.getItem(i)); //Set Selected Credentials
                         selectStateDialog.dismiss();
-
-                        parentID = parent.getId();
-                        Log.i("ID", String.valueOf(parentID));
-
-                        selectedState = selectStateArray.getItem(i).toString();
-                        selectDistrictDialog = new Dialog(RegistrationActivity.this);
-                        selectDistrictDialog.setContentView(R.layout.dialog_spinner);
-//                dialog.getWindow().setLayout(1000,3000);
-                        selectDistrictDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                        selectDistrictDialog.show();
-                        TextView title = selectDistrictDialog.findViewById(R.id.dialog_spinner_title);
-                        title.setText("Select City");
-                        ListView districtList = (ListView) selectDistrictDialog.findViewById(R.id.list_state);
-
-                        if (parentID == R.id.list_state) {
-                            switch (selectedState) {
-                                case "Andhra Pradesh":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_andhra_pradesh_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Arunachal Pradesh":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_arunachal_pradesh_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Assam":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_assam_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Bihar":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_bihar_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Chhattisgarh":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_chhattisgarh_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Goa":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_goa_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Gujarat":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_gujarat_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Haryana":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_haryana_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Himachal Pradesh":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_himachal_pradesh_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Jharkhand":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_jharkhand_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Karnataka":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_karnataka_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Kerala":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_kerala_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Madhya Pradesh":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_madhya_pradesh_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Maharashtra":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_maharashtra_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Manipur":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_manipur_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Meghalaya":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_meghalaya_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Mizoram":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_mizoram_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Nagaland":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_nagaland_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Odisha":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_odisha_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Punjab":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_punjab_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Rajasthan":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_rajasthan_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Sikkim":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_sikkim_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Tamil Nadu":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_tamil_nadu_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Telangana":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_telangana_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Tripura":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_tripura_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Uttar Pradesh":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_uttar_pradesh_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Uttarakhand":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_uttarakhand_districts, R.layout.custom_list_row);
-                                    break;
-                                case "West Bengal":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_west_bengal_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Andaman and Nicobar Islands":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_andaman_nicobar_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Chandigarh":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_chandigarh_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Dadra and Nagar Haveli":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_dadra_nagar_haveli_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Daman and Diu":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_daman_diu_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Delhi":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_delhi_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Jammu and Kashmir":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_jammu_kashmir_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Lakshadweep":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_lakshadweep_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Ladakh":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_ladakh_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Puducherry":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
-                                            R.array.array_puducherry_districts, R.layout.custom_list_row);
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                        districtList.setAdapter(selectDistrictArray);
-
-                        districtList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                selectDistrictText.setText(selectDistrictArray.getItem(i)); //Set Selected Credentials
-                                selectDistrictDialog.dismiss();
-                                selectedDistrict = selectDistrictArray.getItem(i).toString();
-                            }
-                        });
+                        selectDistrictText.performClick();
                     }
                 });
             }
@@ -369,7 +191,138 @@ public class RegistrationActivity extends AppCompatActivity {
                 pinCode.setCursorVisible(false);
                 address.setCursorVisible(false);
                 if (!selectStateText.getText().toString().isEmpty()) {
+                    selectedState = selectStateText.getText().toString();
+                    selectDistrictDialog = new Dialog(RegistrationActivity.this);
+                    selectDistrictDialog.setContentView(R.layout.dialog_spinner);
+//                dialog.getWindow().setLayout(1000,3000);
+                    selectDistrictDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     selectDistrictDialog.show();
+                    TextView title = selectDistrictDialog.findViewById(R.id.dialog_spinner_title);
+                    title.setText("Select City");
+                    ListView districtList = (ListView) selectDistrictDialog.findViewById(R.id.list_state);
+
+                    if (selectedState.equals("AP")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_andhra_pradesh_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("AR")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_arunachal_pradesh_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("AS")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_assam_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("BR")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_bihar_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("CG")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_chhattisgarh_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("GA")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_goa_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("GJ")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_gujarat_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("HR")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_haryana_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("HP")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_himachal_pradesh_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("JH")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_jharkhand_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("KA")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_karnataka_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("KL")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_kerala_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("MP")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_madhya_pradesh_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("MH")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_maharashtra_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("MN")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_manipur_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("ML")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_meghalaya_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("MZ")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_mizoram_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("NL")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_nagaland_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("OD")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_odisha_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("PB")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_punjab_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("RJ")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_rajasthan_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("SK")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_sikkim_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("TN")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_tamil_nadu_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("TS")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_telangana_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("TR")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_tripura_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("UP")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_uttar_pradesh_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("UK")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_uttarakhand_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("WB")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_west_bengal_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("AN")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_andaman_nicobar_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("CH/PB")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_chandigarh_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("DD")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_dadra_nagar_haveli_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("DD2")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_daman_diu_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("DL")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_delhi_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("JK")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_jammu_kashmir_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("LD")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_lakshadweep_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("LA")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_ladakh_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("PY")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(RegistrationActivity.this,
+                                R.array.array_puducherry_districts, R.layout.custom_list_row);
+                    }
+                    districtList.setAdapter(selectDistrictArray);
+
+                    districtList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            selectDistrictText.setText(selectDistrictArray.getItem(i)); //Set Selected Credentials
+                            selectDistrictDialog.dismiss();
+                            selectedDistrict = selectDistrictArray.getItem(i).toString();
+                        }
+                    });
                 }
             }
         });

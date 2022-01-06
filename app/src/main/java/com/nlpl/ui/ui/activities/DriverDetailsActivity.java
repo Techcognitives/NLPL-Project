@@ -3,6 +3,7 @@ package com.nlpl.ui.ui.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -25,11 +26,13 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -39,9 +42,11 @@ import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.Requests.AddDriverRequest;
 import com.nlpl.model.Requests.ImageRequest;
+import com.nlpl.model.Requests.UserRequest;
 import com.nlpl.model.Responses.AddDriverResponse;
 import com.nlpl.model.Responses.ImageResponse;
 import com.nlpl.model.Responses.UploadImageResponse;
+import com.nlpl.model.Responses.UserResponse;
 import com.nlpl.model.UpdateDriverDetails.UpdateDriverEmailId;
 import com.nlpl.model.UpdateDriverDetails.UpdateDriverName;
 import com.nlpl.model.UpdateDriverDetails.UpdateDriverNumber;
@@ -50,6 +55,7 @@ import com.nlpl.model.UpdateUserDetails.UpdateUserIsDriverAdded;
 import com.nlpl.services.AddDriverService;
 import com.nlpl.services.UserService;
 import com.nlpl.utils.ApiClient;
+import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
 
 import org.json.JSONArray;
@@ -58,8 +64,7 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.util.ArrayList;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -87,9 +92,23 @@ public class DriverDetailsActivity extends AppCompatActivity {
     private RequestQueue mQueue;
     private UserService userService;
     private AddDriverService addDriverService;
+    String driverUserId;
 
     String img_type, userId, driverId, driverNameAPI, driverNumberAPI, driverEmailAPI, mobile;
     Boolean isDLUploaded = false, isEdit, isSelfieUploaded = false;
+    ImageView previewDrivingLicense, previewSelfie, previewDLImageView, previewSelfieImageView;
+    Dialog previewDialogDL, previewDialogSelfie;
+    View personalAndAddress;
+
+    ArrayAdapter<CharSequence> selectStateArray, selectDistrictArray, selectStateUnionCode;
+    TextView selectStateText, selectDistrictText;
+    Dialog selectStateDialog, selectDistrictDialog;
+    String selectedDistrict, selectedState;
+    EditText pinCode, address;
+
+    String userIdAPI, nameAPI, isRegistrationDoneAPI, pinCodeAPI, addressAPI, mobileNoAPI, cityAPI, roleAPI;
+    ArrayList<String> arrayUserId, arrayMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
+    Boolean alreadyDriver = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,14 +123,28 @@ public class DriverDetailsActivity extends AppCompatActivity {
             mobile = bundle.getString("mobile");
         }
 
+        personalAndAddress = (View) findViewById(R.id.registration_personal_and_address);
         action_bar = findViewById(R.id.driver_details_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
-        driverMobile = findViewById(R.id.driver_details_mobile_number_edit);
-        driverName = findViewById(R.id.driver_details_driver_name_edit);
+        driverMobile = (EditText) personalAndAddress.findViewById(R.id.registration_mobile_no_edit);
+        driverName = personalAndAddress.findViewById(R.id.registration_edit_name);
         okDriverDetails = findViewById(R.id.driver_details_ok_button);
-        series = (TextView) findViewById(R.id.driver_details_mobile_prefix);
-        driverEmailId = (EditText) findViewById(R.id.driver_details_email_edit);
+        series = (TextView) personalAndAddress.findViewById(R.id.registration_prefix);
+        driverEmailId = (EditText) personalAndAddress.findViewById(R.id.registration_email_id_edit);
+        previewDLImageView = (ImageView) findViewById(R.id.driver_details_preview_driving_license);
+        previewSelfieImageView = (ImageView) findViewById(R.id.driver_details_preview_selfie);
+        ConstraintLayout personalConstrain = (ConstraintLayout) personalAndAddress.findViewById(R.id.personal_registration_sp_constrain);
+        personalConstrain.setVisibility(View.GONE);
+
+        pinCode = (EditText) personalAndAddress.findViewById(R.id.registration_pin_code_edit);
+        address = (EditText) personalAndAddress.findViewById(R.id.registration_address_edit);
+        selectStateText = (TextView) personalAndAddress.findViewById(R.id.registration_select_state);
+        selectDistrictText = (TextView) personalAndAddress.findViewById(R.id.registration_select_city);
+
+        driverName.setHint("Enter Driver Name");
+        driverMobile.setHint("Enter 10 digit Driver Number");
+        driverEmailId.setHint("Enter Driver Email Id");
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.baseURL))
@@ -123,6 +156,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         driverName.addTextChangedListener(driverNameWatcher);
         driverMobile.addTextChangedListener(driverMobileWatcher);
+        pinCode.addTextChangedListener(pinCodeWatcher);
 
         driverEmailId.addTextChangedListener(new TextWatcher() {
             @Override
@@ -185,6 +219,18 @@ public class DriverDetailsActivity extends AppCompatActivity {
         textDS = findViewById(R.id.driver_selfie_text);
         editDS = findViewById(R.id.driver_details_edit_selfie_text);
 
+        previewDialogDL = new Dialog(DriverDetailsActivity.this);
+        previewDialogDL.setContentView(R.layout.dialog_preview_images);
+        previewDialogDL.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        previewDrivingLicense = (ImageView) previewDialogDL.findViewById(R.id.dialog_preview_image_view);
+
+        previewDialogSelfie = new Dialog(DriverDetailsActivity.this);
+        previewDialogSelfie.setContentView(R.layout.dialog_preview_images);
+        previewDialogSelfie.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        previewSelfie = (ImageView) previewDialogSelfie.findViewById(R.id.dialog_preview_image_view);
+
         String mobileNoWatcher = driverMobile.getText().toString().trim();
         String nameWatcher = driverName.getText().toString().trim();
         String emailWtacher = driverEmailId.getText().toString();
@@ -194,7 +240,17 @@ public class DriverDetailsActivity extends AppCompatActivity {
         }
 
         mQueue = Volley.newRequestQueue(DriverDetailsActivity.this);
+        arrayUserId = new ArrayList<>();
+        arrayMobileNo = new ArrayList<>();
+        arrayAddress = new ArrayList<>();
+        arrayCity = new ArrayList<>();
+        arrayPinCode = new ArrayList<>();
+        arrayName = new ArrayList<>();
+        arrayRole = new ArrayList<>();
+        arrayRegDone = new ArrayList<>();
+
         if (isEdit) {
+            getImageURL();
             isSelfieUploaded = true;
             isDLUploaded = true;
             okDriverDetails.setEnabled(true);
@@ -203,6 +259,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
             uploadSelfie.setVisibility(View.INVISIBLE);
             editDS.setVisibility(View.VISIBLE);
             editDL.setVisibility(View.VISIBLE);
+            previewDLImageView.setVisibility(View.VISIBLE);
+            previewSelfieImageView.setVisibility(View.VISIBLE);
             textDS.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             textDL.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             getDriverDetails();
@@ -309,7 +367,199 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 });
             }
         });
+
+        selectStateText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectStateDialog = new Dialog(DriverDetailsActivity.this);
+                selectStateDialog.setContentView(R.layout.dialog_spinner);
+//                dialog.getWindow().setLayout(1000,3000);
+                selectStateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                selectStateDialog.show();
+                selectStateDialog.setCancelable(false);
+                ListView stateList = (ListView) selectStateDialog.findViewById(R.id.list_state);
+
+                selectStateArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this, R.array.array_indian_states, R.layout.custom_list_row);
+                selectStateUnionCode = ArrayAdapter.createFromResource(DriverDetailsActivity.this, R.array.array_indian_states_union_territory_codes, R.layout.custom_list_row);
+
+                stateList.setAdapter(selectStateArray);
+
+
+                stateList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
+                        selectStateText.setText(selectStateUnionCode.getItem(i)); //Set Selected Credentials
+                        selectStateDialog.dismiss();
+                        selectDistrictText.performClick();
+                    }
+                });
+            }
+        });
+
+        selectDistrictText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!selectStateText.getText().toString().isEmpty()) {
+
+                    selectedState = selectStateText.getText().toString();
+                    selectDistrictDialog = new Dialog(DriverDetailsActivity.this);
+                    selectDistrictDialog.setContentView(R.layout.dialog_spinner);
+//                dialog.getWindow().setLayout(1000,3000);
+                    selectDistrictDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    selectDistrictDialog.show();
+                    TextView title = selectDistrictDialog.findViewById(R.id.dialog_spinner_title);
+                    title.setText("Select City");
+                    ListView districtList = (ListView) selectDistrictDialog.findViewById(R.id.list_state);
+
+                    if (selectedState.equals("AP")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_andhra_pradesh_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("AR")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_arunachal_pradesh_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("AS")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_assam_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("BR")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_bihar_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("CG")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_chhattisgarh_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("GA")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_goa_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("GJ")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_gujarat_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("HR")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_haryana_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("HP")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_himachal_pradesh_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("JH")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_jharkhand_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("KA")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_karnataka_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("KL")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_kerala_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("MP")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_madhya_pradesh_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("MH")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_maharashtra_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("MN")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_manipur_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("ML")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_meghalaya_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("MZ")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_mizoram_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("NL")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_nagaland_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("OD")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_odisha_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("PB")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_punjab_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("RJ")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_rajasthan_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("SK")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_sikkim_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("TN")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_tamil_nadu_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("TS")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_telangana_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("TR")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_tripura_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("UP")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_uttar_pradesh_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("UK")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_uttarakhand_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("WB")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_west_bengal_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("AN")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_andaman_nicobar_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("CH/PB")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_chandigarh_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("DD")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_dadra_nagar_haveli_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("DD2")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_daman_diu_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("DL")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_delhi_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("JK")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_jammu_kashmir_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("LD")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_lakshadweep_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("LA")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_ladakh_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("PY")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
+                                R.array.array_puducherry_districts, R.layout.custom_list_row);
+                    }
+                    districtList.setAdapter(selectDistrictArray);
+
+                    districtList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            selectDistrictText.setText(selectDistrictArray.getItem(i)); //Set Selected Credentials
+                            selectDistrictDialog.dismiss();
+                            selectedDistrict = selectDistrictArray.getItem(i).toString();
+                        }
+                    });
+                }
+            }
+        });
     }
+
+    private TextWatcher pinCodeWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String pinCodeWatcher = pinCode.getText().toString().trim();
+
+            if (pinCodeWatcher.length() == 6) {
+                pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+            } else {
+                pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
 
     //-----------------------------------------------upload Image------------------------------------------------------------
     @Override
@@ -332,6 +582,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
             textDL.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadDL.setVisibility(View.INVISIBLE);
             editDL.setVisibility(View.VISIBLE);
+            previewDLImageView.setVisibility(View.VISIBLE);
+            previewSelfieImageView.setVisibility(View.VISIBLE);
 
             isDLUploaded = true;
             String mobileNoWatcher = driverMobile.getText().toString();
@@ -354,6 +606,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
             uploadImage(picturePath);
 
             driverLicenseImage.setImageURI(selectedImage);
+            previewDrivingLicense.setImageURI(selectedImage);
 
         } else if (requestCode == CAMERA_PIC_REQUEST) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
@@ -385,6 +638,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
             Bitmap image = (Bitmap) data.getExtras().get("data");
             String path = getRealPathFromURI(getImageUri(this, image));
             driverSelfieImg.setImageBitmap(BitmapFactory.decodeFile(path));
+            previewSelfie.setImageBitmap(BitmapFactory.decodeFile(path));
 
             uploadImage(path);
 
@@ -402,6 +656,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
             textDL.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadDL.setVisibility(View.INVISIBLE);
             editDL.setVisibility(View.VISIBLE);
+            previewDLImageView.setVisibility(View.VISIBLE);
+            previewSelfieImageView.setVisibility(View.VISIBLE);
 
             isDLUploaded = true;
 
@@ -417,6 +673,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
             Bitmap image = (Bitmap) data.getExtras().get("data");
             String path = getRealPathFromURI(getImageUri(this, image));
             driverLicenseImage.setImageBitmap(BitmapFactory.decodeFile(path));
+            previewDrivingLicense.setImageBitmap(BitmapFactory.decodeFile(path));
 
             uploadImage(path);
         }
@@ -455,27 +712,48 @@ public class DriverDetailsActivity extends AppCompatActivity {
                     }
 
                 } else {
-                    saveDriver(createDriver());
+                    checkPhoneInAPI("91"+driverMobile.getText().toString());
                 }
 
+                if (alreadyDriver == false){
+                    saveDriver(createDriver());
+                    saveDriverUser(createDriverUser());
+                    AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
+                    my_alert.setTitle("Driver Details added successfully");
+                    my_alert.setMessage("Do you want to add Driver's Bank Details");
+                    my_alert.setPositiveButton("May be Later", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
 
-                AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
-                my_alert.setTitle("Driver Details added successfully");
-                my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
+                            Intent i8 = new Intent(DriverDetailsActivity.this, ProfileAndRegistrationActivity.class);
+                            i8.putExtra("userId", userId);
+                            i8.putExtra("mobile2", mobile);
+                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(i8);
+                            overridePendingTransition(0, 0);
+                            DriverDetailsActivity.this.finish();
+                        }
+                    });
+                    my_alert.setNegativeButton("Add Driver Bank Details", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
 
-                        Intent i8 = new Intent(DriverDetailsActivity.this, ProfileAndRegistrationActivity.class);
-                        i8.putExtra("userId", userId);
-                        i8.putExtra("mobile2", mobile);
-                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(i8);
-                        overridePendingTransition(0, 0);
-                        DriverDetailsActivity.this.finish();
-                    }
-                });
-                my_alert.show();
+                            Intent intent2 = new Intent(DriverDetailsActivity.this, BankDetailsActivity.class);
+                            intent2.putExtra("userId", driverUserId);
+                            intent2.putExtra("isEdit", false);
+                            intent2.putExtra("mobile", mobile);
+
+                            startActivity(intent2);
+                        }
+                    });
+                    my_alert.show();
+
+                }else{
+
+                }
+
             }
         }
     }
@@ -830,5 +1108,182 @@ public class DriverDetailsActivity extends AppCompatActivity {
             }
         }
         return path;
+    }
+
+    public void onClickPreviewDrivingLicense(View view) {
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(previewDialogDL.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        previewDialogDL.show();
+        previewDialogDL.getWindow().setAttributes(lp);
+    }
+
+    public void onClickPreviewSelfie(View view) {
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(previewDialogSelfie.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        previewDialogSelfie.show();
+        previewDialogSelfie.getWindow().setAttributes(lp);
+    }
+
+    private void getImageURL() {
+
+        String url = getString(R.string.baseURL) + "/imgbucket/Images/4";
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray imageList = response.getJSONArray("data");
+                    for (int i = 0; i < imageList.length(); i++) {
+                        JSONObject obj = imageList.getJSONObject(i);
+                        String imageType = obj.getString("image_type");
+
+                        String drivingLicenseURL, selfieURL;
+                        if (imageType.equals("cheque")) {
+                            drivingLicenseURL = obj.getString("image_url");
+
+                            new DownloadImageTask(previewDrivingLicense).execute(drivingLicenseURL);
+                            new DownloadImageTask(driverLicenseImage).execute(drivingLicenseURL);
+
+                        }
+
+                        if (imageType.equals("selfie")){
+                            selfieURL = obj.getString("image_url");
+                            new DownloadImageTask(previewSelfie).execute(selfieURL);
+                            new DownloadImageTask(driverSelfieImg).execute(selfieURL);
+
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+    }
+
+
+    //--------------------------------------create User in API -------------------------------------
+    public UserRequest createDriverUser() {
+        UserRequest userRequest = new UserRequest();
+        userRequest.setName(driverName.getText().toString());
+        userRequest.setPhone_number("91"+driverMobile.getText().toString());
+        userRequest.setAddress(address.getText().toString() + " " + selectDistrictText.getText().toString() + " " + selectStateText.getText().toString());
+        userRequest.setUser_type("Driver");
+        userRequest.setEmail_id(driverEmailId.getText().toString());
+        userRequest.setIsRegistration_done(1);
+        userRequest.setPin_code(pinCode.getText().toString());
+        userRequest.setPreferred_location(selectDistrictText.getText().toString());
+        userRequest.setState_code(selectStateText.getText().toString());
+        return userRequest;
+    }
+
+    public void saveDriverUser(UserRequest userRequest) {
+        Call<UserResponse> userResponseCall = ApiClient.getUserService().saveUser(userRequest);
+        userResponseCall.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+//                Log.i("Message UserCreated:", userResponse.getData().getPhone_number());
+                UserResponse userResponse = response.body();
+                Log.i("Msg Success", String.valueOf(userResponse.getData().getUser_id()));
+                driverUserId = String.valueOf(userResponse.getData().getUser_id());
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+
+            }
+        });
+    }
+    //----------------------------------------------------------------------------------------------
+    private void checkPhoneInAPI(String getMobile) {
+        String receivedMobile = getMobile;
+        //------------------------------get user details by mobile Number---------------------------------
+        //-----------------------------------Get User Details---------------------------------------
+        String url = getString(R.string.baseURL) + "/user/get";
+        Log.i("URL at Profile:", url);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray jsonArray = response.getJSONArray("data");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject data = jsonArray.getJSONObject(i);
+                        userIdAPI = data.getString("user_id");
+                        mobileNoAPI = data.getString("phone_number");
+                        pinCodeAPI = data.getString("pin_code");
+                        nameAPI = data.getString("name");
+                        roleAPI = data.getString("user_type");
+                        cityAPI = data.getString("preferred_location");
+                        addressAPI = data.getString("address");
+                        isRegistrationDoneAPI = data.getString("isRegistration_done");
+
+                        arrayUserId.add(userIdAPI);
+                        arrayMobileNo.add(mobileNoAPI);
+                        arrayAddress.add(addressAPI);
+                        arrayRegDone.add(isRegistrationDoneAPI);
+                        arrayName.add(nameAPI);
+                        arrayRole.add(roleAPI);
+                        arrayCity.add(cityAPI);
+                        arrayPinCode.add(pinCodeAPI);
+                    }
+
+                    for (int j = 0; j < arrayMobileNo.size(); j++) {
+                        if (arrayMobileNo.get(j).equals(receivedMobile)) {
+//                            String userIdGet = arrayUserId.get(j);
+//                            String nameGet = arrayName.get(j);
+//                            String phoneGet = arrayMobileNo.get(j);
+//                            String addressGet = arrayAddress.get(j);
+//                            String pinCodeGet = arrayPinCode.get(j);
+//                            String cityGet = arrayCity.get(j);
+//                            String roleGet = arrayRole.get(j);
+//                            String isRegistrationDoneGet = arrayRegDone.get(j);
+
+                            AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
+                            my_alert.setTitle("Driver already Exists with this mobile number");
+                            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+
+                                }
+                            });
+                            my_alert.show();
+                            alreadyDriver = true;
+                            Log.i("Already", "Driver");
+                            break;
+                        }else{
+                            alreadyDriver=false;
+                        }
+                    }
+
+                    Log.i("Driver Status", String.valueOf(alreadyDriver));
+//
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        mQueue.add(request);
+
+        //------------------------------------------------------------------------------------------------
+
     }
 }

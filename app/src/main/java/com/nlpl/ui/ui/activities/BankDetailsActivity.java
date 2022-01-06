@@ -48,11 +48,13 @@ import com.nlpl.model.Responses.UploadImageResponse;
 import com.nlpl.model.UpdateBankDetails.UpdateBankAccountHolderName;
 import com.nlpl.model.UpdateBankDetails.UpdateBankAccountNumber;
 import com.nlpl.model.UpdateBankDetails.UpdateBankIFSICode;
+import com.nlpl.model.UpdateBankDetails.UpdateBankName;
 import com.nlpl.model.UpdateBankDetails.UpdateBankReEnterAccountNumber;
 import com.nlpl.model.UpdateUserDetails.UpdateUserIsBankDetailsGiven;
 import com.nlpl.services.BankService;
 import com.nlpl.services.UserService;
 import com.nlpl.utils.ApiClient;
+import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
 
 import org.json.JSONArray;
@@ -349,7 +351,7 @@ public class BankDetailsActivity extends AppCompatActivity {
         if (accountNo.getText().toString().equals(reAccount.getText().toString())) {
             if (isEdit) {
 
-                updateBankAccountHolderName();
+                updateBankName();
                 updateBankAccountNumber();
                 updateBankReEnterAccountNumber();
                 updateBankIFSICode();
@@ -432,7 +434,7 @@ public class BankDetailsActivity extends AppCompatActivity {
     public BankRequest createBankAcc() {
         BankRequest bankRequest = new BankRequest();
         bankRequest.setUser_id(userId);
-        bankRequest.setAccountholder_name(bankName.getText().toString());
+        bankRequest.setBank_name(bankName.getText().toString());
         bankRequest.setAccount_number(accountNo.getText().toString());
         bankRequest.setRe_enter_acc_num(reAccount.getText().toString());
         bankRequest.setIFSI_CODE(ifscCode.getText().toString());
@@ -598,7 +600,7 @@ public class BankDetailsActivity extends AppCompatActivity {
                     for (int i = 0; i < truckLists.length(); i++) {
 
                         JSONObject obj = truckLists.getJSONObject(i);
-                        String bankNAME = obj.getString("accountholder_name");
+                        String bankNAME = obj.getString("bank_name");
                         Log.i("BANK NAME", bankNAME);
                         bankName.setText(bankNAME);
                         accountNo.setText(obj.getString("account_number"));
@@ -637,6 +639,29 @@ public class BankDetailsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<UpdateUserIsBankDetailsGiven> call, Throwable t) {
+                Log.i("Not Successful", "User is Bank Added");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    private void updateBankName() {
+
+        UpdateBankName updateBankName = new UpdateBankName(bankName.getText().toString());
+
+        Call<UpdateBankName> call = bankService.updateBankName("" + bankId, updateBankName);
+
+        call.enqueue(new Callback<UpdateBankName>() {
+            @Override
+            public void onResponse(Call<UpdateBankName> call, Response<UpdateBankName> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Bank Added");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateBankName> call, Throwable t) {
                 Log.i("Not Successful", "User is Bank Added");
 
             }
@@ -822,36 +847,11 @@ public class BankDetailsActivity extends AppCompatActivity {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(previewDialogCancelledCheque.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp.gravity = Gravity.CENTER;
 
         previewDialogCancelledCheque.show();
         previewDialogCancelledCheque.getWindow().setAttributes(lp);
-    }
-
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urlDisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urlDisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
     }
 
     private void getImageURL() {
@@ -869,8 +869,8 @@ public class BankDetailsActivity extends AppCompatActivity {
                         String cancelledChequeURL;
                         if (imageType.equals("cheque")) {
                             cancelledChequeURL = obj.getString("image_url");
-                            new BankDetailsActivity.DownloadImageTask(cancelledCheckImage).execute(cancelledChequeURL);
-                            new BankDetailsActivity.DownloadImageTask((ImageView) previewDialogCancelledCheque.findViewById(R.id.dialog_preview_image_view)).execute(cancelledChequeURL);
+                            new DownloadImageTask(cancelledCheckImage).execute(cancelledChequeURL);
+                            new DownloadImageTask((ImageView) previewDialogCancelledCheque.findViewById(R.id.dialog_preview_image_view)).execute(cancelledChequeURL);
                         }
                     }
                 } catch (JSONException e) {

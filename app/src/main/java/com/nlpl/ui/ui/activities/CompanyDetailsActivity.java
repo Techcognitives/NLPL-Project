@@ -26,16 +26,32 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nlpl.R;
 import com.nlpl.model.Requests.CompanyRequest;
 import com.nlpl.model.Responses.CompanyResponse;
+import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyAddress;
+import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyCity;
+import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyGSTNumber;
 import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyName;
+import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyPAN;
+import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyState;
+import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyType;
+import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyZip;
 import com.nlpl.model.UpdateUserDetails.UpdateUserIsCompanyAdded;
 import com.nlpl.services.CompanyService;
 import com.nlpl.services.UserService;
 import com.nlpl.utils.ApiClient;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,7 +68,6 @@ public class CompanyDetailsActivity extends AppCompatActivity {
     ArrayAdapter<CharSequence> selectStateArray, selectDistrictArray, selectStateUnionCode;
     Dialog selectStateDialog, selectDistrictDialog;
     String selectedDistrict, selectedState;
-    int parentID;
     EditText companyName, pinCode, address, gstNumber, panNumber;
     Button okButton;
     TextView selectStateText, selectDistrictText;
@@ -63,6 +78,10 @@ public class CompanyDetailsActivity extends AppCompatActivity {
     private UserService userService;
 
     RadioButton proprietaryRadioButton, partnershipRadioButton, pvtLtdRadioButton;
+    Boolean isEdit;
+
+    String companyNameAPI, companyAddressAPI, companyCityAPI, companyZipAPI, companyGSTNumberAPI, companyPanAPI, companyStateAPI, companyIdAPI, companyTypeAPI;
+    private RequestQueue mQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,12 +92,12 @@ public class CompanyDetailsActivity extends AppCompatActivity {
         if (bundle != null) {
             userId = bundle.getString("userId");
             mobile = bundle.getString("mobile");
+            isEdit = bundle.getBoolean("isEdit");
         }
 
-        Gson gson = new GsonBuilder().serializeNulls().create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         companyService = retrofit.create(CompanyService.class);
@@ -116,6 +135,36 @@ public class CompanyDetailsActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         companyName.setFilters(new InputFilter[]{filter});
+
+        mQueue = Volley.newRequestQueue(CompanyDetailsActivity.this);
+        if (isEdit) {
+            getCompanyDetails();
+
+            if (companyName.getText().toString() != null) {
+                updateCompanyName();
+            }
+            if (gstNumber.getText().toString() != null) {
+                updateCompanyGstNumber();
+            }
+            if (panNumber.getText().toString() != null) {
+                updateCompanyPanNumber();
+            }
+            if (selectStateText.getText().toString() != null) {
+                updateCompanyState();
+            }
+            if (address.getText().toString() != null) {
+                updateCompanyAddress();
+            }
+            if (selectDistrictText.getText().toString() != null) {
+                updateCompanyCity();
+            }
+            if (pinCode.getText().toString() != null) {
+                updateCompanyZip();
+            }
+            if(companyType != null){
+                updateCompanyType();
+            }
+        }
 
 //        if (!name.getText().toString().isEmpty() && !selectStateText.getText().toString().isEmpty() && !selectDistrictText.getText().toString().isEmpty() && role != null){
 //            okButton.setBackground(getDrawable(R.drawable.button_active));
@@ -168,183 +217,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
                         selectStateText.setText(selectStateUnionCode.getItem(i)); //Set Selected Credentials
                         selectStateDialog.dismiss();
-
-                        parentID = parent.getId();
-                        Log.i("ID", String.valueOf(parentID));
-
-                        selectedState = selectStateArray.getItem(i).toString();
-                        selectDistrictDialog = new Dialog(CompanyDetailsActivity.this);
-                        selectDistrictDialog.setContentView(R.layout.dialog_spinner);
-//                dialog.getWindow().setLayout(1000,3000);
-                        selectDistrictDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                        selectDistrictDialog.show();
-                        TextView title = selectDistrictDialog.findViewById(R.id.dialog_spinner_title);
-                        title.setText("Select City");
-                        ListView districtList = (ListView) selectDistrictDialog.findViewById(R.id.list_state);
-
-                        if (parentID == R.id.list_state) {
-                            switch (selectedState) {
-                                case "Andhra Pradesh":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this, R.array.array_andhra_pradesh_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Arunachal Pradesh":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_arunachal_pradesh_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Assam":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_assam_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Bihar":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_bihar_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Chhattisgarh":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_chhattisgarh_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Goa":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_goa_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Gujarat":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_gujarat_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Haryana":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_haryana_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Himachal Pradesh":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_himachal_pradesh_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Jharkhand":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_jharkhand_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Karnataka":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_karnataka_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Kerala":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_kerala_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Madhya Pradesh":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_madhya_pradesh_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Maharashtra":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_maharashtra_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Manipur":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_manipur_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Meghalaya":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_meghalaya_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Mizoram":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_mizoram_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Nagaland":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_nagaland_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Odisha":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_odisha_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Punjab":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_punjab_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Rajasthan":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_rajasthan_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Sikkim":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_sikkim_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Tamil Nadu":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_tamil_nadu_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Telangana":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_telangana_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Tripura":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_tripura_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Uttar Pradesh":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_uttar_pradesh_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Uttarakhand":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_uttarakhand_districts, R.layout.custom_list_row);
-                                    break;
-                                case "West Bengal":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_west_bengal_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Andaman and Nicobar Islands":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_andaman_nicobar_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Chandigarh":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_chandigarh_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Dadra and Nagar Haveli":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_dadra_nagar_haveli_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Daman and Diu":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_daman_diu_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Delhi":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_delhi_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Jammu and Kashmir":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_jammu_kashmir_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Lakshadweep":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_lakshadweep_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Ladakh":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_ladakh_districts, R.layout.custom_list_row);
-                                    break;
-                                case "Puducherry":
-                                    selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
-                                            R.array.array_puducherry_districts, R.layout.custom_list_row);
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                        districtList.setAdapter(selectDistrictArray);
-
-                        districtList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                selectDistrictText.setText(selectDistrictArray.getItem(i)); //Set Selected Credentials
-                                selectDistrictDialog.dismiss();
-                                selectedDistrict = selectDistrictArray.getItem(i).toString();
-                            }
-                        });
+                        selectDistrictText.performClick();
                     }
                 });
             }
@@ -357,7 +230,138 @@ public class CompanyDetailsActivity extends AppCompatActivity {
                 pinCode.setCursorVisible(false);
                 address.setCursorVisible(false);
                 if (!selectStateText.getText().toString().isEmpty()) {
+                    selectedState = selectStateText.getText().toString();
+                    selectDistrictDialog = new Dialog(CompanyDetailsActivity.this);
+                    selectDistrictDialog.setContentView(R.layout.dialog_spinner);
+//                dialog.getWindow().setLayout(1000,3000);
+                    selectDistrictDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     selectDistrictDialog.show();
+                    TextView title = selectDistrictDialog.findViewById(R.id.dialog_spinner_title);
+                    title.setText("Select City");
+                    ListView districtList = (ListView) selectDistrictDialog.findViewById(R.id.list_state);
+
+                    if (selectedState.equals("AP")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_andhra_pradesh_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("AR")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_arunachal_pradesh_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("AS")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_assam_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("BR")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_bihar_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("CG")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_chhattisgarh_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("GA")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_goa_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("GJ")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_gujarat_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("HR")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_haryana_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("HP")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_himachal_pradesh_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("JH")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_jharkhand_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("KA")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_karnataka_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("KL")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_kerala_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("MP")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_madhya_pradesh_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("MH")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_maharashtra_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("MN")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_manipur_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("ML")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_meghalaya_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("MZ")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_mizoram_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("NL")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_nagaland_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("OD")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_odisha_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("PB")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_punjab_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("RJ")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_rajasthan_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("SK")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_sikkim_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("TN")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_tamil_nadu_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("TS")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_telangana_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("TR")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_tripura_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("UP")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_uttar_pradesh_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("UK")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_uttarakhand_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("WB")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_west_bengal_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("AN")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_andaman_nicobar_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("CH/PB")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_chandigarh_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("DD")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_dadra_nagar_haveli_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("DD2")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_daman_diu_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("DL")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_delhi_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("JK")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_jammu_kashmir_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("LD")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_lakshadweep_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("LA")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_ladakh_districts, R.layout.custom_list_row);
+                    } else if (selectedState.equals("PY")) {
+                        selectDistrictArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this,
+                                R.array.array_puducherry_districts, R.layout.custom_list_row);
+                    }
+                    districtList.setAdapter(selectDistrictArray);
+
+                    districtList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            selectDistrictText.setText(selectDistrictArray.getItem(i)); //Set Selected Credentials
+                            selectDistrictDialog.dismiss();
+                            selectedDistrict = selectDistrictArray.getItem(i).toString();
+                        }
+                    });
                 }
             }
         });
@@ -491,7 +495,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
         companyRequest.setCompany_pan(panNumber.getText().toString());
         companyRequest.setComp_state(selectStateText.getText().toString());
         companyRequest.setComp_city(selectDistrictText.getText().toString());
-//        companyRequest.setCompany_type(companyType);
+        companyRequest.setCompany_type(companyType);
         companyRequest.setComp_zip(pinCode.getText().toString());
         companyRequest.setComp_add(address.getText().toString());
         companyRequest.setUser_id(userId);
@@ -517,12 +521,12 @@ public class CompanyDetailsActivity extends AppCompatActivity {
     //----------------------------------------------------------------------------------------------
 
     //-------------------------------------- Update Type -----------------------------------------------
-    private void updateCompanyDetails() {
+    private void updateCompanyName() {
 
 //------------------------------------- Update Type ------------------------------------------------
-        UpdateCompanyName updateCompanyName = new UpdateCompanyName("HCL");
+        UpdateCompanyName updateCompanyName = new UpdateCompanyName(companyName.getText().toString());
 
-        Call<UpdateCompanyName> call = companyService.updateCompanyName("", updateCompanyName);
+        Call<UpdateCompanyName> call = companyService.updateCompanyName(""+companyIdAPI, updateCompanyName);
 
         call.enqueue(new Callback<UpdateCompanyName>() {
             @Override
@@ -530,13 +534,188 @@ public class CompanyDetailsActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     UpdateCompanyName updateCompanyName1 = response.body();
                     Log.i("Updated", String.valueOf(updateCompanyName1));
-                }else{
+                } else {
                     Log.i("Not Successful", "Company Details Update");
                 }
             }
 
             @Override
             public void onFailure(Call<UpdateCompanyName> call, Throwable t) {
+                Log.i("Not Successful", "Company Details Update");
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    private void updateCompanyGstNumber() {
+
+//------------------------------------- Update Type ------------------------------------------------
+        UpdateCompanyGSTNumber updateCompanyGSTNumber = new UpdateCompanyGSTNumber(gstNumber.getText().toString());
+
+        Call<UpdateCompanyGSTNumber> call = companyService.updateCompanyGSTNumber(""+companyIdAPI, updateCompanyGSTNumber);
+
+        call.enqueue(new Callback<UpdateCompanyGSTNumber>() {
+            @Override
+            public void onResponse(Call<UpdateCompanyGSTNumber> call, retrofit2.Response<UpdateCompanyGSTNumber> response) {
+                if (response.isSuccessful()) {
+                    UpdateCompanyGSTNumber updateCompanyGSTNumber1 = response.body();
+                    Log.i("Updated", String.valueOf(updateCompanyGSTNumber1));
+                } else {
+                    Log.i("Not Successful", "Company Details Update");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateCompanyGSTNumber> call, Throwable t) {
+                Log.i("Not Successful", "Company Details Update");
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    private void updateCompanyPanNumber() {
+
+//------------------------------------- Update Type ------------------------------------------------
+        UpdateCompanyPAN updateCompanyPAN = new UpdateCompanyPAN(panNumber.getText().toString());
+
+        Call<UpdateCompanyPAN> call = companyService.updateCompanyPAN(""+companyIdAPI, updateCompanyPAN);
+
+        call.enqueue(new Callback<UpdateCompanyPAN>() {
+            @Override
+            public void onResponse(Call<UpdateCompanyPAN> call, retrofit2.Response<UpdateCompanyPAN> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Updated", String.valueOf(response.body()));
+                } else {
+                    Log.i("Not Successful", "Company Details Update");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateCompanyPAN> call, Throwable t) {
+                Log.i("Not Successful", "Company Details Update");
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    private void updateCompanyState() {
+
+//------------------------------------- Update Type ------------------------------------------------
+        UpdateCompanyState updateCompanyState = new UpdateCompanyState(selectStateText.getText().toString());
+
+        Call<UpdateCompanyState> call = companyService.updateCompanyState(""+companyIdAPI, updateCompanyState);
+
+        call.enqueue(new Callback<UpdateCompanyState>() {
+            @Override
+            public void onResponse(Call<UpdateCompanyState> call, retrofit2.Response<UpdateCompanyState> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Updated", String.valueOf(response.body()));
+                } else {
+                    Log.i("Not Successful", "Company Details Update");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateCompanyState> call, Throwable t) {
+                Log.i("Not Successful", "Company Details Update");
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    private void updateCompanyCity() {
+
+//------------------------------------- Update Type ------------------------------------------------
+        UpdateCompanyCity updateCompanyCity = new UpdateCompanyCity(selectDistrictText.getText().toString());
+
+        Call<UpdateCompanyCity> call = companyService.updateCompanyCity(""+companyIdAPI, updateCompanyCity);
+
+        call.enqueue(new Callback<UpdateCompanyCity>() {
+            @Override
+            public void onResponse(Call<UpdateCompanyCity> call, retrofit2.Response<UpdateCompanyCity> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Updated", String.valueOf(response.body()));
+                } else {
+                    Log.i("Not Successful", "Company Details Update");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateCompanyCity> call, Throwable t) {
+                Log.i("Not Successful", "Company Details Update");
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    private void updateCompanyZip() {
+
+//------------------------------------- Update Type ------------------------------------------------
+        UpdateCompanyZip updateCompanyZip = new UpdateCompanyZip(pinCode.getText().toString());
+
+        Call<UpdateCompanyZip> call = companyService.updateCompanyZip(""+companyIdAPI, updateCompanyZip);
+
+        call.enqueue(new Callback<UpdateCompanyZip>() {
+            @Override
+            public void onResponse(Call<UpdateCompanyZip> call, retrofit2.Response<UpdateCompanyZip> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Updated", String.valueOf(response.body()));
+                } else {
+                    Log.i("Not Successful", "Company Details Update");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateCompanyZip> call, Throwable t) {
+                Log.i("Not Successful", "Company Details Update");
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    private void updateCompanyAddress() {
+
+//------------------------------------- Update Type ------------------------------------------------
+        UpdateCompanyAddress updateCompanyAddress = new UpdateCompanyAddress(address.getText().toString());
+
+        Call<UpdateCompanyAddress> call = companyService.updateCompanyAddress(""+companyIdAPI, updateCompanyAddress);
+
+        call.enqueue(new Callback<UpdateCompanyAddress>() {
+            @Override
+            public void onResponse(Call<UpdateCompanyAddress> call, retrofit2.Response<UpdateCompanyAddress> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Updated", String.valueOf(response.body()));
+                } else {
+                    Log.i("Not Successful", "Company Details Update");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateCompanyAddress> call, Throwable t) {
+                Log.i("Not Successful", "Company Details Update");
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+    private void updateCompanyType() {
+
+//------------------------------------- Update Type ------------------------------------------------
+        UpdateCompanyType updateCompanyType = new UpdateCompanyType(companyType);
+
+        Call<UpdateCompanyType> call = companyService.updateCompanyType(""+companyIdAPI, updateCompanyType);
+
+        call.enqueue(new Callback<UpdateCompanyType>() {
+            @Override
+            public void onResponse(Call<UpdateCompanyType> call, retrofit2.Response<UpdateCompanyType> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Updated", String.valueOf(response.body()));
+                } else {
+                    Log.i("Not Successful", "Company Details Update");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateCompanyType> call, Throwable t) {
                 Log.i("Not Successful", "Company Details Update");
             }
         });
@@ -565,5 +744,83 @@ public class CompanyDetailsActivity extends AppCompatActivity {
             }
         });
 //--------------------------------------------------------------------------------------------------
+    }
+
+    public void getCompanyDetails() {
+        //---------------------------- Get Company Details -------------------------------------------
+        String url1 = getString(R.string.baseURL) + "/company/get/" + userId;
+        Log.i("URL: ", url1);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray companyDetails = response.getJSONArray("data");
+                    for (int i = 0; i < companyDetails.length(); i++) {
+                        JSONObject data = companyDetails.getJSONObject(i);
+                        companyNameAPI = data.getString("company_name");
+                        companyGSTNumberAPI = data.getString("company_gst_no");
+                        companyPanAPI = data.getString("company_pan");
+                        companyStateAPI = data.getString("comp_state");
+                        companyAddressAPI = data.getString("comp_add");
+                        companyCityAPI = data.getString("comp_city");
+                        companyZipAPI = data.getString("comp_zip");
+                        companyIdAPI = data.getString("company_id");
+                        companyTypeAPI = data.getString("company_type");
+                    }
+
+                    if (companyNameAPI != null) {
+                        companyName.setText(companyNameAPI);
+                    }
+                    if (companyGSTNumberAPI != null) {
+                        gstNumber.setText(companyGSTNumberAPI);
+                    }
+                    if (companyPanAPI != null) {
+                        panNumber.setText(companyPanAPI);
+                    }
+                    if (companyStateAPI != null) {
+                        selectStateText.setText(companyStateAPI);
+                    }
+                    if (companyAddressAPI != null) {
+                        address.setText(companyAddressAPI);
+                    }
+                    if (companyCityAPI != null) {
+                        selectDistrictText.setText(companyCityAPI);
+                    }
+                    if (companyZipAPI != null) {
+                        pinCode.setText(companyZipAPI);
+                    }
+
+                    if (companyTypeAPI != null) {
+                        companyTypeAPI = companyType;
+                        if (companyTypeAPI.equals("Proprietary")) {
+                            proprietaryRadioButton.setChecked(true);
+                            partnershipRadioButton.setChecked(false);
+                            pvtLtdRadioButton.setChecked(false);
+
+                        } else if (companyTypeAPI.equals("Partnership")) {
+                            proprietaryRadioButton.setChecked(false);
+                            partnershipRadioButton.setChecked(true);
+                            pvtLtdRadioButton.setChecked(false);
+
+                        } else if (companyTypeAPI.equals("Pvt. Ltd.")) {
+                            proprietaryRadioButton.setChecked(false);
+                            partnershipRadioButton.setChecked(false);
+                            pvtLtdRadioButton.setChecked(true);
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+        //-------------------------------------------------------------------------------------------
     }
 }

@@ -23,15 +23,16 @@ public class BankResponse {
 
     public class Data {
 
-        private String user_id,accountholder_name, account_number, re_enter_acc_num, IFSI_CODE, isBankDetails_Given;
+        private String user_id,accountholder_name, account_number, re_enter_acc_num, IFSI_CODE, isBankDetails_Given, bank_name;
 
-        public Data(String user_id, String accountholder_name, String account_number, String re_enter_acc_num, String IFSI_CODE, String isBankDetails_Given) {
+        public Data(String user_id, String accountholder_name, String account_number, String re_enter_acc_num, String IFSI_CODE, String isBankDetails_Given, String bank_name) {
             this.user_id = user_id;
             this.accountholder_name = accountholder_name ;
             this.account_number = account_number;
             this.re_enter_acc_num = re_enter_acc_num;
             this.IFSI_CODE = IFSI_CODE;
             this.isBankDetails_Given = isBankDetails_Given;
+            this.bank_name = bank_name;
         }
 
         public String getUser_id() {
@@ -80,6 +81,14 @@ public class BankResponse {
 
         public void setIsBankDetails_Given(String isBankDetails_Given) {
             this.isBankDetails_Given = isBankDetails_Given;
+        }
+
+        public String getBank_name() {
+            return bank_name;
+        }
+
+        public void setBank_name(String bank_name) {
+            this.bank_name = bank_name;
         }
     }
 }
