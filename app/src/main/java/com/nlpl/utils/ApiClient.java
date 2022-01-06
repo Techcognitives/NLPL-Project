@@ -6,6 +6,9 @@ import com.nlpl.services.BankService;
 import com.nlpl.services.CompanyService;
 import com.nlpl.services.ImageService;
 import com.nlpl.services.ImageUploadService;
+import com.nlpl.services.UploadChequeService;
+import com.nlpl.services.UploadDriverLicenseService;
+import com.nlpl.services.UploadTruckRCService;
 import com.nlpl.services.UserService;
 
 import okhttp3.OkHttpClient;
@@ -63,5 +66,20 @@ public class ApiClient {
     public static ImageUploadService getImageUploadService() {
         ImageUploadService imageUploadService = getRetrofit().create(ImageUploadService.class);
         return imageUploadService;
+    }
+
+    public static UploadChequeService getUploadChequeService() {
+        UploadChequeService uploadChequeService = getRetrofit().create(UploadChequeService.class);
+        return uploadChequeService;
+    }
+
+    public static UploadDriverLicenseService getUploadDriverLicenseService() {
+        UploadDriverLicenseService uploadDriverLicenseService = getRetrofit().create(UploadDriverLicenseService.class);
+        return uploadDriverLicenseService;
+    }
+
+    public static UploadTruckRCService getTruckRCService() {
+        UploadTruckRCService uploadTruckRCService = getRetrofit().create(UploadTruckRCService.class);
+        return uploadTruckRCService;
     }
 }

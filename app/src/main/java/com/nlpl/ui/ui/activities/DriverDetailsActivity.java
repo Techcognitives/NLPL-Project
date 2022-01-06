@@ -47,6 +47,7 @@ import com.nlpl.model.Responses.AddDriverResponse;
 import com.nlpl.model.Responses.ImageResponse;
 import com.nlpl.model.Responses.UploadImageResponse;
 import com.nlpl.model.Responses.UserResponse;
+import com.nlpl.model.Responses.UploadDriverLicenseResponse;
 import com.nlpl.model.UpdateDriverDetails.UpdateDriverEmailId;
 import com.nlpl.model.UpdateDriverDetails.UpdateDriverName;
 import com.nlpl.model.UpdateDriverDetails.UpdateDriverNumber;
@@ -81,6 +82,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
     TextView actionBarTitle;
     EditText driverName, driverMobile, driverEmailId;
     ImageView actionBarBackButton;
+    Intent data;
+    int requestCode;
+    int resultCode;
+    String pathDLGallery, pathDLCamera;
 
     Button uploadDL, okDriverDetails, uploadSelfie;
     TextView textDL, editDL, series, textDS, editDS;
@@ -565,6 +570,13 @@ public class DriverDetailsActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        this.resultCode = resultCode;
+        this.requestCode = requestCode;
+        this.data = data;
+        imagePicker();
+    }
+
+    private String imagePicker(){
 
         //Detects request code for PAN
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
@@ -603,11 +615,13 @@ public class DriverDetailsActivity extends AppCompatActivity {
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
 
-            uploadImage(picturePath);
+            returnPath(picturePath);
+            pathDLGallery = picturePath;
 
             driverLicenseImage.setImageURI(selectedImage);
             previewDrivingLicense.setImageURI(selectedImage);
-
+            return picturePath;
+            
         } else if (requestCode == CAMERA_PIC_REQUEST) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
             my_alert.setTitle("Driver Selfie uploaded successfully");
@@ -639,8 +653,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
             String path = getRealPathFromURI(getImageUri(this, image));
             driverSelfieImg.setImageBitmap(BitmapFactory.decodeFile(path));
             previewSelfie.setImageBitmap(BitmapFactory.decodeFile(path));
-
-            uploadImage(path);
+            
+            return path;
 
         } else if (requestCode == CAMERA_PIC_REQUEST1) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
@@ -674,11 +688,13 @@ public class DriverDetailsActivity extends AppCompatActivity {
             String path = getRealPathFromURI(getImageUri(this, image));
             driverLicenseImage.setImageBitmap(BitmapFactory.decodeFile(path));
             previewDrivingLicense.setImageBitmap(BitmapFactory.decodeFile(path));
-
-            uploadImage(path);
+            
+            pathDLCamera = path;
+            return path;
         }
+        return "";
     }
-
+    
     public void onClickDriverDetailsOk(View view) {
         String driverMobileText = driverMobile.getText().toString();
         String driverNameText = driverName.getText().toString();
@@ -715,6 +731,16 @@ public class DriverDetailsActivity extends AppCompatActivity {
                     checkPhoneInAPI("91"+driverMobile.getText().toString());
                 }
 
+//                if (isEdit){
+//                    Intent i8 = new Intent(DriverDetailsActivity.this, ProfileAndRegistrationActivity.class);
+//                    i8.putExtra("userId", userId);
+//                    i8.putExtra("mobile2", mobile);
+//                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    startActivity(i8);
+//                    overridePendingTransition(0, 0);
+//                    DriverDetailsActivity.this.finish();
+//                }
+
                 if (alreadyDriver == false){
                     saveDriver(createDriver());
                     saveDriverUser(createDriverUser());
@@ -750,8 +776,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
                     });
                     my_alert.show();
 
-                }else{
-
                 }
 
             }
@@ -774,6 +798,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
         addDriverResponseCall.enqueue(new Callback<AddDriverResponse>() {
             @Override
             public void onResponse(Call<AddDriverResponse> call, Response<AddDriverResponse> response) {
+                AddDriverResponse driverResponse = response.body();
+                String driverIdOnResponse = driverResponse.getData().getDriver_id();
+                String path = imagePicker();
+                uploadDriverLicense(driverIdOnResponse,path);
 
             }
 
@@ -1066,27 +1094,29 @@ public class DriverDetailsActivity extends AppCompatActivity {
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
 
-
-    private void uploadImage(String picPath) {
+    private void uploadDriverLicense(String driverId1,String picPath) {
 
         File file = new File(picPath);
 //        File file = new File(getExternalFilesDir("/").getAbsolutePath(), file);
 
         MultipartBody.Part body = prepareFilePart("file", Uri.fromFile(file));
 
-        Call<UploadImageResponse> call = ApiClient.getImageUploadService().uploadImage(userId, img_type, body);
-        call.enqueue(new Callback<UploadImageResponse>() {
+        Call<UploadDriverLicenseResponse> call = ApiClient.getUploadDriverLicenseService().uploadDriverLicense(driverId1,body);
+        call.enqueue(new Callback<UploadDriverLicenseResponse>() {
             @Override
-            public void onResponse(Call<UploadImageResponse> call, Response<UploadImageResponse> response) {
-                Log.i("successful:", "success");
+            public void onResponse(Call<UploadDriverLicenseResponse> call, Response<UploadDriverLicenseResponse> response) {
+
             }
 
             @Override
-            public void onFailure(Call<UploadImageResponse> call, Throwable t) {
-                t.printStackTrace();
-                Log.i("failed:", "failed");
+            public void onFailure(Call<UploadDriverLicenseResponse> call, Throwable t) {
+
             }
         });
+    }
+
+    private String returnPath(String picPath) {
+        return picPath;
     }
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {

@@ -44,6 +44,7 @@ import com.nlpl.model.Requests.BankRequest;
 import com.nlpl.model.Requests.ImageRequest;
 import com.nlpl.model.Responses.BankResponse;
 import com.nlpl.model.Responses.ImageResponse;
+import com.nlpl.model.Responses.UploadChequeResponse;
 import com.nlpl.model.Responses.UploadImageResponse;
 import com.nlpl.model.UpdateBankDetails.UpdateBankAccountHolderName;
 import com.nlpl.model.UpdateBankDetails.UpdateBankAccountNumber;
@@ -83,6 +84,10 @@ public class BankDetailsActivity extends AppCompatActivity {
     ImageView actionBarBackButton;
     String userId;
 
+    int requestCode;
+    int resultCode;
+    Intent data;
+
     EditText bankName, accountNo, reAccount, ifscCode;
     Button okButton;
 
@@ -94,7 +99,7 @@ public class BankDetailsActivity extends AppCompatActivity {
     Boolean isEdit, isImgUploaded = false;
 
     RadioButton canceledCheckRadioButton, acDetailsRadioButton;
-    String bankId, mobile, img_type;
+    String bankId, mobile;
     private RequestQueue mQueue;
 
     private UserService userService;
@@ -191,8 +196,7 @@ public class BankDetailsActivity extends AppCompatActivity {
         uploadCC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                img_type = "cheque";
-                saveImage(imageRequest());
+
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(BankDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
@@ -233,8 +237,7 @@ public class BankDetailsActivity extends AppCompatActivity {
         editCC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                img_type = "cheque";
-                saveImage(imageRequest());
+
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(BankDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
@@ -278,6 +281,15 @@ public class BankDetailsActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        this.resultCode = resultCode;
+        this.requestCode = requestCode;
+        this.data = data;
+
+        imagePicker();
+    }
+
+    private String imagePicker(){
+
         //Detects request code for PAN
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
 
@@ -308,10 +320,9 @@ public class BankDetailsActivity extends AppCompatActivity {
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
 
-            uploadImage(picturePath);
-
             cancelledCheckImage.setImageURI(selectedImage);
             previewDialogCancelledChequeImageView.setImageURI(selectedImage);
+            return picturePath;
 
         } else if (requestCode == CAMERA_PIC_REQUEST1) {
 
@@ -340,9 +351,11 @@ public class BankDetailsActivity extends AppCompatActivity {
             cancelledCheckImage.setImageBitmap(BitmapFactory.decodeFile(path));
             previewDialogCancelledChequeImageView.setImageBitmap(BitmapFactory.decodeFile(path));
 
-            uploadImage(path);
+
+            return path;
 
         }
+        return "";
     }
 
 
@@ -359,25 +372,35 @@ public class BankDetailsActivity extends AppCompatActivity {
             } else {
                 saveBank(createBankAcc());
             }
-
             reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
-            AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
-            my_alert.setTitle("Bank Details added successfully");
-            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
 
-                    updateUserIsBankDetailsGiven();
-                    dialogInterface.dismiss();
-                    Intent i8 = new Intent(BankDetailsActivity.this, ProfileAndRegistrationActivity.class);
-                    i8.putExtra("mobile2", mobile);
-                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i8);
-                    overridePendingTransition(0, 0);
-                    BankDetailsActivity.this.finish();
-                }
-            });
-            my_alert.show();
+            if (isEdit){
+
+                Intent i8 = new Intent(BankDetailsActivity.this, ProfileAndRegistrationActivity.class);
+                i8.putExtra("mobile2", mobile);
+                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i8);
+                overridePendingTransition(0, 0);
+                BankDetailsActivity.this.finish();
+            } else {
+                AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
+                my_alert.setTitle("Bank Details added successfully");
+                my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        updateUserIsBankDetailsGiven();
+                        dialogInterface.dismiss();
+                        Intent i8 = new Intent(BankDetailsActivity.this, ProfileAndRegistrationActivity.class);
+                        i8.putExtra("mobile2", mobile);
+                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i8);
+                        overridePendingTransition(0, 0);
+                        BankDetailsActivity.this.finish();
+                    }
+                });
+                my_alert.show();
+            }
         } else {
             reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
             AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
@@ -447,6 +470,10 @@ public class BankDetailsActivity extends AppCompatActivity {
         bankResponseCall.enqueue(new Callback<BankResponse>() {
             @Override
             public void onResponse(Call<BankResponse> call, Response<BankResponse> response) {
+                BankResponse bankResponse = response.body();
+                String bankIdOnResponse = bankResponse.getData().getBank_id();
+                String path = imagePicker();
+                uploadCheque(bankIdOnResponse,path);
             }
 
             @Override
@@ -509,6 +536,20 @@ public class BankDetailsActivity extends AppCompatActivity {
                 canceledCheckBlurImage.setVisibility(View.GONE);
                 accountDetailsBlurImage.setVisibility(View.VISIBLE);
 
+                String bankName2 = bankName.getText().toString().trim();
+                String accNo = accountNo.getText().toString().trim();
+                String reAccNo = reAccount.getText().toString().trim();
+                String ifscCode2 = ifscCode.getText().toString().trim();
+
+                if (!bankName2.isEmpty() && !accNo.isEmpty() && !reAccNo.isEmpty() && !ifscCode2.isEmpty()) {
+                    okButton.setEnabled(true);
+                    okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                    uploadCC.setEnabled(true);
+                    uploadCC.setVisibility(View.VISIBLE);
+                    editCC.setVisibility(View.INVISIBLE);
+                    previewCancelledCheque.setVisibility(View.VISIBLE);
+                }
+
                 if (isEdit) {
                     okButton.setEnabled(true);
                     okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -521,12 +562,13 @@ public class BankDetailsActivity extends AppCompatActivity {
                     previewCancelledCheque.setVisibility(View.VISIBLE);
                     uploadCC.setVisibility(View.INVISIBLE);
                 } else {
-                    okButton.setEnabled(false);
-                    okButton.setBackground(getResources().getDrawable(R.drawable.button_de_active));
-                    uploadCC.setEnabled(true);
-                    uploadCC.setVisibility(View.VISIBLE);
-                    editCC.setVisibility(View.INVISIBLE);
-                    previewCancelledCheque.setVisibility(View.VISIBLE);
+                        okButton.setEnabled(false);
+                        okButton.setBackground(getResources().getDrawable(R.drawable.button_de_active));
+                        uploadCC.setEnabled(true);
+                        uploadCC.setVisibility(View.VISIBLE);
+                        editCC.setVisibility(View.INVISIBLE);
+                        previewCancelledCheque.setVisibility(View.VISIBLE);
+
                 }
                 break;
 
@@ -545,6 +587,21 @@ public class BankDetailsActivity extends AppCompatActivity {
 
                 canceledCheckBlurImage.setVisibility(View.VISIBLE);
                 accountDetailsBlurImage.setVisibility(View.GONE);
+
+                String bankName3 = bankName.getText().toString().trim();
+                String accNo2 = accountNo.getText().toString().trim();
+                String reAccNo2 = reAccount.getText().toString().trim();
+                String ifscCode3 = ifscCode.getText().toString().trim();
+
+                if (!bankName3.isEmpty() && !accNo2.isEmpty() && !reAccNo2.isEmpty() && !ifscCode3.isEmpty()) {
+
+                    okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                    okButton.setEnabled(true);
+
+                }else {
+                    okButton.setBackground(getResources().getDrawable(R.drawable.button_de_active));
+                    okButton.setEnabled(false);
+                }
 
                 if (isEdit) {
 
@@ -763,27 +820,26 @@ public class BankDetailsActivity extends AppCompatActivity {
 
 
     //--------------------------------------create image in API -------------------------------------
-    public ImageRequest imageRequest() {
-        ImageRequest imageRequest = new ImageRequest();
-        imageRequest.setUser_id(userId);
-        imageRequest.setImage_type(img_type);
-        return imageRequest;
-    }
-
-    public void saveImage(ImageRequest imageRequest) {
-        Call<ImageResponse> imageResponseCall = ApiClient.getImageService().saveImage(imageRequest);
-        imageResponseCall.enqueue(new Callback<ImageResponse>() {
-            @Override
-            public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<ImageResponse> call, Throwable t) {
-
-            }
-        });
-    }
+//    public ImageRequest imageRequest() {
+//        ImageRequest imageRequest = new ImageRequest();
+//        imageRequest.setUser_id(userId);
+//        return imageRequest;
+//    }
+//
+//    public void saveImage(ImageRequest imageRequest) {
+//        Call<ImageResponse> imageResponseCall = ApiClient.getImageService().saveImage(imageRequest);
+//        imageResponseCall.enqueue(new Callback<ImageResponse>() {
+//            @Override
+//            public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ImageResponse> call, Throwable t) {
+//
+//            }
+//        });
+//    }
 
     @NonNull
     private MultipartBody.Part prepareFilePart(String partName, Uri fileUri) {
@@ -799,25 +855,23 @@ public class BankDetailsActivity extends AppCompatActivity {
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
 
-
-    private void uploadImage(String picPath) {
+    private void uploadCheque(String bankId1, String picPath) {
 
         File file = new File(picPath);
 //        File file = new File(getExternalFilesDir("/").getAbsolutePath(), file);
 
         MultipartBody.Part body = prepareFilePart("file", Uri.fromFile(file));
 
-        Call<UploadImageResponse> call = ApiClient.getImageUploadService().uploadImage(userId, img_type, body);
-        call.enqueue(new Callback<UploadImageResponse>() {
+        Call<UploadChequeResponse> call = ApiClient.getUploadChequeService().uploadCheque(bankId1, body);
+        call.enqueue(new Callback<UploadChequeResponse>() {
             @Override
-            public void onResponse(Call<UploadImageResponse> call, Response<UploadImageResponse> response) {
-                Log.i("successful:", "success");
+            public void onResponse(Call<UploadChequeResponse> call, Response<UploadChequeResponse> response) {
+
             }
 
             @Override
-            public void onFailure(Call<UploadImageResponse> call, Throwable t) {
-                t.printStackTrace();
-                Log.i("failed:", "failed");
+            public void onFailure(Call<UploadChequeResponse> call, Throwable t) {
+
             }
         });
     }

@@ -23,13 +23,21 @@ public class AddTruckResponse {
 
     public class Data {
 
-        private String user_id, vehicle_no, vehicle_body_type;
+        private String user_id, vehicle_no, vehicle_body_type, truck_id;
 
-        public Data(String user_id, String vehicle_no, String vehicle_body_type) {
+        public Data(String user_id, String vehicle_no, String vehicle_body_type, String truck_id) {
             this.user_id = user_id;
             this.vehicle_no = vehicle_no;
             this.vehicle_body_type = vehicle_body_type;
+            this.truck_id = truck_id;
+        }
 
+        public String getTruck_id() {
+            return truck_id;
+        }
+
+        public void setTruck_id(String truck_id) {
+            this.truck_id = truck_id;
         }
 
         public String getUser_id() {
