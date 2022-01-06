@@ -406,7 +406,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     if (truckList.size() > 0) {
                         truckListAdapter.updateData(truckList);
                     } else {
-
                     }
 
                     if (truckList.size() > 5){
