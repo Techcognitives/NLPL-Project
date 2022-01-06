@@ -698,7 +698,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 Log.i("path of rc: ", path2);
                 uploadTruckRC(truckId, path2 );
             }
-
             @Override
             public void onFailure(Call<AddTruckResponse> call, Throwable t) {
 
