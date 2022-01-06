@@ -700,7 +700,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<AddTruckResponse> call, Throwable t) {
-
             }
         });
     }
