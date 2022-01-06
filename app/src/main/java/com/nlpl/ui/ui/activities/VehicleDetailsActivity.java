@@ -1137,6 +1137,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                                             selectCapacity.setText(adapter2.getItem(i));
                                             isModelSelected = true;
                                             selectCapacityDialog.dismiss();
+
                                         }
                                     });
 
