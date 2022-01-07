@@ -1438,7 +1438,26 @@ public class DriverDetailsActivity extends AppCompatActivity {
 //                            String roleGet = arrayRole.get(j);
 //                            String isRegistrationDoneGet = arrayRegDone.get(j);
 
-                            if (!driverNumberAPI.equals("91" + driverMobile.getText().toString())) {
+                            if (isEdit) {
+                                if (!driverNumberAPI.equals("91" + driverMobile.getText().toString())) {
+                                    AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
+                                    my_alert.setTitle("Driver already Exists with this mobile number");
+                                    my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            dialogInterface.dismiss();
+
+                                        }
+                                    });
+                                    my_alert.show();
+
+                                    alreadyDriver = true;
+                                    Log.i("Already", "Driver");
+                                    loading.setImageDrawable(getDrawable(R.drawable.loading_small));
+                                    loading.setAnimation(loadingAnimation);
+                                }
+                            }
+                            else{
                                 AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
                                 my_alert.setTitle("Driver already Exists with this mobile number");
                                 my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -1454,7 +1473,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
                                 Log.i("Already", "Driver");
                                 loading.setImageDrawable(getDrawable(R.drawable.loading_small));
                                 loading.setAnimation(loadingAnimation);
+
                             }
+
+
                             break;
                         } else {
                             alreadyDriver = false;
