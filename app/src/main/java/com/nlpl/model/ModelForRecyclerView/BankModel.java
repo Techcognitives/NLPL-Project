@@ -8,6 +8,7 @@ public class BankModel {
     private String IFSI_CODE;
     private String bank_id;
     private String bank_name;
+    private String cancelled_cheque;
 
     public String getUser_id() {
         return user_id;
@@ -63,5 +64,13 @@ public class BankModel {
 
     public void setBank_name(String bank_name) {
         this.bank_name = bank_name;
+    }
+
+    public String getCancelled_cheque() {
+        return cancelled_cheque;
+    }
+
+    public void setCancelled_cheque(String cancelled_cheque) {
+        this.cancelled_cheque = cancelled_cheque;
     }
 }

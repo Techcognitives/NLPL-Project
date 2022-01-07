@@ -216,7 +216,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
         mQueue = Volley.newRequestQueue(VehicleDetailsActivity.this);
         if (isEdit){
-            getImageURL();
+
             isRcUploaded = true;
             isInsurance = true;
             truckSelected = true;
@@ -991,6 +991,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     private void getVehicleDetails() {
 
         String url = getString(R.string.baseURL) + "/truck/" + truckId;
+        Log.i("Truck Id", truckId);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -1008,6 +1009,15 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                         selectModel.setText(truckModelAPI);
                         selectFt.setText(truckFtAPI);
                         selectCapacity.setText(truckCapacityAPI);
+
+                        String drivingLicenseURL = obj.getString("rc_book");
+                        String selfieURL = obj.getString("vehicle_insurance");
+
+                        new DownloadImageTask(previewRcBook).execute(drivingLicenseURL);
+                        new DownloadImageTask(imgRC).execute(drivingLicenseURL);
+
+                        new DownloadImageTask(previewInsurance).execute(selfieURL);
+                        new DownloadImageTask(imgI).execute(selfieURL);
 
                         if (vehicleTypeAPI.equals("Open")){
                             openType.setBackgroundResource(R.drawable.image_view_border_selected);
@@ -1370,47 +1380,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
         previewDialogInsurance.show();
         previewDialogInsurance.getWindow().setAttributes(lp);
-    }
-
-    private void getImageURL() {
-
-        String url = getString(R.string.baseURL) + "/imgbucket/Images/4";
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray imageList = response.getJSONArray("data");
-                    for (int i = 0; i < imageList.length(); i++) {
-                        JSONObject obj = imageList.getJSONObject(i);
-                        String imageType = obj.getString("image_type");
-
-                        String drivingLicenseURL, selfieURL;
-                        if (imageType.equals("rc")) {
-                            drivingLicenseURL = obj.getString("image_url");
-
-                            new DownloadImageTask(previewRcBook).execute(drivingLicenseURL);
-                            new DownloadImageTask(imgRC).execute(drivingLicenseURL);
-
-                        }
-
-                        if (imageType.equals("insurance")){
-                            selfieURL = obj.getString("image_url");
-                            new DownloadImageTask(previewInsurance).execute(selfieURL);
-                            new DownloadImageTask(imgI).execute(selfieURL);
-
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request);
     }
 
     private void requestPermissionsForCamera() {

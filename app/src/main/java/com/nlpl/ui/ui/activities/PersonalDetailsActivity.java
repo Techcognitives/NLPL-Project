@@ -62,7 +62,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
     TextView panCardText, editPAN, editFront, frontText;
     Button uploadPAN, uploadF,  okPersonalDetails;
-    ImageView imgPAN, imgF;
+    ImageView imgPAN, imgF, previewPan, previewAadhar;
     private int GET_FROM_GALLERY = 0;
     private int GET_FROM_GALLERY1 = 1;
 //    private int CAMERA_PIC_REQUEST = 3;
@@ -75,6 +75,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     String userId, mobile;
     Boolean isPanUploaded = false, isFrontUploaded = false;
     String img_type;
+
+    Dialog previewDialogPan, previewDialogAadhar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +115,45 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         editPAN = panAndAadharView.findViewById(R.id.edit1);
         editFront = panAndAadharView.findViewById(R.id.editFront);
         okPersonalDetails = findViewById(R.id.okPersonalDetails);
+        previewPan = (ImageView) panAndAadharView.findViewById(R.id.pan_aadhar_preview_pan);
+        previewAadhar = (ImageView) panAndAadharView.findViewById(R.id.pan_aadhar_preview_aadhar);
+
+        previewDialogPan = new Dialog(PersonalDetailsActivity.this);
+        previewDialogPan.setContentView(R.layout.dialog_preview_images);
+        previewDialogPan.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+
+        previewDialogAadhar = new Dialog(PersonalDetailsActivity.this);
+        previewDialogAadhar.setContentView(R.layout.dialog_preview_images);
+        previewDialogAadhar.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        previewPan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(previewDialogPan.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                previewDialogPan.show();
+                previewDialogPan.getWindow().setAttributes(lp);
+            }
+        });
+
+        previewAadhar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+                lp2.copyFrom(previewDialogAadhar.getWindow().getAttributes());
+                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp2.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp2.gravity = Gravity.CENTER;
+
+                previewDialogAadhar.show();
+                previewDialogAadhar.getWindow().setAttributes(lp2);
+            }
+        });
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.baseURL))
@@ -320,6 +361,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             panCardText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadPAN.setVisibility(View.INVISIBLE);
             editPAN.setVisibility(View.VISIBLE);
+            previewPan.setVisibility(View.VISIBLE);
+            previewAadhar.setVisibility(View.VISIBLE);
             isPanUploaded = true;
 
             if (isPanUploaded && isFrontUploaded ) {
@@ -335,7 +378,9 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             cursor.close();
 
             uploadImage(picturePath);
-
+            ImageView editedAadhar = (ImageView) previewDialogAadhar.findViewById(R.id.dialog_preview_image_view);
+            ImageView editedPan = (ImageView) previewDialogPan.findViewById(R.id.dialog_preview_image_view);
+            editedPan.setImageURI(selectedImage);
             imgPAN.setImageURI(selectedImage);
 
         } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
@@ -368,7 +413,9 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             cursor.close();
 
             uploadImage(picturePath);
-
+            ImageView editedAadhar = (ImageView) previewDialogAadhar.findViewById(R.id.dialog_preview_image_view);
+            ImageView editedPan = (ImageView) previewDialogPan.findViewById(R.id.dialog_preview_image_view);
+            editedAadhar.setImageURI(selectedImage);
             imgF.setImageURI(selectedImage);
 
 //        } else  if (requestCode == CAMERA_PIC_REQUEST) {

@@ -191,7 +191,6 @@ public class BankDetailsActivity extends AppCompatActivity {
             acDetailsRadioButton.setChecked(false);
             Log.i("Bank Id in Bank Details", bankId);
             isImgUploaded = true;
-            getImageURL();
             okButton.setEnabled(true);
             editCC.setEnabled(false);
             okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -249,22 +248,22 @@ public class BankDetailsActivity extends AppCompatActivity {
         editCC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    Dialog chooseDialog;
-                    chooseDialog = new Dialog(BankDetailsActivity.this);
-                    chooseDialog.setContentView(R.layout.dialog_choose);
-                    chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                Dialog chooseDialog;
+                chooseDialog = new Dialog(BankDetailsActivity.this);
+                chooseDialog.setContentView(R.layout.dialog_choose);
+                chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                    WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-                    lp2.copyFrom(chooseDialog.getWindow().getAttributes());
-                    lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-                    lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                    lp2.gravity = Gravity.BOTTOM;
+                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+                lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                lp2.gravity = Gravity.BOTTOM;
 
-                    chooseDialog.show();
-                    chooseDialog.getWindow().setAttributes(lp2);
+                chooseDialog.show();
+                chooseDialog.getWindow().setAttributes(lp2);
 
-                    ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
-                    ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
+                ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
+                ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
 
 //                    camera.setOnClickListener(new View.OnClickListener() {
 //                        @Override
@@ -276,14 +275,14 @@ public class BankDetailsActivity extends AppCompatActivity {
 //                        }
 //                    });
 
-                    gallery.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
+                gallery.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
-                            startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
-                            chooseDialog.dismiss();
-                        }
-                    });
+                        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+                        chooseDialog.dismiss();
+                    }
+                });
 
             }
         });
@@ -303,7 +302,7 @@ public class BankDetailsActivity extends AppCompatActivity {
         imagePickerWithoutAlert();
     }
 
-    private String imagePickerWithoutAlert(){
+    private String imagePickerWithoutAlert() {
         //Detects request code for PAN
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
 
@@ -346,7 +345,7 @@ public class BankDetailsActivity extends AppCompatActivity {
         return "";
     }
 
-    private String imagePicker(){
+    private String imagePicker() {
 
         //Detects request code for PAN
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
@@ -436,7 +435,7 @@ public class BankDetailsActivity extends AppCompatActivity {
             }
             reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
 
-            if (isEdit){
+            if (isEdit) {
 
                 Intent i8 = new Intent(BankDetailsActivity.this, ProfileAndRegistrationActivity.class);
                 i8.putExtra("mobile2", mobile);
@@ -536,8 +535,8 @@ public class BankDetailsActivity extends AppCompatActivity {
                 String bankIdOnResponse = bankResponse.getData().getBank_id();
                 Log.i("bank id on save", bankIdOnResponse);
                 String path = imagePickerWithoutAlert();
-                Log.i("path on saveBank",path);
-                uploadCheque(bankIdOnResponse,path);
+                Log.i("path on saveBank", path);
+                uploadCheque(bankIdOnResponse, path);
             }
 
             @Override
@@ -627,12 +626,12 @@ public class BankDetailsActivity extends AppCompatActivity {
                     previewCancelledCheque.setVisibility(View.VISIBLE);
                     uploadCC.setVisibility(View.INVISIBLE);
                 } else {
-                        okButton.setEnabled(false);
-                        okButton.setBackground(getResources().getDrawable(R.drawable.button_de_active));
-                        uploadCC.setEnabled(true);
-                        uploadCC.setVisibility(View.VISIBLE);
-                        editCC.setVisibility(View.INVISIBLE);
-                        previewCancelledCheque.setVisibility(View.VISIBLE);
+                    okButton.setEnabled(false);
+                    okButton.setBackground(getResources().getDrawable(R.drawable.button_de_active));
+                    uploadCC.setEnabled(true);
+                    uploadCC.setVisibility(View.VISIBLE);
+                    editCC.setVisibility(View.INVISIBLE);
+                    previewCancelledCheque.setVisibility(View.VISIBLE);
 
                 }
                 break;
@@ -662,7 +661,7 @@ public class BankDetailsActivity extends AppCompatActivity {
                     okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                     okButton.setEnabled(true);
 
-                }else {
+                } else {
                     okButton.setBackground(getResources().getDrawable(R.drawable.button_de_active));
                     okButton.setEnabled(false);
                 }
@@ -730,7 +729,11 @@ public class BankDetailsActivity extends AppCompatActivity {
                         reAccount.setText(obj.getString("re_enter_acc_num"));
                         ifscCode.setText(obj.getString("IFSI_CODE"));
 
-                        if (bankNAME != null){
+                        String cancelledChequeURL = obj.getString("cancelled_cheque");
+                        new DownloadImageTask(cancelledCheckImage).execute(cancelledChequeURL);
+                        new DownloadImageTask((ImageView) previewDialogCancelledCheque.findViewById(R.id.dialog_preview_image_view)).execute(cancelledChequeURL);
+
+                        if (bankNAME != null) {
                             canceledCheckRadioButton.setChecked(false);
                             acDetailsRadioButton.setChecked(true);
                             canceledCheckBlurImage.setVisibility(View.VISIBLE);
@@ -742,7 +745,7 @@ public class BankDetailsActivity extends AppCompatActivity {
                             reAccount.setEnabled(true);
                             ifscCode.setEnabled(true);
 
-                        }else {
+                        } else {
                             canceledCheckRadioButton.setChecked(true);
                             acDetailsRadioButton.setChecked(false);
                             canceledCheckBlurImage.setVisibility(View.GONE);
@@ -951,38 +954,6 @@ public class BankDetailsActivity extends AppCompatActivity {
 
         previewDialogCancelledCheque.show();
         previewDialogCancelledCheque.getWindow().setAttributes(lp);
-    }
-
-    private void getImageURL() {
-
-        String url = getString(R.string.baseURL) + "/imgbucket/Images/4";
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray imageList = response.getJSONArray("data");
-                    for (int i = 0; i < imageList.length(); i++) {
-                        JSONObject obj = imageList.getJSONObject(i);
-                        String imageType = obj.getString("image_type");
-
-                        String cancelledChequeURL;
-                        if (imageType.equals("cheque")) {
-                            cancelledChequeURL = obj.getString("image_url");
-                            new DownloadImageTask(cancelledCheckImage).execute(cancelledChequeURL);
-                            new DownloadImageTask((ImageView) previewDialogCancelledCheque.findViewById(R.id.dialog_preview_image_view)).execute(cancelledChequeURL);
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request);
     }
 
     private void requestPermissionsForCamera() {
