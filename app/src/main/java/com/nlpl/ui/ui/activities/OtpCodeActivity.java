@@ -148,7 +148,7 @@ public class OtpCodeActivity extends AppCompatActivity {
 //            }
 //        }).start();
 
-//        initiateOtp();
+        initiateOtp();
         setCountdown();
 
         otpButton.setOnClickListener(new View.OnClickListener() {
@@ -156,39 +156,39 @@ public class OtpCodeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 otp = otp1.getText().toString() + otp2.getText().toString() + otp3.getText().toString() + otp4.getText().toString() + otp5.getText().toString() + otp6.getText().toString();
 
-                AlertDialog.Builder my_alert = new AlertDialog.Builder(OtpCodeActivity.this);
-                my_alert.setTitle("OTP validated successfully");
-                my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if (isEditPhone) {
-                            updateUserPhoneNumber(userIdBundle);
-                            Intent i8 = new Intent(OtpCodeActivity.this, ProfileAndRegistrationActivity.class);
-                            i8.putExtra("mobile2", mobileNoFirebase);
-                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(i8);
-                            overridePendingTransition(0, 0);
-                            finish();
+//                AlertDialog.Builder my_alert = new AlertDialog.Builder(OtpCodeActivity.this);
+//                my_alert.setTitle("OTP validated successfully");
+//                my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        if (isEditPhone) {
+//                            updateUserPhoneNumber(userIdBundle);
+//                            Intent i8 = new Intent(OtpCodeActivity.this, ProfileAndRegistrationActivity.class);
+//                            i8.putExtra("mobile2", mobileNoFirebase);
+//                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                            startActivity(i8);
+//                            overridePendingTransition(0, 0);
+//                            finish();
+//
+//                        } else {
+//                            checkPhoneInAPI(mobileNoFirebase);
+//                        }
+//
+//                        dialogInterface.dismiss();
+//
+//                    }
+//                });
+//                my_alert.show();
 
-                        } else {
-                            checkPhoneInAPI(mobileNoFirebase);
-                        }
+                if (otp1.getText().toString().isEmpty() || otp2.getText().toString().isEmpty() || otp3.getText().toString().isEmpty() || otp4.getText().toString().isEmpty() || otp5.getText().toString().isEmpty() || otp6.getText().toString().isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Field is blank", Toast.LENGTH_LONG).show();
+                } else {
+                    Log.i("OTP", otp);
+                    Log.i("OTP ID", otpId);
+                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpId, otp);
+                    signInWithPhoneAuthCredential(credential);
 
-                        dialogInterface.dismiss();
-
-                    }
-                });
-                my_alert.show();
-
-//                if (otp1.getText().toString().isEmpty() || otp2.getText().toString().isEmpty() || otp3.getText().toString().isEmpty() || otp4.getText().toString().isEmpty() || otp5.getText().toString().isEmpty() || otp6.getText().toString().isEmpty()) {
-//                    Toast.makeText(getApplicationContext(), "Field is blank", Toast.LENGTH_LONG).show();
-//                } else {
-//                    Log.i("OTP", otp);
-//                    Log.i("OTP ID", otpId);
-//                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpId, otp);
-//                    signInWithPhoneAuthCredential(credential);
-
-//                }
+                }
             }
         });
 
