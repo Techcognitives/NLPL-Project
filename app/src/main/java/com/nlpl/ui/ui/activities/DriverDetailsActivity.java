@@ -45,6 +45,7 @@ import com.nlpl.model.Requests.ImageRequest;
 import com.nlpl.model.Requests.UserRequest;
 import com.nlpl.model.Responses.AddDriverResponse;
 import com.nlpl.model.Responses.ImageResponse;
+import com.nlpl.model.Responses.UploadDriverSelfieResponse;
 import com.nlpl.model.Responses.UploadImageResponse;
 import com.nlpl.model.Responses.UserResponse;
 import com.nlpl.model.Responses.UploadDriverLicenseResponse;
@@ -274,8 +275,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
         uploadSelfie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                img_type = "selfie";
-                saveImage(imageRequest());
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
             }
@@ -284,8 +283,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
         editDS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                img_type = "selfie";
-                saveImage(imageRequest());
+
+                String selfiePath = selfieImagePickerWithoutAlert();
+                uploadDriverSelfie(driverId, selfiePath);
+
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
             }
@@ -294,8 +295,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
         uploadDL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                img_type = "dl";
-                saveImage(imageRequest());
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(DriverDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
@@ -335,8 +334,11 @@ public class DriverDetailsActivity extends AppCompatActivity {
         editDL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                img_type = "dl";
-                saveImage(imageRequest());
+
+                String DLpath = DLimagePickerWithoutAlert();
+                uploadDriverLicense(driverId,DLpath);
+
+
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(DriverDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
@@ -573,10 +575,111 @@ public class DriverDetailsActivity extends AppCompatActivity {
         this.resultCode = resultCode;
         this.requestCode = requestCode;
         this.data = data;
-        imagePicker();
+        DLimagePicker();
+        selfieImagePicker();
+        DLimagePickerWithoutAlert();
+        selfieImagePickerWithoutAlert();
     }
 
-    private String imagePicker(){
+    private String DLimagePickerWithoutAlert(){
+
+        //Detects request code for PAN
+        if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
+
+            textDL.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadDL.setVisibility(View.INVISIBLE);
+            editDL.setVisibility(View.VISIBLE);
+            previewDLImageView.setVisibility(View.VISIBLE);
+            previewSelfieImageView.setVisibility(View.VISIBLE);
+
+            isDLUploaded = true;
+            String mobileNoWatcher = driverMobile.getText().toString();
+            String nameWatcher = driverName.getText().toString();
+            String emailWtacher = driverEmailId.getText().toString();
+
+            if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && !emailWtacher.isEmpty() && isDLUploaded && isSelfieUploaded) {
+                okDriverDetails.setEnabled(true);
+                okDriverDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            returnPath(picturePath);
+            pathDLGallery = picturePath;
+
+            driverLicenseImage.setImageURI(selectedImage);
+            previewDrivingLicense.setImageURI(selectedImage);
+            return picturePath;
+            
+        } else if (requestCode == CAMERA_PIC_REQUEST1) {
+
+            textDL.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadDL.setVisibility(View.INVISIBLE);
+            editDL.setVisibility(View.VISIBLE);
+            previewDLImageView.setVisibility(View.VISIBLE);
+            previewSelfieImageView.setVisibility(View.VISIBLE);
+
+            isDLUploaded = true;
+
+            String mobileNoWatcher = driverMobile.getText().toString();
+            String nameWatcher = driverName.getText().toString();
+            String emailWtacher = driverEmailId.getText().toString();
+
+            if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && !emailWtacher.isEmpty() && isDLUploaded && isSelfieUploaded) {
+                okDriverDetails.setEnabled(true);
+                okDriverDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            String path = getRealPathFromURI(getImageUri(this, image));
+            driverLicenseImage.setImageBitmap(BitmapFactory.decodeFile(path));
+            previewDrivingLicense.setImageBitmap(BitmapFactory.decodeFile(path));
+
+            pathDLCamera = path;
+            return path;
+        }
+        return "";
+    }
+
+    private String selfieImagePickerWithoutAlert(){
+
+        //Detects request code for PAN
+       if (requestCode == CAMERA_PIC_REQUEST) {
+
+            isSelfieUploaded = true;
+
+            String mobileNoWatcher = driverMobile.getText().toString();
+            String nameWatcher = driverName.getText().toString();
+            String emailWtacher = driverEmailId.getText().toString();
+
+            if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && !emailWtacher.isEmpty() && isDLUploaded && isSelfieUploaded) {
+                okDriverDetails.setEnabled(true);
+                okDriverDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
+            textDS.setText("Selfie Uploaded");
+            textDS.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadSelfie.setVisibility(View.INVISIBLE);
+            editDS.setVisibility(View.VISIBLE);
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            String path = getRealPathFromURI(getImageUri(this, image));
+            driverSelfieImg.setImageBitmap(BitmapFactory.decodeFile(path));
+            previewSelfie.setImageBitmap(BitmapFactory.decodeFile(path));
+
+            return path;
+
+        }
+        return "";
+    }
+
+    private String DLimagePicker(){
 
         //Detects request code for PAN
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
@@ -621,40 +724,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
             driverLicenseImage.setImageURI(selectedImage);
             previewDrivingLicense.setImageURI(selectedImage);
             return picturePath;
-            
-        } else if (requestCode == CAMERA_PIC_REQUEST) {
-            AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
-            my_alert.setTitle("Driver Selfie uploaded successfully");
-            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            });
-            my_alert.show();
-
-            isSelfieUploaded = true;
-
-            String mobileNoWatcher = driverMobile.getText().toString();
-            String nameWatcher = driverName.getText().toString();
-            String emailWtacher = driverEmailId.getText().toString();
-
-            if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && !emailWtacher.isEmpty() && isDLUploaded && isSelfieUploaded) {
-                okDriverDetails.setEnabled(true);
-                okDriverDetails.setBackgroundResource(R.drawable.button_active);
-            }
-
-            textDS.setText("Selfie Uploaded");
-            textDS.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-            uploadSelfie.setVisibility(View.INVISIBLE);
-            editDS.setVisibility(View.VISIBLE);
-
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-            String path = getRealPathFromURI(getImageUri(this, image));
-            driverSelfieImg.setImageBitmap(BitmapFactory.decodeFile(path));
-            previewSelfie.setImageBitmap(BitmapFactory.decodeFile(path));
-            
-            return path;
 
         } else if (requestCode == CAMERA_PIC_REQUEST1) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
@@ -688,9 +757,50 @@ public class DriverDetailsActivity extends AppCompatActivity {
             String path = getRealPathFromURI(getImageUri(this, image));
             driverLicenseImage.setImageBitmap(BitmapFactory.decodeFile(path));
             previewDrivingLicense.setImageBitmap(BitmapFactory.decodeFile(path));
-            
+
             pathDLCamera = path;
             return path;
+        }
+        return "";
+    }
+
+    private String selfieImagePicker(){
+
+        //Detects request code for PAN
+        if (requestCode == CAMERA_PIC_REQUEST) {
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
+            my_alert.setTitle("Driver Selfie uploaded successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            my_alert.show();
+
+            isSelfieUploaded = true;
+
+            String mobileNoWatcher = driverMobile.getText().toString();
+            String nameWatcher = driverName.getText().toString();
+            String emailWtacher = driverEmailId.getText().toString();
+
+            if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && !emailWtacher.isEmpty() && isDLUploaded && isSelfieUploaded) {
+                okDriverDetails.setEnabled(true);
+                okDriverDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
+            textDS.setText("Selfie Uploaded");
+            textDS.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadSelfie.setVisibility(View.INVISIBLE);
+            editDS.setVisibility(View.VISIBLE);
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            String path = getRealPathFromURI(getImageUri(this, image));
+            driverSelfieImg.setImageBitmap(BitmapFactory.decodeFile(path));
+            previewSelfie.setImageBitmap(BitmapFactory.decodeFile(path));
+
+            return path;
+
         }
         return "";
     }
@@ -800,9 +910,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
             public void onResponse(Call<AddDriverResponse> call, Response<AddDriverResponse> response) {
                 AddDriverResponse driverResponse = response.body();
                 String driverIdOnResponse = driverResponse.getData().getDriver_id();
-                String path = imagePicker();
-                uploadDriverLicense(driverIdOnResponse,path);
-
+                String DLpath = DLimagePickerWithoutAlert();
+                String selfiePath = selfieImagePickerWithoutAlert();
+                uploadDriverLicense(driverIdOnResponse,DLpath);
+                uploadDriverSelfie(driverIdOnResponse, selfiePath);
             }
 
             @Override
@@ -985,30 +1096,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
     }
 
     //-------------------------------- Update User is Driver Added ---------------------------------
-    private void updateDriverUploadLc() {
-
-        UpdateDriverUploadLicense updateDriverUploadLicense = new UpdateDriverUploadLicense(uploadDL.getText().toString());
-
-        Call<UpdateDriverUploadLicense> call = addDriverService.updateDriverUploadLicense("" + driverId, updateDriverUploadLicense);
-
-        call.enqueue(new Callback<UpdateDriverUploadLicense>() {
-            @Override
-            public void onResponse(Call<UpdateDriverUploadLicense> call, Response<UpdateDriverUploadLicense> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Driver Added");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateDriverUploadLicense> call, Throwable t) {
-                Log.i("Not Successful", "User is Driver Added");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    //-------------------------------- Update User is Driver Added ---------------------------------
     private void updateDriverNumber() {
 
         UpdateDriverNumber updateDriverNumber = new UpdateDriverNumber("91" + driverMobile.getText().toString());
@@ -1056,30 +1143,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
 //--------------------------------------------------------------------------------------------------
     }
 
-
-    //--------------------------------------create image in API -------------------------------------
-    public ImageRequest imageRequest() {
-        ImageRequest imageRequest = new ImageRequest();
-        imageRequest.setUser_id(userId);
-        imageRequest.setImage_type(img_type);
-        return imageRequest;
-    }
-
-    public void saveImage(ImageRequest imageRequest) {
-        Call<ImageResponse> imageResponseCall = ApiClient.getImageService().saveImage(imageRequest);
-        imageResponseCall.enqueue(new Callback<ImageResponse>() {
-            @Override
-            public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<ImageResponse> call, Throwable t) {
-
-            }
-        });
-    }
-
     @NonNull
     private MultipartBody.Part prepareFilePart(String partName, Uri fileUri) {
 
@@ -1088,7 +1151,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         File file = FileUtils.getFile(this, fileUri);
 
         // create RequestBody instance from file
-        RequestBody requestFile = RequestBody.create(MediaType.parse("mp3"), file);
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image"), file);
 
         // MultipartBody.Part is used to send also the actual file name
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
@@ -1099,7 +1162,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         File file = new File(picPath);
 //        File file = new File(getExternalFilesDir("/").getAbsolutePath(), file);
 
-        MultipartBody.Part body = prepareFilePart("file", Uri.fromFile(file));
+        MultipartBody.Part body = prepareFilePart("dl", Uri.fromFile(file));
 
         Call<UploadDriverLicenseResponse> call = ApiClient.getUploadDriverLicenseService().uploadDriverLicense(driverId1,body);
         call.enqueue(new Callback<UploadDriverLicenseResponse>() {
@@ -1110,6 +1173,27 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<UploadDriverLicenseResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void uploadDriverSelfie(String driverId1,String picPath) {
+
+        File file = new File(picPath);
+//        File file = new File(getExternalFilesDir("/").getAbsolutePath(), file);
+
+        MultipartBody.Part body = prepareFilePart("selfie", Uri.fromFile(file));
+
+        Call<UploadDriverSelfieResponse> call = ApiClient.getUploadDriverSelfieService().uploadDriverSelfie(driverId1,body);
+        call.enqueue(new Callback<UploadDriverSelfieResponse>() {
+            @Override
+            public void onResponse(Call<UploadDriverSelfieResponse> call, Response<UploadDriverSelfieResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UploadDriverSelfieResponse> call, Throwable t) {
 
             }
         });

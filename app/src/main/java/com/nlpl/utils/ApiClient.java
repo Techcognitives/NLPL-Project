@@ -8,6 +8,8 @@ import com.nlpl.services.ImageService;
 import com.nlpl.services.ImageUploadService;
 import com.nlpl.services.UploadChequeService;
 import com.nlpl.services.UploadDriverLicenseService;
+import com.nlpl.services.UploadDriverSelfieService;
+import com.nlpl.services.UploadTruckInsuranceService;
 import com.nlpl.services.UploadTruckRCService;
 import com.nlpl.services.UserService;
 
@@ -78,8 +80,18 @@ public class ApiClient {
         return uploadDriverLicenseService;
     }
 
+    public static UploadDriverSelfieService getUploadDriverSelfieService() {
+        UploadDriverSelfieService uploadDriverSelfieService = getRetrofit().create(UploadDriverSelfieService.class);
+        return uploadDriverSelfieService;
+    }
+
     public static UploadTruckRCService getTruckRCService() {
         UploadTruckRCService uploadTruckRCService = getRetrofit().create(UploadTruckRCService.class);
         return uploadTruckRCService;
+    }
+
+    public static UploadTruckInsuranceService getTuckInsuranceService() {
+        UploadTruckInsuranceService uploadTruckInsuranceService = getRetrofit().create(UploadTruckInsuranceService.class);
+        return uploadTruckInsuranceService;
     }
 }

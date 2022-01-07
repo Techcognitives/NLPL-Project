@@ -46,6 +46,7 @@ import com.nlpl.model.Responses.AddTruckResponse;
 import com.nlpl.model.Responses.ImageResponse;
 import com.nlpl.model.Responses.UploadDriverLicenseResponse;
 import com.nlpl.model.Responses.UploadImageResponse;
+import com.nlpl.model.Responses.UploadTruckInsuranceResponse;
 import com.nlpl.model.Responses.UploadTruckRCResponse;
 import com.nlpl.model.UpdateTruckDetails.UpdateTruckCarryingCapacity;
 import com.nlpl.model.UpdateTruckDetails.UpdateTruckFeet;
@@ -237,6 +238,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         uploadRC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(VehicleDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
@@ -278,6 +280,10 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         editRC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                String rcPath = rcImagePickerWithoutAlert();
+                uploadTruckRC(truckId, rcPath );
+
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(VehicleDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
@@ -318,6 +324,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         uploadInsurance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(VehicleDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
@@ -358,6 +365,10 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         editInsurance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                String insurancePath = insuranceImagePickerWithoutAlert();
+                uploadTruckInsurance(truckId, insurancePath);
+
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(VehicleDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
@@ -483,10 +494,114 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         this.resultCode = resultCode;
         this.requestCode = requestCode;
         this.data = data;
-        imagePicker();
+        rcImagePicker();
+        insuranceImagePicker();
+        rcImagePickerWithoutAlert();
+        insuranceImagePickerWithoutAlert();
     }
 
-    private String imagePicker(){
+    private String rcImagePickerWithoutAlert(){
+        //Detects request code for PAN
+        if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
+
+            textRC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadRC.setVisibility(View.INVISIBLE);
+            editRC.setVisibility(View.VISIBLE);
+            previewRcBook.setVisibility(View.VISIBLE);
+            previewInsurance.setVisibility(View.VISIBLE);
+
+            isRcUploaded=true;
+            String vehicleNum = vehicleNumberEdit.getText().toString();
+            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected && isModelSelected  ){
+                okVehicleDetails.setEnabled(true);
+                okVehicleDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            imgRC.setImageURI(selectedImage);
+            return picturePath;
+
+        } else  if (requestCode == CAMERA_PIC_REQUEST1) {
+
+            textRC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadRC.setVisibility(View.INVISIBLE);
+            editRC.setVisibility(View.VISIBLE);
+            previewRcBook.setVisibility(View.VISIBLE);
+            previewInsurance.setVisibility(View.VISIBLE);
+
+            isRcUploaded=true;
+            String vehicleNum = vehicleNumberEdit.getText().toString();
+            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected && isModelSelected  ){
+                okVehicleDetails.setEnabled(true);
+                okVehicleDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            String path = getRealPathFromURI(getImageUri(this,image));
+            imgRC.setImageBitmap(BitmapFactory.decodeFile(path));
+            return path;
+
+        }
+        return "";
+    }
+
+    private String insuranceImagePickerWithoutAlert(){
+        //Detects request code for PAN
+        if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
+
+            textInsurance.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadInsurance.setVisibility(View.INVISIBLE);
+            editInsurance.setVisibility(View.VISIBLE);
+
+            isInsurance=true;
+            String vehicleNum = vehicleNumberEdit.getText().toString();
+            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected && isModelSelected){
+                okVehicleDetails.setEnabled(true);
+                okVehicleDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            imgI.setImageURI(selectedImage);
+            return picturePath;
+
+        } else  if (requestCode == CAMERA_PIC_REQUEST2) {
+
+            textInsurance.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadInsurance.setVisibility(View.INVISIBLE);
+            editInsurance.setVisibility(View.VISIBLE);
+
+            isInsurance=true;
+            String vehicleNum = vehicleNumberEdit.getText().toString();
+            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected && isModelSelected  ){
+                okVehicleDetails.setEnabled(true);
+                okVehicleDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            String path = getRealPathFromURI(getImageUri(this,image));
+            imgI.setImageBitmap(BitmapFactory.decodeFile(path));
+            return path;
+        }
+        return "";
+    }
+
+
+
+    private String rcImagePicker(){
         //Detects request code for PAN
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
 
@@ -524,7 +639,43 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             imgRC.setImageURI(selectedImage);
             return picturePath;
 
-        } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
+        } else  if (requestCode == CAMERA_PIC_REQUEST1) {
+
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
+            my_alert.setTitle("RC Uploaded Successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            my_alert.show();
+
+            textRC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadRC.setVisibility(View.INVISIBLE);
+            editRC.setVisibility(View.VISIBLE);
+            previewRcBook.setVisibility(View.VISIBLE);
+            previewInsurance.setVisibility(View.VISIBLE);
+
+            isRcUploaded=true;
+            String vehicleNum = vehicleNumberEdit.getText().toString();
+            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected && isModelSelected  ){
+                okVehicleDetails.setEnabled(true);
+                okVehicleDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            String path = getRealPathFromURI(getImageUri(this,image));
+            imgRC.setImageBitmap(BitmapFactory.decodeFile(path));
+            return path;
+
+        }
+        return "";
+    }
+
+    private String insuranceImagePicker(){
+        //Detects request code for PAN
+        if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
             my_alert.setTitle("Insurance Uploaded Successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -556,36 +707,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             imgI.setImageURI(selectedImage);
             return picturePath;
 
-        }else  if (requestCode == CAMERA_PIC_REQUEST1) {
-
-            AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
-            my_alert.setTitle("RC Uploaded Successfully");
-            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            });
-            my_alert.show();
-
-            textRC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-            uploadRC.setVisibility(View.INVISIBLE);
-            editRC.setVisibility(View.VISIBLE);
-            previewRcBook.setVisibility(View.VISIBLE);
-            previewInsurance.setVisibility(View.VISIBLE);
-
-            isRcUploaded=true;
-            String vehicleNum = vehicleNumberEdit.getText().toString();
-            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected && isModelSelected  ){
-                okVehicleDetails.setEnabled(true);
-                okVehicleDetails.setBackgroundResource(R.drawable.button_active);
-            }
-
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-            String path = getRealPathFromURI(getImageUri(this,image));
-            imgRC.setImageBitmap(BitmapFactory.decodeFile(path));
-            return path;
-
         } else  if (requestCode == CAMERA_PIC_REQUEST2) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
             my_alert.setTitle("Insurance Uploaded Successfully");
@@ -614,6 +735,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         }
         return "";
     }
+
 
     public void onClickVehicleDetailsOk(View view) {
         String vehicleNum = vehicleNumberEdit.getText().toString();
@@ -694,9 +816,10 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             public void onResponse(Call<AddTruckResponse> call, Response<AddTruckResponse> response) {
                 AddTruckResponse addTruckResponse = response.body();
                 String truckId = addTruckResponse.getData().getTruck_id();
-                String path2 = imagePicker();
-                Log.i("path of rc: ", path2);
-                uploadTruckRC(truckId, path2 );
+                String rcPath = rcImagePickerWithoutAlert();
+                String insurancePath = insuranceImagePickerWithoutAlert();
+                uploadTruckRC(truckId, rcPath );
+                uploadTruckInsurance(truckId, insurancePath);
             }
             @Override
             public void onFailure(Call<AddTruckResponse> call, Throwable t) {
@@ -736,6 +859,27 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<UploadTruckRCResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void uploadTruckInsurance(String truckId, String picPath){
+
+        File file = new File(picPath);
+//        File file = new File(getExternalFilesDir("/").getAbsolutePath(), file);
+
+        MultipartBody.Part body = prepareFilePart("insurence", Uri.fromFile(file));
+
+        Call<UploadTruckInsuranceResponse> call = ApiClient.getTuckInsuranceService().uploadTruckInsurance(truckId,body);
+        call.enqueue(new Callback<UploadTruckInsuranceResponse>() {
+            @Override
+            public void onResponse(Call<UploadTruckInsuranceResponse> call, Response<UploadTruckInsuranceResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UploadTruckInsuranceResponse> call, Throwable t) {
 
             }
         });
@@ -927,55 +1071,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         });
 //--------------------------------------------------------------------------------------------------
     }
-
-    //-------------------------------- Update User is Truck Added ----------------------------------
-    private void updateTruckRcBook() {
-
-        UpdateTruckRcBook updateTruckRcBook = new UpdateTruckRcBook("1");
-
-        Call<UpdateTruckRcBook> call = addTruckService.updateTruckRcBook("" + truckId, updateTruckRcBook);
-
-        call.enqueue(new Callback<UpdateTruckRcBook>() {
-            @Override
-            public void onResponse(Call<UpdateTruckRcBook> call, Response<UpdateTruckRcBook> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Truck Added");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateTruckRcBook> call, Throwable t) {
-                Log.i("Not Successful", "User is Truck Added");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    //-------------------------------- Update User is Truck Added ----------------------------------
-    private void updateTruckInsurance() {
-
-        UpdateTruckVehicleInsurance updateTruckVehicleInsurance = new UpdateTruckVehicleInsurance("1");
-
-        Call<UpdateTruckVehicleInsurance> call = addTruckService.updateTruckVehicleInsurance("" + truckId, updateTruckVehicleInsurance);
-
-        call.enqueue(new Callback<UpdateTruckVehicleInsurance>() {
-            @Override
-            public void onResponse(Call<UpdateTruckVehicleInsurance> call, Response<UpdateTruckVehicleInsurance> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Truck Added");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateTruckVehicleInsurance> call, Throwable t) {
-                Log.i("Not Successful", "User is Truck Added");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
     //-------------------------------- Update User is Truck Added ----------------------------------
     private void updateTruckType() {
 
@@ -1205,67 +1300,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
         }
     }
-
-
-    //--------------------------------------create image in API -------------------------------------
-//    public ImageRequest imageRequest() {
-//        ImageRequest imageRequest = new ImageRequest();
-//        imageRequest.setUser_id(userId);
-//        imageRequest.setImage_type(img_type);
-//        return imageRequest;
-//    }
-//
-//    public void saveImage(ImageRequest imageRequest) {
-//        Call<ImageResponse> imageResponseCall = ApiClient.getImageService().saveImage(imageRequest);
-//        imageResponseCall.enqueue(new Callback<ImageResponse>() {
-//            @Override
-//            public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ImageResponse> call, Throwable t) {
-//
-//            }
-//        });
-//    }
-
-//    @NonNull
-//    private MultipartBody.Part prepareFilePart(String partName, Uri fileUri) {
-//
-//        Log.i("file uri: ", String.valueOf(fileUri));
-//        // use the FileUtils to get the actual file by uri
-//        File file = FileUtils.getFile(this, fileUri);
-//
-//        // create RequestBody instance from file
-//        RequestBody requestFile = RequestBody.create(MediaType.parse("mp3"), file);
-//
-//        // MultipartBody.Part is used to send also the actual file name
-//        return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
-//    }
-
-
-//    private void uploadImage(String picPath) {
-//
-//        File file = new File(picPath);
-////        File file = new File(getExternalFilesDir("/").getAbsolutePath(), file);
-//
-//        MultipartBody.Part body = prepareFilePart("file", Uri.fromFile(file));
-//
-//        Call<UploadImageResponse> call = ApiClient.getImageUploadService().uploadImage(userId,img_type,body);
-//        call.enqueue(new Callback<UploadImageResponse>() {
-//            @Override
-//            public void onResponse(Call<UploadImageResponse> call, Response<UploadImageResponse> response) {
-//                Log.i("successful:", "success");
-//            }
-//
-//            @Override
-//            public void onFailure(Call<UploadImageResponse> call, Throwable t) {
-//                t.printStackTrace();
-//                Log.i("failed:","failed");
-//            }
-//        });
-//    }
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();

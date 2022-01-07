@@ -68,8 +68,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
     private UserService userService;
 
-    String userId, driverName, vehicleNo, mobile, name, address, pinCode, city, idProof, bankName, accNo, role;
-    Boolean isPanUploaded = false, isFrontUploaded = false, isBackUploaded = false;
+    String userId, mobile;
+    Boolean isPanUploaded = false, isFrontUploaded = false;
     String img_type;
 
     @Override
@@ -461,7 +461,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         File file = FileUtils.getFile(this, fileUri);
 
         // create RequestBody instance from file
-        RequestBody requestFile = RequestBody.create(MediaType.parse("mp3"), file);
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image"), file);
 
         // MultipartBody.Part is used to send also the actual file name
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
