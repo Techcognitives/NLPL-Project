@@ -583,7 +583,6 @@ public class BankDetailsActivity extends AppCompatActivity {
 
     public void onClickBankDetailsChoose(View view) {
 
-
         switch (view.getId()) {
             case R.id.bank_details_cancelled_check_radio_button:
 
