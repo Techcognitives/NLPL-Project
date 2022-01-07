@@ -4,12 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -294,6 +298,9 @@ public class DriverDetailsActivity extends AppCompatActivity {
         uploadSelfie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                requestPermissionsForCamera();
+                requestPermissionsForGalleryWRITE();
+                requestPermissionsForGalleryREAD();
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
             }
@@ -314,6 +321,9 @@ public class DriverDetailsActivity extends AppCompatActivity {
         uploadDL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                requestPermissionsForCamera();
+                requestPermissionsForGalleryWRITE();
+                requestPermissionsForGalleryREAD();
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(DriverDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
@@ -848,6 +858,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 if (alreadyDriver) {
 
                     if (isEdit) {
+                        String DLpath = DLimagePickerWithoutAlert();
+                        uploadDriverLicense(driverId,DLpath);
+                        String selfiePath = selfieImagePickerWithoutAlert();
+                        uploadDriverSelfie(driverId,selfiePath);
                         if (!driverNumberAPI.equals("91" + driverMobile.getText().toString())) {
                             AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
                             my_alert.setTitle("Driver already Exists with this mobile number");
@@ -1738,5 +1752,32 @@ public class DriverDetailsActivity extends AppCompatActivity {
             }
         });
 //--------------------------------------------------------------------------------------------------
+    }
+
+    private void requestPermissionsForCamera() {
+        if (ContextCompat.checkSelfPermission(DriverDetailsActivity.this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(DriverDetailsActivity.this, new String[]{
+                    Manifest.permission.CAMERA
+            }, 100);
+        }
+    }
+
+    private void requestPermissionsForGalleryWRITE() {
+        if (ContextCompat.checkSelfPermission(DriverDetailsActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(DriverDetailsActivity.this, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+            }, 100);
+        }
+    }
+
+    private void requestPermissionsForGalleryREAD() {
+        if (ContextCompat.checkSelfPermission(DriverDetailsActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(DriverDetailsActivity.this, new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+            }, 100);
+        }
     }
 }
