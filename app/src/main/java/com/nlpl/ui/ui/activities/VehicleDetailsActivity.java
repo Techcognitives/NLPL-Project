@@ -497,10 +497,12 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         this.resultCode = resultCode;
         this.requestCode = requestCode;
         this.data = data;
+
         rcImagePicker();
         insuranceImagePicker();
         rcImagePickerWithoutAlert();
         insuranceImagePickerWithoutAlert();
+
     }
 
     private String rcImagePickerWithoutAlert(){
@@ -826,9 +828,13 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 AddTruckResponse addTruckResponse = response.body();
                 String truckId = addTruckResponse.getData().getTruck_id();
                 String rcPath = rcImagePickerWithoutAlert();
+                Log.i("Rc path onsave", rcPath);
+                Log.i("truckId onsave", truckId);
                 String insurancePath = insuranceImagePickerWithoutAlert();
                 uploadTruckRC(truckId, rcPath );
                 uploadTruckInsurance(truckId, insurancePath);
+                Log.i("Insurance path onsave", insurancePath);
+                Log.i("truckId onsave In", truckId);
             }
             @Override
             public void onFailure(Call<AddTruckResponse> call, Throwable t) {
@@ -839,6 +845,20 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
     @NonNull
     private MultipartBody.Part prepareFilePart(String partName, Uri fileUri) {
+
+        Log.i("file uri: ", String.valueOf(fileUri));
+        // use the FileUtils to get the actual file by uri
+        File file = FileUtils.getFile(this, fileUri);
+
+        // create RequestBody instance from file
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image"), file);
+
+        // MultipartBody.Part is used to send also the actual file name
+        return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
+    }
+
+    @NonNull
+    private MultipartBody.Part prepareFilePart1(String partName, Uri fileUri) {
 
         Log.i("file uri: ", String.valueOf(fileUri));
         // use the FileUtils to get the actual file by uri
@@ -877,7 +897,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         File file = new File(picPath);
 //        File file = new File(getExternalFilesDir("/").getAbsolutePath(), file);
 
-        MultipartBody.Part body = prepareFilePart("insurence", Uri.fromFile(file));
+        MultipartBody.Part body = prepareFilePart1("insurence", Uri.fromFile(file));
 
         Call<UploadTruckInsuranceResponse> call = ApiClient.getTuckInsuranceService().uploadTruckInsurance(truckId,body);
         call.enqueue(new Callback<UploadTruckInsuranceResponse>() {

@@ -121,8 +121,8 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
     private int GET_FROM_GALLERY = 0;
     private int GET_FROM_GALLERY1 = 1;
-    int CAMERA_PIC_REQUEST1 = 5;
-    int CAMERA_PIC_REQUEST2 = 15;
+//    int CAMERA_PIC_REQUEST1 = 5;
+//    int CAMERA_PIC_REQUEST2 = 15;
 
     private UserService userService;
 
@@ -537,14 +537,14 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
                 ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
 
-                camera.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
-                        chooseDialog.dismiss();
-                    }
-                });
+//                camera.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
+//                        chooseDialog.dismiss();
+//                    }
+//                });
 
                 gallery.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -582,14 +582,14 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
                 ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
 
-                camera.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST2);
-                        chooseDialog.dismiss();
-                    }
-                });
+//                camera.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST2);
+//                        chooseDialog.dismiss();
+//                    }
+//                });
 
                 gallery.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -955,55 +955,55 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             uploadImage(picturePath);
 
             imgF.setImageURI(selectedImage);
-        } else if (requestCode == CAMERA_PIC_REQUEST1) {
-            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
-            my_alert.setTitle("PAN Card Uploaded Successfully");
-            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    isPanAdded = true;
-                    noChange = false;
-                    dialogInterface.dismiss();
-                }
-            });
-            my_alert.show();
-
-            panCardText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-            uploadPAN.setVisibility(View.INVISIBLE);
-            editPAN.setVisibility(View.VISIBLE);
-            previewPan.setVisibility(View.VISIBLE);
-            previewAadhar.setVisibility(View.VISIBLE);
-
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-            String path = getRealPathFromURI(getImageUri(this, image));
-            ImageView editedPan = (ImageView) previewDialogPan.findViewById(R.id.dialog_preview_image_view);
-            editedPan.setImageBitmap(BitmapFactory.decodeFile(path));
-            imgPAN.setImageBitmap(BitmapFactory.decodeFile(path));
-            uploadImage(path);
-
-        } else if (requestCode == CAMERA_PIC_REQUEST2) {
-            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
-            my_alert.setTitle("Aadhar Card Uploaded Successfully");
-            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    isAadharAdded = true;
-                    noChange = false;
-                    dialogInterface.dismiss();
-                }
-            });
-            my_alert.show();
-
-            frontText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-            uploadF.setVisibility(View.INVISIBLE);
-            editFront.setVisibility(View.VISIBLE);
-
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-            ImageView editedAadhar = (ImageView) previewDialogAadhar.findViewById(R.id.dialog_preview_image_view);
-            editedAadhar.setImageBitmap(image);
-            String path = getRealPathFromURI(getImageUri(this, image));
-            imgF.setImageBitmap(BitmapFactory.decodeFile(path));
-            uploadImage(path);
+//        } else if (requestCode == CAMERA_PIC_REQUEST1) {
+//            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
+//            my_alert.setTitle("PAN Card Uploaded Successfully");
+//            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialogInterface, int i) {
+//                    isPanAdded = true;
+//                    noChange = false;
+//                    dialogInterface.dismiss();
+//                }
+//            });
+//            my_alert.show();
+//
+//            panCardText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+//            uploadPAN.setVisibility(View.INVISIBLE);
+//            editPAN.setVisibility(View.VISIBLE);
+//            previewPan.setVisibility(View.VISIBLE);
+//            previewAadhar.setVisibility(View.VISIBLE);
+//
+//            Bitmap image = (Bitmap) data.getExtras().get("data");
+//            String path = getRealPathFromURI(getImageUri(this, image));
+//            ImageView editedPan = (ImageView) previewDialogPan.findViewById(R.id.dialog_preview_image_view);
+//            editedPan.setImageBitmap(BitmapFactory.decodeFile(path));
+//            imgPAN.setImageBitmap(BitmapFactory.decodeFile(path));
+//            uploadImage(path);
+//
+//        } else if (requestCode == CAMERA_PIC_REQUEST2) {
+//            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
+//            my_alert.setTitle("Aadhar Card Uploaded Successfully");
+//            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialogInterface, int i) {
+//                    isAadharAdded = true;
+//                    noChange = false;
+//                    dialogInterface.dismiss();
+//                }
+//            });
+//            my_alert.show();
+//
+//            frontText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+//            uploadF.setVisibility(View.INVISIBLE);
+//            editFront.setVisibility(View.VISIBLE);
+//
+//            Bitmap image = (Bitmap) data.getExtras().get("data");
+//            ImageView editedAadhar = (ImageView) previewDialogAadhar.findViewById(R.id.dialog_preview_image_view);
+//            editedAadhar.setImageBitmap(image);
+//            String path = getRealPathFromURI(getImageUri(this, image));
+//            imgF.setImageBitmap(BitmapFactory.decodeFile(path));
+//            uploadImage(path);
         }
     }
     //-------------------------------------------------------------------------------------------------------------------
