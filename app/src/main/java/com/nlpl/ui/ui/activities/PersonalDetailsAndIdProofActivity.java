@@ -1438,7 +1438,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
     private void getImageURL() {
 
-        String url = getString(R.string.baseURL) + "/imgbucket/Images/4";
+        String url = getString(R.string.baseURL) + "/imgbucket/Images/"+userId;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -1448,7 +1448,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                         JSONObject obj = imageList.getJSONObject(i);
                         String imageType = obj.getString("image_type");
 
-                        if (imageType.equals("adhar")) {
+                        if (imageType.equals("aadhar")) {
                             aadharImageURL = obj.getString("image_url");
                             new DownloadImageTask(imgF).execute(aadharImageURL);
 

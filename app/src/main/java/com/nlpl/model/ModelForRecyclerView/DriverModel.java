@@ -7,6 +7,7 @@ public class DriverModel {
     private String upload_lc;
     private String driver_number;
     private String driver_emailId;
+    private String driver_selfie;
 
     public String getUser_id() {
         return user_id;
@@ -54,5 +55,13 @@ public class DriverModel {
 
     public void setDriver_emailId(String driver_emailId) {
         this.driver_emailId = driver_emailId;
+    }
+
+    public String getDriver_selfie() {
+        return driver_selfie;
+    }
+
+    public void setDriver_selfie(String driver_selfie) {
+        this.driver_selfie = driver_selfie;
     }
 }

@@ -203,7 +203,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         });
 
         mQueue = Volley.newRequestQueue(ProfileAndRegistrationActivity.this);
-        getImageURL();
 
         personal_done.setVisibility(View.GONE);
         bankDone.setVisibility(View.GONE);
@@ -241,6 +240,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
                     getUserDetails();
                     getCompanyDetails();
+                    getImageURL();
 
                     //---------------------------- Get Truck Details -------------------------------------------
                     truckListRecyclerView = (RecyclerView) findViewById(R.id.trucks_list_view);
@@ -425,11 +425,11 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     } else {
                     }
 
-                    if (truckList.size() > 5){
+                    if (truckList.size() > 5) {
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        params.height =235; //height recycleviewer
+                        params.height = 235; //height recycleviewer
                         truckListRecyclerView.setLayoutParams(params);
-                    }else{
+                    } else {
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         truckListRecyclerView.setLayoutParams(params);
                     }
@@ -465,7 +465,8 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         modelDriver.setUser_id(obj.getString("user_id"));
                         modelDriver.setDriver_id(obj.getString("driver_id"));
                         modelDriver.setDriver_name(obj.getString("driver_name"));
-//                        modelDriver.setUpload_lc(obj.getString("upload_lc"));
+                        modelDriver.setUpload_lc(obj.getString("upload_dl"));
+                        modelDriver.setDriver_selfie(obj.getString("driver_selfie"));
                         modelDriver.setDriver_number(obj.getString("driver_number"));
                         modelDriver.setDriver_emailId(obj.getString("driver_emailId"));
                         driverList.add(modelDriver);
@@ -476,11 +477,11 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
                     }
 
-                    if (driverList.size() > 5){
+                    if (driverList.size() > 5) {
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        params.height =235; //height recycleviewer
+                        params.height = 235; //height recycleviewer
                         driverListRecyclerView.setLayoutParams(params);
-                    }else{
+                    } else {
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         driverListRecyclerView.setLayoutParams(params);
                     }
@@ -520,6 +521,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         modelBank.setRe_enter_acc_num(obj.getString("re_enter_acc_num"));
                         modelBank.setIFSI_CODE(obj.getString("IFSI_CODE"));
                         modelBank.setBank_id(obj.getString("bank_id"));
+                        modelBank.setCancelled_cheque(obj.getString("cancelled_cheque"));
                         bankList.add(modelBank);
                     }
                     if (bankList.size() > 0) {
@@ -527,11 +529,11 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     } else {
                     }
 
-                    if (bankList.size() > 5){
+                    if (bankList.size() > 5) {
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        params.height =235; //height recycleviewer
+                        params.height = 235; //height recycleviewer
                         bankListRecyclerView.setLayoutParams(params);
-                    }else{
+                    } else {
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         bankListRecyclerView.setLayoutParams(params);
                     }
@@ -568,7 +570,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         companyZip = data.getString("comp_zip");
                     }
 
-                    if (companyName == null){
+                    if (companyName == null) {
                         dialogPersonalDetailsFirmName.setVisibility(View.GONE);
                         editCompanyDetailsImageView.setVisibility(View.GONE);
                         dialogPersonalDetailsFirmAddress.setVisibility(View.GONE);
@@ -606,6 +608,11 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         dialogBankDetailsBankName.setText(" Bank Name: " + obj.getBank_name());
         dialogBankDetailsBankAccountNumber.setText(" Account Number: " + obj.getAccount_number());
         dialogBankDetailsBankIFSICode.setText(" IFSI Code: " + obj.getIFSI_CODE());
+
+        String cancelledChequeURL = obj.getCancelled_cheque();
+        Log.i("IMAGE CHEQUE URL", cancelledChequeURL);
+        new DownloadImageTask(previewCancelledCheque).execute(cancelledChequeURL);
+
     }
 
     public void getOnClickPreviewTruckDetails(TruckModel obj) {
@@ -622,6 +629,14 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         previewTruckDetailsVehicleType.setText(" Vehicle Type: " + obj.getVehicle_type());
         previewTruckDetailsTruckFeet.setText(" Truck ft.: " + obj.getTruck_ft());
         previewTruckDetailsVehicleCapacity.setText(" Truck Capacity: " + obj.getTruck_carrying_capacity());
+
+        String rcBookURL = obj.getRc_book();
+        Log.i("IMAGE RC URL", rcBookURL);
+        new DownloadImageTask(previewRcBook).execute(rcBookURL);
+
+        String insuranceURL = obj.getVehicle_insurance();
+        Log.i("IMAGE INSURANCE URL", insuranceURL);
+        new DownloadImageTask(previewInsurance).execute(insuranceURL);
     }
 
     public void onClickPreviewDriverDetails(DriverModel obj) {
@@ -637,6 +652,14 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         previewDriverDetailsDriverNumber.setText(" Mobile Number: +" + obj.getDriver_number());
         getUserDriverId(obj.getDriver_number());
         previewDriverDetailsEmailId.setText(" Email Id: " + obj.getDriver_emailId());
+
+        String drivingLicenseURL =  obj.getUpload_lc();
+        Log.i("IMAGE DL URL", drivingLicenseURL);
+        new DownloadImageTask(previewDrivingLicense).execute(drivingLicenseURL);
+
+        String selfieURL = obj.getDriver_selfie();
+        Log.i("IMAGE Selfie URL", selfieURL);
+        new DownloadImageTask(previewDriverSelfie).execute(selfieURL);
     }
 
     public void onClickEditCompanyDetails(View view) {
@@ -648,7 +671,8 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     }
 
     private void getImageURL() {
-        String url = getString(R.string.baseURL) + "/imgbucket/Images/4";
+        String url = getString(R.string.baseURL) + "/imgbucket/Images/" + userId;
+        Log.i("Image URL", url);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -658,9 +682,9 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         JSONObject obj = imageList.getJSONObject(i);
                         String imageType = obj.getString("image_type");
 
-                        String panImageURL, aadharImageURL, cancelledChequeURL, rcBookURL, insuranceURL, drivingLicenseURL, selfieURL;
+                        String panImageURL, aadharImageURL;
 
-                        if (imageType.equals("adhar")) {
+                        if (imageType.equals("aadhar")) {
                             aadharImageURL = obj.getString("image_url");
                             new DownloadImageTask(previewAadharImage).execute(aadharImageURL);
                             Log.i("IMAGE AADHAR URL", aadharImageURL);
@@ -670,36 +694,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                             panImageURL = obj.getString("image_url");
                             Log.i("IMAGE PAN URL", panImageURL);
                             new DownloadImageTask(previewPanImage).execute(panImageURL);
-                        }
-
-                        if (imageType.equals("cheque")) {
-                            cancelledChequeURL = obj.getString("image_url");
-                            Log.i("IMAGE CHEQUE URL", cancelledChequeURL);
-                            new DownloadImageTask(previewCancelledCheque).execute(cancelledChequeURL);
-                        }
-
-                        if (imageType.equals("rc")) {
-                            rcBookURL = obj.getString("image_url");
-                            Log.i("IMAGE RC URL", rcBookURL);
-                            new DownloadImageTask(previewRcBook).execute(rcBookURL);
-                        }
-
-                        if (imageType.equals("insurance")) {
-                            insuranceURL = obj.getString("image_url");
-                            Log.i("IMAGE INSURANCE URL", insuranceURL);
-                            new DownloadImageTask(previewInsurance).execute(insuranceURL);
-                        }
-
-                        if (imageType.equals("dl")) {
-                            drivingLicenseURL = obj.getString("image_url");
-                            Log.i("IMAGE DL URL", drivingLicenseURL);
-                            new DownloadImageTask(previewDrivingLicense).execute(drivingLicenseURL);
-                        }
-
-                        if (imageType.equals("selfie")) {
-                            selfieURL = obj.getString("image_url");
-                            Log.i("IMAGE DL URL", selfieURL);
-                            new DownloadImageTask(previewDriverSelfie).execute(selfieURL);
                         }
 
                     }
@@ -783,7 +777,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                                 addDrivers.setCompoundDrawablesWithIntrinsicBounds(R.drawable.driver, 0, R.drawable.ic_right, 0);
                             }
                             //--------------------------------------------------------------------------------------------------------
-
 
 
 ////                            personalDetails.setCompoundDrawablesWithIntrinsicBounds(R.drawable.personal_success, 0, R.drawable.ic_right, 0);
@@ -964,7 +957,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         addDriver.setVisibility(View.VISIBLE);
 
 
-                        if (isPersonalExpanded || isTruckExpanded || isBankExpanded){
+                        if (isPersonalExpanded || isTruckExpanded || isBankExpanded) {
 
                             //-----------------------------Check all Done or not-----------------------------------------
                             if (isPersonalDetailsDone.equals("1")) {
@@ -1095,7 +1088,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                             driverUserIdGet = arrayUserDriverId.get(j);
                             Log.i("DriverUserId", driverUserIdGet);
 
-                            getUserBankDetails(driverUserIdGet);
+                            getUserDriverBankDetails(driverUserIdGet);
                         }
                     }
 //
@@ -1115,7 +1108,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
     }
 
-    private void getUserBankDetails(String driverUserId) {
+    private void getUserDriverBankDetails(String driverUserId) {
 
         String url = getString(R.string.baseURL) + "/bank/getBkByUserId/" + driverUserId;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -1137,11 +1130,13 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         previewDriverDetailsDriverBankAccountNumber.setText(" Account Number: " + bankAccountNumber);
                         previewDriverDetailsDriverBankIFSICode.setText(" IFSI Code: " + ifsiCode);
 
-                        if (bankName == null){
+
+                        if (previewDriverDetailsDriverBankName.getText().toString() == null) {
                             previewDriverDetailsDriverBankAdd.setVisibility(View.VISIBLE);
-                        }else{
-                            previewDriverDetailsDriverBankAdd.setVisibility(View.GONE);
+                        } else {
+                            previewDriverDetailsDriverBankAdd.setVisibility(View.INVISIBLE);
                         }
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
