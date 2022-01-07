@@ -3,12 +3,16 @@ package com.nlpl.ui.ui.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -163,6 +167,9 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         uploadPAN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                requestPermissionsForCamera();
+                requestPermissionsForGalleryWRITE();
+                requestPermissionsForGalleryREAD();
                 img_type = "pan";
                 saveImage(imageRequest());
                 chooseDialog = new Dialog(PersonalDetailsActivity.this);
@@ -204,6 +211,9 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         editPAN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                requestPermissionsForCamera();
+                requestPermissionsForGalleryWRITE();
+                requestPermissionsForGalleryREAD();
                 img_type = "pan";
                 saveImage(imageRequest());
                 chooseDialog = new Dialog(PersonalDetailsActivity.this);
@@ -244,6 +254,9 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         uploadF.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                requestPermissionsForCamera();
+                requestPermissionsForGalleryWRITE();
+                requestPermissionsForGalleryREAD();
                 img_type = "aadhar";
                 saveImage(imageRequest());
                 chooseDialog = new Dialog(PersonalDetailsActivity.this);
@@ -284,6 +297,9 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         editFront.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                requestPermissionsForCamera();
+                requestPermissionsForGalleryWRITE();
+                requestPermissionsForGalleryREAD();
                 img_type = "aadhar";
                 saveImage(imageRequest());
                 chooseDialog = new Dialog(PersonalDetailsActivity.this);
@@ -589,4 +605,32 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         return path;
     }
     //----------------------------------------------------------------------------------------------
+
+    private void requestPermissionsForCamera() {
+        if (ContextCompat.checkSelfPermission(PersonalDetailsActivity.this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(PersonalDetailsActivity.this, new String[]{
+                    Manifest.permission.CAMERA
+            }, 100);
+        }
+    }
+
+    private void requestPermissionsForGalleryWRITE() {
+        if (ContextCompat.checkSelfPermission(PersonalDetailsActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(PersonalDetailsActivity.this, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+            }, 100);
+        }
+    }
+
+    private void requestPermissionsForGalleryREAD() {
+        if (ContextCompat.checkSelfPermission(PersonalDetailsActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(PersonalDetailsActivity.this, new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+            }, 100);
+        }
+    }
+
 }

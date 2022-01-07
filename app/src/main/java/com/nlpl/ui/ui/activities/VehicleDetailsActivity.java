@@ -3,12 +3,16 @@ package com.nlpl.ui.ui.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -239,6 +243,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                requestPermissionsForGalleryWRITE();
+                requestPermissionsForGalleryREAD();
+                requestPermissionsForCamera();
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(VehicleDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
@@ -281,9 +288,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String rcPath = rcImagePickerWithoutAlert();
-                uploadTruckRC(truckId, rcPath );
-
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(VehicleDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
@@ -324,7 +328,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         uploadInsurance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                requestPermissionsForGalleryWRITE();
+                requestPermissionsForGalleryREAD();
+                requestPermissionsForCamera();
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(VehicleDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
@@ -365,9 +371,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         editInsurance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String insurancePath = insuranceImagePickerWithoutAlert();
-                uploadTruckInsurance(truckId, insurancePath);
 
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(VehicleDetailsActivity.this);
@@ -522,11 +525,11 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
             cursor.moveToFirst();
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
+            String picturePath1 = cursor.getString(columnIndex);
             cursor.close();
 
             imgRC.setImageURI(selectedImage);
-            return picturePath;
+            return picturePath1;
 
         } else  if (requestCode == CAMERA_PIC_REQUEST1) {
 
@@ -572,11 +575,11 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
             cursor.moveToFirst();
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
+            String picturePath2 = cursor.getString(columnIndex);
             cursor.close();
 
             imgI.setImageURI(selectedImage);
-            return picturePath;
+            return picturePath2;
 
         } else  if (requestCode == CAMERA_PIC_REQUEST2) {
 
@@ -633,11 +636,11 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
             cursor.moveToFirst();
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
+            String picturePath3 = cursor.getString(columnIndex);
             cursor.close();
 
             imgRC.setImageURI(selectedImage);
-            return picturePath;
+            return picturePath3;
 
         } else  if (requestCode == CAMERA_PIC_REQUEST1) {
 
@@ -701,11 +704,11 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
             cursor.moveToFirst();
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
+            String picturePath4 = cursor.getString(columnIndex);
             cursor.close();
 
             imgI.setImageURI(selectedImage);
-            return picturePath;
+            return picturePath4;
 
         } else  if (requestCode == CAMERA_PIC_REQUEST2) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
@@ -741,6 +744,12 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         String vehicleNum = vehicleNumberEdit.getText().toString();
         if (!vehicleNum.isEmpty()&&isRcUploaded&&isInsurance&&truckSelected && isModelSelected) {
             if (isEdit){
+
+                String insurancePath = insuranceImagePickerWithoutAlert();
+                uploadTruckInsurance(truckId, insurancePath);
+
+                String rcPath = rcImagePickerWithoutAlert();
+                uploadTruckRC(truckId, rcPath );
 
                 okVehicleDetails.setEnabled(true);
                 okVehicleDetails.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -1383,4 +1392,32 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         });
         mQueue.add(request);
     }
+
+    private void requestPermissionsForCamera() {
+        if (ContextCompat.checkSelfPermission(VehicleDetailsActivity.this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(VehicleDetailsActivity.this, new String[]{
+                    Manifest.permission.CAMERA
+            }, 100);
+        }
+    }
+
+    private void requestPermissionsForGalleryWRITE() {
+        if (ContextCompat.checkSelfPermission(VehicleDetailsActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(VehicleDetailsActivity.this, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+            }, 100);
+        }
+    }
+
+    private void requestPermissionsForGalleryREAD() {
+        if (ContextCompat.checkSelfPermission(VehicleDetailsActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(VehicleDetailsActivity.this, new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+            }, 100);
+        }
+    }
+
 }
