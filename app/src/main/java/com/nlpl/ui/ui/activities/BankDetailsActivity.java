@@ -92,6 +92,7 @@ public class BankDetailsActivity extends AppCompatActivity {
     int resultCode;
     Intent data;
 
+
     EditText bankName, accountNo, reAccount, ifscCode;
     Button okButton;
 
