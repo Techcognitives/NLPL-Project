@@ -103,7 +103,7 @@
             android:id="@+id/driver_details_edit_driver_license"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="8dp"
             android:drawableStart="@drawable/ic_edit"
             android:padding="10dp"
             android:text="@string/edit"
@@ -112,7 +112,8 @@
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/driver_details_driver_license_text_image"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/driver_details_driver_license_text_image" />
+            app:layout_constraintTop_toTopOf="@+id/driver_details_driver_license_text_image"
+            app:layout_constraintVertical_bias="0.6" />
 
         <Button
             android:id="@+id/driver_details_upload_driver_license"

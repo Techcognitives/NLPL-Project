@@ -81,6 +81,7 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.sql.Struct;
 import java.util.ArrayList;
 
 import okhttp3.MediaType;
@@ -279,7 +280,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
         arrayState = new ArrayList<>();
 
         if (isEdit) {
-            getImageURL();
             isSelfieUploaded = true;
             isDLUploaded = true;
             okDriverDetails.setEnabled(true);
@@ -365,7 +365,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 String DLpath = DLimagePickerWithoutAlert();
-                uploadDriverLicense(driverId,DLpath);
+                uploadDriverLicense(driverId, DLpath);
 
 
                 Dialog chooseDialog;
@@ -610,7 +610,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         selfieImagePickerWithoutAlert();
     }
 
-    private String DLimagePickerWithoutAlert(){
+    private String DLimagePickerWithoutAlert() {
 
         //Detects request code for PAN
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
@@ -645,7 +645,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
             driverLicenseImage.setImageURI(selectedImage);
             previewDrivingLicense.setImageURI(selectedImage);
             return picturePath;
-            
+
         } else if (requestCode == CAMERA_PIC_REQUEST1) {
 
             textDL.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
@@ -676,10 +676,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
         return "";
     }
 
-    private String selfieImagePickerWithoutAlert(){
+    private String selfieImagePickerWithoutAlert() {
 
         //Detects request code for PAN
-       if (requestCode == CAMERA_PIC_REQUEST) {
+        if (requestCode == CAMERA_PIC_REQUEST) {
 
             isSelfieUploaded = true;
 
@@ -708,7 +708,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         return "";
     }
 
-    private String DLimagePicker(){
+    private String DLimagePicker() {
 
         //Detects request code for PAN
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
@@ -794,7 +794,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
     }
 
 
-    private String selfieImagePicker(){
+    private String selfieImagePicker() {
 
         //Detects request code for PAN
         if (requestCode == CAMERA_PIC_REQUEST) {
@@ -859,9 +859,9 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
                     if (isEdit) {
                         String DLpath = DLimagePickerWithoutAlert();
-                        uploadDriverLicense(driverId,DLpath);
+                        uploadDriverLicense(driverId, DLpath);
                         String selfiePath = selfieImagePickerWithoutAlert();
-                        uploadDriverSelfie(driverId,selfiePath);
+                        uploadDriverSelfie(driverId, selfiePath);
                         if (!driverNumberAPI.equals("91" + driverMobile.getText().toString())) {
                             AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
                             my_alert.setTitle("Driver already Exists with this mobile number");
@@ -989,7 +989,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 String driverIdOnResponse = driverResponse.getData().getDriver_id();
                 String DLpath = DLimagePickerWithoutAlert();
                 String selfiePath = selfieImagePickerWithoutAlert();
-                uploadDriverLicense(driverIdOnResponse,DLpath);
+                uploadDriverLicense(driverIdOnResponse, DLpath);
                 uploadDriverSelfie(driverIdOnResponse, selfiePath);
             }
 
@@ -1105,6 +1105,14 @@ public class DriverDetailsActivity extends AppCompatActivity {
                         driverEmailAPI = obj.getString("driver_emailId");
 
                         driverName.setText(driverNameAPI);
+
+                        String drivingLicenseURL = obj.getString("upload_dl");
+                        new DownloadImageTask(previewDrivingLicense).execute(drivingLicenseURL);
+                        new DownloadImageTask(driverLicenseImage).execute(drivingLicenseURL);
+
+                        String selfieURL = obj.getString("driver_selfie");
+                        new DownloadImageTask(previewSelfie).execute(selfieURL);
+                        new DownloadImageTask(driverSelfieImg).execute(selfieURL);
 
                         if (driverNumberAPI != null) {
                             String s1 = driverNumberAPI.substring(2, 12);
@@ -1264,14 +1272,14 @@ public class DriverDetailsActivity extends AppCompatActivity {
         });
     }
 
-    private void uploadDriverSelfie(String driverId1,String picPath) {
+    private void uploadDriverSelfie(String driverId1, String picPath) {
 
         File file = new File(picPath);
 //        File file = new File(getExternalFilesDir("/").getAbsolutePath(), file);
 
         MultipartBody.Part body = prepareFilePart("selfie", Uri.fromFile(file));
 
-        Call<UploadDriverSelfieResponse> call = ApiClient.getUploadDriverSelfieService().uploadDriverSelfie(driverId1,body);
+        Call<UploadDriverSelfieResponse> call = ApiClient.getUploadDriverSelfieService().uploadDriverSelfie(driverId1, body);
         call.enqueue(new Callback<UploadDriverSelfieResponse>() {
             @Override
             public void onResponse(Call<UploadDriverSelfieResponse> call, Response<UploadDriverSelfieResponse> response) {
@@ -1331,48 +1339,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
         previewDialogSelfie.show();
         previewDialogSelfie.getWindow().setAttributes(lp);
     }
-
-    private void getImageURL() {
-
-        String url = getString(R.string.baseURL) + "/imgbucket/Images/4";
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray imageList = response.getJSONArray("data");
-                    for (int i = 0; i < imageList.length(); i++) {
-                        JSONObject obj = imageList.getJSONObject(i);
-                        String imageType = obj.getString("image_type");
-
-                        String drivingLicenseURL, selfieURL;
-                        if (imageType.equals("cheque")) {
-                            drivingLicenseURL = obj.getString("image_url");
-
-                            new DownloadImageTask(previewDrivingLicense).execute(drivingLicenseURL);
-                            new DownloadImageTask(driverLicenseImage).execute(drivingLicenseURL);
-
-                        }
-
-                        if (imageType.equals("selfie")) {
-                            selfieURL = obj.getString("image_url");
-                            new DownloadImageTask(previewSelfie).execute(selfieURL);
-                            new DownloadImageTask(driverSelfieImg).execute(selfieURL);
-
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request);
-    }
-
 
     //--------------------------------------create User in API -------------------------------------
     public UserRequest createDriverUser() {
@@ -1470,8 +1436,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                                     loading.setImageDrawable(getDrawable(R.drawable.loading_small));
                                     loading.setAnimation(loadingAnimation);
                                 }
-                            }
-                            else{
+                            } else {
                                 AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
                                 my_alert.setTitle("Driver already Exists with this mobile number");
                                 my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
