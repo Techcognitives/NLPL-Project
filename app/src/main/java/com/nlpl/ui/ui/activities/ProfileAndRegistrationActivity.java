@@ -16,9 +16,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -69,8 +71,8 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     View bottomNav;
     TextView truckLoadText;
 
-    String userId, userIdAPI, phone, mobileNoAPI;
-    ArrayList<String> arrayUserId, arrayMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
+    String userId, userIdAPI, phone, mobileNoAPI, mobileNoDriverAPI, userDriverIdAPI, driverUserIdGet;
+    ArrayList<String> arrayUserId, arrayUserDriverId, arrayMobileNo, arrayDriverMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
 
     Button personalDetails, bankDetails, addTrucks, addDrivers;
     String mobile, name, address, pinCode, city, role, emailIdAPI;
@@ -82,9 +84,9 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     TextView dialogPersonalDetailsName, dialogPersonalDetailsPhone, dialogPersonalDetailsEmail, dialogPersonalDetailsAddress, dialogPersonalDetailsFirmName, dialogPersonalDetailsFirmAddress;
     TextView dialogBankDetailsBankName, dialogBankDetailsBankAccountNumber, dialogBankDetailsBankIFSICode;
     Dialog previewDialogPersonalDetails, previewDialogBankDetails, previewDialogTruckDetails, previewDialogDriverDetails;
-    TextView previewTruckDetailsVehicleNumber, previewTruckDetailsTruckType, previewTruckDetailsVehicleType, previewTruckDetailsTruckFeet, previewTruckDetailsVehicleCapacity;
+    TextView previewTruckDetailsVehicleNumber, previewTruckDetailsTruckType, previewTruckDetailsVehicleType, previewTruckDetailsTruckFeet, previewTruckDetailsVehicleCapacity, previewDriverDetailsDriverBankAdd;
     TextView previewDriverDetailsDriverName, previewDriverDetailsDriverNumber, previewDriverDetailsEmailId;
-    ImageView previewPanImage, previewAadharImage, previewCancelledCheque, previewRcBook, previewInsurance, previewDrivingLicense, previewDriverSelfie;
+    ImageView previewPanImage, previewAadharImage, previewCancelledCheque, previewRcBook, previewInsurance, previewDrivingLicense, previewDriverSelfie, editCompanyDetailsImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +104,9 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
 
         arrayUserId = new ArrayList<>();
+        arrayUserDriverId = new ArrayList<>();
         arrayMobileNo = new ArrayList<>();
+        arrayDriverMobileNo = new ArrayList<>();
         arrayAddress = new ArrayList<>();
         arrayCity = new ArrayList<>();
         arrayPinCode = new ArrayList<>();
@@ -140,6 +144,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         emailIdTextView = (TextView) findViewById(R.id.profile_and_registration_email_id_text);
         officeAddressTextView = (TextView) findViewById(R.id.profile_and_registration_office_address_text);
         previewPersonalDetails = (ImageView) findViewById(R.id.profile_and_registration_preview_personal_details);
+        editCompanyDetailsImageView = (ImageView) findViewById(R.id.profile_and_registration_edit_company_details);
 
         previewDialogPersonalDetails = new Dialog(ProfileAndRegistrationActivity.this);
         previewDialogPersonalDetails.setContentView(R.layout.dialog_preview_personal_details);
@@ -184,6 +189,18 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         previewDriverDetailsEmailId = (TextView) previewDialogDriverDetails.findViewById(R.id.dialog_driver_details_driver_email_id_text_view);
         previewDrivingLicense = (ImageView) previewDialogDriverDetails.findViewById(R.id.dialog_driver_details_driving_license_image_view);
         previewDriverSelfie = (ImageView) previewDialogDriverDetails.findViewById(R.id.dialog_driver_details_selfie_image_view);
+        previewDriverDetailsDriverBankAdd = (TextView) previewDialogDriverDetails.findViewById(R.id.dialog_driver_details_add_driver_bank);
+
+        previewDriverDetailsDriverBankAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileAndRegistrationActivity.this, BankDetailsActivity.class);
+                intent.putExtra("isEdit", false);
+                intent.putExtra("userId", driverUserIdGet);
+                intent.putExtra("mobile", phone);
+                startActivity(intent);
+            }
+        });
 
         mQueue = Volley.newRequestQueue(ProfileAndRegistrationActivity.this);
         getImageURL();
@@ -314,13 +331,13 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         String s1 = mobile.substring(2, 12);
                         mobileText.setText("+91 " + s1);
 
-                        phoneDone.setText(" Phone: +91 " + s1);
+                        phoneDone.setText(" +91 " + s1);
                         dialogPersonalDetailsPhone.setText(" Phone: +91 " + s1);
 
-                        emailIdTextView.setText(" Email: " + emailIdAPI);
+                        emailIdTextView.setText(" " + emailIdAPI);
                         dialogPersonalDetailsEmail.setText(" Email: " + emailIdAPI);
 
-                        addressDone.setText(" Address: " + address + ", " + city + " " + pinCode);
+                        addressDone.setText(" " + address + ", " + city + " " + pinCode);
                         dialogPersonalDetailsAddress.setText(" Address: " + address + ", " + city + " " + pinCode);
 
                         //-----------------------------Check all Done or not-----------------------------------------
@@ -409,9 +426,12 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     }
 
                     if (truckList.size() > 5){
-
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        params.height =235; //height recycleviewer
+                        truckListRecyclerView.setLayoutParams(params);
                     }else{
-
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        truckListRecyclerView.setLayoutParams(params);
                     }
 
                 } catch (JSONException e) {
@@ -456,6 +476,15 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
                     }
 
+                    if (driverList.size() > 5){
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        params.height =235; //height recycleviewer
+                        driverListRecyclerView.setLayoutParams(params);
+                    }else{
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        driverListRecyclerView.setLayoutParams(params);
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -498,6 +527,15 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     } else {
                     }
 
+                    if (bankList.size() > 5){
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        params.height =235; //height recycleviewer
+                        bankListRecyclerView.setLayoutParams(params);
+                    }else{
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        bankListRecyclerView.setLayoutParams(params);
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -530,10 +568,16 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         companyZip = data.getString("comp_zip");
                     }
 
-                    firmName.setText(" Firm Name: " + companyName);
+                    if (companyName == null){
+                        dialogPersonalDetailsFirmName.setVisibility(View.GONE);
+                        editCompanyDetailsImageView.setVisibility(View.GONE);
+                        dialogPersonalDetailsFirmAddress.setVisibility(View.GONE);
+                    }
+
+                    firmName.setText(" " + companyName);
                     dialogPersonalDetailsFirmName.setText(" Firm Name: " + companyName);
 
-                    officeAddressTextView.setText(" Office Address: " + companyAddress + ", " + " " + companyCity + ", " + companyZip);
+                    officeAddressTextView.setText(" " + companyAddress + ", " + " " + companyCity + ", " + companyZip);
                     dialogPersonalDetailsFirmAddress.setText(" Office Address: " + companyAddress + ", " + " " + companyCity + ", " + companyZip);
 
                 } catch (JSONException e) {
@@ -591,6 +635,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
         previewDriverDetailsDriverName.setText(" Driver Name: " + obj.getDriver_name());
         previewDriverDetailsDriverNumber.setText(" Mobile Number: +" + obj.getDriver_number());
+        getUserDriverId(obj.getDriver_number());
         previewDriverDetailsEmailId.setText(" Email Id: " + obj.getDriver_emailId());
     }
 
@@ -759,10 +804,12 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
                         if (isFirmDetailsDone.equals("1")) {
                             firmName.setVisibility(View.VISIBLE);
+                            editCompanyDetailsImageView.setVisibility(View.VISIBLE);
                             officeAddressTextView.setVisibility(View.VISIBLE);
                             addCompany.setVisibility(View.GONE);
                         } else {
                             firmName.setVisibility(View.GONE);
+                            editCompanyDetailsImageView.setVisibility(View.GONE);
                             officeAddressTextView.setVisibility(View.GONE);
                             addCompany.setVisibility(View.VISIBLE);
                         }
@@ -1019,5 +1066,95 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         lp.gravity = Gravity.CENTER;
         previewDialogPersonalDetails.show();
         previewDialogPersonalDetails.getWindow().setAttributes(lp);
+    }
+
+    private void getUserDriverId(String getMobile) {
+        String receivedMobile = getMobile;
+        //------------------------------get user details by mobile Number---------------------------------
+        //-----------------------------------Get User Details---------------------------------------
+        String url = getString(R.string.baseURL) + "/user/get";
+        Log.i("URL at Profile:", url);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray jsonArray = response.getJSONArray("data");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject data = jsonArray.getJSONObject(i);
+                        userDriverIdAPI = data.getString("user_id");
+                        mobileNoDriverAPI = data.getString("phone_number");
+
+                        arrayUserDriverId.add(userDriverIdAPI);
+                        arrayDriverMobileNo.add(mobileNoDriverAPI);
+
+                    }
+
+                    for (int j = 0; j < arrayDriverMobileNo.size(); j++) {
+                        if (arrayDriverMobileNo.get(j).equals(receivedMobile)) {
+                            driverUserIdGet = arrayUserDriverId.get(j);
+                            Log.i("DriverUserId", driverUserIdGet);
+
+                            getUserBankDetails(driverUserIdGet);
+                        }
+                    }
+//
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        mQueue.add(request);
+
+        //------------------------------------------------------------------------------------------------
+
+    }
+
+    private void getUserBankDetails(String driverUserId) {
+
+        String url = getString(R.string.baseURL) + "/bank/getBkByUserId/" + driverUserId;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+                        String bankName = obj.getString("bank_name");
+                        String bankAccountNumber = obj.getString("account_number");
+                        String ifsiCode = obj.getString("IFSI_CODE");
+
+                        TextView previewDriverDetailsDriverBankName = (TextView) previewDialogDriverDetails.findViewById(R.id.dialog_driver_details_bank_name);
+                        TextView previewDriverDetailsDriverBankAccountNumber = (TextView) previewDialogDriverDetails.findViewById(R.id.dialog_driver_details_account_number);
+                        TextView previewDriverDetailsDriverBankIFSICode = (TextView) previewDialogDriverDetails.findViewById(R.id.dialog_driver_details_ifsc_code);
+
+                        previewDriverDetailsDriverBankName.setText(" Bank Name: " + bankName);
+                        previewDriverDetailsDriverBankAccountNumber.setText(" Account Number: " + bankAccountNumber);
+                        previewDriverDetailsDriverBankIFSICode.setText(" IFSI Code: " + ifsiCode);
+
+                        if (bankName == null){
+                            previewDriverDetailsDriverBankAdd.setVisibility(View.VISIBLE);
+                        }else{
+                            previewDriverDetailsDriverBankAdd.setVisibility(View.GONE);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        mQueue.add(request);
+
     }
 }

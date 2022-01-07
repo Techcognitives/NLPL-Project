@@ -15,7 +15,7 @@
         android:text="TextView"
         android:textStyle="bold"
         android:textColor="@color/black"
-        android:textSize="14sp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/my_truck_list_capacity"
         app:layout_constraintEnd_toStartOf="@+id/my_truck_list_preview_image_view"
         app:layout_constraintStart_toStartOf="parent"

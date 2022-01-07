@@ -15,7 +15,7 @@
         android:text="@string/name"
         android:textStyle="bold"
         android:textColor="#000000"
-        android:textSize="14sp"
+        android:textSize="15sp"
         app:layout_constraintEnd_toStartOf="@+id/bank_list_preview_bank_details"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

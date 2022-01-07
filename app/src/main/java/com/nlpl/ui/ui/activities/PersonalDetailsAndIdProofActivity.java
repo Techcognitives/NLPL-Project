@@ -721,7 +721,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             updateUserType();
         }
 
-
        if (mobileString.equals("91"+mobileEdit.getText().toString()) || mobileEdit.getText().toString().isEmpty()) {
 
                     Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, ProfileAndRegistrationActivity.class);

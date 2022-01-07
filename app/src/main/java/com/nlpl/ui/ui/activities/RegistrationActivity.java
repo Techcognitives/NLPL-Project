@@ -500,7 +500,7 @@ public class RegistrationActivity extends AppCompatActivity {
         UserRequest userRequest = new UserRequest();
         userRequest.setName(name.getText().toString());
         userRequest.setPhone_number(mobile);
-        userRequest.setAddress(address.getText().toString()+" "+selectDistrictText.getText().toString()+" "+selectStateText.getText().toString());
+        userRequest.setAddress(address.getText().toString());
         userRequest.setUser_type(role);
         userRequest.setEmail_id(email_id.getText().toString());
         userRequest.setIsRegistration_done(1);

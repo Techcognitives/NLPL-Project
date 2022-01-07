@@ -16,8 +16,9 @@
         android:paddingStart="20dp"
         android:paddingEnd="0dp"
         android:text="@string/name"
+        android:textStyle="bold"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,8 +46,8 @@
         android:id="@+id/registration_mobile_no_edit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginTop="5dp"
         android:background="@drawable/mobile_number_right"
         android:hint="@string/edit_number_hint"
         android:inputType="number"
@@ -60,7 +61,7 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/registration_prefix"
-        app:layout_constraintTop_toBottomOf="@+id/registration_email_id_edit"
+        app:layout_constraintTop_toBottomOf="@+id/registration_edit_name"
         tools:ignore="Autofill" />
 
     <EditText
@@ -68,7 +69,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/edit_text_border"
         android:ems="10"
@@ -86,8 +87,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginTop="5dp"
         android:background="@drawable/edit_text_border"
         android:ems="10"
         android:hint="@string/email_id"
@@ -97,28 +98,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registration_edit_name" />
+        app:layout_constraintTop_toBottomOf="@+id/registration_mobile_no_edit" />
 
     <TextView
         android:id="@+id/registration_location"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:paddingStart="20dp"
         android:paddingEnd="0dp"
         android:text="@string/location"
+        android:layout_marginTop="10dp"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registration_mobile_no_edit" />
+        app:layout_constraintTop_toBottomOf="@+id/registration_email_id_edit" />
 
     <TextView
         android:id="@+id/registration_select_city"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/edit_text_border"
         android:drawableEnd="@drawable/ic_down"
@@ -156,13 +158,13 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
+        android:visibility="visible"
         android:background="@drawable/edit_text_border_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registration_select_city">
-
 
         <TextView
             android:id="@+id/registration_sp"
@@ -172,8 +174,9 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/underline"
             android:text="@string/are_u_sp"
+            android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/registration_truck_owner"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.081"
@@ -232,8 +235,9 @@
             android:background="@drawable/underline"
             android:gravity="left"
             android:text="@string/customer"
+            android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="@+id/registration_sp"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/registration_sp"
@@ -281,7 +285,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/edit_text_border"
         android:ems="10"
@@ -295,5 +299,17 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registration_location" />
+
+    <ImageView
+        android:id="@+id/loading_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/registration_mobile_no_edit"
+        app:layout_constraintEnd_toEndOf="@+id/registration_mobile_no_edit"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/registration_prefix"
+        app:layout_constraintTop_toTopOf="@+id/registration_mobile_no_edit"
+        app:srcCompat="@drawable/ic_camera_white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

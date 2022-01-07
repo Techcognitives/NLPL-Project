@@ -25,12 +25,16 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -53,7 +57,14 @@ import com.nlpl.model.UpdateDriverDetails.UpdateDriverEmailId;
 import com.nlpl.model.UpdateDriverDetails.UpdateDriverName;
 import com.nlpl.model.UpdateDriverDetails.UpdateDriverNumber;
 import com.nlpl.model.UpdateDriverDetails.UpdateDriverUploadLicense;
+import com.nlpl.model.UpdateUserDetails.UpdateUserAddress;
+import com.nlpl.model.UpdateUserDetails.UpdateUserEmailId;
 import com.nlpl.model.UpdateUserDetails.UpdateUserIsDriverAdded;
+import com.nlpl.model.UpdateUserDetails.UpdateUserName;
+import com.nlpl.model.UpdateUserDetails.UpdateUserPhoneNumber;
+import com.nlpl.model.UpdateUserDetails.UpdateUserPinCode;
+import com.nlpl.model.UpdateUserDetails.UpdateUserPreferredLocation;
+import com.nlpl.model.UpdateUserDetails.UpdateUserStateCode;
 import com.nlpl.services.AddDriverService;
 import com.nlpl.services.UserService;
 import com.nlpl.utils.ApiClient;
@@ -98,7 +109,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
     private RequestQueue mQueue;
     private UserService userService;
     private AddDriverService addDriverService;
-    String driverUserId;
+    String driverUserId, driverUserIdGet;
+    ImageView loading;
 
     String img_type, userId, driverId, driverNameAPI, driverNumberAPI, driverEmailAPI, mobile;
     Boolean isDLUploaded = false, isEdit, isSelfieUploaded = false;
@@ -112,9 +124,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
     String selectedDistrict, selectedState;
     EditText pinCode, address;
 
-    String userIdAPI, nameAPI, isRegistrationDoneAPI, pinCodeAPI, addressAPI, mobileNoAPI, cityAPI, roleAPI;
-    ArrayList<String> arrayUserId, arrayMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
+    String userIdAPI, nameAPI, stateAPI, pinCodeAPI, addressAPI, mobileNoAPI, cityAPI, roleAPI;
+    ArrayList<String> arrayUserId, arrayMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayState;
     Boolean alreadyDriver = true;
+    Animation loadingAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +142,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
             mobile = bundle.getString("mobile");
         }
 
-        personalAndAddress = (View) findViewById(R.id.registration_personal_and_address);
+        personalAndAddress = (View) findViewById(R.id.driver_details_personal_and_address);
         action_bar = findViewById(R.id.driver_details_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
@@ -142,6 +155,11 @@ public class DriverDetailsActivity extends AppCompatActivity {
         previewSelfieImageView = (ImageView) findViewById(R.id.driver_details_preview_selfie);
         ConstraintLayout personalConstrain = (ConstraintLayout) personalAndAddress.findViewById(R.id.personal_registration_sp_constrain);
         personalConstrain.setVisibility(View.GONE);
+
+        loadingAnimation = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading = (ImageView) personalAndAddress.findViewById(R.id.loading_image);
+        loading.setImageDrawable(getDrawable(R.drawable.ic_camera_white));
+        loading.setAnimation(loadingAnimation);
 
         pinCode = (EditText) personalAndAddress.findViewById(R.id.registration_pin_code_edit);
         address = (EditText) personalAndAddress.findViewById(R.id.registration_address_edit);
@@ -240,6 +258,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         String mobileNoWatcher = driverMobile.getText().toString().trim();
         String nameWatcher = driverName.getText().toString().trim();
         String emailWtacher = driverEmailId.getText().toString();
+
         if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && !emailWtacher.isEmpty() && isDLUploaded && isSelfieUploaded) {
             okDriverDetails.setEnabled(true);
             okDriverDetails.setBackgroundResource(R.drawable.button_active);
@@ -253,7 +272,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         arrayPinCode = new ArrayList<>();
         arrayName = new ArrayList<>();
         arrayRole = new ArrayList<>();
-        arrayRegDone = new ArrayList<>();
+        arrayState = new ArrayList<>();
 
         if (isEdit) {
             getImageURL();
@@ -656,9 +675,9 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
             String mobileNoWatcher = driverMobile.getText().toString();
             String nameWatcher = driverName.getText().toString();
-            String emailWtacher = driverEmailId.getText().toString();
+            String emailWatcher = driverEmailId.getText().toString();
 
-            if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && !emailWtacher.isEmpty() && isDLUploaded && isSelfieUploaded) {
+            if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && !emailWatcher.isEmpty() && isDLUploaded && isSelfieUploaded) {
                 okDriverDetails.setEnabled(true);
                 okDriverDetails.setBackgroundResource(R.drawable.button_active);
             }
@@ -764,6 +783,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         return "";
     }
 
+
     private String selfieImagePicker(){
 
         //Detects request code for PAN
@@ -804,7 +824,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         }
         return "";
     }
-    
+
     public void onClickDriverDetailsOk(View view) {
         String driverMobileText = driverMobile.getText().toString();
         String driverNameText = driverName.getText().toString();
@@ -824,70 +844,113 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 my_alert.show();
 
             } else {
-                updateUserIsDriverAdded();
 
-                if (isEdit) {
-                    if (driverName.getText().toString() != null) {
-                        updateDriverName();
-                    }
-                    if (driverMobile.getText().toString() != null) {
-                        updateDriverNumber();
-                    }
-                    if (driverEmailId.getText().toString() != null) {
-                        updateDriverEmailId();
+                if (alreadyDriver) {
+
+                    if (isEdit) {
+                        if (!driverNumberAPI.equals("91" + driverMobile.getText().toString())) {
+                            AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
+                            my_alert.setTitle("Driver already Exists with this mobile number");
+                            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+
+                                }
+                            });
+                            my_alert.show();
+                        }
+                    } else {
+                        AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
+                        my_alert.setTitle("Driver already Exists with this mobile number");
+                        my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+
+                            }
+                        });
+                        my_alert.show();
                     }
 
                 } else {
-                    checkPhoneInAPI("91"+driverMobile.getText().toString());
-                }
+                    updateUserIsDriverAdded();
 
-//                if (isEdit){
-//                    Intent i8 = new Intent(DriverDetailsActivity.this, ProfileAndRegistrationActivity.class);
-//                    i8.putExtra("userId", userId);
-//                    i8.putExtra("mobile2", mobile);
-//                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                    startActivity(i8);
-//                    overridePendingTransition(0, 0);
-//                    DriverDetailsActivity.this.finish();
-//                }
+                    if (isEdit) {
 
-                if (alreadyDriver == false){
-                    saveDriver(createDriver());
-                    saveDriverUser(createDriverUser());
-                    AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
-                    my_alert.setTitle("Driver Details added successfully");
-                    my_alert.setMessage("Do you want to add Driver's Bank Details");
-                    my_alert.setPositiveButton("May be Later", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-
-                            Intent i8 = new Intent(DriverDetailsActivity.this, ProfileAndRegistrationActivity.class);
-                            i8.putExtra("userId", userId);
-                            i8.putExtra("mobile2", mobile);
-                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(i8);
-                            overridePendingTransition(0, 0);
-                            DriverDetailsActivity.this.finish();
+                        if (driverName.getText().toString() != null) {
+                            updateDriverName();
+                            updateUserDriverName();
                         }
-                    });
-                    my_alert.setNegativeButton("Add Driver Bank Details", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-
-                            Intent intent2 = new Intent(DriverDetailsActivity.this, BankDetailsActivity.class);
-                            intent2.putExtra("userId", driverUserId);
-                            intent2.putExtra("isEdit", false);
-                            intent2.putExtra("mobile", mobile);
-
-                            startActivity(intent2);
+                        if (driverEmailId.getText().toString() != null) {
+                            updateDriverEmailId();
+                            updateUserDriverEmailId();
                         }
-                    });
-                    my_alert.show();
 
+                        if (driverMobile.getText().toString() != null && !driverNumberAPI.equals("91" + driverMobile.getText().toString())) {
+                            updateDriverNumber();
+                            updateUserDriverPhoneNumber();
+                        }
+
+                        if (address.getText().toString() != null) {
+                            updateUserDriverAddress();
+                        }
+
+                        if (pinCode.getText().toString() != null) {
+                            updateUserDriverPinCode();
+                        }
+
+                        if (selectStateText.getText().toString() != null) {
+                            updateUserDriverStateCode();
+                        }
+
+                        if (selectDistrictText.getText().toString() != null) {
+                            updateUserDriverPreferredLocation();
+                        }
+
+                        Intent i8 = new Intent(DriverDetailsActivity.this, ProfileAndRegistrationActivity.class);
+                        i8.putExtra("userId", userId);
+                        i8.putExtra("mobile2", mobile);
+                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i8);
+                        overridePendingTransition(0, 0);
+                        DriverDetailsActivity.this.finish();
+
+                    } else {
+                        saveDriver(createDriver());
+                        saveDriverUser(createDriverUser());
+                        AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
+                        my_alert.setTitle("Driver Details added successfully");
+                        my_alert.setMessage("Do you want to add Driver's Bank Details");
+                        my_alert.setPositiveButton("May be Later", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+
+                                Intent i8 = new Intent(DriverDetailsActivity.this, ProfileAndRegistrationActivity.class);
+                                i8.putExtra("mobile2", mobile);
+                                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(i8);
+                                overridePendingTransition(0, 0);
+                                DriverDetailsActivity.this.finish();
+                            }
+                        });
+                        my_alert.setNegativeButton("Add Driver Bank Details", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+
+                                Intent intent2 = new Intent(DriverDetailsActivity.this, BankDetailsActivity.class);
+                                intent2.putExtra("userId", driverUserId);
+                                intent2.putExtra("isEdit", false);
+                                intent2.putExtra("mobile", mobile);
+
+                                startActivity(intent2);
+                            }
+                        });
+                        my_alert.show();
+                    }
                 }
-
             }
         }
     }
@@ -962,9 +1025,17 @@ public class DriverDetailsActivity extends AppCompatActivity {
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             String mobileNoWatcher = driverMobile.getText().toString().trim();
             String nameWatcher = driverName.getText().toString().trim();
-            String emailWtacher = driverEmailId.getText().toString();
+            String emailWatcher = driverEmailId.getText().toString();
+
+            if (mobileNoWatcher.length() > 0 && mobileNoWatcher.length() <= 10) {
+                loading.setImageDrawable(getDrawable(R.drawable.loading_small));
+            } else {
+                loading.setImageDrawable(getDrawable(R.drawable.ic_camera_white));
+            }
+
             if (mobileNoWatcher.length() == 10) {
-                if (!nameWatcher.isEmpty() && !emailWtacher.isEmpty() && isDLUploaded && isSelfieUploaded) {
+                checkPhoneInAPI("91" + driverMobile.getText().toString());
+                if (!nameWatcher.isEmpty() && !emailWatcher.isEmpty() && isDLUploaded && isSelfieUploaded) {
                     okDriverDetails.setEnabled(true);
                     okDriverDetails.setBackgroundResource(R.drawable.button_active);
                 } else {
@@ -1024,6 +1095,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                         if (driverNumberAPI != null) {
                             String s1 = driverNumberAPI.substring(2, 12);
                             driverMobile.setText(s1);
+                            checkPhoneForDriverDetails(driverNumberAPI);
                         }
 
                         if (driverEmailAPI == null) {
@@ -1157,14 +1229,14 @@ public class DriverDetailsActivity extends AppCompatActivity {
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
 
-    private void uploadDriverLicense(String driverId1,String picPath) {
+    private void uploadDriverLicense(String driverId1, String picPath) {
 
         File file = new File(picPath);
 //        File file = new File(getExternalFilesDir("/").getAbsolutePath(), file);
 
         MultipartBody.Part body = prepareFilePart("dl", Uri.fromFile(file));
 
-        Call<UploadDriverLicenseResponse> call = ApiClient.getUploadDriverLicenseService().uploadDriverLicense(driverId1,body);
+        Call<UploadDriverLicenseResponse> call = ApiClient.getUploadDriverLicenseService().uploadDriverLicense(driverId1, body);
         call.enqueue(new Callback<UploadDriverLicenseResponse>() {
             @Override
             public void onResponse(Call<UploadDriverLicenseResponse> call, Response<UploadDriverLicenseResponse> response) {
@@ -1267,7 +1339,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
                         }
 
-                        if (imageType.equals("selfie")){
+                        if (imageType.equals("selfie")) {
                             selfieURL = obj.getString("image_url");
                             new DownloadImageTask(previewSelfie).execute(selfieURL);
                             new DownloadImageTask(driverSelfieImg).execute(selfieURL);
@@ -1292,8 +1364,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
     public UserRequest createDriverUser() {
         UserRequest userRequest = new UserRequest();
         userRequest.setName(driverName.getText().toString());
-        userRequest.setPhone_number("91"+driverMobile.getText().toString());
-        userRequest.setAddress(address.getText().toString() + " " + selectDistrictText.getText().toString() + " " + selectStateText.getText().toString());
+        userRequest.setPhone_number("91" + driverMobile.getText().toString());
+        userRequest.setAddress(address.getText().toString());
         userRequest.setUser_type("Driver");
         userRequest.setEmail_id(driverEmailId.getText().toString());
         userRequest.setIsRegistration_done(1);
@@ -1320,6 +1392,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
             }
         });
     }
+
     //----------------------------------------------------------------------------------------------
     private void checkPhoneInAPI(String getMobile) {
         String receivedMobile = getMobile;
@@ -1342,12 +1415,12 @@ public class DriverDetailsActivity extends AppCompatActivity {
                         roleAPI = data.getString("user_type");
                         cityAPI = data.getString("preferred_location");
                         addressAPI = data.getString("address");
-                        isRegistrationDoneAPI = data.getString("isRegistration_done");
+                        stateAPI = data.getString("isRegistration_done");
 
                         arrayUserId.add(userIdAPI);
                         arrayMobileNo.add(mobileNoAPI);
                         arrayAddress.add(addressAPI);
-                        arrayRegDone.add(isRegistrationDoneAPI);
+                        arrayState.add(stateAPI);
                         arrayName.add(nameAPI);
                         arrayRole.add(roleAPI);
                         arrayCity.add(cityAPI);
@@ -1356,7 +1429,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
                     for (int j = 0; j < arrayMobileNo.size(); j++) {
                         if (arrayMobileNo.get(j).equals(receivedMobile)) {
-//                            String userIdGet = arrayUserId.get(j);
+//                            driverUserIdGet = arrayUserId.get(j);
 //                            String nameGet = arrayName.get(j);
 //                            String phoneGet = arrayMobileNo.get(j);
 //                            String addressGet = arrayAddress.get(j);
@@ -1365,21 +1438,28 @@ public class DriverDetailsActivity extends AppCompatActivity {
 //                            String roleGet = arrayRole.get(j);
 //                            String isRegistrationDoneGet = arrayRegDone.get(j);
 
-                            AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
-                            my_alert.setTitle("Driver already Exists with this mobile number");
-                            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    dialogInterface.dismiss();
+                            if (!driverNumberAPI.equals("91" + driverMobile.getText().toString())) {
+                                AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
+                                my_alert.setTitle("Driver already Exists with this mobile number");
+                                my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.dismiss();
 
-                                }
-                            });
-                            my_alert.show();
-                            alreadyDriver = true;
-                            Log.i("Already", "Driver");
+                                    }
+                                });
+                                my_alert.show();
+
+                                alreadyDriver = true;
+                                Log.i("Already", "Driver");
+                                loading.setImageDrawable(getDrawable(R.drawable.loading_small));
+                                loading.setAnimation(loadingAnimation);
+                            }
                             break;
-                        }else{
-                            alreadyDriver=false;
+                        } else {
+                            alreadyDriver = false;
+                            loading.setImageDrawable(getDrawable(R.drawable.success_small));
+                            loading.clearAnimation();
                         }
                     }
 
@@ -1399,5 +1479,242 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         //------------------------------------------------------------------------------------------------
 
+    }
+
+    private void checkPhoneForDriverDetails(String getMobile) {
+        String receivedMobile = getMobile;
+        //------------------------------get user details by mobile Number---------------------------------
+        //-----------------------------------Get User Details---------------------------------------
+        String url = getString(R.string.baseURL) + "/user/get";
+        Log.i("URL at Profile:", url);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray jsonArray = response.getJSONArray("data");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject data = jsonArray.getJSONObject(i);
+                        userIdAPI = data.getString("user_id");
+                        mobileNoAPI = data.getString("phone_number");
+                        pinCodeAPI = data.getString("pin_code");
+                        nameAPI = data.getString("name");
+                        roleAPI = data.getString("user_type");
+                        cityAPI = data.getString("preferred_location");
+                        addressAPI = data.getString("address");
+                        stateAPI = data.getString("state_code");
+
+                        arrayUserId.add(userIdAPI);
+                        arrayMobileNo.add(mobileNoAPI);
+                        arrayAddress.add(addressAPI);
+                        arrayState.add(stateAPI);
+                        arrayName.add(nameAPI);
+                        arrayRole.add(roleAPI);
+                        arrayCity.add(cityAPI);
+                        arrayPinCode.add(pinCodeAPI);
+                    }
+
+                    for (int j = 0; j < arrayMobileNo.size(); j++) {
+                        if (arrayMobileNo.get(j).equals(receivedMobile)) {
+                            driverUserIdGet = arrayUserId.get(j);
+                            Log.i("DriverUserId", driverUserIdGet);
+                            String nameGet = arrayName.get(j);
+                            String phoneGet = arrayMobileNo.get(j);
+                            String addressGet = arrayAddress.get(j);
+                            String pinCodeGet = arrayPinCode.get(j);
+                            String cityGet = arrayCity.get(j);
+                            String roleGet = arrayRole.get(j);
+                            String stateGet = arrayState.get(j);
+
+                            address.setText(addressGet);
+                            Log.i("Address Driver", addressGet);
+                            pinCode.setText(pinCodeGet);
+                            selectStateText.setText(stateGet);
+                            selectDistrictText.setText(cityGet);
+
+                        }
+                    }
+
+                    Log.i("Driver Status", String.valueOf(alreadyDriver));
+//
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        mQueue.add(request);
+
+        //------------------------------------------------------------------------------------------------
+
+    }
+
+    //-------------------------------- Update User Name --------------------------------------------
+    private void updateUserDriverName() {
+
+        UpdateUserName updateUserName = new UpdateUserName(driverName.getText().toString());
+
+        Call<UpdateUserName> call = userService.updateUserName("" + driverUserIdGet, updateUserName);
+
+        call.enqueue(new Callback<UpdateUserName>() {
+            @Override
+            public void onResponse(Call<UpdateUserName> call, Response<UpdateUserName> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "UserName");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserName> call, Throwable t) {
+                Log.i("Not Successful", "UserName");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    private void updateUserDriverPhoneNumber() {
+
+        UpdateUserPhoneNumber updateUserPhoneNumber = new UpdateUserPhoneNumber("91" + driverMobile.getText().toString());
+
+        Call<UpdateUserPhoneNumber> call = userService.updateUserPhoneNumber("" + driverUserIdGet, updateUserPhoneNumber);
+
+        call.enqueue(new Callback<UpdateUserPhoneNumber>() {
+            @Override
+            public void onResponse(Call<UpdateUserPhoneNumber> call, Response<UpdateUserPhoneNumber> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "PhoneNumber");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserPhoneNumber> call, Throwable t) {
+                Log.i("Not Successful", "PhoneNumber");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    private void updateUserDriverEmailId() {
+
+        UpdateUserEmailId updateUserEmailId = new UpdateUserEmailId(driverEmailId.getText().toString());
+
+        Call<UpdateUserEmailId> call = userService.updateUserEmailId("" + driverUserIdGet, updateUserEmailId);
+
+        call.enqueue(new Callback<UpdateUserEmailId>() {
+            @Override
+            public void onResponse(Call<UpdateUserEmailId> call, Response<UpdateUserEmailId> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User Email Id");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserEmailId> call, Throwable t) {
+                Log.i("Not Successful", "User Email Id");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    private void updateUserDriverAddress() {
+
+        UpdateUserAddress updateUserAddress = new UpdateUserAddress(address.getText().toString());
+
+        Call<UpdateUserAddress> call = userService.updateUserAddress("" + driverUserIdGet, updateUserAddress);
+
+        call.enqueue(new Callback<UpdateUserAddress>() {
+            @Override
+            public void onResponse(Call<UpdateUserAddress> call, Response<UpdateUserAddress> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User Address");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserAddress> call, Throwable t) {
+                Log.i("Not Successful", "UserAddress");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //-------------------------------- Update User Preferred Location ------------------------------
+    private void updateUserDriverPreferredLocation() {
+
+        UpdateUserPreferredLocation updateUserPreferredLocation = new UpdateUserPreferredLocation(selectDistrictText.getText().toString());
+
+        Call<UpdateUserPreferredLocation> call = userService.updateUserPreferredLocation("" + driverUserIdGet, updateUserPreferredLocation);
+
+        call.enqueue(new Callback<UpdateUserPreferredLocation>() {
+            @Override
+            public void onResponse(Call<UpdateUserPreferredLocation> call, Response<UpdateUserPreferredLocation> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User Preferred Location");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserPreferredLocation> call, Throwable t) {
+                Log.i("Not Successful", "User Preferred Location");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //-------------------------------- Update User State Code --------------------------------------
+    private void updateUserDriverStateCode() {
+
+        UpdateUserStateCode updateUserStateCode = new UpdateUserStateCode(selectStateText.getText().toString());
+
+        Call<UpdateUserStateCode> call = userService.updateUserStateCode("" + driverUserIdGet, updateUserStateCode);
+
+        call.enqueue(new Callback<UpdateUserStateCode>() {
+            @Override
+            public void onResponse(Call<UpdateUserStateCode> call, Response<UpdateUserStateCode> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User State Code");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserStateCode> call, Throwable t) {
+                Log.i("Not Successful", "User State Code");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
+    //-------------------------------- Update User Pin Code ----------------------------------------
+    private void updateUserDriverPinCode() {
+
+        UpdateUserPinCode updateUserStateCode = new UpdateUserPinCode(pinCode.getText().toString());
+
+        Call<UpdateUserPinCode> call = userService.updateUserPinCode("" + driverUserIdGet, updateUserStateCode);
+
+        call.enqueue(new Callback<UpdateUserPinCode>() {
+            @Override
+            public void onResponse(Call<UpdateUserPinCode> call, Response<UpdateUserPinCode> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User Pin Code");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserPinCode> call, Throwable t) {
+                Log.i("Not Successful", "User Pin Code");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
     }
 }

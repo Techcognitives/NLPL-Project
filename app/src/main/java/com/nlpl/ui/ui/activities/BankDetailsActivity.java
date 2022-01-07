@@ -95,7 +95,7 @@ public class BankDetailsActivity extends AppCompatActivity {
     TextView textCC, editCC;
     int GET_FROM_GALLERY = 0;
     int CAMERA_PIC_REQUEST1 = 1;
-    ImageView cancelledCheckImage, previewCancelledCheque, previewDialogCancelledChequeImageView;
+    ImageView cancelledCheckImage, previewCancelledCheque, previewDialogCancelledChequeImageView, canceledCheckBlurImage, accountDetailsBlurImage;
     Boolean isEdit, isImgUploaded = false;
 
     RadioButton canceledCheckRadioButton, acDetailsRadioButton;
@@ -137,6 +137,8 @@ public class BankDetailsActivity extends AppCompatActivity {
         reAccount = (EditText) findViewById(R.id.bank_details_reenter_account_number_edit);
         ifscCode = (EditText) findViewById(R.id.bank_details_ifsc_edit);
         okButton = (Button) findViewById(R.id.bank_details_ok_button);
+        canceledCheckBlurImage = (ImageView) findViewById(R.id.bank_details_blur_image_canceled_check);
+        accountDetailsBlurImage = (ImageView) findViewById(R.id.bank_details_blur_image_account_details);
         okButton.setEnabled(false);
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -519,22 +521,20 @@ public class BankDetailsActivity extends AppCompatActivity {
     }
 
     public void onClickBankDetailsChoose(View view) {
-        ImageView canceledCheckBlurImage = (ImageView) findViewById(R.id.bank_details_blur_image_canceled_check);
-        ImageView accountDetailsBlurImage = (ImageView) findViewById(R.id.bank_details_blur_image_account_details);
+
 
         switch (view.getId()) {
             case R.id.bank_details_cancelled_check_radio_button:
 
                 canceledCheckRadioButton.setChecked(true);
                 acDetailsRadioButton.setChecked(false);
+                canceledCheckBlurImage.setVisibility(View.GONE);
+                accountDetailsBlurImage.setVisibility(View.VISIBLE);
 
                 bankName.setEnabled(false);
                 accountNo.setEnabled(false);
                 reAccount.setEnabled(false);
                 ifscCode.setEnabled(false);
-
-                canceledCheckBlurImage.setVisibility(View.GONE);
-                accountDetailsBlurImage.setVisibility(View.VISIBLE);
 
                 String bankName2 = bankName.getText().toString().trim();
                 String accNo = accountNo.getText().toString().trim();
@@ -575,6 +575,8 @@ public class BankDetailsActivity extends AppCompatActivity {
             case R.id.bank_details_ac_details_radio_button:
                 canceledCheckRadioButton.setChecked(false);
                 acDetailsRadioButton.setChecked(true);
+                canceledCheckBlurImage.setVisibility(View.VISIBLE);
+                accountDetailsBlurImage.setVisibility(View.GONE);
 
                 bankName.requestFocus();
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
@@ -584,9 +586,6 @@ public class BankDetailsActivity extends AppCompatActivity {
                 accountNo.setEnabled(true);
                 reAccount.setEnabled(true);
                 ifscCode.setEnabled(true);
-
-                canceledCheckBlurImage.setVisibility(View.VISIBLE);
-                accountDetailsBlurImage.setVisibility(View.GONE);
 
                 String bankName3 = bankName.getText().toString().trim();
                 String accNo2 = accountNo.getText().toString().trim();
@@ -663,6 +662,30 @@ public class BankDetailsActivity extends AppCompatActivity {
                         accountNo.setText(obj.getString("account_number"));
                         reAccount.setText(obj.getString("re_enter_acc_num"));
                         ifscCode.setText(obj.getString("IFSI_CODE"));
+
+                        if (bankNAME != null){
+                            canceledCheckRadioButton.setChecked(false);
+                            acDetailsRadioButton.setChecked(true);
+                            canceledCheckBlurImage.setVisibility(View.VISIBLE);
+                            accountDetailsBlurImage.setVisibility(View.GONE);
+
+                            bankName.setFocusable(true);
+                            bankName.setEnabled(true);
+                            accountNo.setEnabled(true);
+                            reAccount.setEnabled(true);
+                            ifscCode.setEnabled(true);
+
+                        }else {
+                            canceledCheckRadioButton.setChecked(true);
+                            acDetailsRadioButton.setChecked(false);
+                            canceledCheckBlurImage.setVisibility(View.GONE);
+                            accountDetailsBlurImage.setVisibility(View.VISIBLE);
+
+                            bankName.setEnabled(false);
+                            accountNo.setEnabled(false);
+                            reAccount.setEnabled(false);
+                            ifscCode.setEnabled(false);
+                        }
 
                     }
                 } catch (JSONException e) {

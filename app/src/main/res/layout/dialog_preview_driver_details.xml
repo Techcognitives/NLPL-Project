@@ -41,6 +41,15 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="Driver Name, Phone Number and Email Id" />
+
+            <TextView
                 android:id="@+id/dialog_driver_details_driver_name_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -65,10 +74,61 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
-                android:paddingBottom="10dp"
+                android:paddingBottom="8dp"
                 android:text="Email"
                 android:textColor="#000000"
                 android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/dialog_driver_details_add_driver_bank"
+                android:layout_width="match_parent"
+                android:textColor="@color/button_blue"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textAlignment="textEnd"
+                android:paddingEnd="20dp"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:text="@string/addBank" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="Driver Bank Details" />
+
+            <TextView
+                android:id="@+id/dialog_driver_details_bank_name"
+                android:layout_width="match_parent"
+                android:paddingTop="5dp"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:paddingBottom="3dp"
+                android:layout_height="wrap_content"
+                android:text="Bank Name" />
+
+            <TextView
+                android:id="@+id/dialog_driver_details_account_number"
+                android:layout_width="match_parent"
+                android:paddingTop="5dp"
+                android:paddingBottom="3dp"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_height="wrap_content"
+                android:text="@string/AccountNumber" />
+
+            <TextView
+                android:id="@+id/dialog_driver_details_ifsc_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:paddingBottom="3dp"
+                android:text="IFSI Code" />
 
             <TextView
                 android:id="@+id/dialog_driver_details_driving_license_text_view"
