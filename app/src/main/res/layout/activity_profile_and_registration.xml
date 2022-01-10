@@ -16,68 +16,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/profile_registration_mobile_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/mobNo"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_registration_name_text" />
-
-    <TextView
-        android:id="@+id/profile_registration_name_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="@string/name"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_registration_action_bar" />
-
-    <Button
-        android:id="@+id/profile_registration_personal_details_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/button_active"
-        android:drawableStart="@drawable/personal"
-        android:drawableEnd="@drawable/ic_right"
-        android:gravity="center|start"
-        android:paddingLeft="10dp"
-        android:text="@string/personalDetails"
-        android:onClick="onClickProfileAndRegister"
-        android:textAllCaps="false"
-        android:textColor="@color/background"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_registration_mobile_text" />
 
     <Button
         android:id="@+id/profile_registration_bank_details_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/button_active"
         android:drawableStart="@drawable/bank"
         android:drawableEnd="@drawable/ic_right"
         android:gravity="center|start"
-        android:paddingLeft="10dp"
         android:onClick="onClickProfileAndRegister"
+        android:paddingLeft="10dp"
         android:text="@string/BankDetails"
         android:textAllCaps="false"
         android:textColor="@color/background"
@@ -85,7 +36,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_company" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_registration_action_bar" />
 
     <Button
         android:id="@+id/profile_registration_truck_details"
