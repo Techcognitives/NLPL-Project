@@ -39,13 +39,15 @@ public class RegistrationActivity extends AppCompatActivity {
 
     RadioButton ownerButton, driverButton, brokerButton, customerButton;
     View action_bar;
-    TextView actionBarTitle, selectStateText, selectDistrictText;
+    TextView actionBarTitle, selectStateText, selectDistrictText, english, marathi, hindi;
     ImageView actionBarBackButton;
 
     ArrayAdapter<CharSequence> selectStateArray, selectDistrictArray, selectStateUnionCode;
     Dialog selectStateDialog, selectDistrictDialog;
     String selectedDistrict, selectedState, role;
     String mobile;
+
+    Dialog language;
 
     EditText name, pinCode, address, mobileNoEdit, email_id;
     TextView series;
@@ -62,6 +64,47 @@ public class RegistrationActivity extends AppCompatActivity {
             mobile = bundle.getString("mobile1");
             Log.i("Mobile No Registration", mobile);
         }
+
+
+        Dialog chooseDialog;
+        chooseDialog = new Dialog(RegistrationActivity.this);
+        chooseDialog.setContentView(R.layout.dialog_language);
+        chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+        lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+        lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.gravity = Gravity.BOTTOM;
+
+        chooseDialog.show();
+        chooseDialog.setCancelable(false);
+        chooseDialog.getWindow().setAttributes(lp2);
+
+        english = chooseDialog.findViewById(R.id.english);
+        marathi = chooseDialog.findViewById(R.id.marathi);
+        hindi = chooseDialog.findViewById(R.id.hindi);
+
+        english.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseDialog.dismiss();
+            }
+        });
+
+        hindi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseDialog.dismiss();
+            }
+        });
+
+        marathi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseDialog.dismiss();
+            }
+        });
 
         action_bar = (View) findViewById(R.id.registration_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);

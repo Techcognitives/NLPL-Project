@@ -2,28 +2,40 @@ package com.nlpl.ui.ui.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.ContextMenu;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.nlpl.R;
+
+import java.util.ArrayList;
 
 public class LogInActivity extends AppCompatActivity {
 
 
     EditText mobileNo;
     TextView series;
+    Spinner selectCountry;
     Button getStarted;
     String  mobile;
+    ArrayList<String> country;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +45,27 @@ public class LogInActivity extends AppCompatActivity {
         mobileNo = (EditText) findViewById(R.id.log_in_mobile_no);
         getStarted = (Button) findViewById(R.id.log_in_get_otp_button);
         series = (TextView) findViewById(R.id.log_in_series);
+        selectCountry = findViewById(R.id.selectCountry);
+        registerForContextMenu(selectCountry);
+
+        country = new ArrayList<>();
 
         mobileNo.addTextChangedListener(mobileNumberTextWatcher);
 
         mobileNo.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.array_country_name, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        selectCountry.setAdapter(adapter);
+
+        requestPermissions();
+        requestPermissionsForGalleryREAD();
+        requestPermissionsForGalleryWRITE();
+        requestPermissionsForCamera();
 
         getStarted.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,4 +168,41 @@ public class LogInActivity extends AppCompatActivity {
 //            my_alert.show();
 //        }
 //    }
+
+    private void requestPermissionsForCamera() {
+        if (ContextCompat.checkSelfPermission(LogInActivity.this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(LogInActivity.this, new String[]{
+                    Manifest.permission.CAMERA
+            }, 100);
+        }
+    }
+
+    private void requestPermissionsForGalleryWRITE() {
+        if (ContextCompat.checkSelfPermission(LogInActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(LogInActivity.this, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+            }, 100);
+        }
+    }
+
+    private void requestPermissionsForGalleryREAD() {
+        if (ContextCompat.checkSelfPermission(LogInActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(LogInActivity.this, new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+            }, 100);
+        }
+    }
+
+    private void requestPermissions() {
+        if (ContextCompat.checkSelfPermission(LogInActivity.this, Manifest.permission.RECEIVE_SMS)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(LogInActivity.this, new String[]{
+                    Manifest.permission.RECEIVE_SMS
+            }, 100);
+        }
+    }
+
 }

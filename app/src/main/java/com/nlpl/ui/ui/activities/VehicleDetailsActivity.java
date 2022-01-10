@@ -104,9 +104,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     Button uploadRC, uploadInsurance, okVehicleDetails;
     TextView textRC, editRC;
     TextView textInsurance, editInsurance;
-    int GET_FROM_GALLERY = 0;
+    int GET_FROM_GALLERY = 4;
     int GET_FROM_GALLERY1 = 1;
-    int CAMERA_PIC_REQUEST1 = 2;
+    int CAMERA_PIC_REQUEST1 = 7;
     int CAMERA_PIC_REQUEST2 = 12;
 
     private UserService userService;
@@ -530,7 +530,10 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             String picturePath1 = cursor.getString(columnIndex);
             cursor.close();
 
+            Log.i("path on Activity",picturePath1);
+
             imgRC.setImageURI(selectedImage);
+
             return picturePath1;
 
         } else  if (requestCode == CAMERA_PIC_REQUEST1) {
@@ -642,6 +645,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             cursor.close();
 
             imgRC.setImageURI(selectedImage);
+            Log.i("path onActivityResult",picturePath3);
             return picturePath3;
 
         } else  if (requestCode == CAMERA_PIC_REQUEST1) {
@@ -750,9 +754,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 String insurancePath = insuranceImagePickerWithoutAlert();
                 uploadTruckInsurance(truckId, insurancePath);
 
-                String rcPath = rcImagePickerWithoutAlert();
-                uploadTruckRC(truckId, rcPath );
-
                 okVehicleDetails.setEnabled(true);
                 okVehicleDetails.setBackground(getResources().getDrawable(R.drawable.button_active));
 
@@ -828,13 +829,12 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 AddTruckResponse addTruckResponse = response.body();
                 String truckId = addTruckResponse.getData().getTruck_id();
                 String rcPath = rcImagePickerWithoutAlert();
-                Log.i("Rc path onsave", rcPath);
-                Log.i("truckId onsave", truckId);
                 String insurancePath = insuranceImagePickerWithoutAlert();
-                uploadTruckRC(truckId, rcPath );
-                uploadTruckInsurance(truckId, insurancePath);
-                Log.i("Insurance path onsave", insurancePath);
-                Log.i("truckId onsave In", truckId);
+                Log.i("imgpicker rc", rcImagePickerWithoutAlert());
+                Log.i("rcpath on save", rcPath);
+                Log.i("Insurance on save", insurancePath);
+//                uploadTruckInsurance(truckId, insurancePath);
+                uploadTruckRC(truckId,rcPath);
             }
             @Override
             public void onFailure(Call<AddTruckResponse> call, Throwable t) {
@@ -857,6 +857,26 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
 
+    private void uploadTruckRC(String truckId, String picPath){
+
+        File file = new File(picPath);
+
+        MultipartBody.Part body = prepareFilePart("rc", Uri.fromFile(file));
+
+        Call<UploadTruckRCResponse> call = ApiClient.getUploadTruckRCBookService().UploadTruckRCBook(truckId,body);
+        call.enqueue(new Callback<UploadTruckRCResponse>() {
+            @Override
+            public void onResponse(Call<UploadTruckRCResponse> call, Response<UploadTruckRCResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UploadTruckRCResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
     @NonNull
     private MultipartBody.Part prepareFilePart1(String partName, Uri fileUri) {
 
@@ -869,27 +889,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
         // MultipartBody.Part is used to send also the actual file name
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
-    }
-
-    private void uploadTruckRC(String truckId,String picPath) {
-
-        File file = new File(picPath);
-//        File file = new File(getExternalFilesDir("/").getAbsolutePath(), file);
-
-        MultipartBody.Part body = prepareFilePart("rc", Uri.fromFile(file));
-
-        Call<UploadTruckRCResponse> call = ApiClient.getTruckRCService().uploadTruckRC(truckId,body);
-        call.enqueue(new Callback<UploadTruckRCResponse>() {
-            @Override
-            public void onResponse(Call<UploadTruckRCResponse> call, Response<UploadTruckRCResponse> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<UploadTruckRCResponse> call, Throwable t) {
-
-            }
-        });
     }
 
     private void uploadTruckInsurance(String truckId, String picPath){
@@ -1340,6 +1339,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     }
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {
+//        String path = getRealPathFromURI(getImageUri(this,inImage));
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);

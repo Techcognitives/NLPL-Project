@@ -40,7 +40,6 @@
         <item>Uttar Pradesh</item>
         <item>West Bengal</item>
     </string-array>
-
     <string-array name="array_indian_states_union_territory_codes">
         <item>AN</item>
         <item>AP</item>
@@ -676,6 +675,12 @@
         <item>West Sikkim</item>
     </string-array>
 
+    <string-array name="array_country_name">
+        <item>India</item>
+        <item>Nepal</item>
+        <item>Thailand</item>
+    </string-array>
+
     <string-array name="array_tamil_nadu_districts">
         <item>Ariyalur</item>
         <item>Chengalpattu</item>
@@ -946,6 +951,7 @@
     <string name="tc">Terms of Service</string>
     <string name="and">and</string>
     <string name="pp">Privacy Policy</string>
+    <string name="selectYourCountry">Select Your Country</string>
     //----------------------------------------------------------------------------------------------
 
     //---------------------------- OTP Code Activity -----------------------------------------------
