@@ -10,7 +10,7 @@ import com.nlpl.services.UploadChequeService;
 import com.nlpl.services.UploadDriverLicenseService;
 import com.nlpl.services.UploadDriverSelfieService;
 import com.nlpl.services.UploadTruckInsuranceService;
-import com.nlpl.services.UploadTruckRCService;
+import com.nlpl.services.UploadTruckRCBookService;
 import com.nlpl.services.UserService;
 
 import okhttp3.OkHttpClient;
@@ -85,13 +85,13 @@ public class ApiClient {
         return uploadDriverSelfieService;
     }
 
-    public static UploadTruckRCService getTruckRCService() {
-        UploadTruckRCService uploadTruckRCService = getRetrofit().create(UploadTruckRCService.class);
-        return uploadTruckRCService;
-    }
-
     public static UploadTruckInsuranceService getTuckInsuranceService() {
         UploadTruckInsuranceService uploadTruckInsuranceService = getRetrofit().create(UploadTruckInsuranceService.class);
         return uploadTruckInsuranceService;
+    }
+
+    public static UploadTruckRCBookService getUploadTruckRCBookService() {
+        UploadTruckRCBookService uploadTruckRCBookService = getRetrofit().create(UploadTruckRCBookService.class);
+        return uploadTruckRCBookService;
     }
 }
