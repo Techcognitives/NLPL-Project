@@ -1075,5 +1075,25 @@
     //------------------------------------BASE URL--------------------------------------------------
     <string name="baseURL">http://13.234.163.179:3000</string>
     <string name="internal_storage">internal storage</string>
+    //----------------------------------------------------------------------------------------------
+
+    //-----------------------------------Post A Load------------------------------------------------
+    <string name="pick_up_date">Pick-up Date</string>
+    <string name="pick_up_time">Pick-up Time</string>
+    <string name="budget">Budget</string>
+    <string name="truckTypeAndCapacity">Truck Type &amp; Capacity</string>
+    <string name="SelectVehicleModel">Select Vehicle Model</string>
+    <string name="bodyType">Body Type</string>
+    <string name="pickUpLocationDetails">Pick-up Location Details</string>
+    <string name="dropLocationDetails">Drop Location Details</string>
+    <string name="km">KM (approx)</string>
+    <string name="noteAndMaterial">Note &amp; Material Description*</string>
+    <string name="postALoad">POST A LOAD</string>
+    <string name="date">DD/MM/YY</string>
+    <string name="time">Hr:Min AM/PM</string>
+    <string name="inrRs">INR Rs xxxx</string>
+    <string name="KMAutoCal">KM auto calculated</string>
+    <string name="note_to_post_load">1. Electronic appliances, must handled with care bubble wrap required  </string>
+    //----------------------------------------------------------------------------------------------
 
 </resources>
