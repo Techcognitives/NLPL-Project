@@ -17,265 +17,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <Button
-        android:id="@+id/profile_registration_bank_details_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/button_active"
-        android:drawableStart="@drawable/bank"
-        android:drawableEnd="@drawable/ic_right"
-        android:gravity="center|start"
-        android:onClick="onClickProfileAndRegister"
-        android:paddingLeft="10dp"
-        android:text="@string/BankDetails"
-        android:textAllCaps="false"
-        android:textColor="@color/background"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_registration_action_bar" />
-
-    <Button
-        android:id="@+id/profile_registration_truck_details"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/button_active"
-        android:drawableStart="@drawable/truck"
-        android:drawableEnd="@drawable/ic_right"
-        android:gravity="center|start"
-        android:paddingLeft="10dp"
-        android:onClick="onClickProfileAndRegister"
-        android:text="@string/AddTrucks"
-        android:textAllCaps="false"
-        android:textColor="@color/background"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addBankDone" />
-
-    <Button
-        android:id="@+id/profile_registration_driver_details"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/button_active"
-        android:drawableStart="@drawable/driver"
-        android:drawableEnd="@drawable/ic_right"
-        android:gravity="center|start"
-        android:paddingLeft="10dp"
-        android:text="@string/AddDrivers"
-        android:textAllCaps="false"
-        android:onClick="onClickProfileAndRegister"
-        android:textColor="@color/background"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addTruck" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/personal_done"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:background="@drawable/shadow_small"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_registration_personal_details_button">
-
-        <TextView
-            android:id="@+id/name_done"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="@string/name"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toStartOf="@+id/profile_and_registration_preview_personal_details"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/editPersonalDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:drawableStart="@drawable/ic_edit_small"
-            android:onClick="onClickProfileAndRegister"
-            android:paddingStart="10dp"
-            android:text=""
-            android:textColor="#000000"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/profile_and_registration_preview_personal_details"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/profile_and_registration_preview_personal_details"
-            app:layout_constraintTop_toTopOf="@+id/profile_and_registration_preview_personal_details" />
-
-        <TextView
-            android:id="@+id/phone_done"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:drawableStart="@drawable/success_small"
-            android:text="@string/edit_number_hint"
-            android:textColor="#000000"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/profile_and_registration_email_id_text"
-            app:layout_constraintEnd_toEndOf="@+id/editPersonalDetails"
-            app:layout_constraintStart_toStartOf="@+id/name_done"
-            app:layout_constraintTop_toBottomOf="@+id/name_done" />
-
-        <TextView
-            android:id="@+id/firm_name_done"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="5dp"
-            android:singleLine="true"
-            android:text="@string/firm"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@+id/profile_and_registration_office_address_text"
-            app:layout_constraintEnd_toStartOf="@+id/profile_and_registration_edit_company_details"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/address_done" />
-
-        <TextView
-            android:id="@+id/address_done"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="20dp"
-            android:drawableStart="@drawable/success_small"
-            android:singleLine="true"
-            android:text="@string/address"
-            android:textColor="#000000"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/firm_name_done"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_and_registration_email_id_text" />
-
-        <TextView
-            android:id="@+id/profile_and_registration_office_address_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="20dp"
-            android:drawableStart="@drawable/success_small"
-            android:singleLine="true"
-            android:text="@string/address"
-            android:textColor="#000000"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/firm_name_done" />
-
-        <TextView
-            android:id="@+id/profile_and_registration_email_id_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="20dp"
-            android:drawableStart="@drawable/success_small"
-            android:singleLine="true"
-            android:text="@string/email_id"
-            android:textColor="#000000"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/address_done"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/phone_done" />
-
-        <ImageView
-            android:id="@+id/profile_and_registration_preview_personal_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onClickPreviewPersonalDetails"
-            app:layout_constraintBottom_toBottomOf="@+id/name_done"
-            app:layout_constraintEnd_toStartOf="@+id/editPersonalDetails"
-            app:layout_constraintStart_toEndOf="@+id/name_done"
-            app:layout_constraintTop_toTopOf="@+id/name_done"
-            app:srcCompat="@drawable/ic_preview" />
-
-        <ImageView
-            android:id="@+id/profile_and_registration_edit_company_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:onClick="onClickEditCompanyDetails"
-            app:layout_constraintBottom_toBottomOf="@+id/firm_name_done"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/firm_name_done"
-            app:layout_constraintTop_toTopOf="@+id/firm_name_done"
-            app:srcCompat="@drawable/ic_edit_small" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/add_company"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:background="@drawable/button_de_active_medium_small"
-        android:gravity="center"
-        android:padding="3dp"
-        android:onClick="onClickProfileAndRegister"
-        android:text="@string/add_company"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/personal_done"
-        app:layout_constraintStart_toStartOf="@+id/personal_done"
-        app:layout_constraintTop_toBottomOf="@+id/personal_done" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/bankDetailsDoneLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shadow_small"
-        android:visibility="gone"
-        android:paddingTop="5dp"
-        android:paddingBottom="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/profile_registration_bank_details_button"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/profile_registration_bank_details_button"
-        app:layout_constraintTop_toBottomOf="@+id/profile_registration_bank_details_button">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/bank_list_view"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:scrollbars="vertical"
-            android:scrollbarThumbVertical="@android:color/holo_blue_dark"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <TextView
         android:id="@+id/addBankDone"
         android:layout_width="0dp"
@@ -289,9 +30,9 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/bankDetailsDoneLayout"
-        app:layout_constraintStart_toStartOf="@+id/bankDetailsDoneLayout"
-        app:layout_constraintTop_toBottomOf="@+id/bankDetailsDoneLayout" />
+        app:layout_constraintEnd_toEndOf="@+id/view_bank_details_constrain"
+        app:layout_constraintStart_toStartOf="@+id/view_bank_details_constrain"
+        app:layout_constraintTop_toBottomOf="@+id/view_bank_details_constrain" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/addTrucksDone"
@@ -301,9 +42,9 @@
         android:visibility="gone"
         android:paddingTop="5dp"
         android:paddingBottom="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/profile_registration_truck_details"
-        app:layout_constraintStart_toStartOf="@+id/profile_registration_truck_details"
-        app:layout_constraintTop_toBottomOf="@+id/profile_registration_truck_details">
+        app:layout_constraintEnd_toEndOf="@+id/menu_truck_details"
+        app:layout_constraintStart_toStartOf="@+id/menu_truck_details"
+        app:layout_constraintTop_toBottomOf="@+id/menu_truck_details">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/trucks_list_view"
@@ -345,9 +86,9 @@
         android:visibility="gone"
         android:paddingTop="5dp"
         android:paddingBottom="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/profile_registration_driver_details"
-        app:layout_constraintStart_toStartOf="@+id/profile_registration_driver_details"
-        app:layout_constraintTop_toBottomOf="@+id/profile_registration_driver_details">
+        app:layout_constraintEnd_toEndOf="@+id/menu_driver_details"
+        app:layout_constraintStart_toStartOf="@+id/menu_driver_details"
+        app:layout_constraintTop_toBottomOf="@+id/menu_driver_details">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/driver_list_view"

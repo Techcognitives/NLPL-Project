@@ -15,11 +15,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -74,10 +72,6 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -283,9 +277,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         });
 
         okButton.setEnabled(true);
-        okButton.setBackground(
-
-                getDrawable(R.drawable.button_active));
+        okButton.setBackground(getDrawable(R.drawable.button_active));
 
         ownerButton = (RadioButton) personalAndAddressView.findViewById(R.id.registration_truck_owner);
         driverButton = (RadioButton) personalAndAddressView.findViewById(R.id.registration_driver);
@@ -493,7 +485,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
         panCardText = panAndAadharView.findViewById(R.id.pancard1);
         frontText = panAndAadharView.findViewById(R.id.frontText);
-        backText = panAndAadharView.findViewById(R.id.profile_registration_name_text);
+        backText = panAndAadharView.findViewById(R.id.menu_name_text);
         uploadPAN = panAndAadharView.findViewById(R.id.uploadPan);
         uploadF = panAndAadharView.findViewById(R.id.uploadF);
         imgPAN = panAndAadharView.findViewById(R.id.imagePan);
@@ -731,14 +723,15 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             updateUserType();
         }
 
-       if (mobileString.equals("91"+mobileEdit.getText().toString()) || mobileEdit.getText().toString().isEmpty()) {
+        if (mobileString.equals("91" + mobileEdit.getText().toString()) || mobileEdit.getText().toString().isEmpty()) {
 
-                    Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, ProfileAndRegistrationActivity.class);
-                    i8.putExtra("mobile2", mobileAPI);
-                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i8);
-                    overridePendingTransition(0, 0);
-                    PersonalDetailsAndIdProofActivity.this.finish();
+            Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, ViewPersonalDetailsActivity.class);
+            i8.putExtra("mobile", mobileAPI);
+            i8.putExtra("userId", userId);
+            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i8);
+            overridePendingTransition(0, 0);
+            PersonalDetailsAndIdProofActivity.this.finish();
 
         } else {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
@@ -1448,7 +1441,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
     private void getImageURL() {
 
-        String url = getString(R.string.baseURL) + "/imgbucket/Images/"+userId;
+        String url = getString(R.string.baseURL) + "/imgbucket/Images/" + userId;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

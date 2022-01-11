@@ -328,7 +328,7 @@ public class OtpCodeActivity extends AppCompatActivity {
             }
         });
 
-        new OTPReceiver().setEditText_otp(otp1, otp2, otp3, otp4, otp5, otp6);
+        new OTPReceiver().setEditText_otp(otp1, otp2, otp3, otp4, otp5, otp6, otpButton);
     }
 
     private void setCountdown() {

@@ -3,6 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/shadow_file"
+    android:layout_margin="5dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
     android:layout_height="wrap_content">
 
     <TextView
@@ -10,13 +14,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
         android:drawableStart="@drawable/success_small"
         android:text="@string/name"
-        android:textStyle="bold"
         android:textColor="#000000"
         android:textSize="15sp"
-        app:layout_constraintEnd_toStartOf="@+id/bank_list_preview_bank_details"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/bank_list_edit_bank_details_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,15 +44,15 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:drawableStart="@drawable/ic_edit_small"
-        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:text=""
         android:textColor="#000000"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/bank_list_bank_name"
+        app:layout_constraintBottom_toTopOf="@+id/bank_list_account_number_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bank_list_preview_bank_details"
-        app:layout_constraintTop_toTopOf="@+id/bank_list_preview_bank_details" />
+        app:layout_constraintStart_toEndOf="@+id/bank_list_bank_name"
+        app:layout_constraintTop_toTopOf="@+id/bank_list_bank_name" />
 
     <TextView
         android:id="@+id/bank_list_account_number_text"
@@ -75,19 +78,24 @@
         android:text="@string/IFSC"
         android:textColor="#000000"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bank_list_account_holder_name_text" />
 
-    <ImageView
+    <TextView
         android:id="@+id/bank_list_preview_bank_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/bank_list_bank_name"
-        app:layout_constraintEnd_toStartOf="@+id/bank_list_edit_bank_details_text"
-        app:layout_constraintStart_toEndOf="@+id/bank_list_bank_name"
-        app:layout_constraintTop_toTopOf="@+id/bank_list_bank_name"
-        app:srcCompat="@drawable/ic_preview" />
+        android:layout_marginStart="20dp"
+        android:drawableEnd="@drawable/ic_preview"
+        android:paddingStart="5dp"
+        android:paddingTop="3dp"
+        android:text="Preview Cancelled Cheque"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bank_list_ifsi_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
