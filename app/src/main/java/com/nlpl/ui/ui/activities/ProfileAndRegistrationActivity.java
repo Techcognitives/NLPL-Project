@@ -2,29 +2,19 @@ package com.nlpl.ui.ui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.auth.FirebaseAuth;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BankModel;
 import com.nlpl.model.ModelForRecyclerView.DriverModel;
@@ -47,9 +38,7 @@ import com.nlpl.utils.DownloadImageTask;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 
 public class ProfileAndRegistrationActivity extends AppCompatActivity {
@@ -63,20 +52,16 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     private DriversAdapter driverListAdapter;
     private RecyclerView driverListRecyclerView;
 
-    private ArrayList<BankModel> bankList = new ArrayList<>();
-    private BanksAdapter bankListAdapter;
-    private RecyclerView bankListRecyclerView;
-
-    private boolean isPersonalExpanded = false, isBankExpanded = false, isTruckExpanded = false, isDriverExpanded = false;
     String isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
 
     View actionBar;
-    TextView addDriver, addTruck, addBankDetails, accNoDone, editPersonalDetails, actionBarTitle, addCompany, phoneDone, nameDone, firmName, addressDone;
-    ImageView actionBarBackButton, previewPersonalDetails, actionBarMenuButton;
+    TextView addDriver, addTruck, addBankDetails, accNoDone, actionBarTitle;
+    ImageView actionBarBackButton, actionBarMenuButton;
 
     Dialog menuDialog;
-    TextView menuUserNameTextView, mobileText;
-    ConstraintLayout personalDetailsButton;
+    ConstraintLayout drawerLayout;
+    TextView menuUserNameTextView, mobileText, personalDetailsButton, bankDetailsTextView, addTrucksTextView, addDriversTextView;
+    ImageView personalDetailsLogoImageView, bankDetailsLogoImageView, truckDetailsLogoImageView, driverDetailsLogoImageView;
 
     View bottomNav;
     TextView truckLoadText;
@@ -84,19 +69,13 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     String userId, userIdAPI, phone, mobileNoAPI, mobileNoDriverAPI, userDriverIdAPI, driverUserIdGet;
     ArrayList<String> arrayUserId, arrayUserDriverId, arrayMobileNo, arrayDriverMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
 
-    Button bankDetails, addTrucks, addDrivers;
     String mobile, name, address, pinCode, city, role, emailIdAPI;
-    TextView emailIdTextView, officeAddressTextView;
-    ConstraintLayout personal_done, bankDone, vehicleDone, driverDone;
+    ConstraintLayout vehicleDone, driverDone;
 
-    String companyName, companyAddress, companyCity, companyZip;
-
-    TextView dialogPersonalDetailsName, dialogPersonalDetailsPhone, dialogPersonalDetailsEmail, dialogPersonalDetailsAddress, dialogPersonalDetailsFirmName, dialogPersonalDetailsFirmAddress;
-    TextView dialogBankDetailsBankName, dialogBankDetailsBankAccountNumber, dialogBankDetailsBankIFSICode;
-    Dialog previewDialogPersonalDetails, previewDialogBankDetails, previewDialogTruckDetails, previewDialogDriverDetails;
+    Dialog previewDialogTruckDetails, previewDialogDriverDetails;
     TextView previewTruckDetailsVehicleNumber, previewTruckDetailsTruckType, previewTruckDetailsVehicleType, previewTruckDetailsTruckFeet, previewTruckDetailsVehicleCapacity, previewDriverDetailsDriverBankAdd;
     TextView previewDriverDetailsDriverName, previewDriverDetailsDriverNumber, previewDriverDetailsEmailId;
-    ImageView previewPanImage, previewAadharImage, previewCancelledCheque, previewRcBook, previewInsurance, previewDrivingLicense, previewDriverSelfie, editCompanyDetailsImageView;
+    ImageView previewRcBook, previewInsurance, previewDrivingLicense, previewDriverSelfie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,51 +110,12 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         bottomNav = (View) findViewById(R.id.profile_registration_bottom_nav_bar);
         truckLoadText = (TextView) bottomNav.findViewById(R.id.dhuejsfcb);
 
-
-        bankDetails = findViewById(R.id.profile_registration_bank_details_button);
-        addTrucks = findViewById(R.id.profile_registration_truck_details);
-        addDrivers = findViewById(R.id.profile_registration_driver_details);
-        personal_done = findViewById(R.id.personal_done);
-        addCompany = findViewById(R.id.add_company);
-        phoneDone = findViewById(R.id.phone_done);
-        nameDone = findViewById(R.id.name_done);
-        firmName = findViewById(R.id.firm_name_done);
-        addressDone = findViewById(R.id.address_done);
-        editPersonalDetails = findViewById(R.id.editPersonalDetails);
         accNoDone = findViewById(R.id.bank_list_account_number_text);
-        bankDone = findViewById(R.id.bankDetailsDoneLayout);
         addBankDetails = findViewById(R.id.addBankDone);
         vehicleDone = findViewById(R.id.addTrucksDone);
         addTruck = findViewById(R.id.addTruck);
         driverDone = findViewById(R.id.driverDone);
         addDriver = findViewById(R.id.addDriverDone);
-
-        emailIdTextView = (TextView) findViewById(R.id.profile_and_registration_email_id_text);
-        officeAddressTextView = (TextView) findViewById(R.id.profile_and_registration_office_address_text);
-        previewPersonalDetails = (ImageView) findViewById(R.id.profile_and_registration_preview_personal_details);
-        editCompanyDetailsImageView = (ImageView) findViewById(R.id.profile_and_registration_edit_company_details);
-
-        previewDialogPersonalDetails = new Dialog(ProfileAndRegistrationActivity.this);
-        previewDialogPersonalDetails.setContentView(R.layout.dialog_preview_personal_details);
-        previewDialogPersonalDetails.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        dialogPersonalDetailsName = (TextView) previewDialogPersonalDetails.findViewById(R.id.dialog_personal_details_name_text_view);
-        dialogPersonalDetailsPhone = (TextView) previewDialogPersonalDetails.findViewById(R.id.dialog_personal_details_phone_number_text_view);
-        dialogPersonalDetailsEmail = (TextView) previewDialogPersonalDetails.findViewById(R.id.dialog_personal_details_email_id_text_view);
-        dialogPersonalDetailsAddress = (TextView) previewDialogPersonalDetails.findViewById(R.id.dialog_personal_details_address_text_view);
-        dialogPersonalDetailsFirmName = (TextView) previewDialogPersonalDetails.findViewById(R.id.dialog_personal_details_firm_name_text_view);
-        dialogPersonalDetailsFirmAddress = (TextView) previewDialogPersonalDetails.findViewById(R.id.dialog_personal_details_firm_address_text_view);
-        previewPanImage = (ImageView) previewDialogPersonalDetails.findViewById(R.id.dialog_personal_details_pan_image_view);
-        previewAadharImage = (ImageView) previewDialogPersonalDetails.findViewById(R.id.dialog_personal_details_aadhar_image_view);
-
-        previewDialogBankDetails = new Dialog(ProfileAndRegistrationActivity.this);
-        previewDialogBankDetails.setContentView(R.layout.dialog_preview_bank_details);
-        previewDialogBankDetails.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        dialogBankDetailsBankName = (TextView) previewDialogBankDetails.findViewById(R.id.dialog_bank_details_name_text_view);
-        dialogBankDetailsBankAccountNumber = (TextView) previewDialogBankDetails.findViewById(R.id.dialog_bank_details_account_number_text_view);
-        dialogBankDetailsBankIFSICode = (TextView) previewDialogBankDetails.findViewById(R.id.dialog_bank_details_ifsi_code_text_view);
-        previewCancelledCheque = (ImageView) previewDialogBankDetails.findViewById(R.id.dialog_bank_details_cheque_image_view);
 
         previewDialogTruckDetails = new Dialog(ProfileAndRegistrationActivity.this);
         previewDialogTruckDetails.setContentView(R.layout.dialog_preview_truck_details);
@@ -204,9 +144,17 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         menuDialog.setContentView(R.layout.dialog_menu);
         menuDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        menuUserNameTextView = (TextView) menuDialog.findViewById(R.id.profile_registration_name_text);
-        mobileText = (TextView) menuDialog.findViewById(R.id.profile_registration_mobile_text);
-        personalDetailsButton = (ConstraintLayout) menuDialog.findViewById(R.id.profile_registration_personal_details_button);
+        drawerLayout = (ConstraintLayout) menuDialog.findViewById(R.id.drawer_menu);
+        menuUserNameTextView = (TextView) menuDialog.findViewById(R.id.menu_name_text);
+        mobileText = (TextView) menuDialog.findViewById(R.id.menu_mobile);
+        personalDetailsButton = (TextView) menuDialog.findViewById(R.id.menu_personal_details_button);
+        bankDetailsTextView = (TextView) menuDialog.findViewById(R.id.menu_bank_details_button);
+        addTrucksTextView = (TextView) menuDialog.findViewById(R.id.menu_truck_details);
+        addDriversTextView = (TextView) menuDialog.findViewById(R.id.menu_driver_details);
+        personalDetailsLogoImageView = (ImageView) menuDialog.findViewById(R.id.menu_personal_details_logo_image_view);
+        bankDetailsLogoImageView = (ImageView) menuDialog.findViewById(R.id.menu_bank_details_logo_image_view);
+        truckDetailsLogoImageView = (ImageView) menuDialog.findViewById(R.id.menu_truck_details_logo_image_view);
+        driverDetailsLogoImageView = (ImageView) menuDialog.findViewById(R.id.menu_driver_details_logo_image_view);
 
         previewDriverDetailsDriverBankAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -220,15 +168,14 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         });
 
         mQueue = Volley.newRequestQueue(ProfileAndRegistrationActivity.this);
+        getUserId(phone);
 
-        personal_done.setVisibility(View.GONE);
-        bankDone.setVisibility(View.GONE);
         vehicleDone.setVisibility(View.GONE);
         driverDone.setVisibility(View.GONE);
-        addCompany.setVisibility(View.GONE);
 
-        //---------------------------- Get Truck Details -------------------------------------------
-        truckListRecyclerView = (RecyclerView) findViewById(R.id.trucks_list_view);
+    }
+
+    private void getUserId(String userMobileNumber){
 
         //------------------------------get user details by mobile Number---------------------------------
         //-----------------------------------Get User Details---------------------------------------
@@ -249,15 +196,13 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     }
 
                     for (int j = 0; j < arrayMobileNo.size(); j++) {
-                        if (arrayMobileNo.get(j).equals(phone)) {
+                        if (arrayMobileNo.get(j).equals(userMobileNumber)) {
                             userId = arrayUserId.get(j);
                             Log.i("userIDAPI:", userId);
                         }
                     }
 
                     getUserDetails();
-                    getCompanyDetails();
-                    getImageURL();
 
                     //---------------------------- Get Truck Details -------------------------------------------
                     truckListRecyclerView = (RecyclerView) findViewById(R.id.trucks_list_view);
@@ -285,19 +230,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     getDriverDetailsList();
                     //------------------------------------------------------------------------------------------
 
-                    //---------------------------- Get Bank Details -------------------------------------------
-                    bankListRecyclerView = (RecyclerView) findViewById(R.id.bank_list_view);
-
-                    LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(getApplicationContext());
-                    linearLayoutManagerBank.setReverseLayout(true);
-                    bankListRecyclerView.setLayoutManager(linearLayoutManagerBank);
-                    bankListRecyclerView.setHasFixedSize(true);
-
-                    bankListAdapter = new BanksAdapter(ProfileAndRegistrationActivity.this, bankList);
-                    bankListRecyclerView.setAdapter(bankListAdapter);
-                    getBankDetailsList();
-                    //------------------------------------------------------------------------------------------
-
 //
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -312,6 +244,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         mQueue.add(request);
 
         //------------------------------------------------------------------------------------------------
+
     }
 
     private void getUserDetails() {
@@ -340,23 +273,34 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                         isDriverDetailsDone = obj.getString("isDriver_added");
 
                         //-------------------------------------Personal details ---- -------------------------------------
-                        menuUserNameTextView.setText(" " + name + "!");
-                        dialogPersonalDetailsName.setText(" Name: " + name);
-                        nameDone.setText(" " + name);
-
+                        menuUserNameTextView.setText(" Hello, " + name + "!");
                         String s1 = mobile.substring(2, 12);
                         mobileText.setText("+91 " + s1);
 
-                        phoneDone.setText(" +91 " + s1);
-                        dialogPersonalDetailsPhone.setText(" Phone: +91 " + s1);
-
-                        emailIdTextView.setText(" " + emailIdAPI);
-                        dialogPersonalDetailsEmail.setText(" Email: " + emailIdAPI);
-
-                        addressDone.setText(" " + address + ", " + city + " " + pinCode);
-                        dialogPersonalDetailsAddress.setText(" Address: " + address + ", " + city + " " + pinCode);
-
                         //--------------------------------------------------------------------------------------------------------
+                        if (isPersonalDetailsDone.equals("1")) {
+                            personalDetailsLogoImageView.setImageDrawable(getResources().getDrawable(R.drawable.personal_success));
+                        } else {
+                            personalDetailsLogoImageView.setImageDrawable(getResources().getDrawable(R.drawable.personal));
+                        }
+
+                        if (isBankDetailsDone.equals("1")) {
+                            bankDetailsLogoImageView.setImageDrawable(getResources().getDrawable(R.drawable.bank_success));
+                        } else {
+                            bankDetailsLogoImageView.setImageDrawable(getResources().getDrawable(R.drawable.bank));
+                        }
+
+                        if (isTruckDetailsDone.equals("1")) {
+                            truckDetailsLogoImageView.setImageDrawable(getResources().getDrawable(R.drawable.truck_success));
+                        } else {
+                            truckDetailsLogoImageView.setImageDrawable(getResources().getDrawable(R.drawable.truck));
+                        }
+
+                        if (isDriverDetailsDone.equals("1")) {
+                            driverDetailsLogoImageView.setImageDrawable(getResources().getDrawable(R.drawable.driver_success));
+                        } else {
+                            driverDetailsLogoImageView.setImageDrawable(getResources().getDrawable(R.drawable.driver));
+                        }
 
                         if (role.equals("Customer")) {
                             truckLoadText.setText("Post a Load");
@@ -484,120 +428,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         //-------------------------------------------------------------------------------------------
     }
 
-    public void getBankDetailsList() {
-        //---------------------------- Get Bank Details -------------------------------------------
-        String url1 = getString(R.string.baseURL) + "/bank/getBkByUserId/" + userId;
-        Log.i("URL: ", url1);
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    bankList = new ArrayList<>();
-                    JSONArray bankLists = response.getJSONArray("data");
-                    for (int i = 0; i < bankLists.length(); i++) {
-                        JSONObject obj = bankLists.getJSONObject(i);
-                        BankModel modelBank = new BankModel();
-                        modelBank.setUser_id(obj.getString("user_id"));
-                        modelBank.setAccountholder_name(obj.getString("accountholder_name"));
-                        modelBank.setBank_name(obj.getString("bank_name"));
-                        modelBank.setAccount_number(obj.getString("account_number"));
-                        modelBank.setRe_enter_acc_num(obj.getString("re_enter_acc_num"));
-                        modelBank.setIFSI_CODE(obj.getString("IFSI_CODE"));
-                        modelBank.setBank_id(obj.getString("bank_id"));
-                        modelBank.setCancelled_cheque(obj.getString("cancelled_cheque"));
-                        bankList.add(modelBank);
-                    }
-                    if (bankList.size() > 0) {
-                        bankListAdapter.updateData(bankList);
-                    } else {
-                    }
-
-                    if (bankList.size() > 5) {
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        params.height = 235; //height recycleviewer
-                        bankListRecyclerView.setLayoutParams(params);
-                    } else {
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        bankListRecyclerView.setLayoutParams(params);
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request);
-        //-------------------------------------------------------------------------------------------
-    }
-
-    public void getCompanyDetails() {
-        //---------------------------- Get Company Details -------------------------------------------
-        String url1 = getString(R.string.baseURL) + "/company/get/" + userId;
-        Log.i("URL: ", url1);
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray companyDetails = response.getJSONArray("data");
-                    for (int i = 0; i < companyDetails.length(); i++) {
-                        JSONObject data = companyDetails.getJSONObject(i);
-                        companyName = data.getString("company_name");
-                        companyAddress = data.getString("comp_add");
-                        companyCity = data.getString("comp_city");
-                        companyZip = data.getString("comp_zip");
-                    }
-
-                    if (companyName == null) {
-                        dialogPersonalDetailsFirmName.setVisibility(View.GONE);
-                        editCompanyDetailsImageView.setVisibility(View.GONE);
-                        dialogPersonalDetailsFirmAddress.setVisibility(View.GONE);
-                    }
-
-                    firmName.setText(" " + companyName);
-                    dialogPersonalDetailsFirmName.setText(" Firm Name: " + companyName);
-
-                    officeAddressTextView.setText(" " + companyAddress + ", " + " " + companyCity + ", " + companyZip);
-                    dialogPersonalDetailsFirmAddress.setText(" Office Address: " + companyAddress + ", " + " " + companyCity + ", " + companyZip);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request);
-        //-------------------------------------------------------------------------------------------
-    }
-
-    public void onClickPreviewBankDetails(BankModel obj) {
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(previewDialogBankDetails.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.gravity = Gravity.CENTER;
-        previewDialogBankDetails.show();
-        previewDialogBankDetails.getWindow().setAttributes(lp);
-
-        dialogBankDetailsBankName.setText(" Bank Name: " + obj.getBank_name());
-        dialogBankDetailsBankAccountNumber.setText(" Account Number: " + obj.getAccount_number());
-        dialogBankDetailsBankIFSICode.setText(" IFSI Code: " + obj.getIFSI_CODE());
-
-        String cancelledChequeURL = obj.getCancelled_cheque();
-        Log.i("IMAGE CHEQUE URL", cancelledChequeURL);
-        new DownloadImageTask(previewCancelledCheque).execute(cancelledChequeURL);
-
-    }
 
     public void getOnClickPreviewTruckDetails(TruckModel obj) {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -646,53 +476,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         new DownloadImageTask(previewDriverSelfie).execute(selfieURL);
     }
 
-    public void onClickEditCompanyDetails(View view) {
-        Intent intent1 = new Intent(ProfileAndRegistrationActivity.this, CompanyDetailsActivity.class);
-        intent1.putExtra("userId", userId);
-        intent1.putExtra("mobile", phone);
-        intent1.putExtra("isEdit", true);
-        startActivity(intent1);
-    }
 
-    private void getImageURL() {
-        String url = getString(R.string.baseURL) + "/imgbucket/Images/" + userId;
-        Log.i("Image URL", url);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray imageList = response.getJSONArray("data");
-                    for (int i = 0; i < imageList.length(); i++) {
-                        JSONObject obj = imageList.getJSONObject(i);
-                        String imageType = obj.getString("image_type");
-
-                        String panImageURL, aadharImageURL;
-
-                        if (imageType.equals("aadhar")) {
-                            aadharImageURL = obj.getString("image_url");
-                            new DownloadImageTask(previewAadharImage).execute(aadharImageURL);
-                            Log.i("IMAGE AADHAR URL", aadharImageURL);
-                        }
-
-                        if (imageType.equals("pan")) {
-                            panImageURL = obj.getString("image_url");
-                            Log.i("IMAGE PAN URL", panImageURL);
-                            new DownloadImageTask(previewPanImage).execute(panImageURL);
-                        }
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request);
-    }
 
     public void getTruckDetails(TruckModel obj) {
         Intent intent = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
@@ -714,21 +498,14 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void getBankDetails(BankModel obj) {
-        Intent intent = new Intent(ProfileAndRegistrationActivity.this, BankDetailsActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("isEdit", true);
-        intent.putExtra("bankDetailsID", obj.getBank_id());
-        Log.i("Bank Id in P and R", obj.getBank_id());
-        intent.putExtra("mobile", phone);
-        startActivity(intent);
-    }
-
     public void onClickProfileAndRegister(View view) {
         switch (view.getId()) {
-            case R.id.profile_registration_personal_details_button:
+            case R.id.menu_personal_details_button:
                 if (isPersonalDetailsDone.equals("1")) {
-
+                    Intent intent = new Intent(ProfileAndRegistrationActivity.this, ViewPersonalDetailsActivity.class);
+                    intent.putExtra("userId", userId);
+                    intent.putExtra("mobile", phone);
+                    startActivity(intent);
                 } else {
                     Intent intent = new Intent(ProfileAndRegistrationActivity.this, PersonalDetailsActivity.class);
                     intent.putExtra("userId", userId);
@@ -737,9 +514,12 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 }
                 break;
 
-            case R.id.profile_registration_bank_details_button:
+            case R.id.menu_bank_details_button:
                 if (isBankDetailsDone.equals("1")) {
-
+                    Intent intent = new Intent(ProfileAndRegistrationActivity.this, ViewBankDetailsActivity.class);
+                    intent.putExtra("userId", userId);
+                    intent.putExtra("mobile", phone);
+                    startActivity(intent);
                 } else {
                     Intent intent = new Intent(ProfileAndRegistrationActivity.this, BankDetailsActivity.class);
                     intent.putExtra("isEdit", false);
@@ -749,7 +529,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 }
                 break;
 
-            case R.id.profile_registration_truck_details:
+            case R.id.menu_truck_details:
                 if (isTruckDetailsDone.equals("1")) {
 
                 } else {
@@ -762,7 +542,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
                 break;
 
-            case R.id.profile_registration_driver_details:
+            case R.id.menu_driver_details:
                 if (isDriverDetailsDone.equals("1")) {
 
                 } else {
@@ -772,21 +552,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     intent.putExtra("mobile", phone);
                     startActivity(intent);
                 }
-                break;
-
-            case R.id.editPersonalDetails:
-                Intent intent = new Intent(ProfileAndRegistrationActivity.this, PersonalDetailsAndIdProofActivity.class);
-                intent.putExtra("userId", userId);
-                intent.putExtra("mobile", phone);
-                startActivity(intent);
-                break;
-
-            case R.id.add_company:
-                Intent intent1 = new Intent(ProfileAndRegistrationActivity.this, CompanyDetailsActivity.class);
-                intent1.putExtra("userId", userId);
-                intent1.putExtra("mobile", phone);
-                intent1.putExtra("isEdit", false);
-                startActivity(intent1);
                 break;
 
             case R.id.addBankDone:
@@ -814,16 +579,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 startActivity(intent4);
                 break;
         }
-    }
-
-    public void onClickPreviewPersonalDetails(View view) {
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(previewDialogPersonalDetails.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.gravity = Gravity.CENTER;
-        previewDialogPersonalDetails.show();
-        previewDialogPersonalDetails.getWindow().setAttributes(lp);
     }
 
     private void getUserDriverId(String getMobile) {
@@ -915,19 +670,25 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         });
 
         mQueue.add(request);
-
     }
 
     public void onCLickShowMenu (View view){
-
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(menuDialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp.gravity = Gravity.END;
         menuDialog.show();
+        menuDialog.setCancelable(true);
         menuDialog.getWindow().setAttributes(lp);
+    }
 
+    public void onClickLogOut (View view){
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(ProfileAndRegistrationActivity.this, LogInActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
     }
 
 }

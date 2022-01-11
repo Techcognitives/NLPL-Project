@@ -139,31 +139,6 @@ public class CompanyDetailsActivity extends AppCompatActivity {
         mQueue = Volley.newRequestQueue(CompanyDetailsActivity.this);
         if (isEdit) {
             getCompanyDetails();
-
-            if (companyName.getText().toString() != null) {
-                updateCompanyName();
-            }
-            if (gstNumber.getText().toString() != null) {
-                updateCompanyGstNumber();
-            }
-            if (panNumber.getText().toString() != null) {
-                updateCompanyPanNumber();
-            }
-            if (selectStateText.getText().toString() != null) {
-                updateCompanyState();
-            }
-            if (address.getText().toString() != null) {
-                updateCompanyAddress();
-            }
-            if (selectDistrictText.getText().toString() != null) {
-                updateCompanyCity();
-            }
-            if (pinCode.getText().toString() != null) {
-                updateCompanyZip();
-            }
-            if(companyType != null){
-                updateCompanyType();
-            }
         }
 
 //        if (!name.getText().toString().isEmpty() && !selectStateText.getText().toString().isEmpty() && !selectDistrictText.getText().toString().isEmpty() && role != null){
@@ -415,7 +390,36 @@ public class CompanyDetailsActivity extends AppCompatActivity {
     };
 
     public void onClickCompanyDetailsOK(View view) {
-        saveCompany(createCompany());
+        if (isEdit){
+
+            if (companyName.getText().toString() != null) {
+                updateCompanyName();
+            }
+            if (gstNumber.getText().toString() != null) {
+                updateCompanyGstNumber();
+            }
+            if (panNumber.getText().toString() != null) {
+                updateCompanyPanNumber();
+            }
+            if (selectStateText.getText().toString() != null) {
+                updateCompanyState();
+            }
+            if (address.getText().toString() != null) {
+                updateCompanyAddress();
+            }
+            if (selectDistrictText.getText().toString() != null) {
+                updateCompanyCity();
+            }
+            if (pinCode.getText().toString() != null) {
+                updateCompanyZip();
+            }
+            if(companyType != null){
+                updateCompanyType();
+            }
+
+        }else{
+            saveCompany(createCompany());
+        }
         updateUserIsCompanyAdded();
         AlertDialog.Builder my_alert = new AlertDialog.Builder(CompanyDetailsActivity.this);
         my_alert.setTitle("Company Details added Successfully");
@@ -423,8 +427,9 @@ public class CompanyDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
-                Intent i8 = new Intent(CompanyDetailsActivity.this, ProfileAndRegistrationActivity.class);
-                i8.putExtra("mobile2", mobile);
+                Intent i8 = new Intent(CompanyDetailsActivity.this, ViewPersonalDetailsActivity.class);
+                i8.putExtra("mobile", mobile);
+                i8.putExtra("userId", userId);
                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i8);
                 overridePendingTransition(0, 0);
@@ -522,6 +527,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 
     //-------------------------------------- Update Type -----------------------------------------------
     private void updateCompanyName() {
+//        Log.i("CompanyId", companyIdAPI);
 
 //------------------------------------- Update Type ------------------------------------------------
         UpdateCompanyName updateCompanyName = new UpdateCompanyName(companyName.getText().toString());
@@ -766,6 +772,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
                         companyCityAPI = data.getString("comp_city");
                         companyZipAPI = data.getString("comp_zip");
                         companyIdAPI = data.getString("company_id");
+                        Log.i("CompanyId Metho", companyIdAPI);
                         companyTypeAPI = data.getString("company_type");
                     }
 

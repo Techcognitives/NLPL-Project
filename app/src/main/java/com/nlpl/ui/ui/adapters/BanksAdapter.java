@@ -14,15 +14,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BankModel;
 import com.nlpl.ui.ui.activities.ProfileAndRegistrationActivity;
+import com.nlpl.ui.ui.activities.ViewBankDetailsActivity;
 
 import java.util.ArrayList;
 
 public class BanksAdapter extends RecyclerView.Adapter<BanksAdapter.BankViewHolder> {
 
     private ArrayList<BankModel> bankList;
-    private ProfileAndRegistrationActivity activity;
+    private ViewBankDetailsActivity activity;
 
-    public BanksAdapter(ProfileAndRegistrationActivity activity, ArrayList<BankModel> bankList) {
+    public BanksAdapter(ViewBankDetailsActivity activity, ArrayList<BankModel> bankList) {
         this.bankList = bankList;
         this.activity = activity;
     }
@@ -76,8 +77,7 @@ public class BanksAdapter extends RecyclerView.Adapter<BanksAdapter.BankViewHold
     }
 
     public class BankViewHolder extends RecyclerView.ViewHolder {
-        private TextView list_acc_holder_name, list_acc_no, list_edit, list_bank_name, list_ifsi;
-        private ImageView list_preview_bank_details;
+        private TextView list_acc_holder_name, list_acc_no, list_edit, list_bank_name, list_ifsi, list_preview_bank_details;
 
         public BankViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -17,6 +17,7 @@ import android.text.TextWatcher;
 import android.view.ContextMenu;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,7 +36,6 @@ public class LogInActivity extends AppCompatActivity {
     Spinner selectCountry;
     Button getStarted;
     String  mobile;
-    ArrayList<String> country;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,19 +48,32 @@ public class LogInActivity extends AppCompatActivity {
         selectCountry = findViewById(R.id.selectCountry);
         registerForContextMenu(selectCountry);
 
-        country = new ArrayList<>();
+        selectCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                //Change the selected item's text color
+                try {
+                    ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+            }
+        });
+
 
         mobileNo.addTextChangedListener(mobileNumberTextWatcher);
 
         mobileNo.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.array_country_name, android.R.layout.simple_spinner_item);
-// Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
-        selectCountry.setAdapter(adapter);
 
         requestPermissions();
         requestPermissionsForGalleryREAD();

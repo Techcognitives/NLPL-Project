@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -19,9 +19,21 @@
         android:theme="@style/Theme.NLPL"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.ui.activities.ViewTruckDetailsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
+        <activity
+            android:name=".ui.ui.activities.ViewBankDetailsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
+        <activity
+            android:name=".ui.ui.activities.ViewPersonalDetailsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
+        <activity
             android:name=".ui.ui.activities.PersonalDetailsAndIdProofActivity"
-            android:theme="@style/Theme.Design.Light.NoActionBar"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
             android:name=".ui.ui.activities.CompanyDetailsActivity"
             android:exported="false"
