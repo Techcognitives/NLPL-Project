@@ -31,7 +31,7 @@
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.ui.activities.PostALoad"
+            android:name=".ui.ui.activities.PostALoadActivity"
             android:exported="true" />
         <activity
             android:name=".ui.ui.activities.PersonalDetailsAndIdProofActivity"

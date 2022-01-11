@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.nlpl.R;
 
-public class PostALoad extends AppCompatActivity {
+public class PostALoadActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

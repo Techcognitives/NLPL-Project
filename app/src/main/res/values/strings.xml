@@ -1087,11 +1087,11 @@
     <string name="pickUpLocationDetails">Pick-up Location Details</string>
     <string name="dropLocationDetails">Drop Location Details</string>
     <string name="km">KM (approx)</string>
-    <string name="noteAndMaterial">Note &amp; Material Description*</string>
+    <string name="noteAndMaterial">Notes &amp; Material Description*</string>
     <string name="postALoad">POST A LOAD</string>
-    <string name="date">DD/MM/YY</string>
-    <string name="time">Hr:Min AM/PM</string>
-    <string name="inrRs">INR Rs xxxx</string>
+    <string name="date">DD-Month-YY</string>
+    <string name="time">hh:mm AM/PM</string>
+    <string name="inrRs">INR X,XXX</string>
     <string name="KMAutoCal">KM auto calculated</string>
     <string name="note_to_post_load">1. Electronic appliances, must handled with care bubble wrap required  </string>
     //----------------------------------------------------------------------------------------------
