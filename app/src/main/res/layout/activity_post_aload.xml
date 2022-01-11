@@ -6,9 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".ui.ui.activities.PostALoadActivity">
 
-
     <include
-        android:id="@+id/registration_action_bar"
+        android:id="@+id/post_a_load_action_bar"
         layout="@layout/action_bar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -17,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <include
-        android:id="@+id/profile_registration_bottom_nav_bar"
+        android:id="@+id/post_a_load_bottom_nav_bar0"
         layout="@layout/bottom_nav_bar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -27,7 +26,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/registration_ok2"
+        android:id="@+id/post_a_load_ok_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -39,10 +38,10 @@
         android:textColor="@color/background"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/profile_registration_bottom_nav_bar"
+        app:layout_constraintBottom_toTopOf="@+id/post_a_load_bottom_nav_bar0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName6" />
+        app:layout_constraintTop_toBottomOf="@+id/post_a_load_notes_edit_text" />
 
     <TextView
         android:id="@+id/textView8"
@@ -53,9 +52,9 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/textView11"
-        app:layout_constraintStart_toStartOf="@+id/textView11"
-        app:layout_constraintTop_toBottomOf="@+id/registration_action_bar" />
+        app:layout_constraintEnd_toEndOf="@+id/post_a_load_date_text_view"
+        app:layout_constraintStart_toStartOf="@+id/post_a_load_date_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/post_a_load_action_bar" />
 
     <TextView
         android:id="@+id/textView9"
@@ -66,8 +65,8 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/textView8"
-        app:layout_constraintEnd_toEndOf="@+id/textView14"
-        app:layout_constraintStart_toStartOf="@+id/textView14"
+        app:layout_constraintEnd_toEndOf="@+id/post_a_load_time_text_view"
+        app:layout_constraintStart_toStartOf="@+id/post_a_load_time_text_view"
         app:layout_constraintTop_toTopOf="@+id/textView8" />
 
     <TextView
@@ -79,12 +78,12 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/textView9"
-        app:layout_constraintEnd_toEndOf="@+id/textView15"
-        app:layout_constraintStart_toStartOf="@+id/textView15"
+        app:layout_constraintEnd_toEndOf="@+id/post_a_load_budget_text_view"
+        app:layout_constraintStart_toStartOf="@+id/post_a_load_budget_text_view"
         app:layout_constraintTop_toTopOf="@+id/textView9" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/post_a_load_date_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -97,13 +96,13 @@
         android:paddingBottom="5dp"
         android:textColor="@color/black"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView14"
-        app:layout_constraintEnd_toStartOf="@+id/textView14"
+        app:layout_constraintBottom_toBottomOf="@+id/post_a_load_time_text_view"
+        app:layout_constraintEnd_toStartOf="@+id/post_a_load_time_text_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <TextView
-        android:id="@+id/textView14"
+        android:id="@+id/post_a_load_time_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -116,12 +115,12 @@
         android:paddingEnd="5dp"
         android:paddingBottom="5dp"
         android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/textView15"
-        app:layout_constraintStart_toEndOf="@+id/textView11"
+        app:layout_constraintEnd_toStartOf="@+id/post_a_load_budget_text_view"
+        app:layout_constraintStart_toEndOf="@+id/post_a_load_date_text_view"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/post_a_load_budget_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -134,9 +133,9 @@
         android:paddingBottom="5dp"
         android:textColor="@color/black"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView14"
+        app:layout_constraintBottom_toBottomOf="@+id/post_a_load_time_text_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView14"
+        app:layout_constraintStart_toEndOf="@+id/post_a_load_time_text_view"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
     <TextView
@@ -151,11 +150,11 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        app:layout_constraintTop_toBottomOf="@+id/post_a_load_date_text_view" />
 
     <TextView
-        android:id="@+id/textView18"
-        android:layout_width="174dp"
+        android:id="@+id/post_a_load_vehicle_model"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
@@ -167,13 +166,13 @@
         android:paddingEnd="25dp"
         android:paddingBottom="5dp"
         android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/textView19"
+        app:layout_constraintEnd_toStartOf="@+id/post_a_load_feet_text_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
     <TextView
-        android:id="@+id/textView19"
-        android:layout_width="174dp"
+        android:id="@+id/post_a_load_feet_text_view"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         android:layout_marginEnd="20dp"
@@ -184,14 +183,14 @@
         android:paddingEnd="25dp"
         android:paddingBottom="5dp"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView18"
+        app:layout_constraintBottom_toBottomOf="@+id/post_a_load_vehicle_model"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView18"
-        app:layout_constraintTop_toTopOf="@+id/textView18" />
+        app:layout_constraintStart_toEndOf="@+id/post_a_load_vehicle_model"
+        app:layout_constraintTop_toTopOf="@+id/post_a_load_vehicle_model" />
 
     <TextView
-        android:id="@+id/textView20"
-        android:layout_width="174dp"
+        android:id="@+id/post_a_load_capacity_text_view"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@drawable/edit_text_border"
@@ -201,13 +200,13 @@
         android:paddingEnd="25dp"
         android:paddingBottom="5dp"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView18"
-        app:layout_constraintStart_toStartOf="@+id/textView18"
-        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+        app:layout_constraintEnd_toEndOf="@+id/post_a_load_vehicle_model"
+        app:layout_constraintStart_toStartOf="@+id/post_a_load_vehicle_model"
+        app:layout_constraintTop_toBottomOf="@+id/post_a_load_vehicle_model" />
 
     <TextView
-        android:id="@+id/textView21"
-        android:layout_width="174dp"
+        android:id="@+id/post_a_load_body_type_text_view"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/edit_text_border"
         android:paddingStart="10dp"
@@ -216,10 +215,10 @@
         android:paddingBottom="5dp"
         android:text="@string/bodyType"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView20"
-        app:layout_constraintEnd_toEndOf="@+id/textView19"
-        app:layout_constraintStart_toStartOf="@+id/textView19"
-        app:layout_constraintTop_toTopOf="@+id/textView20" />
+        app:layout_constraintBottom_toBottomOf="@+id/post_a_load_capacity_text_view"
+        app:layout_constraintEnd_toEndOf="@+id/post_a_load_feet_text_view"
+        app:layout_constraintStart_toStartOf="@+id/post_a_load_feet_text_view"
+        app:layout_constraintTop_toTopOf="@+id/post_a_load_capacity_text_view" />
 
     <TextView
         android:id="@+id/textView22"
@@ -233,7 +232,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+        app:layout_constraintTop_toBottomOf="@+id/post_a_load_capacity_text_view" />
 
     <TextView
         android:id="@+id/textView25"
@@ -247,10 +246,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
+        app:layout_constraintTop_toBottomOf="@+id/post_a_load_pin_code_pick_up_edit_text" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/post_a_load_address_edit_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -271,7 +270,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName4"
+        android:id="@+id/post_a_load_drop_address_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -292,8 +291,8 @@
         app:layout_constraintTop_toBottomOf="@+id/textView25" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName3"
-        android:layout_width="67dp"
+        android:id="@+id/post_a_load_pin_code_pick_up_edit_text"
+        android:layout_width="87dp"
         android:layout_height="wrap_content"
         android:background="@drawable/edit_text_border"
         android:ems="10"
@@ -305,14 +304,14 @@
         android:paddingBottom="5dp"
         android:textColor="@color/black"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView24"
-        app:layout_constraintEnd_toStartOf="@+id/textView24"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2"
-        app:layout_constraintTop_toTopOf="@+id/textView24" />
+        app:layout_constraintBottom_toBottomOf="@+id/post_a_load_pick_up_state_text_view"
+        app:layout_constraintEnd_toStartOf="@+id/post_a_load_pick_up_state_text_view"
+        app:layout_constraintStart_toStartOf="@+id/post_a_load_address_edit_text"
+        app:layout_constraintTop_toTopOf="@+id/post_a_load_pick_up_state_text_view" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName5"
-        android:layout_width="67dp"
+        android:id="@+id/post_a_load_drop_pin_edit_text"
+        android:layout_width="87dp"
         android:layout_height="wrap_content"
         android:background="@drawable/edit_text_border"
         android:ems="10"
@@ -324,13 +323,13 @@
         android:paddingBottom="5dp"
         android:textColor="@color/black"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView27"
-        app:layout_constraintEnd_toStartOf="@+id/textView27"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName4"
-        app:layout_constraintTop_toTopOf="@+id/textView27" />
+        app:layout_constraintBottom_toBottomOf="@+id/post_a_load_drop_state_text_view"
+        app:layout_constraintEnd_toStartOf="@+id/post_a_load_drop_state_text_view"
+        app:layout_constraintStart_toStartOf="@+id/post_a_load_drop_address_text_view"
+        app:layout_constraintTop_toTopOf="@+id/post_a_load_drop_state_text_view" />
 
     <TextView
-        android:id="@+id/textView23"
+        android:id="@+id/post_a_load_pick_up_city_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/edit_text_border"
@@ -341,13 +340,13 @@
         android:paddingBottom="5dp"
         android:textColor="@color/black"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView24"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName2"
-        app:layout_constraintStart_toEndOf="@+id/textView24"
-        app:layout_constraintTop_toTopOf="@+id/textView24" />
+        app:layout_constraintBottom_toBottomOf="@+id/post_a_load_pick_up_state_text_view"
+        app:layout_constraintEnd_toEndOf="@+id/post_a_load_address_edit_text"
+        app:layout_constraintStart_toEndOf="@+id/post_a_load_pick_up_state_text_view"
+        app:layout_constraintTop_toTopOf="@+id/post_a_load_pick_up_state_text_view" />
 
     <TextView
-        android:id="@+id/textView26"
+        android:id="@+id/post_a_load_drop_city_text_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/edit_text_border"
@@ -358,13 +357,13 @@
         android:paddingBottom="5dp"
         android:textColor="@color/black"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView27"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName4"
-        app:layout_constraintStart_toEndOf="@+id/textView27"
-        app:layout_constraintTop_toTopOf="@+id/textView27" />
+        app:layout_constraintBottom_toBottomOf="@+id/post_a_load_drop_state_text_view"
+        app:layout_constraintEnd_toEndOf="@+id/post_a_load_drop_address_text_view"
+        app:layout_constraintStart_toEndOf="@+id/post_a_load_drop_state_text_view"
+        app:layout_constraintTop_toTopOf="@+id/post_a_load_drop_state_text_view" />
 
     <TextView
-        android:id="@+id/textView24"
+        android:id="@+id/post_a_load_pick_up_state_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -377,12 +376,12 @@
         android:paddingEnd="25dp"
         android:paddingBottom="5dp"
         android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/textView23"
-        app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName3"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+        app:layout_constraintEnd_toStartOf="@+id/post_a_load_pick_up_city_text_view"
+        app:layout_constraintStart_toEndOf="@+id/post_a_load_pin_code_pick_up_edit_text"
+        app:layout_constraintTop_toBottomOf="@+id/post_a_load_address_edit_text" />
 
     <TextView
-        android:id="@+id/textView27"
+        android:id="@+id/post_a_load_drop_state_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -396,9 +395,9 @@
         android:paddingBottom="5dp"
         android:textColor="@color/black"
         android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/textView26"
-        app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName5"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName4" />
+        app:layout_constraintEnd_toStartOf="@+id/post_a_load_drop_city_text_view"
+        app:layout_constraintStart_toEndOf="@+id/post_a_load_drop_pin_edit_text"
+        app:layout_constraintTop_toBottomOf="@+id/post_a_load_drop_address_text_view" />
 
     <TextView
         android:id="@+id/textView28"
@@ -409,13 +408,13 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/textView29"
-        app:layout_constraintEnd_toStartOf="@+id/textView29"
+        app:layout_constraintBottom_toBottomOf="@+id/post_a_load_auto_calculated_km_edit_text"
+        app:layout_constraintEnd_toStartOf="@+id/post_a_load_auto_calculated_km_edit_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView29" />
+        app:layout_constraintTop_toTopOf="@+id/post_a_load_auto_calculated_km_edit_text" />
 
     <TextView
-        android:id="@+id/textView29"
+        android:id="@+id/post_a_load_auto_calculated_km_edit_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -431,7 +430,7 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView28"
-        app:layout_constraintTop_toBottomOf="@+id/textView27" />
+        app:layout_constraintTop_toBottomOf="@+id/post_a_load_drop_state_text_view" />
 
     <TextView
         android:id="@+id/textView30"
@@ -445,10 +444,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView29" />
+        app:layout_constraintTop_toBottomOf="@+id/post_a_load_auto_calculated_km_edit_text" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName6"
+        android:id="@+id/post_a_load_notes_edit_text"
         android:layout_width="363dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -472,71 +471,71 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_down"
-        app:layout_constraintBottom_toBottomOf="@+id/textView18"
-        app:layout_constraintEnd_toEndOf="@+id/textView18"
-        app:layout_constraintTop_toTopOf="@+id/textView18" />
+        app:layout_constraintBottom_toBottomOf="@+id/post_a_load_vehicle_model"
+        app:layout_constraintEnd_toEndOf="@+id/post_a_load_vehicle_model"
+        app:layout_constraintTop_toTopOf="@+id/post_a_load_vehicle_model" />
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_down"
-        app:layout_constraintBottom_toBottomOf="@+id/textView19"
-        app:layout_constraintEnd_toEndOf="@+id/textView19"
-        app:layout_constraintTop_toTopOf="@+id/textView19" />
+        app:layout_constraintBottom_toBottomOf="@+id/post_a_load_feet_text_view"
+        app:layout_constraintEnd_toEndOf="@+id/post_a_load_feet_text_view"
+        app:layout_constraintTop_toTopOf="@+id/post_a_load_feet_text_view" />
 
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_down"
-        app:layout_constraintBottom_toBottomOf="@+id/textView20"
-        app:layout_constraintEnd_toEndOf="@+id/textView20"
-        app:layout_constraintTop_toTopOf="@+id/textView20" />
+        app:layout_constraintBottom_toBottomOf="@+id/post_a_load_capacity_text_view"
+        app:layout_constraintEnd_toEndOf="@+id/post_a_load_capacity_text_view"
+        app:layout_constraintTop_toTopOf="@+id/post_a_load_capacity_text_view" />
 
     <ImageView
         android:id="@+id/imageView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_down"
-        app:layout_constraintBottom_toBottomOf="@+id/textView21"
-        app:layout_constraintEnd_toEndOf="@+id/textView21"
-        app:layout_constraintTop_toTopOf="@+id/textView21" />
+        app:layout_constraintBottom_toBottomOf="@+id/post_a_load_body_type_text_view"
+        app:layout_constraintEnd_toEndOf="@+id/post_a_load_body_type_text_view"
+        app:layout_constraintTop_toTopOf="@+id/post_a_load_body_type_text_view" />
 
     <ImageView
         android:id="@+id/imageView8"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:src="@drawable/ic_down"
-        app:layout_constraintBottom_toBottomOf="@+id/textView24"
-        app:layout_constraintEnd_toEndOf="@+id/textView24"
-        app:layout_constraintTop_toTopOf="@+id/textView24" />
+        app:layout_constraintBottom_toBottomOf="@+id/post_a_load_pick_up_state_text_view"
+        app:layout_constraintEnd_toEndOf="@+id/post_a_load_pick_up_state_text_view"
+        app:layout_constraintTop_toTopOf="@+id/post_a_load_pick_up_state_text_view" />
 
     <ImageView
         android:id="@+id/imageView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_down"
-        app:layout_constraintBottom_toBottomOf="@+id/textView23"
-        app:layout_constraintEnd_toEndOf="@+id/textView23"
-        app:layout_constraintTop_toTopOf="@+id/textView23" />
+        app:layout_constraintBottom_toBottomOf="@+id/post_a_load_pick_up_city_text_view"
+        app:layout_constraintEnd_toEndOf="@+id/post_a_load_pick_up_city_text_view"
+        app:layout_constraintTop_toTopOf="@+id/post_a_load_pick_up_city_text_view" />
 
     <ImageView
         android:id="@+id/imageView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_down"
-        app:layout_constraintBottom_toBottomOf="@+id/textView27"
-        app:layout_constraintEnd_toEndOf="@+id/textView27"
-        app:layout_constraintTop_toTopOf="@+id/textView27" />
+        app:layout_constraintBottom_toBottomOf="@+id/post_a_load_drop_state_text_view"
+        app:layout_constraintEnd_toEndOf="@+id/post_a_load_drop_state_text_view"
+        app:layout_constraintTop_toTopOf="@+id/post_a_load_drop_state_text_view" />
 
     <ImageView
         android:id="@+id/imageView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_down"
-        app:layout_constraintBottom_toBottomOf="@+id/textView26"
-        app:layout_constraintEnd_toEndOf="@+id/textView26"
-        app:layout_constraintTop_toTopOf="@+id/textView26" />
+        app:layout_constraintBottom_toBottomOf="@+id/post_a_load_drop_city_text_view"
+        app:layout_constraintEnd_toEndOf="@+id/post_a_load_drop_city_text_view"
+        app:layout_constraintTop_toTopOf="@+id/post_a_load_drop_city_text_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
