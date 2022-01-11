@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:textAlignment="center"
+    android:id="@+id/profile_registration_constrain"
     tools:context=".ui.ui.activities.ProfileAndRegistrationActivity">
 
     <include
@@ -16,30 +17,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <TextView
-        android:id="@+id/addBankDone"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:background="@drawable/button_de_active_medium_small"
-        android:gravity="center"
-        android:padding="3dp"
-        android:text="@string/addBank"
-        android:onClick="onClickProfileAndRegister"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/view_bank_details_constrain"
-        app:layout_constraintStart_toStartOf="@+id/view_bank_details_constrain"
-        app:layout_constraintTop_toBottomOf="@+id/view_bank_details_constrain" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/addTrucksDone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/shadow_small"
-        android:visibility="gone"
+        android:visibility="visible"
         android:paddingTop="5dp"
         android:paddingBottom="10dp"
         app:layout_constraintEnd_toEndOf="@+id/menu_truck_details"

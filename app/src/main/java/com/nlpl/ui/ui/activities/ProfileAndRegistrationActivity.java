@@ -11,7 +11,9 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -54,8 +56,11 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
     String isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
 
+    ConstraintLayout profileAndRegistrationLayout;
+    SwipeListener swipeListener;
+
     View actionBar;
-    TextView addDriver, addTruck, addBankDetails, accNoDone, actionBarTitle;
+    TextView addDriver, addTruck, accNoDone, actionBarTitle;
     ImageView actionBarBackButton, actionBarMenuButton;
 
     Dialog menuDialog;
@@ -109,9 +114,9 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
         bottomNav = (View) findViewById(R.id.profile_registration_bottom_nav_bar);
         truckLoadText = (TextView) bottomNav.findViewById(R.id.dhuejsfcb);
+        profileAndRegistrationLayout = (ConstraintLayout) findViewById(R.id.profile_registration_constrain);
 
         accNoDone = findViewById(R.id.bank_list_account_number_text);
-        addBankDetails = findViewById(R.id.addBankDone);
         vehicleDone = findViewById(R.id.addTrucksDone);
         addTruck = findViewById(R.id.addTruck);
         driverDone = findViewById(R.id.driverDone);
@@ -155,6 +160,8 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         bankDetailsLogoImageView = (ImageView) menuDialog.findViewById(R.id.menu_bank_details_logo_image_view);
         truckDetailsLogoImageView = (ImageView) menuDialog.findViewById(R.id.menu_truck_details_logo_image_view);
         driverDetailsLogoImageView = (ImageView) menuDialog.findViewById(R.id.menu_driver_details_logo_image_view);
+
+        swipeListener = new SwipeListener(profileAndRegistrationLayout);
 
         previewDriverDetailsDriverBankAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -554,15 +561,6 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 }
                 break;
 
-            case R.id.addBankDone:
-                Intent intent2 = new Intent(ProfileAndRegistrationActivity.this, BankDetailsActivity.class);
-                intent2.putExtra("userId", userId);
-                intent2.putExtra("isEdit", false);
-                intent2.putExtra("mobile", phone);
-
-                startActivity(intent2);
-                break;
-
             case R.id.addTruck:
                 Intent intent3 = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
                 intent3.putExtra("userId", userId);
@@ -691,4 +689,61 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         finish();
     }
 
+    public void onClickDismiss (View view){
+        menuDialog.dismiss();
+    }
+
+    private class SwipeListener implements View.OnTouchListener {
+        GestureDetector gestureDetector;
+
+        SwipeListener(View view){
+            int threshold = 100;
+            int velocity_threshold = 100;
+
+            GestureDetector.SimpleOnGestureListener listener = new GestureDetector.SimpleOnGestureListener(){
+                @Override
+                public boolean onDown(MotionEvent e) {
+                    return true;
+                }
+
+                @Override
+                public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                    float xDiff = e2.getX() - e1.getX();
+                    float yDiff = e2.getY() - e1.getY();
+                    try {
+                        if (Math.abs(xDiff) > Math.abs(yDiff)){
+                            if (Math.abs(xDiff) > threshold && Math.abs(velocityX) > velocity_threshold){
+                                if (xDiff < 0){
+                                    //Swiped Left
+                                    actionBarMenuButton.performClick();
+                                }else{
+                                    //Swiped Right
+                                    menuDialog.dismiss();
+                                }
+                                return true;
+                            }
+                        }else{
+                            if (Math.abs(yDiff) > threshold && Math.abs(velocityY) > velocity_threshold){
+                                if (yDiff > 0){
+                                    //Swiped Down
+                                }else{
+                                    //Swiped Up
+                                }
+                                return true;
+                            }
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    return false;
+                }
+            };
+            gestureDetector = new GestureDetector(listener);
+            view.setOnTouchListener(this);
+        }
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            return gestureDetector.onTouchEvent(motionEvent);
+        }
+    }
 }

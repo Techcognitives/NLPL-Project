@@ -42,9 +42,8 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
     private RecyclerView bankListRecyclerView;
 
     String phone, userId;
-    Dialog previewDialogBankDetails;
-    TextView dialogBankDetailsBankName, dialogBankDetailsBankAccountNumber, dialogBankDetailsBankIFSICode;
-    ImageView previewCancelledCheque;
+    Dialog previewDialogCancelledCheque;
+    ImageView previewDialogCancelledChequeImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,14 +72,11 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
         getBankDetailsList();
         //------------------------------------------------------------------------------------------
 
-        previewDialogBankDetails = new Dialog(ViewBankDetailsActivity.this);
-        previewDialogBankDetails.setContentView(R.layout.dialog_preview_bank_details);
-        previewDialogBankDetails.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        previewDialogCancelledCheque = new Dialog(ViewBankDetailsActivity.this);
+        previewDialogCancelledCheque.setContentView(R.layout.dialog_preview_images);
+        previewDialogCancelledCheque.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        dialogBankDetailsBankName = (TextView) previewDialogBankDetails.findViewById(R.id.dialog_bank_details_name_text_view);
-        dialogBankDetailsBankAccountNumber = (TextView) previewDialogBankDetails.findViewById(R.id.dialog_bank_details_account_number_text_view);
-        dialogBankDetailsBankIFSICode = (TextView) previewDialogBankDetails.findViewById(R.id.dialog_bank_details_ifsi_code_text_view);
-        previewCancelledCheque = (ImageView) previewDialogBankDetails.findViewById(R.id.dialog_bank_details_cheque_image_view);
+        previewDialogCancelledChequeImageView = (ImageView) previewDialogCancelledCheque.findViewById(R.id.dialog_preview_image_view);
     }
 
     public void onClickBackViewBankDetails(View view) {
@@ -115,7 +111,6 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
                         bankListAdapter.updateData(bankList);
                     } else {
                     }
-
 //                    if (bankList.size() > 5) {
 //                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 //                        params.height = 235; //height recycleviewer
@@ -151,20 +146,25 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
 
     public void onClickPreviewBankDetails(BankModel obj) {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(previewDialogBankDetails.getWindow().getAttributes());
+        lp.copyFrom(previewDialogCancelledCheque.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp.gravity = Gravity.CENTER;
-        previewDialogBankDetails.show();
-        previewDialogBankDetails.getWindow().setAttributes(lp);
-
-        dialogBankDetailsBankName.setText(" Bank Name: " + obj.getBank_name());
-        dialogBankDetailsBankAccountNumber.setText(" Account Number: " + obj.getAccount_number());
-        dialogBankDetailsBankIFSICode.setText(" IFSI Code: " + obj.getIFSI_CODE());
+        previewDialogCancelledCheque.show();
+        previewDialogCancelledCheque.getWindow().setAttributes(lp);
 
         String cancelledChequeURL = obj.getCancelled_cheque();
         Log.i("IMAGE CHEQUE URL", cancelledChequeURL);
-        new DownloadImageTask(previewCancelledCheque).execute(cancelledChequeURL);
+        new DownloadImageTask((ImageView) previewDialogCancelledCheque.findViewById(R.id.dialog_preview_image_view)).execute(cancelledChequeURL);
 
+    }
+
+    public void onClickAddBankDetails(View view) {
+        Intent intent2 = new Intent(ViewBankDetailsActivity.this, BankDetailsActivity.class);
+        intent2.putExtra("userId", userId);
+        intent2.putExtra("isEdit", false);
+        intent2.putExtra("mobile", phone);
+
+        startActivity(intent2);
     }
 }

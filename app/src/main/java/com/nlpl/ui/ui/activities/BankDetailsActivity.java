@@ -438,8 +438,9 @@ public class BankDetailsActivity extends AppCompatActivity {
 
             if (isEdit) {
 
-                Intent i8 = new Intent(BankDetailsActivity.this, ProfileAndRegistrationActivity.class);
-                i8.putExtra("mobile2", mobile);
+                Intent i8 = new Intent(BankDetailsActivity.this, ViewBankDetailsActivity.class);
+                i8.putExtra("mobile", mobile);
+                i8.putExtra("userId", userId);
                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i8);
                 overridePendingTransition(0, 0);
@@ -453,8 +454,9 @@ public class BankDetailsActivity extends AppCompatActivity {
 
                         updateUserIsBankDetailsGiven();
                         dialogInterface.dismiss();
-                        Intent i8 = new Intent(BankDetailsActivity.this, ProfileAndRegistrationActivity.class);
-                        i8.putExtra("mobile2", mobile);
+                        Intent i8 = new Intent(BankDetailsActivity.this, ViewBankDetailsActivity.class);
+                        i8.putExtra("mobile", mobile);
+                        i8.putExtra("userId", userId);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);
                         overridePendingTransition(0, 0);
