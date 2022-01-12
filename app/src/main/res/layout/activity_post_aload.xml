@@ -471,7 +471,7 @@
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/edit_text_border"
                 android:ems="10"
-                android:hint="........"
+                android:hint="@string/note_to_post_load"
                 android:inputType="textMultiLine"
                 android:paddingStart="10dp"
                 android:paddingTop="5dp"
