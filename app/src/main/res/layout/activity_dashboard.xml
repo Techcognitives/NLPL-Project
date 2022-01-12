@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:textAlignment="center"
+    android:background="@color/background"
     tools:context=".ui.ui.activities.DashboardActivity">
 
     <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
@@ -56,7 +57,7 @@
         layout="@layout/action_bar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/textView34"
+        app:layout_constraintBottom_toTopOf="@+id/dashboard_current_location_text_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -93,7 +94,7 @@
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout6"
         app:layout_constraintEnd_toStartOf="@+id/personal_details_id_proof_pan_aadhar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView34" />
+        app:layout_constraintTop_toBottomOf="@+id/dashboard_current_location_text_view" />
 
     <TextView
         android:id="@+id/personal_details_id_proof_pan_aadhar"
@@ -118,7 +119,7 @@
         app:layout_constraintTop_toTopOf="@+id/personal_details_id_proof_personal_address_button" />
 
     <TextView
-        android:id="@+id/textView34"
+        android:id="@+id/dashboard_current_location_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
@@ -142,10 +143,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:src="@drawable/blue_profile_small"
-        app:layout_constraintBottom_toBottomOf="@+id/textView34"
-        app:layout_constraintEnd_toStartOf="@+id/textView34"
+        app:layout_constraintBottom_toBottomOf="@+id/dashboard_current_location_text_view"
+        app:layout_constraintEnd_toStartOf="@+id/dashboard_current_location_text_view"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView34" />
+        app:layout_constraintTop_toTopOf="@+id/dashboard_current_location_text_view" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout6"
@@ -239,10 +240,13 @@
         android:paddingBottom="5dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/profile_registration_bottom_nav_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -254,11 +258,21 @@
         android:paddingBottom="5dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/profile_registration_bottom_nav_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
 
+        <TextView
+            android:id="@+id/textView39"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bids Submitted"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
