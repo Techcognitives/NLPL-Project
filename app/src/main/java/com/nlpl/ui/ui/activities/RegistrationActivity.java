@@ -65,44 +65,42 @@ public class RegistrationActivity extends AppCompatActivity {
             Log.i("Mobile No Registration", mobile);
         }
 
-
-        Dialog chooseDialog;
-        chooseDialog = new Dialog(RegistrationActivity.this);
-        chooseDialog.setContentView(R.layout.dialog_language);
-        chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        language = new Dialog(RegistrationActivity.this);
+        language.setContentView(R.layout.dialog_language);
+        language.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-        lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+        lp2.copyFrom(language.getWindow().getAttributes());
         lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
         lp2.gravity = Gravity.BOTTOM;
 
-        chooseDialog.show();
-        chooseDialog.setCancelable(false);
-        chooseDialog.getWindow().setAttributes(lp2);
+        language.show();
+        language.setCancelable(false);
+        language.getWindow().setAttributes(lp2);
 
-        english = chooseDialog.findViewById(R.id.english);
-        marathi = chooseDialog.findViewById(R.id.marathi);
-        hindi = chooseDialog.findViewById(R.id.hindi);
+        english = language.findViewById(R.id.english);
+        marathi = language.findViewById(R.id.marathi);
+        hindi = language.findViewById(R.id.hindi);
 
         english.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chooseDialog.dismiss();
+                language.dismiss();
             }
         });
 
         hindi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chooseDialog.dismiss();
+                language.dismiss();
             }
         });
 
         marathi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chooseDialog.dismiss();
+                language.dismiss();
             }
         });
 
@@ -122,7 +120,7 @@ public class RegistrationActivity extends AppCompatActivity {
         selectStateText = (TextView) personalAndAddress.findViewById(R.id.registration_select_state);
         selectDistrictText = (TextView) personalAndAddress.findViewById(R.id.registration_select_city);
         okButton = (Button) findViewById(R.id.registration_ok);
-        email_id = findViewById(R.id.registration_email_id_edit);
+        email_id = personalAndAddress.findViewById(R.id.registration_email_id_edit);
 
         name.addTextChangedListener(registrationWatcher);
         selectStateText.addTextChangedListener(registrationWatcher);
