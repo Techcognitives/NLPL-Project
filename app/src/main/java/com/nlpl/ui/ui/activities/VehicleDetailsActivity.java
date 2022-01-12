@@ -769,8 +769,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             }
 
             if (isEdit){
-                Intent i8 = new Intent(VehicleDetailsActivity.this, DashboardActivity.class);
-                i8.putExtra("mobile2", mobile);
+                Intent i8 = new Intent(VehicleDetailsActivity.this, ViewTruckDetailsActivity.class);
+                i8.putExtra("mobile", mobile);
+                i8.putExtra("userId", userId);
                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i8);
                 overridePendingTransition(0, 0);
@@ -783,8 +784,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         updateUserIsTruckAdded();
                         dialogInterface.dismiss();
-                        Intent i8 = new Intent(VehicleDetailsActivity.this, DashboardActivity.class);
-                        i8.putExtra("mobile2", mobile);
+                        Intent i8 = new Intent(VehicleDetailsActivity.this, ViewTruckDetailsActivity.class);
+                        i8.putExtra("mobile", mobile);
+                        i8.putExtra("userId", userId);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);
                         overridePendingTransition(0, 0);
@@ -796,7 +798,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         }else{
 //            okVehicleDetails.setEnabled(false);
 //            okVehicleDetails.setBackground(getResources().getDrawable(R.drawable.button_de_active));
-
         }
     }
 

@@ -57,14 +57,14 @@ public class DriversAdapter extends RecyclerView.Adapter<DriversAdapter.DriverVi
         holder.list_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activity.getDriverDetails(obj);
+//                activity.getDriverDetails(obj);
             }
         });
 
         holder.list_preview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activity.onClickPreviewDriverDetails(obj);
+//                activity.onClickPreviewDriverDetails(obj);
             }
         });
     }

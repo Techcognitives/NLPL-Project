@@ -41,11 +41,9 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
     private TrucksAdapter truckListAdapter;
     private RecyclerView truckListRecyclerView;
 
-    Dialog previewDialogTruckDetails;
-    ImageView previewRcBook, previewInsurance;
-    TextView previewTruckDetailsVehicleNumber, previewTruckDetailsTruckType, previewTruckDetailsVehicleType, previewTruckDetailsTruckFeet, previewTruckDetailsVehicleCapacity;
-
+    Dialog previewDialogRcBook, previewDialogInsurance;
     String phone, userId;
+    ImageView previewRcBook, previewInsurance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,17 +71,19 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
         getTruckList();
         //------------------------------------------------------------------------------------------
 
-        previewDialogTruckDetails = new Dialog(ViewTruckDetailsActivity.this);
-        previewDialogTruckDetails.setContentView(R.layout.dialog_preview_truck_details);
-        previewDialogTruckDetails.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        previewDialogRcBook = new Dialog(ViewTruckDetailsActivity.this);
+        previewDialogRcBook.setContentView(R.layout.dialog_preview_images);
+        previewDialogRcBook.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        previewTruckDetailsVehicleNumber = (TextView) previewDialogTruckDetails.findViewById(R.id.dialog_truck_details_vehicle_number_text_view);
-        previewTruckDetailsTruckType = (TextView) previewDialogTruckDetails.findViewById(R.id.dialog_truck_details_truck_type_text_view);
-        previewTruckDetailsVehicleType = (TextView) previewDialogTruckDetails.findViewById(R.id.dialog_truck_details_vehicle_type_text_view);
-        previewTruckDetailsTruckFeet = (TextView) previewDialogTruckDetails.findViewById(R.id.dialog_truck_details_truck_ft_text_view);
-        previewTruckDetailsVehicleCapacity = (TextView) previewDialogTruckDetails.findViewById(R.id.dialog_truck_details_capacity_text_view);
-        previewRcBook = (ImageView) previewDialogTruckDetails.findViewById(R.id.dialog_truck_details_rc_image_view);
-        previewInsurance = (ImageView) previewDialogTruckDetails.findViewById(R.id.dialog_truck_details_insurance_image_view);
+        previewRcBook = (ImageView) previewDialogRcBook.findViewById(R.id.dialog_preview_image_view);
+
+        previewDialogInsurance = new Dialog(ViewTruckDetailsActivity.this);
+        previewDialogInsurance.setContentView(R.layout.dialog_preview_images);
+        previewDialogInsurance.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        previewInsurance = (ImageView) previewDialogInsurance.findViewById(R.id.dialog_preview_image_view);
+
+
     }
 
     public void onClickBackViewTruckDetails(View view) {
@@ -155,12 +155,13 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
 
     public void getOnClickPreviewTruckRcBook(TruckModel obj) {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(previewDialogTruckDetails.getWindow().getAttributes());
+        lp.copyFrom(previewDialogRcBook.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp.gravity = Gravity.CENTER;
-        previewDialogTruckDetails.show();
-        previewDialogTruckDetails.getWindow().setAttributes(lp);
+
+        previewDialogRcBook.show();
+        previewDialogRcBook.getWindow().setAttributes(lp);
 
         String rcBookURL = obj.getRc_book();
         Log.i("IMAGE RC URL", rcBookURL);
@@ -168,9 +169,26 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
     }
 
     public void getOnClickPreviewTruckInsurance(TruckModel obj) {
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(previewDialogInsurance.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        previewDialogInsurance.show();
+        previewDialogInsurance.getWindow().setAttributes(lp);
 
         String insuranceURL = obj.getVehicle_insurance();
         Log.i("IMAGE INSURANCE URL", insuranceURL);
         new DownloadImageTask(previewInsurance).execute(insuranceURL);
+    }
+
+    public void onClickAddTruckDetails(View view) {
+        Intent intent3 = new Intent(ViewTruckDetailsActivity.this, VehicleDetailsActivity.class);
+        intent3.putExtra("userId", userId);
+        intent3.putExtra("isEdit", false);
+        intent3.putExtra("mobile", phone);
+
+        startActivity(intent3);
     }
 }

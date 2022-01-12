@@ -130,41 +130,6 @@
             app:layout_constraintTop_toTopOf="@+id/menu_truck_details" />
 
         <TextView
-            android:id="@+id/menu_driver_details"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="5dp"
-            android:background="@drawable/mobile_number_right"
-            android:drawableEnd="@drawable/ic_right"
-            android:drawableTint="@color/black"
-            android:gravity="center|start"
-            android:onClick="onClickProfileAndRegister"
-            android:paddingStart="10dp"
-            android:paddingTop="11.5dp"
-            android:paddingBottom="11.5dp"
-            android:text="@string/AddDrivers"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/menu_driver_details_logo_image_view"
-            app:layout_constraintTop_toBottomOf="@+id/menu_truck_details" />
-
-        <ImageView
-            android:id="@+id/menu_driver_details_logo_image_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:background="@drawable/mobile_number_left"
-            android:padding="5dp"
-            android:src="@drawable/driver"
-            app:layout_constraintBottom_toBottomOf="@+id/menu_driver_details"
-            app:layout_constraintEnd_toStartOf="@+id/menu_driver_details"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/menu_driver_details" />
-
-        <TextView
             android:id="@+id/textView8"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

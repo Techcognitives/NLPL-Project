@@ -8,6 +8,49 @@
     android:id="@+id/profile_registration_constrain"
     tools:context=".ui.ui.activities.DashboardActivity">
 
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:id="@+id/driverDone"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@drawable/shadow_small"-->
+<!--        android:paddingTop="5dp"-->
+<!--        android:paddingBottom="10dp"-->
+<!--        android:visibility="visible"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/profile_registration_action_bar">-->
+
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/driver_list_view"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="200dp"-->
+<!--            android:scrollbarThumbVertical="@android:color/holo_blue_dark"-->
+<!--            android:scrollbars="vertical"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/addDriverDone"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="2dp"-->
+<!--        android:background="@drawable/button_de_active_medium_small"-->
+<!--        android:gravity="center"-->
+<!--        android:padding="1dp"-->
+<!--        android:onClick="onClickProfileAndRegister"-->
+<!--        android:text="@string/addDriver"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textSize="16sp"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/driverDone"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/driverDone"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/driverDone" />-->
+
     <include
         android:id="@+id/profile_registration_action_bar"
         layout="@layout/action_bar"
@@ -16,68 +59,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/addTruck"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/button_de_active_medium_small"
-        android:gravity="center"
-        android:padding="1dp"
-        android:onClick="onClickProfileAndRegister"
-        android:text="@string/addTruck"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addTrucksDone" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/driverDone"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shadow_small"
-        android:visibility="gone"
-        android:paddingTop="5dp"
-        android:paddingBottom="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/menu_driver_details"
-        app:layout_constraintStart_toStartOf="@+id/menu_driver_details"
-        app:layout_constraintTop_toBottomOf="@+id/menu_driver_details">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/driver_list_view"
-            android:layout_width="0dp"
-            android:layout_height="200dp"
-            android:scrollbars="vertical"
-            android:scrollbarThumbVertical="@android:color/holo_blue_dark"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/addDriverDone"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:background="@drawable/button_de_active_medium_small"
-        android:gravity="center"
-        android:padding="1dp"
-        android:onClick="onClickProfileAndRegister"
-        android:text="@string/addDriver"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/driverDone"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/driverDone"
-        app:layout_constraintTop_toBottomOf="@+id/driverDone" />
 
     <include
         android:id="@+id/profile_registration_bottom_nav_bar"
@@ -88,4 +69,68 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/personal_details_id_proof_personal_address_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="3dp"
+        android:background="@drawable/personal_details_buttons_active"
+        android:paddingStart="2dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="2dp"
+        android:paddingBottom="5dp"
+        android:text="Load Notifications"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/background"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/personal_details_id_proof_pan_aadhar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_registration_action_bar" />
+
+    <TextView
+        android:id="@+id/personal_details_id_proof_pan_aadhar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/personal_details_buttons_de_active"
+        android:paddingStart="2dp"
+        android:paddingEnd="2dp"
+        android:textAlignment="center"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:text="Bids Submitted"
+        android:textAllCaps="false"
+        android:textColor="@color/background"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/personal_details_id_proof_personal_address_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/personal_details_id_proof_personal_address_button"
+        app:layout_constraintTop_toTopOf="@+id/personal_details_id_proof_personal_address_button" />
+
+    <TextView
+        android:id="@+id/textView34"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView12"
+        app:layout_constraintTop_toBottomOf="@+id/profile_registration_action_bar" />
+
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/blue_profile_small"
+        app:layout_constraintBottom_toBottomOf="@+id/textView34"
+        app:layout_constraintEnd_toStartOf="@+id/textView34"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView34" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
