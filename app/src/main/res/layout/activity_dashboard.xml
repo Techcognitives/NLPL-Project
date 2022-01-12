@@ -17,31 +17,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/addTrucksDone"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shadow_small"
-        android:visibility="visible"
-        android:paddingTop="5dp"
-        android:paddingBottom="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/menu_truck_details"
-        app:layout_constraintStart_toStartOf="@+id/menu_truck_details"
-        app:layout_constraintTop_toBottomOf="@+id/menu_truck_details">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/trucks_list_view"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:scrollbars="vertical"
-            android:scrollbarThumbVertical="@android:color/holo_blue_dark"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <TextView
         android:id="@+id/addTruck"
         android:layout_width="0dp"

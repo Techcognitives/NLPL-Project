@@ -44,9 +44,6 @@ import java.util.ArrayList;
 public class DashboardActivity extends AppCompatActivity {
 
     private RequestQueue mQueue;
-    private ArrayList<TruckModel> truckList = new ArrayList<>();
-    private TrucksAdapter truckListAdapter;
-    private RecyclerView truckListRecyclerView;
 
     private ArrayList<DriverModel> driverList = new ArrayList<>();
     private DriversAdapter driverListAdapter;
@@ -73,12 +70,12 @@ public class DashboardActivity extends AppCompatActivity {
     ArrayList<String> arrayUserId, arrayUserDriverId, arrayMobileNo, arrayDriverMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
 
     String mobile, name, address, pinCode, city, role, emailIdAPI;
-    ConstraintLayout vehicleDone, driverDone;
+    ConstraintLayout driverDone;
 
-    Dialog previewDialogTruckDetails, previewDialogDriverDetails;
-    TextView previewTruckDetailsVehicleNumber, previewTruckDetailsTruckType, previewTruckDetailsVehicleType, previewTruckDetailsTruckFeet, previewTruckDetailsVehicleCapacity, previewDriverDetailsDriverBankAdd;
+    Dialog previewDialogDriverDetails;
+    TextView previewDriverDetailsDriverBankAdd;
     TextView previewDriverDetailsDriverName, previewDriverDetailsDriverNumber, previewDriverDetailsEmailId;
-    ImageView previewRcBook, previewInsurance, previewDrivingLicense, previewDriverSelfie;
+    ImageView previewDrivingLicense, previewDriverSelfie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +104,7 @@ public class DashboardActivity extends AppCompatActivity {
         arrayRole = new ArrayList<>();
         arrayRegDone = new ArrayList<>();
 
-        actionBarTitle.setText("My Profile");
+        actionBarTitle.setText("Dashboard");
         actionBarBackButton.setVisibility(View.GONE);
 
         bottomNav = (View) findViewById(R.id.profile_registration_bottom_nav_bar);
@@ -115,22 +112,9 @@ public class DashboardActivity extends AppCompatActivity {
         profileAndRegistrationLayout = (ConstraintLayout) findViewById(R.id.profile_registration_constrain);
 
         accNoDone = findViewById(R.id.bank_list_account_number_text);
-        vehicleDone = findViewById(R.id.addTrucksDone);
         addTruck = findViewById(R.id.addTruck);
         driverDone = findViewById(R.id.driverDone);
         addDriver = findViewById(R.id.addDriverDone);
-
-        previewDialogTruckDetails = new Dialog(DashboardActivity.this);
-        previewDialogTruckDetails.setContentView(R.layout.dialog_preview_truck_details);
-        previewDialogTruckDetails.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        previewTruckDetailsVehicleNumber = (TextView) previewDialogTruckDetails.findViewById(R.id.dialog_truck_details_vehicle_number_text_view);
-        previewTruckDetailsTruckType = (TextView) previewDialogTruckDetails.findViewById(R.id.dialog_truck_details_truck_type_text_view);
-        previewTruckDetailsVehicleType = (TextView) previewDialogTruckDetails.findViewById(R.id.dialog_truck_details_vehicle_type_text_view);
-        previewTruckDetailsTruckFeet = (TextView) previewDialogTruckDetails.findViewById(R.id.dialog_truck_details_truck_ft_text_view);
-        previewTruckDetailsVehicleCapacity = (TextView) previewDialogTruckDetails.findViewById(R.id.dialog_truck_details_capacity_text_view);
-        previewRcBook = (ImageView) previewDialogTruckDetails.findViewById(R.id.dialog_truck_details_rc_image_view);
-        previewInsurance = (ImageView) previewDialogTruckDetails.findViewById(R.id.dialog_truck_details_insurance_image_view);
 
         previewDialogDriverDetails = new Dialog(DashboardActivity.this);
         previewDialogDriverDetails.setContentView(R.layout.dialog_preview_driver_details);
@@ -175,7 +159,6 @@ public class DashboardActivity extends AppCompatActivity {
         mQueue = Volley.newRequestQueue(DashboardActivity.this);
         getUserId(phone);
 
-        vehicleDone.setVisibility(View.GONE);
         driverDone.setVisibility(View.GONE);
 
     }
@@ -208,19 +191,6 @@ public class DashboardActivity extends AppCompatActivity {
                     }
 
                     getUserDetails();
-
-                    //---------------------------- Get Truck Details -------------------------------------------
-                    truckListRecyclerView = (RecyclerView) findViewById(R.id.trucks_list_view);
-
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-                    linearLayoutManager.setReverseLayout(true);
-                    truckListRecyclerView.setLayoutManager(linearLayoutManager);
-                    truckListRecyclerView.setHasFixedSize(true);
-
-                    truckListAdapter = new TrucksAdapter(DashboardActivity.this, truckList);
-                    truckListRecyclerView.setAdapter(truckListAdapter);
-                    getTruckList();
-                    //------------------------------------------------------------------------------------------
 
                     //---------------------------- Get Driver Details -------------------------------------------
                     driverListRecyclerView = (RecyclerView) findViewById(R.id.driver_list_view);
@@ -328,59 +298,6 @@ public class DashboardActivity extends AppCompatActivity {
 
     }
 
-    public void getTruckList() {
-        //---------------------------- Get Truck Details -------------------------------------------
-        String url1 = getString(R.string.baseURL) + "/truck/truckbyuserID/" + userId;
-        Log.i("URL: ", url1);
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    truckList = new ArrayList<>();
-                    JSONArray truckLists = response.getJSONArray("data");
-                    for (int i = 0; i < truckLists.length(); i++) {
-                        JSONObject obj = truckLists.getJSONObject(i);
-                        TruckModel model = new TruckModel();
-                        model.setUser_id(obj.getString("user_id"));
-                        model.setVehicle_no(obj.getString("vehicle_no"));
-                        model.setTruck_type(obj.getString("truck_type"));
-                        model.setVehicle_type(obj.getString("vehicle_type"));
-                        model.setTruck_ft(obj.getString("truck_ft"));
-                        model.setTruck_carrying_capacity(obj.getString("truck_carrying_capacity"));
-                        model.setRc_book(obj.getString("rc_book"));
-                        model.setVehicle_insurance(obj.getString("vehicle_insurance"));
-                        model.setTruck_id(obj.getString("truck_id"));
-                        truckList.add(model);
-                    }
-                    if (truckList.size() > 0) {
-                        truckListAdapter.updateData(truckList);
-                    } else {
-                    }
-
-                    if (truckList.size() > 5) {
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        params.height = 235; //height recycleviewer
-                        truckListRecyclerView.setLayoutParams(params);
-                    } else {
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        truckListRecyclerView.setLayoutParams(params);
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request);
-        //-------------------------------------------------------------------------------------------
-    }
-
     public void getDriverDetailsList() {
         //---------------------------- Get Driver Details ------------------------------------------
         String url1 = getString(R.string.baseURL) + "/driver/userId/" + userId;
@@ -433,31 +350,6 @@ public class DashboardActivity extends AppCompatActivity {
         //-------------------------------------------------------------------------------------------
     }
 
-
-    public void getOnClickPreviewTruckDetails(TruckModel obj) {
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(previewDialogTruckDetails.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.gravity = Gravity.CENTER;
-        previewDialogTruckDetails.show();
-        previewDialogTruckDetails.getWindow().setAttributes(lp);
-
-        previewTruckDetailsVehicleNumber.setText(" Vehicle Number: " + obj.getVehicle_no());
-        previewTruckDetailsTruckType.setText(" Truck Model: " + obj.getTruck_type());
-        previewTruckDetailsVehicleType.setText(" Vehicle Type: " + obj.getVehicle_type());
-        previewTruckDetailsTruckFeet.setText(" Truck ft.: " + obj.getTruck_ft());
-        previewTruckDetailsVehicleCapacity.setText(" Truck Capacity: " + obj.getTruck_carrying_capacity());
-
-        String rcBookURL = obj.getRc_book();
-        Log.i("IMAGE RC URL", rcBookURL);
-        new DownloadImageTask(previewRcBook).execute(rcBookURL);
-
-        String insuranceURL = obj.getVehicle_insurance();
-        Log.i("IMAGE INSURANCE URL", insuranceURL);
-        new DownloadImageTask(previewInsurance).execute(insuranceURL);
-    }
-
     public void onClickPreviewDriverDetails(DriverModel obj) {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(previewDialogDriverDetails.getWindow().getAttributes());
@@ -479,18 +371,6 @@ public class DashboardActivity extends AppCompatActivity {
         String selfieURL = obj.getDriver_selfie();
         Log.i("IMAGE Selfie URL", selfieURL);
         new DownloadImageTask(previewDriverSelfie).execute(selfieURL);
-    }
-
-
-
-    public void getTruckDetails(TruckModel obj) {
-        Intent intent = new Intent(DashboardActivity.this, VehicleDetailsActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("isEdit", true);
-        intent.putExtra("truckId", obj.getTruck_id());
-        intent.putExtra("mobile", phone);
-
-        startActivity(intent);
     }
 
     public void getDriverDetails(DriverModel obj) {
@@ -536,7 +416,10 @@ public class DashboardActivity extends AppCompatActivity {
 
             case R.id.menu_truck_details:
                 if (isTruckDetailsDone.equals("1")) {
-
+                    Intent intent = new Intent(DashboardActivity.this, ViewTruckDetailsActivity.class);
+                    intent.putExtra("userId", userId);
+                    intent.putExtra("mobile", phone);
+                    startActivity(intent);
                 } else {
                     Intent intent2 = new Intent(DashboardActivity.this, VehicleDetailsActivity.class);
                     intent2.putExtra("userId", userId);

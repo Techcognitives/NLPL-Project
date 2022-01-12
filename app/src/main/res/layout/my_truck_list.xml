@@ -3,21 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@drawable/shadow_file"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp">
 
     <TextView
         android:id="@+id/my_truck_list_vehicle_number_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
         android:drawableStart="@drawable/success_small"
         android:text="TextView"
-        android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/my_truck_list_capacity"
-        app:layout_constraintEnd_toStartOf="@+id/my_truck_list_preview_image_view"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/my_truck_list_vehicle_type"
+        app:layout_constraintEnd_toStartOf="@+id/my_truck_list_edit_text_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,69 +35,97 @@
         android:text=""
         android:textColor="@color/black"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/my_truck_list_preview_image_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/my_truck_list_preview_image_view"
-        app:layout_constraintTop_toTopOf="@+id/my_truck_list_preview_image_view" />
-
-    <ImageView
-        android:id="@+id/my_truck_list_preview_image_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/my_truck_list_vehicle_number_text_view"
-        app:layout_constraintEnd_toStartOf="@+id/my_truck_list_edit_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/my_truck_list_vehicle_number_text_view"
-        app:layout_constraintTop_toTopOf="@+id/my_truck_list_vehicle_number_text_view"
-        app:srcCompat="@drawable/ic_preview" />
+        app:layout_constraintTop_toTopOf="@+id/my_truck_list_vehicle_number_text_view" />
+
+    <TextView
+        android:id="@+id/my_truck_list_preview_rc_book_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:drawableStart="@drawable/ic_preview"
+        android:text="  RC Book"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/my_truck_list_preview_insurance_text_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_truck_list_capacity" />
+
+    <TextView
+        android:id="@+id/my_truck_list_preview_insurance_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:drawableStart="@drawable/ic_preview"
+        android:text="  Insurance"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/my_truck_list_preview_rc_book_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/my_truck_list_preview_rc_book_text_view"
+        app:layout_constraintTop_toTopOf="@+id/my_truck_list_preview_rc_book_text_view" />
 
     <TextView
         android:id="@+id/my_truck_list_vehicle_type"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
         android:text="Vehicle Type"
-        android:textColor="@color/black"
+        android:textColor="@color/teal_700"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/my_truck_list_capacity"
-        app:layout_constraintEnd_toEndOf="@+id/my_truck_list_vehicle_number_text_view"
-        app:layout_constraintStart_toEndOf="@+id/my_truck_list_capacity"
-        app:layout_constraintTop_toTopOf="@+id/my_truck_list_capacity" />
-
-    <TextView
-        android:id="@+id/my_truck_list_capacity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Capacity"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/my_truck_list_vehicle_type"
-        app:layout_constraintStart_toEndOf="@+id/my_truck_list_ft"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/my_truck_list_capacity"
+        app:layout_constraintEnd_toStartOf="@+id/my_truck_list_ft"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/my_truck_list_vehicle_number_text_view" />
 
     <TextView
-        android:id="@+id/my_truck_list_ft"
-        android:layout_width="wrap_content"
+        android:id="@+id/my_truck_list_capacity"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Feet"
-        android:textAlignment="center"
-        android:textColor="@color/black"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:text="Capacity"
+        android:textColor="@color/teal_700"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/my_truck_list_capacity"
-        app:layout_constraintEnd_toStartOf="@+id/my_truck_list_capacity"
-        app:layout_constraintStart_toEndOf="@+id/my_truck_list_truck_type"
-        app:layout_constraintTop_toTopOf="@+id/my_truck_list_capacity"
-        app:layout_constraintVertical_bias="0.0" />
+        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/my_truck_list_preview_rc_book_text_view"
+        app:layout_constraintEnd_toStartOf="@+id/my_truck_list_truck_type"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_truck_list_vehicle_type" />
+
+    <TextView
+        android:id="@+id/my_truck_list_ft"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:text="Feet"
+        android:textColor="@color/teal_700"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="@+id/my_truck_list_vehicle_type"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/my_truck_list_vehicle_type"
+        app:layout_constraintTop_toTopOf="@+id/my_truck_list_vehicle_type" />
 
     <TextView
         android:id="@+id/my_truck_list_truck_type"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
         android:text="Truck Type"
-        android:textColor="@color/black"
+        android:textColor="@color/teal_700"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/my_truck_list_ft"
-        app:layout_constraintEnd_toStartOf="@+id/my_truck_list_ft"
-        app:layout_constraintStart_toStartOf="@+id/my_truck_list_vehicle_number_text_view"
-        app:layout_constraintTop_toTopOf="@+id/my_truck_list_ft" />
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="@+id/my_truck_list_capacity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/my_truck_list_capacity"
+        app:layout_constraintTop_toTopOf="@+id/my_truck_list_capacity" />
 </androidx.constraintlayout.widget.ConstraintLayout>

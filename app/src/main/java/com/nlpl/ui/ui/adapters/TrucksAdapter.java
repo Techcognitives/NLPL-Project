@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,16 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.TruckModel;
-import com.nlpl.ui.ui.activities.DashboardActivity;
+import com.nlpl.ui.ui.activities.ViewTruckDetailsActivity;
 
 import java.util.ArrayList;
 
 public class TrucksAdapter extends RecyclerView.Adapter<TrucksAdapter.TruckViewHolder> {
 
     private ArrayList<TruckModel> truckList;
-    private DashboardActivity activity;
+    private ViewTruckDetailsActivity activity;
 
-    public TrucksAdapter(DashboardActivity activity, ArrayList<TruckModel> truckList) {
+    public TrucksAdapter(ViewTruckDetailsActivity activity, ArrayList<TruckModel> truckList) {
         this.truckList = truckList;
         this.activity = activity;
     }
@@ -49,17 +48,24 @@ public class TrucksAdapter extends RecyclerView.Adapter<TrucksAdapter.TruckViewH
             }
         });
 
-        holder.list_preview.setOnClickListener(new View.OnClickListener() {
+        holder.list_preview_rc_book.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activity.getOnClickPreviewTruckDetails(obj);
+                activity.getOnClickPreviewTruckRcBook(obj);
             }
         });
 
-        holder.list_truck_type.setText(obj.getTruck_type());
-        holder.list_feet.setText(obj.getTruck_ft());
-        holder.list_capacity.setText(obj.getTruck_carrying_capacity());
-        holder.list_vehicle_type.setText(obj.getVehicle_type());
+        holder.list_preview_insurance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.getOnClickPreviewTruckInsurance(obj);
+            }
+        });
+
+        holder.list_truck_type.setText("Model: " + obj.getTruck_type());
+        holder.list_feet.setText("Feet: " + obj.getTruck_ft());
+        holder.list_capacity.setText("Capacity: " + obj.getTruck_carrying_capacity());
+        holder.list_vehicle_type.setText("Body: " + obj.getVehicle_type());
     }
 
     @Override
@@ -73,15 +79,15 @@ public class TrucksAdapter extends RecyclerView.Adapter<TrucksAdapter.TruckViewH
     }
 
     public class TruckViewHolder extends RecyclerView.ViewHolder {
-        private TextView list_title, list_edit, list_truck_type, list_feet, list_capacity, list_vehicle_type;
-        private ImageView list_preview;
+        private TextView list_title, list_edit, list_truck_type, list_feet, list_capacity, list_vehicle_type, list_preview_rc_book, list_preview_insurance;
 
         public TruckViewHolder(@NonNull View itemView) {
             super(itemView);
 
             list_title = itemView.findViewById(R.id.my_truck_list_vehicle_number_text_view);
             list_edit = itemView.findViewById(R.id.my_truck_list_edit_text_view);
-            list_preview = itemView.findViewById(R.id.my_truck_list_preview_image_view);
+            list_preview_rc_book = itemView.findViewById(R.id.my_truck_list_preview_rc_book_text_view);
+            list_preview_insurance = itemView.findViewById(R.id.my_truck_list_preview_insurance_text_view);
             list_truck_type = itemView.findViewById(R.id.my_truck_list_truck_type);
             list_feet = itemView.findViewById(R.id.my_truck_list_ft);
             list_capacity = itemView.findViewById(R.id.my_truck_list_capacity);

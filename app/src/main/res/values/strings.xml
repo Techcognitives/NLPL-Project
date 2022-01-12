@@ -1093,7 +1093,7 @@
     <string name="time">hh:mm AM/PM</string>
     <string name="inrRs">INR X,XXX</string>
     <string name="KMAutoCal">KM auto calculated</string>
-    <string name="note_to_post_load">1. Electronic appliances, must handled with care. <br></br> 2. bubble wrap required  <br></br> 3. Preferable pick-up time after 1:00 PM</string>
+    <string name="note_to_post_load">1. Electronic appliances, must handled with care.<br></br>2. Bubble wrap required.<br></br>3. Preferable pick-up time after 12:00pm<br></br>4. Please call and confirm before starting.</string>
     //----------------------------------------------------------------------------------------------
 
 </resources>
