@@ -2,60 +2,61 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profile_registration_constrain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:textAlignment="center"
-    android:id="@+id/profile_registration_constrain"
     tools:context=".ui.ui.activities.DashboardActivity">
 
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:id="@+id/driverDone"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="@drawable/shadow_small"-->
-<!--        android:paddingTop="5dp"-->
-<!--        android:paddingBottom="10dp"-->
-<!--        android:visibility="visible"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/profile_registration_action_bar">-->
+    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--        android:id="@+id/driverDone"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:background="@drawable/shadow_small"-->
+    <!--        android:paddingTop="5dp"-->
+    <!--        android:paddingBottom="10dp"-->
+    <!--        android:visibility="visible"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/profile_registration_action_bar">-->
 
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--            android:id="@+id/driver_list_view"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="200dp"-->
-<!--            android:scrollbarThumbVertical="@android:color/holo_blue_dark"-->
-<!--            android:scrollbars="vertical"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
+    <!--        <androidx.recyclerview.widget.RecyclerView-->
+    <!--            android:id="@+id/driver_list_view"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="200dp"-->
+    <!--            android:scrollbarThumbVertical="@android:color/holo_blue_dark"-->
+    <!--            android:scrollbars="vertical"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent" />-->
 
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
-<!--    <TextView-->
-<!--        android:id="@+id/addDriverDone"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="2dp"-->
-<!--        android:background="@drawable/button_de_active_medium_small"-->
-<!--        android:gravity="center"-->
-<!--        android:padding="1dp"-->
-<!--        android:onClick="onClickProfileAndRegister"-->
-<!--        android:text="@string/addDriver"-->
-<!--        android:textColor="@color/white"-->
-<!--        android:textSize="16sp"-->
-<!--        android:visibility="gone"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/driverDone"-->
-<!--        app:layout_constraintHorizontal_bias="0.0"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/driverDone"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/driverDone" />-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/addDriverDone"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="2dp"-->
+    <!--        android:background="@drawable/button_de_active_medium_small"-->
+    <!--        android:gravity="center"-->
+    <!--        android:padding="1dp"-->
+    <!--        android:onClick="onClickProfileAndRegister"-->
+    <!--        android:text="@string/addDriver"-->
+    <!--        android:textColor="@color/white"-->
+    <!--        android:textSize="16sp"-->
+    <!--        android:visibility="gone"-->
+    <!--        app:layout_constraintEnd_toEndOf="@+id/driverDone"-->
+    <!--        app:layout_constraintHorizontal_bias="0.0"-->
+    <!--        app:layout_constraintStart_toStartOf="@+id/driverDone"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/driverDone" />-->
 
     <include
         android:id="@+id/profile_registration_action_bar"
         layout="@layout/action_bar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/textView34"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -68,14 +69,15 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout7" />
 
     <TextView
         android:id="@+id/personal_details_id_proof_personal_address_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="3dp"
         android:background="@drawable/personal_details_buttons_active"
         android:paddingStart="2dp"
@@ -88,9 +90,10 @@
         android:textColor="@color/background"
         android:textSize="16sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout6"
         app:layout_constraintEnd_toStartOf="@+id/personal_details_id_proof_pan_aadhar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_registration_action_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/textView34" />
 
     <TextView
         android:id="@+id/personal_details_id_proof_pan_aadhar"
@@ -100,11 +103,11 @@
         android:layout_marginEnd="20dp"
         android:background="@drawable/personal_details_buttons_de_active"
         android:paddingStart="2dp"
-        android:paddingEnd="2dp"
-        android:textAlignment="center"
         android:paddingTop="5dp"
+        android:paddingEnd="2dp"
         android:paddingBottom="5dp"
         android:text="Bids Submitted"
+        android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/background"
         android:textSize="16sp"
@@ -118,7 +121,17 @@
         android:id="@+id/textView34"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/edit_text_border"
+        android:drawableStart="@drawable/google_location_small"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:text="Current Location"
+        android:textColor="@color/teal_700"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/personal_details_id_proof_personal_address_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView12"
         app:layout_constraintTop_toBottomOf="@+id/profile_registration_action_bar" />
@@ -127,10 +140,125 @@
         android:id="@+id/imageView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:src="@drawable/blue_profile_small"
         app:layout_constraintBottom_toBottomOf="@+id/textView34"
         app:layout_constraintEnd_toStartOf="@+id/textView34"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView34" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/bottom_cornors_rounded_buttons"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_personal_address_button">
+
+        <TextView
+            android:id="@+id/textView35"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="load Details"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/textView36"
+            app:layout_constraintEnd_toStartOf="@+id/textView36"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView36" />
+
+        <TextView
+            android:id="@+id/textView36"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Pickup Date"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/textView37"
+            app:layout_constraintEnd_toStartOf="@+id/textView37"
+            app:layout_constraintStart_toEndOf="@+id/textView35"
+            app:layout_constraintTop_toTopOf="@+id/textView37" />
+
+        <TextView
+            android:id="@+id/textView37"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Time"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textView38"
+            app:layout_constraintStart_toEndOf="@+id/textView36"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView38"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Distance"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/textView37"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView37"
+            app:layout_constraintTop_toTopOf="@+id/textView37" />
+
+        <ImageView
+            android:id="@+id/imageView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_drop_down"
+            app:layout_constraintBottom_toBottomOf="@+id/textView36"
+            app:layout_constraintEnd_toEndOf="@+id/textView36"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/textView35"
+            app:layout_constraintTop_toTopOf="@+id/textView36"
+            app:tint="@color/black" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout7"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/profile_registration_bottom_nav_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cjbdssdkbcsd"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/profile_registration_bottom_nav_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
