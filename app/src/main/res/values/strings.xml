@@ -1091,9 +1091,46 @@
     <string name="postALoad">POST A LOAD</string>
     <string name="date">DD-Month-YY</string>
     <string name="time">hh:mm AM/PM</string>
-    <string name="inrRs">INR X,XXX</string>
+    <string name="inrRs">INR XXXX</string>
     <string name="KMAutoCal">KM auto calculated</string>
     <string name="note_to_post_load">1. Electronic appliances, must handled with care.<br></br>2. Bubble wrap required.<br></br>3. Preferable pick-up time after 12:00pm<br></br>4. Please call and confirm before starting.</string>
+    //----------------------------------------------------------------------------------------------
+
+    //--------------------------------------Bid_now dialog------------------------------------------
+    <string name="load_id">Load ID: city-city-000 </string>
+    <string name="timeLeft"> <p>   </p> Time left</string>
+    <string name="timeinmin">00:00</string>
+    <string name="pickUpDateWithColon">Pick-up Date:</string>
+    <string name="pickUpLocationWithColon">Pick-up Location:</string>
+    <string name="addressForPickUpLocation"><b>City: </b>Address line 1, City, District, State, <br></br> PinCode</string>
+    <string name="dropLocationWithColon">Drop Location:</string>
+    <string name="no">No</string>
+    <string name="selectTruck">Select Truck</string>
+    <string name="selectDriver">Select Driver</string>
+    <string name="yes_small">Yes</string>
+    <string name="noteAndMaterialWithColon">Notes &amp; Material Description::</string>
+    <string name="timeOnly">Time:</string>
+    <string name="budgetWithColon">Budget:</string>
+    <string name="capacityWithColon">Capacity:</string>
+    <string name="distanceWithColon">Distance:</string>
+    <string name="xx_km">xxx km</string>
+    <string name="xx_capacity">xxx kgs</string>
+    <string name="xx_feet">xx ft</string>
+    <string name="timewithoutAMPM">hh:mm </string>
+    <string name="distance">Distance</string>
+    <string name="modelwithColon">Model:</string>
+    <string name="model">Model</string>
+    <string name="body">Body:</string>
+    <string name="selectAndAssignTruck">Select &amp; Assign a Truck &amp; Driver for this load</string>
+    <string name="yourQuote">Your Quote (INR)</string>
+    <string name="negotiable">Negotiable</string>
+    <string name="truck">Truck</string>
+    <string name="feet">Feet</string>
+    <string name="Notes">Notes</string>
+    <string name="NotesIfAny">Notes: Type your notes if any...</string>
+    <string name="acceptBid">Accept &amp; Bid</string>
+    <string name="cancel">Cancel</string>
+    <string name="declaration"> <b>Declaration: </b>  <em>I hereby declare, driver will reach Pick-up location 15 minutes prior Pick-up Time.</em> </string>
     //----------------------------------------------------------------------------------------------
 
 </resources>

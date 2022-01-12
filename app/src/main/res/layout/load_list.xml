@@ -65,7 +65,7 @@
                 android:paddingEnd="7dp"
                 android:text="Time left"
                 android:drawableStart="@drawable/clock_small"
-                android:textColor="#ff0000"
+                android:textColor="@color/redDark"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toStartOf="@+id/textView19"
                 app:layout_constraintStart_toStartOf="parent"
