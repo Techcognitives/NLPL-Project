@@ -1086,7 +1086,7 @@
     <string name="bodyType">Body Type</string>
     <string name="pickUpLocationDetails">Pick-up Location Details</string>
     <string name="dropLocationDetails">Drop Location Details</string>
-    <string name="km">KM (approx)</string>
+    <string name="km">Km (approx)</string>
     <string name="noteAndMaterial">Notes &amp; Material Description*</string>
     <string name="postALoad">POST A LOAD</string>
     <string name="date">DD-Month-YY</string>
