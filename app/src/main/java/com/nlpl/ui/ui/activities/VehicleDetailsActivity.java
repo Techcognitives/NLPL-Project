@@ -1056,7 +1056,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 error.printStackTrace();
             }
         });
-
         mQueue.add(request);
 
     }
