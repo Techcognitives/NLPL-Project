@@ -29,10 +29,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.nlpl.R;
-import com.nlpl.model.ModelForRecyclerView.BankModel;
 import com.nlpl.model.ModelForRecyclerView.DriverModel;
 import com.nlpl.model.ModelForRecyclerView.TruckModel;
-import com.nlpl.ui.ui.adapters.BanksAdapter;
 import com.nlpl.ui.ui.adapters.DriversAdapter;
 import com.nlpl.ui.ui.adapters.TrucksAdapter;
 import com.nlpl.utils.DownloadImageTask;
@@ -43,7 +41,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class ProfileAndRegistrationActivity extends AppCompatActivity {
+public class DashboardActivity extends AppCompatActivity {
 
     private RequestQueue mQueue;
     private ArrayList<TruckModel> truckList = new ArrayList<>();
@@ -85,7 +83,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_and_registration);
+        setContentView(R.layout.activity_dashboard);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -122,7 +120,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         driverDone = findViewById(R.id.driverDone);
         addDriver = findViewById(R.id.addDriverDone);
 
-        previewDialogTruckDetails = new Dialog(ProfileAndRegistrationActivity.this);
+        previewDialogTruckDetails = new Dialog(DashboardActivity.this);
         previewDialogTruckDetails.setContentView(R.layout.dialog_preview_truck_details);
         previewDialogTruckDetails.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -134,7 +132,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         previewRcBook = (ImageView) previewDialogTruckDetails.findViewById(R.id.dialog_truck_details_rc_image_view);
         previewInsurance = (ImageView) previewDialogTruckDetails.findViewById(R.id.dialog_truck_details_insurance_image_view);
 
-        previewDialogDriverDetails = new Dialog(ProfileAndRegistrationActivity.this);
+        previewDialogDriverDetails = new Dialog(DashboardActivity.this);
         previewDialogDriverDetails.setContentView(R.layout.dialog_preview_driver_details);
         previewDialogDriverDetails.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -145,7 +143,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         previewDriverSelfie = (ImageView) previewDialogDriverDetails.findViewById(R.id.dialog_driver_details_selfie_image_view);
         previewDriverDetailsDriverBankAdd = (TextView) previewDialogDriverDetails.findViewById(R.id.dialog_driver_details_add_driver_bank);
 
-        menuDialog = new Dialog(ProfileAndRegistrationActivity.this);
+        menuDialog = new Dialog(DashboardActivity.this);
         menuDialog.setContentView(R.layout.dialog_menu);
         menuDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -166,7 +164,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         previewDriverDetailsDriverBankAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ProfileAndRegistrationActivity.this, BankDetailsActivity.class);
+                Intent intent = new Intent(DashboardActivity.this, BankDetailsActivity.class);
                 intent.putExtra("isEdit", false);
                 intent.putExtra("userId", driverUserIdGet);
                 intent.putExtra("mobile", phone);
@@ -174,7 +172,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
             }
         });
 
-        mQueue = Volley.newRequestQueue(ProfileAndRegistrationActivity.this);
+        mQueue = Volley.newRequestQueue(DashboardActivity.this);
         getUserId(phone);
 
         vehicleDone.setVisibility(View.GONE);
@@ -219,7 +217,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     truckListRecyclerView.setLayoutManager(linearLayoutManager);
                     truckListRecyclerView.setHasFixedSize(true);
 
-                    truckListAdapter = new TrucksAdapter(ProfileAndRegistrationActivity.this, truckList);
+                    truckListAdapter = new TrucksAdapter(DashboardActivity.this, truckList);
                     truckListRecyclerView.setAdapter(truckListAdapter);
                     getTruckList();
                     //------------------------------------------------------------------------------------------
@@ -232,7 +230,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                     driverListRecyclerView.setLayoutManager(linearLayoutManagerDriver);
                     driverListRecyclerView.setHasFixedSize(true);
 
-                    driverListAdapter = new DriversAdapter(ProfileAndRegistrationActivity.this, driverList);
+                    driverListAdapter = new DriversAdapter(DashboardActivity.this, driverList);
                     driverListRecyclerView.setAdapter(driverListAdapter);
                     getDriverDetailsList();
                     //------------------------------------------------------------------------------------------
@@ -486,7 +484,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
 
     public void getTruckDetails(TruckModel obj) {
-        Intent intent = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
+        Intent intent = new Intent(DashboardActivity.this, VehicleDetailsActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("isEdit", true);
         intent.putExtra("truckId", obj.getTruck_id());
@@ -496,7 +494,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
     }
 
     public void getDriverDetails(DriverModel obj) {
-        Intent intent = new Intent(ProfileAndRegistrationActivity.this, DriverDetailsActivity.class);
+        Intent intent = new Intent(DashboardActivity.this, DriverDetailsActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("isEdit", true);
         intent.putExtra("driverId", obj.getDriver_id());
@@ -509,12 +507,12 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.menu_personal_details_button:
                 if (isPersonalDetailsDone.equals("1")) {
-                    Intent intent = new Intent(ProfileAndRegistrationActivity.this, ViewPersonalDetailsActivity.class);
+                    Intent intent = new Intent(DashboardActivity.this, ViewPersonalDetailsActivity.class);
                     intent.putExtra("userId", userId);
                     intent.putExtra("mobile", phone);
                     startActivity(intent);
                 } else {
-                    Intent intent = new Intent(ProfileAndRegistrationActivity.this, PersonalDetailsActivity.class);
+                    Intent intent = new Intent(DashboardActivity.this, PersonalDetailsActivity.class);
                     intent.putExtra("userId", userId);
                     intent.putExtra("mobile", phone);
                     startActivity(intent);
@@ -523,12 +521,12 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
             case R.id.menu_bank_details_button:
                 if (isBankDetailsDone.equals("1")) {
-                    Intent intent = new Intent(ProfileAndRegistrationActivity.this, ViewBankDetailsActivity.class);
+                    Intent intent = new Intent(DashboardActivity.this, ViewBankDetailsActivity.class);
                     intent.putExtra("userId", userId);
                     intent.putExtra("mobile", phone);
                     startActivity(intent);
                 } else {
-                    Intent intent = new Intent(ProfileAndRegistrationActivity.this, BankDetailsActivity.class);
+                    Intent intent = new Intent(DashboardActivity.this, BankDetailsActivity.class);
                     intent.putExtra("isEdit", false);
                     intent.putExtra("userId", userId);
                     intent.putExtra("mobile", phone);
@@ -540,7 +538,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 if (isTruckDetailsDone.equals("1")) {
 
                 } else {
-                    Intent intent2 = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
+                    Intent intent2 = new Intent(DashboardActivity.this, VehicleDetailsActivity.class);
                     intent2.putExtra("userId", userId);
                     intent2.putExtra("isEdit", false);
                     intent2.putExtra("mobile", phone);
@@ -553,7 +551,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 if (isDriverDetailsDone.equals("1")) {
 
                 } else {
-                    Intent intent = new Intent(ProfileAndRegistrationActivity.this, DriverDetailsActivity.class);
+                    Intent intent = new Intent(DashboardActivity.this, DriverDetailsActivity.class);
                     intent.putExtra("userId", userId);
                     intent.putExtra("isEdit", false);
                     intent.putExtra("mobile", phone);
@@ -562,7 +560,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 break;
 
             case R.id.addTruck:
-                Intent intent3 = new Intent(ProfileAndRegistrationActivity.this, VehicleDetailsActivity.class);
+                Intent intent3 = new Intent(DashboardActivity.this, VehicleDetailsActivity.class);
                 intent3.putExtra("userId", userId);
                 intent3.putExtra("isEdit", false);
                 intent3.putExtra("mobile", phone);
@@ -570,7 +568,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
                 break;
 
             case R.id.addDriverDone:
-                Intent intent4 = new Intent(ProfileAndRegistrationActivity.this, DriverDetailsActivity.class);
+                Intent intent4 = new Intent(DashboardActivity.this, DriverDetailsActivity.class);
                 intent4.putExtra("userId", userId);
                 intent4.putExtra("isEdit", false);
                 intent4.putExtra("mobile", phone);
@@ -683,7 +681,7 @@ public class ProfileAndRegistrationActivity extends AppCompatActivity {
 
     public void onClickLogOut (View view){
         FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(ProfileAndRegistrationActivity.this, LogInActivity.class);
+        Intent intent = new Intent(DashboardActivity.this, LogInActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();

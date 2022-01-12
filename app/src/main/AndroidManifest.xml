@@ -58,7 +58,7 @@
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.ui.activities.ProfileAndRegistrationActivity"
+            android:name=".ui.ui.activities.DashboardActivity"
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity

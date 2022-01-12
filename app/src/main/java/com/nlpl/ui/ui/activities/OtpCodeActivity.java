@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.icu.text.DecimalFormat;
 import android.icu.text.NumberFormat;
@@ -38,7 +37,6 @@ import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
-import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.nlpl.R;
 import com.nlpl.model.UpdateUserDetails.UpdateUserPhoneNumber;
@@ -48,7 +46,6 @@ import com.nlpl.ui.ui.adapters.OTPReceiver;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -163,7 +160,7 @@ public class OtpCodeActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (isEditPhone) {
                             updateUserPhoneNumber(userIdBundle);
-                            Intent i8 = new Intent(OtpCodeActivity.this, ProfileAndRegistrationActivity.class);
+                            Intent i8 = new Intent(OtpCodeActivity.this, DashboardActivity.class);
                             i8.putExtra("mobile2", mobileNoFirebase);
                             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i8);
@@ -394,7 +391,7 @@ public class OtpCodeActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialogInterface, int i) {
                             if (isEditPhone) {
                                 updateUserPhoneNumber(mobileNoFirebase);
-                                Intent i8 = new Intent(OtpCodeActivity.this, ProfileAndRegistrationActivity.class);
+                                Intent i8 = new Intent(OtpCodeActivity.this, DashboardActivity.class);
                                 i8.putExtra("mobile2", mobileNoFirebase);
                                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(i8);
@@ -544,7 +541,7 @@ public class OtpCodeActivity extends AppCompatActivity {
                         Log.i("isregDone:", isRegistrationDone);
                         Log.i("Mobile No API Matches", phone);
 
-                        Intent i8 = new Intent(OtpCodeActivity.this, ProfileAndRegistrationActivity.class);
+                        Intent i8 = new Intent(OtpCodeActivity.this, DashboardActivity.class);
                         i8.putExtra("mobile2", phone);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);
@@ -630,7 +627,7 @@ public class OtpCodeActivity extends AppCompatActivity {
                         Log.i("isregDone:", isRegistrationDone);
                         Log.i("Mobile No API Matches", phone);
 
-                        Intent i8 = new Intent(OtpCodeActivity.this, ProfileAndRegistrationActivity.class);
+                        Intent i8 = new Intent(OtpCodeActivity.this, DashboardActivity.class);
                         i8.putExtra("mobile2", phone);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);

@@ -13,16 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.TruckModel;
-import com.nlpl.ui.ui.activities.ProfileAndRegistrationActivity;
+import com.nlpl.ui.ui.activities.DashboardActivity;
 
 import java.util.ArrayList;
 
 public class TrucksAdapter extends RecyclerView.Adapter<TrucksAdapter.TruckViewHolder> {
 
     private ArrayList<TruckModel> truckList;
-    private ProfileAndRegistrationActivity activity;
+    private DashboardActivity activity;
 
-    public TrucksAdapter(ProfileAndRegistrationActivity activity, ArrayList<TruckModel> truckList) {
+    public TrucksAdapter(DashboardActivity activity, ArrayList<TruckModel> truckList) {
         this.truckList = truckList;
         this.activity = activity;
     }

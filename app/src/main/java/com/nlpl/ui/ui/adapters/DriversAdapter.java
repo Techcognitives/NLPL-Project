@@ -15,16 +15,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.DriverModel;
-import com.nlpl.ui.ui.activities.ProfileAndRegistrationActivity;
+import com.nlpl.ui.ui.activities.DashboardActivity;
 
 import java.util.ArrayList;
 
 public class DriversAdapter extends RecyclerView.Adapter<DriversAdapter.DriverViewHolder> {
 
     private ArrayList<DriverModel> driverList;
-    private ProfileAndRegistrationActivity activity;
+    private DashboardActivity activity;
 
-    public DriversAdapter(ProfileAndRegistrationActivity activity, ArrayList<DriverModel> driverList) {
+    public DriversAdapter(DashboardActivity activity, ArrayList<DriverModel> driverList) {
         this.driverList = driverList;
         this.activity = activity;
     }

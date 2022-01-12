@@ -452,7 +452,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
-                    Intent i8 = new Intent(RegistrationActivity.this, ProfileAndRegistrationActivity.class);
+                    Intent i8 = new Intent(RegistrationActivity.this, DashboardActivity.class);
                     i8.putExtra("mobile2", mobile);
                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i8);

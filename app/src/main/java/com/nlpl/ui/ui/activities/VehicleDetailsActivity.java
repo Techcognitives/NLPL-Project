@@ -45,18 +45,12 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.Requests.AddTruckRequest;
-import com.nlpl.model.Requests.ImageRequest;
 import com.nlpl.model.Responses.AddTruckResponse;
-import com.nlpl.model.Responses.ImageResponse;
-import com.nlpl.model.Responses.UploadDriverLicenseResponse;
-import com.nlpl.model.Responses.UploadImageResponse;
 import com.nlpl.model.Responses.UploadTruckInsuranceResponse;
 import com.nlpl.model.Responses.UploadTruckRCResponse;
 import com.nlpl.model.UpdateTruckDetails.UpdateTruckCarryingCapacity;
 import com.nlpl.model.UpdateTruckDetails.UpdateTruckFeet;
-import com.nlpl.model.UpdateTruckDetails.UpdateTruckRcBook;
 import com.nlpl.model.UpdateTruckDetails.UpdateTruckType;
-import com.nlpl.model.UpdateTruckDetails.UpdateTruckVehicleInsurance;
 import com.nlpl.model.UpdateTruckDetails.UpdateTruckVehicleNumber;
 import com.nlpl.model.UpdateTruckDetails.UpdateVehicleType;
 import com.nlpl.model.UpdateUserDetails.UpdateUserIsTruckAdded;
@@ -72,10 +66,7 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -778,7 +769,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             }
 
             if (isEdit){
-                Intent i8 = new Intent(VehicleDetailsActivity.this, ProfileAndRegistrationActivity.class);
+                Intent i8 = new Intent(VehicleDetailsActivity.this, DashboardActivity.class);
                 i8.putExtra("mobile2", mobile);
                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i8);
@@ -792,7 +783,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         updateUserIsTruckAdded();
                         dialogInterface.dismiss();
-                        Intent i8 = new Intent(VehicleDetailsActivity.this, ProfileAndRegistrationActivity.class);
+                        Intent i8 = new Intent(VehicleDetailsActivity.this, DashboardActivity.class);
                         i8.putExtra("mobile2", mobile);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);

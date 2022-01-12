@@ -1,6 +1,5 @@
 package com.nlpl.ui.ui.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -18,7 +17,6 @@ import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.nlpl.R;
-import com.razorpay.Checkout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -121,7 +119,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                                     Log.i("isregDone:", isRegistrationDone);
                                     Log.i("Mobile No API Matches", phone);
 
-                                    Intent i8 = new Intent(SplashScreenActivity.this, ProfileAndRegistrationActivity.class);
+                                    Intent i8 = new Intent(SplashScreenActivity.this, DashboardActivity.class);
                                     i8.putExtra("mobile2", phone);
                                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(i8);

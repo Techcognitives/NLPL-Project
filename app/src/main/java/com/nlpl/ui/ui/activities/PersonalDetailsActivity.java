@@ -15,7 +15,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -40,8 +39,6 @@ import com.nlpl.utils.FileUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -480,7 +477,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
-                    Intent i8 = new Intent(PersonalDetailsActivity.this, ProfileAndRegistrationActivity.class);
+                    Intent i8 = new Intent(PersonalDetailsActivity.this, DashboardActivity.class);
                     i8.putExtra("mobile2", mobile);
                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i8);

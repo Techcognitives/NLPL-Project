@@ -16,7 +16,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -29,7 +28,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -38,7 +36,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -49,18 +46,14 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.Requests.AddDriverRequest;
-import com.nlpl.model.Requests.ImageRequest;
 import com.nlpl.model.Requests.UserRequest;
 import com.nlpl.model.Responses.AddDriverResponse;
-import com.nlpl.model.Responses.ImageResponse;
 import com.nlpl.model.Responses.UploadDriverSelfieResponse;
-import com.nlpl.model.Responses.UploadImageResponse;
 import com.nlpl.model.Responses.UserResponse;
 import com.nlpl.model.Responses.UploadDriverLicenseResponse;
 import com.nlpl.model.UpdateDriverDetails.UpdateDriverEmailId;
 import com.nlpl.model.UpdateDriverDetails.UpdateDriverName;
 import com.nlpl.model.UpdateDriverDetails.UpdateDriverNumber;
-import com.nlpl.model.UpdateDriverDetails.UpdateDriverUploadLicense;
 import com.nlpl.model.UpdateUserDetails.UpdateUserAddress;
 import com.nlpl.model.UpdateUserDetails.UpdateUserEmailId;
 import com.nlpl.model.UpdateUserDetails.UpdateUserIsDriverAdded;
@@ -81,7 +74,6 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.sql.Struct;
 import java.util.ArrayList;
 
 import okhttp3.MediaType;
@@ -1005,7 +997,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                             updateUserDriverPreferredLocation();
                         }
 
-                        Intent i8 = new Intent(DriverDetailsActivity.this, ProfileAndRegistrationActivity.class);
+                        Intent i8 = new Intent(DriverDetailsActivity.this, DashboardActivity.class);
                         i8.putExtra("userId", userId);
                         i8.putExtra("mobile2", mobile);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -1024,7 +1016,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();
 
-                                Intent i8 = new Intent(DriverDetailsActivity.this, ProfileAndRegistrationActivity.class);
+                                Intent i8 = new Intent(DriverDetailsActivity.this, DashboardActivity.class);
                                 i8.putExtra("mobile2", mobile);
                                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(i8);
