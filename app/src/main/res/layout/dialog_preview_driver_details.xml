@@ -87,7 +87,7 @@
                 android:textStyle="bold"
                 android:textAlignment="textEnd"
                 android:paddingEnd="20dp"
-                android:visibility="invisible"
+                android:visibility="visible"
                 android:layout_height="wrap_content"
                 android:text="@string/addBank" />
 

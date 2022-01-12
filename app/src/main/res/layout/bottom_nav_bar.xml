@@ -11,7 +11,7 @@
         android:id="@+id/ejdcnjeknsd"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/nav_unselected_blue"
+        android:background="@color/nav_selected_blue"
         android:paddingTop="5dp"
         app:layout_constraintBottom_toTopOf="@+id/fuhhiedsfcjb"
         app:layout_constraintEnd_toStartOf="@+id/dscufsd"
@@ -20,28 +20,15 @@
         app:srcCompat="@drawable/dashboard_logo" />
 
     <ImageView
-        android:id="@+id/duyewudscknjds"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/nav_selected_blue"
-        android:paddingTop="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/fhuedfrcjberd"
-        app:layout_constraintEnd_toStartOf="@+id/fuhefhueusi"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/profile_logo" />
-
-    <ImageView
         android:id="@+id/fuhefhueusi"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
         android:background="@color/nav_unselected_blue"
         android:paddingTop="5dp"
         app:layout_constraintBottom_toTopOf="@+id/dhuejsfcb"
         app:layout_constraintEnd_toStartOf="@+id/ejdcnjeknsd"
-        app:layout_constraintStart_toEndOf="@+id/duyewudscknjds"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/track_load_logo" />
 
@@ -59,26 +46,9 @@
         app:srcCompat="@drawable/track_logo" />
 
     <TextView
-        android:id="@+id/fhuedfrcjberd"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/nav_selected_blue"
-        android:paddingBottom="10dp"
-        android:text="Profile"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/duyewudscknjds"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/duyewudscknjds" />
-
-    <TextView
         android:id="@+id/dhuejsfcb"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
         android:background="@color/nav_unselected_blue"
         android:paddingBottom="10dp"
@@ -88,18 +58,18 @@
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ejdcnjeknsd"
-        app:layout_constraintStart_toEndOf="@+id/duyewudscknjds"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fuhefhueusi" />
 
     <TextView
         android:id="@+id/fuhhiedsfcjb"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/nav_unselected_blue"
+        android:background="@color/nav_selected_blue"
         android:paddingBottom="10dp"
         android:text="Dashboard"
         android:textAlignment="center"
-        android:textColor="@color/dark_grey"
+        android:textColor="@color/white"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/ejdcnjeknsd"
