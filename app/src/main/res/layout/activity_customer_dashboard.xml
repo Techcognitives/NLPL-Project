@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.ui.activities.CustomerDashboardActivity">
+
+    <include
+        android:id="@+id/profile_registration_action_bar"
+        layout="@layout/action_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/customer_dashboard_bids_received_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/profile_registration_bottom_nav_bar"
+        layout="@layout/bottom_nav_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customer_dashboard_bids_received_constrain" />
+
+    <TextView
+        android:id="@+id/customer_dashboard_bids_received_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="3dp"
+        android:background="@drawable/personal_details_buttons_active"
+        android:onClick="onClickBidsAndLoads"
+        android:paddingStart="2dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="2dp"
+        android:paddingBottom="5dp"
+        android:text="Bids Received"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/background"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/customer_dashboard_bids_received_constrain"
+        app:layout_constraintEnd_toStartOf="@+id/customer_dashboard_loads_accepted_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_registration_action_bar" />
+
+    <TextView
+        android:id="@+id/customer_dashboard_loads_accepted_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/personal_details_buttons_de_active"
+        android:paddingStart="2dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="2dp"
+        android:paddingBottom="5dp"
+        android:onClick="onClickBidsAndLoads"
+        android:text="Loads Accepted"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/background"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/customer_dashboard_bids_received_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/customer_dashboard_bids_received_button"
+        app:layout_constraintTop_toTopOf="@+id/customer_dashboard_bids_received_button" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/customer_dashboard_fab_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:tint="@color/white"
+        app:fabSize="mini"
+        android:backgroundTint="@color/button_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.87"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/customer_dashboard_bids_received_constrain"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/profile_registration_bottom_nav_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customer_dashboard_bids_received_button">
+
+        <TextView
+            android:id="@+id/vsavjxjsd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bids Received"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/customer_dashboard_loads_accepted_constrain"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/profile_registration_bottom_nav_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customer_dashboard_bids_received_button">
+
+        <TextView
+            android:id="@+id/jsbxhsjalxsds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Loads Accepted"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView42"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:text="Post a Load"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:textColor="@color/button_blue"
+        app:layout_constraintBottom_toBottomOf="@+id/customer_dashboard_fab_button"
+        app:layout_constraintEnd_toStartOf="@+id/customer_dashboard_fab_button"
+        app:layout_constraintTop_toTopOf="@+id/customer_dashboard_fab_button" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

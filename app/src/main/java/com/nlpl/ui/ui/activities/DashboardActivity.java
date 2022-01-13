@@ -38,6 +38,7 @@ import com.nlpl.utils.DownloadImageTask;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -70,8 +71,11 @@ public class DashboardActivity extends AppCompatActivity {
     TextView menuUserNameTextView, mobileText, personalDetailsButton, bankDetailsTextView, addTrucksTextView;
     ImageView personalDetailsLogoImageView, bankDetailsLogoImageView, truckDetailsLogoImageView;
 
+    ConstraintLayout loadNotificationConstrain, bidsSubmittedConstrain;
+    TextView loadNotificationTextView, bidsSubmittedTextView;
+
     View bottomNav;
-    TextView truckLoadText;
+    ConstraintLayout spDashboard, customerDashboard;
 
     String userId, userIdAPI, phone, mobileNoAPI;
     ArrayList<String> arrayUserId, arrayUserDriverId, arrayMobileNo, arrayDriverMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
@@ -94,6 +98,11 @@ public class DashboardActivity extends AppCompatActivity {
         actionBarBackButton = (ImageView) actionBar.findViewById(R.id.action_bar_back_button);
         actionBarMenuButton = (ImageView) actionBar.findViewById(R.id.action_bar_menu);
 
+        loadNotificationConstrain = (ConstraintLayout) findViewById(R.id.dashboard_load_notification_constrain);
+        bidsSubmittedConstrain = (ConstraintLayout) findViewById(R.id.dashboard_bids_submitted_constrain);
+        loadNotificationTextView = (TextView) findViewById(R.id.dashboard_load_notification_button);
+        bidsSubmittedTextView = (TextView) findViewById(R.id.dashboard_bids_submitted_button);
+
         arrayUserId = new ArrayList<>();
         arrayMobileNo = new ArrayList<>();
         arrayDriverMobileNo = new ArrayList<>();
@@ -108,7 +117,9 @@ public class DashboardActivity extends AppCompatActivity {
         actionBarBackButton.setVisibility(View.GONE);
 
         bottomNav = (View) findViewById(R.id.profile_registration_bottom_nav_bar);
-        truckLoadText = (TextView) bottomNav.findViewById(R.id.dhuejsfcb);
+        spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
+        customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
+
         profileAndRegistrationLayout = (ConstraintLayout) findViewById(R.id.profile_registration_constrain);
 
 //        addDriver = findViewById(R.id.addDriverDone);
@@ -265,9 +276,9 @@ public class DashboardActivity extends AppCompatActivity {
                         }
 
                         if (role.equals("Customer")) {
-                            truckLoadText.setText("Post a Load");
+
                         } else {
-                            truckLoadText.setText("Post a Trip");
+
                         }
                     }
                 } catch (JSONException e) {
@@ -538,6 +549,46 @@ public class DashboardActivity extends AppCompatActivity {
 
     public void onClickDismiss(View view) {
         menuDialog.dismiss();
+    }
+
+    public void onClickLoadAndBids(View view) {
+        switch (view.getId()) {
+            case R.id.dashboard_load_notification_button:
+                loadNotificationConstrain.setVisibility(View.VISIBLE);
+                bidsSubmittedConstrain.setVisibility(View.INVISIBLE);
+                loadNotificationTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
+                bidsSubmittedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+                break;
+
+            case R.id.dashboard_bids_submitted_button:
+                loadNotificationConstrain.setVisibility(View.INVISIBLE);
+                bidsSubmittedConstrain.setVisibility(View.VISIBLE);
+                loadNotificationTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+                bidsSubmittedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
+                break;
+        }
+    }
+
+    public void onClickBottomNavigation(View view){
+        switch (view.getId()) {
+            case R.id.bottom_nav_sp_dashboard:
+
+                break;
+
+            case R.id.bottom_nav_customer_dashboard:
+                Intent intent = new Intent(DashboardActivity.this, CustomerDashboardActivity.class);
+                intent.putExtra("userId", userId);
+                intent.putExtra("mobile", phone);
+                startActivity(intent);
+                break;
+        }
+    }
+
+    public void onClickPostALoad(View view) {
+        Intent intent = new Intent(DashboardActivity.this, PostALoadActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("mobile", phone);
+        startActivity(intent);
     }
 
     private class SwipeListener implements View.OnTouchListener {

@@ -5,90 +5,82 @@
     android:id="@+id/action_bar_constrain"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
     android:background="@color/background">
 
-    <ImageView
-        android:id="@+id/ejdcnjeknsd"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottom_nav_sp_dashboard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:onClick="onClickBottomNavigation"
         android:background="@color/nav_selected_blue"
-        android:paddingTop="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/fuhhiedsfcjb"
-        app:layout_constraintEnd_toStartOf="@+id/dscufsd"
-        app:layout_constraintStart_toEndOf="@+id/fuhefhueusi"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/dashboard_logo" />
-
-    <ImageView
-        android:id="@+id/fuhefhueusi"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="1dp"
-        android:background="@color/nav_unselected_blue"
-        android:paddingTop="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/dhuejsfcb"
-        app:layout_constraintEnd_toStartOf="@+id/ejdcnjeknsd"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/bottom_nav_customer_dashboard"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/track_load_logo" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/dscufsd"
+        <ImageView
+            android:id="@+id/ejdcnjeknsd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/fuhhiedsfcjb"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/dashboard_logo" />
+
+        <TextView
+            android:id="@+id/fuhhiedsfcjb"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:text="SP Dashboard"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ejdcnjeknsd" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottom_nav_customer_dashboard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
+        android:onClick="onClickBottomNavigation"
         android:background="@color/nav_unselected_blue"
-        android:paddingTop="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/dfuhcisdekcf"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ejdcnjeknsd"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/track_logo" />
+        app:layout_constraintStart_toEndOf="@+id/bottom_nav_sp_dashboard"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/dhuejsfcb"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="1dp"
-        android:background="@color/nav_unselected_blue"
-        android:paddingBottom="10dp"
-        android:text="Post a Load"
-        android:textAlignment="center"
-        android:textColor="@color/dark_grey"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/ejdcnjeknsd"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fuhefhueusi" />
+        <ImageView
+            android:id="@+id/dscufsd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/dfuhcisdekcf"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/track_logo" />
 
-    <TextView
-        android:id="@+id/fuhhiedsfcjb"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/nav_selected_blue"
-        android:paddingBottom="10dp"
-        android:text="Dashboard"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/ejdcnjeknsd"
-        app:layout_constraintStart_toStartOf="@+id/ejdcnjeknsd"
-        app:layout_constraintTop_toBottomOf="@+id/ejdcnjeknsd" />
+        <TextView
+            android:id="@+id/dfuhcisdekcf"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:text="Cust Dashboard"
+            android:textAlignment="center"
+            android:textColor="@color/dark_grey"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dscufsd" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/dfuhcisdekcf"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:background="@color/nav_unselected_blue"
-        android:paddingBottom="10dp"
-        android:text="Track"
-        android:textAlignment="center"
-        android:textColor="@color/dark_grey"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/dscufsd"
-        app:layout_constraintStart_toEndOf="@+id/ejdcnjeknsd"
-        app:layout_constraintTop_toBottomOf="@+id/dscufsd" />
 </androidx.constraintlayout.widget.ConstraintLayout>
