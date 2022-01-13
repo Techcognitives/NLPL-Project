@@ -92,6 +92,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
     Dialog selectModelDialog, selectFeetDialog, selectCapacityDialog;
 
+
     Button uploadRC, uploadInsurance, okVehicleDetails;
     TextView textRC, editRC;
     TextView textInsurance, editInsurance;
