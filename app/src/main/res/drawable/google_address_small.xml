@@ -3,8 +3,8 @@
 
     <item
         android:drawable="@drawable/address_google"
-        android:width="20dp"
-        android:height="20dp"
+        android:width="10dp"
+        android:height="10dp"
         />
 
 </layer-list >

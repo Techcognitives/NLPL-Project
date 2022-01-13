@@ -8,7 +8,7 @@
     tools:context=".ui.ui.activities.CustomerDashboardActivity">
 
     <include
-        android:id="@+id/profile_registration_action_bar"
+        android:id="@+id/customer_dashboard_action_bar"
         layout="@layout/action_bar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <include
-        android:id="@+id/profile_registration_bottom_nav_bar"
+        android:id="@+id/customer_dashboard_bottom_nav_bar"
         layout="@layout/bottom_nav_bar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
         app:layout_constraintBottom_toTopOf="@+id/customer_dashboard_bids_received_constrain"
         app:layout_constraintEnd_toStartOf="@+id/customer_dashboard_loads_accepted_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_registration_action_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/customer_dashboard_action_bar" />
 
     <TextView
         android:id="@+id/customer_dashboard_loads_accepted_button"
@@ -101,7 +101,7 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/profile_registration_bottom_nav_bar"
+        app:layout_constraintBottom_toTopOf="@+id/customer_dashboard_bottom_nav_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/customer_dashboard_bids_received_button">
@@ -126,7 +126,7 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/profile_registration_bottom_nav_bar"
+        app:layout_constraintBottom_toTopOf="@+id/customer_dashboard_bottom_nav_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/customer_dashboard_bids_received_button">

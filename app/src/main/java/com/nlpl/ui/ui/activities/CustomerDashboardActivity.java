@@ -36,7 +36,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             userId = bundle.getString("userId");
         }
 
-        actionBar = findViewById(R.id.profile_registration_action_bar);
+        actionBar = findViewById(R.id.customer_dashboard_action_bar);
         actionBarTitle = (TextView) actionBar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) actionBar.findViewById(R.id.action_bar_back_button);
         actionBarMenuButton = (ImageView) actionBar.findViewById(R.id.action_bar_menu);
@@ -44,7 +44,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         actionBarTitle.setText("Load Poster Dashboard");
         actionBarBackButton.setVisibility(View.GONE);
 
-        bottomNav = (View) findViewById(R.id.profile_registration_bottom_nav_bar);
+        bottomNav = (View) findViewById(R.id.customer_dashboard_bottom_nav_bar);
         spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
         customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
         spDashboard.setBackgroundColor(getResources().getColor(R.color.nav_unselected_blue));

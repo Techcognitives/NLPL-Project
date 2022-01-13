@@ -29,9 +29,13 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.nlpl.R;
+import com.nlpl.model.ModelForRecyclerView.BankModel;
 import com.nlpl.model.ModelForRecyclerView.DriverModel;
+import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
 import com.nlpl.model.ModelForRecyclerView.TruckModel;
+import com.nlpl.ui.ui.adapters.BanksAdapter;
 import com.nlpl.ui.ui.adapters.DriversAdapter;
+import com.nlpl.ui.ui.adapters.LoadNotificationAdapter;
 import com.nlpl.ui.ui.adapters.TrucksAdapter;
 import com.nlpl.utils.DownloadImageTask;
 
@@ -45,6 +49,10 @@ import java.util.ArrayList;
 public class DashboardActivity extends AppCompatActivity {
 
     private RequestQueue mQueue;
+
+    private ArrayList<LoadNotificationModel> loadList = new ArrayList<>();
+    private LoadNotificationAdapter loadListAdapter;
+    private RecyclerView loadListRecyclerView;
 
 //    private ArrayList<DriverModel> driverList = new ArrayList<>();
 //    private DriversAdapter driverListAdapter;
@@ -197,6 +205,19 @@ public class DashboardActivity extends AppCompatActivity {
                     }
 
                     getUserDetails();
+
+                    //---------------------------- Get Bank Details -------------------------------------------
+                    loadListRecyclerView = (RecyclerView) findViewById(R.id.dashboard_load_notification_recycler_view);
+
+                    LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(getApplicationContext());
+                    linearLayoutManagerBank.setReverseLayout(true);
+                    loadListRecyclerView.setLayoutManager(linearLayoutManagerBank);
+                    loadListRecyclerView.setHasFixedSize(true);
+
+                    loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadList);
+                    loadListRecyclerView.setAdapter(loadListAdapter);
+                    getLoadNotificationList();
+                    //------------------------------------------------------------------------------------------
 
 //                    //---------------------------- Get Driver Details -------------------------------------------
 //                    driverListRecyclerView = (RecyclerView) findViewById(R.id.driver_list_view);
@@ -584,6 +605,63 @@ public class DashboardActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
         }
+    }
+
+    public void getLoadNotificationList() {
+        //---------------------------- Get Bank Details -------------------------------------------
+        String url1 = getString(R.string.baseURL) + "/loadpost/getAllPosts";
+        Log.i("URL: ", url1);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    loadList = new ArrayList<>();
+                    JSONArray loadLists = response.getJSONArray("data");
+                    for (int i = 0; i < loadLists.length(); i++) {
+                        JSONObject obj = loadLists.getJSONObject(i);
+                        LoadNotificationModel modelLoadNotification = new LoadNotificationModel();
+                        modelLoadNotification.setIdpost_load(obj.getString("idpost_load"));
+                        modelLoadNotification.setUser_id(obj.getString("user_id"));
+                        modelLoadNotification.setPick_up_date(obj.getString("pick_up_date"));
+                        modelLoadNotification.setPick_up_time(obj.getString("pick_up_time"));
+                        modelLoadNotification.setBudget(obj.getString("budget"));
+                        modelLoadNotification.setBid_status(obj.getString("bid_status"));
+                        modelLoadNotification.setVehicle_model(obj.getString("vehicle_model"));
+                        modelLoadNotification.setFeet(obj.getString("feet"));
+                        modelLoadNotification.setCapacity(obj.getString("capacity"));
+                        modelLoadNotification.setBody_type(obj.getString("body_type"));
+                        modelLoadNotification.setPick_add(obj.getString("pick_add"));
+                        modelLoadNotification.setPick_pin_code(obj.getString("pick_pin_code"));
+                        modelLoadNotification.setPick_city(obj.getString("pick_city"));
+                        modelLoadNotification.setPick_state(obj.getString("pick_state"));
+                        modelLoadNotification.setPick_country(obj.getString("pick_country"));
+                        modelLoadNotification.setDrop_add(obj.getString("drop_add"));
+                        modelLoadNotification.setDrop_pin_code(obj.getString("drop_pin_code"));
+                        modelLoadNotification.setDrop_city(obj.getString("drop_city"));
+                        modelLoadNotification.setDrop_state(obj.getString("drop_state"));
+                        modelLoadNotification.setDrop_country(obj.getString("drop_country"));
+                        modelLoadNotification.setKm_approx(obj.getString("km_approx"));
+                        modelLoadNotification.setNotes_meterial_des(obj.getString("notes_meterial_des"));
+                        loadList.add(modelLoadNotification);
+                    }
+                    if (loadList.size() > 0) {
+                        loadListAdapter.updateData(loadList);
+                    } else {
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+        //-------------------------------------------------------------------------------------------
     }
 
 

@@ -778,12 +778,26 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 overridePendingTransition(0, 0);
                 VehicleDetailsActivity.this.finish();
             } else {
+                updateUserIsTruckAdded();
                 AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
                 my_alert.setTitle("Vehicle Details added successfully");
-                my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                my_alert.setPositiveButton("+ Add Truck Driver", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        updateUserIsTruckAdded();
+                        dialogInterface.dismiss();
+                        Intent i8 = new Intent(VehicleDetailsActivity.this, DriverDetailsActivity.class);
+                        i8.putExtra("userId", userId);
+                        i8.putExtra("isEdit", false);
+                        i8.putExtra("mobile", mobile);
+                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i8);
+                        overridePendingTransition(0, 0);
+                        VehicleDetailsActivity.this.finish();
+                    }
+                });
+                my_alert.setNegativeButton("Skip", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
                         Intent i8 = new Intent(VehicleDetailsActivity.this, ViewTruckDetailsActivity.class);
                         i8.putExtra("mobile", mobile);
