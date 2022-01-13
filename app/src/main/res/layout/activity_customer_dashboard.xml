@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".ui.ui.activities.CustomerDashboardActivity">
 
     <include
@@ -81,6 +82,7 @@
         android:clickable="true"
         app:tint="@color/white"
         app:fabSize="mini"
+        android:onClick="onClickPostALoad"
         android:backgroundTint="@color/button_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

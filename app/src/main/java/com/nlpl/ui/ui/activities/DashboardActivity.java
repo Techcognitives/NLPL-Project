@@ -98,6 +98,15 @@ public class DashboardActivity extends AppCompatActivity {
         actionBarBackButton = (ImageView) actionBar.findViewById(R.id.action_bar_back_button);
         actionBarMenuButton = (ImageView) actionBar.findViewById(R.id.action_bar_menu);
 
+        actionBarTitle.setText("Dashboard");
+        actionBarBackButton.setVisibility(View.GONE);
+
+        bottomNav = (View) findViewById(R.id.profile_registration_bottom_nav_bar);
+        spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
+        customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
+        customerDashboard.setBackgroundColor(getResources().getColor(R.color.nav_unselected_blue));
+        spDashboard.setBackgroundColor(getResources().getColor(R.color.nav_selected_blue));
+
         loadNotificationConstrain = (ConstraintLayout) findViewById(R.id.dashboard_load_notification_constrain);
         bidsSubmittedConstrain = (ConstraintLayout) findViewById(R.id.dashboard_bids_submitted_constrain);
         loadNotificationTextView = (TextView) findViewById(R.id.dashboard_load_notification_button);
@@ -112,13 +121,6 @@ public class DashboardActivity extends AppCompatActivity {
         arrayName = new ArrayList<>();
         arrayRole = new ArrayList<>();
         arrayRegDone = new ArrayList<>();
-
-        actionBarTitle.setText("Dashboard");
-        actionBarBackButton.setVisibility(View.GONE);
-
-        bottomNav = (View) findViewById(R.id.profile_registration_bottom_nav_bar);
-        spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
-        customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
 
         profileAndRegistrationLayout = (ConstraintLayout) findViewById(R.id.profile_registration_constrain);
 
@@ -584,12 +586,6 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
-    public void onClickPostALoad(View view) {
-        Intent intent = new Intent(DashboardActivity.this, PostALoadActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("mobile", phone);
-        startActivity(intent);
-    }
 
     private class SwipeListener implements View.OnTouchListener {
         GestureDetector gestureDetector;

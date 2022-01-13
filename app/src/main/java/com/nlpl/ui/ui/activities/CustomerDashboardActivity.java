@@ -7,11 +7,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nlpl.R;
 
 public class CustomerDashboardActivity extends AppCompatActivity {
+
+    View actionBar;
+    TextView actionBarTitle;
+    ImageView actionBarBackButton, actionBarMenuButton;
+
+    View bottomNav;
+    ConstraintLayout spDashboard, customerDashboard;
 
     ConstraintLayout loadAcceptedConstrain, bidsReceivedConstrain;
     TextView loadAcceptedTextView, bidsReceivedTextView;
@@ -27,6 +35,17 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             phone = bundle.getString("mobile");
             userId = bundle.getString("userId");
         }
+
+        actionBar = findViewById(R.id.profile_registration_action_bar);
+        actionBarTitle = (TextView) actionBar.findViewById(R.id.action_bar_title);
+        actionBarBackButton = (ImageView) actionBar.findViewById(R.id.action_bar_back_button);
+        actionBarMenuButton = (ImageView) actionBar.findViewById(R.id.action_bar_menu);
+
+        bottomNav = (View) findViewById(R.id.profile_registration_bottom_nav_bar);
+        spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
+        customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
+        spDashboard.setBackgroundColor(getResources().getColor(R.color.nav_unselected_blue));
+        customerDashboard.setBackgroundColor(getResources().getColor(R.color.nav_selected_blue));
 
         loadAcceptedConstrain = (ConstraintLayout) findViewById(R.id.customer_dashboard_loads_accepted_constrain);
         bidsReceivedConstrain = (ConstraintLayout) findViewById(R.id.customer_dashboard_bids_received_constrain);
@@ -53,12 +72,20 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         }
     }
 
+    public void onClickPostALoad(View view) {
+        Intent intent = new Intent(CustomerDashboardActivity.this, PostALoadActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("mobile", phone);
+        startActivity(intent);
+    }
+
     public void onClickBottomNavigation(View view){
         switch (view.getId()) {
             case R.id.bottom_nav_sp_dashboard:
                 Intent intent = new Intent(CustomerDashboardActivity.this, DashboardActivity.class);
                 intent.putExtra("mobile2", phone);
                 startActivity(intent);
+
                 break;
 
             case R.id.bottom_nav_customer_dashboard:

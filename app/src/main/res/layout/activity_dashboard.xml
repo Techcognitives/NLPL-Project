@@ -297,7 +297,6 @@
         android:backgroundTint="@color/button_blue"
         android:clickable="true"
         app:fabSize="mini"
-        android:onClick="onClickPostALoad"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.954"
