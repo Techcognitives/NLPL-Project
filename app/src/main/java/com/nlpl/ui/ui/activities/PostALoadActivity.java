@@ -1085,6 +1085,31 @@ public class PostALoadActivity extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            if (!pick_up_address.getText().toString().isEmpty()){
+                pick_up_address.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+            }else {
+                pick_up_address.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+            }
+
+            if (!drop_address.getText().toString().isEmpty()){
+                drop_address.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+            }else {
+                drop_address.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+            }
+
+            if (!pick_up_pinCode.getText().toString().isEmpty()){
+                pick_up_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+            }else {
+                pick_up_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+            }
+
+            if (!drop_pinCode.getText().toString().isEmpty()){
+                drop_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+            }else {
+                drop_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+            }
+
             if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
                     && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
                     && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
