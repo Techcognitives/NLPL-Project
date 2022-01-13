@@ -34,6 +34,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -71,6 +72,7 @@ import com.nlpl.utils.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.xmlpull.v1.sax2.Driver;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -88,13 +90,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DriverDetailsActivity extends AppCompatActivity {
 
     View action_bar;
-    TextView actionBarTitle;
+    TextView actionBarTitle, actionBarSkipButton;
+
     EditText driverName, driverMobile, driverEmailId;
     ImageView actionBarBackButton;
     Intent data;
     int requestCode;
     int resultCode;
     String pathDLGallery, pathDLCamera;
+    CheckBox selfCheckBox;
 
     Button uploadDL, okDriverDetails, uploadSelfie;
     TextView textDL, editDL, series, textDS, editDS;
@@ -141,9 +145,12 @@ public class DriverDetailsActivity extends AppCompatActivity {
         }
 
         personalAndAddress = (View) findViewById(R.id.driver_details_personal_and_address);
-        action_bar = findViewById(R.id.driver_details_action_bar);
+        action_bar = (View) findViewById(R.id.driver_details_action_bar);
+
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
+        actionBarSkipButton = (TextView) action_bar.findViewById(R.id.action_bar_skip);
+
         driverMobile = (EditText) personalAndAddress.findViewById(R.id.registration_mobile_no_edit);
         driverName = personalAndAddress.findViewById(R.id.registration_edit_name);
         okDriverDetails = findViewById(R.id.driver_details_ok_button);
@@ -225,10 +232,15 @@ public class DriverDetailsActivity extends AppCompatActivity {
         driverName.setFilters(new InputFilter[]{filter});
 
         actionBarTitle.setText("Driver Details");
-        actionBarBackButton.setOnClickListener(new View.OnClickListener() {
+        actionBarBackButton.setVisibility(View.GONE);
+        actionBarSkipButton.setVisibility(View.VISIBLE);
+        actionBarSkipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DriverDetailsActivity.this.finish();
+                Intent intent = new Intent(DriverDetailsActivity.this, ViewTruckDetailsActivity.class);
+                intent.putExtra("userId", userId);
+                intent.putExtra("mobile", mobile);
+                startActivity(intent);
             }
         });
 
@@ -240,6 +252,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         driverSelfieImg = findViewById(R.id.driver_selfie_img);
         textDS = findViewById(R.id.driver_selfie_text);
         editDS = findViewById(R.id.driver_details_edit_selfie_text);
+        selfCheckBox = (CheckBox) findViewById(R.id.driver_details_self_checkbox);
 
         previewDialogDL = new Dialog(DriverDetailsActivity.this);
         previewDialogDL.setContentView(R.layout.dialog_preview_images);
@@ -1819,5 +1832,58 @@ public class DriverDetailsActivity extends AppCompatActivity {
                     Manifest.permission.READ_EXTERNAL_STORAGE
             }, 100);
         }
+    }
+
+    public void onClickIsSelf(View view) {
+        if (selfCheckBox.isChecked()){
+            selfCheckBox.setChecked(false);
+        }else {
+            selfCheckBox.setChecked(true);
+            getUserDetails();
+        }
+    }
+
+    private void getUserDetails() {
+
+        String url = getString(R.string.baseURL) + "/user/" + userId;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+                        String userNameAPI = obj.getString("name");
+                        String userMobileAPI = obj.getString("phone_number");
+                        String emailIdAPI = obj.getString("email_id");
+                        String userAddressAPI = obj.getString("address");
+                        String userStateAPI = obj.getString("state_code");
+                        String userCityAPI = obj.getString("preferred_location");
+                        String userPinCodeAPI = obj.getString("pin_code");
+                        String userRole = obj.getString("user_type");
+
+                        driverName.setText(userNameAPI);
+                        String s1 = userMobileAPI.substring(2, 12);
+                        driverMobile.setText(s1);
+                        address.setText(userAddressAPI);
+                        selectStateText.setText(userStateAPI);
+                        selectDistrictText.setText(userCityAPI);
+                        pinCode.setText(userPinCodeAPI);
+                        driverEmailId.setText(emailIdAPI);
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        mQueue.add(request);
+
     }
 }
