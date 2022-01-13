@@ -69,9 +69,8 @@ public class PostALoadActivity extends AppCompatActivity {
     Button Ok_PostLoad;
 
     ArrayAdapter<CharSequence> selectStateArray, selectDistrictArray, selectStateUnionCode;
-
-
     ArrayList<String> arrayTruckBodyType, arrayVehicleType, arrayTruckFt, arrayCapacity;
+
     private RequestQueue mQueue;
 
     @Override
@@ -127,7 +126,6 @@ public class PostALoadActivity extends AppCompatActivity {
         drop_address.addTextChangedListener(PostTextWatcher);
         drop_pinCode.addTextChangedListener(PostTextWatcher);
 
-
         mQueue = Volley.newRequestQueue(PostALoadActivity.this);
 
         String[] allDate = currentDate.toString().split(" ", 6);
@@ -136,6 +134,7 @@ public class PostALoadActivity extends AppCompatActivity {
             Log.i("Sep Date", sepDate);
             currentSepDate.add(sepDate);
         }
+
         String dayC = (String) currentSepDate.get(0);
         String monC = (String) currentSepDate.get(1);
         String dateC = (String) currentSepDate.get(2);
@@ -176,7 +175,6 @@ public class PostALoadActivity extends AppCompatActivity {
         } else if (monC.equals("Dec")) {
             count = 12;
         }
-
 
         todayDate = dateC + "/" + count + "/" + yearC;
         Log.i("Today's Date", todayDate);
@@ -485,7 +483,7 @@ public class PostALoadActivity extends AppCompatActivity {
                 }
             }
         }, year, month, day);
-        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
         datePickerDialog.show();
     }
 
