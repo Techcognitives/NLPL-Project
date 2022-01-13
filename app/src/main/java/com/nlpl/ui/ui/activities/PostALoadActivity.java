@@ -8,6 +8,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -294,6 +295,10 @@ public class PostALoadActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
+                        Intent intent = new Intent(PostALoadActivity.this, CustomerDashboardActivity.class);
+                        intent.putExtra("userId", userId);
+                        intent.putExtra("mobile", phone);
+                        startActivity(intent);
                     }
                 });
                 my_alert.show();
