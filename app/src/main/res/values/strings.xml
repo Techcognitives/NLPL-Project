@@ -1080,6 +1080,7 @@
     //-----------------------------------Post A Load------------------------------------------------
     <string name="pick_up_date">Pick-up Date</string>
     <string name="pick_up_time">Pick-up Time</string>
+    <string name="enterYourBudget">Please enter your expected budget</string>
     <string name="budget">Budget</string>
     <string name="truckTypeAndCapacity">Truck Type &amp; Capacity</string>
     <string name="SelectVehicleModel">Select Vehicle Model</string>

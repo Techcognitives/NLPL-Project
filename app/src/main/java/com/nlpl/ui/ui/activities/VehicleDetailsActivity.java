@@ -106,11 +106,11 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
     String userId, truckId, vehicleNumberAPI, vehicleTypeAPI, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI, truckModelAPI, truckFtAPI, truckCapacityAPI;
     Boolean isEdit, isRcUploaded=false, isInsurance=false, truckSelected=false, isModelSelected = false;
-    private RequestQueue mQueue;
 
     RadioButton openSelected, closeSelected, tarpaulinSelected;
 
     ArrayList<String> arrayVehicleType, arrayTruckFt, arrayCapacity;
+    private RequestQueue mQueue;
 
     Dialog previewDialogRcBook, previewDialogInsurance;
     ImageView previewRcBook, previewInsurance, previewRcBookImageView, previewInsuranceImageView;
