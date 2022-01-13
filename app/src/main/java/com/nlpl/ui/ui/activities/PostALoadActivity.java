@@ -58,7 +58,7 @@ public class PostALoadActivity extends AppCompatActivity {
 
     TextView pick_up_date, pick_up_time, select_budget, select_model, select_feet, select_capacity, select_truck_body_type, pick_up_state, pick_up_city, drop_state, drop_city, auto_calculated_KM;
     EditText pick_up_address, drop_address, pick_up_pinCode, drop_pinCode, note_to_post_load;
-    String selectedDistrict, selectedState, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI, customerBudget, sDate, eDate, monthS, monthE, startingDate, endingDate, todayDate;
+    String phone, userId, selectedDistrict, selectedState, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI, customerBudget, sDate, eDate, monthS, monthE, startingDate, endingDate, todayDate;
     int sMonth, eMonth, count, startCount;
     Date currentDate, date1, date2, date3, date4;
     ArrayList currentSepDate;
@@ -77,6 +77,12 @@ public class PostALoadActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_aload);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            phone = bundle.getString("mobile");
+            userId = bundle.getString("userId");
+        }
 
 //-------------------------------------- Today's Date ----------------------------------------------
         currentDate = Calendar.getInstance().getTime();
@@ -877,7 +883,7 @@ public class PostALoadActivity extends AppCompatActivity {
         postLoadRequest.setDrop_pin_code(drop_pinCode.getText().toString());
         postLoadRequest.setDrop_state(drop_state.getText().toString());
         postLoadRequest.setDrop_country(drop_state.getText().toString());
-        postLoadRequest.setUser_id("2");
+        postLoadRequest.setUser_id(userId);
         postLoadRequest.setKm_approx(select_capacity.getText().toString());
         postLoadRequest.setNotes_meterial_des(note_to_post_load.getText().toString());
 
