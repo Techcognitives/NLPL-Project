@@ -80,6 +80,7 @@ public class PostALoadActivity extends AppCompatActivity {
 
     ArrayAdapter<CharSequence> selectStateArray, selectDistrictArray, selectStateUnionCode;
     ArrayList<String> arrayTruckBodyType, arrayVehicleType, arrayTruckFt, arrayCapacity;
+
     private RequestQueue mQueue;
 
     @Override
@@ -142,7 +143,6 @@ public class PostALoadActivity extends AppCompatActivity {
         drop_address.addTextChangedListener(PostTextWatcher);
         drop_pinCode.addTextChangedListener(PostTextWatcher);
 
-
         mQueue = Volley.newRequestQueue(PostALoadActivity.this);
 
         String[] allDate = currentDate.toString().split(" ", 6);
@@ -151,6 +151,7 @@ public class PostALoadActivity extends AppCompatActivity {
             Log.i("Sep Date", sepDate);
             currentSepDate.add(sepDate);
         }
+
         String dayC = (String) currentSepDate.get(0);
         String monC = (String) currentSepDate.get(1);
         String dateC = (String) currentSepDate.get(2);
@@ -191,7 +192,6 @@ public class PostALoadActivity extends AppCompatActivity {
         } else if (monC.equals("Dec")) {
             count = 12;
         }
-
 
         todayDate = dateC + "/" + count + "/" + yearC;
         Log.i("Today's Date", todayDate);
@@ -500,7 +500,7 @@ public class PostALoadActivity extends AppCompatActivity {
                 }
             }
         }, year, month, day);
-        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
         datePickerDialog.show();
     }
 
@@ -1085,6 +1085,31 @@ public class PostALoadActivity extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            if (!pick_up_address.getText().toString().isEmpty()){
+                pick_up_address.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+            }else {
+                pick_up_address.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+            }
+
+            if (!drop_address.getText().toString().isEmpty()){
+                drop_address.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+            }else {
+                drop_address.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+            }
+
+            if (!pick_up_pinCode.getText().toString().isEmpty()){
+                pick_up_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+            }else {
+                pick_up_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+            }
+
+            if (!drop_pinCode.getText().toString().isEmpty()){
+                drop_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+            }else {
+                drop_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+            }
+
             if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
                     && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
                     && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
