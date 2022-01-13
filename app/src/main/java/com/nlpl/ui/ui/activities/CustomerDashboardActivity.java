@@ -41,6 +41,9 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         actionBarBackButton = (ImageView) actionBar.findViewById(R.id.action_bar_back_button);
         actionBarMenuButton = (ImageView) actionBar.findViewById(R.id.action_bar_menu);
 
+        actionBarTitle.setText("Load Poster Dashboard");
+        actionBarBackButton.setVisibility(View.GONE);
+
         bottomNav = (View) findViewById(R.id.profile_registration_bottom_nav_bar);
         spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
         customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
@@ -68,7 +71,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                 loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
                 bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
                 break;
-
         }
     }
 
