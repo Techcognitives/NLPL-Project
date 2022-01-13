@@ -1,7 +1,6 @@
 package com.nlpl.ui.ui.adapters;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nlpl.R;
-import com.nlpl.model.ModelForRecyclerView.BankModel;
 import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
 import com.nlpl.ui.ui.activities.DashboardActivity;
-import com.nlpl.ui.ui.activities.ViewBankDetailsActivity;
 
 import java.util.ArrayList;
 
@@ -39,20 +36,22 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
         LoadNotificationModel obj = loadList.get(position);
 
         String pickUpCity = obj.getPick_city();
+        holder.destinationStart.setText(pickUpCity);
+
         String dropCity = obj.getDrop_city();
-        holder.destinations.setText(pickUpCity + "-" + dropCity);
+        holder.destinationEnd.setText(dropCity);
 
         String budget = obj.getBudget();
         holder.budget.setText("INR " + budget);
 
         String date = obj.getPick_up_date();
-        holder.date.setText(date);
+        holder.date.setText("Date: " + date);
 
         String time = obj.getPick_up_time();
-        holder.time.setText(time);
+        holder.time.setText("Time: " + time);
 
         String approxKms = obj.getKm_approx();
-        holder.distance.setText(approxKms);
+        holder.distance.setText("Distance: " + approxKms);
 
         String model = obj.getVehicle_model();
         holder.model.setText("Model: " + model);
@@ -78,12 +77,13 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
     }
 
     public class LoadNotificationViewHolder extends RecyclerView.ViewHolder {
-        private TextView destinations, budget, date, time, distance, model, feet, capacity, body;
+        private TextView destinationStart, destinationEnd, budget, date, time, distance, model, feet, capacity, body;
 
         public LoadNotificationViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            destinations = itemView.findViewById(R.id.load_list_destinations);
+            destinationStart = itemView.findViewById(R.id.load_list_pick_up);
+            destinationEnd = itemView.findViewById(R.id.load_list_drop);
             budget = itemView.findViewById(R.id.load_list_budget);
             date = itemView.findViewById(R.id.load_list_pick_up_date);
             time = itemView.findViewById(R.id.load_list_pick_up_time);
