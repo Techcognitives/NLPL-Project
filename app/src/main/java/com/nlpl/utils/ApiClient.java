@@ -6,6 +6,7 @@ import com.nlpl.services.BankService;
 import com.nlpl.services.CompanyService;
 import com.nlpl.services.ImageService;
 import com.nlpl.services.ImageUploadService;
+import com.nlpl.services.PostLoadService;
 import com.nlpl.services.UploadChequeService;
 import com.nlpl.services.UploadDriverLicenseService;
 import com.nlpl.services.UploadDriverSelfieService;
@@ -93,5 +94,10 @@ public class ApiClient {
     public static UploadTruckRCBookService getUploadTruckRCBookService() {
         UploadTruckRCBookService uploadTruckRCBookService = getRetrofit().create(UploadTruckRCBookService.class);
         return uploadTruckRCBookService;
+    }
+
+    public static PostLoadService getPostLoadService() {
+        PostLoadService postLoadService = getRetrofit().create(PostLoadService.class);
+        return postLoadService;
     }
 }
