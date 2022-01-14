@@ -88,10 +88,10 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     EditText vehicleNumberEdit;
     TextView selectModel, selectFt, selectCapacity;
     ImageView openType, closedType, tarpaulinType, imgRC, imgI;
-    String bodyTypeSelected, mobile;
+    String bodyTypeSelected, mobile, truckIdPass;
 
     Dialog selectModelDialog, selectFeetDialog, selectCapacityDialog;
-
+    String isDriverDetailsDoneAPI;
 
     Button uploadRC, uploadInsurance, okVehicleDetails;
     TextView textRC, editRC;
@@ -127,6 +127,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             truckId = bundle.getString("truckId");
             mobile = bundle.getString("mobile");
         }
+        mQueue = Volley.newRequestQueue(VehicleDetailsActivity.this);
+        getUserDetails(userId);
 
         action_bar = findViewById(R.id.vehicle_details_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
@@ -206,7 +208,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         vehicleNumberEdit.setFilters(new InputFilter[] { filter });
 
-        mQueue = Volley.newRequestQueue(VehicleDetailsActivity.this);
         if (isEdit){
 
             isRcUploaded = true;
@@ -779,6 +780,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 VehicleDetailsActivity.this.finish();
             } else {
                 updateUserIsTruckAdded();
+
                 AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
                 my_alert.setTitle("Vehicle Details added successfully");
                 my_alert.setPositiveButton("+ Add Truck Driver", new DialogInterface.OnClickListener() {
@@ -789,6 +791,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                         i8.putExtra("userId", userId);
                         i8.putExtra("isEdit", false);
                         i8.putExtra("mobile", mobile);
+                        i8.putExtra("truckIdPass", truckIdPass);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);
                         overridePendingTransition(0, 0);
@@ -799,13 +802,47 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
-                        Intent i8 = new Intent(VehicleDetailsActivity.this, ViewTruckDetailsActivity.class);
-                        i8.putExtra("mobile", mobile);
-                        i8.putExtra("userId", userId);
-                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(i8);
-                        overridePendingTransition(0, 0);
-                        VehicleDetailsActivity.this.finish();
+                        if (isDriverDetailsDoneAPI.equals("1")) {
+                            Intent i8 = new Intent(VehicleDetailsActivity.this, ViewTruckDetailsActivity.class);
+                            i8.putExtra("mobile", mobile);
+                            i8.putExtra("userId", userId);
+                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(i8);
+                            overridePendingTransition(0, 0);
+                            VehicleDetailsActivity.this.finish();
+                        }else{
+                            AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
+                            my_alert.setTitle("You can not bid unless you have a Driver");
+                            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                    Intent i8 = new Intent(VehicleDetailsActivity.this, ViewTruckDetailsActivity.class);
+                                    i8.putExtra("mobile", mobile);
+                                    i8.putExtra("userId", userId);
+                                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(i8);
+                                    overridePendingTransition(0, 0);
+                                    VehicleDetailsActivity.this.finish();
+                                }
+                            });
+                            my_alert.setNegativeButton("+ Add Truck Driver", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                    Intent i8 = new Intent(VehicleDetailsActivity.this, DriverDetailsActivity.class);
+                                    i8.putExtra("userId", userId);
+                                    i8.putExtra("isEdit", false);
+                                    i8.putExtra("mobile", mobile);
+                                    i8.putExtra("truckIdPass", truckIdPass);
+                                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(i8);
+                                    overridePendingTransition(0, 0);
+                                    VehicleDetailsActivity.this.finish();
+                                }
+                            });
+                            my_alert.show();
+                        }
                     }
                 });
                 my_alert.show();
@@ -835,6 +872,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             public void onResponse(Call<AddTruckResponse> call, Response<AddTruckResponse> response) {
                 AddTruckResponse addTruckResponse = response.body();
                 String truckId = addTruckResponse.getData().getTruck_id();
+                truckIdPass = addTruckResponse.getData().getTruck_id();
                 String rcPath = rcImagePickerWithoutAlert();
                 String insurancePath = insuranceImagePickerWithoutAlert();
                 Log.i("imgpicker rc", rcImagePickerWithoutAlert());
@@ -1413,6 +1451,32 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                     Manifest.permission.READ_EXTERNAL_STORAGE
             }, 100);
         }
+    }
+
+    private void getUserDetails(String userIds) {
+
+        String url = getString(R.string.baseURL) + "/user/" + userIds;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+                        isDriverDetailsDoneAPI = obj.getString("isDriver_added");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        mQueue.add(request);
     }
 
 }

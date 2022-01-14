@@ -6,6 +6,7 @@ import com.nlpl.model.UpdateBankDetails.UpdateBankIFSICode;
 import com.nlpl.model.UpdateDriverDetails.UpdateDriverEmailId;
 import com.nlpl.model.UpdateDriverDetails.UpdateDriverName;
 import com.nlpl.model.UpdateDriverDetails.UpdateDriverNumber;
+import com.nlpl.model.UpdateDriverDetails.UpdateDriverTruckId;
 import com.nlpl.model.UpdateDriverDetails.UpdateDriverUploadLicense;
 
 import retrofit2.Call;
@@ -30,4 +31,7 @@ public interface AddDriverService {
 
     @PUT("/driver/{driverId}")
     Call<UpdateDriverEmailId> updateDriverEmailId(@Path("driverId") String driverId, @Body UpdateDriverEmailId updateDriverEmailId);
+
+    @PUT("/driver/{driverId}")
+    Call<UpdateDriverTruckId> updateDriverTruckId(@Path("driverId") String driverId, @Body UpdateDriverTruckId updateDriverTruckId);
 }

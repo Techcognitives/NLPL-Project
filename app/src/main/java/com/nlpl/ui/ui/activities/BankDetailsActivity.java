@@ -120,6 +120,9 @@ public class BankDetailsActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             userId = bundle.getString("userId");
+            if (userId!=null){
+                Log.i("Bank Details", userId);
+            }
             isEdit = bundle.getBoolean("isEdit");
             bankId = bundle.getString("bankDetailsID");
             mobile = bundle.getString("mobile");
@@ -454,9 +457,8 @@ public class BankDetailsActivity extends AppCompatActivity {
 
                         updateUserIsBankDetailsGiven();
                         dialogInterface.dismiss();
-                        Intent i8 = new Intent(BankDetailsActivity.this, ViewBankDetailsActivity.class);
-                        i8.putExtra("mobile", mobile);
-                        i8.putExtra("userId", userId);
+                        Intent i8 = new Intent(BankDetailsActivity.this, DashboardActivity.class);
+                        i8.putExtra("mobile2", mobile);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);
                         overridePendingTransition(0, 0);

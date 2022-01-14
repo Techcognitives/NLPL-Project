@@ -19,9 +19,13 @@
         android:theme="@style/Theme.NLPL"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.ui.activities.CustomerDashboardActivity"
+            android:name=".ui.ui.activities.PostATripActivity"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:exported="false" />
+        <activity
+            android:name=".ui.ui.activities.CustomerDashboardActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
             android:name=".ui.ui.activities.ViewTruckDetailsActivity"
             android:exported="false"
@@ -36,8 +40,8 @@
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
             android:name=".ui.ui.activities.PostALoadActivity"
-            android:theme="@style/Theme.Design.Light.NoActionBar"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
             android:name=".ui.ui.activities.PersonalDetailsAndIdProofActivity"
             android:exported="false"

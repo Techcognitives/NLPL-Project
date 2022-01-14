@@ -94,11 +94,11 @@ public class PostALoadActivity extends AppCompatActivity {
             userId = bundle.getString("userId");
         }
 
-        bottomNav = (View) findViewById(R.id.post_a_load_bottom_nav_bar0);
-        spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
-        customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
-        spDashboard.setBackgroundColor(getResources().getColor(R.color.nav_unselected_blue));
-        customerDashboard.setBackgroundColor(getResources().getColor(R.color.nav_selected_blue));
+//        bottomNav = (View) findViewById(R.id.post_a_load_bottom_nav_bar0);
+//        spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
+//        customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
+//        spDashboard.setBackgroundColor(getResources().getColor(R.color.nav_unselected_blue));
+//        customerDashboard.setBackgroundColor(getResources().getColor(R.color.nav_selected_blue));
 
 //-------------------------------------- Today's Date ----------------------------------------------
         currentDate = Calendar.getInstance().getTime();

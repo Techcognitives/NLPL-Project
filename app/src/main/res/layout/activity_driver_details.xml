@@ -247,7 +247,7 @@
             app:srcCompat="@drawable/ic_preview" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <CheckBox
+    <RadioButton
         android:id="@+id/driver_details_self_checkbox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

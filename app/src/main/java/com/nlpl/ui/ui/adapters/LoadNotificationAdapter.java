@@ -36,10 +36,10 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
         LoadNotificationModel obj = loadList.get(position);
 
         String pickUpCity = obj.getPick_city();
-        holder.destinationStart.setText(pickUpCity);
+        holder.destinationStart.setText("  " + pickUpCity);
 
         String dropCity = obj.getDrop_city();
-        holder.destinationEnd.setText(dropCity);
+        holder.destinationEnd.setText("  " + dropCity);
 
         String budget = obj.getBudget();
         holder.budget.setText("INR " + budget);
@@ -64,6 +64,9 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
 
         String bodyType = obj.getBody_type();
         holder.body.setText("Body: " + bodyType);
+
+        String pickUpLocation = obj.getPick_add();
+        holder.pickUpLocation.setText(pickUpLocation);
     }
 
     @Override
@@ -77,7 +80,7 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
     }
 
     public class LoadNotificationViewHolder extends RecyclerView.ViewHolder {
-        private TextView destinationStart, destinationEnd, budget, date, time, distance, model, feet, capacity, body;
+        private TextView destinationStart, destinationEnd, budget, date, time, distance, model, feet, capacity, body, pickUpLocation;
 
         public LoadNotificationViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -92,6 +95,7 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
             feet = itemView.findViewById(R.id.load_list_feet);
             capacity = itemView.findViewById(R.id.load_list_capacity);
             body = itemView.findViewById(R.id.load_list_body);
+            pickUpLocation = itemView.findViewById(R.id.load_list_location);
 
         }
 
