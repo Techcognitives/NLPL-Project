@@ -138,10 +138,10 @@ public class PostALoadActivity extends AppCompatActivity {
         arrayTruckBodyType.add("Closed");
         arrayTruckBodyType.add("Tarpulian");
 
-        pick_up_address.addTextChangedListener(PostTextWatcher);
-        pick_up_pinCode.addTextChangedListener(PostTextWatcher);
-        drop_address.addTextChangedListener(PostTextWatcher);
-        drop_pinCode.addTextChangedListener(PostTextWatcher);
+        pick_up_address.addTextChangedListener(PickAddressTextWatcher);
+        pick_up_pinCode.addTextChangedListener(PickPinCodeTextWatcher);
+        drop_address.addTextChangedListener(DropAddressTextWatcher);
+        drop_pinCode.addTextChangedListener(DropPinCodeTextWatcher);
 
         mQueue = Volley.newRequestQueue(PostALoadActivity.this);
 
@@ -1077,7 +1077,7 @@ public class PostALoadActivity extends AppCompatActivity {
     }
     //-----------------------------------------------------------------------------------------------------
 
-    private TextWatcher PostTextWatcher = new TextWatcher() {
+    private TextWatcher PickAddressTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -1092,22 +1092,106 @@ public class PostALoadActivity extends AppCompatActivity {
                 pick_up_address.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
             }
 
+            if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
+                    && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
+                    && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
+                    && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
+                    && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()){
+                Ok_PostLoad.setEnabled(true);
+                Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
+            } else {
+                Ok_PostLoad.setEnabled(false);
+                Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+
+    private TextWatcher DropPinCodeTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            if (drop_pinCode.getText().toString().length() == 6){
+                drop_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+            }else {
+                drop_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+            }
+
+            if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
+                    && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
+                    && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
+                    && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
+                    && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()){
+                Ok_PostLoad.setEnabled(true);
+                Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
+            } else {
+                Ok_PostLoad.setEnabled(false);
+                Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+
+    private TextWatcher DropAddressTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
             if (!drop_address.getText().toString().isEmpty()){
                 drop_address.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
             }else {
                 drop_address.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
             }
 
-            if (!pick_up_pinCode.getText().toString().isEmpty()){
+            if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
+                    && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
+                    && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
+                    && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
+                    && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()){
+                Ok_PostLoad.setEnabled(true);
+                Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
+            } else {
+                Ok_PostLoad.setEnabled(false);
+                Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+
+    private TextWatcher PickPinCodeTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            if (pick_up_pinCode.getText().toString().length() == 6){
                 pick_up_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
             }else {
                 pick_up_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
-            }
-
-            if (!drop_pinCode.getText().toString().isEmpty()){
-                drop_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
-            }else {
-                drop_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
             }
 
             if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
