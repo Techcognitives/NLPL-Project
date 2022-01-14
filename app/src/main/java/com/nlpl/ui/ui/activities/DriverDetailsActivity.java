@@ -57,6 +57,8 @@ import com.nlpl.model.UpdateDriverDetails.UpdateDriverEmailId;
 import com.nlpl.model.UpdateDriverDetails.UpdateDriverName;
 import com.nlpl.model.UpdateDriverDetails.UpdateDriverNumber;
 import com.nlpl.model.UpdateDriverDetails.UpdateDriverTruckId;
+import com.nlpl.model.UpdateTruckDetails.UpdateTruckDriverId;
+import com.nlpl.model.UpdateTruckDetails.UpdateTruckVehicleNumber;
 import com.nlpl.model.UpdateUserDetails.UpdateUserAddress;
 import com.nlpl.model.UpdateUserDetails.UpdateUserEmailId;
 import com.nlpl.model.UpdateUserDetails.UpdateUserIsDriverAdded;
@@ -66,6 +68,7 @@ import com.nlpl.model.UpdateUserDetails.UpdateUserPinCode;
 import com.nlpl.model.UpdateUserDetails.UpdateUserPreferredLocation;
 import com.nlpl.model.UpdateUserDetails.UpdateUserStateCode;
 import com.nlpl.services.AddDriverService;
+import com.nlpl.services.AddTruckService;
 import com.nlpl.services.UserService;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
@@ -112,8 +115,11 @@ public class DriverDetailsActivity extends AppCompatActivity {
     ImageView driverLicenseImage, driverSelfieImg;
 
     private RequestQueue mQueue;
+
     private UserService userService;
+    private AddTruckService addTruckService;
     private AddDriverService addDriverService;
+
     String driverUserId, driverUserIdGet;
 
     String img_type, userId, driverId, driverNameAPI, driverNumberAPI, driverEmailAPI, mobile;
@@ -183,6 +189,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         userService = retrofit.create(UserService.class);
         addDriverService = retrofit.create(AddDriverService.class);
+        addTruckService = retrofit.create(AddTruckService.class);
 
         driverName.addTextChangedListener(driverNameWatcher);
         driverMobile.addTextChangedListener(driverMobileWatcher);
@@ -1085,6 +1092,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 AddDriverResponse driverResponse = response.body();
                 String driverIdOnResponse = driverResponse.getData().getDriver_id();
                 driverIdPass = driverResponse.getData().getDriver_id();
+                updateTruckDriverId(driverIdPass);
                 String DLpath = DLimagePickerWithoutAlert();
                 String selfiePath = selfieImagePickerWithoutAlert();
                 uploadDriverLicense(driverIdOnResponse, DLpath);
@@ -1096,6 +1104,29 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void updateTruckDriverId(String truckDriverId) {
+
+        UpdateTruckDriverId updateTruckDriverId = new UpdateTruckDriverId(truckDriverId);
+
+        Call<UpdateTruckDriverId> call = addTruckService.updateTruckDriverId("" + truckIdPass, updateTruckDriverId);
+
+        call.enqueue(new Callback<UpdateTruckDriverId>() {
+            @Override
+            public void onResponse(Call<UpdateTruckDriverId> call, Response<UpdateTruckDriverId> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Truck Added");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateTruckDriverId> call, Throwable t) {
+                Log.i("Not Successful", "User is Truck Added");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
     }
     //-----------------------------------------------------------------------------------------------------
 

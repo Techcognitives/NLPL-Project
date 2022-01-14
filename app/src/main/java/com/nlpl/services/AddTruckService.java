@@ -4,6 +4,7 @@ import com.nlpl.model.Requests.AddTruckRequest;
 import com.nlpl.model.Responses.AddTruckResponse;
 import com.nlpl.model.UpdateDriverDetails.UpdateDriverEmailId;
 import com.nlpl.model.UpdateTruckDetails.UpdateTruckCarryingCapacity;
+import com.nlpl.model.UpdateTruckDetails.UpdateTruckDriverId;
 import com.nlpl.model.UpdateTruckDetails.UpdateTruckFeet;
 import com.nlpl.model.UpdateTruckDetails.UpdateTruckRcBook;
 import com.nlpl.model.UpdateTruckDetails.UpdateTruckType;
@@ -42,6 +43,9 @@ public interface AddTruckService {
 
     @PUT("/truck/{truckId}")
     Call<UpdateTruckType> updateTruckType(@Path("truckId") String truckId, @Body UpdateTruckType updateTruckType);
+
+    @PUT("/truck/{truckId}")
+    Call<UpdateTruckDriverId> updateTruckDriverId(@Path("truckId") String truckId, @Body UpdateTruckDriverId updateTruckDriverId);
 }
 
 
