@@ -87,7 +87,7 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
 
         <TextView
-            android:id="@+id/post_a_load_notes_edit_text2"
+            android:id="@+id/dialog_bid_now_received_notes_textview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -125,13 +125,13 @@
             android:textColor="@color/black"
             android:textSize="13dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/textView53"
-            app:layout_constraintEnd_toStartOf="@+id/textView55"
-            app:layout_constraintStart_toEndOf="@+id/textView53"
-            app:layout_constraintTop_toTopOf="@+id/textView53" />
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_bid_now_req_capacity_textview"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_bid_now_req_bodyType_textview"
+            app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_req_capacity_textview"
+            app:layout_constraintTop_toTopOf="@+id/dialog_bid_now_req_capacity_textview" />
 
         <TextView
-            android:id="@+id/textView49"
+            android:id="@+id/dialog_bid_now_req_model_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
@@ -143,7 +143,7 @@
             app:layout_constraintTop_toTopOf="@+id/textView48" />
 
         <TextView
-            android:id="@+id/textView55"
+            android:id="@+id/dialog_bid_now_req_bodyType_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
@@ -155,7 +155,7 @@
             app:layout_constraintTop_toTopOf="@+id/textView54" />
 
         <TextView
-            android:id="@+id/textView47"
+            android:id="@+id/dialog_bid_now_distance_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -164,13 +164,13 @@
             android:layout_marginBottom="5dp"
             android:text="@string/xx_km"
             android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/textView53"
+            app:layout_constraintBottom_toTopOf="@+id/dialog_bid_now_req_capacity_textview"
             app:layout_constraintEnd_toStartOf="@+id/textView48"
             app:layout_constraintStart_toEndOf="@+id/textView46"
             app:layout_constraintTop_toBottomOf="@+id/textView40" />
 
         <TextView
-            android:id="@+id/textView53"
+            android:id="@+id/dialog_bid_now_req_capacity_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -181,10 +181,10 @@
             app:layout_constraintBottom_toTopOf="@+id/textView56"
             app:layout_constraintEnd_toStartOf="@+id/textView54"
             app:layout_constraintStart_toEndOf="@+id/textView52"
-            app:layout_constraintTop_toBottomOf="@+id/textView47" />
+            app:layout_constraintTop_toBottomOf="@+id/dialog_bid_now_distance_textview" />
 
         <TextView
-            android:id="@+id/textView57"
+            android:id="@+id/dialog_bid_now_pick_up_location_textview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
@@ -195,7 +195,7 @@
             app:layout_constraintTop_toTopOf="@+id/textView56" />
 
         <TextView
-            android:id="@+id/textView59"
+            android:id="@+id/dialog_bid_now_drop_location_textview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
@@ -206,7 +206,7 @@
             app:layout_constraintTop_toTopOf="@+id/textView58" />
 
         <TextView
-            android:id="@+id/textView41"
+            android:id="@+id/dialog_bid_now_pick_up_time_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
@@ -225,10 +225,10 @@
             android:drawableStart="@drawable/google_location_small"
             android:text="@string/address"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView41"
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_bid_now_pick_up_time_textview"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView41"
-            app:layout_constraintTop_toTopOf="@+id/textView41" />
+            app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_pick_up_time_textview"
+            app:layout_constraintTop_toTopOf="@+id/dialog_bid_now_pick_up_time_textview" />
 
         <TextView
             android:id="@+id/textView38"
@@ -245,10 +245,10 @@
             android:textColor="@color/black"
             android:textSize="13dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/textView39"
-            app:layout_constraintEnd_toStartOf="@+id/textView39"
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_bid_now_pick_up_date_textview"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_bid_now_pick_up_date_textview"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView39" />
+            app:layout_constraintTop_toTopOf="@+id/dialog_bid_now_pick_up_date_textview" />
 
         <TextView
             android:id="@+id/textView44"
@@ -265,10 +265,10 @@
             android:textColor="@color/black"
             android:textSize="13dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/textView45"
-            app:layout_constraintEnd_toStartOf="@+id/textView45"
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_bid_now_budget_textview"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_bid_now_budget_textview"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView45" />
+            app:layout_constraintTop_toTopOf="@+id/dialog_bid_now_budget_textview" />
 
         <TextView
             android:id="@+id/textView50"
@@ -285,10 +285,10 @@
             android:textColor="@color/black"
             android:textSize="13dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/textView51"
-            app:layout_constraintEnd_toStartOf="@+id/textView51"
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_bid_now_req_feet_textview"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_bid_now_req_feet_textview"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView51" />
+            app:layout_constraintTop_toTopOf="@+id/dialog_bid_now_req_feet_textview" />
 
         <TextView
             android:id="@+id/textView56"
@@ -309,9 +309,9 @@
             android:textSize="13dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/textView58"
-            app:layout_constraintEnd_toStartOf="@+id/textView57"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_bid_now_pick_up_location_textview"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView53" />
+            app:layout_constraintTop_toBottomOf="@+id/dialog_bid_now_req_capacity_textview" />
 
         <TextView
             android:id="@+id/textView58"
@@ -332,7 +332,7 @@
             android:textSize="13dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/textView60"
-            app:layout_constraintEnd_toStartOf="@+id/textView59"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_bid_now_drop_location_textview"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView56" />
 
@@ -351,10 +351,10 @@
             android:textColor="@color/black"
             android:textSize="13dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/textView47"
-            app:layout_constraintEnd_toStartOf="@+id/textView47"
-            app:layout_constraintStart_toEndOf="@+id/textView45"
-            app:layout_constraintTop_toTopOf="@+id/textView47" />
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_bid_now_distance_textview"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_bid_now_distance_textview"
+            app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_budget_textview"
+            app:layout_constraintTop_toTopOf="@+id/dialog_bid_now_distance_textview" />
 
         <TextView
             android:id="@+id/textView52"
@@ -372,10 +372,10 @@
             android:textColor="@color/black"
             android:textSize="13dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/textView53"
-            app:layout_constraintEnd_toStartOf="@+id/textView53"
-            app:layout_constraintStart_toEndOf="@+id/textView51"
-            app:layout_constraintTop_toTopOf="@+id/textView53" />
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_bid_now_req_capacity_textview"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_bid_now_req_capacity_textview"
+            app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_req_feet_textview"
+            app:layout_constraintTop_toTopOf="@+id/dialog_bid_now_req_capacity_textview" />
 
         <TextView
             android:id="@+id/textView48"
@@ -393,10 +393,10 @@
             android:textColor="@color/black"
             android:textSize="13dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/textView47"
-            app:layout_constraintEnd_toStartOf="@+id/textView49"
-            app:layout_constraintStart_toEndOf="@+id/textView47"
-            app:layout_constraintTop_toTopOf="@+id/textView47" />
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_bid_now_distance_textview"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_bid_now_req_model_textview"
+            app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_distance_textview"
+            app:layout_constraintTop_toTopOf="@+id/dialog_bid_now_distance_textview" />
 
         <TextView
             android:id="@+id/textView40"
@@ -416,13 +416,13 @@
             android:textColor="@color/black"
             android:textSize="13dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textView47"
-            app:layout_constraintEnd_toStartOf="@+id/textView41"
-            app:layout_constraintStart_toEndOf="@+id/textView39"
+            app:layout_constraintBottom_toTopOf="@+id/dialog_bid_now_distance_textview"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_bid_now_pick_up_time_textview"
+            app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_pick_up_date_textview"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView39"
+            android:id="@+id/dialog_bid_now_pick_up_date_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -435,7 +435,7 @@
             app:layout_constraintTop_toTopOf="@+id/textView40" />
 
         <TextView
-            android:id="@+id/textView45"
+            android:id="@+id/dialog_bid_now_budget_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -448,7 +448,7 @@
             app:layout_constraintTop_toTopOf="@+id/textView46" />
 
         <TextView
-            android:id="@+id/textView51"
+            android:id="@+id/dialog_bid_now_req_feet_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -471,10 +471,10 @@
             android:textColor="@color/black"
             android:textSize="13sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/post_a_load_notes_edit_text2"
+            app:layout_constraintBottom_toTopOf="@+id/dialog_bid_now_received_notes_textview"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView59" />
+            app:layout_constraintTop_toBottomOf="@+id/dialog_bid_now_drop_location_textview" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -503,13 +503,13 @@
             android:textColor="@color/white"
             android:textSize="15dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName"
+            app:layout_constraintBottom_toTopOf="@+id/dialog_bid_now_sp_quote_textview"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView79"
+            android:id="@+id/dialog_bid_now_cancel_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -523,13 +523,13 @@
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView78"
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_bid_now_accept_and_bid_btn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView78"
-            app:layout_constraintTop_toTopOf="@+id/textView78" />
+            app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_accept_and_bid_btn"
+            app:layout_constraintTop_toTopOf="@+id/dialog_bid_now_accept_and_bid_btn" />
 
         <TextView
-            android:id="@+id/textView78"
+            android:id="@+id/dialog_bid_now_accept_and_bid_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -546,12 +546,12 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textView79"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_bid_now_cancel_btn"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+            app:layout_constraintTop_toBottomOf="@+id/dialog_bid_now_declaration" />
 
         <EditText
-            android:id="@+id/post_a_load_notes_edit_text3"
+            android:id="@+id/dialog_bid_now_notes_editText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -567,13 +567,13 @@
             android:paddingBottom="5dp"
             android:textSize="14sp"
             android:textStyle="italic"
-            app:layout_constraintBottom_toTopOf="@+id/checkBox"
+            app:layout_constraintBottom_toTopOf="@+id/dialog_bid_now_declaration"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView75" />
+            app:layout_constraintTop_toBottomOf="@+id/dialog_bid_now_truck_capacity_textview" />
 
         <TextView
-            android:id="@+id/textView73"
+            android:id="@+id/dialog_bid_now_truck_feet_textview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
@@ -590,7 +590,7 @@
             app:layout_constraintTop_toTopOf="@+id/textView72" />
 
         <TextView
-            android:id="@+id/textView77"
+            android:id="@+id/dialog_bid_now_truck_body_type_textview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
@@ -616,10 +616,10 @@
             android:textColor="@color/black"
             android:textSize="13sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/textView71"
-            app:layout_constraintEnd_toStartOf="@+id/textView71"
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_bid_now_truck_model_textview"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_bid_now_truck_model_textview"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView71" />
+            app:layout_constraintTop_toTopOf="@+id/dialog_bid_now_truck_model_textview" />
 
         <TextView
             android:id="@+id/textView74"
@@ -631,10 +631,10 @@
             android:textColor="@color/black"
             android:textSize="13sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/textView75"
-            app:layout_constraintEnd_toStartOf="@+id/textView75"
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_bid_now_truck_capacity_textview"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_bid_now_truck_capacity_textview"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView75" />
+            app:layout_constraintTop_toTopOf="@+id/dialog_bid_now_truck_capacity_textview" />
 
         <TextView
             android:id="@+id/textView72"
@@ -646,10 +646,10 @@
             android:textColor="@color/black"
             android:textSize="13sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/textView71"
-            app:layout_constraintEnd_toStartOf="@+id/textView73"
-            app:layout_constraintStart_toEndOf="@+id/textView71"
-            app:layout_constraintTop_toTopOf="@+id/textView71" />
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_bid_now_truck_model_textview"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_bid_now_truck_feet_textview"
+            app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_truck_model_textview"
+            app:layout_constraintTop_toTopOf="@+id/dialog_bid_now_truck_model_textview" />
 
         <TextView
             android:id="@+id/textView76"
@@ -661,10 +661,10 @@
             android:textColor="@color/black"
             android:textSize="13sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/textView75"
-            app:layout_constraintEnd_toStartOf="@+id/textView77"
-            app:layout_constraintStart_toEndOf="@+id/textView75"
-            app:layout_constraintTop_toTopOf="@+id/textView75" />
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_bid_now_truck_capacity_textview"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_bid_now_truck_body_type_textview"
+            app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_truck_capacity_textview"
+            app:layout_constraintTop_toTopOf="@+id/dialog_bid_now_truck_capacity_textview" />
 
         <TextView
             android:id="@+id/textView63"
@@ -676,10 +676,10 @@
             android:textColor="@color/black"
             android:textSize="13sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName"
-            app:layout_constraintEnd_toStartOf="@+id/editTextTextPersonName"
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_bid_now_sp_quote_textview"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_bid_now_sp_quote_textview"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName" />
+            app:layout_constraintTop_toTopOf="@+id/dialog_bid_now_sp_quote_textview" />
 
         <TextView
             android:id="@+id/textView66"
@@ -690,10 +690,10 @@
             android:textColor="@color/black"
             android:textSize="13sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName2"
-            app:layout_constraintEnd_toStartOf="@+id/editTextTextPersonName2"
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_bid_now_select_truck_textview"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_bid_now_select_truck_textview"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName2" />
+            app:layout_constraintTop_toTopOf="@+id/dialog_bid_now_select_truck_textview" />
 
         <TextView
             android:id="@+id/textView67"
@@ -705,10 +705,10 @@
             android:textColor="@color/black"
             android:textSize="13sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName2"
-            app:layout_constraintEnd_toStartOf="@+id/editTextTextPersonName3"
-            app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName2"
-            app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName2" />
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_bid_now_select_truck_textview"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_bid_now_select_driver_textview"
+            app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_select_truck_textview"
+            app:layout_constraintTop_toTopOf="@+id/dialog_bid_now_select_truck_textview" />
 
         <TextView
             android:id="@+id/textView65"
@@ -719,13 +719,13 @@
             android:textColor="@color/black"
             android:textSize="13sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName"
-            app:layout_constraintEnd_toStartOf="@+id/radioButton"
-            app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName"
-            app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName" />
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_bid_now_sp_quote_textview"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_bid_now_radio_btn_yes"
+            app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_sp_quote_textview"
+            app:layout_constraintTop_toTopOf="@+id/dialog_bid_now_sp_quote_textview" />
 
         <TextView
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/dialog_bid_now_sp_quote_textview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -741,13 +741,13 @@
             android:paddingBottom="2dp"
             android:textColor="@color/redDark"
             android:textSize="12dp"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName2"
+            app:layout_constraintBottom_toTopOf="@+id/dialog_bid_now_select_truck_textview"
             app:layout_constraintEnd_toStartOf="@+id/textView65"
             app:layout_constraintStart_toEndOf="@+id/textView63"
             app:layout_constraintTop_toBottomOf="@+id/textView61" />
 
         <TextView
-            android:id="@+id/editTextTextPersonName2"
+            android:id="@+id/dialog_bid_now_select_truck_textview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -765,13 +765,13 @@
             android:paddingBottom="2dp"
             android:textColor="@color/black"
             android:textSize="12dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView71"
+            app:layout_constraintBottom_toTopOf="@+id/dialog_bid_now_truck_model_textview"
             app:layout_constraintEnd_toStartOf="@+id/textView67"
             app:layout_constraintStart_toEndOf="@+id/textView66"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+            app:layout_constraintTop_toBottomOf="@+id/dialog_bid_now_sp_quote_textview" />
 
         <TextView
-            android:id="@+id/editTextTextPersonName3"
+            android:id="@+id/dialog_bid_now_select_driver_textview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
@@ -793,7 +793,7 @@
             app:layout_constraintTop_toTopOf="@+id/textView67" />
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/dialog_bid_now_radio_btn_yes"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginEnd="5dp"
@@ -801,25 +801,25 @@
             android:text="@string/yes_small"
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView65"
-            app:layout_constraintEnd_toStartOf="@+id/radioButton2"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_bid_now_radio_btn_no"
             app:layout_constraintStart_toEndOf="@+id/textView65"
             app:layout_constraintTop_toTopOf="@+id/textView65" />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/dialog_bid_now_radio_btn_no"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginEnd="10dp"
             android:buttonTint="@color/button_blue"
             android:text="@string/no"
             android:textSize="10sp"
-            app:layout_constraintBottom_toBottomOf="@+id/radioButton"
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_bid_now_radio_btn_yes"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/radioButton"
-            app:layout_constraintTop_toTopOf="@+id/radioButton" />
+            app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_radio_btn_yes"
+            app:layout_constraintTop_toTopOf="@+id/dialog_bid_now_radio_btn_yes" />
 
         <TextView
-            android:id="@+id/textView68"
+            android:id="@+id/dialog_bid_now_add_truck_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
@@ -832,12 +832,12 @@
             android:text="@string/addTruck"
             android:textColor="@color/white"
             android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/textView71"
-            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName2"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+            app:layout_constraintBottom_toTopOf="@+id/dialog_bid_now_truck_model_textview"
+            app:layout_constraintEnd_toEndOf="@+id/dialog_bid_now_select_truck_textview"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_bid_now_select_truck_textview" />
 
         <TextView
-            android:id="@+id/textView69"
+            android:id="@+id/dialog_bid_now_add_driver_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button_active"
@@ -848,12 +848,12 @@
             android:text="@string/addDriver"
             android:textColor="@color/white"
             android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/textView71"
-            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName3"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
+            app:layout_constraintBottom_toTopOf="@+id/dialog_bid_now_truck_model_textview"
+            app:layout_constraintEnd_toEndOf="@+id/dialog_bid_now_select_driver_textview"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_bid_now_select_driver_textview" />
 
         <TextView
-            android:id="@+id/textView71"
+            android:id="@+id/dialog_bid_now_truck_model_textview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
@@ -866,13 +866,13 @@
             android:paddingBottom="2dp"
             android:text="@string/model"
             android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/textView75"
+            app:layout_constraintBottom_toTopOf="@+id/dialog_bid_now_truck_capacity_textview"
             app:layout_constraintEnd_toStartOf="@+id/textView72"
             app:layout_constraintStart_toEndOf="@+id/textView70"
-            app:layout_constraintTop_toBottomOf="@+id/textView68" />
+            app:layout_constraintTop_toBottomOf="@+id/dialog_bid_now_add_truck_textview" />
 
         <TextView
-            android:id="@+id/textView75"
+            android:id="@+id/dialog_bid_now_truck_capacity_textview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -885,13 +885,13 @@
             android:paddingBottom="2dp"
             android:text="@string/xx_capacity"
             android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/post_a_load_notes_edit_text3"
+            app:layout_constraintBottom_toTopOf="@+id/dialog_bid_now_notes_editText"
             app:layout_constraintEnd_toStartOf="@+id/textView76"
             app:layout_constraintStart_toEndOf="@+id/textView74"
-            app:layout_constraintTop_toBottomOf="@+id/textView71" />
+            app:layout_constraintTop_toBottomOf="@+id/dialog_bid_now_truck_model_textview" />
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/dialog_bid_now_declaration"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -901,10 +901,10 @@
             android:text="@string/declaration"
             android:textSize="12sp"
             android:textStyle="normal"
-            app:layout_constraintBottom_toTopOf="@+id/textView78"
+            app:layout_constraintBottom_toTopOf="@+id/dialog_bid_now_accept_and_bid_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/post_a_load_notes_edit_text3" />
+            app:layout_constraintTop_toBottomOf="@+id/dialog_bid_now_notes_editText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

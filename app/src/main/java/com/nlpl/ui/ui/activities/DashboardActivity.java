@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
@@ -18,9 +19,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -67,7 +73,7 @@ public class DashboardActivity extends AppCompatActivity {
 //    TextView addDriver;
 //    String mobileNoDriverAPI, userDriverIdAPI, driverUserIdGet;
 
-    Dialog previewDialogBidNow;
+    Dialog setBudget, selectTruckDialog, previewDialogBidNow;
 
     String isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
 
@@ -75,7 +81,7 @@ public class DashboardActivity extends AppCompatActivity {
     SwipeListener swipeListener;
 
     View actionBar;
-    TextView actionBarTitle;
+    TextView spQuote, selectTruck, actionBarTitle;
     ImageView actionBarBackButton, actionBarMenuButton;
 
     Dialog menuDialog;
@@ -90,7 +96,7 @@ public class DashboardActivity extends AppCompatActivity {
     ConstraintLayout spDashboard, customerDashboard;
 
     String userId, userIdAPI, phone, mobileNoAPI;
-    ArrayList<String> arrayUserId, arrayUserDriverId, arrayMobileNo, arrayDriverMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
+    ArrayList<String> arrayUserId, arrayTruckList, arrayMobileNo, arrayDriverMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
 
     String mobile, name, address, pinCode, city, role, emailIdAPI;
 
@@ -133,6 +139,7 @@ public class DashboardActivity extends AppCompatActivity {
         arrayName = new ArrayList<>();
         arrayRole = new ArrayList<>();
         arrayRegDone = new ArrayList<>();
+        arrayTruckList = new ArrayList<>();
 
         profileAndRegistrationLayout = (ConstraintLayout) findViewById(R.id.profile_registration_constrain);
 
@@ -673,6 +680,8 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     public void onClickBidNow(LoadNotificationModel obj) {
+
+        String postLoadId = obj.getIdpost_load();
         String pick_up_date = obj.getPick_up_date();
         String pick_up_time = obj.getPick_up_time();
         String required_budget = obj.getBudget();
@@ -681,8 +690,8 @@ public class DashboardActivity extends AppCompatActivity {
         String required_feet = obj.getFeet();
         String required_capacity = obj.getCapacity();
         String required_truck_body = obj.getBody_type();
-        String pick_up_location = obj.getPick_add()+" "+obj.getPick_city()+" "+obj.getPick_state()+" "+obj.getPick_pin_code();
-        String drop_location = obj.getDrop_add()+" "+obj.getDrop_city()+" "+obj.getDrop_state()+" "+obj.getDrop_pin_code();
+        String pick_up_location = obj.getPick_add() + " " + obj.getPick_city() + " " + obj.getPick_state() + " " + obj.getPick_pin_code();
+        String drop_location = obj.getDrop_add() + " " + obj.getDrop_city() + " " + obj.getDrop_state() + " " + obj.getDrop_pin_code();
         String received_notes_description = obj.getNotes_meterial_des();
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -693,6 +702,7 @@ public class DashboardActivity extends AppCompatActivity {
         previewDialogBidNow.show();
         previewDialogBidNow.getWindow().setAttributes(lp);
 
+        //-------------------------------------------Display Load Information---------------------------------------------
         TextView pickUpDate = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_pick_up_date_textview);
         TextView pickUpTime = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_pick_up_time_textview);
         TextView reqBudget = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_budget_textview);
@@ -703,7 +713,7 @@ public class DashboardActivity extends AppCompatActivity {
         TextView reqBodyType = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_req_bodyType_textview);
         TextView pickUpLocation = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_pick_up_location_textview);
         TextView dropLocation = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_drop_location_textview);
-        EditText receivedNotes = (EditText) previewDialogBidNow.findViewById(R.id.dialog_bid_now_received_notes_textview);
+        TextView receivedNotes = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_received_notes_textview);
 
         pickUpDate.setText(pick_up_date);
         pickUpTime.setText(pick_up_time);
@@ -716,7 +726,113 @@ public class DashboardActivity extends AppCompatActivity {
         pickUpLocation.setText(pick_up_location);
         dropLocation.setText(drop_location);
         receivedNotes.setText(received_notes_description);
+        //----------------------------------------------------------------------------------------------------------------
 
+        //-------------------------------------------------Accept Load and Bid now-----------------------------------------
+        spQuote = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_sp_quote_textview);
+        selectTruck = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_select_truck_textview);
+        TextView selectDriver = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_select_driver_textview);
+        TextView addTruck = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_add_truck_textview);
+        TextView addDriver = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_add_driver_textview);
+        TextView selectedTruckModel = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_model_textview);
+        TextView selectedTruckFeet = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_feet_textview);
+        TextView selectedTruckCapacity = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_capacity_textview);
+        TextView selectedTruckBodyType = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_body_type_textview);
+        EditText notesSP = (EditText) previewDialogBidNow.findViewById(R.id.dialog_bid_now_notes_editText);
+        CheckBox declaration = (CheckBox) previewDialogBidNow.findViewById(R.id.dialog_bid_now_declaration);
+        TextView acceptAndBid = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_accept_and_bid_btn);
+        TextView cancel = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_cancel_btn);
+
+        spQuote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                budgetSet();
+            }
+        });
+
+        selectTruck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectTruckToBid();
+            }
+        });
+
+    }
+
+
+
+    private void selectTruckToBid(){
+        selectTruckDialog = new Dialog(DashboardActivity.this);
+        selectTruckDialog.setContentView(R.layout.dialog_spinner);
+        selectTruckDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        selectTruckDialog.show();
+        selectTruckDialog.setCancelable(false);
+        TextView model_title = selectTruckDialog.findViewById(R.id.dialog_spinner_title);
+        model_title.setText("Select Truck to Bid");
+
+        ListView modelList = (ListView) selectTruckDialog.findViewById(R.id.list_state);
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, R.layout.custom_list_row, arrayTruckList);
+        modelList.setAdapter(adapter1);
+
+        modelList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                selectTruck.setText(adapter1.getItem(i));
+                selectTruckDialog.dismiss();
+            }
+        });
+    }
+
+    private void budgetSet() {
+
+        setBudget = new Dialog(DashboardActivity.this);
+        setBudget.setContentView(R.layout.dialog_budget);
+
+        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+        lp2.copyFrom(setBudget.getWindow().getAttributes());
+        lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.gravity = Gravity.TOP;
+
+        setBudget.show();
+        setBudget.setCancelable(false);
+        setBudget.getWindow().setAttributes(lp2);
+
+        EditText budget = setBudget.findViewById(R.id.dialog_budget_edit);
+        Button okBudget = setBudget.findViewById(R.id.dialog_budget_ok_btn);
+        budget.requestFocus();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+        budget.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String budgetEditText = budget.getText().toString();
+                if (!budgetEditText.isEmpty()) {
+                    spQuote.setText(budgetEditText);
+                    okBudget.setEnabled(true);
+                    okBudget.setBackgroundResource((R.drawable.button_active));
+                } else {
+                    okBudget.setEnabled(false);
+                    okBudget.setBackgroundResource((R.drawable.button_de_active));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        okBudget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setBudget.dismiss();
+            }
+        });
     }
 
 

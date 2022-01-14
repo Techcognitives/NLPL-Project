@@ -3,6 +3,7 @@ package com.nlpl.utils;
 import com.nlpl.services.AddDriverService;
 import com.nlpl.services.AddTruckService;
 import com.nlpl.services.BankService;
+import com.nlpl.services.BidLoadService;
 import com.nlpl.services.CompanyService;
 import com.nlpl.services.ImageService;
 import com.nlpl.services.ImageUploadService;
@@ -99,5 +100,9 @@ public class ApiClient {
     public static PostLoadService getPostLoadService() {
         PostLoadService postLoadService = getRetrofit().create(PostLoadService.class);
         return postLoadService;
+    }
+    public static BidLoadService getBidLoadService() {
+        BidLoadService bidLoadService = getRetrofit().create(BidLoadService.class);
+        return bidLoadService;
     }
 }

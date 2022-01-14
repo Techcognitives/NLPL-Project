@@ -341,8 +341,6 @@ public class PostALoadActivity extends AppCompatActivity {
         budget.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-        customerBudget = budget.getText().toString();
-
         budget.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
