@@ -32,46 +32,52 @@
             android:textSize="15dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textView34"
+            app:layout_constraintEnd_toStartOf="@+id/constraintLayout11"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView34"
-            android:layout_width="wrap_content"
-            android:layout_height="23dp"
-            android:drawableLeft="@drawable/clock_small"
-            android:gravity="center"
-            android:paddingStart="10dp"
-            android:paddingTop="2dp"
-            android:paddingEnd="60dp"
-            android:paddingBottom="2dp"
-            android:text="@string/timeLeft"
-            android:textColor="@color/redDark"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/textView36"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView36" />
-
-        <TextView
-            android:id="@+id/textView36"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
             android:layout_marginEnd="10dp"
+            android:padding="5dp"
             android:background="@drawable/edit_text_border_white"
-            android:gravity="center"
-            android:paddingStart="90dp"
-            android:paddingTop="2dp"
-            android:paddingEnd="10dp"
-            android:paddingBottom="2dp"
-            android:text="@string/timeinmin"
-            android:textColor="@color/redDark"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView35"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView34"
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                android:drawableLeft="@drawable/clock_small"
+                android:gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:text="@string/timeLeft"
+                android:textColor="@color/redDark"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textView36"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView36"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginEnd="5dp"
+                android:text="@string/timeinmin"
+                android:textColor="@color/redDark"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView34"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
