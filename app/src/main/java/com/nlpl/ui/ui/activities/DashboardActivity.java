@@ -1,11 +1,13 @@
 package com.nlpl.ui.ui.activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -27,6 +29,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -41,10 +44,15 @@ import com.nlpl.model.ModelForRecyclerView.BankModel;
 import com.nlpl.model.ModelForRecyclerView.DriverModel;
 import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
 import com.nlpl.model.ModelForRecyclerView.TruckModel;
+import com.nlpl.model.Requests.BidLoadRequest;
+import com.nlpl.model.Requests.PostLoadRequest;
+import com.nlpl.model.Responses.BidLadResponse;
+import com.nlpl.model.Responses.PostLoadResponse;
 import com.nlpl.ui.ui.adapters.BanksAdapter;
 import com.nlpl.ui.ui.adapters.DriversAdapter;
 import com.nlpl.ui.ui.adapters.LoadNotificationAdapter;
 import com.nlpl.ui.ui.adapters.TrucksAdapter;
+import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 
 import org.json.JSONArray;
@@ -53,6 +61,9 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -75,13 +86,17 @@ public class DashboardActivity extends AppCompatActivity {
 
     Dialog setBudget, selectTruckDialog, previewDialogBidNow;
 
-    String isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
+    String vehicle_no, truckId, isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
 
     ConstraintLayout profileAndRegistrationLayout;
     SwipeListener swipeListener;
 
     View actionBar;
-    TextView spQuote, selectTruck, actionBarTitle;
+    TextView cancel,acceptAndBid,  spQuote, addDriver, selectDriver, addTruck, selectTruck, selectedTruckModel, selectedTruckFeet, selectedTruckCapacity, selectedTruckBodyType, actionBarTitle;
+    EditText notesSp;
+    CheckBox declaration;
+    RadioButton negotiable_yes, negotiable_no;
+    Boolean isTruckSelectedToBid = false, negotiable = null, isNegotiableSelected = false;
     ImageView actionBarBackButton, actionBarMenuButton;
 
     Dialog menuDialog;
@@ -95,8 +110,8 @@ public class DashboardActivity extends AppCompatActivity {
     View bottomNav;
     ConstraintLayout spDashboard, customerDashboard;
 
-    String userId, userIdAPI, phone, mobileNoAPI;
-    ArrayList<String> arrayUserId, arrayTruckList, arrayMobileNo, arrayDriverMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
+    String loadId,  selectedDriverId, selectedDriverName, userId, userIdAPI, phone, mobileNoAPI;
+    ArrayList<String> arrayUserId, arrayTruckId, arrayDriverId, arrayDriverName, arrayTruckList, arrayMobileNo, arrayDriverMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
 
     String mobile, name, address, pinCode, city, role, emailIdAPI;
 
@@ -140,6 +155,9 @@ public class DashboardActivity extends AppCompatActivity {
         arrayRole = new ArrayList<>();
         arrayRegDone = new ArrayList<>();
         arrayTruckList = new ArrayList<>();
+        arrayTruckId = new ArrayList<>();
+        arrayDriverId = new ArrayList<>();
+        arrayDriverName = new ArrayList<>();
 
         profileAndRegistrationLayout = (ConstraintLayout) findViewById(R.id.profile_registration_constrain);
 
@@ -681,7 +699,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     public void onClickBidNow(LoadNotificationModel obj) {
 
-        String postLoadId = obj.getIdpost_load();
+        loadId = obj.getIdpost_load();
         String pick_up_date = obj.getPick_up_date();
         String pick_up_time = obj.getPick_up_time();
         String required_budget = obj.getBudget();
@@ -731,17 +749,115 @@ public class DashboardActivity extends AppCompatActivity {
         //-------------------------------------------------Accept Load and Bid now-----------------------------------------
         spQuote = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_sp_quote_textview);
         selectTruck = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_select_truck_textview);
-        TextView selectDriver = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_select_driver_textview);
-        TextView addTruck = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_add_truck_textview);
-        TextView addDriver = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_add_driver_textview);
-        TextView selectedTruckModel = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_model_textview);
-        TextView selectedTruckFeet = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_feet_textview);
-        TextView selectedTruckCapacity = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_capacity_textview);
-        TextView selectedTruckBodyType = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_body_type_textview);
-        EditText notesSP = (EditText) previewDialogBidNow.findViewById(R.id.dialog_bid_now_notes_editText);
-        CheckBox declaration = (CheckBox) previewDialogBidNow.findViewById(R.id.dialog_bid_now_declaration);
-        TextView acceptAndBid = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_accept_and_bid_btn);
-        TextView cancel = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_cancel_btn);
+        selectDriver = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_select_driver_textview);
+        addTruck = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_add_truck_textview);
+        addDriver = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_add_driver_textview);
+        selectedTruckModel = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_model_textview);
+        selectedTruckFeet = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_feet_textview);
+        selectedTruckCapacity = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_capacity_textview);
+        selectedTruckBodyType = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_body_type_textview);
+        notesSp  = (EditText) previewDialogBidNow.findViewById(R.id.dialog_bid_now_notes_editText);
+        declaration = (CheckBox) previewDialogBidNow.findViewById(R.id.dialog_bid_now_declaration);
+        acceptAndBid = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_accept_and_bid_btn);
+        cancel = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_cancel_btn);
+        negotiable_yes = previewDialogBidNow.findViewById(R.id.dialog_bid_now_radio_btn_yes);
+        negotiable_no = previewDialogBidNow.findViewById(R.id.dialog_bid_now_radio_btn_no);
+
+        acceptAndBid.setEnabled(false);
+        cancel.setEnabled(true);
+        cancel.setBackgroundResource((R.drawable.button_active));
+
+        negotiable_no.setChecked(false);
+        negotiable_yes.setChecked(false);
+        isNegotiableSelected = false;
+
+
+        if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
+            acceptAndBid.setEnabled(true);
+            acceptAndBid.setBackgroundResource((R.drawable.button_active));
+        } else {
+            acceptAndBid.setEnabled(false);
+            acceptAndBid.setBackgroundResource((R.drawable.button_de_active));
+        }
+
+        declaration.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
+                    acceptAndBid.setEnabled(true);
+                    acceptAndBid.setBackgroundResource((R.drawable.button_active));
+                } else {
+                    acceptAndBid.setEnabled(false);
+                    acceptAndBid.setBackgroundResource((R.drawable.button_de_active));
+                }
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                previewDialogBidNow.dismiss();
+            }
+        });
+
+        acceptAndBid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
+                    saveBid(createBidRequest());
+
+                    AlertDialog.Builder my_alert = new AlertDialog.Builder(DashboardActivity.this);
+                    my_alert.setTitle("Bid Posted Successfully");
+                    my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                            previewDialogBidNow.dismiss();
+                        }
+                    });
+                    my_alert.show();
+
+                }
+            }
+        });
+
+        negotiable_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isNegotiableSelected= true;
+                negotiable = true;
+
+                if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
+                    acceptAndBid.setEnabled(true);
+                    acceptAndBid.setBackgroundResource((R.drawable.button_active));
+                } else {
+                    acceptAndBid.setEnabled(false);
+                    acceptAndBid.setBackgroundResource((R.drawable.button_de_active));
+                }
+
+                negotiable_yes.setChecked(true);
+                negotiable_no.setChecked(false);
+            }
+        });
+
+        negotiable_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isNegotiableSelected = true;
+                negotiable = false;
+
+                if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
+                    acceptAndBid.setEnabled(true);
+                    acceptAndBid.setBackgroundResource((R.drawable.button_active));
+                } else {
+                    acceptAndBid.setEnabled(false);
+                    acceptAndBid.setBackgroundResource((R.drawable.button_de_active));
+                }
+
+                negotiable_yes.setChecked(false);
+                negotiable_no.setChecked(true);
+            }
+        });
 
         spQuote.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -753,14 +869,81 @@ public class DashboardActivity extends AppCompatActivity {
         selectTruck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectTruckToBid();
+                getTrucksByUserId();
             }
         });
+
+        selectDriver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isTruckSelectedToBid) {
+                    getDriversByUserId();
+                }
+            }
+        });
+
+        addTruck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent3 = new Intent(DashboardActivity.this, VehicleDetailsActivity.class);
+                intent3.putExtra("userId", userId);
+                intent3.putExtra("isEdit", false);
+                intent3.putExtra("mobile", phone);
+                startActivity(intent3);
+            }
+        });
+
+        addDriver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Log.i("truckId Selected", truckId);
+                Intent i8 = new Intent(DashboardActivity.this, DriverDetailsActivity.class);
+                i8.putExtra("userId", userId);
+                i8.putExtra("isEdit", false);
+                i8.putExtra("mobile", mobile);
+                i8.putExtra("truckIdPass", truckId);
+                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i8);
+                overridePendingTransition(0, 0);
+            }
+        });
+
+
     }
 
+    private void getDriversByUserId(){
 
+            String url = getString(R.string.baseURL) + "/driver/userId/" + userId;
+            Log.i("url for driverByUserId", url);
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        JSONArray truckLists = response.getJSONArray("data");
+                        for (int i = 0; i < truckLists.length(); i++) {
+                            JSONObject obj = truckLists.getJSONObject(i);
+                            selectedDriverId = obj.getString("driver_id");
+                            selectedDriverName = obj.getString("driver_name");
+                            arrayDriverId.add(selectedDriverId);
+                            arrayDriverName.add(selectedDriverName);
+                        }
+                        selectDriverToBid(arrayDriverId);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new com.android.volley.Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                }
+            });
+            mQueue.add(request);
+        }
 
-    private void selectTruckToBid(){
+    private void selectTruckToBid(ArrayList<String> arrayTruckId){
+
         selectTruckDialog = new Dialog(DashboardActivity.this);
         selectTruckDialog.setContentView(R.layout.dialog_spinner);
         selectTruckDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -776,11 +959,158 @@ public class DashboardActivity extends AppCompatActivity {
         modelList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                isTruckSelectedToBid = true;
                 selectTruck.setText(adapter1.getItem(i));
+                if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
+                    acceptAndBid.setEnabled(true);
+                    acceptAndBid.setBackgroundResource((R.drawable.button_active));
+                } else {
+                    acceptAndBid.setEnabled(false);
+                    acceptAndBid.setBackgroundResource((R.drawable.button_de_active));
+                }
+                getTruckDetailsByTruckId(arrayTruckId.get(i));
                 selectTruckDialog.dismiss();
             }
         });
     }
+
+    private void selectDriverToBid(ArrayList<String> arrayDriverId){
+
+        selectTruckDialog = new Dialog(DashboardActivity.this);
+        selectTruckDialog.setContentView(R.layout.dialog_spinner);
+        selectTruckDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        selectTruckDialog.show();
+        selectTruckDialog.setCancelable(false);
+        TextView model_title = selectTruckDialog.findViewById(R.id.dialog_spinner_title);
+        model_title.setText("Select Driver to Bid");
+
+        ListView modelList = (ListView) selectTruckDialog.findViewById(R.id.list_state);
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, R.layout.custom_list_row, arrayDriverName);
+        modelList.setAdapter(adapter1);
+
+        modelList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                selectDriver.setText(adapter1.getItem(i));
+                getDriverDetailsByDriverId(arrayDriverId.get(i));
+                if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
+                    acceptAndBid.setEnabled(true);
+                    acceptAndBid.setBackgroundResource((R.drawable.button_active));
+                } else {
+                    acceptAndBid.setEnabled(false);
+                    acceptAndBid.setBackgroundResource((R.drawable.button_de_active));
+                }
+                selectTruckDialog.dismiss();
+            }
+        });
+    }
+
+
+    private void getDriverDetailsByDriverId(String driverIdSelected){
+
+        Log.i("Driver selected", driverIdSelected);
+        String url = getString(R.string.baseURL) + "/driver/driverId/" + driverIdSelected;
+        Log.i("url for truckByTruckId", url);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+                        selectedDriverName = obj.getString("driver_name");
+                    }
+                    if (selectedDriverName!=null){
+                        selectDriver.setText(selectedDriverName);
+                    } else {
+                        selectDriver.setText("Select Driver");
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+    }
+
+    private void getTruckDetailsByTruckId(String truckIdSelected){
+
+        Log.i("truckId selected", truckIdSelected);
+        truckId = truckIdSelected;
+        String url = getString(R.string.baseURL) + "/truck/" + truckIdSelected;
+        Log.i("url for truckByTruckId", url);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+                        String truckModel = obj.getString("truck_type");
+                        String  truckFeet = obj.getString("truck_ft");
+                        String truckCapacity = obj.getString("truck_carrying_capacity");
+                        String bodyType = obj.getString("vehicle_type");
+                        selectedDriverId = obj.getString("driver_id");
+                        selectedTruckModel.setText(truckModel);
+                        selectedTruckFeet.setText(truckFeet);
+                        selectedTruckBodyType.setText(bodyType);
+                        selectedTruckCapacity.setText(truckCapacity);
+                    }
+
+                    if (selectedDriverId==null){
+                        selectedDriverId = null;
+                        selectDriver.setText("Select Driver");
+                    } else {
+                        getDriverDetailsByDriverId(selectedDriverId);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+    }
+
+
+//    private void getDriverDetailsBySelectedDriver(String driverId){
+//        Log.i("driver selected", driverId);
+//        String url = getString(R.string.baseURL) + "/driver/driverId/" + driverId;
+//        Log.i("url for truckByTruckId", url);
+//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                try {
+//                    JSONArray truckLists = response.getJSONArray("data");
+//                    for (int i = 0; i < truckLists.length(); i++) {
+//                        JSONObject obj = truckLists.getJSONObject(i);
+//                        selectedDriverName = obj.getString("driver_name");
+//                    }
+//                    selectDriver.setText(selectedDriverName);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, new com.android.volley.Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                error.printStackTrace();
+//            }
+//        });
+//        mQueue.add(request);
+//
+//    }
+
 
     private void budgetSet() {
 
@@ -829,10 +1159,84 @@ public class DashboardActivity extends AppCompatActivity {
         okBudget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setBudget.dismiss();
+                if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
+                    acceptAndBid.setEnabled(true);
+                    acceptAndBid.setBackgroundResource((R.drawable.button_active));
+                } else {
+                    acceptAndBid.setEnabled(false);
+                    acceptAndBid.setBackgroundResource((R.drawable.button_de_active));
+                }
+                    setBudget.dismiss();
             }
         });
     }
+
+    private void getTrucksByUserId(){
+
+        String url = getString(R.string.baseURL) + "/truck/truckbyuserID/" + userId;
+        Log.i("url for truckByUserId", url);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+                        vehicle_no = obj.getString("vehicle_no");
+                        truckId = obj.getString("truck_id");
+                        Log.i("vehicle no", vehicle_no);
+                        arrayTruckList.add(vehicle_no);
+                        arrayTruckId.add(truckId);
+                    }
+                    selectTruckToBid(arrayTruckId);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        mQueue.add(request);
+    }
+
+
+    //--------------------------------------create Bank Details in API -------------------------------------
+    public BidLoadRequest createBidRequest() {
+        BidLoadRequest bidLoadRequest = new BidLoadRequest();
+        bidLoadRequest.setUser_id(userId);
+        bidLoadRequest.setAssigned_truck_id(truckId);
+        bidLoadRequest.setAssigned_driver_id(selectedDriverId);
+        bidLoadRequest.setIdpost_load(loadId);
+        bidLoadRequest.setBody_type(selectedTruckBodyType.getText().toString());
+        bidLoadRequest.setVehicle_model(selectedTruckModel.getText().toString());
+        bidLoadRequest.setFeet(selectedTruckFeet.getText().toString());
+        bidLoadRequest.setCapacity(selectedTruckCapacity.getText().toString());
+        bidLoadRequest.setNotes(notesSp.getText().toString());
+        bidLoadRequest.setIs_negatiable(negotiable);
+        bidLoadRequest.setSp_quote(spQuote.getText().toString());
+        return bidLoadRequest;
+    }
+
+    public void saveBid(BidLoadRequest bidLoadRequest) {
+        Call<BidLadResponse> bidLadResponseCall = ApiClient.getBidLoadService().saveBid(bidLoadRequest);
+        bidLadResponseCall.enqueue(new Callback<BidLadResponse>() {
+            @Override
+            public void onResponse(Call<BidLadResponse> call, retrofit2.Response<BidLadResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<BidLadResponse> call, Throwable t) {
+
+            }
+        });
+    }
+    //-----------------------------------------------------------------------------------------------------
+
 
 
     private class SwipeListener implements View.OnTouchListener {

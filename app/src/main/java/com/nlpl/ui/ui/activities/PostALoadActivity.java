@@ -1040,7 +1040,7 @@ public class PostALoadActivity extends AppCompatActivity {
         postLoadRequest.setPick_up_time(pick_up_time.getText().toString());
         postLoadRequest.setBudget(select_budget.getText().toString());
         postLoadRequest.setVehicle_model(select_model.getText().toString());
-        postLoadRequest.setFeet(select_feet.getText().toString());
+        postLoadRequest.setFeet(select_feet.getText().toString()+" Ft");
         postLoadRequest.setCapacity(select_capacity.getText().toString());
         postLoadRequest.setBody_type(select_truck_body_type.getText().toString());
         postLoadRequest.setPick_add(pick_up_address.getText().toString());

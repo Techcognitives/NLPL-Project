@@ -745,7 +745,7 @@
             android:paddingTop="2dp"
             android:paddingEnd="2dp"
             android:paddingBottom="2dp"
-            android:textColor="@color/redDark"
+            android:textColor="@color/black"
             android:textSize="12dp"
             app:layout_constraintBottom_toTopOf="@+id/dialog_bid_now_select_truck_textview"
             app:layout_constraintEnd_toStartOf="@+id/textView65"

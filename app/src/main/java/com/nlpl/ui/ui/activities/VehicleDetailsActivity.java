@@ -860,7 +860,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         addTruckRequest.setVehicle_no(vehicleNumberEdit.getText().toString());
         addTruckRequest.setVehicle_type(bodyTypeSelected);
         addTruckRequest.setTruck_type(selectModel.getText().toString());
-        addTruckRequest.setTruck_ft(selectFt.getText().toString());
+        addTruckRequest.setTruck_ft(selectFt.getText().toString()+" Ft");
         addTruckRequest.setTruck_carrying_capacity(selectCapacity.getText().toString());
         return addTruckRequest;
     }
@@ -1007,7 +1007,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                     JSONArray truckLists = response.getJSONArray("data");
                     for (int i = 0; i < truckLists.length(); i++) {
                         JSONObject obj = truckLists.getJSONObject(i);
-                        vehicle_typeAPI = obj.getString("vehicle_type");
+                        vehicle_typeAPI = obj.getString("vehicle_model");
                         truck_ftAPI = obj.getString("truck_ft");
                         truck_carrying_capacityAPI = obj.getString("truck_carrying_capacity");
 
@@ -1302,6 +1302,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                                     selectCapacityDialog.setCancelable(false);
 
                                     TextView capacity_title = selectCapacityDialog.findViewById(R.id.dialog_spinner_title);
+
                                     capacity_title.setText("Select Vehicle Capacity");
 
                                     ListView capacityList = (ListView) selectCapacityDialog.findViewById(R.id.list_state);
