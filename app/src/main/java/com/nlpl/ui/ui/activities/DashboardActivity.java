@@ -756,7 +756,6 @@ public class DashboardActivity extends AppCompatActivity {
                 selectTruckToBid();
             }
         });
-
     }
 
 
