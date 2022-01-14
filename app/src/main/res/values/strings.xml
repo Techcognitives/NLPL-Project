@@ -1128,7 +1128,7 @@
     <string name="truck">Truck</string>
     <string name="feet">Feet</string>
     <string name="Notes">Notes</string>
-    <string name="NotesIfAny">Notes: Type your notes if any...</string>
+    <string name="NotesIfAny"><b>Notes: </b>Type your notes if any...</string>
     <string name="acceptBid">Accept &amp; Bid</string>
     <string name="cancel">Cancel</string>
     <string name="declaration"> <b>Declaration: </b>  <em>I hereby declare, driver will reach Pick-up location 15 minutes prior Pick-up Time.</em> </string>
