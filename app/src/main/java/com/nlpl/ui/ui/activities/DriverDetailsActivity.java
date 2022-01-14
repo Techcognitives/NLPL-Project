@@ -104,7 +104,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
     int requestCode;
     int resultCode;
     String pathDLGallery, pathDLCamera, isDriverDetailsDoneAPI;
-    RadioButton selfCheckBox;
+    CheckBox selfCheckBox;
 
     Button uploadDL, okDriverDetails, uploadSelfie;
     TextView textDL, editDL, series, textDS, editDS;
@@ -285,7 +285,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         driverSelfieImg = findViewById(R.id.driver_selfie_img);
         textDS = findViewById(R.id.driver_selfie_text);
         editDS = findViewById(R.id.driver_details_edit_selfie_text);
-        selfCheckBox = (RadioButton) findViewById(R.id.driver_details_self_checkbox);
+        selfCheckBox = (CheckBox) findViewById(R.id.driver_details_self_checkbox);
 
         previewDialogDL = new Dialog(DriverDetailsActivity.this);
         previewDialogDL.setContentView(R.layout.dialog_preview_images);
@@ -1072,7 +1072,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
         }
     }
 
-
     //--------------------------------------create Driver Details in API -------------------------------------
     public AddDriverRequest createDriver() {
         AddDriverRequest addDriverRequest = new AddDriverRequest();
@@ -1858,10 +1857,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
     public void onClickIsSelf(View view) {
         if (selfCheckBox.isChecked()) {
-            selfCheckBox.setChecked(false);
             getUserDetails();
         } else if (!selfCheckBox.isChecked()) {
-            selfCheckBox.setChecked(true);
             driverName.getText().clear();
             driverMobile.getText().clear();
             address.getText().clear();

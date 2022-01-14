@@ -65,6 +65,8 @@ public class DashboardActivity extends AppCompatActivity {
 //    TextView addDriver;
 //    String mobileNoDriverAPI, userDriverIdAPI, driverUserIdGet;
 
+    Dialog previewDialogBidNow;
+
     String isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
 
     ConstraintLayout profileAndRegistrationLayout;
@@ -160,6 +162,10 @@ public class DashboardActivity extends AppCompatActivity {
         truckDetailsLogoImageView = (ImageView) menuDialog.findViewById(R.id.menu_truck_details_logo_image_view);
 
         swipeListener = new SwipeListener(profileAndRegistrationLayout);
+
+        previewDialogBidNow = new Dialog(DashboardActivity.this);
+        previewDialogBidNow.setContentView(R.layout.dialog_bid_now);
+        previewDialogBidNow.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 //        previewDriverDetailsDriverBankAdd.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -592,7 +598,7 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
-    public void onClickBottomNavigation(View view){
+    public void onClickBottomNavigation(View view) {
         switch (view.getId()) {
             case R.id.bottom_nav_sp_dashboard:
 
@@ -662,6 +668,16 @@ public class DashboardActivity extends AppCompatActivity {
         });
         mQueue.add(request);
         //-------------------------------------------------------------------------------------------
+    }
+
+    public void onClickBidNow(LoadNotificationModel obj) {
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(previewDialogBidNow.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.gravity = Gravity.CENTER;
+        previewDialogBidNow.show();
+        previewDialogBidNow.getWindow().setAttributes(lp);
     }
 
 
