@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
@@ -17,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -671,6 +673,18 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     public void onClickBidNow(LoadNotificationModel obj) {
+        String pick_up_date = obj.getPick_up_date();
+        String pick_up_time = obj.getPick_up_time();
+        String required_budget = obj.getBudget();
+        String distance = obj.getKm_approx();
+        String required_model = obj.getVehicle_model();
+        String required_feet = obj.getFeet();
+        String required_capacity = obj.getCapacity();
+        String required_truck_body = obj.getBody_type();
+        String pick_up_location = obj.getPick_add()+" "+obj.getPick_city()+" "+obj.getPick_state()+" "+obj.getPick_pin_code();
+        String drop_location = obj.getDrop_add()+" "+obj.getDrop_city()+" "+obj.getDrop_state()+" "+obj.getDrop_pin_code();
+        String received_notes_description = obj.getNotes_meterial_des();
+
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(previewDialogBidNow.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -678,6 +692,31 @@ public class DashboardActivity extends AppCompatActivity {
         lp.gravity = Gravity.CENTER;
         previewDialogBidNow.show();
         previewDialogBidNow.getWindow().setAttributes(lp);
+
+        TextView pickUpDate = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_pick_up_date_textview);
+        TextView pickUpTime = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_pick_up_time_textview);
+        TextView reqBudget = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_budget_textview);
+        TextView approxDistance = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_distance_textview);
+        TextView reqModel = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_req_model_textview);
+        TextView reqFeet = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_req_feet_textview);
+        TextView reqCapacity = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_req_capacity_textview);
+        TextView reqBodyType = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_req_bodyType_textview);
+        TextView pickUpLocation = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_pick_up_location_textview);
+        TextView dropLocation = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_drop_location_textview);
+        EditText receivedNotes = (EditText) previewDialogBidNow.findViewById(R.id.dialog_bid_now_received_notes_textview);
+
+        pickUpDate.setText(pick_up_date);
+        pickUpTime.setText(pick_up_time);
+        reqBudget.setText(required_budget);
+        approxDistance.setText(distance);
+        reqModel.setText(required_model);
+        reqFeet.setText(required_feet);
+        reqCapacity.setText(required_capacity);
+        reqBodyType.setText(required_truck_body);
+        pickUpLocation.setText(pick_up_location);
+        dropLocation.setText(drop_location);
+        receivedNotes.setText(received_notes_description);
+
     }
 
 

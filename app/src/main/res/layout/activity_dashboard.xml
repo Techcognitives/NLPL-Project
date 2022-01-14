@@ -252,7 +252,7 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
 
         <TextView
-            android:id="@+id/textView39"
+            android:id="@+id/dialog_bid_now_pick_up_date_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Bids Submitted"
