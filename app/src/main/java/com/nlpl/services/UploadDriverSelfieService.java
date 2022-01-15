@@ -12,6 +12,6 @@ import retrofit2.http.Path;
 
 public interface UploadDriverSelfieService {
     @Multipart
-    @PUT("uploadDrDlAndSelfie/{driverId}")
+    @PUT("/driver/uploadDrDlAndSelfie/{driverId}")
     Call<UploadDriverSelfieResponse> uploadDriverSelfie(@Path("driverId") String driverId, @Part MultipartBody.Part file);
 }

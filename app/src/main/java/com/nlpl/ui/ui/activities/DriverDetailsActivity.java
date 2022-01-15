@@ -103,7 +103,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
     Intent data;
     int requestCode;
     int resultCode;
-    String pathDLGallery, pathDLCamera, isDriverDetailsDoneAPI;
+    String   isDriverDetailsDoneAPI;
     CheckBox selfCheckBox;
 
     Button uploadDL, okDriverDetails, uploadSelfie;
@@ -138,7 +138,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
     String userIdAPI, nameAPI, stateAPI, pinCodeAPI, addressAPI, mobileNoAPI, cityAPI, roleAPI;
     ArrayList<String> arrayUserId, arrayMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayState;
     Boolean alreadyDriver = true;
-    String truckIdPass, driverIdPass;
+    String truckIdPass, driverIdPass, DLpath,selfiePath ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -647,8 +647,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
         this.resultCode = resultCode;
         this.requestCode = requestCode;
         this.data = data;
+
         DLimagePicker();
         selfieImagePicker();
+
         DLimagePickerWithoutAlert();
         selfieImagePickerWithoutAlert();
     }
@@ -681,9 +683,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
-
-            returnPath(picturePath);
-            pathDLGallery = picturePath;
 
             driverLicenseImage.setImageURI(selectedImage);
             previewDrivingLicense.setImageURI(selectedImage);
@@ -745,9 +744,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
-
-            returnPath(picturePath);
-            pathDLGallery = picturePath;
 
             driverLicenseImage.setImageURI(selectedImage);
             previewDrivingLicense.setImageURI(selectedImage);
@@ -822,9 +818,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
-
-            returnPath(picturePath);
-            pathDLGallery = picturePath;
 
             driverLicenseImage.setImageURI(selectedImage);
             previewDrivingLicense.setImageURI(selectedImage);
@@ -908,11 +901,9 @@ public class DriverDetailsActivity extends AppCompatActivity {
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
 
-            returnPath(picturePath);
-            pathDLGallery = picturePath;
-
             driverLicenseImage.setImageURI(selectedImage);
             previewDrivingLicense.setImageURI(selectedImage);
+
             return picturePath;
         }
 
@@ -979,6 +970,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
 
                 if (isEdit) {
+
                     String DLpath = DLimagePickerWithoutAlert();
                     uploadDriverLicense(driverId, DLpath);
                     String selfiePath = selfieImagePickerWithoutAlert();
@@ -1089,13 +1081,15 @@ public class DriverDetailsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<AddDriverResponse> call, Response<AddDriverResponse> response) {
                 AddDriverResponse driverResponse = response.body();
-                String driverIdOnResponse = driverResponse.getData().getDriver_id();
                 driverIdPass = driverResponse.getData().getDriver_id();
                 updateTruckDriverId(driverIdPass);
-                String DLpath = DLimagePickerWithoutAlert();
-                String selfiePath = selfieImagePickerWithoutAlert();
-                uploadDriverLicense(driverIdOnResponse, DLpath);
-                uploadDriverSelfie(driverIdOnResponse, selfiePath);
+                DLpath = DLimagePickerWithoutAlert();
+
+                Log.i("driverlicense Path", DLpath);
+
+                Log.i("driver id on saved", driverIdPass);
+                uploadDriverLicense(driverIdPass, DLpath);
+
             }
 
             @Override
@@ -1407,7 +1401,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
         call.enqueue(new Callback<UploadDriverLicenseResponse>() {
             @Override
             public void onResponse(Call<UploadDriverLicenseResponse> call, Response<UploadDriverLicenseResponse> response) {
-
+                selfiePath = selfieImagePickerWithoutAlert();
+                Log.i("driver Id on save DL", driverId1);
+                Log.i("selfie path onsaveDl", selfiePath);
+                uploadDriverSelfie(driverId1, selfiePath);
             }
 
             @Override
@@ -1436,10 +1433,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    private String returnPath(String picPath) {
-        return picPath;
     }
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {

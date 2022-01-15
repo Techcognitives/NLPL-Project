@@ -13,6 +13,6 @@ import retrofit2.http.Path;
 
 public interface UploadDriverLicenseService {
     @Multipart
-    @PUT("uploadDrDlAndSelfie/{driverId}")
+    @PUT("/driver/uploadDrDlAndSelfie/{driverId}")
     Call<UploadDriverLicenseResponse> uploadDriverLicense(@Path("driverId") String driverId, @Part MultipartBody.Part file);
 }
