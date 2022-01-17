@@ -94,7 +94,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
         bidsListAdapter = new BidsReceivedAdapter(CustomerDashboardActivity.this, bidsList);
         bidsListRecyclerView.setAdapter(bidsListAdapter);
-        getLoadNotificationList();
+        getBidsResponses();
         //------------------------------------------------------------------------------------------
     }
 
@@ -193,18 +193,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         });
         mQueue.add(request);
         //-------------------------------------------------------------------------------------------
-    }
-
-    public void getBidsResponses(BidsReceivedModel obj, RecyclerView bidsReceivedRecyclerView) {
-
-        LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(getApplicationContext());
-        linearLayoutManagerBank.setReverseLayout(true);
-        bidsReceivedRecyclerView.setLayoutManager(linearLayoutManagerBank);
-        bidsReceivedRecyclerView.setHasFixedSize(true);
-
-        bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidsResponseList);
-        bidsReceivedRecyclerView.setAdapter(bidsResponsesAdapter);
-        getBidsResponses();
     }
 
     public void getBidsResponses() {

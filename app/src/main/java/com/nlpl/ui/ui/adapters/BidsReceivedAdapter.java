@@ -34,10 +34,6 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
     private ArrayList<BidsReceivedModel> loadList;
     private CustomerDashboardActivity activity;
 
-    private RequestQueue mQueue;
-    private ArrayList<BidsResponsesModel> bidsResponseList = new ArrayList<>();
-    private BidsResponsesAdapter bidsResponsesAdapter;
-
     public BidsReceivedAdapter(CustomerDashboardActivity activity, ArrayList<BidsReceivedModel> loadList) {
         this.loadList = loadList;
         this.activity = activity;
@@ -85,19 +81,6 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
 
         String bidsResponses = String.valueOf(loadList.size());
         holder.bidsReceived.setText(bidsResponses + " Responses Received");
-
-        mQueue = Volley.newRequestQueue(activity);
-        getBidsResponses(obj.getUser_id());
-
-        bidsResponsesAdapter = new BidsResponsesAdapter(activity, bidsResponseList);
-
-        LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(activity);
-        linearLayoutManagerBank.setReverseLayout(true);
-        holder.bidsReceivedRecyclerView.setLayoutManager(linearLayoutManagerBank);
-        holder.bidsReceivedRecyclerView.setHasFixedSize(true);
-        holder.bidsReceivedRecyclerView.setAdapter(bidsResponsesAdapter);
-
-//        activity.getBidsResponses(obj, holder.bidsReceivedRecyclerView);
     }
 
     @Override
@@ -112,7 +95,6 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
 
     public class BidsReceivedViewHolder extends RecyclerView.ViewHolder {
         private TextView destinationStart, destinationEnd, budget, date, time, distance, model, feet, capacity, body, editLoadButton, bidsReceived;
-        RecyclerView bidsReceivedRecyclerView;
 
         public BidsReceivedViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -128,68 +110,10 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
             capacity = itemView.findViewById(R.id.bids_responses_capacity);
             body = itemView.findViewById(R.id.bids_responses_body);
             editLoadButton = itemView.findViewById(R.id.bids_responses_edit_load_button);
-            bidsReceivedRecyclerView = itemView.findViewById(R.id.bids_received_recycler_view);
             bidsReceived = itemView.findViewById(R.id.bids_responses_no_of_responses);
 
         }
 
     }
-//--------------------------------------------------------------------------------------------------
 
-    public void getBidsResponses(String userId) {
-
-        String url1 = activity.getString(R.string.baseURL) + "/loadpost/getLoadDtByUser/"+userId;
-        Log.i("URL: ", url1);
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    bidsResponseList = new ArrayList<>();
-                    JSONArray bidsResponsesLists = response.getJSONArray("data");
-                    for (int i = 0; i < bidsResponsesLists.length(); i++) {
-                        JSONObject obj = bidsResponsesLists.getJSONObject(i);
-                        BidsResponsesModel bidsResponsesModel = new BidsResponsesModel();
-                        bidsResponsesModel.setIdpost_load(obj.getString("idpost_load"));
-                        bidsResponsesModel.setUser_id(obj.getString("user_id"));
-                        bidsResponsesModel.setPick_up_date(obj.getString("pick_up_date"));
-                        bidsResponsesModel.setPick_up_time(obj.getString("pick_up_time"));
-                        bidsResponsesModel.setBudget(obj.getString("budget"));
-                        bidsResponsesModel.setBid_status(obj.getString("bid_status"));
-                        bidsResponsesModel.setVehicle_model(obj.getString("vehicle_model"));
-                        bidsResponsesModel.setFeet(obj.getString("feet"));
-                        bidsResponsesModel.setCapacity(obj.getString("capacity"));
-                        bidsResponsesModel.setBody_type(obj.getString("body_type"));
-                        bidsResponsesModel.setPick_add(obj.getString("pick_add"));
-                        bidsResponsesModel.setPick_pin_code(obj.getString("pick_pin_code"));
-                        bidsResponsesModel.setPick_city(obj.getString("pick_city"));
-                        bidsResponsesModel.setPick_state(obj.getString("pick_state"));
-                        bidsResponsesModel.setPick_country(obj.getString("pick_country"));
-                        bidsResponsesModel.setDrop_add(obj.getString("drop_add"));
-                        bidsResponsesModel.setDrop_pin_code(obj.getString("drop_pin_code"));
-                        bidsResponsesModel.setDrop_city(obj.getString("drop_city"));
-                        bidsResponsesModel.setDrop_state(obj.getString("drop_state"));
-                        bidsResponsesModel.setDrop_country(obj.getString("drop_country"));
-                        bidsResponsesModel.setKm_approx(obj.getString("km_approx"));
-                        bidsResponsesModel.setNotes_meterial_des(obj.getString("notes_meterial_des"));
-                        bidsResponseList.add(bidsResponsesModel);
-                    }
-                    if (bidsResponseList.size() > 0) {
-                        bidsResponsesAdapter.updateData(bidsResponseList);
-                    } else {
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request);
-        //-------------------------------------------------------------------------------------------
-    }
 }

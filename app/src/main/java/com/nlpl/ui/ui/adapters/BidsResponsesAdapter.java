@@ -47,7 +47,7 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
         BidsResponsesModel obj = bidsResponsesList.get(position);
 
         String pickUpCity = obj.getPick_city();
-        holder.spName.setText("  ");
+        holder.spName.setText("  "+pickUpCity);
     }
 
     @Override
