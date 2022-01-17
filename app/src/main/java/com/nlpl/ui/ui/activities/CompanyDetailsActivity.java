@@ -67,7 +67,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 
     ArrayAdapter<CharSequence> selectStateArray, selectDistrictArray, selectStateUnionCode;
     Dialog selectStateDialog, selectDistrictDialog;
-    String selectedDistrict, selectedState;
+    String stateByPinCode, distByPinCode, selectedDistrict, selectedState;
     EditText companyName, pinCode, address, gstNumber, panNumber;
     Button okButton;
     TextView selectStateText, selectDistrictText;
@@ -482,6 +482,8 @@ public class CompanyDetailsActivity extends AppCompatActivity {
             if (pinCodeWatcher.length() != 6) {
                 pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
             } else {
+                String enteredPinCode = pinCode.getText().toString();
+                getStateAndDistrict(enteredPinCode);
                 pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
             }
         }
@@ -491,6 +493,44 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 
         }
     };
+
+
+    private void getStateAndDistrict(String enteredPin) {
+
+        Log.i("Entered PIN", enteredPin);
+
+        String url = getString(R.string.baseURL) + "/user/locationData/" + enteredPin;
+        Log.i("url for truckByTruckId", url);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+
+                    JSONObject object = response.getJSONObject("data");
+
+                    stateByPinCode = object.getString("stateCode");
+                    distByPinCode = object.getString("district");
+
+                    Log.i("state By PIncode", stateByPinCode);
+                    Log.i("Dist By PIncode", distByPinCode);
+
+                    selectStateText.setText(stateByPinCode);
+                    selectDistrictText.setText(distByPinCode);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+    }
+
+    //----------------------------------------------------------------------------------------------
 
     //--------------------------------------create User in API -------------------------------------
     public CompanyRequest createCompany() {

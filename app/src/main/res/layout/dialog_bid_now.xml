@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView35"
+            android:id="@+id/dialog_bid_now_loadId_heading"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingStart="20dp"
@@ -44,7 +44,7 @@
             android:background="@drawable/edit_text_border_white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView35"
+            app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_loadId_heading"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView

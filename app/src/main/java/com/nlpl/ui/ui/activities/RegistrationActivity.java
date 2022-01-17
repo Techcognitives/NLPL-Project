@@ -27,10 +27,19 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.Requests.UserRequest;
 import com.nlpl.model.Responses.UserResponse;
 import com.nlpl.utils.ApiClient;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,7 +55,7 @@ public class RegistrationActivity extends AppCompatActivity {
     ArrayAdapter<CharSequence> selectStateArray, selectDistrictArray, selectStateUnionCode;
     Dialog selectStateDialog, selectDistrictDialog;
     String selectedDistrict, selectedState, role;
-    String mobile;
+    String mobile, stateByPinCode, distByPinCode;
 
     Dialog language;
 
@@ -54,6 +63,7 @@ public class RegistrationActivity extends AppCompatActivity {
     TextView series;
     Button okButton;
     View personalAndAddress;
+    private RequestQueue mQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +93,8 @@ public class RegistrationActivity extends AppCompatActivity {
         english = language.findViewById(R.id.english);
         marathi = language.findViewById(R.id.marathi);
         hindi = language.findViewById(R.id.hindi);
+
+        mQueue = Volley.newRequestQueue(RegistrationActivity.this);
 
         english.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,7 +175,7 @@ public class RegistrationActivity extends AppCompatActivity {
         name.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-        name.setFilters(new InputFilter[] { filter });
+        name.setFilters(new InputFilter[]{filter});
 
 //        if (!name.getText().toString().isEmpty() && !selectStateText.getText().toString().isEmpty() && !selectDistrictText.getText().toString().isEmpty() && role != null){
 //            okButton.setBackground(getDrawable(R.drawable.button_active));
@@ -385,7 +397,7 @@ public class RegistrationActivity extends AppCompatActivity {
         String addressWatcher = address.getText().toString().trim();
 
         //--------------------------------------------------------------------------------------
-        if (!nameWatcher.isEmpty() && !pinCodeWatcher.isEmpty() && !addressWatcher.isEmpty() && pinCodeWatcher.length()==6 && !stateWatcher.isEmpty() && !cityWatcher.isEmpty()) {
+        if (!nameWatcher.isEmpty() && !pinCodeWatcher.isEmpty() && !addressWatcher.isEmpty() && pinCodeWatcher.length() == 6 && !stateWatcher.isEmpty() && !cityWatcher.isEmpty()) {
             okButton.setEnabled(true);
             okButton.setBackgroundResource((R.drawable.button_active));
         } else {
@@ -444,13 +456,13 @@ public class RegistrationActivity extends AppCompatActivity {
         boolean broker = brokerButton.isChecked();
         boolean customer = customerButton.isChecked();
 
-        if (!nameWatcher.isEmpty() && !pinCodeWatcher.isEmpty() && !addressWatcher.isEmpty() && !stateWatcher.isEmpty() && pinCodeWatcher.length()==6 && !cityWatcher.isEmpty() && (owner || driver || broker || customer)) {
+        if (!nameWatcher.isEmpty() && !pinCodeWatcher.isEmpty() && !addressWatcher.isEmpty() && !stateWatcher.isEmpty() && pinCodeWatcher.length() == 6 && !cityWatcher.isEmpty() && (owner || driver || broker || customer)) {
             okButton.setEnabled(true);
             okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
             saveUser(createUser());
             AlertDialog.Builder my_alert = new AlertDialog.Builder(RegistrationActivity.this);
             my_alert.setTitle("Registration Successful");
-            my_alert.setMessage("Welcome to " +getString(R.string.app_name)+"\n\nPlease update your profile and explore the platform benefits.");
+            my_alert.setMessage("Welcome to " + getString(R.string.app_name) + "\n\nPlease update your profile and explore the platform benefits.");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -486,7 +498,7 @@ public class RegistrationActivity extends AppCompatActivity {
             boolean broker = brokerButton.isChecked();
             boolean customer = customerButton.isChecked();
 
-            if (!nameWatcher.isEmpty() && !pinCodeWatcher.isEmpty() && !addressWatcher.isEmpty() && !stateWatcher.isEmpty() && pinCodeWatcher.length()==6 && !cityWatcher.isEmpty() && (owner || driver || broker || customer)) {
+            if (!nameWatcher.isEmpty() && !pinCodeWatcher.isEmpty() && !addressWatcher.isEmpty() && !stateWatcher.isEmpty() && pinCodeWatcher.length() == 6 && !cityWatcher.isEmpty() && (owner || driver || broker || customer)) {
                 okButton.setEnabled(true);
                 okButton.setBackgroundResource((R.drawable.button_active));
             } else {
@@ -511,9 +523,11 @@ public class RegistrationActivity extends AppCompatActivity {
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             String pinCodeWatcher = pinCode.getText().toString().trim();
 
-            if (pinCodeWatcher.length() != 6){
+            if (pinCodeWatcher.length() != 6) {
                 pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
-            }else{
+            } else {
+                String enteredPinCode = pinCode.getText().toString().trim();
+                getStateAndDistrict(enteredPinCode);
                 pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
             }
         }
@@ -524,7 +538,7 @@ public class RegistrationActivity extends AppCompatActivity {
         }
     };
 
-    private String blockCharacterSet ="~#^|$%&*!+@₹_-()':;?/={}";
+    private String blockCharacterSet = "~#^|$%&*!+@₹_-()':;?/={}";
 
     private InputFilter filter = new InputFilter() {
 
@@ -538,6 +552,45 @@ public class RegistrationActivity extends AppCompatActivity {
             return null;
         }
     };
+
+    //--------------------------------------Get State and city by PinCode---------------------------
+
+    private void getStateAndDistrict(String enteredPin) {
+
+        Log.i("Entered PIN", enteredPin);
+
+        String url = getString(R.string.baseURL) + "/user/locationData/" + enteredPin;
+        Log.i("url for truckByTruckId", url);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+
+                    JSONObject object = response.getJSONObject("data");
+
+                    stateByPinCode = object.getString("stateCode");
+                    distByPinCode = object.getString("district");
+
+                    Log.i("state By PIncode", stateByPinCode);
+                    Log.i("Dist By PIncode", distByPinCode);
+
+                    selectStateText.setText(stateByPinCode);
+                    selectDistrictText.setText(distByPinCode);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+    }
+
+    //----------------------------------------------------------------------------------------------
 
     //--------------------------------------create User in API -------------------------------------
     public UserRequest createUser() {

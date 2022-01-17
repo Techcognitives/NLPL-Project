@@ -729,6 +729,7 @@ public class DashboardActivity extends AppCompatActivity {
         TextView pickUpLocation = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_pick_up_location_textview);
         TextView dropLocation = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_drop_location_textview);
         TextView receivedNotes = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_received_notes_textview);
+        TextView loadIdHeading = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_loadId_heading);
 
         pickUpDate.setText(pick_up_date);
         pickUpTime.setText(pick_up_time);
@@ -741,6 +742,7 @@ public class DashboardActivity extends AppCompatActivity {
         pickUpLocation.setText(pick_up_location);
         dropLocation.setText(drop_location);
         receivedNotes.setText(received_notes_description);
+        loadIdHeading.setText("Load ID: "+obj.getPick_city()+"-"+obj.getDrop_city()+"-000");
         //----------------------------------------------------------------------------------------------------------------
 
         //-------------------------------------------------Accept Load and Bid now-----------------------------------------

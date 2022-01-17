@@ -69,7 +69,7 @@ public class PostALoadActivity extends AppCompatActivity {
     TextView pick_up_date, pick_up_time, select_budget, select_model, select_feet, select_capacity, select_truck_body_type, pick_up_state, pick_up_city, drop_state, drop_city, auto_calculated_KM;
     EditText pick_up_address, drop_address, pick_up_pinCode, drop_pinCode, note_to_post_load;
 
-    String phone, userId, selectedDistrict, selectedState, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI, customerBudget, sDate, eDate, monthS, monthE, startingDate, endingDate, todayDate;
+    String distByPinCode,stateByPinCode, phone, userId, selectedDistrict, selectedState, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI, customerBudget, sDate, eDate, monthS, monthE, startingDate, endingDate, todayDate;
     int sMonth, eMonth, count, startCount;
     Date currentDate, date1, date2, date3, date4;
     ArrayList currentSepDate;
@@ -540,7 +540,7 @@ public class PostALoadActivity extends AppCompatActivity {
         selectFeetDialog.setContentView(R.layout.dialog_spinner);
         selectFeetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         selectFeetDialog.show();
-        selectFeetDialog.setCancelable(false);
+        selectFeetDialog.setCancelable(true);
 
         TextView feetTitle = selectFeetDialog.findViewById(R.id.dialog_spinner_title);
         feetTitle.setText("Select Vehicle Feet");
@@ -574,7 +574,7 @@ public class PostALoadActivity extends AppCompatActivity {
         selectCapacityDialog.setContentView(R.layout.dialog_spinner);
         selectCapacityDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         selectCapacityDialog.show();
-        selectCapacityDialog.setCancelable(false);
+        selectCapacityDialog.setCancelable(true);
 
         TextView capacity_title = selectCapacityDialog.findViewById(R.id.dialog_spinner_title);
         capacity_title.setText("Select Vehicle Capacity");
@@ -608,7 +608,7 @@ public class PostALoadActivity extends AppCompatActivity {
         selectBodyTypeDialog.setContentView(R.layout.dialog_spinner);
         selectBodyTypeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         selectBodyTypeDialog.show();
-        selectBodyTypeDialog.setCancelable(false);
+        selectBodyTypeDialog.setCancelable(true);
 
         TextView capacity_title = selectBodyTypeDialog.findViewById(R.id.dialog_spinner_title);
         capacity_title.setText("Select Vehicle Body Type");
@@ -647,7 +647,7 @@ public class PostALoadActivity extends AppCompatActivity {
                     JSONArray truckLists = response.getJSONArray("data");
                     for (int i = 0; i < truckLists.length(); i++) {
                         JSONObject obj = truckLists.getJSONObject(i);
-                        vehicle_typeAPI = obj.getString("vehicle_type");
+                        vehicle_typeAPI = obj.getString("vehicle_model");
                         truck_ftAPI = obj.getString("truck_ft");
                         truck_carrying_capacityAPI = obj.getString("truck_carrying_capacity");
 
@@ -1119,6 +1119,7 @@ public class PostALoadActivity extends AppCompatActivity {
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             if (drop_pinCode.getText().toString().length() == 6){
+                getDropStateAndDistrict(drop_pinCode.getText().toString());
                 drop_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
             }else {
                 drop_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
@@ -1187,6 +1188,7 @@ public class PostALoadActivity extends AppCompatActivity {
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             if (pick_up_pinCode.getText().toString().length() == 6){
+                getPickStateAndDistrict(pick_up_pinCode.getText().toString());
                 pick_up_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
             }else {
                 pick_up_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
@@ -1210,5 +1212,84 @@ public class PostALoadActivity extends AppCompatActivity {
 
         }
     };
+
+    //--------------------------------------Get State and city by PinCode---------------------------
+
+    private void getPickStateAndDistrict(String enteredPin) {
+
+        Log.i("Entered PIN", enteredPin);
+
+        String url = getString(R.string.baseURL) + "/user/locationData/" + enteredPin;
+        Log.i("url for truckByTruckId", url);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+
+                    JSONObject object = response.getJSONObject("data");
+
+                    stateByPinCode = object.getString("stateCode");
+                    distByPinCode = object.getString("district");
+
+                    Log.i("state By PIncode", stateByPinCode);
+                    Log.i("Dist By PIncode", distByPinCode);
+
+                    pick_up_state.setText(stateByPinCode);
+                    pick_up_city.setText(distByPinCode);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+    }
+
+    //----------------------------------------------------------------------------------------------
+
+    //--------------------------------------Get State and city by PinCode---------------------------
+
+    private void getDropStateAndDistrict(String enteredPin) {
+
+        Log.i("Entered PIN", enteredPin);
+
+        String url = getString(R.string.baseURL) + "/user/locationData/" + enteredPin;
+        Log.i("url for truckByTruckId", url);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+
+                    JSONObject object = response.getJSONObject("data");
+
+                    stateByPinCode = object.getString("stateCode");
+                    distByPinCode = object.getString("district");
+
+                    Log.i("state By PIncode", stateByPinCode);
+                    Log.i("Dist By PIncode", distByPinCode);
+
+                    drop_state.setText(stateByPinCode);
+                    drop_city.setText(distByPinCode);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+    }
+
+    //----------------------------------------------------------------------------------------------
+
 
 }
