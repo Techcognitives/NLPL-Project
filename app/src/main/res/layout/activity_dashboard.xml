@@ -167,7 +167,7 @@
         app:layout_constraintTop_toBottomOf="@+id/dashboard_load_notification_button">
 
         <TextView
-            android:id="@+id/textView35"
+            android:id="@+id/dialog_bid_now_loadId_heading"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Load Details"
@@ -191,7 +191,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView35"
+            app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_loadId_heading"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
@@ -202,7 +202,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/textView36"
             app:layout_constraintEnd_toEndOf="@+id/textView36"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/textView35"
+            app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_loadId_heading"
             app:layout_constraintTop_toTopOf="@+id/textView36"
             app:tint="@color/black" />
 

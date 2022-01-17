@@ -95,7 +95,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     TextView selectStateText, selectDistrictText, series;
     ArrayAdapter<CharSequence> selectStateArray, selectDistrictArray, selectStateUnionCode;
     Dialog selectStateDialog, selectDistrictDialog;
-    String selectedDistrict, selectedState, role, img_type;
+    String stateByPinCode, distByPinCode, selectedDistrict, selectedState, role, img_type;
 
     EditText name, pinCode, address, mobileEdit, emailIdEdit;
     Button okButton;
@@ -830,6 +830,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             String pinCodeWatcher = pinCode.getText().toString().trim();
 
             if (pinCodeWatcher.length() == 6) {
+                getStateAndDistrict(pinCode.getText().toString());
                 okButton.setEnabled(true);
                 okButton.setBackground(getDrawable(R.drawable.button_active));
                 pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
@@ -1590,4 +1591,40 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             }, 100);
         }
     }
+
+    private void getStateAndDistrict(String enteredPin) {
+
+        Log.i("Entered PIN", enteredPin);
+
+        String url = getString(R.string.baseURL) + "/user/locationData/" + enteredPin;
+        Log.i("url for truckByTruckId", url);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+
+                    JSONObject object = response.getJSONObject("data");
+
+                    stateByPinCode = object.getString("stateCode");
+                    distByPinCode = object.getString("district");
+
+                    Log.i("state By PIncode", stateByPinCode);
+                    Log.i("Dist By PIncode", distByPinCode);
+
+                    selectStateText.setText(stateByPinCode);
+                    selectDistrictText.setText(distByPinCode);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+    }
+
 }
