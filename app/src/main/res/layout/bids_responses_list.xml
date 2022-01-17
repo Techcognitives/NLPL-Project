@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@color/background"
+    android:paddingStart="5dp"
+    android:paddingTop="5dp"
+    android:paddingEnd="5dp"
+    android:paddingBottom="5dp">
+
+    <ImageView
+        android:id="@+id/imageView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/bids_responses_sp_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/black_profile_small" />
+
+    <TextView
+        android:id="@+id/bids_responses_sp_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="SP Name"
+        android:singleLine="true"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginStart="5dp"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/bids_responses_sp_rating_number"
+        app:layout_constraintEnd_toStartOf="@+id/bids_responses_nego"
+        app:layout_constraintStart_toEndOf="@+id/imageView15"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/bids_responses_sp_rating_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4.0"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/bids_responses_star_rating"
+        app:layout_constraintStart_toStartOf="@+id/bids_responses_sp_name"
+        app:layout_constraintTop_toBottomOf="@+id/bids_responses_sp_name" />
+
+    <RatingBar
+        android:id="@+id/bids_responses_star_rating"
+        style="@style/Widget.AppCompat.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:foregroundGravity="center"
+        android:isIndicator="true"
+        android:numStars="4"
+        android:stepSize="0.1"
+        android:theme="@style/RatingBar"
+        app:layout_constraintBottom_toBottomOf="@+id/bids_responses_sp_rating_number"
+        app:layout_constraintStart_toEndOf="@+id/bids_responses_sp_rating_number"
+        app:layout_constraintTop_toTopOf="@+id/bids_responses_sp_rating_number" />
+
+    <TextView
+        android:id="@+id/bids_responses_nego"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/negotiable"
+        android:textSize="14sp"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:paddingStart="3dp"
+        android:paddingEnd="3dp"
+        app:layout_constraintBottom_toTopOf="@+id/bids_responses_budget_sp"
+        app:layout_constraintEnd_toStartOf="@+id/bids_responses_view_accept_bids"
+        app:layout_constraintStart_toEndOf="@+id/bids_responses_sp_name"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/bids_responses_budget_sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/inrRs"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:paddingStart="3dp"
+        android:paddingEnd="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/bids_responses_nego"
+        app:layout_constraintStart_toEndOf="@+id/bids_responses_sp_name"
+        app:layout_constraintTop_toBottomOf="@+id/bids_responses_nego" />
+
+    <TextView
+        android:id="@+id/bids_responses_view_accept_bids"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/button_active"
+        android:backgroundTint="#ff7600"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="View and\nAccept Bid"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bids_responses_nego"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

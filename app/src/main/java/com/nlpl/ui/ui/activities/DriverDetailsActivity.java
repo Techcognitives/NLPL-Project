@@ -309,6 +309,11 @@ public class DriverDetailsActivity extends AppCompatActivity {
         }
 
         mQueue = Volley.newRequestQueue(DriverDetailsActivity.this);
+
+        if (userId!=null){
+            getUserDetails();
+        }
+
         arrayUserId = new ArrayList<>();
         arrayMobileNo = new ArrayList<>();
         arrayAddress = new ArrayList<>();
@@ -1882,14 +1887,16 @@ public class DriverDetailsActivity extends AppCompatActivity {
                         String userRole = obj.getString("user_type");
                         isDriverDetailsDoneAPI = obj.getString("isDriver_added");
 
-                        driverName.setText(userNameAPI);
-                        String s1 = userMobileAPI.substring(2, 12);
-                        driverMobile.setText(s1);
-                        address.setText(userAddressAPI);
-                        selectStateText.setText(userStateAPI);
-                        selectDistrictText.setText(userCityAPI);
-                        pinCode.setText(userPinCodeAPI);
-                        driverEmailId.setText(emailIdAPI);
+                        if (selfCheckBox.isChecked()) {
+                            driverName.setText(userNameAPI);
+                            String s1 = userMobileAPI.substring(2, 12);
+                            driverMobile.setText(s1);
+                            address.setText(userAddressAPI);
+                            selectStateText.setText(userStateAPI);
+                            selectDistrictText.setText(userCityAPI);
+                            pinCode.setText(userPinCodeAPI);
+                            driverEmailId.setText(emailIdAPI);
+                        }
 
                     }
                 } catch (JSONException e) {

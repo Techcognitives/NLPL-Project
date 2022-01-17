@@ -88,7 +88,6 @@ public class DashboardActivity extends AppCompatActivity {
 
     String vehicle_no, truckId, isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
 
-    ConstraintLayout profileAndRegistrationLayout;
     SwipeListener swipeListener;
 
     View actionBar;
@@ -125,6 +124,8 @@ public class DashboardActivity extends AppCompatActivity {
             phone = bundle.getString("mobile2");
             Log.i("Mobile No Registration", phone);
         }
+        mQueue = Volley.newRequestQueue(DashboardActivity.this);
+        getUserId(phone);
 
         actionBar = findViewById(R.id.profile_registration_action_bar);
         actionBarTitle = (TextView) actionBar.findViewById(R.id.action_bar_title);
@@ -159,7 +160,7 @@ public class DashboardActivity extends AppCompatActivity {
         arrayDriverId = new ArrayList<>();
         arrayDriverName = new ArrayList<>();
 
-        profileAndRegistrationLayout = (ConstraintLayout) findViewById(R.id.profile_registration_constrain);
+        loadListRecyclerView = (RecyclerView) findViewById(R.id.dashboard_load_notification_recycler_view);
 
 //        addDriver = findViewById(R.id.addDriverDone);
 
@@ -188,7 +189,7 @@ public class DashboardActivity extends AppCompatActivity {
         bankDetailsLogoImageView = (ImageView) menuDialog.findViewById(R.id.menu_bank_details_logo_image_view);
         truckDetailsLogoImageView = (ImageView) menuDialog.findViewById(R.id.menu_truck_details_logo_image_view);
 
-        swipeListener = new SwipeListener(profileAndRegistrationLayout);
+//        swipeListener = new SwipeListener(loadListRecyclerView);
 
         previewDialogBidNow = new Dialog(DashboardActivity.this);
         previewDialogBidNow.setContentView(R.layout.dialog_bid_now);
@@ -204,9 +205,6 @@ public class DashboardActivity extends AppCompatActivity {
 //                startActivity(intent);
 //            }
 //        });
-
-        mQueue = Volley.newRequestQueue(DashboardActivity.this);
-        getUserId(phone);
 
     }
 
@@ -239,8 +237,7 @@ public class DashboardActivity extends AppCompatActivity {
 
                     getUserDetails();
 
-                    //---------------------------- Get Bank Details -------------------------------------------
-                    loadListRecyclerView = (RecyclerView) findViewById(R.id.dashboard_load_notification_recycler_view);
+                    //---------------------------- Get Load Details -------------------------------------------
 
                     LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(getApplicationContext());
                     linearLayoutManagerBank.setReverseLayout(true);
@@ -308,7 +305,7 @@ public class DashboardActivity extends AppCompatActivity {
                         isDriverDetailsDone = obj.getString("isDriver_added");
 
                         //-------------------------------------Personal details ---- -------------------------------------
-                        menuUserNameTextView.setText(" Hello, " + name + "!");
+                        menuUserNameTextView.setText(name);
                         String s1 = mobile.substring(2, 12);
                         mobileText.setText("+91 " + s1);
 
@@ -715,7 +712,7 @@ public class DashboardActivity extends AppCompatActivity {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(previewDialogBidNow.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp.gravity = Gravity.CENTER;
         previewDialogBidNow.show();
         previewDialogBidNow.getWindow().setAttributes(lp);
@@ -896,13 +893,10 @@ public class DashboardActivity extends AppCompatActivity {
         addDriver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Log.i("truckId Selected", truckId);
                 Intent i8 = new Intent(DashboardActivity.this, DriverDetailsActivity.class);
                 i8.putExtra("userId", userId);
                 i8.putExtra("isEdit", false);
                 i8.putExtra("mobile", mobile);
-                i8.putExtra("truckIdPass", truckId);
                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i8);
                 overridePendingTransition(0, 0);

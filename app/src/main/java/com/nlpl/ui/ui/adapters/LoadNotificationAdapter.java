@@ -42,7 +42,7 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
         holder.destinationEnd.setText("  " + dropCity);
 
         String budget = obj.getBudget();
-        holder.budget.setText("INR " + budget);
+        holder.budget.setText("₹" + budget);
 
         String date = obj.getPick_up_date();
         holder.date.setText("Date: " + date);
@@ -66,7 +66,7 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
         holder.body.setText("Body: " + bodyType);
 
         String pickUpLocation = obj.getPick_add();
-        holder.pickUpLocation.setText(pickUpLocation);
+        holder.pickUpLocation.setText(" "+pickUpLocation);
 
         holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
             @Override

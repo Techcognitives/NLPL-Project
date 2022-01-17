@@ -106,12 +106,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/customer_dashboard_bids_received_button">
 
-        <TextView
-            android:id="@+id/vsavjxjsd"
-            android:layout_width="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/customer_dashboard_load_notification_recycler_view"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Bids Received"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_centerHorizontal="true"
+            android:foregroundGravity="top"
+            android:scrollbarThumbVertical="@android:color/holo_blue_dark"
+            android:scrollbars="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -150,7 +152,12 @@
         android:text="Post a Load"
         android:textStyle="bold"
         android:textSize="14sp"
-        android:textColor="@color/button_blue"
+        android:paddingBottom="2dp"
+        android:gravity="center"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:background="@drawable/button_active"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/customer_dashboard_fab_button"
         app:layout_constraintEnd_toStartOf="@+id/customer_dashboard_fab_button"
         app:layout_constraintTop_toTopOf="@+id/customer_dashboard_fab_button" />

@@ -2,9 +2,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:drawable="@drawable/bank_logo"
-        android:width="20dp"
-        android:height="20dp"
+        android:drawable="@drawable/black_profile"
+        android:width="40dp"
+        android:height="40dp"
         />
 
 </layer-list >

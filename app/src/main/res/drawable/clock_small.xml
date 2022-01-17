@@ -3,8 +3,8 @@
 
     <item
         android:drawable="@drawable/clock"
-        android:width="12dp"
-        android:height="12dp"
+        android:width="15dp"
+        android:height="15dp"
         />
 
 </layer-list >
