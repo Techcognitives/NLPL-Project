@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -40,7 +41,7 @@ public class RegistrationActivity extends AppCompatActivity {
     RadioButton ownerButton, driverButton, brokerButton, customerButton;
     View action_bar;
     TextView actionBarTitle, selectStateText, selectDistrictText, english, marathi, hindi;
-    ImageView actionBarBackButton;
+    ImageView actionBarBackButton, actionBarMenuButton;
 
     ArrayAdapter<CharSequence> selectStateArray, selectDistrictArray, selectStateUnionCode;
     Dialog selectStateDialog, selectDistrictDialog;
@@ -107,6 +108,8 @@ public class RegistrationActivity extends AppCompatActivity {
         action_bar = (View) findViewById(R.id.registration_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
+        actionBarMenuButton = (ImageView) action_bar.findViewById(R.id.action_bar_menu);
+        actionBarMenuButton.setVisibility(View.GONE);
         actionBarTitle.setText("Registration");
         actionBarBackButton.setVisibility(View.GONE);
         //------------------------------------------------------------------------------------------

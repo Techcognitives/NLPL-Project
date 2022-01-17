@@ -7,257 +7,273 @@
     android:background="@color/background"
     tools:context=".ui.ui.activities.DriverDetailsActivity">
 
-    <TextView
-        android:id="@+id/driver_details_driver_license_text2"
+    <ScrollView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:paddingStart="20dp"
-        android:text="@string/UploadDriverSelfie"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/driver_details_driver_license_constrain" />
-
-    <include
-        android:id="@+id/driver_details_action_bar"
-        layout="@layout/action_bar"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <include
-        android:id="@+id/driver_details_personal_and_address"
-        layout="@layout/personal_and_address"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/driver_details_self_checkbox" />
-
-    <TextView
-        android:id="@+id/driver_details_driver_license_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:paddingStart="20dp"
-        android:text="@string/UploadDriverLicense"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/driver_details_personal_and_address" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/driver_details_driver_license_constrain"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/shadow_file"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/driver_details_driver_license_text">
-
-        <ImageView
-            android:id="@+id/driver_details_driver_license_image"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/image_view_border"
-            android:padding="2dp"
-            android:src="@drawable/driving_license"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/driver_details_driver_license_text_image"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/driver_details_driver_license_text_image"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="@string/DriverLicense"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/driver_details_driver_license_image"
-            app:layout_constraintEnd_toStartOf="@+id/driver_details_upload_driver_license"
-            app:layout_constraintStart_toEndOf="@+id/driver_details_driver_license_image"
-            app:layout_constraintTop_toTopOf="@+id/driver_details_driver_license_image"
-            app:layout_constraintVertical_bias="0.506" />
-
-        <TextView
-            android:id="@+id/driver_details_edit_driver_license"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:drawableStart="@drawable/ic_edit"
-            android:padding="10dp"
-            android:text="@string/edit"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/driver_details_driver_license_text_image"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/driver_details_driver_license_text_image"
-            app:layout_constraintVertical_bias="0.6" />
-
-        <Button
-            android:id="@+id/driver_details_upload_driver_license"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/all_rounded_small"
-            android:backgroundTint="@color/button_blue"
-            android:drawableStart="@drawable/ic_upload"
-            android:padding="10dp"
-            android:text="@string/Upload"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/driver_details_driver_license_text_image"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/driver_details_driver_license_text_image" />
-
-        <ImageView
-            android:id="@+id/driver_details_preview_driving_license"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            android:onClick="onClickPreviewDrivingLicense"
-            app:layout_constraintBottom_toBottomOf="@+id/driver_details_edit_driver_license"
-            app:layout_constraintEnd_toStartOf="@+id/driver_details_edit_driver_license"
-            app:layout_constraintTop_toTopOf="@+id/driver_details_edit_driver_license"
-            app:srcCompat="@drawable/ic_preview" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <Button
-        android:id="@+id/driver_details_ok_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/button_de_active"
-        android:gravity="center"
-        android:onClick="onClickDriverDetailsOk"
-        android:padding="10dp"
-        android:text="@string/ok"
-        android:textAllCaps="false"
-        android:textColor="@color/background"
-        android:textSize="20sp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout5"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/shadow_file"
-        app:layout_constraintEnd_toEndOf="@+id/driver_details_driver_license_constrain"
-        app:layout_constraintStart_toStartOf="@+id/driver_details_driver_license_constrain"
-        app:layout_constraintTop_toBottomOf="@+id/driver_details_driver_license_text2">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/driver_details_edit_selfie_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_edit"
-            android:padding="10dp"
-            android:text="@string/edit"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/driver_selfie_text"
-            app:layout_constraintEnd_toEndOf="@+id/upload_driver_selfie"
-            app:layout_constraintTop_toTopOf="@+id/driver_selfie_text" />
+            <TextView
+                android:id="@+id/driver_details_driver_license_text2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingStart="20dp"
+                android:text="@string/UploadDriverSelfie"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/driver_details_driver_license_constrain" />
 
-        <Button
-            android:id="@+id/upload_driver_selfie"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/all_rounded_small"
-            android:backgroundTint="@color/button_blue"
-            android:drawableStart="@drawable/ic_camera_white"
-            android:padding="7dp"
-            android:text="@string/camera"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/driver_selfie_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/driver_selfie_text"
-            app:layout_constraintVertical_bias="0.555" />
+            <include
+                android:id="@+id/driver_details_action_bar"
+                layout="@layout/action_bar"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/driver_selfie_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="@string/TakePhoto"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/driver_selfie_img"
-            app:layout_constraintEnd_toStartOf="@+id/upload_driver_selfie"
-            app:layout_constraintStart_toEndOf="@+id/driver_selfie_img"
-            app:layout_constraintTop_toTopOf="@+id/driver_selfie_img" />
+            <include
+                android:id="@+id/driver_details_personal_and_address"
+                layout="@layout/personal_and_address"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/driver_details_self_checkbox" />
 
-        <ImageView
-            android:id="@+id/driver_selfie_img"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/image_view_border"
-            android:padding="2dp"
-            android:src="@drawable/selfie"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/driver_details_driver_license_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:paddingStart="20dp"
+                android:text="@string/UploadDriverLicense"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/driver_details_personal_and_address" />
 
-        <ImageView
-            android:id="@+id/driver_details_preview_selfie"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            android:onClick="onClickPreviewSelfie"
-            app:layout_constraintBottom_toBottomOf="@+id/driver_details_edit_selfie_text"
-            app:layout_constraintEnd_toStartOf="@+id/driver_details_edit_selfie_text"
-            app:layout_constraintTop_toTopOf="@+id/driver_details_edit_selfie_text"
-            app:srcCompat="@drawable/ic_preview" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/driver_details_driver_license_constrain"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/shadow_file"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/driver_details_driver_license_text">
 
-    <CheckBox
-        android:id="@+id/driver_details_self_checkbox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="20dp"
-        android:text="Self"
-        android:onClick="onClickIsSelf"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/driver_details_action_bar" />
+                <ImageView
+                    android:id="@+id/driver_details_driver_license_image"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/image_view_border"
+                    android:padding="2dp"
+                    android:src="@drawable/driving_license"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/driver_details_driver_license_text_image"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
 
+                <TextView
+                    android:id="@+id/driver_details_driver_license_text_image"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="@string/DriverLicense"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/driver_details_driver_license_image"
+                    app:layout_constraintEnd_toStartOf="@+id/driver_details_upload_driver_license"
+                    app:layout_constraintStart_toEndOf="@+id/driver_details_driver_license_image"
+                    app:layout_constraintTop_toTopOf="@+id/driver_details_driver_license_image"
+                    app:layout_constraintVertical_bias="0.506" />
+
+                <TextView
+                    android:id="@+id/driver_details_edit_driver_license"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:drawableStart="@drawable/ic_edit"
+                    android:padding="10dp"
+                    android:text="@string/edit"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@+id/driver_details_driver_license_text_image"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/driver_details_driver_license_text_image"
+                    app:layout_constraintVertical_bias="0.6" />
+
+                <Button
+                    android:id="@+id/driver_details_upload_driver_license"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/all_rounded_small"
+                    android:backgroundTint="@color/button_blue"
+                    android:drawableStart="@drawable/ic_upload"
+                    android:padding="10dp"
+                    android:text="@string/Upload"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="@+id/driver_details_driver_license_text_image"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/driver_details_driver_license_text_image" />
+
+                <ImageView
+                    android:id="@+id/driver_details_preview_driving_license"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onClickPreviewDrivingLicense"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@+id/driver_details_edit_driver_license"
+                    app:layout_constraintEnd_toStartOf="@+id/driver_details_edit_driver_license"
+                    app:layout_constraintTop_toTopOf="@+id/driver_details_edit_driver_license"
+                    app:srcCompat="@drawable/ic_preview" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/driver_details_ok_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="3dp"
+                android:background="@drawable/button_de_active"
+                android:gravity="center"
+                android:onClick="onClickDriverDetailsOk"
+                android:padding="10dp"
+                android:text="@string/ok"
+                android:textAllCaps="false"
+                android:textColor="@color/background"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/shadow_file"
+                app:layout_constraintEnd_toEndOf="@+id/driver_details_driver_license_constrain"
+                app:layout_constraintStart_toStartOf="@+id/driver_details_driver_license_constrain"
+                app:layout_constraintTop_toBottomOf="@+id/driver_details_driver_license_text2">
+
+                <TextView
+                    android:id="@+id/driver_details_edit_selfie_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_edit"
+                    android:padding="10dp"
+                    android:text="@string/edit"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@+id/driver_selfie_text"
+                    app:layout_constraintEnd_toEndOf="@+id/upload_driver_selfie"
+                    app:layout_constraintTop_toTopOf="@+id/driver_selfie_text" />
+
+                <Button
+                    android:id="@+id/upload_driver_selfie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/all_rounded_small"
+                    android:backgroundTint="@color/button_blue"
+                    android:drawableStart="@drawable/ic_camera_white"
+                    android:padding="7dp"
+                    android:text="@string/camera"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="@+id/driver_selfie_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/driver_selfie_text"
+                    app:layout_constraintVertical_bias="0.555" />
+
+                <TextView
+                    android:id="@+id/driver_selfie_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="@string/TakePhoto"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/driver_selfie_img"
+                    app:layout_constraintEnd_toStartOf="@+id/upload_driver_selfie"
+                    app:layout_constraintStart_toEndOf="@+id/driver_selfie_img"
+                    app:layout_constraintTop_toTopOf="@+id/driver_selfie_img" />
+
+                <ImageView
+                    android:id="@+id/driver_selfie_img"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/image_view_border"
+                    android:padding="2dp"
+                    android:src="@drawable/selfie"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/driver_details_preview_selfie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onClickPreviewSelfie"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@+id/driver_details_edit_selfie_text"
+                    app:layout_constraintEnd_toStartOf="@+id/driver_details_edit_selfie_text"
+                    app:layout_constraintTop_toTopOf="@+id/driver_details_edit_selfie_text"
+                    app:srcCompat="@drawable/ic_preview" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <CheckBox
+                android:id="@+id/driver_details_self_checkbox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="20dp"
+                android:onClick="onClickIsSelf"
+                android:text="Self"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/driver_details_action_bar" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
