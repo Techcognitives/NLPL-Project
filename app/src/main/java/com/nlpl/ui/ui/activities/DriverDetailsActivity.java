@@ -137,7 +137,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
     String userIdAPI, nameAPI, stateAPI, pinCodeAPI, addressAPI, mobileNoAPI, cityAPI, roleAPI;
     ArrayList<String> arrayUserId, arrayMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayState;
-    Boolean alreadyDriver = true;
+    Boolean alreadyDriver = true, isSelfie= false, isDL = false;
     String truckIdPass, driverIdPass, DLpath,selfiePath ;
 
     @Override
@@ -342,6 +342,9 @@ public class DriverDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                isSelfie = true;
+                isDL = false;
+
                 startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY1);
 
 //                requestPermissionsForCamera();
@@ -356,6 +359,9 @@ public class DriverDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                isSelfie = true;
+                isDL = false;
+
                 startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY1);
 
 //                String selfiePath = selfieImagePickerWithoutAlert();
@@ -369,6 +375,9 @@ public class DriverDetailsActivity extends AppCompatActivity {
         uploadDL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                isDL = true;
+                isSelfie = false;
                 requestPermissionsForCamera();
                 requestPermissionsForGalleryWRITE();
                 requestPermissionsForGalleryREAD();
@@ -411,6 +420,9 @@ public class DriverDetailsActivity extends AppCompatActivity {
         editDL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                isDL = true;
+                isSelfie = false;
 
                 String DLpath = DLimagePickerWithoutAlert();
                 uploadDriverLicense(driverId, DLpath);
@@ -653,11 +665,17 @@ public class DriverDetailsActivity extends AppCompatActivity {
         this.requestCode = requestCode;
         this.data = data;
 
-        DLimagePicker();
-        selfieImagePicker();
+//
+//        if (isSelfie){
+//            selfieImagePicker();
+//            selfieImagePickerWithoutAlert();
+//        }
 
-        DLimagePickerWithoutAlert();
-        selfieImagePickerWithoutAlert();
+//        if (isDL) {
+            DLimagePicker();
+            DLimagePickerWithoutAlert();
+//        }
+
     }
 
     private String DLimagePickerWithoutAlert() {
@@ -978,8 +996,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
                     String DLpath = DLimagePickerWithoutAlert();
                     uploadDriverLicense(driverId, DLpath);
-                    String selfiePath = selfieImagePickerWithoutAlert();
-                    uploadDriverSelfie(driverId, selfiePath);
+//                    String selfiePath = selfieImagePickerWithoutAlert();
+//                    uploadDriverSelfie(driverId, selfiePath);
 
                     if (driverName.getText().toString() != null) {
                         updateDriverName();
@@ -1088,12 +1106,17 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 AddDriverResponse driverResponse = response.body();
                 driverIdPass = driverResponse.getData().getDriver_id();
                 updateTruckDriverId(driverIdPass);
+
                 DLpath = DLimagePickerWithoutAlert();
+//                selfiePath = selfieImagePickerWithoutAlert();
 
                 Log.i("driverlicense Path", DLpath);
+//                Log.i("selfie Path", selfiePath);
 
                 Log.i("driver id on saved", driverIdPass);
+
                 uploadDriverLicense(driverIdPass, DLpath);
+//                uploadDriverSelfie(driverIdPass, selfiePath);
 
             }
 
@@ -1406,10 +1429,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         call.enqueue(new Callback<UploadDriverLicenseResponse>() {
             @Override
             public void onResponse(Call<UploadDriverLicenseResponse> call, Response<UploadDriverLicenseResponse> response) {
-                selfiePath = selfieImagePickerWithoutAlert();
-                Log.i("driver Id on save DL", driverId1);
-                Log.i("selfie path onsaveDl", selfiePath);
-                uploadDriverSelfie(driverId1, selfiePath);
+
             }
 
             @Override
