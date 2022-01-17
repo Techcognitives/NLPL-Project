@@ -540,7 +540,7 @@ public class PostALoadActivity extends AppCompatActivity {
         selectFeetDialog.setContentView(R.layout.dialog_spinner);
         selectFeetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         selectFeetDialog.show();
-        selectFeetDialog.setCancelable(false);
+        selectFeetDialog.setCancelable(true);
 
         TextView feetTitle = selectFeetDialog.findViewById(R.id.dialog_spinner_title);
         feetTitle.setText("Select Vehicle Feet");
@@ -574,7 +574,7 @@ public class PostALoadActivity extends AppCompatActivity {
         selectCapacityDialog.setContentView(R.layout.dialog_spinner);
         selectCapacityDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         selectCapacityDialog.show();
-        selectCapacityDialog.setCancelable(false);
+        selectCapacityDialog.setCancelable(true);
 
         TextView capacity_title = selectCapacityDialog.findViewById(R.id.dialog_spinner_title);
         capacity_title.setText("Select Vehicle Capacity");
@@ -608,7 +608,7 @@ public class PostALoadActivity extends AppCompatActivity {
         selectBodyTypeDialog.setContentView(R.layout.dialog_spinner);
         selectBodyTypeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         selectBodyTypeDialog.show();
-        selectBodyTypeDialog.setCancelable(false);
+        selectBodyTypeDialog.setCancelable(true);
 
         TextView capacity_title = selectBodyTypeDialog.findViewById(R.id.dialog_spinner_title);
         capacity_title.setText("Select Vehicle Body Type");
@@ -647,7 +647,7 @@ public class PostALoadActivity extends AppCompatActivity {
                     JSONArray truckLists = response.getJSONArray("data");
                     for (int i = 0; i < truckLists.length(); i++) {
                         JSONObject obj = truckLists.getJSONObject(i);
-                        vehicle_typeAPI = obj.getString("vehicle_type");
+                        vehicle_typeAPI = obj.getString("vehicle_model");
                         truck_ftAPI = obj.getString("truck_ft");
                         truck_carrying_capacityAPI = obj.getString("truck_carrying_capacity");
 
