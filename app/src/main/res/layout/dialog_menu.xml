@@ -15,176 +15,393 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/constraintLayout12"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout15"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:onClick="onClickDismiss"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/constraintLayout13"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout12">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout12"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/all_rounded_small"
+        android:backgroundTint="@color/redDark"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout15"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/constraintLayout13"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/menu_personal_constrain"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="5dp"
-            android:background="@drawable/button_active"
-            android:onClick="onClickProfileAndRegister"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/menu_name_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:text="@string/name"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/menu_mobile"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/menu_mobile"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/mobNo"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/menu_name_text" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
         <TextView
-            android:id="@+id/menu_bank_details_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="5dp"
-            android:drawableEnd="@drawable/ic_right"
-            android:drawableTint="@color/black"
-            android:gravity="center|start"
-            android:onClick="onClickProfileAndRegister"
-            android:paddingStart="10dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:text="@string/BankDetails"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/menu_bank_details_logo_image_view"
-            app:layout_constraintTop_toBottomOf="@+id/menu_personal_details_button" />
-
-        <ImageView
-            android:id="@+id/menu_bank_details_logo_image_view"
+            android:id="@+id/menu_name_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:padding="5dp"
-            app:layout_constraintBottom_toBottomOf="@+id/menu_bank_details_button"
-            app:layout_constraintEnd_toStartOf="@+id/menu_bank_details_button"
+            android:layout_marginTop="5dp"
+            android:singleLine="true"
+            android:text="@string/name"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/menu_mobile"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/menu_bank_details_button"
-            app:srcCompat="@drawable/bank" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/menu_truck_details"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="5dp"
-            android:drawableEnd="@drawable/ic_right"
-            android:drawableTint="@color/black"
-            android:gravity="center|start"
-            android:onClick="onClickProfileAndRegister"
-            android:paddingStart="10dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:text="@string/AddTrucks"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/menu_truck_details_logo_image_view"
-            app:layout_constraintTop_toBottomOf="@+id/menu_bank_details_button" />
-
-        <ImageView
-            android:id="@+id/menu_truck_details_logo_image_view"
+            android:id="@+id/menu_mobile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:padding="5dp"
-            android:src="@drawable/truck"
-            app:layout_constraintBottom_toBottomOf="@+id/menu_truck_details"
-            app:layout_constraintEnd_toStartOf="@+id/menu_truck_details"
+            android:layout_marginBottom="5dp"
+            android:text="@string/mobNo"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout16"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/menu_truck_details" />
+            app:layout_constraintTop_toBottomOf="@+id/menu_name_text" />
 
         <TextView
             android:id="@+id/textView8"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/button_active"
-            android:drawableStart="@drawable/ic_power"
-            android:drawableTint="@color/white"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/redDark"
+            android:drawableStart="@drawable/log_out_small"
             android:onClick="onClickLogOut"
-            android:padding="10dp"
-            android:text="  Log Out"
+            android:paddingStart="5dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="  Logout"
             android:textColor="@color/white"
             android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout16" />
 
-        <TextView
-            android:id="@+id/menu_personal_details_button"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout16"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="5dp"
-            android:drawableEnd="@drawable/ic_right"
-            android:drawableTint="@color/black"
-            android:onClick="onClickProfileAndRegister"
-            android:paddingStart="10dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:text="@string/personalDetails"
-            android:textColor="@color/black"
-            android:textSize="16sp"
+            android:background="@color/button_blue"
+            android:paddingEnd="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/textView8"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/menu_personal_details_logo_image_view"
-            app:layout_constraintTop_toBottomOf="@+id/menu_personal_constrain" />
-
-        <ImageView
-            android:id="@+id/menu_personal_details_logo_image_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:padding="5dp"
-            app:layout_constraintBottom_toBottomOf="@+id/menu_personal_details_button"
-            app:layout_constraintEnd_toStartOf="@+id/menu_personal_details_button"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/menu_personal_details_button"
-            app:srcCompat="@drawable/personal" />
+            app:layout_constraintTop_toBottomOf="@+id/menu_mobile">
+
+            <TextView
+                android:id="@+id/menu_bank_details_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:gravity="center|start"
+                android:onClick="onClickProfileAndRegister"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/BankDetails"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@+id/loads_and_trips"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/menu_bank_details_logo_image_view"
+                app:layout_constraintTop_toBottomOf="@+id/menu_driver_details" />
+
+            <TextView
+                android:id="@+id/menu_truck_details"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:gravity="center|start"
+                android:onClick="onClickProfileAndRegister"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/AddTrucks"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@+id/menu_driver_details"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/menu_truck_details_logo_image_view"
+                app:layout_constraintTop_toBottomOf="@+id/menu_personal_details_button" />
+
+            <ImageView
+                android:id="@+id/menu_bank_details_logo_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/menu_bank_details_button"
+                app:layout_constraintEnd_toStartOf="@+id/menu_bank_details_button"
+                app:layout_constraintStart_toStartOf="@+id/imageView16"
+                app:layout_constraintTop_toTopOf="@+id/menu_bank_details_button"
+                app:srcCompat="@drawable/bank" />
+
+            <ImageView
+                android:id="@+id/menu_truck_details_logo_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:src="@drawable/truck"
+                app:layout_constraintBottom_toBottomOf="@+id/menu_truck_details"
+                app:layout_constraintEnd_toStartOf="@+id/menu_truck_details"
+                app:layout_constraintStart_toStartOf="@+id/menu_personal_details_logo_image_view"
+                app:layout_constraintTop_toTopOf="@+id/menu_truck_details" />
+
+            <TextView
+                android:id="@+id/menu_personal_details_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:onClick="onClickProfileAndRegister"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="Personal and Company"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@+id/menu_truck_details"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/menu_personal_details_logo_image_view"
+                app:layout_constraintTop_toBottomOf="@+id/view" />
+
+            <ImageView
+                android:id="@+id/menu_personal_details_logo_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/menu_personal_details_button"
+                app:layout_constraintEnd_toStartOf="@+id/menu_personal_details_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/menu_personal_details_button"
+                app:srcCompat="@drawable/personal" />
+
+            <TextView
+                android:id="@+id/menu_driver_details"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:gravity="center|start"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/AddDrivers"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@+id/menu_bank_details_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imageView16"
+                app:layout_constraintTop_toBottomOf="@+id/menu_truck_details" />
+
+            <ImageView
+                android:id="@+id/imageView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/menu_driver_details"
+                app:layout_constraintStart_toStartOf="@+id/menu_truck_details_logo_image_view"
+                app:layout_constraintTop_toTopOf="@+id/menu_driver_details"
+                app:srcCompat="@drawable/driver" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="Profile"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/menu_personal_details_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="0dp"
+                android:layout_height="0.8dp"
+                android:background="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/menu_personal_details_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="0dp"
+                android:layout_height="0.8dp"
+                android:background="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/menu_loads_history_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loads_and_trips" />
+
+            <TextView
+                android:id="@+id/loads_and_trips"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingStart="5dp"
+                android:text="Loads and Trips"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/view2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/menu_bank_details_button" />
+
+            <TextView
+                android:id="@+id/menu_loads_history_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center|start"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="Loads History"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@+id/menu_trip_history_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView17"
+                app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+            <ImageView
+                android:id="@+id/imageView17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/menu_loads_history_button"
+                app:layout_constraintEnd_toStartOf="@+id/menu_loads_history_button"
+                app:layout_constraintStart_toStartOf="@+id/menu_bank_details_logo_image_view"
+                app:layout_constraintTop_toTopOf="@+id/menu_loads_history_button"
+                app:srcCompat="@drawable/truck_history_small" />
+
+            <TextView
+                android:id="@+id/menu_trip_history_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center|start"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="Trip History"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@+id/menu_payment_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView18"
+                app:layout_constraintTop_toBottomOf="@+id/menu_loads_history_button" />
+
+            <ImageView
+                android:id="@+id/imageView18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/menu_trip_history_button"
+                app:layout_constraintEnd_toStartOf="@+id/menu_trip_history_button"
+                app:layout_constraintStart_toStartOf="@+id/imageView17"
+                app:layout_constraintTop_toTopOf="@+id/menu_trip_history_button"
+                app:srcCompat="@drawable/truck_history_small" />
+
+            <TextView
+                android:id="@+id/menu_payment_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:gravity="center|start"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="Payments"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@+id/menu_languages_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView19"
+                app:layout_constraintTop_toBottomOf="@+id/menu_trip_history_button" />
+
+            <TextView
+                android:id="@+id/menu_languages_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center|start"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="Language"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@+id/menu_settings_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView21"
+                app:layout_constraintTop_toBottomOf="@+id/menu_payment_button" />
+
+            <ImageView
+                android:id="@+id/imageView19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/menu_payment_button"
+                app:layout_constraintEnd_toStartOf="@+id/menu_payment_button"
+                app:layout_constraintStart_toStartOf="@+id/imageView18"
+                app:layout_constraintTop_toTopOf="@+id/menu_payment_button"
+                app:srcCompat="@drawable/payments_small" />
+
+            <TextView
+                android:id="@+id/menu_settings_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center|start"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="Settings and Preferences"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView20"
+                app:layout_constraintTop_toBottomOf="@+id/menu_languages_button" />
+
+            <ImageView
+                android:id="@+id/imageView20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/menu_settings_button"
+                app:layout_constraintEnd_toStartOf="@+id/menu_settings_button"
+                app:layout_constraintStart_toStartOf="@+id/imageView21"
+                app:layout_constraintTop_toTopOf="@+id/menu_settings_button"
+                app:srcCompat="@drawable/settings_small" />
+
+            <ImageView
+                android:id="@+id/imageView21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/menu_languages_button"
+                app:layout_constraintEnd_toStartOf="@+id/menu_languages_button"
+                app:layout_constraintStart_toStartOf="@+id/imageView19"
+                app:layout_constraintTop_toTopOf="@+id/menu_languages_button"
+                app:srcCompat="@drawable/languages_small" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

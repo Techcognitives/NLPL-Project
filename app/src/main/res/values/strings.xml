@@ -984,7 +984,7 @@
     <string name="hello">Hello,</string>
     <string name="mobNo">+91</string>
     <string name="personalDetails"><p>   </p>Personal Details</string>
-    <string name="BankDetails"><p>   </p>Bank Details</string>
+    <string name="BankDetails"><p>   </p>My Bank</string>
     <string name="AddTrucks"><p>   </p>My Trucks</string>
     <string name="AddDrivers"><p>   </p>My Drivers</string>
     //----------------------------------------------------------------------------------------------
@@ -1102,9 +1102,9 @@
     <string name="timeLeft"> <p>   </p> Time left</string>
     <string name="timeinmin">00:00</string>
     <string name="pickUpDateWithColon">Pick-up Date:</string>
-    <string name="pickUpLocationWithColon">Pick-up:</string>
-    <string name="addressForPickUpLocation">City, State, PIN Code<br></br> Address</string>
-    <string name="dropLocationWithColon">Drop:</string>
+    <string name="pickUpLocationWithColon"><p>  </p>Pick-up:</string>
+    <string name="addressForPickUpLocation">City, State, PIN Code, Address</string>
+    <string name="dropLocationWithColon"><p>  </p>Drop:</string>
     <string name="no">No</string>
     <string name="selectTruck">Select Truck</string>
     <string name="selectDriver">Select Driver</string>

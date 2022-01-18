@@ -2,14 +2,14 @@ package com.nlpl.model.ModelForRecyclerView;
 
 public class BidsResponsesModel {
 
-    private String idpost_load, user_id, pick_up_date, pick_up_time, budget, bid_status, vehicle_model, feet, capacity, body_type, pick_add, pick_pin_code, pick_city, pick_state, pick_country, drop_add, drop_pin_code, drop_city, drop_state, drop_country, km_approx, notes_meterial_des;
+    private String sp_bid_id, user_id, idpost_load, sp_quote, is_negatiable, assigned_truck_id, assigned_driver_id, vehicle_model, feet, capacity, body_type, notes, bid_status, is_bid_accpted_by_sp;
 
-    public String getIdpost_load() {
-        return idpost_load;
+    public String getSp_bid_id() {
+        return sp_bid_id;
     }
 
-    public void setIdpost_load(String idpost_load) {
-        this.idpost_load = idpost_load;
+    public void setSp_bid_id(String sp_bid_id) {
+        this.sp_bid_id = sp_bid_id;
     }
 
     public String getUser_id() {
@@ -20,36 +20,44 @@ public class BidsResponsesModel {
         this.user_id = user_id;
     }
 
-    public String getPick_up_date() {
-        return pick_up_date;
+    public String getIdpost_load() {
+        return idpost_load;
     }
 
-    public void setPick_up_date(String pick_up_date) {
-        this.pick_up_date = pick_up_date;
+    public void setIdpost_load(String idpost_load) {
+        this.idpost_load = idpost_load;
     }
 
-    public String getPick_up_time() {
-        return pick_up_time;
+    public String getSp_quote() {
+        return sp_quote;
     }
 
-    public void setPick_up_time(String pick_up_time) {
-        this.pick_up_time = pick_up_time;
+    public void setSp_quote(String sp_quote) {
+        this.sp_quote = sp_quote;
     }
 
-    public String getBudget() {
-        return budget;
+    public String getIs_negatiable() {
+        return is_negatiable;
     }
 
-    public void setBudget(String budget) {
-        this.budget = budget;
+    public void setIs_negatiable(String is_negatiable) {
+        this.is_negatiable = is_negatiable;
     }
 
-    public String getBid_status() {
-        return bid_status;
+    public String getAssigned_truck_id() {
+        return assigned_truck_id;
     }
 
-    public void setBid_status(String bid_status) {
-        this.bid_status = bid_status;
+    public void setAssigned_truck_id(String assigned_truck_id) {
+        this.assigned_truck_id = assigned_truck_id;
+    }
+
+    public String getAssigned_driver_id() {
+        return assigned_driver_id;
+    }
+
+    public void setAssigned_driver_id(String assigned_driver_id) {
+        this.assigned_driver_id = assigned_driver_id;
     }
 
     public String getVehicle_model() {
@@ -84,99 +92,27 @@ public class BidsResponsesModel {
         this.body_type = body_type;
     }
 
-    public String getPick_add() {
-        return pick_add;
+    public String getNotes() {
+        return notes;
     }
 
-    public void setPick_add(String pick_add) {
-        this.pick_add = pick_add;
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
-    public String getPick_pin_code() {
-        return pick_pin_code;
+    public String getBid_status() {
+        return bid_status;
     }
 
-    public void setPick_pin_code(String pick_pin_code) {
-        this.pick_pin_code = pick_pin_code;
+    public void setBid_status(String bid_status) {
+        this.bid_status = bid_status;
     }
 
-    public String getPick_city() {
-        return pick_city;
+    public String getIs_bid_accpted_by_sp() {
+        return is_bid_accpted_by_sp;
     }
 
-    public void setPick_city(String pick_city) {
-        this.pick_city = pick_city;
-    }
-
-    public String getPick_state() {
-        return pick_state;
-    }
-
-    public void setPick_state(String pick_state) {
-        this.pick_state = pick_state;
-    }
-
-    public String getPick_country() {
-        return pick_country;
-    }
-
-    public void setPick_country(String pick_country) {
-        this.pick_country = pick_country;
-    }
-
-    public String getDrop_add() {
-        return drop_add;
-    }
-
-    public void setDrop_add(String drop_add) {
-        this.drop_add = drop_add;
-    }
-
-    public String getDrop_pin_code() {
-        return drop_pin_code;
-    }
-
-    public void setDrop_pin_code(String drop_pin_code) {
-        this.drop_pin_code = drop_pin_code;
-    }
-
-    public String getDrop_city() {
-        return drop_city;
-    }
-
-    public void setDrop_city(String drop_city) {
-        this.drop_city = drop_city;
-    }
-
-    public String getDrop_state() {
-        return drop_state;
-    }
-
-    public void setDrop_state(String drop_state) {
-        this.drop_state = drop_state;
-    }
-
-    public String getDrop_country() {
-        return drop_country;
-    }
-
-    public void setDrop_country(String drop_country) {
-        this.drop_country = drop_country;
-    }
-
-    public String getKm_approx() {
-        return km_approx;
-    }
-
-    public void setKm_approx(String km_approx) {
-        this.km_approx = km_approx;
-    }
-
-    public String getNotes_meterial_des() {
-        return notes_meterial_des;
-    }
-
-    public void setNotes_meterial_des(String notes_meterial_des) {
-        this.notes_meterial_des = notes_meterial_des;
+    public void setIs_bid_accpted_by_sp(String is_bid_accpted_by_sp) {
+        this.is_bid_accpted_by_sp = is_bid_accpted_by_sp;
     }
 }

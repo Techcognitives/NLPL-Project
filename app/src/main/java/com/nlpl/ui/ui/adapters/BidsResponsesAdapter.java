@@ -13,11 +13,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
+import com.nlpl.model.ModelForRecyclerView.BidsReceivedModel;
 import com.nlpl.model.ModelForRecyclerView.BidsResponsesModel;
 import com.nlpl.ui.ui.activities.CustomerDashboardActivity;
+import com.nlpl.ui.ui.activities.DashboardActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,11 +33,14 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
 
     private ArrayList<BidsResponsesModel> bidsResponsesList;
     private CustomerDashboardActivity activity;
+    private RequestQueue mQueue;
 
+    String mobile, name, address, pinCode, city, role, emailIdAPI;
 
     public BidsResponsesAdapter(CustomerDashboardActivity activity, ArrayList<BidsResponsesModel> bidsResponsesList) {
         this.bidsResponsesList = bidsResponsesList;
         this.activity = activity;
+        mQueue = Volley.newRequestQueue(activity);
     }
 
     @Override
@@ -45,9 +52,56 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
     @Override
     public void onBindViewHolder(BidsResponsesViewHolder holder, @SuppressLint("RecyclerView") int position) {
         BidsResponsesModel obj = bidsResponsesList.get(position);
+       //----------------------------------------------------------
+        String url = activity.getString(R.string.baseURL) + "/user/" + obj.getUser_id();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+                        name = obj.getString("name");
+                        mobile = obj.getString("phone_number");
+                        address = obj.getString("address");
+                        city = obj.getString("preferred_location");
+                        pinCode = obj.getString("pin_code");
+                        role = obj.getString("user_type");
 
-        String pickUpCity = obj.getPick_city();
-        holder.spName.setText("  "+pickUpCity);
+                        emailIdAPI = obj.getString("email_id");
+                        String spName = name;
+                        holder.spName.setText(spName);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        mQueue.add(request);
+        //----------------------------------------------------------
+
+        String isNegotiable = obj.getIs_negatiable();
+        if (isNegotiable.equals("1")){
+            holder.negotiable.setText("Negotiable");
+        }else{
+            holder.negotiable.setText("Non-Nego");
+        }
+
+        String budget = obj.getSp_quote();
+        holder.budget.setText(budget);
+
+        holder.acceptViewBidButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.onClickViewAndAcceptBid(obj);
+            }
+        });
     }
 
     @Override
