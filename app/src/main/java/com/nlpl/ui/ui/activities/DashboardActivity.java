@@ -19,7 +19,6 @@ import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,7 +26,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -40,28 +38,18 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.nlpl.R;
-import com.nlpl.model.ModelForRecyclerView.BankModel;
-import com.nlpl.model.ModelForRecyclerView.DriverModel;
+import com.nlpl.model.ModelForRecyclerView.BidSubmittedModel;
 import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
-import com.nlpl.model.ModelForRecyclerView.TruckModel;
 import com.nlpl.model.Requests.BidLoadRequest;
-import com.nlpl.model.Requests.PostLoadRequest;
 import com.nlpl.model.Responses.BidLadResponse;
-import com.nlpl.model.Responses.PostLoadResponse;
-import com.nlpl.ui.ui.adapters.BanksAdapter;
-import com.nlpl.ui.ui.adapters.DriversAdapter;
 import com.nlpl.ui.ui.adapters.LoadNotificationAdapter;
 import com.nlpl.ui.ui.adapters.LoadSubmittedAdapter;
-import com.nlpl.ui.ui.adapters.TrucksAdapter;
 import com.nlpl.utils.ApiClient;
-import com.nlpl.utils.DownloadImageTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.net.URI;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -72,9 +60,9 @@ public class DashboardActivity extends AppCompatActivity {
     private RequestQueue mQueue;
 
     private ArrayList<LoadNotificationModel> loadList = new ArrayList<>();
-    private ArrayList<LoadNotificationModel> loadSubmittedList = new ArrayList<>();
+    private ArrayList<BidSubmittedModel> loadSubmittedList = new ArrayList<>();
     private LoadNotificationAdapter loadListAdapter;
-    private  LoadSubmittedAdapter loadSubmittedAdapter;
+    private LoadSubmittedAdapter loadSubmittedAdapter;
     private RecyclerView loadListRecyclerView, loadSubmittedRecyclerView;
 
 //    private ArrayList<DriverModel> driverList = new ArrayList<>();
@@ -95,7 +83,7 @@ public class DashboardActivity extends AppCompatActivity {
     SwipeListener swipeListener;
 
     View actionBar;
-    TextView cancel,acceptAndBid,  spQuote, addDriver, selectDriver, addTruck, selectTruck, selectedTruckModel, selectedTruckFeet, selectedTruckCapacity, selectedTruckBodyType, actionBarTitle;
+    TextView cancel, acceptAndBid, spQuote, addDriver, selectDriver, addTruck, selectTruck, selectedTruckModel, selectedTruckFeet, selectedTruckCapacity, selectedTruckBodyType, actionBarTitle;
     EditText notesSp;
     CheckBox declaration;
     RadioButton negotiable_yes, negotiable_no;
@@ -113,7 +101,7 @@ public class DashboardActivity extends AppCompatActivity {
     View bottomNav;
     ConstraintLayout spDashboard, customerDashboard;
 
-    String loadId,  selectedDriverId, selectedDriverName, userId, userIdAPI, phone, mobileNoAPI;
+    String loadId, selectedDriverId, selectedDriverName, userId, userIdAPI, phone, mobileNoAPI;
     ArrayList<String> arrayPostIdFromBidList, arrayUserId, arrayTruckId, arrayDriverId, arrayDriverName, arrayTruckList, arrayMobileNo, arrayDriverMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
 
     String mobile, name, address, pinCode, city, role, emailIdAPI;
@@ -696,16 +684,11 @@ public class DashboardActivity extends AppCompatActivity {
                         bidStatus = obj.getString("bid_status");
                         Log.i("Bid_status: ", bidStatus);
 
-                        if (bidStatus.equals("pending")) {
-                            loadList.add(modelLoadNotification);
-                        } else if (bidStatus.equals("submitted")){
-                            loadSubmittedList.add(modelLoadNotification);
-                        }
+                        loadList.add(modelLoadNotification);
+
                     }
                     if (loadList.size() > 0) {
                         loadListAdapter.updateData(loadList);
-                    } else if (loadSubmittedList.size()>0){
-                        loadSubmittedAdapter.updateData(loadSubmittedList);
                     }
 
                 } catch (JSONException e) {
@@ -771,7 +754,7 @@ public class DashboardActivity extends AppCompatActivity {
         pickUpLocation.setText(pick_up_location);
         dropLocation.setText(drop_location);
         receivedNotes.setText(received_notes_description);
-        loadIdHeading.setText("Load ID: "+obj.getPick_city()+"-"+obj.getDrop_city()+"-000");
+        loadIdHeading.setText("Load ID: " + obj.getPick_city() + "-" + obj.getDrop_city() + "-000");
         //----------------------------------------------------------------------------------------------------------------
 
         //-------------------------------------------------Accept Load and Bid now-----------------------------------------
@@ -784,7 +767,7 @@ public class DashboardActivity extends AppCompatActivity {
         selectedTruckFeet = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_feet_textview);
         selectedTruckCapacity = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_capacity_textview);
         selectedTruckBodyType = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_body_type_textview);
-        notesSp  = (EditText) previewDialogBidNow.findViewById(R.id.dialog_bid_now_notes_editText);
+        notesSp = (EditText) previewDialogBidNow.findViewById(R.id.dialog_bid_now_notes_editText);
         declaration = (CheckBox) previewDialogBidNow.findViewById(R.id.dialog_bid_now_declaration);
         acceptAndBid = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_accept_and_bid_btn);
         cancel = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_cancel_btn);
@@ -861,7 +844,7 @@ public class DashboardActivity extends AppCompatActivity {
         negotiable_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                isNegotiableSelected= true;
+                isNegotiableSelected = true;
                 negotiable = true;
 
                 if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
@@ -946,37 +929,37 @@ public class DashboardActivity extends AppCompatActivity {
 
     }
 
-    private void getDriversByUserId(){
+    private void getDriversByUserId() {
 
-            String url = getString(R.string.baseURL) + "/driver/userId/" + userId;
-            Log.i("url for driverByUserId", url);
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        JSONArray truckLists = response.getJSONArray("data");
-                        for (int i = 0; i < truckLists.length(); i++) {
-                            JSONObject obj = truckLists.getJSONObject(i);
-                            selectedDriverId = obj.getString("driver_id");
-                            selectedDriverName = obj.getString("driver_name");
-                            arrayDriverId.add(selectedDriverId);
-                            arrayDriverName.add(selectedDriverName);
-                        }
-                        selectDriverToBid(arrayDriverId);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+        String url = getString(R.string.baseURL) + "/driver/userId/" + userId;
+        Log.i("url for driverByUserId", url);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+                        selectedDriverId = obj.getString("driver_id");
+                        selectedDriverName = obj.getString("driver_name");
+                        arrayDriverId.add(selectedDriverId);
+                        arrayDriverName.add(selectedDriverName);
                     }
+                    selectDriverToBid(arrayDriverId);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            }, new com.android.volley.Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    error.printStackTrace();
-                }
-            });
-            mQueue.add(request);
-        }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+    }
 
-    private void selectTruckToBid(ArrayList<String> arrayTruckId){
+    private void selectTruckToBid(ArrayList<String> arrayTruckId) {
 
         selectTruckDialog = new Dialog(DashboardActivity.this);
         selectTruckDialog.setContentView(R.layout.dialog_spinner);
@@ -1008,7 +991,7 @@ public class DashboardActivity extends AppCompatActivity {
         });
     }
 
-    private void selectDriverToBid(ArrayList<String> arrayDriverId){
+    private void selectDriverToBid(ArrayList<String> arrayDriverId) {
 
         selectTruckDialog = new Dialog(DashboardActivity.this);
         selectTruckDialog.setContentView(R.layout.dialog_spinner);
@@ -1040,7 +1023,7 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
 
-    private void getDriverDetailsByDriverId(String driverIdSelected){
+    private void getDriverDetailsByDriverId(String driverIdSelected) {
 
         Log.i("Driver selected", driverIdSelected);
         String url = getString(R.string.baseURL) + "/driver/driverId/" + driverIdSelected;
@@ -1054,7 +1037,7 @@ public class DashboardActivity extends AppCompatActivity {
                         JSONObject obj = truckLists.getJSONObject(i);
                         selectedDriverName = obj.getString("driver_name");
                     }
-                    if (selectedDriverName!=null){
+                    if (selectedDriverName != null) {
                         selectDriver.setText(selectedDriverName);
                     } else {
                         selectDriver.setText("Select Driver");
@@ -1073,7 +1056,7 @@ public class DashboardActivity extends AppCompatActivity {
         mQueue.add(request);
     }
 
-    private void getTruckDetailsByTruckId(String truckIdSelected){
+    private void getTruckDetailsByTruckId(String truckIdSelected) {
 
         Log.i("truckId selected", truckIdSelected);
         truckId = truckIdSelected;
@@ -1087,7 +1070,7 @@ public class DashboardActivity extends AppCompatActivity {
                     for (int i = 0; i < truckLists.length(); i++) {
                         JSONObject obj = truckLists.getJSONObject(i);
                         String truckModel = obj.getString("truck_type");
-                        String  truckFeet = obj.getString("truck_ft");
+                        String truckFeet = obj.getString("truck_ft");
                         String truckCapacity = obj.getString("truck_carrying_capacity");
                         String bodyType = obj.getString("vehicle_type");
                         selectedDriverId = obj.getString("driver_id");
@@ -1097,7 +1080,7 @@ public class DashboardActivity extends AppCompatActivity {
                         selectedTruckCapacity.setText(truckCapacity);
                     }
 
-                    if (selectedDriverId==null){
+                    if (selectedDriverId == null) {
                         selectedDriverId = null;
                         selectDriver.setText("Select Driver");
                     } else {
@@ -1116,7 +1099,7 @@ public class DashboardActivity extends AppCompatActivity {
         mQueue.add(request);
     }
 
-    private void getBidListByUserId(){
+    private void getBidListByUserId() {
 
         String url = getString(R.string.baseURL) + "/spbid/getBidDtByUserId/" + userId;
         Log.i("url betBidByUserID", url);
@@ -1129,6 +1112,7 @@ public class DashboardActivity extends AppCompatActivity {
                         JSONObject obj = truckLists.getJSONObject(i);
                         String postId = obj.getString("idpost_load");
                         arrayPostIdFromBidList.add(postId);
+                        getBidSubmittedList(postId);
                     }
                     Log.i("array of postId", String.valueOf(arrayPostIdFromBidList));
 
@@ -1143,7 +1127,65 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
         mQueue.add(request);
+    }
 
+    public void getBidSubmittedList(String loadId) {
+        //---------------------------- Get Bank Details -------------------------------------------
+        String url1 = getString(R.string.baseURL) + "/loadpost/getLoadDtByPostId/" + loadId;
+        Log.i("URL: ", url1);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    loadSubmittedList = new ArrayList<>();
+                    JSONArray loadLists = response.getJSONArray("data");
+                    for (int i = 0; i < loadLists.length(); i++) {
+                        JSONObject obj = loadLists.getJSONObject(i);
+                        BidSubmittedModel modelLoadNotification = new BidSubmittedModel();
+                        modelLoadNotification.setIdpost_load(obj.getString("idpost_load"));
+                        modelLoadNotification.setUser_id(obj.getString("user_id"));
+                        modelLoadNotification.setPick_up_date(obj.getString("pick_up_date"));
+                        modelLoadNotification.setPick_up_time(obj.getString("pick_up_time"));
+                        modelLoadNotification.setBudget(obj.getString("budget"));
+                        modelLoadNotification.setBid_status(obj.getString("bid_status"));
+                        modelLoadNotification.setVehicle_model(obj.getString("vehicle_model"));
+                        modelLoadNotification.setFeet(obj.getString("feet"));
+                        modelLoadNotification.setCapacity(obj.getString("capacity"));
+                        modelLoadNotification.setBody_type(obj.getString("body_type"));
+                        modelLoadNotification.setPick_add(obj.getString("pick_add"));
+                        modelLoadNotification.setPick_pin_code(obj.getString("pick_pin_code"));
+                        modelLoadNotification.setPick_city(obj.getString("pick_city"));
+                        modelLoadNotification.setPick_state(obj.getString("pick_state"));
+                        modelLoadNotification.setPick_country(obj.getString("pick_country"));
+                        modelLoadNotification.setDrop_add(obj.getString("drop_add"));
+                        modelLoadNotification.setDrop_pin_code(obj.getString("drop_pin_code"));
+                        modelLoadNotification.setDrop_city(obj.getString("drop_city"));
+                        modelLoadNotification.setDrop_state(obj.getString("drop_state"));
+                        modelLoadNotification.setDrop_country(obj.getString("drop_country"));
+                        modelLoadNotification.setKm_approx(obj.getString("km_approx"));
+                        modelLoadNotification.setNotes_meterial_des(obj.getString("notes_meterial_des"));
+
+                        loadSubmittedList.add(modelLoadNotification);
+                        Log.i("Load submitted list", String.valueOf(loadSubmittedList));
+                        Log.i("loadId", modelLoadNotification.getIdpost_load());
+                    }
+                    if (loadSubmittedList.size() > 0) {
+                        loadSubmittedAdapter.updateData(loadSubmittedList);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+        //-------------------------------------------------------------------------------------------
     }
 
 
@@ -1230,7 +1272,7 @@ public class DashboardActivity extends AppCompatActivity {
                     acceptAndBid.setEnabled(false);
                     acceptAndBid.setBackgroundResource((R.drawable.button_de_active));
                 }
-                    setBudget.dismiss();
+                setBudget.dismiss();
             }
         });
     }
@@ -1300,7 +1342,6 @@ public class DashboardActivity extends AppCompatActivity {
         });
     }
     //-----------------------------------------------------------------------------------------------------
-
 
 
     private class SwipeListener implements View.OnTouchListener {

@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nlpl.R;
+import com.nlpl.model.ModelForRecyclerView.BidSubmittedModel;
 import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
 import com.nlpl.ui.ui.activities.DashboardActivity;
 
@@ -17,10 +18,10 @@ import java.util.ArrayList;
 
 public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdapter.LoadSubmittedViewHolder> {
 
-    private ArrayList<LoadNotificationModel> loadSubmittedList;
+    private ArrayList<BidSubmittedModel> loadSubmittedList;
     private DashboardActivity activity;
 
-    public LoadSubmittedAdapter(DashboardActivity activity, ArrayList<LoadNotificationModel> loadSubmittedList) {
+    public LoadSubmittedAdapter(DashboardActivity activity, ArrayList<BidSubmittedModel> loadSubmittedList) {
         this.loadSubmittedList = loadSubmittedList;
         this.activity = activity;
     }
@@ -33,7 +34,7 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
 
     @Override
     public void onBindViewHolder(LoadSubmittedViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        LoadNotificationModel obj = loadSubmittedList.get(position);
+        BidSubmittedModel obj = loadSubmittedList.get(position);
 
         String pickUpCity = obj.getPick_city();
         holder.destinationStart.setText("  " + pickUpCity);
@@ -68,12 +69,12 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
         String pickUpLocation = obj.getPick_add();
         holder.pickUpLocation.setText(" "+pickUpLocation);
 
-        holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activity.onClickBidNow(obj);
-            }
-        });
+//        holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                activity.onClickBidNow(obj);
+//            }
+//        });
     }
 
     @Override
@@ -81,7 +82,7 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
         return loadSubmittedList.size();
     }
 
-    public void updateData(ArrayList<LoadNotificationModel> loadSubmittedList) {
+    public void updateData(ArrayList<BidSubmittedModel> loadSubmittedList) {
         this.loadSubmittedList = loadSubmittedList;
         notifyDataSetChanged();
     }

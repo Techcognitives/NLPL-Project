@@ -176,10 +176,10 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         bidsReceivedModel.setNotes_meterial_des(obj.getString("notes_meterial_des"));
                         bidsList.add(bidsReceivedModel);
                     }
-                    if (bidsList.size() > 0) {
-                        bidsListAdapter.updateData(bidsList);
-                    } else {
-                    }
+//                    if (bidsList.size() > 0) {
+//                        bidsListAdapter.updateData(bidsList);
+//                    } else {
+//                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -233,10 +233,10 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         bidsResponsesModel.setNotes_meterial_des(obj.getString("notes_meterial_des"));
                         bidsResponseList.add(bidsResponsesModel);
                     }
-                    if (bidsResponseList.size() > 0) {
-                        bidsResponsesAdapter.updateData(bidsResponseList);
-                    } else {
-                    }
+//                    if (bidsResponseList.size() > 0) {
+//                        bidsResponsesAdapter.updateData(bidsResponseList);
+//                    } else {
+//                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();

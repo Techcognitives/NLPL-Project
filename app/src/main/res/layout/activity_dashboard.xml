@@ -255,7 +255,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/dashboard_load_notification_submitted_recycler_view"
             android:layout_width="0dp"
-            android:layout_height="194dp"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:foregroundGravity="top"
             android:scrollbarThumbVertical="@android:color/holo_blue_dark"
