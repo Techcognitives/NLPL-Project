@@ -230,6 +230,7 @@
             android:foregroundGravity="top"
             android:scrollbarThumbVertical="@android:color/holo_blue_dark"
             android:scrollbars="vertical"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -250,6 +251,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/dashboard_load_notification_submitted_recycler_view"
+            android:layout_width="0dp"
+            android:layout_height="194dp"
+            android:layout_centerHorizontal="true"
+            android:foregroundGravity="top"
+            android:scrollbarThumbVertical="@android:color/holo_blue_dark"
+            android:scrollbars="vertical"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
