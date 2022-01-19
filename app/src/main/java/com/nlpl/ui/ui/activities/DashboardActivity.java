@@ -467,10 +467,10 @@ public class DashboardActivity extends AppCompatActivity {
 
                         bidStatus = obj.getString("bid_status");
                         Log.i("Bid_status: ", bidStatus);
-
                         loadList.add(modelLoadNotification);
 
                     }
+
                     if (loadList.size() > 0) {
                         loadListAdapter.updateData(loadList);
                     }
@@ -896,8 +896,9 @@ public class DashboardActivity extends AppCompatActivity {
                         JSONObject obj = truckLists.getJSONObject(i);
                         String postId = obj.getString("idpost_load");
                         arrayPostIdFromBidList.add(postId);
-                        getBidSubmittedList(postId);
+
                     }
+                    getBidSubmittedList(arrayPostIdFromBidList);
                     Log.i("array of postId", String.valueOf(arrayPostIdFromBidList));
 
                 } catch (JSONException e) {
@@ -913,63 +914,65 @@ public class DashboardActivity extends AppCompatActivity {
         mQueue.add(request);
     }
 
-    public void getBidSubmittedList(String loadId) {
-        //---------------------------- Get Bank Details -------------------------------------------
-        String url1 = getString(R.string.baseURL) + "/loadpost/getLoadDtByPostId/" + loadId;
-        Log.i("URL: ", url1);
+    public void getBidSubmittedList(ArrayList<String> arrayLoadId) {
+        //---------------------------- Get Bank Details ------------------------------------------
+        for (int i = 0; i < arrayLoadId.size(); i++) {
+            String url1 = getString(R.string.baseURL) + "/loadpost/getLoadDtByPostId/" + arrayLoadId.get(i);
+            Log.i("URL: ", url1);
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    loadSubmittedList = new ArrayList<>();
-                    JSONArray loadLists = response.getJSONArray("data");
-                    for (int i = 0; i < loadLists.length(); i++) {
-                        JSONObject obj = loadLists.getJSONObject(i);
-                        BidSubmittedModel bidSubmittedModel = new BidSubmittedModel();
-                        bidSubmittedModel.setIdpost_load(obj.getString("idpost_load"));
-                        bidSubmittedModel.setUser_id(obj.getString("user_id"));
-                        bidSubmittedModel.setPick_up_date(obj.getString("pick_up_date"));
-                        bidSubmittedModel.setPick_up_time(obj.getString("pick_up_time"));
-                        bidSubmittedModel.setBudget(obj.getString("budget"));
-                        bidSubmittedModel.setBid_status(obj.getString("bid_status"));
-                        bidSubmittedModel.setVehicle_model(obj.getString("vehicle_model"));
-                        bidSubmittedModel.setFeet(obj.getString("feet"));
-                        bidSubmittedModel.setCapacity(obj.getString("capacity"));
-                        bidSubmittedModel.setBody_type(obj.getString("body_type"));
-                        bidSubmittedModel.setPick_add(obj.getString("pick_add"));
-                        bidSubmittedModel.setPick_pin_code(obj.getString("pick_pin_code"));
-                        bidSubmittedModel.setPick_city(obj.getString("pick_city"));
-                        bidSubmittedModel.setPick_state(obj.getString("pick_state"));
-                        bidSubmittedModel.setPick_country(obj.getString("pick_country"));
-                        bidSubmittedModel.setDrop_add(obj.getString("drop_add"));
-                        bidSubmittedModel.setDrop_pin_code(obj.getString("drop_pin_code"));
-                        bidSubmittedModel.setDrop_city(obj.getString("drop_city"));
-                        bidSubmittedModel.setDrop_state(obj.getString("drop_state"));
-                        bidSubmittedModel.setDrop_country(obj.getString("drop_country"));
-                        bidSubmittedModel.setKm_approx(obj.getString("km_approx"));
-                        bidSubmittedModel.setNotes_meterial_des(obj.getString("notes_meterial_des"));
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        loadSubmittedList = new ArrayList<>();
+                        JSONArray loadLists = response.getJSONArray("data");
+                        for (int i = 0; i < loadLists.length(); i++) {
+                            JSONObject obj = loadLists.getJSONObject(i);
+                            BidSubmittedModel modelLoadNotification = new BidSubmittedModel();
+                            modelLoadNotification.setIdpost_load(obj.getString("idpost_load"));
+                            modelLoadNotification.setUser_id(obj.getString("user_id"));
+                            modelLoadNotification.setPick_up_date(obj.getString("pick_up_date"));
+                            modelLoadNotification.setPick_up_time(obj.getString("pick_up_time"));
+                            modelLoadNotification.setBudget(obj.getString("budget"));
+                            modelLoadNotification.setBid_status(obj.getString("bid_status"));
+                            modelLoadNotification.setVehicle_model(obj.getString("vehicle_model"));
+                            modelLoadNotification.setFeet(obj.getString("feet"));
+                            modelLoadNotification.setCapacity(obj.getString("capacity"));
+                            modelLoadNotification.setBody_type(obj.getString("body_type"));
+                            modelLoadNotification.setPick_add(obj.getString("pick_add"));
+                            modelLoadNotification.setPick_pin_code(obj.getString("pick_pin_code"));
+                            modelLoadNotification.setPick_city(obj.getString("pick_city"));
+                            modelLoadNotification.setPick_state(obj.getString("pick_state"));
+                            modelLoadNotification.setPick_country(obj.getString("pick_country"));
+                            modelLoadNotification.setDrop_add(obj.getString("drop_add"));
+                            modelLoadNotification.setDrop_pin_code(obj.getString("drop_pin_code"));
+                            modelLoadNotification.setDrop_city(obj.getString("drop_city"));
+                            modelLoadNotification.setDrop_state(obj.getString("drop_state"));
+                            modelLoadNotification.setDrop_country(obj.getString("drop_country"));
+                            modelLoadNotification.setKm_approx(obj.getString("km_approx"));
+                            modelLoadNotification.setNotes_meterial_des(obj.getString("notes_meterial_des"));
 
-                        loadSubmittedList.add(bidSubmittedModel);
-                        Log.i("Load submitted list", String.valueOf(loadSubmittedList));
-                        Log.i("loadId", bidSubmittedModel.getIdpost_load());
+                            loadSubmittedList.add(modelLoadNotification);
+                            Log.i("Load submitted list", String.valueOf(loadSubmittedList));
+                            Log.i("loadId", modelLoadNotification.getIdpost_load());
+                        }
+                        if (loadSubmittedList.size() > 0) {
+                            loadSubmittedAdapter.updateData(loadSubmittedList);
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                    if (loadSubmittedList.size() > 0) {
-                        loadSubmittedAdapter.updateData(loadSubmittedList);
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request);
-        //-------------------------------------------------------------------------------------------
+            }, new com.android.volley.Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                }
+            });
+            mQueue.add(request);
+            //-------------------------------------------------------------------------------------------
+        }
     }
 
 

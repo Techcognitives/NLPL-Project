@@ -122,7 +122,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
     String driverUserId, driverUserIdGet;
 
-    String img_type, userId, driverId, driverNameAPI, driverNumberAPI, driverEmailAPI, mobile;
+    String pathForDL, pathForSelfie, img_type, userId, driverId, driverNameAPI, driverNumberAPI, driverEmailAPI, mobile;
     Boolean isDLUploaded = false, isEdit;
     //    Boolean isSelfieUploaded = false;
     ImageView previewDrivingLicense, previewSelfie, previewDLImageView, previewSelfieImageView;
@@ -138,7 +138,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
     String userIdAPI, nameAPI, stateAPI, pinCodeAPI, addressAPI, mobileNoAPI, cityAPI, roleAPI;
     ArrayList<String> arrayUserId, arrayMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayState;
     Boolean alreadyDriver = true, isSelfie= false, isDL = false;
-    String truckIdPass, driverIdPass, DLpath,selfiePath ;
+    String truckIdPass, driverIdPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -364,8 +364,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
                 startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY1);
 
-//                String selfiePath = selfieImagePickerWithoutAlert();
-//                uploadDriverSelfie(driverId, selfiePath);
+                uploadDriverSelfie(driverId, pathForSelfie);
 //
 //                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 //                startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
@@ -424,8 +423,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 isDL = true;
                 isSelfie = false;
 
-                String DLpath = DLimagePickerWithoutAlert();
-                uploadDriverLicense(driverId, DLpath);
+                uploadDriverLicense(driverId, pathForDL);
 
 
                 Dialog chooseDialog;
@@ -665,16 +663,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
         this.requestCode = requestCode;
         this.data = data;
 
-//
-//        if (isSelfie){
-//            selfieImagePicker();
-//            selfieImagePickerWithoutAlert();
-//        }
-
-//        if (isDL) {
             DLimagePicker();
             DLimagePickerWithoutAlert();
-//        }
+            selfieImagePicker();
+            selfieImagePickerWithoutAlert();
 
     }
 
@@ -709,6 +701,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
             driverLicenseImage.setImageURI(selectedImage);
             previewDrivingLicense.setImageURI(selectedImage);
+            pathForDL = picturePath;
             return picturePath;
 
 //        } else if (requestCode == CAMERA_PIC_REQUEST1) {
@@ -734,7 +727,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 //            String path = getRealPathFromURI(getImageUri(this, image));
 //            driverLicenseImage.setImageBitmap(BitmapFactory.decodeFile(path));
 //            previewDrivingLicense.setImageBitmap(BitmapFactory.decodeFile(path));
-//
+//            pathForDL = path;
 //            pathDLCamera = path;
 //            return path;
         }
@@ -770,6 +763,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
             driverLicenseImage.setImageURI(selectedImage);
             previewDrivingLicense.setImageURI(selectedImage);
+            pathForSelfie = picturePath;
             return picturePath;
         }
 
@@ -796,7 +790,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 //            String path = getRealPathFromURI(getImageUri(this, image));
 //            driverSelfieImg.setImageBitmap(BitmapFactory.decodeFile(path));
 //            previewSelfie.setImageBitmap(BitmapFactory.decodeFile(path));
-//
+//            pathForSelfie = path;
 //            return path;
 //
 //        }
@@ -844,6 +838,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
             driverLicenseImage.setImageURI(selectedImage);
             previewDrivingLicense.setImageURI(selectedImage);
+            pathForDL = picturePath;
             return picturePath;
 
 //        } else if (requestCode == CAMERA_PIC_REQUEST1) {
@@ -879,7 +874,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 //            driverLicenseImage.setImageBitmap(BitmapFactory.decodeFile(path));
 //            previewDrivingLicense.setImageBitmap(BitmapFactory.decodeFile(path));
 //
-//            pathDLCamera = path;
+//            pathForDL = path;
 //            return path;
         }
         return "";
@@ -927,6 +922,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
             driverLicenseImage.setImageURI(selectedImage);
             previewDrivingLicense.setImageURI(selectedImage);
 
+            pathForSelfie = picturePath;
             return picturePath;
         }
 
@@ -962,7 +958,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 //            String path = getRealPathFromURI(getImageUri(this, image));
 //            driverSelfieImg.setImageBitmap(BitmapFactory.decodeFile(path));
 //            previewSelfie.setImageBitmap(BitmapFactory.decodeFile(path));
-//
+//            pathForSelfie = path;
 //            return path;
 //
 //        }
@@ -994,10 +990,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
                 if (isEdit) {
 
-                    String DLpath = DLimagePickerWithoutAlert();
-                    uploadDriverLicense(driverId, DLpath);
-//                    String selfiePath = selfieImagePickerWithoutAlert();
-//                    uploadDriverSelfie(driverId, selfiePath);
+                    uploadDriverLicense(driverId, pathForDL);
+                    uploadDriverSelfie(driverId, pathForSelfie);
 
                     if (driverName.getText().toString() != null) {
                         updateDriverName();
@@ -1107,16 +1101,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 driverIdPass = driverResponse.getData().getDriver_id();
                 updateTruckDriverId(driverIdPass);
 
-                DLpath = DLimagePickerWithoutAlert();
-//                selfiePath = selfieImagePickerWithoutAlert();
-
-                Log.i("driverlicense Path", DLpath);
-//                Log.i("selfie Path", selfiePath);
-
-                Log.i("driver id on saved", driverIdPass);
-
-                uploadDriverLicense(driverIdPass, DLpath);
-//                uploadDriverSelfie(driverIdPass, selfiePath);
+                uploadDriverLicense(driverIdPass, pathForDL);
+                uploadDriverSelfie(driverIdPass, pathForSelfie);
 
             }
 
