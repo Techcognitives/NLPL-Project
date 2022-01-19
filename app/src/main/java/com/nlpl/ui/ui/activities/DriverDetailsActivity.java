@@ -1306,6 +1306,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         Call<UpdateDriverName> call = addDriverService.updateDriverName("" + driverId, updateDriverName);
 
         call.enqueue(new Callback<UpdateDriverName>() {
+
             @Override
             public void onResponse(Call<UpdateDriverName> call, Response<UpdateDriverName> response) {
                 if (response.isSuccessful()) {
