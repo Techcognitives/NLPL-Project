@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:background="@drawable/shadow_file"
+    android:background="@drawable/load_shadow"
     android:paddingTop="5dp"
     android:paddingBottom="5dp">
 
@@ -46,6 +46,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
+        android:textAlignment="textStart"
+        android:gravity="center"
         android:drawableStart="@drawable/ic_preview"
         android:text="  RC Book"
         android:textColor="@color/black"
@@ -54,7 +56,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/my_truck_list_preview_insurance_text_view"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_truck_list_capacity" />
+        app:layout_constraintTop_toBottomOf="@+id/my_truck_list_capacity"
+        tools:ignore="RtlCompat" />
 
     <TextView
         android:id="@+id/my_truck_list_preview_insurance_text_view"
@@ -63,13 +66,16 @@
         android:layout_marginEnd="20dp"
         android:drawableStart="@drawable/ic_preview"
         android:text="  Insurance"
+        android:textAlignment="textStart"
+        android:gravity="center"
         android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/my_truck_list_preview_rc_book_text_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/my_truck_list_preview_rc_book_text_view"
-        app:layout_constraintTop_toTopOf="@+id/my_truck_list_preview_rc_book_text_view" />
+        app:layout_constraintTop_toTopOf="@+id/my_truck_list_preview_rc_book_text_view"
+        tools:ignore="RtlCompat" />
 
     <TextView
         android:id="@+id/my_truck_list_vehicle_type"

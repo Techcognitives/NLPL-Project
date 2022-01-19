@@ -49,7 +49,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     RadioButton ownerButton, driverButton, brokerButton, customerButton;
     View action_bar;
-    TextView actionBarTitle, selectStateText, selectDistrictText, english, marathi, hindi;
+    TextView actionBarTitle, selectStateText, selectDistrictText, english, marathi, hindi, actionBarSkip;
     ImageView actionBarBackButton, actionBarMenuButton;
 
     ArrayAdapter<CharSequence> selectStateArray, selectDistrictArray, selectStateUnionCode;
@@ -121,9 +121,13 @@ public class RegistrationActivity extends AppCompatActivity {
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
         actionBarMenuButton = (ImageView) action_bar.findViewById(R.id.action_bar_menu);
+        actionBarSkip = (TextView) action_bar.findViewById(R.id.action_bar_skip);
+
+        actionBarSkip.setVisibility(View.VISIBLE);
         actionBarMenuButton.setVisibility(View.GONE);
         actionBarTitle.setText("Registration");
         actionBarBackButton.setVisibility(View.GONE);
+
         //------------------------------------------------------------------------------------------
 
         personalAndAddress = (View) findViewById(R.id.registration_personal_and_address);
@@ -442,6 +446,13 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 break;
         }
+    }
+
+    public void onClickSkip(View view){
+        Intent i8 = new Intent(RegistrationActivity.this, SliderActivity.class);
+        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i8);
+        overridePendingTransition(0, 0);
     }
 
     public void onClickRegistration(View view) {

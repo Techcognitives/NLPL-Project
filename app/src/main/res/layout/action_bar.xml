@@ -54,6 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:text="Skip"
+        android:onClick="onClickSkip"
         android:textColor="@color/white"
         android:textSize="16sp"
         android:visibility="gone"

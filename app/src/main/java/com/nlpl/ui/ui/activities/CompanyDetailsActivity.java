@@ -108,7 +108,12 @@ public class CompanyDetailsActivity extends AppCompatActivity {
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
         actionBarTitle.setText("Company Details");
-        actionBarBackButton.setVisibility(View.GONE);
+        actionBarBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CompanyDetailsActivity.this.finish();
+            }
+        });
 //--------------------------------------------------------------------------------------------------
 
         companyName = (EditText) findViewById(R.id.company_details_company_name_edit);

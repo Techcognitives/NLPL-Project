@@ -38,7 +38,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     private ArrayList<BidsReceivedModel> bidsList = new ArrayList<>();
     private BidsReceivedAdapter bidsListAdapter;
     private RecyclerView bidsListRecyclerView;
-//    private ArrayList<BidsResponsesModel> bidResponsesList = new ArrayList<>();
     private BidsResponsesAdapter bidsResponsesAdapter;
 
     View actionBar;
@@ -63,7 +62,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             userId = bundle.getString("userId");
         }
         mQueue = Volley.newRequestQueue(CustomerDashboardActivity.this);
-//        getBidResponsesByUserId();
         actionBar = findViewById(R.id.customer_dashboard_action_bar);
         actionBarTitle = (TextView) actionBar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) actionBar.findViewById(R.id.action_bar_back_button);
@@ -195,72 +193,14 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         //-------------------------------------------------------------------------------------------
     }
 
-//    public void getBidResponsesByUserId() {
-//
-//        String url1 = getString(R.string.baseURL) + "/spbid/getBidDtByUserId/"+ userId;
-//        Log.i("URL: ", url1);
-//
-//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                try {
-//                    JSONArray bidResponsesLists = response.getJSONArray("data");
-//                    for (int i = 0; i < bidResponsesLists.length(); i++) {
-//                        JSONObject obj = bidResponsesLists.getJSONObject(i);
-//                        BidsResponsesModel bidsResponsesModel = new BidsResponsesModel();
-//                        bidsResponsesModel.setSp_bid_id(obj.getString("sp_bid_id"));
-//                        bidsResponsesModel.setUser_id(obj.getString("user_id"));
-//                        bidsResponsesModel.setIdpost_load(obj.getString("idpost_load"));
-//                        bidsResponsesModel.setSp_quote(obj.getString("sp_quote"));
-//                        bidsResponsesModel.setIs_negatiable(obj.getString("is_negatiable"));
-//                        bidsResponsesModel.setAssigned_truck_id(obj.getString("assigned_truck_id"));
-//                        bidsResponsesModel.setAssigned_driver_id(obj.getString("assigned_driver_id"));
-//                        bidsResponsesModel.setVehicle_model(obj.getString("vehicle_model"));
-//                        bidsResponsesModel.setFeet(obj.getString("feet"));
-//                        bidsResponsesModel.setCapacity(obj.getString("capacity"));
-//                        bidsResponsesModel.setBody_type(obj.getString("body_type"));
-//                        bidsResponsesModel.setNotes(obj.getString("notes"));
-//                        bidsResponsesModel.setBid_status(obj.getString("bid_status"));
-//                        bidsResponsesModel.setIs_bid_accpted_by_sp(obj.getString("is_bid_accpted_by_sp"));
-//                        bidResponsesList.add(bidsResponsesModel);
-//                    }
-////                    if (bidResponsesList.size() > 0) {
-////                        bidsResponsesAdapter.updateData(bidResponsesList);
-////                    } else {
-////                    }
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }, new com.android.volley.Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                error.printStackTrace();
-//            }
-//        });
-//        mQueue.add(request);
-//        //-------------------------------------------------------------------------------------------
-//    }
-
     public void onClickViewAndAcceptBid(BidsResponsesModel obj) {
     }
 
     public void onClickEditLoadPost(BidsReceivedModel obj) {
     }
 
-    public void showRecyclerView(ConstraintLayout showRecyclerView, BidsReceivedModel obj, RecyclerView bidsResponsesRecyclerView) {
-//        String isVisible = String.valueOf(bidsResponsesRecyclerView.getVisibility());
-//        bidsResponsesRecyclerView.setVisibility(View.GONE);
-//        Log.i("isVisible", isVisible);
-//        if (isVisible.equals("8")){
-//            bidsResponsesRecyclerView.setVisibility(View.VISIBLE);
-//        }else{
-//            bidsResponsesRecyclerView.setVisibility(View.GONE);
-//        }
-    }
 
-    public void getBidsResponsesList(BidsReceivedModel obj, RecyclerView bidsResponsesRecyclerView) {
+    public void getBidsResponsesList(BidsReceivedModel obj, RecyclerView bidsResponsesRecyclerView, TextView bidsReceived, ConstraintLayout showRecyclerView) {
         ArrayList<BidsResponsesModel> bidResponsesList = new ArrayList<>();
         bidResponsesList.clear();
 
@@ -291,17 +231,27 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         bidsResponsesModel.setIs_bid_accpted_by_sp(obj.getString("is_bid_accpted_by_sp"));
                         bidResponsesList.add(bidsResponsesModel);
                     }
-//                    if (bidResponsesList.size() > 0) {
-//                        bidsResponsesAdapter.updateData(bidResponsesList);
-//                    } else {
-//                    }
 
                     for (int i = 0; i < bidResponsesList.size(); i++) {
                         if (obj.getIdpost_load().equals(bidResponsesList.get(i).getIdpost_load())) {
+
+                            String bidsResponses = String.valueOf(bidResponsesList.size());
+                            Log.i("bid size", String.valueOf(bidResponsesList.size()));
+                            bidsReceived.setText(bidsResponses+" Responses Received");
+                            Log.i("Res", bidsReceived.getText().toString());
+
                             bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
                             bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
                             bidsResponsesAdapter.updateData(bidResponsesList);
                         }
+                    }
+
+                    if (bidsReceived.getText().toString().equals("0 Responses Received")){
+                        showRecyclerView.setVisibility(View.GONE);
+                        bidsResponsesRecyclerView.setVisibility(View.GONE);
+                    }else{
+                        showRecyclerView.setVisibility(View.VISIBLE);
+                        bidsResponsesRecyclerView.setVisibility(View.VISIBLE);
                     }
 
                 } catch (JSONException e) {

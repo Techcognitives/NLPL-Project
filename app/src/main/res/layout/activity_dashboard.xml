@@ -9,49 +9,6 @@
     android:background="@color/background"
     tools:context=".ui.ui.activities.DashboardActivity">
 
-    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-    <!--        android:id="@+id/driverDone"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:background="@drawable/shadow_small"-->
-    <!--        android:paddingTop="5dp"-->
-    <!--        android:paddingBottom="10dp"-->
-    <!--        android:visibility="visible"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/profile_registration_action_bar">-->
-
-    <!--        <androidx.recyclerview.widget.RecyclerView-->
-    <!--            android:id="@+id/driver_list_view"-->
-    <!--            android:layout_width="0dp"-->
-    <!--            android:layout_height="200dp"-->
-    <!--            android:scrollbarThumbVertical="@android:color/holo_blue_dark"-->
-    <!--            android:scrollbars="vertical"-->
-    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/addDriverDone"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="2dp"-->
-    <!--        android:background="@drawable/button_de_active_medium_small"-->
-    <!--        android:gravity="center"-->
-    <!--        android:padding="1dp"-->
-    <!--        android:onClick="onClickProfileAndRegister"-->
-    <!--        android:text="@string/addDriver"-->
-    <!--        android:textColor="@color/white"-->
-    <!--        android:textSize="16sp"-->
-    <!--        android:visibility="gone"-->
-    <!--        app:layout_constraintEnd_toEndOf="@+id/driverDone"-->
-    <!--        app:layout_constraintHorizontal_bias="0.0"-->
-    <!--        app:layout_constraintStart_toStartOf="@+id/driverDone"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/driverDone" />-->
-
     <include
         android:id="@+id/profile_registration_action_bar"
         layout="@layout/action_bar"

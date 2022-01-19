@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_gravity="bottom"
     android:paddingBottom="50dp"
-    android:layout_marginStart="20dp"
-    android:layout_marginEnd="20dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
     android:background="@drawable/language_selector_top_corners"
     android:layout_height="wrap_content">
 

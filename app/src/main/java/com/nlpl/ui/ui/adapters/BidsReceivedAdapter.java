@@ -85,88 +85,14 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
         String bodyType = obj.getBody_type();
         holder.body.setText("Body: " + bodyType);
 
-//        String bidsResponses = String.valueOf(bidResponsesList.size());
-//        holder.bidsReceived.setText(bidsResponses + " Responses Received");
-
         LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(activity);
         linearLayoutManagerBank.setReverseLayout(true);
         linearLayoutManagerBank.setOrientation(LinearLayoutManager.VERTICAL);
         holder.bidsResponsesRecyclerView.setLayoutManager(linearLayoutManagerBank);
         holder.bidsResponsesRecyclerView.setHasFixedSize(true);
 
-        activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView);
+        activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView, holder.bidsReceived, holder.showRecyclerView);
 
-//        holder.showRecyclerView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                bidResponsesList.clear();
-//
-//                String url1 = activity.getString(R.string.baseURL) + "/spbid/getBidDtByPostId/" + obj.getIdpost_load();
-//                Log.i("URL: ", url1);
-//
-//                JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        try {
-//                            JSONArray bidResponsesLists = response.getJSONArray("data");
-//                            for (int i = 0; i < bidResponsesLists.length(); i++) {
-//                                JSONObject obj = bidResponsesLists.getJSONObject(i);
-//                                BidsResponsesModel bidsResponsesModel = new BidsResponsesModel();
-//                                bidsResponsesModel.setSp_bid_id(obj.getString("sp_bid_id"));
-//                                bidsResponsesModel.setUser_id(obj.getString("user_id"));
-//                                bidsResponsesModel.setIdpost_load(obj.getString("idpost_load"));
-//                                bidsResponsesModel.setSp_quote(obj.getString("sp_quote"));
-//                                bidsResponsesModel.setIs_negatiable(obj.getString("is_negatiable"));
-//                                bidsResponsesModel.setAssigned_truck_id(obj.getString("assigned_truck_id"));
-//                                bidsResponsesModel.setAssigned_driver_id(obj.getString("assigned_driver_id"));
-//                                bidsResponsesModel.setVehicle_model(obj.getString("vehicle_model"));
-//                                bidsResponsesModel.setFeet(obj.getString("feet"));
-//                                bidsResponsesModel.setCapacity(obj.getString("capacity"));
-//                                bidsResponsesModel.setBody_type(obj.getString("body_type"));
-//                                bidsResponsesModel.setNotes(obj.getString("notes"));
-//                                bidsResponsesModel.setBid_status(obj.getString("bid_status"));
-//                                bidsResponsesModel.setIs_bid_accpted_by_sp(obj.getString("is_bid_accpted_by_sp"));
-//                                bidResponsesList.add(bidsResponsesModel);
-//                            }
-////                    if (bidResponsesList.size() > 0) {
-////                        bidsResponsesAdapter.updateData(bidResponsesList);
-////                    } else {
-////                    }
-//                            for (int i = 0; i < bidResponsesList.size(); i++) {
-//                                if (obj.getIdpost_load().equals(bidResponsesList.get(i).getIdpost_load())) {
-//                                    bidsResponsesAdapter = new BidsResponsesAdapter(activity, bidResponsesList);
-//                                    holder.bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
-//                                    bidsResponsesAdapter.updateData(bidResponsesList);
-//                                    activity.showRecyclerView(holder.showRecyclerView, obj, holder.bidsResponsesRecyclerView);
-//                                }
-//                            }
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }, new com.android.volley.Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        error.printStackTrace();
-//                    }
-//                });
-//                mQueue.add(request);
-//                //-------------------------------------------------------------------------------------------
-//            }
-//        });
-
-
-//        for (int i = 0; i < bidResponsesListNumber.size(); i++) {
-//            if (obj.getIdpost_load().equals(bidResponsesList.get(i).getIdpost_load())) {
-//                getBidResponses(obj.getIdpost_load());
-//                bidsResponsesAdapter = new BidsResponsesAdapter(activity, bidResponsesList);
-//                holder.bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
-//                bidsResponsesAdapter.updateData(bidResponsesList);
-//            }else{
-//
-//            }
-//        }
 
         holder.editLoadButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,53 +139,5 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
         }
 
     }
-
-//    public void getBidResponses(String loadId) {
-//
-//        String url1 = activity.getString(R.string.baseURL) + "/spbid/getBidDtByPostId/"+ obj.getIdpost_load();
-//        Log.i("URL: ", url1);
-//
-//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                try {
-//                    JSONArray bidResponsesLists = response.getJSONArray("data");
-//                    for (int i = 0; i < bidResponsesLists.length(); i++) {
-//                        JSONObject obj = bidResponsesLists.getJSONObject(i);
-//                        BidsResponsesModel bidsResponsesModel = new BidsResponsesModel();
-//                        bidsResponsesModel.setSp_bid_id(obj.getString("sp_bid_id"));
-//                        bidsResponsesModel.setUser_id(obj.getString("user_id"));
-//                        bidsResponsesModel.setIdpost_load(obj.getString("idpost_load"));
-//                        bidsResponsesModel.setSp_quote(obj.getString("sp_quote"));
-//                        bidsResponsesModel.setIs_negatiable(obj.getString("is_negatiable"));
-//                        bidsResponsesModel.setAssigned_truck_id(obj.getString("assigned_truck_id"));
-//                        bidsResponsesModel.setAssigned_driver_id(obj.getString("assigned_driver_id"));
-//                        bidsResponsesModel.setVehicle_model(obj.getString("vehicle_model"));
-//                        bidsResponsesModel.setFeet(obj.getString("feet"));
-//                        bidsResponsesModel.setCapacity(obj.getString("capacity"));
-//                        bidsResponsesModel.setBody_type(obj.getString("body_type"));
-//                        bidsResponsesModel.setNotes(obj.getString("notes"));
-//                        bidsResponsesModel.setBid_status(obj.getString("bid_status"));
-//                        bidsResponsesModel.setIs_bid_accpted_by_sp(obj.getString("is_bid_accpted_by_sp"));
-//                        bidResponsesList.add(bidsResponsesModel);
-//                    }
-////                    if (bidResponsesList.size() > 0) {
-////                        bidsResponsesAdapter.updateData(bidResponsesList);
-////                    } else {
-////                    }
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }, new com.android.volley.Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                error.printStackTrace();
-//            }
-//        });
-//        mQueue.add(request);
-//        //-------------------------------------------------------------------------------------------
-//    }
 
 }

@@ -7,8 +7,8 @@
     android:background="@drawable/edit_text_border_small"
     android:orientation="vertical"
     android:backgroundTint="@color/white"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
     android:scrollbars="vertical"
     android:visibility="visible">
 

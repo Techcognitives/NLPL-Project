@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -19,9 +20,17 @@
         android:theme="@style/Theme.NLPL"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.ui.activities.PostATripActivity"
+            android:name=".ui.ui.activities.SliderActivity"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:exported="false" />
+        <activity
+            android:name=".ui.ui.activities.ViewDriverDetailsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
+        <activity
+            android:name=".ui.ui.activities.PostATripActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
             android:name=".ui.ui.activities.CustomerDashboardActivity"
             android:exported="false"
