@@ -137,7 +137,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
     String userIdAPI, nameAPI, stateAPI, pinCodeAPI, addressAPI, mobileNoAPI, cityAPI, roleAPI;
     ArrayList<String> arrayUserId, arrayMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayState;
-    Boolean alreadyDriver = true, isSelfie= false, isDL = false;
+    Boolean alreadyDriver = true, isSelfie= false, isDL = false, idDLEdited = false, isSelfieEdited = false;
     String truckIdPass, driverIdPass;
 
     @Override
@@ -363,8 +363,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 isDL = false;
 
                 startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY1);
-
-                uploadDriverSelfie(driverId, pathForSelfie);
+                isSelfieEdited = true;
 //
 //                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 //                startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
@@ -423,8 +422,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 isDL = true;
                 isSelfie = false;
 
-                uploadDriverLicense(driverId, pathForDL);
-
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(DriverDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
@@ -454,6 +451,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 gallery.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        idDLEdited = true;
                         startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
                         chooseDialog.dismiss();
                     }
@@ -989,8 +987,13 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
                 if (isEdit) {
 
-                    uploadDriverLicense(driverId, pathForDL);
-                    uploadDriverSelfie(driverId, pathForSelfie);
+//                    if (idDLEdited){
+//                        uploadDriverLicense(driverId, pathForDL);
+//                    }
+//
+//                    if (isSelfieEdited) {
+//                        uploadDriverSelfie(driverId, pathForSelfie);
+//                    }
 
                     if (driverName.getText().toString() != null) {
                         updateDriverName();
@@ -1297,11 +1300,13 @@ public class DriverDetailsActivity extends AppCompatActivity {
     //-------------------------------- Update User is Driver Added ---------------------------------
     private void updateDriverName() {
 
+        Log.i("driver Id at update", driverId);
         UpdateDriverName updateDriverName = new UpdateDriverName(driverName.getText().toString());
 
         Call<UpdateDriverName> call = addDriverService.updateDriverName("" + driverId, updateDriverName);
 
         call.enqueue(new Callback<UpdateDriverName>() {
+
             @Override
             public void onResponse(Call<UpdateDriverName> call, Response<UpdateDriverName> response) {
                 if (response.isSuccessful()) {
