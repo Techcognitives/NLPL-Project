@@ -65,6 +65,7 @@ public class DashboardActivity extends AppCompatActivity {
     private LoadSubmittedAdapter loadSubmittedAdapter;
     private RecyclerView loadListRecyclerView, loadSubmittedRecyclerView;
 
+    ArrayList<String> arrayLoadListLoadId, arrayLoadSubmittedLoadId;
 
     Dialog setBudget, selectTruckDialog, previewDialogBidNow;
 
@@ -436,6 +437,7 @@ public class DashboardActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try {
                     loadList = new ArrayList<>();
+                    arrayLoadListLoadId = new ArrayList<>();
                     loadSubmittedList = new ArrayList<>();
                     JSONArray loadLists = response.getJSONArray("data");
                     for (int i = 0; i < loadLists.length(); i++) {
@@ -468,6 +470,7 @@ public class DashboardActivity extends AppCompatActivity {
                         bidStatus = obj.getString("bid_status");
                         Log.i("Bid_status: ", bidStatus);
                         loadList.add(modelLoadNotification);
+                        arrayLoadListLoadId.add(obj.getString("idpost_load"));
 
                     }
 
@@ -883,6 +886,21 @@ public class DashboardActivity extends AppCompatActivity {
         mQueue.add(request);
     }
 
+    private void compareArrays(){
+
+        Log.i("LL Array for compare", String.valueOf(arrayLoadListLoadId));
+        Log.i("LS Array for compare", String.valueOf(arrayLoadSubmittedLoadId));
+
+        for (int i=0; i< loadList.size(); i++){
+            for (int j=0; j<loadSubmittedList.size(); j++){
+                if (arrayLoadListLoadId.get(i).equals(arrayLoadSubmittedLoadId.get(j))){
+                    loadList.remove(i);
+                }
+            }
+        }
+        loadListAdapter.updateData(loadList);
+    }
+
     private void getBidListByUserId() {
 
         String url = getString(R.string.baseURL) + "/spbid/getBidDtByUserId/" + userId;
@@ -925,6 +943,7 @@ public class DashboardActivity extends AppCompatActivity {
                 public void onResponse(JSONObject response) {
                     try {
                         loadSubmittedList = new ArrayList<>();
+                        arrayLoadSubmittedLoadId = new ArrayList<>();
                         JSONArray loadLists = response.getJSONArray("data");
                         for (int i = 0; i < loadLists.length(); i++) {
                             JSONObject obj = loadLists.getJSONObject(i);
@@ -955,9 +974,11 @@ public class DashboardActivity extends AppCompatActivity {
                             loadSubmittedList.add(modelLoadNotification);
                             Log.i("Load submitted list", String.valueOf(loadSubmittedList));
                             Log.i("loadId", modelLoadNotification.getIdpost_load());
+                            arrayLoadSubmittedLoadId.add(obj.getString("idpost_load"));
                         }
                         if (loadSubmittedList.size() > 0) {
                             loadSubmittedAdapter.updateData(loadSubmittedList);
+                            compareArrays();
                         }
 
                     } catch (JSONException e) {

@@ -21,6 +21,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -69,6 +70,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -341,8 +343,10 @@ public class BankDetailsActivity extends AppCompatActivity {
             Bitmap image = (Bitmap) data.getExtras().get("data");
 
             String path = getRealPathFromURI(getImageUri(this, image));
+
             cancelledCheckImage.setImageBitmap(BitmapFactory.decodeFile(path));
             previewDialogCancelledChequeImageView.setImageBitmap(BitmapFactory.decodeFile(path));
+
             return path;
 
         }
@@ -987,31 +991,26 @@ public class BankDetailsActivity extends AppCompatActivity {
         }
     }
 
-//    private convertBitmapToFile(String fileName , Bitmap bitmap) {
-//        //create a file to write bitmap data
-//        File file = File(context.cacheDir, fileName);
-//        file.createNewFile();
-//
-//        //Convert bitmap to byte array
-//        val bos = ByteArrayOutputStream()
-//        bitmap.compress(Bitmap.CompressFormat.JPEG, 0 /ignored for PNG/, bos)
-//        val bitMapData = bos.toByteArray()
-//
-//        //write the bytes in file
-//        var fos: FileOutputStream? = null
-//        try {
-//            fos = FileOutputStream(file)
-//        } catch (e: FileNotFoundException) {
-//            e.printStackTrace()
-//        }
-//        try {
-//            fos?.write(bitMapData)
-//            fos?.flush()
-//            fos?.close()
-//        } catch (e: IOException) {
-//            e.printStackTrace()
-//        }
-//        return file
-//    }
+    public static File bitmapToFile(Context context,Bitmap bitmap, String fileNameToSave) {
+        File file = null;
+        try {
+            file = new File(Environment.getExternalStorageDirectory() + File.separator + fileNameToSave);
+            file.createNewFile();
+
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 0 , bos); // YOU can also save it in JPEG
+            byte[] bitmapdata = bos.toByteArray();
+
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(bitmapdata);
+            fos.flush();
+            fos.close();
+            return file;
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return file;
+        }
+    }
 
 }
