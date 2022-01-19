@@ -1022,7 +1022,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                         updateUserDriverPreferredLocation();
                     }
 
-                    Intent i8 = new Intent(DriverDetailsActivity.this, ViewTruckDetailsActivity.class);
+                    Intent i8 = new Intent(DriverDetailsActivity.this, ViewDriverDetailsActivity.class);
                     i8.putExtra("userId", userId);
                     i8.putExtra("mobile", mobile);
                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -1328,7 +1328,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<UpdateDriverTruckId> call, Response<UpdateDriverTruckId> response) {
                 if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Driver Added");
+                    Log.i("Successful", "User is Driver Truck Id");
                 }
             }
 
@@ -1352,7 +1352,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<UpdateDriverNumber> call, Response<UpdateDriverNumber> response) {
                 if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Driver Added");
+                    Log.i("Successful", "User is Driver Number");
                 }
             }
 
@@ -1376,7 +1376,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<UpdateDriverEmailId> call, Response<UpdateDriverEmailId> response) {
                 if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Driver Added");
+                    Log.i("Successful", "User is Driver Email");
                 }
             }
 

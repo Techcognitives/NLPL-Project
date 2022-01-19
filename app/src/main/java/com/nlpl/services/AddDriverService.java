@@ -20,18 +20,18 @@ public interface AddDriverService {
     @POST("driver/addDriver")
     Call<AddDriverResponse> saveDriver(@Body AddDriverRequest addDriverRequest);
 
-    @PUT("/driver/{driverId}")
+    @PUT("/driver/updateDr/{driverId}")
     Call<UpdateDriverName> updateDriverName(@Path("driverId") String driverId, @Body UpdateDriverName updateDriverName);
 
-    @PUT("/driver/{driverId}")
+    @PUT("/driver/updateDr/{driverId}")
     Call<UpdateDriverUploadLicense> updateDriverUploadLicense(@Path("driverId") String driverId, @Body UpdateDriverUploadLicense updateDriverUploadLicense);
 
-    @PUT("/driver/{driverId}")
+    @PUT("/driver/updateDr/{driverId}")
     Call<UpdateDriverNumber> updateDriverNumber(@Path("driverId") String driverId, @Body UpdateDriverNumber updateDriverNumber);
 
-    @PUT("/driver/{driverId}")
+    @PUT("/driver/updateDr/{driverId}")
     Call<UpdateDriverEmailId> updateDriverEmailId(@Path("driverId") String driverId, @Body UpdateDriverEmailId updateDriverEmailId);
 
-    @PUT("/driver/{driverId}")
+    @PUT("/driver/updateDr/{driverId}")
     Call<UpdateDriverTruckId> updateDriverTruckId(@Path("driverId") String driverId, @Body UpdateDriverTruckId updateDriverTruckId);
 }
