@@ -91,7 +91,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     String bodyTypeSelected, mobile, truckIdPass;
 
     Dialog selectModelDialog, selectFeetDialog, selectCapacityDialog;
-    String isDriverDetailsDoneAPI;
+    String isDriverDetailsDoneAPI, pathForRC, pathForInsurance;
 
     Button uploadRC, uploadInsurance, okVehicleDetails;
     TextView textRC, editRC;
@@ -527,6 +527,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
             imgRC.setImageURI(selectedImage);
 
+            pathForRC = picturePath1;
+
             return picturePath1;
 
         } else  if (requestCode == CAMERA_PIC_REQUEST1) {
@@ -547,6 +549,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             Bitmap image = (Bitmap) data.getExtras().get("data");
             String path = getRealPathFromURI(getImageUri(this,image));
             imgRC.setImageBitmap(BitmapFactory.decodeFile(path));
+            pathForRC = path;
             return path;
 
         }
@@ -577,6 +580,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             cursor.close();
 
             imgI.setImageURI(selectedImage);
+
+            pathForInsurance = picturePath2;
+
             return picturePath2;
 
         } else  if (requestCode == CAMERA_PIC_REQUEST2) {
@@ -595,6 +601,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             Bitmap image = (Bitmap) data.getExtras().get("data");
             String path = getRealPathFromURI(getImageUri(this,image));
             imgI.setImageBitmap(BitmapFactory.decodeFile(path));
+            pathForInsurance = path;
             return path;
         }
         return "";
@@ -639,6 +646,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
             imgRC.setImageURI(selectedImage);
             Log.i("path onActivityResult",picturePath3);
+            pathForRC = picturePath3;
             return picturePath3;
 
         } else  if (requestCode == CAMERA_PIC_REQUEST1) {
@@ -669,6 +677,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             Bitmap image = (Bitmap) data.getExtras().get("data");
             String path = getRealPathFromURI(getImageUri(this,image));
             imgRC.setImageBitmap(BitmapFactory.decodeFile(path));
+            pathForRC = path;
             return path;
 
         }
@@ -707,6 +716,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             cursor.close();
 
             imgI.setImageURI(selectedImage);
+            pathForInsurance = picturePath4;
             return picturePath4;
 
         } else  if (requestCode == CAMERA_PIC_REQUEST2) {
@@ -733,6 +743,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             Bitmap image = (Bitmap) data.getExtras().get("data");
             String path = getRealPathFromURI(getImageUri(this,image));
             imgI.setImageBitmap(BitmapFactory.decodeFile(path));
+            pathForInsurance = path;
             return path;
         }
         return "";
@@ -871,15 +882,15 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<AddTruckResponse> call, Response<AddTruckResponse> response) {
                 AddTruckResponse addTruckResponse = response.body();
+
                 String truckId = addTruckResponse.getData().getTruck_id();
                 truckIdPass = addTruckResponse.getData().getTruck_id();
-                String rcPath = rcImagePickerWithoutAlert();
-                String insurancePath = insuranceImagePickerWithoutAlert();
-                Log.i("imgpicker rc", rcImagePickerWithoutAlert());
-                Log.i("rcpath on save", rcPath);
-                Log.i("Insurance on save", insurancePath);
-//                uploadTruckInsurance(truckId, insurancePath);
-                uploadTruckRC(truckId,rcPath);
+
+//                String rcPath = rcImagePickerWithoutAlert();
+//                String insurancePath = insuranceImagePickerWithoutAlert();
+
+                uploadTruckInsurance(truckId, pathForInsurance);
+                uploadTruckRC(truckId,pathForRC);
             }
             @Override
             public void onFailure(Call<AddTruckResponse> call, Throwable t) {
