@@ -119,6 +119,7 @@ public class DashboardActivity extends AppCompatActivity {
         actionBarMenuButton = (ImageView) actionBar.findViewById(R.id.action_bar_menu);
 
         actionBarTitle.setText("Dashboard");
+        actionBarMenuButton.setVisibility(View.VISIBLE);
         actionBarBackButton.setVisibility(View.GONE);
 
         bottomNav = (View) findViewById(R.id.profile_registration_bottom_nav_bar);

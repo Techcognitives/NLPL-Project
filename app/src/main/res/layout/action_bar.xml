@@ -40,7 +40,7 @@
         android:onClick="onCLickShowMenu"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/action_bar_title"

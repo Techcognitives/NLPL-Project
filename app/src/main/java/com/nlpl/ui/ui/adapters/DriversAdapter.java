@@ -73,6 +73,13 @@ public class DriversAdapter extends RecyclerView.Adapter<DriversAdapter.DriverVi
                 activity.onClickPreviewDriverSelfie(obj);
             }
         });
+
+        holder.list_preview_driver_bank_details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.onClickPreviewDriverBankDetails(obj);
+            }
+        });
     }
 
     @Override
@@ -86,7 +93,7 @@ public class DriversAdapter extends RecyclerView.Adapter<DriversAdapter.DriverVi
     }
 
     public class DriverViewHolder extends RecyclerView.ViewHolder {
-        private TextView list_title, list_edit, list_driver_number, list_driver_email_id, list_preview_driver_license, list_preview_driver_selfie;
+        private TextView list_title, list_edit, list_driver_number, list_driver_email_id, list_preview_driver_license, list_preview_driver_selfie, list_preview_driver_bank_details;
 
         public DriverViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -97,6 +104,7 @@ public class DriversAdapter extends RecyclerView.Adapter<DriversAdapter.DriverVi
             list_driver_number = itemView.findViewById(R.id.my_driver_list_driver_phone_number);
             list_driver_email_id = itemView.findViewById(R.id.my_driver_list_driver_email_id);
             list_preview_driver_selfie = itemView.findViewById(R.id.my_driver_list_driver_selfie);
+            list_preview_driver_bank_details = itemView.findViewById(R.id.my_driver_list_driver_bank_details);
         }
 
     }
