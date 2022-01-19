@@ -46,7 +46,6 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
     TextView previewDriverDetailsDriverBankAdd;
     TextView previewDriverDetailsDriverName, previewDriverDetailsDriverNumber, previewDriverDetailsEmailId;
     ImageView previewDrivingLicense, previewDriverSelfie;
-    TextView addDriver;
     String mobileNoDriverAPI, userDriverIdAPI, driverUserIdGet;
 
     String phone, userId;
@@ -61,8 +60,6 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
             userId = bundle.getString("userId");
         }
         mQueue = Volley.newRequestQueue(ViewDriverDetailsActivity.this);
-
-        addDriver = findViewById(R.id.addDriverDone);
 
         previewDialogDriverDetails = new Dialog(ViewDriverDetailsActivity.this);
         previewDialogDriverDetails.setContentView(R.layout.dialog_preview_driver_details);
@@ -277,8 +274,13 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
     }
 
     public void onClickBackViewDriverDetails(View view) {
+        ViewDriverDetailsActivity.this.finish();
     }
 
     public void onClickPreviewDriverSelfie(DriverModel obj) {
+    }
+
+    public void onClickAddDriverDetails(View view) {
+
     }
 }

@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -83,7 +84,7 @@ public class DashboardActivity extends AppCompatActivity {
     Dialog menuDialog;
     ConstraintLayout drawerLayout;
     TextView menuUserNameTextView, mobileText, personalDetailsButton, bankDetailsTextView, addTrucksTextView;
-    ImageView personalDetailsLogoImageView, bankDetailsLogoImageView, truckDetailsLogoImageView;
+    ImageView personalDetailsLogoImageView, bankDetailsLogoImageView, truckDetailsLogoImageView, driverDetailsLogoImageView;
 
     ConstraintLayout loadNotificationConstrain, bidsSubmittedConstrain;
     TextView loadNotificationTextView, bidsSubmittedTextView;
@@ -107,7 +108,6 @@ public class DashboardActivity extends AppCompatActivity {
             Log.i("Mobile No Registration", phone);
         }
         mQueue = Volley.newRequestQueue(DashboardActivity.this);
-        getUserId(phone);
 
         actionBar = findViewById(R.id.profile_registration_action_bar);
         actionBarTitle = (TextView) actionBar.findViewById(R.id.action_bar_title);
@@ -143,6 +143,8 @@ public class DashboardActivity extends AppCompatActivity {
         arrayDriverName = new ArrayList<>();
         arrayPostIdFromBidList = new ArrayList<>();
 
+        getUserId(phone);
+
         loadListRecyclerView = (RecyclerView) findViewById(R.id.dashboard_load_notification_recycler_view);
         loadSubmittedRecyclerView = (RecyclerView) findViewById(R.id.dashboard_load_notification_submitted_recycler_view);
 
@@ -159,6 +161,7 @@ public class DashboardActivity extends AppCompatActivity {
         personalDetailsLogoImageView = (ImageView) menuDialog.findViewById(R.id.menu_personal_details_logo_image_view);
         bankDetailsLogoImageView = (ImageView) menuDialog.findViewById(R.id.menu_bank_details_logo_image_view);
         truckDetailsLogoImageView = (ImageView) menuDialog.findViewById(R.id.menu_truck_details_logo_image_view);
+        driverDetailsLogoImageView = (ImageView) menuDialog.findViewById(R.id.menu_driver_details_logo_image_view);
 
 //        swipeListener = new SwipeListener(loadListRecyclerView);
 
@@ -196,7 +199,6 @@ public class DashboardActivity extends AppCompatActivity {
                     }
 
                     getUserDetails();
-                    getBidListByUserId();
 
                     //---------------------------- Get Load Details -------------------------------------------
 
@@ -205,18 +207,19 @@ public class DashboardActivity extends AppCompatActivity {
                     loadListRecyclerView.setLayoutManager(linearLayoutManagerBank);
                     loadListRecyclerView.setHasFixedSize(true);
 
+                    loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadList);
+                    loadListRecyclerView.setAdapter(loadListAdapter);
+
                     LinearLayoutManager linearLayoutManagerBank1 = new LinearLayoutManager(getApplicationContext());
                     linearLayoutManagerBank1.setReverseLayout(true);
                     loadSubmittedRecyclerView.setLayoutManager(linearLayoutManagerBank1);
                     loadSubmittedRecyclerView.setHasFixedSize(true);
 
-                    loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadList);
-                    loadListRecyclerView.setAdapter(loadListAdapter);
-
                     loadSubmittedAdapter = new LoadSubmittedAdapter(DashboardActivity.this, loadSubmittedList);
                     loadSubmittedRecyclerView.setAdapter(loadSubmittedAdapter);
 
                     getLoadNotificationList();
+                    getBidListByUserId();
                     //------------------------------------------------------------------------------------------
 
                 } catch (JSONException e) {
@@ -282,6 +285,12 @@ public class DashboardActivity extends AppCompatActivity {
                             truckDetailsLogoImageView.setImageDrawable(getResources().getDrawable(R.drawable.truck_success));
                         } else {
                             truckDetailsLogoImageView.setImageDrawable(getResources().getDrawable(R.drawable.truck));
+                        }
+
+                        if (isDriverDetailsDone.equals("1")) {
+                            driverDetailsLogoImageView.setImageDrawable(getResources().getDrawable(R.drawable.driver_success));
+                        }else {
+                            driverDetailsLogoImageView.setImageDrawable(getResources().getDrawable(R.drawable.driver));
                         }
 
                         if (role.equals("Customer")) {

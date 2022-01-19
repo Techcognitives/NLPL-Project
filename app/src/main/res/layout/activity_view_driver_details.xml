@@ -66,19 +66,20 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/addDriverDone"
-        android:layout_width="0dp"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/view_driver_details_fab_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_de_active_medium_small"
-        android:gravity="center"
-        android:padding="1dp"
-        android:text="@string/addDriver"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/view_driver_details_title"
+        android:clickable="true"
+        app:tint="@color/white"
+        android:onClick="onClickAddDriverDetails"
+        android:backgroundTint="@color/button_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintTop_toTopOf="@+id/view_driver_details_title" />
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.972"
+        app:srcCompat="@drawable/ic_drop_down" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
