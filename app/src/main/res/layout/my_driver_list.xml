@@ -131,14 +131,14 @@
         android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView26"
+        app:layout_constraintBottom_toTopOf="@+id/my_driver_list_driver_bank_details"
         app:layout_constraintEnd_toStartOf="@+id/my_driver_list_edit_text_view"
         app:layout_constraintStart_toEndOf="@+id/my_driver_list_preview_driver_license"
         app:layout_constraintTop_toBottomOf="@+id/my_driver_list_driver_email_id"
         tools:ignore="RtlCompat" />
 
     <TextView
-        android:id="@+id/textView26"
+        android:id="@+id/my_driver_list_driver_bank_details"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -153,13 +153,13 @@
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textView27"
+        app:layout_constraintEnd_toStartOf="@+id/my_driver_list_driver_truck_details"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/my_driver_list_driver_selfie"
         tools:ignore="RtlCompat" />
 
     <TextView
-        android:id="@+id/textView27"
+        android:id="@+id/my_driver_list_driver_truck_details"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
@@ -170,8 +170,8 @@
         android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/textView26"
+        app:layout_constraintBottom_toBottomOf="@+id/my_driver_list_driver_bank_details"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView26"
-        app:layout_constraintTop_toTopOf="@+id/textView26" />
+        app:layout_constraintStart_toEndOf="@+id/my_driver_list_driver_bank_details"
+        app:layout_constraintTop_toTopOf="@+id/my_driver_list_driver_bank_details" />
 </androidx.constraintlayout.widget.ConstraintLayout>

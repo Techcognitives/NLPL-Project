@@ -425,7 +425,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
                 uploadDriverLicense(driverId, pathForDL);
 
-
                 Dialog chooseDialog;
                 chooseDialog = new Dialog(DriverDetailsActivity.this);
                 chooseDialog.setContentView(R.layout.dialog_choose);
