@@ -55,12 +55,14 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_driver_details);
+
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             phone = bundle.getString("mobile");
-            Log.i("Mobile No View Personal", phone);
+            Log.i("Mobile No View Driver", phone);
             userId = bundle.getString("userId");
         }
+
         mQueue = Volley.newRequestQueue(ViewDriverDetailsActivity.this);
 
         arrayUserDriverId = new ArrayList<>();
@@ -212,17 +214,10 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
                         previewDriverDetailsDriverBankIFSICode = (TextView) previewDialogDriverDetails.findViewById(R.id.dialog_driver_details_ifsc_code);
                         previewDriverDetailsDriverBankDetailsTitle = (TextView) previewDialogDriverDetails.findViewById(R.id.dialog_driver_details_title);
 
-//                        previewDriverDetailsDriverBankName
-
                         previewDriverDetailsDriverBankName.setText(" Bank Name: " + bankName);
                         previewDriverDetailsDriverBankAccountNumber.setText(" Account Number: " + bankAccountNumber);
                         previewDriverDetailsDriverBankIFSICode.setText(" IFSI Code: " + ifsiCode);
 
-                        if (bankName == null){
-                            previewDriverDetailsDriverBankDetailsTitle.setText("Driver Bank Not Added");
-                        }else{
-                            previewDriverDetailsDriverBankDetailsTitle.setText("Driver Bank Details");
-                        }
 
                     }
                 } catch (JSONException e) {

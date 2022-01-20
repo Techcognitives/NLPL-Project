@@ -20,9 +20,13 @@
         android:theme="@style/Theme.NLPL"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.ui.activities.SliderActivity"
+            android:name=".ui.ui.activities.FindLoadsActivity"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             android:exported="false" />
+        <activity
+            android:name=".ui.ui.activities.SliderActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
             android:name=".ui.ui.activities.ViewDriverDetailsActivity"
             android:exported="false"

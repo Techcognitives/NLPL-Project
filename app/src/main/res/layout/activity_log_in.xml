@@ -151,35 +151,22 @@
         app:layout_constraintVertical_bias="0.011"
         app:srcCompat="@drawable/logo_circle" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:paddingStart="5dp"
-        android:text="@string/selectYourCountry"
-        android:textColor="#FFFFFF"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/log_in_text" />
-
     <Spinner
         android:id="@+id/selectCountry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/edit_text_border"
         android:entries="@array/array_country_name"
         android:paddingStart="10dp"
-        android:text="India"
         android:paddingTop="10dp"
         android:paddingEnd="40dp"
         android:paddingBottom="10dp"
+        android:text="India"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/log_in_text" />
 
     <ImageView
         android:id="@+id/imageView7"
