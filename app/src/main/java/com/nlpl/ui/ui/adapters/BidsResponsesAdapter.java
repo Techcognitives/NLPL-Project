@@ -1,6 +1,7 @@
 package com.nlpl.ui.ui.adapters;
 
 import android.annotation.SuppressLint;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,10 +51,11 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
         return new BidsResponsesViewHolder(view);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(BidsResponsesViewHolder holder, @SuppressLint("RecyclerView") int position) {
         BidsResponsesModel obj = bidsResponsesList.get(position);
-       //----------------------------------------------------------
+        //----------------------------------------------------------
         String url = activity.getString(R.string.baseURL) + "/user/" + obj.getUser_id();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
@@ -62,13 +65,7 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
                     for (int i = 0; i < truckLists.length(); i++) {
                         JSONObject obj = truckLists.getJSONObject(i);
                         name = obj.getString("name");
-                        mobile = obj.getString("phone_number");
-                        address = obj.getString("address");
-                        city = obj.getString("preferred_location");
-                        pinCode = obj.getString("pin_code");
-                        role = obj.getString("user_type");
 
-                        emailIdAPI = obj.getString("email_id");
                         String spName = name;
                         holder.spName.setText(spName);
                     }
@@ -87,21 +84,32 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
         //----------------------------------------------------------
 
         String isNegotiable = obj.getIs_negatiable();
-        if (isNegotiable.equals("1")){
+        if (isNegotiable.equals("1")) {
             holder.negotiable.setText("Negotiable");
-        }else{
+        } else {
             holder.negotiable.setText("Non-Nego");
+        }
+
+        if (obj.getBid_status().equals("submitted")) {
+            holder.acceptViewBidButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    activity.onClickViewAndAcceptBid(obj);
+                }
+            });
+            holder.acceptViewBidButton.setDrawingCacheBackgroundColor(R.color.orange);
+        } else if (obj.getBid_status().equals("Accepted")) {
+            holder.acceptViewBidButton.setText("You\nResponded");
+            holder.acceptViewBidButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.button_blue));
+//            Drawable buttonDrawable = holder.acceptViewBidButton.getBackground();
+//            buttonDrawable = DrawableCompat.wrap(buttonDrawable);
+//            DrawableCompat.setTint(buttonDrawable, R.color.button_blue);
+//            holder.acceptViewBidButton.setBackground(buttonDrawable);
         }
 
         String budget = obj.getSp_quote();
         holder.budget.setText(budget);
 
-        holder.acceptViewBidButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activity.onClickViewAndAcceptBid(obj);
-            }
-        });
     }
 
     @Override

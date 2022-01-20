@@ -40,9 +40,15 @@ import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BidSubmittedModel;
+import com.nlpl.model.ModelForRecyclerView.BidsResponsesModel;
 import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
 import com.nlpl.model.Requests.BidLoadRequest;
 import com.nlpl.model.Responses.BidLadResponse;
+import com.nlpl.model.UpdateBidStatusAccepted;
+import com.nlpl.model.UpdateLoadStatusSubmitted;
+import com.nlpl.services.BidLoadService;
+import com.nlpl.services.PostLoadService;
+import com.nlpl.ui.ui.adapters.BidsResponsesAdapter;
 import com.nlpl.ui.ui.adapters.LoadNotificationAdapter;
 import com.nlpl.ui.ui.adapters.LoadSubmittedAdapter;
 import com.nlpl.utils.ApiClient;
@@ -55,10 +61,13 @@ import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DashboardActivity extends AppCompatActivity {
 
     private RequestQueue mQueue;
+    private PostLoadService postLoadService;
 
     private ArrayList<LoadNotificationModel> loadList = new ArrayList<>();
 
@@ -145,6 +154,12 @@ public class DashboardActivity extends AppCompatActivity {
         arrayDriverId = new ArrayList<>();
         arrayDriverName = new ArrayList<>();
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.baseURL))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        postLoadService = retrofit.create(PostLoadService.class);
 
         getUserId(phone);
 
@@ -431,7 +446,7 @@ public class DashboardActivity extends AppCompatActivity {
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
-                Intent intent = new Intent(DashboardActivity.this, FindLoadsActivity.class);
+                Intent intent = new Intent(DashboardActivity.this, CustomerDashboardActivity.class);
                 intent.putExtra("userId", userId);
                 intent.putExtra("mobile", phone);
                 startActivity(intent);
@@ -479,12 +494,11 @@ public class DashboardActivity extends AppCompatActivity {
                         modelLoadNotification.setKm_approx(obj.getString("km_approx"));
                         modelLoadNotification.setNotes_meterial_des(obj.getString("notes_meterial_des"));
 
-                        bidStatus = obj.getString("bid_status");
-                        Log.i("Bid_status: ", bidStatus);
                         loadList.add(modelLoadNotification);
+
                     }
 
-                    if (loadList.size()>0){
+                    if (loadList.size() > 0) {
                         loadListAdapter.updateData(loadList);
                     }
 
@@ -614,6 +628,8 @@ public class DashboardActivity extends AppCompatActivity {
                 if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
 
                     saveBid(createBidRequest());
+                    Log.i("loadId bidded", obj.getIdpost_load());
+                    updateLoadStatusSubmitted(obj.getIdpost_load());
 
                     AlertDialog.Builder my_alert = new AlertDialog.Builder(DashboardActivity.this);
                     my_alert.setTitle("Bid Posted Successfully");
@@ -909,7 +925,8 @@ public class DashboardActivity extends AppCompatActivity {
                     for (int i = 0; i < truckLists.length(); i++) {
                         JSONObject obj = truckLists.getJSONObject(i);
                         String postId = obj.getString("idpost_load");
-                        getBidSubmittedList(postId);
+                        String bidId = obj.getString("sp_bid_id");
+                        getBidSubmittedList(postId, bidId );
                     }
 
                 } catch (JSONException e) {
@@ -925,7 +942,7 @@ public class DashboardActivity extends AppCompatActivity {
         mQueue.add(request);
     }
 
-    public void getBidSubmittedList(String loadIdReceived) {
+    public void getBidSubmittedList(String loadIdReceived, String bidId) {
         //---------------------------- Get Bank Details ------------------------------------------
         String url1 = getString(R.string.baseURL) + "/loadpost/getLoadDtByPostId/" + loadIdReceived;
         Log.i("URL: ", url1);
@@ -963,6 +980,7 @@ public class DashboardActivity extends AppCompatActivity {
                         bidSubmittedModel.setDrop_country(obj.getString("drop_country"));
                         bidSubmittedModel.setKm_approx(obj.getString("km_approx"));
                         bidSubmittedModel.setNotes_meterial_des(obj.getString("notes_meterial_des"));
+                        bidSubmittedModel.setBidId(bidId);
 
                         loadSubmittedList.add(bidSubmittedModel);
                     }
@@ -1029,7 +1047,7 @@ public class DashboardActivity extends AppCompatActivity {
         lp2.gravity = Gravity.TOP;
 
         setBudget.show();
-        setBudget.setCancelable(false);
+        setBudget.setCancelable(true);
         setBudget.getWindow().setAttributes(lp2);
 
         EditText budget = setBudget.findViewById(R.id.dialog_budget_edit);
@@ -1197,4 +1215,26 @@ public class DashboardActivity extends AppCompatActivity {
             return gestureDetector.onTouchEvent(motionEvent);
         }
     }
+
+    //----------------------------------------------------------------------------------------------------------------
+    private void updateLoadStatusSubmitted(String loadId) {
+
+        UpdateLoadStatusSubmitted updateLoadStatusSubmitted = new UpdateLoadStatusSubmitted("submitted");
+
+        Call<UpdateLoadStatusSubmitted> call = postLoadService.updateBidStatusSubmitted("" + loadId, updateLoadStatusSubmitted);
+
+        call.enqueue(new Callback<UpdateLoadStatusSubmitted>() {
+            @Override
+            public void onResponse(Call<UpdateLoadStatusSubmitted> call, retrofit2.Response<UpdateLoadStatusSubmitted> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UpdateLoadStatusSubmitted> call, Throwable t) {
+
+            }
+        });
+    }
+    //--------------------------------------------------------------------------------------------------
+
 }

@@ -9,10 +9,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BidSubmittedModel;
 import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
 import com.nlpl.ui.ui.activities.DashboardActivity;
+import com.nlpl.ui.ui.activities.PostALoadActivity;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -20,7 +30,7 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
 
     private ArrayList<BidSubmittedModel> loadSubmittedList;
     private DashboardActivity activity;
-
+    private RequestQueue mQueue;
     public LoadSubmittedAdapter(DashboardActivity activity, ArrayList<BidSubmittedModel> loadSubmittedList) {
         this.loadSubmittedList = loadSubmittedList;
         this.activity = activity;
@@ -28,12 +38,15 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
 
     @Override
     public LoadSubmittedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        mQueue = Volley.newRequestQueue(activity);
+
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.load_list, parent, false);
         return new LoadSubmittedViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(LoadSubmittedViewHolder holder, @SuppressLint("RecyclerView") int position) {
+
         BidSubmittedModel obj = loadSubmittedList.get(position);
 
         String pickUpCity = obj.getPick_city();
@@ -69,12 +82,37 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
         String pickUpLocation = obj.getPick_add();
         holder.pickUpLocation.setText(" "+pickUpLocation);
 
-//        holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                activity.onClickBidNow(obj);
-//            }
-//        });
+        //----------------------------------------------------------
+        String url = activity.getString(R.string.baseURL) + "/spbid/bidDtByBidId/" + obj.getBidId();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+                        String bid_status = obj.getString("bid_status");
+                        if (bid_status.equals("Accepted")){
+                            holder.bidNowButton.setText("Accept Revised");
+                            holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.red));
+                        } else if (bid_status.equals("submitted")){
+                            holder.bidNowButton.setText("Bid Submitted");
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        mQueue.add(request);
+        //----------------------------------------------------------
     }
 
     @Override

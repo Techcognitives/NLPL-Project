@@ -142,6 +142,10 @@ public class PostALoadActivity extends AppCompatActivity {
         pick_up_pinCode.addTextChangedListener(PickPinCodeTextWatcher);
         drop_address.addTextChangedListener(DropAddressTextWatcher);
         drop_pinCode.addTextChangedListener(DropPinCodeTextWatcher);
+        pick_up_state.addTextChangedListener(cityStateTextWatcher);
+        pick_up_city.addTextChangedListener(cityStateTextWatcher);
+        drop_state.addTextChangedListener(cityStateTextWatcher);
+        drop_city.addTextChangedListener(cityStateTextWatcher);
 
         mQueue = Volley.newRequestQueue(PostALoadActivity.this);
 
@@ -1091,6 +1095,33 @@ public class PostALoadActivity extends AppCompatActivity {
                 pick_up_address.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
             }
 
+            if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
+                    && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
+                    && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
+                    && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
+                    && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()){
+                Ok_PostLoad.setEnabled(true);
+                Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
+            } else {
+                Ok_PostLoad.setEnabled(false);
+                Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+
+    private TextWatcher cityStateTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
                     && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
                     && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
