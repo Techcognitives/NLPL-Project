@@ -61,15 +61,13 @@ public class DashboardActivity extends AppCompatActivity {
     private RequestQueue mQueue;
 
     private ArrayList<LoadNotificationModel> loadList = new ArrayList<>();
-    private ArrayList<LoadNotificationModel> updatedLoadList = new ArrayList<>();
+
     private ArrayList<BidSubmittedModel> loadSubmittedList = new ArrayList<>();
     private ArrayList<BidSubmittedModel> updatedLoadSubmittedList = new ArrayList<>();
 
     private LoadNotificationAdapter loadListAdapter;
     private LoadSubmittedAdapter loadSubmittedAdapter;
     private RecyclerView loadListRecyclerView, loadSubmittedRecyclerView;
-
-    ArrayList<String> arrayLoadListLoadId, updatedArrayLoadSubmittedLoadId, arrayLoadSubmittedLoadId;
 
     Dialog setBudget, selectTruckDialog, previewDialogBidNow;
 
@@ -97,7 +95,7 @@ public class DashboardActivity extends AppCompatActivity {
     ConstraintLayout spDashboard, customerDashboard;
 
     String loadId, selectedDriverId, selectedDriverName, userId, userIdAPI, phone, mobileNoAPI;
-    ArrayList<String> arrayPostIdFromBidList, arrayUserId, arrayTruckId, arrayDriverId, arrayDriverName, arrayTruckList, arrayMobileNo, arrayDriverMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
+    ArrayList<String> arrayUserId, arrayTruckId, arrayDriverId, arrayDriverName, arrayTruckList, arrayMobileNo, arrayDriverMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
 
     String mobile, name, address, pinCode, city, role, emailIdAPI;
 
@@ -146,8 +144,6 @@ public class DashboardActivity extends AppCompatActivity {
         arrayTruckId = new ArrayList<>();
         arrayDriverId = new ArrayList<>();
         arrayDriverName = new ArrayList<>();
-        arrayPostIdFromBidList = new ArrayList<>();
-        arrayLoadSubmittedLoadId = new ArrayList<>();
 
 
         getUserId(phone);
@@ -453,9 +449,7 @@ public class DashboardActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try {
                     loadList = new ArrayList<>();
-                    arrayLoadListLoadId = new ArrayList<>();
                     loadSubmittedList = new ArrayList<>();
-                    updatedLoadList = new ArrayList<>();
 
                     JSONArray loadLists = response.getJSONArray("data");
                     for (int i = 0; i < loadLists.length(); i++) {
@@ -488,51 +482,11 @@ public class DashboardActivity extends AppCompatActivity {
                         bidStatus = obj.getString("bid_status");
                         Log.i("Bid_status: ", bidStatus);
                         loadList.add(modelLoadNotification);
-                        arrayLoadListLoadId.add(obj.getString("idpost_load"));
                     }
 
-                    //-------------------------------------------------------------------------------------------------------
-                    String url = getString(R.string.baseURL) + "/spbid/getBidDtByUserId/" + userId;
-                    Log.i("url betBidByUserID", url);
-                    JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                JSONArray truckLists = response.getJSONArray("data");
-                                for (int i = 0; i < truckLists.length(); i++) {
-                                    JSONObject obj = truckLists.getJSONObject(i);
-                                    String postId = obj.getString("idpost_load");
-                                    arrayPostIdFromBidList.add(postId);
-                                }
-
-                                if (arrayPostIdFromBidList.isEmpty()) {
-                                    loadListAdapter.updateData(loadList);
-                                } else {
-                                    for (int i = 0; i < loadList.size(); i++) {
-                                        for (int j = 0; j < arrayPostIdFromBidList.size(); j++) {
-                                            if (!arrayLoadListLoadId.get(i).equals(arrayPostIdFromBidList.get(j))) {
-                                                updatedLoadList.add(loadList.get(i));
-                                            }
-                                        }
-                                    }
-                                    loadListAdapter.updateData(updatedLoadList);
-                                }
-
-                                Log.i("array of postId2", String.valueOf(arrayPostIdFromBidList));
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new com.android.volley.Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            error.printStackTrace();
-                        }
-                    });
-                    mQueue.add(request);
-                    //-----------------------------------------------------------------------------------------------------
-
+                    if (loadList.size()>0){
+                        loadListAdapter.updateData(loadList);
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -955,10 +909,8 @@ public class DashboardActivity extends AppCompatActivity {
                     for (int i = 0; i < truckLists.length(); i++) {
                         JSONObject obj = truckLists.getJSONObject(i);
                         String postId = obj.getString("idpost_load");
-//                        arrayPostIdFromBidList.add(postId);
                         getBidSubmittedList(postId);
                     }
-                    Log.i("array of postId 1", String.valueOf(arrayPostIdFromBidList));
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -983,7 +935,6 @@ public class DashboardActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try {
                     loadSubmittedList = new ArrayList<>();
-                    updatedArrayLoadSubmittedLoadId = new ArrayList<>();
                     loadSubmittedList.clear();
 
                     JSONArray loadLists = response.getJSONArray("data");
@@ -1014,37 +965,12 @@ public class DashboardActivity extends AppCompatActivity {
                         bidSubmittedModel.setNotes_meterial_des(obj.getString("notes_meterial_des"));
 
                         loadSubmittedList.add(bidSubmittedModel);
-
-                        arrayLoadSubmittedLoadId.add(obj.getString("idpost_load"));
                     }
 
                     if (loadSubmittedList.size() > 0) {
-                        updatedArrayLoadSubmittedLoadId.addAll(arrayLoadSubmittedLoadId);
                         updatedLoadSubmittedList.addAll(loadSubmittedList);
                         loadSubmittedAdapter.updateData(updatedLoadSubmittedList);
                     }
-
-
-//                        Log.i("LL Array for compare", String.valueOf(arrayLoadListLoadId));
-//                        Log.i("LS Array for compare", String.valueOf(updatedLoadSubmittedList));
-//
-////                        if (updatedLoadSubmittedList.size()==0 && loadList.size()>0){
-////                            loadListAdapter.updateData(loadList);
-////                        } else
-//                        if (updatedLoadSubmittedList.size()>0) {
-//                            for (int i = 0; i < updatedLoadList.size(); i++) {
-//                                for (int j = 0; j < updatedLoadSubmittedList.size(); j++) {
-//                                    if (arrayLoadListLoadId.get(i).equals(updatedArrayLoadSubmittedLoadId.get(j))) {
-//                                        Log.i("load Id matches", String.valueOf(updatedLoadList.get(i)));
-//                                    } else {
-//                                        updatedLoadList.add(updatedLoadList.get(i));
-//                                        Log.i("load Id diff", String.valueOf(updatedLoadList.get(i)));
-//                                    }
-//                                }
-//                            }
-//                            loadListAdapter.updateData(updatedLoadList);
-//                        }
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();
