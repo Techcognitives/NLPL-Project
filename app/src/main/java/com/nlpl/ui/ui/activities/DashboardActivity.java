@@ -61,15 +61,13 @@ public class DashboardActivity extends AppCompatActivity {
     private RequestQueue mQueue;
 
     private ArrayList<LoadNotificationModel> loadList = new ArrayList<>();
-    private ArrayList<LoadNotificationModel> updatedLoadList = new ArrayList<>();
+
     private ArrayList<BidSubmittedModel> loadSubmittedList = new ArrayList<>();
     private ArrayList<BidSubmittedModel> updatedLoadSubmittedList = new ArrayList<>();
 
     private LoadNotificationAdapter loadListAdapter;
     private LoadSubmittedAdapter loadSubmittedAdapter;
     private RecyclerView loadListRecyclerView, loadSubmittedRecyclerView;
-
-    ArrayList<String> arrayLoadListLoadId, updatedArrayLoadSubmittedLoadId, arrayLoadSubmittedLoadId;
 
     Dialog setBudget, selectTruckDialog, previewDialogBidNow;
 
@@ -97,7 +95,7 @@ public class DashboardActivity extends AppCompatActivity {
     ConstraintLayout spDashboard, customerDashboard;
 
     String loadId, selectedDriverId, selectedDriverName, userId, userIdAPI, phone, mobileNoAPI;
-    ArrayList<String> arrayPostIdFromBidList, arrayUserId, arrayTruckId, arrayDriverId, arrayDriverName, arrayTruckList, arrayMobileNo, arrayDriverMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
+    ArrayList<String> arrayUserId, arrayTruckId, arrayDriverId, arrayDriverName, arrayTruckList, arrayMobileNo, arrayDriverMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
 
     String mobile, name, address, pinCode, city, role, emailIdAPI;
 
@@ -146,7 +144,7 @@ public class DashboardActivity extends AppCompatActivity {
         arrayTruckId = new ArrayList<>();
         arrayDriverId = new ArrayList<>();
         arrayDriverName = new ArrayList<>();
-        arrayPostIdFromBidList = new ArrayList<>();
+
 
         getUserId(phone);
 
@@ -206,13 +204,15 @@ public class DashboardActivity extends AppCompatActivity {
                     getUserDetails();
 
                     //---------------------------- Get Load Details -------------------------------------------
+                    getBidListByUserId();
+                    getLoadNotificationList();
 
                     LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(getApplicationContext());
                     linearLayoutManagerBank.setReverseLayout(true);
                     loadListRecyclerView.setLayoutManager(linearLayoutManagerBank);
                     loadListRecyclerView.setHasFixedSize(true);
 
-                    loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, updatedLoadList);
+                    loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadList);
                     loadListRecyclerView.setAdapter(loadListAdapter);
 
                     LinearLayoutManager linearLayoutManagerBank1 = new LinearLayoutManager(getApplicationContext());
@@ -224,9 +224,6 @@ public class DashboardActivity extends AppCompatActivity {
                     loadSubmittedRecyclerView.setAdapter(loadSubmittedAdapter);
 
 
-                    getLoadNotificationList();
-                    compareArrays();
-                    getBidListByUserId();
                     //------------------------------------------------------------------------------------------
 
                 } catch (JSONException e) {
@@ -296,7 +293,7 @@ public class DashboardActivity extends AppCompatActivity {
 
                         if (isDriverDetailsDone.equals("1")) {
                             driverDetailsLogoImageView.setImageDrawable(getResources().getDrawable(R.drawable.driver_success));
-                        }else {
+                        } else {
                             driverDetailsLogoImageView.setImageDrawable(getResources().getDrawable(R.drawable.driver));
                         }
 
@@ -369,12 +366,12 @@ public class DashboardActivity extends AppCompatActivity {
                 break;
 
             case R.id.menu_driver_details:
-                if (isDriverDetailsDone.equals("1")){
+                if (isDriverDetailsDone.equals("1")) {
                     Intent intent = new Intent(DashboardActivity.this, ViewDriverDetailsActivity.class);
                     intent.putExtra("userId", userId);
                     intent.putExtra("mobile", phone);
                     startActivity(intent);
-                }else{
+                } else {
                     Intent intent4 = new Intent(DashboardActivity.this, DriverDetailsActivity.class);
                     intent4.putExtra("userId", userId);
                     intent4.putExtra("isEdit", false);
@@ -452,8 +449,8 @@ public class DashboardActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try {
                     loadList = new ArrayList<>();
-                    arrayLoadListLoadId = new ArrayList<>();
                     loadSubmittedList = new ArrayList<>();
+
                     JSONArray loadLists = response.getJSONArray("data");
                     for (int i = 0; i < loadLists.length(); i++) {
 
@@ -485,12 +482,10 @@ public class DashboardActivity extends AppCompatActivity {
                         bidStatus = obj.getString("bid_status");
                         Log.i("Bid_status: ", bidStatus);
                         loadList.add(modelLoadNotification);
-                        arrayLoadListLoadId.add(obj.getString("idpost_load"));
-
                     }
 
-                    if (loadList.size() > 0) {
-                        loadListAdapter.updateData(updatedLoadList);
+                    if (loadList.size()>0){
+                        loadListAdapter.updateData(loadList);
                     }
 
                 } catch (JSONException e) {
@@ -901,20 +896,6 @@ public class DashboardActivity extends AppCompatActivity {
         mQueue.add(request);
     }
 
-    private void compareArrays(){
-
-        Log.i("LL Array for compare", String.valueOf(arrayLoadListLoadId));
-        Log.i("LS Array for compare", String.valueOf(arrayLoadSubmittedLoadId));
-
-        for (int i=0; i< loadList.size(); i++){
-            for (int j=0; j<updatedLoadSubmittedList.size(); j++){
-                if (!arrayLoadListLoadId.get(i).equals(updatedArrayLoadSubmittedLoadId.get(j))){
-                    updatedLoadList.add(loadList.get(i));
-                }
-            }
-        }
-        loadListAdapter.updateData(updatedLoadList);
-    }
 
     private void getBidListByUserId() {
 
@@ -928,10 +909,8 @@ public class DashboardActivity extends AppCompatActivity {
                     for (int i = 0; i < truckLists.length(); i++) {
                         JSONObject obj = truckLists.getJSONObject(i);
                         String postId = obj.getString("idpost_load");
-                        arrayPostIdFromBidList.add(postId);
                         getBidSubmittedList(postId);
                     }
-                    Log.i("array of postId", String.valueOf(arrayPostIdFromBidList));
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -948,67 +927,63 @@ public class DashboardActivity extends AppCompatActivity {
 
     public void getBidSubmittedList(String loadIdReceived) {
         //---------------------------- Get Bank Details ------------------------------------------
-            String url1 = getString(R.string.baseURL) + "/loadpost/getLoadDtByPostId/" + loadIdReceived;
-            Log.i("URL: ", url1);
+        String url1 = getString(R.string.baseURL) + "/loadpost/getLoadDtByPostId/" + loadIdReceived;
+        Log.i("URL: ", url1);
 
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        loadSubmittedList = new ArrayList<>();
-                        arrayLoadSubmittedLoadId = new ArrayList<>();
-                        updatedArrayLoadSubmittedLoadId = new ArrayList<>();
-                        loadSubmittedList.clear();
-                        JSONArray loadLists = response.getJSONArray("data");
-                        for (int i = 0; i < loadLists.length(); i++) {
-                            JSONObject obj = loadLists.getJSONObject(i);
-                            BidSubmittedModel bidSubmittedModel = new BidSubmittedModel();
-                            bidSubmittedModel.setIdpost_load(obj.getString("idpost_load"));
-                            bidSubmittedModel.setUser_id(obj.getString("user_id"));
-                            bidSubmittedModel.setPick_up_date(obj.getString("pick_up_date"));
-                            bidSubmittedModel.setPick_up_time(obj.getString("pick_up_time"));
-                            bidSubmittedModel.setBudget(obj.getString("budget"));
-                            bidSubmittedModel.setBid_status(obj.getString("bid_status"));
-                            bidSubmittedModel.setVehicle_model(obj.getString("vehicle_model"));
-                            bidSubmittedModel.setFeet(obj.getString("feet"));
-                            bidSubmittedModel.setCapacity(obj.getString("capacity"));
-                            bidSubmittedModel.setBody_type(obj.getString("body_type"));
-                            bidSubmittedModel.setPick_add(obj.getString("pick_add"));
-                            bidSubmittedModel.setPick_pin_code(obj.getString("pick_pin_code"));
-                            bidSubmittedModel.setPick_city(obj.getString("pick_city"));
-                            bidSubmittedModel.setPick_state(obj.getString("pick_state"));
-                            bidSubmittedModel.setPick_country(obj.getString("pick_country"));
-                            bidSubmittedModel.setDrop_add(obj.getString("drop_add"));
-                            bidSubmittedModel.setDrop_pin_code(obj.getString("drop_pin_code"));
-                            bidSubmittedModel.setDrop_city(obj.getString("drop_city"));
-                            bidSubmittedModel.setDrop_state(obj.getString("drop_state"));
-                            bidSubmittedModel.setDrop_country(obj.getString("drop_country"));
-                            bidSubmittedModel.setKm_approx(obj.getString("km_approx"));
-                            bidSubmittedModel.setNotes_meterial_des(obj.getString("notes_meterial_des"));
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    loadSubmittedList = new ArrayList<>();
+                    loadSubmittedList.clear();
 
-                            loadSubmittedList.add(bidSubmittedModel);
-                            Log.i("Load submitted list", String.valueOf(loadSubmittedList));
-                            Log.i("loadId", bidSubmittedModel.getIdpost_load());
-                            arrayLoadSubmittedLoadId.add(obj.getString("idpost_load"));
-                        }
-                        if (loadSubmittedList.size() > 0) {
-                            updatedArrayLoadSubmittedLoadId.addAll(arrayLoadSubmittedLoadId);
-                            updatedLoadSubmittedList.addAll(loadSubmittedList);
-                            loadSubmittedAdapter.updateData(updatedLoadSubmittedList);
-                        }
+                    JSONArray loadLists = response.getJSONArray("data");
+                    for (int i = 0; i < loadLists.length(); i++) {
+                        JSONObject obj = loadLists.getJSONObject(i);
+                        BidSubmittedModel bidSubmittedModel = new BidSubmittedModel();
+                        bidSubmittedModel.setIdpost_load(obj.getString("idpost_load"));
+                        bidSubmittedModel.setUser_id(obj.getString("user_id"));
+                        bidSubmittedModel.setPick_up_date(obj.getString("pick_up_date"));
+                        bidSubmittedModel.setPick_up_time(obj.getString("pick_up_time"));
+                        bidSubmittedModel.setBudget(obj.getString("budget"));
+                        bidSubmittedModel.setBid_status(obj.getString("bid_status"));
+                        bidSubmittedModel.setVehicle_model(obj.getString("vehicle_model"));
+                        bidSubmittedModel.setFeet(obj.getString("feet"));
+                        bidSubmittedModel.setCapacity(obj.getString("capacity"));
+                        bidSubmittedModel.setBody_type(obj.getString("body_type"));
+                        bidSubmittedModel.setPick_add(obj.getString("pick_add"));
+                        bidSubmittedModel.setPick_pin_code(obj.getString("pick_pin_code"));
+                        bidSubmittedModel.setPick_city(obj.getString("pick_city"));
+                        bidSubmittedModel.setPick_state(obj.getString("pick_state"));
+                        bidSubmittedModel.setPick_country(obj.getString("pick_country"));
+                        bidSubmittedModel.setDrop_add(obj.getString("drop_add"));
+                        bidSubmittedModel.setDrop_pin_code(obj.getString("drop_pin_code"));
+                        bidSubmittedModel.setDrop_city(obj.getString("drop_city"));
+                        bidSubmittedModel.setDrop_state(obj.getString("drop_state"));
+                        bidSubmittedModel.setDrop_country(obj.getString("drop_country"));
+                        bidSubmittedModel.setKm_approx(obj.getString("km_approx"));
+                        bidSubmittedModel.setNotes_meterial_des(obj.getString("notes_meterial_des"));
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        loadSubmittedList.add(bidSubmittedModel);
                     }
+
+                    if (loadSubmittedList.size() > 0) {
+                        updatedLoadSubmittedList.addAll(loadSubmittedList);
+                        loadSubmittedAdapter.updateData(updatedLoadSubmittedList);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            }, new com.android.volley.Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    error.printStackTrace();
-                }
-            });
-            mQueue.add(request);
-            //-------------------------------------------------------------------------------------------
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+        //-------------------------------------------------------------------------------------------
 
     }
 
