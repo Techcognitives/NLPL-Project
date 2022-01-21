@@ -803,4 +803,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         });
 
     }
+
+    public void onClickViewConsignment(BidsAcceptedModel obj) {
+    }
 }
