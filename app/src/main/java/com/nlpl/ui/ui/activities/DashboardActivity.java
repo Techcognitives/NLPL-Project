@@ -456,7 +456,7 @@ public class DashboardActivity extends AppCompatActivity {
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
-                Intent intent = new Intent(DashboardActivity.this, FindLoadsActivity.class);
+                Intent intent = new Intent(DashboardActivity.this, CustomerDashboardActivity.class);
                 intent.putExtra("userId", userId);
                 intent.putExtra("mobile", phone);
                 startActivity(intent);

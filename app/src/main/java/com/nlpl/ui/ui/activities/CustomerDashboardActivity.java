@@ -33,6 +33,7 @@ import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BidsAcceptedModel;
 import com.nlpl.model.ModelForRecyclerView.BidsReceivedModel;
 import com.nlpl.model.ModelForRecyclerView.BidsResponsesModel;
+import com.nlpl.model.ModelForRecyclerView.FindLoadsModel;
 import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
 import com.nlpl.model.UpdateBidStatusAccepted;
 import com.nlpl.model.UpdateBidStatusFinalAccepted;
@@ -64,7 +65,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     private BidsReceivedAdapter bidsListAdapter;
     private RecyclerView bidsListRecyclerView;
 
-    private ArrayList<BidsAcceptedModel> acceptedList = new ArrayList<>();
+    private ArrayList<BidsAcceptedModel> acceptedList;
     private BidsAcceptedAdapter bidsAcceptedAdapter;
     private RecyclerView bidsAcceptedRecyclerView;
 
@@ -95,6 +96,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             userId = bundle.getString("userId");
         }
         mQueue = Volley.newRequestQueue(CustomerDashboardActivity.this);
+
         actionBar = findViewById(R.id.customer_dashboard_action_bar);
         actionBarTitle = (TextView) actionBar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) actionBar.findViewById(R.id.action_bar_back_button);
@@ -113,6 +115,8 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         bidsReceivedConstrain = (ConstraintLayout) findViewById(R.id.customer_dashboard_bids_received_constrain);
         loadAcceptedTextView = (TextView) findViewById(R.id.customer_dashboard_loads_accepted_button);
         bidsReceivedTextView = (TextView) findViewById(R.id.customer_dashboard_bids_received_button);
+
+        acceptedList = new ArrayList<>();
 
         //---------------------------- Get Load Details -------------------------------------------
         bidsListRecyclerView = (RecyclerView) findViewById(R.id.customer_dashboard_load_notification_recycler_view);
@@ -138,7 +142,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         bidsAcceptedRecyclerView.setHasFixedSize(true);
 
         bidsAcceptedAdapter = new BidsAcceptedAdapter(CustomerDashboardActivity.this, acceptedList);
-        bidsAcceptedRecyclerView.setAdapter(bidsListAdapter);
+        bidsAcceptedRecyclerView.setAdapter(bidsAcceptedAdapter);
         getBidsAccepted();
         //------------------------------------------------------------------------------------------
 
@@ -197,10 +201,18 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         bidsAcceptedModel.setKm_approx(obj.getString("km_approx"));
                         bidsAcceptedModel.setNotes_meterial_des(obj.getString("notes_meterial_des"));
 
-                        if (obj.getString("bid_status").equals("FinalAccepted")) {
+                        if (obj.getString("bid_status").equals("submitted")) {
                             acceptedList.add(bidsAcceptedModel);
                         }
                     }
+
+//                    for (int i=0; i< acceptedList.size(); i++){
+//                        if (acceptedList.get(i).getBid_status().equals("FinalAccepted")){
+                            if (acceptedList.size() > 0) {
+                                bidsAcceptedAdapter.updateData(acceptedList);
+                            }
+//                        }
+//                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
