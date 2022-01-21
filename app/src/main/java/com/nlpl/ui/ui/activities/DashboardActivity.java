@@ -82,7 +82,7 @@ public class DashboardActivity extends AppCompatActivity {
     private LoadSubmittedAdapter loadSubmittedAdapter;
     private RecyclerView loadListRecyclerView, loadSubmittedRecyclerView;
 
-    Dialog setBudget, selectTruckDialog, previewDialogBidNow, dialogAcceptRevisedBid;
+    Dialog setBudget, selectTruckDialog, previewDialogBidNow, dialogAcceptRevisedBid, dialogViewConsignment;
 
     String bidStatus, vehicle_no, truckId, isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
 
@@ -93,12 +93,12 @@ public class DashboardActivity extends AppCompatActivity {
     EditText notesSp;
     CheckBox declaration;
     RadioButton negotiable_yes, negotiable_no;
-    Boolean isTruckSelectedToBid = false, negotiable = null, isNegotiableSelected = false;
+    Boolean isTruckSelectedToBid = false, negotiable = null, isNegotiableSelected = false, fromAdapter = false;
     ImageView actionBarBackButton, actionBarMenuButton;
 
     Dialog menuDialog;
     ConstraintLayout drawerLayout;
-    TextView menuUserNameTextView, mobileText, personalDetailsButton, bankDetailsTextView, addTrucksTextView;
+    TextView timeLeft00, timeLeftTextview, partitionTextview, menuUserNameTextView, mobileText, personalDetailsButton, bankDetailsTextView, addTrucksTextView;
     ImageView personalDetailsLogoImageView, bankDetailsLogoImageView, truckDetailsLogoImageView, driverDetailsLogoImageView;
 
     ConstraintLayout loadNotificationConstrain, bidsSubmittedConstrain;
@@ -194,6 +194,10 @@ public class DashboardActivity extends AppCompatActivity {
         dialogAcceptRevisedBid = new Dialog(DashboardActivity.this);
         dialogAcceptRevisedBid.setContentView(R.layout.dialog_bid_now);
         dialogAcceptRevisedBid.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        dialogViewConsignment = new Dialog(DashboardActivity.this);
+        dialogViewConsignment.setContentView(R.layout.dialog_bid_now);
+        dialogViewConsignment.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
     }
 
@@ -523,7 +527,9 @@ public class DashboardActivity extends AppCompatActivity {
                         modelLoadNotification.setKm_approx(obj.getString("km_approx"));
                         modelLoadNotification.setNotes_meterial_des(obj.getString("notes_meterial_des"));
 
-                        loadList.add(modelLoadNotification);
+                        if (obj.getString("bid_status").equals("pending")) {
+                            loadList.add(modelLoadNotification);
+                        }
 
                     }
 
@@ -656,7 +662,6 @@ public class DashboardActivity extends AppCompatActivity {
 
                     saveBid(createBidRequest());
                     Log.i("loadId bidded", obj.getIdpost_load());
-                    updateLoadStatusSubmitted(obj.getIdpost_load());
 
                     AlertDialog.Builder my_alert = new AlertDialog.Builder(DashboardActivity.this);
                     my_alert.setTitle("Bid Posted Successfully");
@@ -730,6 +735,7 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getTrucksByUserId();
+                arrayTruckList.clear();
             }
         });
 
@@ -738,6 +744,7 @@ public class DashboardActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (isTruckSelectedToBid) {
                     getDriversByUserId();
+                    arrayDriverName.clear();
                 }
             }
         });
@@ -817,16 +824,21 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 isTruckSelectedToBid = true;
-//                selectTruck.setText(adapter1.getItem(i));
-                if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
+                if (!fromAdapter) {
+                    if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
+                        acceptAndBid.setEnabled(true);
+                        acceptAndBid.setBackgroundResource((R.drawable.button_active));
+                    } else {
+                        acceptAndBid.setEnabled(false);
+                        acceptAndBid.setBackgroundResource((R.drawable.button_de_active));
+                    }
+                } else {
                     acceptAndBid.setEnabled(true);
                     acceptAndBid.setBackgroundResource((R.drawable.button_active));
-                } else {
-                    acceptAndBid.setEnabled(false);
-                    acceptAndBid.setBackgroundResource((R.drawable.button_de_active));
                 }
                 getTruckDetailsByTruckId(arrayTruckId.get(i));
                 selectTruckDialog.dismiss();
+                arrayTruckList.clear();
             }
         });
     }
@@ -850,14 +862,20 @@ public class DashboardActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 selectDriver.setText(adapter1.getItem(i));
                 getDriverDetailsByDriverId(arrayDriverId.get(i));
-                if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
+                if (!fromAdapter) {
+                    if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
+                        acceptAndBid.setEnabled(true);
+                        acceptAndBid.setBackgroundResource((R.drawable.button_active));
+                    } else {
+                        acceptAndBid.setEnabled(false);
+                        acceptAndBid.setBackgroundResource((R.drawable.button_de_active));
+                    }
+                } else {
                     acceptAndBid.setEnabled(true);
                     acceptAndBid.setBackgroundResource((R.drawable.button_active));
-                } else {
-                    acceptAndBid.setEnabled(false);
-                    acceptAndBid.setBackgroundResource((R.drawable.button_de_active));
                 }
                 selectTruckDialog.dismiss();
+                arrayDriverName.clear();
             }
         });
     }
@@ -1192,6 +1210,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     public void acceptRevisedBid(BidSubmittedModel obj) {
 
+        fromAdapter = true;
         loadId = obj.getIdpost_load();
         bidStatus = obj.getBid_status();
         String pick_up_date = obj.getPick_up_date();
@@ -1283,9 +1302,6 @@ public class DashboardActivity extends AppCompatActivity {
         acceptAndBid.setEnabled(true);
         acceptAndBid.setBackgroundResource((R.drawable.button_active));
 
-        spQuote.setText("");
-
-
         acceptAndBid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -1320,6 +1336,7 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getTrucksByUserId();
+                arrayTruckList.clear();
             }
         });
 
@@ -1328,6 +1345,7 @@ public class DashboardActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (isTruckSelectedToBid) {
                     getDriversByUserId();
+                    arrayDriverName.clear();
                 }
             }
         });
@@ -1386,11 +1404,146 @@ public class DashboardActivity extends AppCompatActivity {
                 error.printStackTrace();
             }
         });
-
         mQueue.add(request);
         //----------------------------------------------------------
 
     }
+
+    public void viewConsignment(BidSubmittedModel obj) {
+
+        loadId = obj.getIdpost_load();
+        bidStatus = obj.getBid_status();
+        String pick_up_date = obj.getPick_up_date();
+        String pick_up_time = obj.getPick_up_time();
+        String distance = obj.getKm_approx();
+        String required_model = obj.getVehicle_model();
+        String required_feet = obj.getFeet();
+        String required_capacity = obj.getCapacity();
+        String required_truck_body = obj.getBody_type();
+        String pick_up_location = obj.getPick_add() + " " + obj.getPick_city() + " " + obj.getPick_state() + " " + obj.getPick_pin_code();
+        String drop_location = obj.getDrop_add() + " " + obj.getDrop_city() + " " + obj.getDrop_state() + " " + obj.getDrop_pin_code();
+        String received_notes_description = obj.getNotes_meterial_des();
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialogViewConsignment.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+        dialogViewConsignment.show();
+        dialogViewConsignment.getWindow().setAttributes(lp);
+
+        //-------------------------------------------Display Load Information---------------------------------------------
+        TextView pickUpDate = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_pick_up_date_textview);
+        TextView pickUpTime = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_pick_up_time_textview);
+        reqBudget = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_budget_textview);
+        TextView approxDistance = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_distance_textview);
+        TextView reqModel = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_req_model_textview);
+        TextView reqFeet = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_req_feet_textview);
+        TextView reqCapacity = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_req_capacity_textview);
+        TextView reqBodyType = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_req_bodyType_textview);
+        TextView pickUpLocation = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_pick_up_location_textview);
+        TextView dropLocation = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_drop_location_textview);
+        TextView receivedNotes = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_received_notes_textview);
+        TextView loadIdHeading = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_loadId_heading);
+
+        pickUpDate.setText(pick_up_date);
+        pickUpTime.setText(pick_up_time);
+        approxDistance.setText(distance);
+        reqModel.setText(required_model);
+        reqFeet.setText(required_feet);
+        reqCapacity.setText(required_capacity);
+        reqBodyType.setText(required_truck_body);
+        pickUpLocation.setText(pick_up_location);
+        dropLocation.setText(drop_location);
+        receivedNotes.setText(received_notes_description);
+        loadIdHeading.setText("Load ID: " + obj.getPick_city() + "-" + obj.getDrop_city() + "-000");
+        //----------------------------------------------------------------------------------------------------------------
+
+        //------------------------------------Accept Load and Bid now-----------------------------------------
+        spQuote = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_sp_quote_textview);
+        selectTruck = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_select_truck_textview);
+        selectDriver = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_select_driver_textview);
+        addTruck = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_add_truck_textview);
+        addDriver = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_add_driver_textview);
+        selectedTruckModel = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_truck_model_textview);
+        selectedTruckFeet = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_truck_feet_textview);
+        selectedTruckCapacity = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_truck_capacity_textview);
+        selectedTruckBodyType = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_truck_body_type_textview);
+        notesSp = (EditText) dialogViewConsignment.findViewById(R.id.dialog_bid_now_notes_editText);
+        declaration = (CheckBox) dialogViewConsignment.findViewById(R.id.dialog_bid_now_declaration);
+        acceptAndBid = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_accept_and_bid_btn);
+        cancel = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_cancel_btn);
+        negotiable_yes = dialogViewConsignment.findViewById(R.id.dialog_bid_now_radio_btn_yes);
+        negotiable_no = dialogViewConsignment.findViewById(R.id.dialog_bid_now_radio_btn_no);
+        partitionTextview = dialogViewConsignment.findViewById(R.id.bid_now_middle_textview_partition);
+        timeLeftTextview = dialogViewConsignment.findViewById(R.id.bid_now_time_left_textView);
+        timeLeft00 = dialogViewConsignment.findViewById(R.id.bid_now_time_left_00_textview);
+
+        notesSp.setVisibility(View.GONE);
+        addTruck.setVisibility(View.INVISIBLE);
+        addDriver.setVisibility(View.INVISIBLE);
+        timeLeft00.setVisibility(View.GONE);
+        partitionTextview.setText("My Bid Response");
+        timeLeftTextview.setText("CONSIGNMENT");
+        timeLeftTextview.setTextColor(getResources().getColorStateList(R.color.black));
+        timeLeftTextview.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+
+        negotiable_yes.setEnabled(false);
+        negotiable_yes.setChecked(false);
+        negotiable_no.setChecked(true);
+        declaration.setVisibility(View.INVISIBLE);
+
+        getBidDetailsByBidId(obj.getBidId());
+
+        cancel.setText("Withdraw");
+        cancel.setEnabled(true);
+        cancel.setBackgroundTintList(getResources().getColorStateList(R.color.orange));
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i8 = new Intent(DashboardActivity.this, DashboardActivity.class);
+                i8.putExtra("mobile2", phone);
+                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i8);
+                overridePendingTransition(0, 0);
+                finish();
+                dialogViewConsignment.dismiss();
+            }
+        });
+
+        acceptAndBid.setText("Start Trip");
+        acceptAndBid.setEnabled(true);
+        acceptAndBid.setBackgroundResource((R.drawable.button_active));
+
+        acceptAndBid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder my_alert = new AlertDialog.Builder(DashboardActivity.this);
+                my_alert.setTitle("Trip Started Successfully");
+                my_alert.setMessage("You can track your trip in track section");
+                my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        Intent i8 = new Intent(DashboardActivity.this, DashboardActivity.class);
+                        i8.putExtra("mobile2", phone);
+                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i8);
+                        overridePendingTransition(0, 0);
+                        finish();
+
+                        dialogInterface.dismiss();
+                        dialogViewConsignment.dismiss();
+                    }
+                });
+                my_alert.show();
+
+            }
+        });
+    }
+
 
 
     private class SwipeListener implements View.OnTouchListener {
@@ -1447,27 +1600,6 @@ public class DashboardActivity extends AppCompatActivity {
             return gestureDetector.onTouchEvent(motionEvent);
         }
     }
-
-    //----------------------------------------------------------------------------------------------------------------
-    private void updateLoadStatusSubmitted(String loadId) {
-
-        UpdateLoadStatusSubmitted updateLoadStatusSubmitted = new UpdateLoadStatusSubmitted("submitted");
-
-        Call<UpdateLoadStatusSubmitted> call = postLoadService.updateBidStatusSubmitted("" + loadId, updateLoadStatusSubmitted);
-
-        call.enqueue(new Callback<UpdateLoadStatusSubmitted>() {
-            @Override
-            public void onResponse(Call<UpdateLoadStatusSubmitted> call, retrofit2.Response<UpdateLoadStatusSubmitted> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<UpdateLoadStatusSubmitted> call, Throwable t) {
-
-            }
-        });
-    }
-    //--------------------------------------------------------------------------------------------------
 
     //----------------------------------------------------------------------------------------------------------------
     private void updateBidStatusRespondedBySP(String bidId) {

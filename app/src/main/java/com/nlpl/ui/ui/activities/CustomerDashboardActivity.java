@@ -35,6 +35,7 @@ import com.nlpl.model.ModelForRecyclerView.BidsResponsesModel;
 import com.nlpl.model.UpdateBidStatusAccepted;
 import com.nlpl.model.UpdateBidStatusFinalAccepted;
 import com.nlpl.model.UpdateCustomerBudget;
+import com.nlpl.model.UpdateLoadStatusSubmitted;
 import com.nlpl.services.BidLoadService;
 import com.nlpl.services.PostLoadService;
 import com.nlpl.ui.ui.adapters.BidsReceivedAdapter;
@@ -213,7 +214,11 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         bidsReceivedModel.setDrop_country(obj.getString("drop_country"));
                         bidsReceivedModel.setKm_approx(obj.getString("km_approx"));
                         bidsReceivedModel.setNotes_meterial_des(obj.getString("notes_meterial_des"));
-                        bidsList.add(bidsReceivedModel);
+
+                        if (obj.getString("bid_status").equals("pending")) {
+                            bidsList.add(bidsReceivedModel);
+                        }
+
                     }
                     if (bidsList.size() > 0) {
                         bidsListAdapter.updateData(bidsList);
@@ -415,6 +420,27 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<UpdateBidStatusAccepted> call, Throwable t) {
+
+            }
+        });
+    }
+    //--------------------------------------------------------------------------------------------------
+
+    //----------------------------------------------------------------------------------------------------------------
+    private void updateLoadStatusSubmitted(String loadId) {
+
+        UpdateLoadStatusSubmitted updateLoadStatusSubmitted = new UpdateLoadStatusSubmitted("submitted");
+
+        Call<UpdateLoadStatusSubmitted> call = postLoadService.updateBidStatusSubmitted("" + loadId, updateLoadStatusSubmitted);
+
+        call.enqueue(new Callback<UpdateLoadStatusSubmitted>() {
+            @Override
+            public void onResponse(Call<UpdateLoadStatusSubmitted> call, retrofit2.Response<UpdateLoadStatusSubmitted> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UpdateLoadStatusSubmitted> call, Throwable t) {
 
             }
         });
@@ -650,6 +676,8 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         submitResponseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                updateLoadStatusSubmitted(obj.getIdpost_load());
                 updateBidStatusFinalAccepted(obj.getSp_bid_id());
                 AlertDialog.Builder my_alert = new AlertDialog.Builder(CustomerDashboardActivity.this);
                 my_alert.setTitle("Final Offer accepted Successfully");
