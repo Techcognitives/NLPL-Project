@@ -113,7 +113,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         bidsListRecyclerView = (RecyclerView) findViewById(R.id.customer_dashboard_load_notification_recycler_view);
 
         LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(getApplicationContext());
-        linearLayoutManagerBank.setReverseLayout(true);
+        linearLayoutManagerBank.setReverseLayout(false);
         linearLayoutManagerBank.setOrientation(LinearLayoutManager.VERTICAL);
         bidsListRecyclerView.setLayoutManager(linearLayoutManagerBank);
         bidsListRecyclerView.setHasFixedSize(true);
@@ -531,11 +531,14 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                             bidsReceived.setText(bidsResponses + " Responses Received");
                             Log.i("Res", bidsReceived.getText().toString());
 
-//                            if (obj.getBid_status().equals("Accepted")) {
+                            if (bidResponsesList.get(i).getBid_status().equals("Accepted")) {
+                                int itemPos = bidResponsesList.indexOf(bidResponsesList.get(i));
+                                bidResponsesList.add(0, bidResponsesList.get(i));
+                                bidResponsesList.remove(itemPos+1);
                                 bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
                                 bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
                                 bidsResponsesAdapter.updateData(bidResponsesList);
-//                            }
+                            }
                         }
                     }
 

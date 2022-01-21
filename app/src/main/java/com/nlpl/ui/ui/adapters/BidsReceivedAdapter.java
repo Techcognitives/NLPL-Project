@@ -86,7 +86,7 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
         holder.body.setText("Body: " + bodyType);
 
         LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(activity);
-        linearLayoutManagerBank.setReverseLayout(true);
+        linearLayoutManagerBank.setReverseLayout(false);
         linearLayoutManagerBank.setOrientation(LinearLayoutManager.VERTICAL);
         holder.bidsResponsesRecyclerView.setLayoutManager(linearLayoutManagerBank);
         holder.bidsResponsesRecyclerView.setHasFixedSize(true);
