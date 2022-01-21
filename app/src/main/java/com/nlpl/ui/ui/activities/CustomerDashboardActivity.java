@@ -32,18 +32,13 @@ import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BidsReceivedModel;
 import com.nlpl.model.ModelForRecyclerView.BidsResponsesModel;
-import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
-import com.nlpl.model.UpdateBankDetails.UpdateBankName;
 import com.nlpl.model.UpdateBidStatusAccepted;
+import com.nlpl.model.UpdateBidStatusFinalAccepted;
 import com.nlpl.model.UpdateCustomerBudget;
-import com.nlpl.model.UpdateLoadStatusSubmitted;
-import com.nlpl.services.BankService;
 import com.nlpl.services.BidLoadService;
 import com.nlpl.services.PostLoadService;
-import com.nlpl.services.UserService;
 import com.nlpl.ui.ui.adapters.BidsReceivedAdapter;
 import com.nlpl.ui.ui.adapters.BidsResponsesAdapter;
-import com.nlpl.ui.ui.adapters.LoadNotificationAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,7 +64,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     View actionBar;
     TextView actionBarTitle;
     ImageView actionBarBackButton, actionBarMenuButton;
-    Dialog previewDialogAcceptANdBid, setBudget;
+    Dialog previewDialogAcceptANdBid, setBudget, acceptFinalBid;
     View bottomNav;
     ConstraintLayout spDashboard, customerDashboard;
 
@@ -79,6 +74,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     EditText notesCustomer;
     String userId, phone;
     private PostLoadService postLoadService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,6 +122,10 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         previewDialogAcceptANdBid = new Dialog(CustomerDashboardActivity.this);
         previewDialogAcceptANdBid.setContentView(R.layout.dialog_acept_bid_customer);
         previewDialogAcceptANdBid.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        acceptFinalBid = new Dialog(CustomerDashboardActivity.this);
+        acceptFinalBid.setContentView(R.layout.dialog_acept_bid_customer);
+        acceptFinalBid.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.baseURL))
@@ -336,10 +336,8 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         submitResponseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 updateBidStatusAsAccepted(obj.getSp_bid_id());
-                updateCustomerBudget(obj.getSp_bid_id(), customerQuote.getText().toString());
-
+                updateCustomerBudgetOnResponse(obj.getSp_bid_id(), customerQuote.getText().toString());
                 AlertDialog.Builder my_alert = new AlertDialog.Builder(CustomerDashboardActivity.this);
                 my_alert.setTitle("Response submitted Successfully");
                 my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -358,6 +356,49 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             }
         });
     }
+
+    //----------------------------------------------------------------------------------------------------------------
+    private void updateCustomerBudgetOnResponse(String bidId, String cQuote) {
+
+        UpdateCustomerBudget updateCustomerBudget = new UpdateCustomerBudget(cQuote);
+
+        Call<UpdateCustomerBudget> call = bidService.updateCustomerBudget("" + bidId, updateCustomerBudget);
+
+        call.enqueue(new Callback<UpdateCustomerBudget>() {
+            @Override
+            public void onResponse(Call<UpdateCustomerBudget> call, Response<UpdateCustomerBudget> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UpdateCustomerBudget> call, Throwable t) {
+
+            }
+        });
+    }
+    //--------------------------------------------------------------------------------------------------
+
+    //----------------------------------------------------------------------------------------------------------------
+    private void updateBidStatusFinalAccepted(String bidId) {
+
+        UpdateBidStatusFinalAccepted updateBidStatusFinalAccepted = new UpdateBidStatusFinalAccepted("FinalAccepted");
+
+        Call<UpdateBidStatusFinalAccepted> call = bidService.updateFinalAccepted("" + bidId, updateBidStatusFinalAccepted);
+
+        call.enqueue(new Callback<UpdateBidStatusFinalAccepted>() {
+            @Override
+            public void onResponse(Call<UpdateBidStatusFinalAccepted> call, Response<UpdateBidStatusFinalAccepted> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UpdateBidStatusFinalAccepted> call, Throwable t) {
+
+            }
+        });
+    }
+    //--------------------------------------------------------------------------------------------------
+
 
     //----------------------------------------------------------------------------------------------------------------
     private void updateBidStatusAsAccepted(String bidId) {
@@ -379,28 +420,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         });
     }
     //--------------------------------------------------------------------------------------------------
-
-    //----------------------------------------------------------------------------------------------------------------
-    private void updateCustomerBudget(String loadId, String customerBudget) {
-
-        UpdateCustomerBudget updateCustomerBudget = new UpdateCustomerBudget(customerBudget);
-
-        Call<UpdateCustomerBudget> call = postLoadService.updateCustomerBudget("" + loadId, updateCustomerBudget);
-
-        call.enqueue(new Callback<UpdateCustomerBudget>() {
-            @Override
-            public void onResponse(Call<UpdateCustomerBudget> call, Response<UpdateCustomerBudget> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<UpdateCustomerBudget> call, Throwable t) {
-
-            }
-        });
-    }
-    //--------------------------------------------------------------------------------------------------
-
 
     private void budgetSet() {
 
@@ -509,7 +528,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 //                    }
 
 
-
 //                    for (int i=0; i<bidResponsesList.size()-1 ;i++){
 //                        for (int j = i+1; j<bidResponsesList.size(); j++){
 //                            if (bidResponsesList.get(i).getBid_status().compareTo(bidResponsesList.get(j).getBid_status())>0){
@@ -561,5 +579,117 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         });
         mQueue.add(request);
         //-------------------------------------------------------------------------------------------
+    }
+
+    public void acceptFinalOffer(BidsResponsesModel obj) {
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(acceptFinalBid.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+        acceptFinalBid.show();
+        acceptFinalBid.getWindow().setAttributes(lp);
+
+        //-------------------------------------------Display Load Information---------------------------------------------
+        TextView nameSP = (TextView) acceptFinalBid.findViewById(R.id.dialog_accept_bit_service_provider_name);
+        TextView modelBySP = (TextView) acceptFinalBid.findViewById(R.id.dialog_accept_bid_model_textview);
+        TextView feetBySP = (TextView) acceptFinalBid.findViewById(R.id.dialog_accept_bid_feet_textview);
+        TextView capacityBySP = (TextView) acceptFinalBid.findViewById(R.id.dialog_accept_bid_capacity_textview);
+        TextView bodyTypeBySP = (TextView) acceptFinalBid.findViewById(R.id.dialog_accept_bid_body_type_textview);
+        TextView quoteBySP = (TextView) acceptFinalBid.findViewById(R.id.dialog_accept_bid_bidder_quote_textview);
+        TextView negotiableBySP = (TextView) acceptFinalBid.findViewById(R.id.dialog_accept_bid_negotiable_textview);
+        TextView notesBySP = (TextView) acceptFinalBid.findViewById(R.id.dialog_accept_bid_received_notes_textview);
+
+        //----------------------------------------------------------
+        String url = getString(R.string.baseURL) + "/user/" + obj.getUser_id();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+                        String spName = obj.getString("name");
+                        nameSP.setText(spName);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+        //----------------------------------------------------------
+
+        Log.i("Bid-id", obj.getSp_bid_id());
+        Log.i("Load-id", obj.getIdpost_load());
+
+        quoteBySP.setText(obj.getSp_quote());
+        modelBySP.setText(obj.getVehicle_model());
+        feetBySP.setText(obj.getFeet());
+        capacityBySP.setText(obj.getCapacity());
+        bodyTypeBySP.setText(obj.getBody_type());
+        notesBySP.setText(obj.getNotes());
+        negotiableBySP.setText("No");
+        //----------------------------------------------------------------------------------------------------------------
+
+        customerQuote = (TextView) acceptFinalBid.findViewById(R.id.dialog_accept_bid_customer_final_quote_textview);
+        negotiable_yes = acceptFinalBid.findViewById(R.id.dialog_accept_bid_radio_btn_yes);
+        negotiable_no = acceptFinalBid.findViewById(R.id.dialog_accept_bid_radio_btn_no);
+        notesCustomer = (EditText) acceptFinalBid.findViewById(R.id.dialog_accept_bid_notes_editText);
+        submitResponseBtn = (TextView) acceptFinalBid.findViewById(R.id.dialog_accept_bid_submit_response_btn);
+        cancleBtn = (TextView) acceptFinalBid.findViewById(R.id.dialog_accept_bid_cancel_btn);
+
+        negotiable_yes.setChecked(false);
+        negotiable_yes.setEnabled(false);
+        negotiable_no.setChecked(true);
+        customerQuote.setText(obj.getSp_quote());
+        submitResponseBtn.setText("Accept Final Offer");
+
+        submitResponseBtn.setEnabled(true);
+        submitResponseBtn.setBackgroundResource((R.drawable.button_active));
+
+        submitResponseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateBidStatusFinalAccepted(obj.getSp_bid_id());
+                AlertDialog.Builder my_alert = new AlertDialog.Builder(CustomerDashboardActivity.this);
+                my_alert.setTitle("Final Offer accepted Successfully");
+                my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
+                        intent.putExtra("userId", userId);
+                        intent.putExtra("mobile", phone);
+                        startActivity(intent);
+                        finish();
+                        dialogInterface.dismiss();
+                        acceptFinalBid.dismiss();
+                    }
+                });
+                my_alert.show();
+            }
+        });
+
+        cancleBtn.setEnabled(true);
+        cancleBtn.setBackgroundResource((R.drawable.button_active));
+
+        cancleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
+                intent.putExtra("userId", userId);
+                intent.putExtra("mobile", phone);
+                startActivity(intent);
+                finish();
+                acceptFinalBid.dismiss();
+            }
+        });
+
     }
 }
