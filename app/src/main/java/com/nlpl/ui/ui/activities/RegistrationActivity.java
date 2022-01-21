@@ -470,7 +470,7 @@ public class RegistrationActivity extends AppCompatActivity {
             okButton.setEnabled(true);
             okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
             saveUser(createUser());
-            AlertDialog.Builder my_alert = new AlertDialog.Builder(RegistrationActivity.this);
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(RegistrationActivity.this).setCancelable(false);
             my_alert.setTitle("Registration Successful");
             my_alert.setMessage("Welcome to " + getString(R.string.app_name) + "\n\nPlease update your profile and explore the platform benefits.");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {

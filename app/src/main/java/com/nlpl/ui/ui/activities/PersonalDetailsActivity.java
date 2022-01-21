@@ -471,7 +471,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     public void onClickOKPersonal(View view) {
         if (isPanUploaded && isFrontUploaded ) {
             updateUserIsPersonalDetailsAdded();
-            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this).setCancelable(false);
             my_alert.setTitle("Personal Details added successfully");
             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
@@ -486,6 +486,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 }
             });
             my_alert.show();
+            my_alert.setCancelable(false);
         }
     }
 

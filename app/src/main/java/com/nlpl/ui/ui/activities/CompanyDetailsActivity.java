@@ -422,27 +422,35 @@ public class CompanyDetailsActivity extends AppCompatActivity {
                 updateCompanyType();
             }
 
+            Intent i8 = new Intent(CompanyDetailsActivity.this, ViewPersonalDetailsActivity.class);
+            i8.putExtra("mobile", mobile);
+            i8.putExtra("userId", userId);
+            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i8);
+            overridePendingTransition(0, 0);
+            finish();
+
         }else{
             saveCompany(createCompany());
-        }
-        updateUserIsCompanyAdded();
-        AlertDialog.Builder my_alert = new AlertDialog.Builder(CompanyDetailsActivity.this);
-        my_alert.setTitle("Company Details added Successfully");
-        my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-                Intent i8 = new Intent(CompanyDetailsActivity.this, ViewPersonalDetailsActivity.class);
-                i8.putExtra("mobile", mobile);
-                i8.putExtra("userId", userId);
-                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i8);
-                overridePendingTransition(0, 0);
-                finish();
-            }
-        });
-        my_alert.show();
 
+            updateUserIsCompanyAdded();
+            AlertDialog.Builder my_alert = new AlertDialog.Builder(CompanyDetailsActivity.this).setCancelable(false);
+            my_alert.setTitle("Company Details added Successfully");
+            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                    Intent i8 = new Intent(CompanyDetailsActivity.this, ViewPersonalDetailsActivity.class);
+                    i8.putExtra("mobile", mobile);
+                    i8.putExtra("userId", userId);
+                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i8);
+                    overridePendingTransition(0, 0);
+                    finish();
+                }
+            });
+            my_alert.show();
+        }
 
     }
 
