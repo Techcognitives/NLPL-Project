@@ -461,7 +461,6 @@ public class DashboardActivity extends AppCompatActivity {
     public void onClickBottomNavigation(View view) {
         switch (view.getId()) {
             case R.id.bottom_nav_sp_dashboard:
-
                 break;
 
             case R.id.bottom_nav_customer_dashboard:

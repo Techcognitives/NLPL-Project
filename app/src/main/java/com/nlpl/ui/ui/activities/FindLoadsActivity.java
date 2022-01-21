@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -61,6 +62,20 @@ public class FindLoadsActivity extends AppCompatActivity {
         getBidsReceived();
     }
 
+    public void onClickBottomNavigation(View view) {
+        switch (view.getId()) {
+            case R.id.bottom_nav_sp_dashboard:
+                Intent intent = new Intent(FindLoadsActivity.this, DashboardActivity.class);
+                intent.putExtra("mobile2", phone);
+                startActivity(intent);
+                break;
+
+            case R.id.bottom_nav_customer_dashboard:
+
+                break;
+        }
+    }
+
     public void getBidsReceived() {
 
         String url1 = getString(R.string.baseURL) + "/loadpost/getAllPosts";
@@ -100,17 +115,21 @@ public class FindLoadsActivity extends AppCompatActivity {
                         bidsList.add(findLoadsModel);
                     }
 
-                    if (bidsList.size() == 0) {
-                        bidsListRecyclerView.setVisibility(View.GONE);
-                    } else if (bidsList.size() == 1) {
-                        ArrayList<FindLoadsModel> newList = new ArrayList<>(bidsList.subList(bidsList.size() - 1, bidsList.size()));
-                        bidsListAdapter.updateData(newList);
-                    } else if (bidsList.size() == 2) {
-                        ArrayList<FindLoadsModel> newList = new ArrayList<>(bidsList.subList(bidsList.size() - 2, bidsList.size()));
-                        bidsListAdapter.updateData(newList);
-                    } else if (bidsList.size() >= 3) {
-                        ArrayList<FindLoadsModel> newList = new ArrayList<>(bidsList.subList(bidsList.size() - 3, bidsList.size()));
-                        bidsListAdapter.updateData(newList);
+                    for (int i=0; i< bidsList.size(); i++){
+                        if (bidsList.get(i).getBid_status().equals("pending")){
+                            if (bidsList.size() == 0) {
+                                bidsListRecyclerView.setVisibility(View.GONE);
+                            } else if (bidsList.size() == 1) {
+                                ArrayList<FindLoadsModel> newList = new ArrayList<>(bidsList.subList(bidsList.size() - 1, bidsList.size()));
+                                bidsListAdapter.updateData(newList);
+                            } else if (bidsList.size() == 2) {
+                                ArrayList<FindLoadsModel> newList = new ArrayList<>(bidsList.subList(bidsList.size() - 2, bidsList.size()));
+                                bidsListAdapter.updateData(newList);
+                            } else if (bidsList.size() >= 3) {
+                                ArrayList<FindLoadsModel> newList = new ArrayList<>(bidsList.subList(bidsList.size() - 3, bidsList.size()));
+                                bidsListAdapter.updateData(newList);
+                            }
+                        }
                     }
 
                 } catch (JSONException e) {
