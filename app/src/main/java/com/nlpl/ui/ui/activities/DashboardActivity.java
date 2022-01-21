@@ -232,7 +232,7 @@ public class DashboardActivity extends AppCompatActivity {
 
 
                     LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(getApplicationContext());
-                    linearLayoutManagerBank.setReverseLayout(true);
+                    linearLayoutManagerBank.setReverseLayout(false);
                     loadListRecyclerView.setLayoutManager(linearLayoutManagerBank);
                     loadListRecyclerView.setHasFixedSize(true);
 

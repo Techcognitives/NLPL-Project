@@ -30,9 +30,9 @@ public class SliderActivity extends AppCompatActivity {
         SliderView sliderView = findViewById(R.id.slider);
 
         // adding the urls inside array list
+        sliderDataArrayList.add(getDrawable(R.drawable.slider_slide_three));
         sliderDataArrayList.add(getDrawable(R.drawable.slider_slide_one));
         sliderDataArrayList.add(getDrawable(R.drawable.slider_slide_two));
-        sliderDataArrayList.add(getDrawable(R.drawable.slider_slide_three));
 
         // passing this array list inside our adapter class.
         SliderAdapter adapter = new SliderAdapter(this, sliderDataArrayList);
@@ -47,7 +47,7 @@ public class SliderActivity extends AppCompatActivity {
 
         // below method is use to set
         // scroll time in seconds.
-        sliderView.setScrollTimeInSec(3);
+        sliderView.setScrollTimeInSec(4);
 
         // to set it scrollable automatically
         // we use below method.

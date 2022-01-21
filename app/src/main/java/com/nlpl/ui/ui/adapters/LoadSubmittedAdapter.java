@@ -122,7 +122,7 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
 
                         }
                     }
-
+                    
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
