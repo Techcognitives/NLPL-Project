@@ -84,7 +84,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     Dialog setBudget, selectTruckDialog, previewDialogBidNow, dialogAcceptRevisedBid, dialogViewConsignment;
 
-    String bidStatus, vehicle_no, truckId, isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
+    String bidStatusToCompare, bidStatus, vehicle_no, truckId, isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
 
     SwipeListener swipeListener;
 
@@ -250,6 +250,10 @@ public class DashboardActivity extends AppCompatActivity {
                     loadSubmittedRecyclerView.setAdapter(loadSubmittedAdapter);
                     loadSubmittedRecyclerView.scrollToPosition(loadSubmittedAdapter.getItemCount() - 1);
 
+//                    loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadList);
+//                    loadListRecyclerView.setAdapter(loadListAdapter);
+//                    loadListRecyclerView.scrollToPosition(loadListAdapter.getItemCount() - 1);
+
                     //------------------------------------------------------------------------------------------
 
                 } catch (JSONException e) {
@@ -324,7 +328,11 @@ public class DashboardActivity extends AppCompatActivity {
                         }
 
                         if (role.equals("Customer")) {
-
+                            Intent intent = new Intent(DashboardActivity.this, CustomerDashboardActivity.class);
+                            intent.putExtra("userId", userId);
+                            intent.putExtra("mobile", phone);
+                            overridePendingTransition(0, 0);
+                            startActivity(intent);
                         } else {
 
                         }
@@ -465,26 +473,23 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
-    private void compareAndRemove(ArrayList<LoadNotificationModel> loadListToCompare){
-        // remove loadSubmittedList from LoadList
+    private void compareAndRemove(ArrayList<LoadNotificationModel> loadListToCompare, String bidStatusToCompare) {
 
-        Log.i("updated loadSub list", String.valueOf(updatedLoadSubmittedList));
-        Log.i(" loadlist", String.valueOf(loadId));
-
-        for (int i=0; i<loadListToCompare.size(); i++){
-            for (int j=0; j<updatedLoadSubmittedList.size(); j++){
-                if (loadListToCompare.get(i).getIdpost_load().equals(updatedLoadSubmittedList.get(j).getIdpost_load())){
+        for (int i = 0; i < loadListToCompare.size(); i++) {
+            for (int j = 0; j < updatedLoadSubmittedList.size(); j++) {
+                if (loadListToCompare.get(i).getIdpost_load().equals(updatedLoadSubmittedList.get(j).getIdpost_load())) {
                     loadListToCompare.remove(i);
                 }
             }
         }
+
         loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadListToCompare);
         loadListRecyclerView.setAdapter(loadListAdapter);
         loadListRecyclerView.scrollToPosition(loadListAdapter.getItemCount() - 1);
-        if (loadListToCompare.size()>0) {
+
+        if (loadListToCompare.size() > 0) {
             loadListAdapter.updateData(loadListToCompare);
         }
-
     }
 
     public void getLoadNotificationList() {
@@ -527,13 +532,14 @@ public class DashboardActivity extends AppCompatActivity {
                         modelLoadNotification.setKm_approx(obj.getString("km_approx"));
                         modelLoadNotification.setNotes_meterial_des(obj.getString("notes_meterial_des"));
 
-                        if (obj.getString("bid_status").equals("pending")) {
-                            loadList.add(modelLoadNotification);
-                        }
-
+                        bidStatusToCompare = obj.getString("bid_status");
+                        loadList.add(modelLoadNotification);
                     }
-
-                    getBidListByUserId(loadList);
+//
+//                    if (loadList.size() > 0) {
+//                        loadListAdapter.updateData(loadList);
+//                    }
+                    getBidListByUserId(loadList, bidStatusToCompare);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -960,7 +966,7 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
 
-    private void getBidListByUserId(ArrayList<LoadNotificationModel> loadListToCompare) {
+    private void getBidListByUserId(ArrayList<LoadNotificationModel> loadListToCompare, String bidStatusToCompare) {
 
         String url = getString(R.string.baseURL) + "/spbid/getBidDtByUserId/" + userId;
         Log.i("url betBidByUserID", url);
@@ -973,7 +979,7 @@ public class DashboardActivity extends AppCompatActivity {
                         JSONObject obj = truckLists.getJSONObject(i);
                         String postId = obj.getString("idpost_load");
                         String bidId = obj.getString("sp_bid_id");
-                        getBidSubmittedList(postId, bidId, loadListToCompare);
+                        getBidSubmittedList(postId, bidId, loadListToCompare, bidStatusToCompare);
                     }
 
                 } catch (JSONException e) {
@@ -989,7 +995,7 @@ public class DashboardActivity extends AppCompatActivity {
         mQueue.add(request);
     }
 
-    public void getBidSubmittedList(String loadIdReceived, String bidId, ArrayList<LoadNotificationModel> loadListToCompare) {
+    public void getBidSubmittedList(String loadIdReceived, String bidId, ArrayList<LoadNotificationModel> loadListToCompare, String bidStatusToCompare) {
         //---------------------------- Get Bank Details ------------------------------------------
         String url1 = getString(R.string.baseURL) + "/loadpost/getLoadDtByPostId/" + loadIdReceived;
         Log.i("URL: ", url1);
@@ -1035,9 +1041,18 @@ public class DashboardActivity extends AppCompatActivity {
                     if (loadSubmittedList.size() > 0) {
                         updatedLoadSubmittedList.addAll(loadSubmittedList);
                         loadSubmittedAdapter.updateData(updatedLoadSubmittedList);
+//
                     }
-
-                    compareAndRemove(loadListToCompare);
+                    compareAndRemove(loadListToCompare, bidStatusToCompare);
+//                    else {
+//                        loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadListToCompare);
+//                        loadListRecyclerView.setAdapter(loadListAdapter);
+//                        loadListRecyclerView.scrollToPosition(loadListAdapter.getItemCount() - 1);
+//
+//                        if (loadListToCompare.size() > 0) {
+//                            loadListAdapter.updateData(loadListToCompare);
+//                        }
+//                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1486,7 +1501,7 @@ public class DashboardActivity extends AppCompatActivity {
         partitionTextview.setText("My Bid Response");
         timeLeftTextview.setText("CONSIGNMENT");
         timeLeftTextview.setTextColor(getResources().getColorStateList(R.color.black));
-        timeLeftTextview.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+        timeLeftTextview.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
 
         negotiable_yes.setEnabled(false);
         negotiable_yes.setChecked(false);
@@ -1543,7 +1558,6 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
     private class SwipeListener implements View.OnTouchListener {
