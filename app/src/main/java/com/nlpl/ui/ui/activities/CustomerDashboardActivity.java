@@ -295,7 +295,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             negotiableBySP.setText("No");
         }
         //----------------------------------------------------------------------------------------------------------------
-
         customerQuote = (TextView) previewDialogAcceptANdBid.findViewById(R.id.dialog_accept_bid_customer_final_quote_textview);
         negotiable_yes = previewDialogAcceptANdBid.findViewById(R.id.dialog_accept_bid_radio_btn_yes);
         negotiable_no = previewDialogAcceptANdBid.findViewById(R.id.dialog_accept_bid_radio_btn_no);
