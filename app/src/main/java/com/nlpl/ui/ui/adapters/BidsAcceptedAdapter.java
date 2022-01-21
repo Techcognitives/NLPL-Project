@@ -69,6 +69,7 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
         String pickUpLocation = obj.getPick_add();
         holder.pickUpLocation.setText(" "+pickUpLocation);
 
+
         holder.bidNowButton.setText("View Consignment");
         holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
             @Override

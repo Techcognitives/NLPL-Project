@@ -120,12 +120,6 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
             });
 
         } else if (obj.getBid_status().equals("FinalAccepted")) {
-            holder.acceptViewBidButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    activity.viewConsignmentCustomer(obj);
-                }
-            });
             holder.acceptViewBidButton.setText("Finally Accepted");
         }
 

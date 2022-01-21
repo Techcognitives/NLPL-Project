@@ -83,6 +83,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     RadioButton negotiable_yes, negotiable_no;
     EditText notesCustomer;
     String userId, phone;
+    String spQuoteByApi, bid_idByAPI, noteByApi;
     private PostLoadService postLoadService;
 
     @Override
@@ -213,9 +214,9 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
 //                    for (int i=0; i< acceptedList.size(); i++){
 //                        if (acceptedList.get(i).getBid_status().equals("FinalAccepted")){
-                            if (acceptedList.size() > 0) {
-                                bidsAcceptedAdapter.updateData(acceptedList);
-                            }
+                    if (acceptedList.size() > 0) {
+                        bidsAcceptedAdapter.updateData(acceptedList);
+                    }
 //                        }
 //                    }
 
@@ -808,7 +809,12 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         });
     }
 
-    public void viewConsignmentCustomer(BidsResponsesModel obj) {
+    public void getBidDetailsByPostId(String postId) {
+
+
+    }
+
+    public void onClickViewConsignment(BidsAcceptedModel obj) {
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(viewConsignmentCustomer.getWindow().getAttributes());
@@ -853,82 +859,105 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         mQueue.add(request);
         //----------------------------------------------------------
 
-        Log.i("Bid-id", obj.getSp_bid_id());
-        Log.i("Load-id", obj.getIdpost_load());
 
-        quoteBySP.setText(obj.getSp_quote());
-        modelBySP.setText(obj.getVehicle_model());
-        feetBySP.setText(obj.getFeet());
-        capacityBySP.setText(obj.getCapacity());
-        bodyTypeBySP.setText(obj.getBody_type());
-        notesBySP.setText(obj.getNotes());
-        negotiableBySP.setText("No");
-        //----------------------------------------------------------------------------------------------------------------
+        String url1 = getString(R.string.baseURL) + "/spbid/getBidDtByPostId/" + obj.getIdpost_load();
+        Log.i("URL: ", url1);
 
-        customerQuote = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_customer_final_quote_textview);
-        negotiable_yes = viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_radio_btn_yes);
-        negotiable_no = viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_radio_btn_no);
-        notesCustomer = (EditText) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_notes_editText);
-        submitResponseBtn = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_submit_response_btn);
-        cancleBtn = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_cancel_btn);
-        timeLeftTextview = viewConsignmentCustomer.findViewById(R.id.accept_bid_time_left_textview);
-        timeLeft00 = viewConsignmentCustomer.findViewById(R.id.accept_bid_time_left_00_textview);
-
-        timeLeftTextview.setText("CONSIGNMENT");
-        timeLeft00.setVisibility(View.GONE);
-        timeLeftTextview.setTextColor(getResources().getColorStateList(R.color.black));
-        timeLeftTextview.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
-
-        negotiable_yes.setChecked(false);
-        negotiable_yes.setEnabled(false);
-        negotiable_no.setChecked(true);
-        customerQuote.setText(obj.getSp_quote());
-
-        submitResponseBtn.setText("Withdraw");
-        submitResponseBtn.setBackgroundTintList(getResources().getColorStateList(R.color.orange));
-        submitResponseBtn.setEnabled(true);
-
-        submitResponseBtn.setOnClickListener(new View.OnClickListener() {
+        JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
-            public void onClick(View view) {
-
-                updateLoadStatusSubmitted(obj.getIdpost_load());
-                updateBidStatusFinalAccepted(obj.getSp_bid_id());
-                AlertDialog.Builder my_alert = new AlertDialog.Builder(CustomerDashboardActivity.this);
-                my_alert.setTitle("Withdraw Successfully");
-                my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
-                        intent.putExtra("userId", userId);
-                        intent.putExtra("mobile", phone);
-                        startActivity(intent);
-                        finish();
-                        dialogInterface.dismiss();
-                        viewConsignmentCustomer.dismiss();
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray bidResponsesLists = response.getJSONArray("data");
+                    for (int i = 0; i < bidResponsesLists.length(); i++) {
+                        JSONObject obj = bidResponsesLists.getJSONObject(i);
+                        spQuoteByApi = obj.getString("sp_quote");
+                        noteByApi =  obj.getString("notes");
+                        bid_idByAPI = obj.getString("sp_bid_id");
                     }
-                });
-                my_alert.show();
+
+                    quoteBySP.setText(spQuoteByApi);
+                    modelBySP.setText(obj.getVehicle_model());
+                    feetBySP.setText(obj.getFeet());
+                    capacityBySP.setText(obj.getCapacity());
+                    bodyTypeBySP.setText(obj.getBody_type());
+                    notesBySP.setText(noteByApi);
+                    negotiableBySP.setText("No");
+                    //----------------------------------------------------------------------------------------------------------------
+
+                    customerQuote = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_customer_final_quote_textview);
+                    negotiable_yes = viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_radio_btn_yes);
+                    negotiable_no = viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_radio_btn_no);
+                    notesCustomer = (EditText) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_notes_editText);
+                    submitResponseBtn = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_submit_response_btn);
+                    cancleBtn = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_cancel_btn);
+                    timeLeftTextview = viewConsignmentCustomer.findViewById(R.id.accept_bid_time_left_textview);
+                    timeLeft00 = viewConsignmentCustomer.findViewById(R.id.accept_bid_time_left_00_textview);
+
+                    timeLeftTextview.setText("CONSIGNMENT");
+                    timeLeft00.setVisibility(View.GONE);
+                    timeLeftTextview.setTextColor(getResources().getColorStateList(R.color.black));
+                    timeLeftTextview.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+
+                    negotiable_yes.setChecked(false);
+                    negotiable_yes.setEnabled(false);
+                    negotiable_no.setChecked(true);
+                    customerQuote.setText(spQuoteByApi);
+
+                    submitResponseBtn.setText("Withdraw");
+                    submitResponseBtn.setBackgroundTintList(getResources().getColorStateList(R.color.orange));
+                    submitResponseBtn.setEnabled(true);
+
+                    submitResponseBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            updateLoadStatusSubmitted(obj.getIdpost_load());
+                            updateBidStatusFinalAccepted(bid_idByAPI);
+                            AlertDialog.Builder my_alert = new AlertDialog.Builder(CustomerDashboardActivity.this);
+                            my_alert.setTitle("Withdraw Successfully");
+                            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
+                                    intent.putExtra("userId", userId);
+                                    intent.putExtra("mobile", phone);
+                                    startActivity(intent);
+                                    finish();
+                                    dialogInterface.dismiss();
+                                    viewConsignmentCustomer.dismiss();
+                                }
+                            });
+                            my_alert.show();
+                        }
+                    });
+
+                    cancleBtn.setEnabled(true);
+                    cancleBtn.setBackgroundResource((R.drawable.button_active));
+                    cancleBtn.setText("Back");
+
+                    cancleBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
+                            intent.putExtra("userId", userId);
+                            intent.putExtra("mobile", phone);
+                            startActivity(intent);
+                            finish();
+                            viewConsignmentCustomer.dismiss();
+                        }
+                    });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
-        });
-
-        cancleBtn.setEnabled(true);
-        cancleBtn.setBackgroundResource((R.drawable.button_active));
-        cancleBtn.setText("Back");
-
-        cancleBtn.setOnClickListener(new View.OnClickListener() {
+        }, new com.android.volley.Response.ErrorListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
-                intent.putExtra("userId", userId);
-                intent.putExtra("mobile", phone);
-                startActivity(intent);
-                finish();
-                viewConsignmentCustomer.dismiss();
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
             }
         });
-    }
+        mQueue.add(request1);
+        //-------------------------------------------------------------------------------------------
 
-    public void onClickViewConsignment(BidsAcceptedModel obj) {
     }
 }
