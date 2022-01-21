@@ -453,7 +453,6 @@ public class DashboardActivity extends AppCompatActivity {
     public void onClickBottomNavigation(View view) {
         switch (view.getId()) {
             case R.id.bottom_nav_sp_dashboard:
-
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
@@ -465,15 +464,15 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
-    private void compareAndRemove(ArrayList<LoadNotificationModel> loadListToCompare){
+    private void compareAndRemove(ArrayList<LoadNotificationModel> loadListToCompare) {
         // remove loadSubmittedList from LoadList
 
         Log.i("updated loadSub list", String.valueOf(updatedLoadSubmittedList));
         Log.i(" loadlist", String.valueOf(loadId));
 
-        for (int i=0; i<loadListToCompare.size(); i++){
-            for (int j=0; j<updatedLoadSubmittedList.size(); j++){
-                if (loadListToCompare.get(i).getIdpost_load().equals(updatedLoadSubmittedList.get(j).getIdpost_load())){
+        for (int i = 0; i < loadListToCompare.size(); i++) {
+            for (int j = 0; j < updatedLoadSubmittedList.size(); j++) {
+                if (loadListToCompare.get(i).getIdpost_load().equals(updatedLoadSubmittedList.get(j).getIdpost_load())) {
                     loadListToCompare.remove(i);
                 }
             }
@@ -481,7 +480,7 @@ public class DashboardActivity extends AppCompatActivity {
         loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadListToCompare);
         loadListRecyclerView.setAdapter(loadListAdapter);
         loadListRecyclerView.scrollToPosition(loadListAdapter.getItemCount() - 1);
-        if (loadListToCompare.size()>0) {
+        if (loadListToCompare.size() > 0) {
             loadListAdapter.updateData(loadListToCompare);
         }
 
@@ -527,10 +526,7 @@ public class DashboardActivity extends AppCompatActivity {
                         modelLoadNotification.setKm_approx(obj.getString("km_approx"));
                         modelLoadNotification.setNotes_meterial_des(obj.getString("notes_meterial_des"));
 
-                        if (obj.getString("bid_status").equals("pending")) {
-                            loadList.add(modelLoadNotification);
-                        }
-
+                        loadList.add(modelLoadNotification);
                     }
 
                     getBidListByUserId(loadList);
@@ -1486,7 +1482,7 @@ public class DashboardActivity extends AppCompatActivity {
         partitionTextview.setText("My Bid Response");
         timeLeftTextview.setText("CONSIGNMENT");
         timeLeftTextview.setTextColor(getResources().getColorStateList(R.color.black));
-        timeLeftTextview.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+        timeLeftTextview.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
 
         negotiable_yes.setEnabled(false);
         negotiable_yes.setChecked(false);
@@ -1543,7 +1539,6 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
     private class SwipeListener implements View.OnTouchListener {

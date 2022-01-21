@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -59,6 +60,20 @@ public class FindLoadsActivity extends AppCompatActivity {
         bidsListAdapter = new FindLoadAdapter(FindLoadsActivity.this, bidsList);
         bidsListRecyclerView.setAdapter(bidsListAdapter);
         getBidsReceived();
+    }
+
+    public void onClickBottomNavigation(View view) {
+        switch (view.getId()) {
+            case R.id.bottom_nav_sp_dashboard:
+                Intent intent = new Intent(FindLoadsActivity.this, DashboardActivity.class);
+                intent.putExtra("mobile2", phone);
+                startActivity(intent);
+                break;
+
+            case R.id.bottom_nav_customer_dashboard:
+
+                break;
+        }
     }
 
     public void getBidsReceived() {
