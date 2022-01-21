@@ -485,7 +485,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     }
 
 
-    public void getBidsResponsesList(BidsReceivedModel obj, RecyclerView bidsResponsesRecyclerView, TextView bidsReceived, ConstraintLayout showRecyclerView) {
+    public void getBidsResponsesList(BidsReceivedModel obj, RecyclerView bidsResponsesRecyclerView, TextView bidsReceived, ConstraintLayout showRecyclerView, ArrayList<BidsReceivedModel> loadList) {
         ArrayList<BidsResponsesModel> bidResponsesList = new ArrayList<>();
         bidResponsesList.clear();
 
@@ -548,13 +548,25 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                             bidsReceived.setText(bidsResponses + " Responses Received");
                             Log.i("Res", bidsReceived.getText().toString());
 
-                            if (bidResponsesList.get(i).getBid_status().equals("Accepted")) {
-                                int itemPos = bidResponsesList.indexOf(bidResponsesList.get(i));
-                                bidResponsesList.add(0, bidResponsesList.get(i));
-                                bidResponsesList.remove(itemPos+1);
+                            if (bidResponsesList.get(i).getBid_status().equals("submitted")) {
                                 bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
                                 bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
                                 bidsResponsesAdapter.updateData(bidResponsesList);
+
+                            } else if (bidResponsesList.get(i).getBid_status().equals("Accepted")) {
+                                int itemPos = bidResponsesList.indexOf(bidResponsesList.get(i));
+                                bidResponsesList.add(0, bidResponsesList.get(i));
+                                bidResponsesList.remove(itemPos + 1);
+
+                                bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
+                                bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
+                                bidsResponsesAdapter.updateData(bidResponsesList);
+                            } else if (bidResponsesList.get(i).getBid_status().equals("RespondedBySP")) {
+                                bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
+                                bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
+                                bidsResponsesAdapter.updateData(bidResponsesList);
+                            } else if (bidResponsesList.get(i).getBid_status().equals("FinalAccepted")) {
+                                loadList.remove(loadList.get(i));
                             }
                         }
                     }
