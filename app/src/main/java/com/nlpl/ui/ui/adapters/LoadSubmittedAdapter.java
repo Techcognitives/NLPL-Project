@@ -31,6 +31,7 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
     private ArrayList<BidSubmittedModel> loadSubmittedList;
     private DashboardActivity activity;
     private RequestQueue mQueue;
+
     public LoadSubmittedAdapter(DashboardActivity activity, ArrayList<BidSubmittedModel> loadSubmittedList) {
         this.loadSubmittedList = loadSubmittedList;
         this.activity = activity;
@@ -55,9 +56,6 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
         String dropCity = obj.getDrop_city();
         holder.destinationEnd.setText("  " + dropCity);
 
-        String budget = obj.getBudget();
-        holder.budget.setText("₹" + budget);
-
         String date = obj.getPick_up_date();
         holder.date.setText("Date: " + date);
 
@@ -80,7 +78,7 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
         holder.body.setText("Body: " + bodyType);
 
         String pickUpLocation = obj.getPick_add();
-        holder.pickUpLocation.setText(" "+pickUpLocation);
+        holder.pickUpLocation.setText(" " + pickUpLocation);
 
         //----------------------------------------------------------
         String url = activity.getString(R.string.baseURL) + "/spbid/bidDtByBidId/" + obj.getBidId();
@@ -90,13 +88,38 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
                 try {
                     JSONArray truckLists = response.getJSONArray("data");
                     for (int i = 0; i < truckLists.length(); i++) {
-                        JSONObject obj = truckLists.getJSONObject(i);
-                        String bid_status = obj.getString("bid_status");
-                        if (bid_status.equals("Accepted")){
+                        JSONObject obj1 = truckLists.getJSONObject(i);
+                        String bid_status = obj1.getString("bid_status");
+                        if (bid_status.equals("Accepted")) {
+
+                            holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
                             holder.bidNowButton.setText("Accept Revised");
                             holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.red));
-                        } else if (bid_status.equals("submitted")){
+
+                            holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    activity.acceptRevisedBid(obj);
+                                }
+                            });
+
+                        } else if (bid_status.equals("submitted")) {
+
+                            holder.budget.setText("₹" + obj.getBudget());
                             holder.bidNowButton.setText("Bid Submitted");
+
+                        } else if (bid_status.equals("RespondedBySP")) {
+
+                            holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
+                            holder.bidNowButton.setText("You Responded");
+                            holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.button_blue));
+
+                        } else if (bid_status.equals("FinalAccepted")) {
+
+                            holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
+                            holder.bidNowButton.setText("Accepted");
+                            holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.green));
+
                         }
                     }
 
@@ -145,7 +168,6 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
             bidNowButton = itemView.findViewById(R.id.load_list_bid_now_button);
 
         }
-
     }
 //--------------------------------------------------------------------------------------------------
 }

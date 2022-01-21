@@ -65,7 +65,6 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
                     for (int i = 0; i < truckLists.length(); i++) {
                         JSONObject obj = truckLists.getJSONObject(i);
                         name = obj.getString("name");
-
                         String spName = name;
                         holder.spName.setText(spName);
                     }
@@ -91,6 +90,7 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
         }
 
         if (obj.getBid_status().equals("submitted")) {
+
             holder.acceptViewBidButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -98,13 +98,28 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
                 }
             });
             holder.acceptViewBidButton.setDrawingCacheBackgroundColor(R.color.orange);
+
         } else if (obj.getBid_status().equals("Accepted")) {
+
             holder.acceptViewBidButton.setText("You\nResponded");
             holder.acceptViewBidButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.button_blue));
-//            Drawable buttonDrawable = holder.acceptViewBidButton.getBackground();
-//            buttonDrawable = DrawableCompat.wrap(buttonDrawable);
-//            DrawableCompat.setTint(buttonDrawable, R.color.button_blue);
-//            holder.acceptViewBidButton.setBackground(buttonDrawable);
+
+        } else if (obj.getBid_status().equals("RespondedBySP")) {
+
+            holder.negotiable.setText("Non-Nego");
+            holder.acceptViewBidButton.setText("Accept\n Final Offer");
+            holder.acceptViewBidButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.green));
+
+            holder.acceptViewBidButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    activity.acceptFinalOffer(obj);
+                }
+
+            });
+        } else if (obj.getBid_status().equals("FinalAccepted")) {
+
+            holder.acceptViewBidButton.setText("Finally Accepted");
         }
 
         String budget = obj.getSp_quote();

@@ -1,24 +1,24 @@
 package com.nlpl.model;
 
 public class UpdateCustomerBudget {
-    private String budget;
+    private String is_bid_accpted_by_sp;
 
-    public UpdateCustomerBudget(String budget) {
-        this.budget = budget;
+    public UpdateCustomerBudget(String is_bid_accpted_by_sp) {
+        this.is_bid_accpted_by_sp = is_bid_accpted_by_sp;
     }
 
     @Override
     public String toString() {
         return "UpdateCustomerBudget{" +
-                "customerBudget='" + budget + '\'' +
+                "is_bid_accpted_by_sp='" + is_bid_accpted_by_sp + '\'' +
                 '}';
     }
 
-    public String getBid_status() {
-        return budget;
+    public String getIs_bid_accpted_by_sp() {
+        return is_bid_accpted_by_sp;
     }
 
-    public void setBid_status(String bid_status) {
-        this.budget = bid_status;
+    public void setIs_bid_accpted_by_sp(String is_bid_accpted_by_sp) {
+        this.is_bid_accpted_by_sp = is_bid_accpted_by_sp;
     }
 }

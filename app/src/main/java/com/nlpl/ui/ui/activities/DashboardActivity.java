@@ -45,7 +45,9 @@ import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
 import com.nlpl.model.Requests.BidLoadRequest;
 import com.nlpl.model.Responses.BidLadResponse;
 import com.nlpl.model.UpdateBidStatusAccepted;
+import com.nlpl.model.UpdateBidStatusRespondedBySP;
 import com.nlpl.model.UpdateLoadStatusSubmitted;
+import com.nlpl.model.UpdateSPQuoteFinal;
 import com.nlpl.services.BidLoadService;
 import com.nlpl.services.PostLoadService;
 import com.nlpl.ui.ui.adapters.BidsResponsesAdapter;
@@ -68,8 +70,10 @@ public class DashboardActivity extends AppCompatActivity {
 
     private RequestQueue mQueue;
     private PostLoadService postLoadService;
+    private BidLoadService bidService;
 
     private ArrayList<LoadNotificationModel> loadList = new ArrayList<>();
+    private ArrayList<LoadNotificationModel> loadListToCompare = new ArrayList<>();
 
     private ArrayList<BidSubmittedModel> loadSubmittedList = new ArrayList<>();
     private ArrayList<BidSubmittedModel> updatedLoadSubmittedList = new ArrayList<>();
@@ -78,14 +82,14 @@ public class DashboardActivity extends AppCompatActivity {
     private LoadSubmittedAdapter loadSubmittedAdapter;
     private RecyclerView loadListRecyclerView, loadSubmittedRecyclerView;
 
-    Dialog setBudget, selectTruckDialog, previewDialogBidNow;
+    Dialog setBudget, selectTruckDialog, previewDialogBidNow, dialogAcceptRevisedBid;
 
     String bidStatus, vehicle_no, truckId, isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
 
     SwipeListener swipeListener;
 
     View actionBar;
-    TextView cancel, acceptAndBid, spQuote, addDriver, selectDriver, addTruck, selectTruck, selectedTruckModel, selectedTruckFeet, selectedTruckCapacity, selectedTruckBodyType, actionBarTitle;
+    TextView reqBudget, cancel, acceptAndBid, spQuote, addDriver, selectDriver, addTruck, selectTruck, selectedTruckModel, selectedTruckFeet, selectedTruckCapacity, selectedTruckBodyType, actionBarTitle;
     EditText notesSp;
     CheckBox declaration;
     RadioButton negotiable_yes, negotiable_no;
@@ -158,7 +162,7 @@ public class DashboardActivity extends AppCompatActivity {
                 .baseUrl(getString(R.string.baseURL))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
+        bidService = retrofit.create(BidLoadService.class);
         postLoadService = retrofit.create(PostLoadService.class);
 
         getUserId(phone);
@@ -186,6 +190,10 @@ public class DashboardActivity extends AppCompatActivity {
         previewDialogBidNow = new Dialog(DashboardActivity.this);
         previewDialogBidNow.setContentView(R.layout.dialog_bid_now);
         previewDialogBidNow.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        dialogAcceptRevisedBid = new Dialog(DashboardActivity.this);
+        dialogAcceptRevisedBid.setContentView(R.layout.dialog_bid_now);
+        dialogAcceptRevisedBid.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
     }
 
@@ -219,16 +227,15 @@ public class DashboardActivity extends AppCompatActivity {
                     getUserDetails();
 
                     //---------------------------- Get Load Details -------------------------------------------
-                    getBidListByUserId();
+
                     getLoadNotificationList();
+
 
                     LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(getApplicationContext());
                     linearLayoutManagerBank.setReverseLayout(true);
                     loadListRecyclerView.setLayoutManager(linearLayoutManagerBank);
                     loadListRecyclerView.setHasFixedSize(true);
 
-                    loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadList);
-                    loadListRecyclerView.setAdapter(loadListAdapter);
 
                     LinearLayoutManager linearLayoutManagerBank1 = new LinearLayoutManager(getApplicationContext());
                     linearLayoutManagerBank1.setReverseLayout(true);
@@ -454,6 +461,27 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
+    private void compareAndRemove(ArrayList<LoadNotificationModel> loadListToCompare){
+        // remove loadSubmittedList from LoadList
+
+        Log.i("updated loadSub list", String.valueOf(updatedLoadSubmittedList));
+        Log.i(" loadlist", String.valueOf(loadId));
+
+        for (int i=0; i<loadListToCompare.size(); i++){
+            for (int j=0; j<updatedLoadSubmittedList.size(); j++){
+                if (loadListToCompare.get(i).getIdpost_load().equals(updatedLoadSubmittedList.get(j).getIdpost_load())){
+                    loadListToCompare.remove(i);
+                }
+            }
+        }
+        loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadListToCompare);
+        loadListRecyclerView.setAdapter(loadListAdapter);
+        if (loadListToCompare.size()>0) {
+            loadListAdapter.updateData(loadListToCompare);
+        }
+
+    }
+
     public void getLoadNotificationList() {
         //---------------------------- Get Bank Details -------------------------------------------
         String url1 = getString(R.string.baseURL) + "/loadpost/getAllPosts";
@@ -498,9 +526,7 @@ public class DashboardActivity extends AppCompatActivity {
 
                     }
 
-                    if (loadList.size() > 0) {
-                        loadListAdapter.updateData(loadList);
-                    }
+                    getBidListByUserId(loadList);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -790,7 +816,7 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 isTruckSelectedToBid = true;
-                selectTruck.setText(adapter1.getItem(i));
+//                selectTruck.setText(adapter1.getItem(i));
                 if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
                     acceptAndBid.setEnabled(true);
                     acceptAndBid.setBackgroundResource((R.drawable.button_active));
@@ -886,7 +912,9 @@ public class DashboardActivity extends AppCompatActivity {
                         String truckFeet = obj.getString("truck_ft");
                         String truckCapacity = obj.getString("truck_carrying_capacity");
                         String bodyType = obj.getString("vehicle_type");
+                        String vehicleNo = obj.getString("vehicle_no");
                         selectedDriverId = obj.getString("driver_id");
+                        selectTruck.setText(vehicleNo);
                         selectedTruckModel.setText(truckModel);
                         selectedTruckFeet.setText(truckFeet);
                         selectedTruckBodyType.setText(bodyType);
@@ -913,7 +941,7 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
 
-    private void getBidListByUserId() {
+    private void getBidListByUserId(ArrayList<LoadNotificationModel> loadListToCompare) {
 
         String url = getString(R.string.baseURL) + "/spbid/getBidDtByUserId/" + userId;
         Log.i("url betBidByUserID", url);
@@ -926,7 +954,7 @@ public class DashboardActivity extends AppCompatActivity {
                         JSONObject obj = truckLists.getJSONObject(i);
                         String postId = obj.getString("idpost_load");
                         String bidId = obj.getString("sp_bid_id");
-                        getBidSubmittedList(postId, bidId );
+                        getBidSubmittedList(postId, bidId, loadListToCompare);
                     }
 
                 } catch (JSONException e) {
@@ -942,7 +970,7 @@ public class DashboardActivity extends AppCompatActivity {
         mQueue.add(request);
     }
 
-    public void getBidSubmittedList(String loadIdReceived, String bidId) {
+    public void getBidSubmittedList(String loadIdReceived, String bidId, ArrayList<LoadNotificationModel> loadListToCompare) {
         //---------------------------- Get Bank Details ------------------------------------------
         String url1 = getString(R.string.baseURL) + "/loadpost/getLoadDtByPostId/" + loadIdReceived;
         Log.i("URL: ", url1);
@@ -989,6 +1017,8 @@ public class DashboardActivity extends AppCompatActivity {
                         updatedLoadSubmittedList.addAll(loadSubmittedList);
                         loadSubmittedAdapter.updateData(updatedLoadSubmittedList);
                     }
+
+                    compareAndRemove(loadListToCompare);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1158,7 +1188,208 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void acceptRevisedBid(BidSubmittedModel obj) {
+
+        loadId = obj.getIdpost_load();
+        bidStatus = obj.getBid_status();
+        String pick_up_date = obj.getPick_up_date();
+        String pick_up_time = obj.getPick_up_time();
+        String distance = obj.getKm_approx();
+        String required_model = obj.getVehicle_model();
+        String required_feet = obj.getFeet();
+        String required_capacity = obj.getCapacity();
+        String required_truck_body = obj.getBody_type();
+        String pick_up_location = obj.getPick_add() + " " + obj.getPick_city() + " " + obj.getPick_state() + " " + obj.getPick_pin_code();
+        String drop_location = obj.getDrop_add() + " " + obj.getDrop_city() + " " + obj.getDrop_state() + " " + obj.getDrop_pin_code();
+        String received_notes_description = obj.getNotes_meterial_des();
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialogAcceptRevisedBid.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+        dialogAcceptRevisedBid.show();
+        dialogAcceptRevisedBid.getWindow().setAttributes(lp);
+
+        //-------------------------------------------Display Load Information---------------------------------------------
+        TextView pickUpDate = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_pick_up_date_textview);
+        TextView pickUpTime = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_pick_up_time_textview);
+        reqBudget = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_budget_textview);
+        TextView approxDistance = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_distance_textview);
+        TextView reqModel = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_req_model_textview);
+        TextView reqFeet = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_req_feet_textview);
+        TextView reqCapacity = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_req_capacity_textview);
+        TextView reqBodyType = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_req_bodyType_textview);
+        TextView pickUpLocation = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_pick_up_location_textview);
+        TextView dropLocation = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_drop_location_textview);
+        TextView receivedNotes = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_received_notes_textview);
+        TextView loadIdHeading = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_loadId_heading);
+
+        pickUpDate.setText(pick_up_date);
+        pickUpTime.setText(pick_up_time);
+        approxDistance.setText(distance);
+        reqModel.setText(required_model);
+        reqFeet.setText(required_feet);
+        reqCapacity.setText(required_capacity);
+        reqBodyType.setText(required_truck_body);
+        pickUpLocation.setText(pick_up_location);
+        dropLocation.setText(drop_location);
+        receivedNotes.setText(received_notes_description);
+        loadIdHeading.setText("Load ID: " + obj.getPick_city() + "-" + obj.getDrop_city() + "-000");
+        //----------------------------------------------------------------------------------------------------------------
+
+        //------------------------------------Accept Load and Bid now-----------------------------------------
+        spQuote = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_sp_quote_textview);
+        selectTruck = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_select_truck_textview);
+        selectDriver = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_select_driver_textview);
+        addTruck = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_add_truck_textview);
+        addDriver = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_add_driver_textview);
+        selectedTruckModel = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_truck_model_textview);
+        selectedTruckFeet = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_truck_feet_textview);
+        selectedTruckCapacity = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_truck_capacity_textview);
+        selectedTruckBodyType = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_truck_body_type_textview);
+        notesSp = (EditText) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_notes_editText);
+        declaration = (CheckBox) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_declaration);
+        acceptAndBid = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_accept_and_bid_btn);
+        cancel = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_cancel_btn);
+        negotiable_yes = dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_radio_btn_yes);
+        negotiable_no = dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_radio_btn_no);
+
+        negotiable_yes.setEnabled(false);
+        negotiable_yes.setChecked(false);
+        negotiable_no.setChecked(true);
+        declaration.setVisibility(View.INVISIBLE);
+
+        getBidDetailsByBidId(obj.getBidId());
+
+        cancel.setEnabled(true);
+        cancel.setBackgroundResource((R.drawable.button_active));
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i8 = new Intent(DashboardActivity.this, DashboardActivity.class);
+                i8.putExtra("mobile2", phone);
+                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i8);
+                overridePendingTransition(0, 0);
+                finish();
+                previewDialogBidNow.dismiss();
+            }
+        });
+
+        acceptAndBid.setEnabled(true);
+        acceptAndBid.setBackgroundResource((R.drawable.button_active));
+
+        spQuote.setText("");
+
+
+        acceptAndBid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                updateBidStatusRespondedBySP(obj.getBidId());
+                updateSPQuoteFinal(obj.getBidId(), spQuote.getText().toString());
+
+                AlertDialog.Builder my_alert = new AlertDialog.Builder(DashboardActivity.this);
+                my_alert.setTitle("Bid Revised and Responded Successfully");
+                my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        Intent i8 = new Intent(DashboardActivity.this, DashboardActivity.class);
+                        i8.putExtra("mobile2", phone);
+                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i8);
+                        overridePendingTransition(0, 0);
+                        finish();
+
+                        dialogInterface.dismiss();
+                        previewDialogBidNow.dismiss();
+                    }
+                });
+                my_alert.show();
+
+            }
+
+        });
+
+        selectTruck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getTrucksByUserId();
+            }
+        });
+
+        selectDriver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isTruckSelectedToBid) {
+                    getDriversByUserId();
+                }
+            }
+        });
+
+        addTruck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent3 = new Intent(DashboardActivity.this, VehicleDetailsActivity.class);
+                intent3.putExtra("userId", userId);
+                intent3.putExtra("isEdit", false);
+                intent3.putExtra("mobile", phone);
+                startActivity(intent3);
+            }
+        });
+
+        addDriver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i8 = new Intent(DashboardActivity.this, DriverDetailsActivity.class);
+                i8.putExtra("userId", userId);
+                i8.putExtra("isEdit", false);
+                i8.putExtra("mobile", mobile);
+                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i8);
+                overridePendingTransition(0, 0);
+            }
+        });
+
+    }
     //-----------------------------------------------------------------------------------------------------
+
+    private void getBidDetailsByBidId(String bidId) {
+        //-------------------------------------------------------------------------------------------
+        String url = getString(R.string.baseURL) + "/spbid/bidDtByBidId/" + bidId;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj1 = truckLists.getJSONObject(i);
+                        String truck_id = obj1.getString("assigned_truck_id");
+                        getTruckDetailsByTruckId(truck_id);
+                        String driver_id = obj1.getString("assigned_driver_id");
+                        getDriverDetailsByDriverId(driver_id);
+                        spQuote.setText(obj1.getString("is_bid_accpted_by_sp"));
+                        reqBudget.setText(obj1.getString("is_bid_accpted_by_sp"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        mQueue.add(request);
+        //----------------------------------------------------------
+
+    }
 
 
     private class SwipeListener implements View.OnTouchListener {
@@ -1236,5 +1467,49 @@ public class DashboardActivity extends AppCompatActivity {
         });
     }
     //--------------------------------------------------------------------------------------------------
+
+    //----------------------------------------------------------------------------------------------------------------
+    private void updateBidStatusRespondedBySP(String bidId) {
+
+        UpdateBidStatusRespondedBySP updateBidStatusRespondedBySP = new UpdateBidStatusRespondedBySP("RespondedBySP");
+
+        Call<UpdateBidStatusRespondedBySP> call = bidService.updateBidStatusRespondedBySP("" + bidId, updateBidStatusRespondedBySP);
+
+        call.enqueue(new Callback<UpdateBidStatusRespondedBySP>() {
+            @Override
+            public void onResponse(Call<UpdateBidStatusRespondedBySP> call, retrofit2.Response<UpdateBidStatusRespondedBySP> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UpdateBidStatusRespondedBySP> call, Throwable t) {
+
+            }
+        });
+    }
+    //--------------------------------------------------------------------------------------------------
+
+    //----------------------------------------------------------------------------------------------------------------
+    private void updateSPQuoteFinal(String bidId, String spQuote) {
+
+        UpdateSPQuoteFinal updateSPQuoteFinal = new UpdateSPQuoteFinal(spQuote);
+
+        Call<UpdateSPQuoteFinal> call = bidService.updateSPQuoteFinal("" + bidId, updateSPQuoteFinal);
+
+        call.enqueue(new Callback<UpdateSPQuoteFinal>() {
+            @Override
+            public void onResponse(Call<UpdateSPQuoteFinal> call, retrofit2.Response<UpdateSPQuoteFinal> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UpdateSPQuoteFinal> call, Throwable t) {
+
+            }
+        });
+
+    }
+    //--------------------------------------------------------------------------------------------------
+
 
 }

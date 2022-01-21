@@ -3,6 +3,10 @@ package com.nlpl.services;
 import com.nlpl.model.Requests.BidLoadRequest;
 import com.nlpl.model.Responses.BidLadResponse;
 import com.nlpl.model.UpdateBidStatusAccepted;
+import com.nlpl.model.UpdateBidStatusFinalAccepted;
+import com.nlpl.model.UpdateBidStatusRespondedBySP;
+import com.nlpl.model.UpdateCustomerBudget;
+import com.nlpl.model.UpdateSPQuoteFinal;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -16,4 +20,17 @@ public interface BidLoadService {
 
     @PUT("/spbid/updateBidByBID/{bidId}")
     Call<UpdateBidStatusAccepted> updateBidStatusAccepted(@Path("bidId") String bidId, @Body UpdateBidStatusAccepted updateBidStatusAccepted);
+
+    @PUT("/spbid/updateBidByBID/{bidId}")
+    Call<UpdateBidStatusRespondedBySP> updateBidStatusRespondedBySP(@Path("bidId") String bidId, @Body UpdateBidStatusRespondedBySP updateBidStatusRespondedBySP);
+
+    @PUT("/spbid/updateBidByBID/{bidId}")
+    Call<UpdateSPQuoteFinal> updateSPQuoteFinal(@Path("bidId") String bidId, @Body UpdateSPQuoteFinal updateSPQuoteFinal);
+
+    @PUT("/spbid/updateBidByBID/{bidId}")
+    Call<UpdateCustomerBudget> updateCustomerBudget(@Path("bidId") String bidId, @Body UpdateCustomerBudget updateCustomerBudget);
+
+    @PUT("/spbid/updateBidByBID/{bidId}")
+    Call<UpdateBidStatusFinalAccepted> updateFinalAccepted(@Path("bidId") String bidId, @Body UpdateBidStatusFinalAccepted updateBidStatusFinalAccepted);
+
 }
