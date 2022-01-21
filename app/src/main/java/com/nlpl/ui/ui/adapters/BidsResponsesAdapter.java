@@ -37,7 +37,7 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
     private CustomerDashboardActivity activity;
     private RequestQueue mQueue;
 
-    String mobile, name, address, pinCode, city, role, emailIdAPI;
+    String name;
 
     public BidsResponsesAdapter(CustomerDashboardActivity activity, ArrayList<BidsResponsesModel> bidsResponsesList) {
         this.bidsResponsesList = bidsResponsesList;
@@ -118,6 +118,7 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
                 }
 
             });
+
         } else if (obj.getBid_status().equals("FinalAccepted")) {
             holder.acceptViewBidButton.setText("Finally Accepted");
         }
