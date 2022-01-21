@@ -520,26 +520,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
                     }
 
-//                    for (int i=0; i<bidResponsesList.size(); i++){
-//                        if (bidResponsesList.get(i).getBid_status().equals("Accepted")){
-//                            int index = bidResponsesList.indexOf(bidResponsesLists.get(i));
-//                            bidResponsesLists.remove(index);
-//                            bidResponsesList.add(0, bidResponsesList.get(i));
-//                        }
-//                    }
-
-
-//                    for (int i=0; i<bidResponsesList.size()-1 ;i++){
-//                        for (int j = i+1; j<bidResponsesList.size(); j++){
-//                            if (bidResponsesList.get(i).getBid_status().compareTo(bidResponsesList.get(j).getBid_status())>0){
-//                                ArrayList<BidsResponsesModel> temp = new ArrayList<>();
-//                                temp.add(bidResponsesList.get(i));
-//                                bidResponsesList.add(i,(BidsResponsesModel) bidResponsesList.get(j));
-//                                bidResponsesList.add(j,temp.get(0));
-//
-//                            }
-//                        }
-//                    }
 
                     for (int i = 0; i < bidResponsesList.size(); i++) {
                         if (obj.getIdpost_load().equals(bidResponsesList.get(i).getIdpost_load())) {
