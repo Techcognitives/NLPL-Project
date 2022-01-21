@@ -45,6 +45,7 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
         mQueue = Volley.newRequestQueue(activity);
     }
 
+
     @Override
     public BidsResponsesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bids_responses_list, parent, false);
