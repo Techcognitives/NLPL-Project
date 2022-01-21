@@ -133,12 +133,12 @@
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textView36"
+            app:layout_constraintEnd_toStartOf="@+id/bid_now_time_left_00_textview"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView36"
+            android:id="@+id/bid_now_time_left_00_textview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Pickup Date"
@@ -156,11 +156,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_drop_down"
-            app:layout_constraintBottom_toBottomOf="@+id/textView36"
-            app:layout_constraintEnd_toEndOf="@+id/textView36"
+            app:layout_constraintBottom_toBottomOf="@+id/bid_now_time_left_00_textview"
+            app:layout_constraintEnd_toEndOf="@+id/bid_now_time_left_00_textview"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_loadId_heading"
-            app:layout_constraintTop_toTopOf="@+id/textView36"
+            app:layout_constraintTop_toTopOf="@+id/bid_now_time_left_00_textview"
             app:tint="@color/black" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

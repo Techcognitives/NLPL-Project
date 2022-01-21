@@ -117,8 +117,14 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
                         } else if (bid_status.equals("FinalAccepted")) {
 
                             holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
-                            holder.bidNowButton.setText("Accepted");
+                            holder.bidNowButton.setText("View Consignment");
                             holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.green));
+                            holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    activity.viewConsignment(obj);
+                                }
+                            });
 
                         }
                     }

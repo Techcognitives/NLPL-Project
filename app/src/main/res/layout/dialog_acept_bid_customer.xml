@@ -49,7 +49,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/textView34"
+                android:id="@+id/bid_now_time_left_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="23dp"
                 android:layout_marginStart="5dp"
@@ -60,12 +60,12 @@
                 android:textColor="@color/redDark"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/textView36"
+                app:layout_constraintEnd_toStartOf="@+id/bid_now_time_left_00_textview"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView36"
+                android:id="@+id/bid_now_time_left_00_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -75,7 +75,7 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView34"
+                app:layout_constraintStart_toEndOf="@+id/bid_now_time_left_textView"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
