@@ -70,10 +70,37 @@
             android:scrollbars="horizontal"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/jbnskdc"
+            app:layout_constraintStart_toEndOf="@+id/bdcscxlsdn"
             app:layout_constraintTop_toBottomOf="@+id/dashboard_load_notification_button"
             app:stackFromEnd="true" />
+
+        <ImageView
+            android:id="@+id/bdcscxlsdn"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="5dp"
+            android:scaleX="-1"
+            android:onClick="onClickShiftRecyclerviewToLeft"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/find_loads_recycler_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dashboard_load_notification_button"
+            app:srcCompat="@drawable/ic_right"
+            app:tint="@color/black" />
+
+        <ImageView
+            android:id="@+id/jbnskdc"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="5dp"
+            android:onClick="onClickShiftRecyclerviewToRight"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/find_loads_recycler_view"
+            app:layout_constraintTop_toBottomOf="@+id/dashboard_load_notification_button"
+            app:srcCompat="@drawable/ic_right"
+            app:tint="@color/black" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -84,7 +111,9 @@
         app:layout_constraintBottom_toTopOf="@+id/find_loads_bottom_nav_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/find_loads_constrain" />
+        app:layout_constraintTop_toBottomOf="@+id/find_loads_constrain" >
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

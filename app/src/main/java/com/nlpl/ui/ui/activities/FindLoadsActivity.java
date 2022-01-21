@@ -51,7 +51,7 @@ public class FindLoadsActivity extends AppCompatActivity {
         bidsListRecyclerView = (RecyclerView) findViewById(R.id.find_loads_recycler_view);
 
         LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(getApplicationContext());
-        linearLayoutManagerBank.setReverseLayout(true);
+        linearLayoutManagerBank.setReverseLayout(false);
         linearLayoutManagerBank.setOrientation(LinearLayoutManager.HORIZONTAL);
         bidsListRecyclerView.setLayoutManager(linearLayoutManagerBank);
         bidsListRecyclerView.setHasFixedSize(true);
@@ -125,5 +125,13 @@ public class FindLoadsActivity extends AppCompatActivity {
         });
         mQueue.add(request);
         //-------------------------------------------------------------------------------------------
+    }
+
+    public void onClickShiftRecyclerviewToLeft(View view) {
+        bidsListRecyclerView.setAdapter(bidsListAdapter);
+    }
+
+    public void onClickShiftRecyclerviewToRight(View view) {
+        bidsListRecyclerView.scrollToPosition(bidsListAdapter.getItemCount() - 1);
     }
 }

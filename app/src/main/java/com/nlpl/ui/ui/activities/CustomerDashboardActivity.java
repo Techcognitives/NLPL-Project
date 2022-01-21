@@ -546,11 +546,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                                 bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
                                 bidsResponsesAdapter.updateData(bidResponsesList);
                             } else if (bidResponsesList.get(i).getBid_status().equals("FinalAccepted")) {
-                                loadList.remove(loadList.get(i));
-                                bidsListAdapter.updateData(loadList);
-                                bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
-                                bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
-                                bidsResponsesAdapter.updateData(bidResponsesList);
+
                             }
 
                         }

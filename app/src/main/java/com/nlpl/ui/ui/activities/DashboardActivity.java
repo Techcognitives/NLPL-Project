@@ -232,7 +232,7 @@ public class DashboardActivity extends AppCompatActivity {
 
 
                     LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(getApplicationContext());
-                    linearLayoutManagerBank.setReverseLayout(false);
+                    linearLayoutManagerBank.setReverseLayout(true);
                     loadListRecyclerView.setLayoutManager(linearLayoutManagerBank);
                     loadListRecyclerView.setHasFixedSize(true);
 
@@ -244,7 +244,7 @@ public class DashboardActivity extends AppCompatActivity {
 
                     loadSubmittedAdapter = new LoadSubmittedAdapter(DashboardActivity.this, updatedLoadSubmittedList);
                     loadSubmittedRecyclerView.setAdapter(loadSubmittedAdapter);
-
+                    loadSubmittedRecyclerView.scrollToPosition(loadSubmittedAdapter.getItemCount() - 1);
 
                     //------------------------------------------------------------------------------------------
 
@@ -453,7 +453,7 @@ public class DashboardActivity extends AppCompatActivity {
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
-                Intent intent = new Intent(DashboardActivity.this, CustomerDashboardActivity.class);
+                Intent intent = new Intent(DashboardActivity.this, FindLoadsActivity.class);
                 intent.putExtra("userId", userId);
                 intent.putExtra("mobile", phone);
                 startActivity(intent);
@@ -476,6 +476,7 @@ public class DashboardActivity extends AppCompatActivity {
         }
         loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadListToCompare);
         loadListRecyclerView.setAdapter(loadListAdapter);
+        loadListRecyclerView.scrollToPosition(loadListAdapter.getItemCount() - 1);
         if (loadListToCompare.size()>0) {
             loadListAdapter.updateData(loadListToCompare);
         }
