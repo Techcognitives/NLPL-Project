@@ -531,9 +531,11 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                             bidsReceived.setText(bidsResponses + " Responses Received");
                             Log.i("Res", bidsReceived.getText().toString());
 
-                            bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
-                            bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
-                            bidsResponsesAdapter.updateData(bidResponsesList);
+//                            if (obj.getBid_status().equals("Accepted")) {
+                                bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
+                                bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
+                                bidsResponsesAdapter.updateData(bidResponsesList);
+//                            }
                         }
                     }
 

@@ -99,7 +99,7 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
                             holder.bidNowButton.setText("Bid Submitted");
                         }
                     }
-
+                    
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
