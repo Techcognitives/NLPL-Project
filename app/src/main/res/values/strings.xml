@@ -971,12 +971,12 @@
     <string name="select_city">City</string>
     <string name="pin_code">PIN Code</string>
     <string name="address">Address</string>
-    <string name="are_u_sp">Are you a Service Provider? </string>
-    <string name="truck_owner">Truck Owner</string>
+    <string name="are_u_sp">Are you a Truck Owner / Driver / Broker? </string>
+    <string name="truck_owner">Truck Owner / Driver / Broker</string>
     <string name="driver">Driver</string>
     <string name="broker">Broker</string>
     <string name="ok">OK</string>
-    <string name="customer">Are you a Customer?</string>
+    <string name="customer">Are you a Load Poster?</string>
     <string name="yes">YES</string>
     //----------------------------------------------------------------------------------------------
 

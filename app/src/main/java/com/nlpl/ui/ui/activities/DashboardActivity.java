@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -50,6 +51,8 @@ import com.nlpl.model.UpdateLoadStatusSubmitted;
 import com.nlpl.model.UpdateSPQuoteFinal;
 import com.nlpl.services.BidLoadService;
 import com.nlpl.services.PostLoadService;
+import com.nlpl.ui.ui.adapters.BidsAcceptedAdapter;
+import com.nlpl.ui.ui.adapters.BidsReceivedAdapter;
 import com.nlpl.ui.ui.adapters.BidsResponsesAdapter;
 import com.nlpl.ui.ui.adapters.LoadNotificationAdapter;
 import com.nlpl.ui.ui.adapters.LoadSubmittedAdapter;
@@ -68,6 +71,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DashboardActivity extends AppCompatActivity {
 
+    SwipeRefreshLayout swipeRefreshLayout;
     private RequestQueue mQueue;
     private PostLoadService postLoadService;
     private BidLoadService bidService;
@@ -170,6 +174,15 @@ public class DashboardActivity extends AppCompatActivity {
         loadListRecyclerView = (RecyclerView) findViewById(R.id.dashboard_load_notification_recycler_view);
         loadSubmittedRecyclerView = (RecyclerView) findViewById(R.id.dashboard_load_notification_submitted_recycler_view);
 
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.profile_registration_constrain);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(false);
+                RearrangeItems();
+            }
+        });
+
         menuDialog = new Dialog(DashboardActivity.this);
         menuDialog.setContentView(R.layout.dialog_menu);
         menuDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -199,6 +212,13 @@ public class DashboardActivity extends AppCompatActivity {
         dialogViewConsignment.setContentView(R.layout.dialog_bid_now);
         dialogViewConsignment.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+    }
+
+    public void RearrangeItems() {
+        loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadList);
+        loadListRecyclerView.setAdapter(loadListAdapter);
+        loadSubmittedAdapter = new LoadSubmittedAdapter(DashboardActivity.this, updatedLoadSubmittedList);
+        loadSubmittedRecyclerView.setAdapter(loadSubmittedAdapter);
     }
 
     private void getUserId(String userMobileNumber) {
@@ -250,9 +270,9 @@ public class DashboardActivity extends AppCompatActivity {
                     loadSubmittedRecyclerView.setAdapter(loadSubmittedAdapter);
                     loadSubmittedRecyclerView.scrollToPosition(loadSubmittedAdapter.getItemCount() - 1);
 
-//                    loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadList);
-//                    loadListRecyclerView.setAdapter(loadListAdapter);
-//                    loadListRecyclerView.scrollToPosition(loadListAdapter.getItemCount() - 1);
+                    loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadList);
+                    loadListRecyclerView.setAdapter(loadListAdapter);
+                    loadListRecyclerView.scrollToPosition(loadListAdapter.getItemCount() - 1);
 
                     //------------------------------------------------------------------------------------------
 
@@ -333,6 +353,7 @@ public class DashboardActivity extends AppCompatActivity {
                             intent.putExtra("mobile", phone);
                             overridePendingTransition(0, 0);
                             startActivity(intent);
+                            DashboardActivity.this.finish();
                         } else {
 
                         }
@@ -534,10 +555,15 @@ public class DashboardActivity extends AppCompatActivity {
                         bidStatusToCompare = obj.getString("bid_status");
                         loadList.add(modelLoadNotification);
                     }
-//
-//                    if (loadList.size() > 0) {
-//                        loadListAdapter.updateData(loadList);
-//                    }
+
+                    TextView noLoadAvailable = (TextView) findViewById(R.id.dashboard_load_here_text);
+                    if (loadList.size() > 0) {
+                        noLoadAvailable.setVisibility(View.GONE);
+                        loadListAdapter.updateData(loadList);
+                    }else{
+                        noLoadAvailable.setVisibility(View.VISIBLE);
+                    }
+
                     getBidListByUserId(loadList, bidStatusToCompare);
 
                 } catch (JSONException e) {
@@ -1037,12 +1063,15 @@ public class DashboardActivity extends AppCompatActivity {
                         loadSubmittedList.add(bidSubmittedModel);
                     }
 
+                    TextView noBidsSubmittedTextView = (TextView) findViewById(R.id.dashboard_no_bids_submitted_text);
                     if (loadSubmittedList.size() > 0) {
                         updatedLoadSubmittedList.addAll(loadSubmittedList);
                         loadSubmittedAdapter.updateData(updatedLoadSubmittedList);
-//
+                        noBidsSubmittedTextView.setVisibility(View.GONE);
+                    }else{
+                        noBidsSubmittedTextView.setVisibility(View.VISIBLE);
                     }
-                    compareAndRemove(loadListToCompare, bidStatusToCompare);
+//                    compareAndRemove(loadListToCompare, bidStatusToCompare);
 //                    else {
 //                        loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadListToCompare);
 //                        loadListRecyclerView.setAdapter(loadListAdapter);
@@ -1107,7 +1136,7 @@ public class DashboardActivity extends AppCompatActivity {
         lp2.copyFrom(setBudget.getWindow().getAttributes());
         lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp2.gravity = Gravity.TOP;
+        lp2.gravity = Gravity.CENTER;
 
         setBudget.show();
         setBudget.setCancelable(true);

@@ -1,261 +1,297 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/profile_registration_constrain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:textAlignment="center"
     android:background="@color/background"
+    android:textAlignment="center"
     tools:context=".ui.ui.activities.DashboardActivity">
 
-    <include
-        android:id="@+id/profile_registration_action_bar"
-        layout="@layout/action_bar"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/dashboard_current_location_text_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <include
-        android:id="@+id/profile_registration_bottom_nav_bar"
-        layout="@layout/bottom_nav_bar"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dashboard_load_notification_constrain" />
-
-    <TextView
-        android:id="@+id/dashboard_load_notification_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="3dp"
-        android:background="@drawable/personal_details_buttons_active"
-        android:paddingStart="2dp"
-        android:paddingTop="5dp"
-        android:paddingEnd="2dp"
-        android:onClick="onClickLoadAndBids"
-        android:paddingBottom="5dp"
-        android:text="Load Notifications"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="@color/background"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout6"
-        app:layout_constraintEnd_toStartOf="@+id/dashboard_bids_submitted_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dashboard_current_location_text_view" />
-
-    <TextView
-        android:id="@+id/dashboard_bids_submitted_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/personal_details_buttons_de_active"
-        android:paddingStart="2dp"
-        android:paddingTop="5dp"
-        android:paddingEnd="2dp"
-        android:paddingBottom="5dp"
-        android:onClick="onClickLoadAndBids"
-        android:text="Bids Submitted"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="@color/background"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/dashboard_load_notification_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/dashboard_load_notification_button"
-        app:layout_constraintTop_toTopOf="@+id/dashboard_load_notification_button" />
-
-    <TextView
-        android:id="@+id/dashboard_current_location_text_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/edit_text_border"
-        android:drawableStart="@drawable/google_location_small"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp"
-        android:text="Current Location"
-        android:textColor="@color/teal_700"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/dashboard_load_notification_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView12"
-        app:layout_constraintTop_toBottomOf="@+id/profile_registration_action_bar" />
-
-    <ImageView
-        android:id="@+id/imageView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:onClick="onCLickShowMenu"
-        android:src="@drawable/blue_profile_small"
-        app:layout_constraintBottom_toBottomOf="@+id/dashboard_current_location_text_view"
-        app:layout_constraintEnd_toStartOf="@+id/dashboard_current_location_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/dashboard_current_location_text_view" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout6"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/bottom_cornors_rounded_buttons"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp"
-        app:layout_constraintBottom_toTopOf="@+id/dashboard_load_notification_constrain"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dashboard_load_notification_button">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/dialog_bid_now_loadId_heading"
-            android:layout_width="0dp"
+
+        <include
+            android:id="@+id/profile_registration_action_bar"
+            layout="@layout/action_bar"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Load Details"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/bid_now_time_left_00_textview"
+            app:layout_constraintBottom_toTopOf="@+id/dashboard_current_location_text_view"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/bid_now_time_left_00_textview"
-            android:layout_width="0dp"
+        <include
+            android:id="@+id/profile_registration_bottom_nav_bar"
+            layout="@layout/bottom_nav_bar"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Pickup Date"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            android:textStyle="bold"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_loadId_heading"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dashboard_load_notification_constrain" />
+
+        <TextView
+            android:id="@+id/dashboard_load_notification_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="3dp"
+            android:background="@drawable/personal_details_buttons_active"
+            android:onClick="onClickLoadAndBids"
+            android:paddingStart="2dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="2dp"
+            android:paddingBottom="5dp"
+            android:text="Load Notifications"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/background"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout6"
+            app:layout_constraintEnd_toStartOf="@+id/dashboard_bids_submitted_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dashboard_current_location_text_view" />
+
+        <TextView
+            android:id="@+id/dashboard_bids_submitted_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/personal_details_buttons_de_active"
+            android:onClick="onClickLoadAndBids"
+            android:paddingStart="2dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="2dp"
+            android:paddingBottom="5dp"
+            android:text="Bids Submitted"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/background"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/dashboard_load_notification_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/dashboard_load_notification_button"
+            app:layout_constraintTop_toTopOf="@+id/dashboard_load_notification_button" />
+
+        <TextView
+            android:id="@+id/dashboard_current_location_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/edit_text_border"
+            android:drawableStart="@drawable/google_location_small"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:text="Current Location"
+            android:textColor="@color/teal_700"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/dashboard_load_notification_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView12"
+            app:layout_constraintTop_toBottomOf="@+id/profile_registration_action_bar" />
 
         <ImageView
-            android:id="@+id/imageView13"
+            android:id="@+id/imageView12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_drop_down"
-            app:layout_constraintBottom_toBottomOf="@+id/bid_now_time_left_00_textview"
-            app:layout_constraintEnd_toEndOf="@+id/bid_now_time_left_00_textview"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_loadId_heading"
-            app:layout_constraintTop_toTopOf="@+id/bid_now_time_left_00_textview"
-            app:tint="@color/black" />
+            android:layout_marginStart="5dp"
+            android:onClick="onCLickShowMenu"
+            android:src="@drawable/blue_profile_small"
+            app:layout_constraintBottom_toBottomOf="@+id/dashboard_current_location_text_view"
+            app:layout_constraintEnd_toStartOf="@+id/dashboard_current_location_text_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/dashboard_current_location_text_view" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/dashboard_load_notification_constrain"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/profile_registration_bottom_nav_bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/dashboard_load_notification_recycler_view"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout6"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:foregroundGravity="top"
-            android:scrollbarThumbVertical="@android:color/holo_blue_dark"
-            android:scrollbars="vertical"
-            android:visibility="visible"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/bottom_cornors_rounded_buttons"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            app:layout_constraintBottom_toTopOf="@+id/dashboard_load_notification_constrain"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/dashboard_load_notification_button">
 
+            <TextView
+                android:id="@+id/dialog_bid_now_loadId_heading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Load Details"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/bid_now_time_left_00_textview"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/bid_now_time_left_00_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Pickup Date"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_loadId_heading"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/dashboard_bids_submitted_constrain"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/profile_registration_bottom_nav_bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
+            <ImageView
+                android:id="@+id/imageView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_drop_down"
+                app:layout_constraintBottom_toBottomOf="@+id/bid_now_time_left_00_textview"
+                app:layout_constraintEnd_toEndOf="@+id/bid_now_time_left_00_textview"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_loadId_heading"
+                app:layout_constraintTop_toTopOf="@+id/bid_now_time_left_00_textview"
+                app:tint="@color/black" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/dashboard_load_notification_submitted_recycler_view"
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/dashboard_load_notification_constrain"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:foregroundGravity="top"
-            android:scrollbarThumbVertical="@android:color/holo_blue_dark"
-            android:scrollbars="vertical"
+            android:layout_height="0dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/profile_registration_bottom_nav_bar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
+
+            <TextView
+                android:id="@+id/dashboard_load_here_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="No Load Available"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/dashboard_load_notification_recycler_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:foregroundGravity="top"
+                android:scrollbarThumbVertical="@android:color/holo_blue_dark"
+                android:scrollbars="vertical"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/dashboard_bids_submitted_constrain"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/profile_registration_bottom_nav_bar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
+
+            <TextView
+                android:id="@+id/dashboard_no_bids_submitted_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="No Bids Submitted"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/dashboard_load_notification_submitted_recycler_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:foregroundGravity="top"
+                android:scrollbarThumbVertical="@android:color/holo_blue_dark"
+                android:scrollbars="vertical"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/dashboard_fab_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/button_blue"
+            android:clickable="true"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.954"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.87"
+            app:srcCompat="@android:drawable/ic_input_add"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/textView62"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/button_active"
+            android:gravity="center"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="2dp"
+            android:text="Post a Trip"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/dashboard_fab_button"
+            app:layout_constraintEnd_toStartOf="@+id/dashboard_fab_button"
+            app:layout_constraintTop_toTopOf="@+id/dashboard_fab_button" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/dashboard_fab_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/button_blue"
-        android:clickable="true"
-        app:fabSize="mini"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.954"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.87"
-        app:srcCompat="@android:drawable/ic_input_add"
-        app:tint="@color/white" />
-
-    <TextView
-        android:id="@+id/textView62"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:text="Post a Trip"
-        android:textStyle="bold"
-        android:textSize="14sp"
-        android:paddingBottom="2dp"
-        android:gravity="center"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:background="@drawable/button_active"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/dashboard_fab_button"
-        app:layout_constraintEnd_toStartOf="@+id/dashboard_fab_button"
-        app:layout_constraintTop_toTopOf="@+id/dashboard_fab_button" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -48,6 +49,7 @@ import com.nlpl.ui.ui.adapters.BidsResponsesAdapter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -59,6 +61,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CustomerDashboardActivity extends AppCompatActivity {
 
+    SwipeRefreshLayout swipeRefreshLayout;
     private RequestQueue mQueue;
 
     private ArrayList<BidsReceivedModel> bidsList = new ArrayList<>();
@@ -97,6 +100,15 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             userId = bundle.getString("userId");
         }
         mQueue = Volley.newRequestQueue(CustomerDashboardActivity.this);
+
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(false);
+                RearrangeItems();
+            }
+        });
 
         actionBar = findViewById(R.id.customer_dashboard_action_bar);
         actionBarTitle = (TextView) actionBar.findViewById(R.id.action_bar_title);
@@ -170,9 +182,16 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
     }
 
+    public void RearrangeItems() {
+        bidsListAdapter = new BidsReceivedAdapter(CustomerDashboardActivity.this, bidsList);
+        bidsListRecyclerView.setAdapter(bidsListAdapter);
+        bidsAcceptedAdapter = new BidsAcceptedAdapter(CustomerDashboardActivity.this, acceptedList);
+        bidsAcceptedRecyclerView.setAdapter(bidsAcceptedAdapter);
+    }
+
     public void getBidsAccepted() {
         //---------------------------- Get Bank Details -------------------------------------------
-        String url1 = getString(R.string.baseURL) + "/loadpost/getAllPosts";
+        String url1 = getString(R.string.baseURL) + "/loadpost/getLoadDtByUser/" + userId;
         Log.i("URL: ", url1);
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -212,10 +231,14 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         }
                     }
 
+                    TextView noAcceptedLoads = (TextView) findViewById(R.id.customer_dashboard_no_load_accepted_text);
 //                    for (int i=0; i< acceptedList.size(); i++){
 //                        if (acceptedList.get(i).getBid_status().equals("FinalAccepted")){
                     if (acceptedList.size() > 0) {
+                        noAcceptedLoads.setVisibility(View.GONE);
                         bidsAcceptedAdapter.updateData(acceptedList);
+                    }else{
+                        noAcceptedLoads.setVisibility(View.VISIBLE);
                     }
 //                        }
 //                    }
@@ -314,11 +337,14 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         if (obj.getString("bid_status").equals("pending")) {
                             bidsList.add(bidsReceivedModel);
                         }
-
                     }
+                    TextView noLoadTextView = (TextView) findViewById(R.id.customer_dashboard_no_load_text);
+
                     if (bidsList.size() > 0) {
+                        noLoadTextView.setVisibility(View.GONE);
                         bidsListAdapter.updateData(bidsList);
                     } else {
+                        noLoadTextView.setVisibility(View.VISIBLE);
                     }
 
                 } catch (JSONException e) {
