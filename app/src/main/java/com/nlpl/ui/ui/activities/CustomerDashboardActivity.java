@@ -30,14 +30,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
+import com.nlpl.model.ModelForRecyclerView.BidsAcceptedModel;
 import com.nlpl.model.ModelForRecyclerView.BidsReceivedModel;
 import com.nlpl.model.ModelForRecyclerView.BidsResponsesModel;
+import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
 import com.nlpl.model.UpdateBidStatusAccepted;
 import com.nlpl.model.UpdateBidStatusFinalAccepted;
 import com.nlpl.model.UpdateCustomerBudget;
 import com.nlpl.model.UpdateLoadStatusSubmitted;
 import com.nlpl.services.BidLoadService;
 import com.nlpl.services.PostLoadService;
+import com.nlpl.ui.ui.adapters.BidsAcceptedAdapter;
 import com.nlpl.ui.ui.adapters.BidsReceivedAdapter;
 import com.nlpl.ui.ui.adapters.BidsResponsesAdapter;
 
@@ -60,6 +63,11 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     private ArrayList<BidsReceivedModel> bidsList = new ArrayList<>();
     private BidsReceivedAdapter bidsListAdapter;
     private RecyclerView bidsListRecyclerView;
+
+    private ArrayList<BidsAcceptedModel> acceptedList = new ArrayList<>();
+    private BidsAcceptedAdapter bidsAcceptedAdapter;
+    private RecyclerView bidsAcceptedRecyclerView;
+
     private BidsResponsesAdapter bidsResponsesAdapter;
     private BidLoadService bidService;
     View actionBar;
@@ -120,6 +128,20 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         getBidsReceived();
         //------------------------------------------------------------------------------------------
 
+        //---------------------------- Get Accepted Load Details -----------------------------------
+        bidsAcceptedRecyclerView = (RecyclerView) findViewById(R.id.customer_dashboard_loads_accepted_recycler_view);
+
+        LinearLayoutManager linearLayoutManagerAccepted = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManagerAccepted.setReverseLayout(false);
+        linearLayoutManagerAccepted.setOrientation(LinearLayoutManager.VERTICAL);
+        bidsAcceptedRecyclerView.setLayoutManager(linearLayoutManagerAccepted);
+        bidsAcceptedRecyclerView.setHasFixedSize(true);
+
+        bidsAcceptedAdapter = new BidsAcceptedAdapter(CustomerDashboardActivity.this, acceptedList);
+        bidsAcceptedRecyclerView.setAdapter(bidsListAdapter);
+        getBidsAccepted();
+        //------------------------------------------------------------------------------------------
+
         previewDialogAcceptANdBid = new Dialog(CustomerDashboardActivity.this);
         previewDialogAcceptANdBid.setContentView(R.layout.dialog_acept_bid_customer);
         previewDialogAcceptANdBid.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -136,6 +158,62 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         bidService = retrofit.create(BidLoadService.class);
         postLoadService = retrofit.create(PostLoadService.class);
 
+    }
+
+    public void getBidsAccepted() {
+        //---------------------------- Get Bank Details -------------------------------------------
+        String url1 = getString(R.string.baseURL) + "/loadpost/getAllPosts";
+        Log.i("URL: ", url1);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray acceptedLoadList = response.getJSONArray("data");
+                    for (int i = 0; i < acceptedLoadList.length(); i++) {
+
+                        JSONObject obj = acceptedLoadList.getJSONObject(i);
+                        BidsAcceptedModel bidsAcceptedModel = new BidsAcceptedModel();
+                        bidsAcceptedModel.setIdpost_load(obj.getString("idpost_load"));
+                        bidsAcceptedModel.setUser_id(obj.getString("user_id"));
+                        bidsAcceptedModel.setPick_up_date(obj.getString("pick_up_date"));
+                        bidsAcceptedModel.setPick_up_time(obj.getString("pick_up_time"));
+                        bidsAcceptedModel.setBudget(obj.getString("budget"));
+                        bidsAcceptedModel.setBid_status(obj.getString("bid_status"));
+                        bidsAcceptedModel.setVehicle_model(obj.getString("vehicle_model"));
+                        bidsAcceptedModel.setFeet(obj.getString("feet"));
+                        bidsAcceptedModel.setCapacity(obj.getString("capacity"));
+                        bidsAcceptedModel.setBody_type(obj.getString("body_type"));
+                        bidsAcceptedModel.setPick_add(obj.getString("pick_add"));
+                        bidsAcceptedModel.setPick_pin_code(obj.getString("pick_pin_code"));
+                        bidsAcceptedModel.setPick_city(obj.getString("pick_city"));
+                        bidsAcceptedModel.setPick_state(obj.getString("pick_state"));
+                        bidsAcceptedModel.setPick_country(obj.getString("pick_country"));
+                        bidsAcceptedModel.setDrop_add(obj.getString("drop_add"));
+                        bidsAcceptedModel.setDrop_pin_code(obj.getString("drop_pin_code"));
+                        bidsAcceptedModel.setDrop_city(obj.getString("drop_city"));
+                        bidsAcceptedModel.setDrop_state(obj.getString("drop_state"));
+                        bidsAcceptedModel.setDrop_country(obj.getString("drop_country"));
+                        bidsAcceptedModel.setKm_approx(obj.getString("km_approx"));
+                        bidsAcceptedModel.setNotes_meterial_des(obj.getString("notes_meterial_des"));
+
+                        if (obj.getString("bid_status").equals("FinalAccepted")) {
+                            acceptedList.add(bidsAcceptedModel);
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+        //-------------------------------------------------------------------------------------------
     }
 
     public void onClickBidsAndLoads(View view) {

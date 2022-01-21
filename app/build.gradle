@@ -66,7 +66,5 @@ dependencies {
     // dependency for loading image from url
     implementation 'com.github.bumptech.glide:glide:4.11.0'
 
-    implementation 'com.google.android.gsm:play-services-location:17.0.0'
-
 
 }
