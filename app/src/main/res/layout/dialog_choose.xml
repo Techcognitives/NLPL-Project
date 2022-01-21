@@ -15,7 +15,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:paddingStart="20dp"
         android:paddingEnd="0dp"
         android:text="Choose any of the following"
         android:textColor="@color/black"

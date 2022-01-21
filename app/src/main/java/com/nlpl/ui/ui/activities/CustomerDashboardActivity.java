@@ -444,7 +444,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         customerQuote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                budgetSet();
+                budgetSet(customerQuote.getText().toString());
             }
         });
 
@@ -569,7 +569,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     }
     //--------------------------------------------------------------------------------------------------
 
-    private void budgetSet() {
+    private void budgetSet(String previousBudget) {
 
         setBudget = new Dialog(CustomerDashboardActivity.this);
         setBudget.setContentView(R.layout.dialog_budget);
@@ -578,7 +578,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         lp2.copyFrom(setBudget.getWindow().getAttributes());
         lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp2.gravity = Gravity.TOP;
+        lp2.gravity = Gravity.CENTER;
 
         setBudget.show();
         setBudget.setCancelable(true);
@@ -588,6 +588,16 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         Button okBudget = setBudget.findViewById(R.id.dialog_budget_ok_btn);
         budget.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+        budget.setText(previousBudget);
+
+        if (!previousBudget.isEmpty()) {
+            okBudget.setEnabled(true);
+            okBudget.setBackgroundResource((R.drawable.button_active));
+        } else {
+            okBudget.setEnabled(false);
+            okBudget.setBackgroundResource((R.drawable.button_de_active));
+        }
 
         budget.addTextChangedListener(new TextWatcher() {
             @Override
@@ -613,6 +623,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
             }
         });
+
         okBudget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -835,11 +846,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         });
     }
 
-    public void getBidDetailsByPostId(String postId) {
-
-
-    }
-
     public void onClickViewConsignment(BidsAcceptedModel obj) {
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -930,8 +936,8 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                     customerQuote.setText(spQuoteByApi);
 
                     submitResponseBtn.setText("Withdraw");
-                    submitResponseBtn.setBackgroundTintList(getResources().getColorStateList(R.color.orange));
-                    submitResponseBtn.setEnabled(true);
+                    submitResponseBtn.setBackgroundTintList(getResources().getColorStateList(R.color.grey));
+                    submitResponseBtn.setEnabled(false);
 
                     submitResponseBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -940,7 +946,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                             updateLoadStatusSubmitted(obj.getIdpost_load());
                             updateBidStatusFinalAccepted(bid_idByAPI);
                             AlertDialog.Builder my_alert = new AlertDialog.Builder(CustomerDashboardActivity.this);
-                            my_alert.setTitle("Withdraw Successfully");
+                            my_alert.setTitle("Withdrawn Successfully");
                             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -954,6 +960,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                                 }
                             });
                             my_alert.show();
+                            my_alert.setCancelable(false);
                         }
                     });
 

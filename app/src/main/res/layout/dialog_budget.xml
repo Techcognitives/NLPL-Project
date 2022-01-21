@@ -8,7 +8,8 @@
     android:layout_marginStart="10dp"
     android:layout_marginEnd="10dp"
     android:layout_gravity="center"
-    android:background="@drawable/all_rounded_small">
+    android:backgroundTint="@color/white"
+    android:background="@drawable/button_active">
 
     <Button
         android:id="@+id/dialog_budget_ok_btn"
@@ -38,10 +39,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:textStyle="bold"
+        android:textStyle="normal"
         android:text="@string/enterYourBudget"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/dialog_budget_edit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

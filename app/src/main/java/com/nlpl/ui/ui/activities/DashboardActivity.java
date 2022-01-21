@@ -351,6 +351,7 @@ public class DashboardActivity extends AppCompatActivity {
                             Intent intent = new Intent(DashboardActivity.this, CustomerDashboardActivity.class);
                             intent.putExtra("userId", userId);
                             intent.putExtra("mobile", phone);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             overridePendingTransition(0, 0);
                             startActivity(intent);
                             DashboardActivity.this.finish();
@@ -694,7 +695,7 @@ public class DashboardActivity extends AppCompatActivity {
                     saveBid(createBidRequest());
                     Log.i("loadId bidded", obj.getIdpost_load());
 
-                    AlertDialog.Builder my_alert = new AlertDialog.Builder(DashboardActivity.this);
+                    AlertDialog.Builder my_alert = new AlertDialog.Builder(DashboardActivity.this).setCancelable(false);
                     my_alert.setTitle("Bid Posted Successfully");
                     my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
@@ -758,7 +759,7 @@ public class DashboardActivity extends AppCompatActivity {
         spQuote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                budgetSet();
+                budgetSet(spQuote.getText().toString());
             }
         });
 
@@ -823,7 +824,25 @@ public class DashboardActivity extends AppCompatActivity {
                         arrayDriverId.add(selectedDriverId);
                         arrayDriverName.add(selectedDriverName);
                     }
-                    selectDriverToBid(arrayDriverId);
+                    if (arrayDriverName.size()==0){
+                         AlertDialog.Builder my_alert = new AlertDialog.Builder(DashboardActivity.this);
+                        my_alert.setTitle("Add a Truck");
+                        my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent i8 = new Intent(DashboardActivity.this, DriverDetailsActivity.class);
+                                i8.putExtra("userId", userId);
+                                i8.putExtra("isEdit", false);
+                                i8.putExtra("mobile", mobile);
+                                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(i8);
+                                overridePendingTransition(0, 0);
+                            }
+                        });
+                        my_alert.show();
+                    } else {
+                        selectDriverToBid(arrayDriverId);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -1127,7 +1146,7 @@ public class DashboardActivity extends AppCompatActivity {
 //    }
 
 
-    private void budgetSet() {
+    private void budgetSet(String previousBudget) {
 
         setBudget = new Dialog(DashboardActivity.this);
         setBudget.setContentView(R.layout.dialog_budget);
@@ -1146,6 +1165,16 @@ public class DashboardActivity extends AppCompatActivity {
         Button okBudget = setBudget.findViewById(R.id.dialog_budget_ok_btn);
         budget.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+        budget.setText(previousBudget);
+
+        if (!previousBudget.isEmpty()) {
+            okBudget.setEnabled(true);
+            okBudget.setBackgroundResource((R.drawable.button_active));
+        } else {
+            okBudget.setEnabled(false);
+            okBudget.setBackgroundResource((R.drawable.button_de_active));
+        }
 
         budget.addTextChangedListener(new TextWatcher() {
             @Override
@@ -1203,7 +1232,24 @@ public class DashboardActivity extends AppCompatActivity {
                         arrayTruckList.add(vehicle_no);
                         arrayTruckId.add(truckId);
                     }
-                    selectTruckToBid(arrayTruckId);
+                    if (arrayTruckId.size()==0){
+                        AlertDialog.Builder my_alert = new AlertDialog.Builder(DashboardActivity.this);
+                        my_alert.setTitle("Add a Truck");
+                        my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent3 = new Intent(DashboardActivity.this, VehicleDetailsActivity.class);
+                                intent3.putExtra("userId", userId);
+                                intent3.putExtra("isEdit", false);
+                                intent3.putExtra("mobile", phone);
+                                startActivity(intent3);
+                            }
+                        });
+                        my_alert.show();
+
+                    } else {
+                        selectTruckToBid(arrayTruckId);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -1539,8 +1585,8 @@ public class DashboardActivity extends AppCompatActivity {
         getBidDetailsByBidId(obj.getBidId());
 
         cancel.setText("Withdraw");
-        cancel.setEnabled(true);
-        cancel.setBackgroundTintList(getResources().getColorStateList(R.color.orange));
+        cancel.setEnabled(false);
+        cancel.setBackgroundTintList(getResources().getColorStateList(R.color.grey));
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1556,8 +1602,8 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
         acceptAndBid.setText("Start Trip");
-        acceptAndBid.setEnabled(true);
-        acceptAndBid.setBackgroundResource((R.drawable.button_active));
+        acceptAndBid.setEnabled(false);
+        acceptAndBid.setBackgroundResource((R.drawable.button_de_active));
 
         acceptAndBid.setOnClickListener(new View.OnClickListener() {
             @Override

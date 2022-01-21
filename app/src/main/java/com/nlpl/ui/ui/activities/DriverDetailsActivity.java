@@ -252,7 +252,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                     startActivity(intent);
                 }else{
                     AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
-                    my_alert.setTitle("You can not bid unless you have a Driver");
+                    my_alert.setTitle("You cannot bid unless you have a Driver");
                     my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -1042,7 +1042,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                         saveDriverUser(createDriverUser());
                     }
 
-                    AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this);
+                    AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this).setCancelable(false);
                     my_alert.setTitle("Driver Details added successfully");
                     my_alert.setMessage("Do you want to add Driver's Bank Details");
                     my_alert.setPositiveButton("May be Later", new DialogInterface.OnClickListener() {

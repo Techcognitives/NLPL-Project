@@ -230,7 +230,7 @@ public class PostALoadActivity extends AppCompatActivity {
         select_budget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                budgetSet();
+                budgetSet(select_budget.getText().toString());
             }
         });
 
@@ -308,7 +308,7 @@ public class PostALoadActivity extends AppCompatActivity {
                 }
 
                 saveLoad(createLoadRequest());
-                AlertDialog.Builder my_alert = new AlertDialog.Builder(PostALoadActivity.this);
+                AlertDialog.Builder my_alert = new AlertDialog.Builder(PostALoadActivity.this).setCancelable(false);
                 my_alert.setTitle("Load Posted Successfully");
                 my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
@@ -325,7 +325,7 @@ public class PostALoadActivity extends AppCompatActivity {
         });
     }
 
-    private void budgetSet() {
+    private void budgetSet(String previousBudget) {
 
         setBudget = new Dialog(PostALoadActivity.this);
         setBudget.setContentView(R.layout.dialog_budget);
@@ -334,16 +334,26 @@ public class PostALoadActivity extends AppCompatActivity {
         lp2.copyFrom(setBudget.getWindow().getAttributes());
         lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp2.gravity = Gravity.TOP;
+        lp2.gravity = Gravity.CENTER;
 
         setBudget.show();
-        setBudget.setCancelable(false);
+        setBudget.setCancelable(true);
         setBudget.getWindow().setAttributes(lp2);
 
         EditText budget = setBudget.findViewById(R.id.dialog_budget_edit);
         Button okBudget = setBudget.findViewById(R.id.dialog_budget_ok_btn);
         budget.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+        budget.setText(previousBudget);
+
+        if (!previousBudget.isEmpty()) {
+            okBudget.setEnabled(true);
+            okBudget.setBackgroundResource((R.drawable.button_active));
+        } else {
+            okBudget.setEnabled(false);
+            okBudget.setBackgroundResource((R.drawable.button_de_active));
+        }
 
         budget.addTextChangedListener(new TextWatcher() {
             @Override

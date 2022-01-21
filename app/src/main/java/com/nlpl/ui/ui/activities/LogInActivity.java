@@ -85,7 +85,7 @@ public class LogInActivity extends AppCompatActivity {
             public void onClick(View view) {
                 mobile = "+91" + mobileNo.getText().toString();
                 if (mobileNo.getText().length()==10) {
-                    AlertDialog.Builder my_alert = new AlertDialog.Builder(LogInActivity.this);
+                    AlertDialog.Builder my_alert = new AlertDialog.Builder(LogInActivity.this).setCancelable(false);
                     my_alert.setTitle("OTP is sent to "+mobile);
                     my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
@@ -110,6 +110,7 @@ public class LogInActivity extends AppCompatActivity {
                         }
                     });
                     my_alert.show();
+                    my_alert.setCancelable(false);
                 }
             }
         });

@@ -153,7 +153,7 @@ public class OtpCodeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 otp = otp1.getText().toString() + otp2.getText().toString() + otp3.getText().toString() + otp4.getText().toString() + otp5.getText().toString() + otp6.getText().toString();
 
-                AlertDialog.Builder my_alert = new AlertDialog.Builder(OtpCodeActivity.this);
+                AlertDialog.Builder my_alert = new AlertDialog.Builder(OtpCodeActivity.this).setCancelable(false);
                 my_alert.setTitle("OTP validated successfully");
                 my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
@@ -176,6 +176,7 @@ public class OtpCodeActivity extends AppCompatActivity {
                     }
                 });
                 my_alert.show();
+                my_alert.setCancelable(false);
 
 //                if (otp1.getText().toString().isEmpty() || otp2.getText().toString().isEmpty() || otp3.getText().toString().isEmpty() || otp4.getText().toString().isEmpty() || otp5.getText().toString().isEmpty() || otp6.getText().toString().isEmpty()) {
 //                    Toast.makeText(getApplicationContext(), "Field is blank", Toast.LENGTH_LONG).show();
@@ -384,7 +385,7 @@ public class OtpCodeActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    AlertDialog.Builder my_alert = new AlertDialog.Builder(OtpCodeActivity.this);
+                    AlertDialog.Builder my_alert = new AlertDialog.Builder(OtpCodeActivity.this).setCancelable(false);
                     my_alert.setTitle("OTP validated successfully");
                     my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
@@ -417,6 +418,7 @@ public class OtpCodeActivity extends AppCompatActivity {
                         }
                     });
                     my_alert.show();
+                    my_alert.setCancelable(false);
                 }
             }
         });
