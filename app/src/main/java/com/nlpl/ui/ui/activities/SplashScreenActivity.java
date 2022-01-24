@@ -118,6 +118,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                                     Log.i("userName", name);
                                     Log.i("isregDone:", isRegistrationDone);
                                     Log.i("Mobile No API Matches", phone);
+                                    Log.i("role splash", role);
 
                                     if (role.equals("Customer")) {
                                         Intent i8 = new Intent(SplashScreenActivity.this, CustomerDashboardActivity.class);
@@ -134,6 +135,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                                         overridePendingTransition(0, 0);
                                         finish();
                                     }
+
                                 } else {
 //                                            Log.i("mobile no not equal", mobileNoAPI);
                                     Intent i8 = new Intent(SplashScreenActivity.this, RegistrationActivity.class);
