@@ -123,7 +123,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
     String driverUserId, driverUserIdGet;
 
     String pathForDL, pathForSelfie, img_type, userId, driverId, driverNameAPI, driverNumberAPI, driverEmailAPI, mobile;
-    Boolean isDLUploaded = false, isEdit;
+    Boolean fromBidNow = false, isDLUploaded = false, isEdit;
     //    Boolean isSelfieUploaded = false;
     ImageView previewDrivingLicense, previewSelfie, previewDLImageView, previewSelfieImageView;
     Dialog previewDialogDL, previewDialogSelfie;
@@ -150,6 +150,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
             userId = bundle.getString("userId");
             isEdit = bundle.getBoolean("isEdit");
             driverId = bundle.getString("driverId");
+            fromBidNow = bundle.getBoolean("fromBidNow");
             mobile = bundle.getString("mobile");
             truckIdPass = bundle.getString("truckIdPass");
         }
@@ -1050,13 +1051,17 @@ public class DriverDetailsActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
 
-                            Intent i8 = new Intent(DriverDetailsActivity.this, ViewTruckDetailsActivity.class);
-                            i8.putExtra("mobile", mobile);
-                            i8.putExtra("userId", userId);
-                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(i8);
-                            overridePendingTransition(0, 0);
-                            DriverDetailsActivity.this.finish();
+                            if (fromBidNow){
+                                DriverDetailsActivity.this.finish();
+                            } else {
+                                Intent i8 = new Intent(DriverDetailsActivity.this, ViewDriverDetailsActivity.class);
+                                i8.putExtra("mobile", mobile);
+                                i8.putExtra("userId", userId);
+                                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(i8);
+                                overridePendingTransition(0, 0);
+                                DriverDetailsActivity.this.finish();
+                            }
                         }
                     });
                     my_alert.setNegativeButton("Add Driver Bank Details", new DialogInterface.OnClickListener() {

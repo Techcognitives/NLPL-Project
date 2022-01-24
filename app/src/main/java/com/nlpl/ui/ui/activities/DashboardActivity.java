@@ -78,6 +78,8 @@ public class DashboardActivity extends AppCompatActivity {
 
     private ArrayList<LoadNotificationModel> loadList = new ArrayList<>();
     private ArrayList<LoadNotificationModel> loadListToCompare = new ArrayList<>();
+    private ArrayList<LoadNotificationModel> bidStatusLoadListToCompare = new ArrayList<>();
+
 
     private ArrayList<BidSubmittedModel> loadSubmittedList = new ArrayList<>();
     private ArrayList<BidSubmittedModel> updatedLoadSubmittedList = new ArrayList<>();
@@ -112,7 +114,7 @@ public class DashboardActivity extends AppCompatActivity {
     ConstraintLayout spDashboard, customerDashboard;
 
     String loadId, selectedDriverId, selectedDriverName, userId, userIdAPI, phone, mobileNoAPI;
-    ArrayList<String> arrayUserId, arrayTruckId, arrayDriverId, arrayDriverName, arrayTruckList, arrayMobileNo, arrayDriverMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
+    ArrayList<String> arrayBidStatus, arrayUserId, arrayTruckId, arrayDriverId, arrayDriverName, arrayTruckList, arrayMobileNo, arrayDriverMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
 
     String mobile, name, address, pinCode, city, role, emailIdAPI;
 
@@ -161,6 +163,7 @@ public class DashboardActivity extends AppCompatActivity {
         arrayTruckId = new ArrayList<>();
         arrayDriverId = new ArrayList<>();
         arrayDriverName = new ArrayList<>();
+        arrayBidStatus = new ArrayList<>();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.baseURL))
@@ -265,10 +268,6 @@ public class DashboardActivity extends AppCompatActivity {
                     loadSubmittedAdapter = new LoadSubmittedAdapter(DashboardActivity.this, updatedLoadSubmittedList);
                     loadSubmittedRecyclerView.setAdapter(loadSubmittedAdapter);
                     loadSubmittedRecyclerView.scrollToPosition(loadSubmittedAdapter.getItemCount() - 1);
-
-                    loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadList);
-                    loadListRecyclerView.setAdapter(loadListAdapter);
-                    loadListRecyclerView.scrollToPosition(loadListAdapter.getItemCount() - 1);
 
                     //------------------------------------------------------------------------------------------
                     RearrangeItems();
@@ -402,6 +401,7 @@ public class DashboardActivity extends AppCompatActivity {
                     Intent intent2 = new Intent(DashboardActivity.this, VehicleDetailsActivity.class);
                     intent2.putExtra("userId", userId);
                     intent2.putExtra("isEdit", false);
+                    intent2.putExtra("fromBidNow",false);
                     intent2.putExtra("mobile", phone);
                     startActivity(intent2);
                 }
@@ -417,6 +417,7 @@ public class DashboardActivity extends AppCompatActivity {
                     Intent intent4 = new Intent(DashboardActivity.this, DriverDetailsActivity.class);
                     intent4.putExtra("userId", userId);
                     intent4.putExtra("isEdit", false);
+                    intent4.putExtra("fromBidNow",false);
                     intent4.putExtra("mobile", phone);
                     startActivity(intent4);
                 }
@@ -480,12 +481,25 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
-    private void compareAndRemove(ArrayList<LoadNotificationModel> loadListToCompare, String bidStatusToCompare) {
+    private void compareAndRemove(ArrayList<LoadNotificationModel> loadListToCompare, ArrayList<String> arrayBidStatus) {
+
+        Log.i("Load list", String.valueOf(loadListToCompare.size()));
+        Log.i("array bidStatus", String.valueOf(arrayBidStatus.size()));
 
         for (int i = 0; i < loadListToCompare.size(); i++) {
             for (int j = 0; j < updatedLoadSubmittedList.size(); j++) {
                 if (loadListToCompare.get(i).getIdpost_load().equals(updatedLoadSubmittedList.get(j).getIdpost_load())) {
                     loadListToCompare.remove(i);
+                    arrayBidStatus.remove(j);
+                }
+            }
+        }
+
+        for (int i=0; i<loadListToCompare.size(); i++){
+            for (int j=0; j<arrayBidStatus.size(); j++){
+                if (arrayBidStatus.get(j).equals("submitted")){
+                    loadListToCompare.remove(i);
+                    arrayBidStatus.remove(j);
                 }
             }
         }
@@ -540,18 +554,19 @@ public class DashboardActivity extends AppCompatActivity {
                         modelLoadNotification.setNotes_meterial_des(obj.getString("notes_meterial_des"));
 
                         bidStatusToCompare = obj.getString("bid_status");
+                        arrayBidStatus.add(bidStatusToCompare);
                         loadList.add(modelLoadNotification);
                     }
 
                     TextView noLoadAvailable = (TextView) findViewById(R.id.dashboard_load_here_text);
                     if (loadList.size() > 0) {
                         noLoadAvailable.setVisibility(View.GONE);
-                        loadListAdapter.updateData(loadList);
+//                        loadListAdapter.updateData(loadList);
                     }else{
                         noLoadAvailable.setVisibility(View.VISIBLE);
                     }
 
-                    getBidListByUserId(loadList, bidStatusToCompare);
+                    getBidListByUserId(loadList, arrayBidStatus);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -752,6 +767,7 @@ public class DashboardActivity extends AppCompatActivity {
         selectTruck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                arrayTruckId.clear();
                 getTrucksByUserId();
                 arrayTruckList.clear();
             }
@@ -761,6 +777,7 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isTruckSelectedToBid) {
+                    arrayDriverId.clear();
                     getDriversByUserId();
                     arrayDriverName.clear();
                 }
@@ -773,6 +790,7 @@ public class DashboardActivity extends AppCompatActivity {
                 Intent intent3 = new Intent(DashboardActivity.this, VehicleDetailsActivity.class);
                 intent3.putExtra("userId", userId);
                 intent3.putExtra("isEdit", false);
+                intent3.putExtra("fromBidNow",true);
                 intent3.putExtra("mobile", phone);
                 startActivity(intent3);
             }
@@ -784,6 +802,7 @@ public class DashboardActivity extends AppCompatActivity {
                 Intent i8 = new Intent(DashboardActivity.this, DriverDetailsActivity.class);
                 i8.putExtra("userId", userId);
                 i8.putExtra("isEdit", false);
+                i8.putExtra("fromBidNow",true);
                 i8.putExtra("mobile", mobile);
                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i8);
@@ -812,13 +831,14 @@ public class DashboardActivity extends AppCompatActivity {
                     }
                     if (arrayDriverName.size()==0){
                          AlertDialog.Builder my_alert = new AlertDialog.Builder(DashboardActivity.this);
-                        my_alert.setTitle("Add a Truck");
+                        my_alert.setTitle("Add a Driver");
                         my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Intent i8 = new Intent(DashboardActivity.this, DriverDetailsActivity.class);
                                 i8.putExtra("userId", userId);
                                 i8.putExtra("isEdit", false);
+                                i8.putExtra("fromBidNow",true);
                                 i8.putExtra("mobile", mobile);
                                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(i8);
@@ -855,6 +875,7 @@ public class DashboardActivity extends AppCompatActivity {
         ListView modelList = (ListView) selectTruckDialog.findViewById(R.id.list_state);
         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, R.layout.custom_list_row, arrayTruckList);
         modelList.setAdapter(adapter1);
+
 
         modelList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -931,11 +952,7 @@ public class DashboardActivity extends AppCompatActivity {
                         JSONObject obj = truckLists.getJSONObject(i);
                         selectedDriverName = obj.getString("driver_name");
                     }
-                    if (selectedDriverName != null) {
                         selectDriver.setText(selectedDriverName);
-                    } else {
-                        selectDriver.setText("Select Driver");
-                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -976,12 +993,8 @@ public class DashboardActivity extends AppCompatActivity {
                         selectedTruckCapacity.setText(truckCapacity);
                     }
 
-                    if (selectedDriverId == null) {
-                        selectedDriverId = null;
-                        selectDriver.setText("Select Driver");
-                    } else {
                         getDriverDetailsByDriverId(selectedDriverId);
-                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -995,8 +1008,7 @@ public class DashboardActivity extends AppCompatActivity {
         mQueue.add(request);
     }
 
-
-    private void getBidListByUserId(ArrayList<LoadNotificationModel> loadListToCompare, String bidStatusToCompare) {
+    private void getBidListByUserId(ArrayList<LoadNotificationModel> loadListToCompare, ArrayList<String> arrayBidStatus) {
 
         String url = getString(R.string.baseURL) + "/spbid/getBidDtByUserId/" + userId;
         Log.i("url betBidByUserID", url);
@@ -1009,7 +1021,7 @@ public class DashboardActivity extends AppCompatActivity {
                         JSONObject obj = truckLists.getJSONObject(i);
                         String postId = obj.getString("idpost_load");
                         String bidId = obj.getString("sp_bid_id");
-                        getBidSubmittedList(postId, bidId, loadListToCompare, bidStatusToCompare);
+                        getBidSubmittedList(postId, bidId, loadListToCompare, arrayBidStatus);
                     }
 
                 } catch (JSONException e) {
@@ -1025,7 +1037,7 @@ public class DashboardActivity extends AppCompatActivity {
         mQueue.add(request);
     }
 
-    public void getBidSubmittedList(String loadIdReceived, String bidId, ArrayList<LoadNotificationModel> loadListToCompare, String bidStatusToCompare) {
+    public void getBidSubmittedList(String loadIdReceived, String bidId, ArrayList<LoadNotificationModel> loadListToCompare, ArrayList<String> arrayBidStatus) {
         //---------------------------- Get Bank Details ------------------------------------------
         String url1 = getString(R.string.baseURL) + "/loadpost/getLoadDtByPostId/" + loadIdReceived;
         Log.i("URL: ", url1);
@@ -1073,10 +1085,19 @@ public class DashboardActivity extends AppCompatActivity {
                         updatedLoadSubmittedList.addAll(loadSubmittedList);
                         loadSubmittedAdapter.updateData(updatedLoadSubmittedList);
                         noBidsSubmittedTextView.setVisibility(View.GONE);
+                        compareAndRemove(loadListToCompare, arrayBidStatus);
                     }else{
+                        loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadList);
+                        loadListRecyclerView.setAdapter(loadListAdapter);
+                        loadListRecyclerView.scrollToPosition(loadListAdapter.getItemCount() - 1);
+
+                        if (loadList.size() > 0) {
+                            loadListAdapter.updateData(loadListToCompare);
+                        }
+
                         noBidsSubmittedTextView.setVisibility(View.VISIBLE);
                     }
-//                    compareAndRemove(loadListToCompare, bidStatusToCompare);
+//
 //                    else {
 //                        loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadListToCompare);
 //                        loadListRecyclerView.setAdapter(loadListAdapter);
@@ -1227,6 +1248,7 @@ public class DashboardActivity extends AppCompatActivity {
                                 Intent intent3 = new Intent(DashboardActivity.this, VehicleDetailsActivity.class);
                                 intent3.putExtra("userId", userId);
                                 intent3.putExtra("isEdit", false);
+                                intent3.putExtra("fromBidNow",true);
                                 intent3.putExtra("mobile", phone);
                                 startActivity(intent3);
                             }
@@ -1410,6 +1432,7 @@ public class DashboardActivity extends AppCompatActivity {
         selectTruck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                arrayTruckId.clear();
                 getTrucksByUserId();
                 arrayTruckList.clear();
             }
@@ -1419,6 +1442,7 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isTruckSelectedToBid) {
+                    arrayDriverId.clear();
                     getDriversByUserId();
                     arrayDriverName.clear();
                 }
@@ -1431,6 +1455,7 @@ public class DashboardActivity extends AppCompatActivity {
                 Intent intent3 = new Intent(DashboardActivity.this, VehicleDetailsActivity.class);
                 intent3.putExtra("userId", userId);
                 intent3.putExtra("isEdit", false);
+                intent3.putExtra("fromBidNow",true);
                 intent3.putExtra("mobile", phone);
                 startActivity(intent3);
             }
@@ -1442,6 +1467,7 @@ public class DashboardActivity extends AppCompatActivity {
                 Intent i8 = new Intent(DashboardActivity.this, DriverDetailsActivity.class);
                 i8.putExtra("userId", userId);
                 i8.putExtra("isEdit", false);
+                i8.putExtra("fromBidNow",true);
                 i8.putExtra("mobile", mobile);
                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i8);
