@@ -627,15 +627,15 @@ public class OtpCodeActivity extends AppCompatActivity {
                         Log.i("Mobile No API Matches", phone);
 
                         if (role.equals("Customer")) {
-                            Intent i8 = new Intent(OtpCodeActivity.this, DashboardActivity.class);
-                            i8.putExtra("mobile2", phone);
+                            Intent i8 = new Intent(OtpCodeActivity.this, CustomerDashboardActivity.class);
+                            i8.putExtra("mobile", phone);
                             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i8);
                             overridePendingTransition(0, 0);
                             finish();
                         }else{
-                            Intent i8 = new Intent(OtpCodeActivity.this, CustomerDashboardActivity.class);
-                            i8.putExtra("mobile", phone);
+                            Intent i8 = new Intent(OtpCodeActivity.this, DashboardActivity.class);
+                            i8.putExtra("mobile2", phone);
                             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i8);
                             overridePendingTransition(0, 0);

@@ -477,15 +477,15 @@ public class RegistrationActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
                     if (role.equals("Customer")) {
-                        Intent i8 = new Intent(RegistrationActivity.this, DashboardActivity.class);
-                        i8.putExtra("mobile2", mobile);
+                        Intent i8 = new Intent(RegistrationActivity.this, CustomerDashboardActivity.class);
+                        i8.putExtra("mobile", mobile);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);
                         overridePendingTransition(0, 0);
                         finish();
                     }else{
-                        Intent i8 = new Intent(RegistrationActivity.this, CustomerDashboardActivity.class);
-                        i8.putExtra("mobile", mobile);
+                        Intent i8 = new Intent(RegistrationActivity.this, DashboardActivity.class);
+                        i8.putExtra("mobile2", mobile);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);
                         overridePendingTransition(0, 0);
