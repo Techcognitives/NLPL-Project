@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_menu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/flag_transparent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout13"
+        android:layout_width="165dp"
+        android:layout_height="0dp"
+        android:onClick="onClickDismissDialog"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/constraintLayout12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout15"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:onClick="onClickDismissDialog"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/constraintLayout13"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout12">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout12"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/all_rounded_small"
+        android:backgroundTint="@color/redDark"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/constraintLayout13"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/customer_menu_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:singleLine="true"
+            android:text="@string/name"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/customer_menu_mobile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/customer_menu_mobile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/mobNo"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/customer_menu_name_text" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/redDark"
+            android:drawableStart="@drawable/log_out_small"
+            android:onClick="onClickLogOutCustomer"
+            android:paddingStart="5dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="  Logout"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout16" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout16"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/button_blue"
+            android:paddingEnd="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/textView8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/customer_menu_mobile">
+
+            <TextView
+                android:id="@+id/customer_menu_bank_details_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:gravity="center|start"
+                android:onClick="onClickProfileAndRegisterCustomer"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/BankDetails"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@+id/menu_loads_history_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/customer_menu_bank_details_logo_image_view"
+                app:layout_constraintTop_toBottomOf="@+id/customer_menu_personal_details_button" />
+
+            <ImageView
+                android:id="@+id/customer_menu_bank_details_logo_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/customer_menu_bank_details_button"
+                app:layout_constraintEnd_toStartOf="@+id/customer_menu_bank_details_button"
+                app:layout_constraintStart_toStartOf="@+id/customer_menu_personal_details_logo_image_view"
+                app:layout_constraintTop_toTopOf="@+id/customer_menu_bank_details_button"
+                app:srcCompat="@drawable/bank" />
+
+            <TextView
+                android:id="@+id/customer_menu_personal_details_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:onClick="onClickProfileAndRegisterCustomer"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="Personal and Company"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@+id/customer_menu_bank_details_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/customer_menu_personal_details_logo_image_view"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/customer_menu_personal_details_logo_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/customer_menu_personal_details_button"
+                app:layout_constraintEnd_toStartOf="@+id/customer_menu_personal_details_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/customer_menu_personal_details_button"
+                app:srcCompat="@drawable/personal" />
+
+            <TextView
+                android:id="@+id/menu_loads_history_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center|start"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="Loads History"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@+id/menu_payment_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView17"
+                app:layout_constraintTop_toBottomOf="@+id/customer_menu_bank_details_button" />
+
+            <ImageView
+                android:id="@+id/imageView17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/menu_loads_history_button"
+                app:layout_constraintEnd_toStartOf="@+id/menu_loads_history_button"
+                app:layout_constraintStart_toStartOf="@+id/customer_menu_bank_details_logo_image_view"
+                app:layout_constraintTop_toTopOf="@+id/menu_loads_history_button"
+                app:srcCompat="@drawable/truck_history_small" />
+
+            <TextView
+                android:id="@+id/menu_payment_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center|start"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="Payments"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@+id/menu_languages_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView19"
+                app:layout_constraintTop_toBottomOf="@+id/menu_loads_history_button" />
+
+            <TextView
+                android:id="@+id/menu_languages_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center|start"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="Language"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toTopOf="@+id/menu_settings_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView21"
+                app:layout_constraintTop_toBottomOf="@+id/menu_payment_button" />
+
+            <ImageView
+                android:id="@+id/imageView19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/menu_payment_button"
+                app:layout_constraintEnd_toStartOf="@+id/menu_payment_button"
+                app:layout_constraintStart_toStartOf="@+id/imageView17"
+                app:layout_constraintTop_toTopOf="@+id/menu_payment_button"
+                app:srcCompat="@drawable/payments_small" />
+
+            <TextView
+                android:id="@+id/menu_settings_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="150dp"
+                android:gravity="center|start"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="Settings and Preferences"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView20"
+                app:layout_constraintTop_toBottomOf="@+id/menu_languages_button" />
+
+            <ImageView
+                android:id="@+id/imageView20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/menu_settings_button"
+                app:layout_constraintEnd_toStartOf="@+id/menu_settings_button"
+                app:layout_constraintStart_toStartOf="@+id/imageView21"
+                app:layout_constraintTop_toTopOf="@+id/menu_settings_button"
+                app:srcCompat="@drawable/settings_small" />
+
+            <ImageView
+                android:id="@+id/imageView21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/menu_languages_button"
+                app:layout_constraintEnd_toStartOf="@+id/menu_languages_button"
+                app:layout_constraintStart_toStartOf="@+id/imageView19"
+                app:layout_constraintTop_toTopOf="@+id/menu_languages_button"
+                app:srcCompat="@drawable/languages_small" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

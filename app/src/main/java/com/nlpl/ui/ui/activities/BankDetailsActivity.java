@@ -94,7 +94,6 @@ public class BankDetailsActivity extends AppCompatActivity {
     int resultCode;
     Intent data;
 
-
     EditText bankName, accountNo, reAccount, ifscCode;
     Button okButton;
 
@@ -106,7 +105,7 @@ public class BankDetailsActivity extends AppCompatActivity {
     Boolean isEdit, isImgUploaded = false;
 
     RadioButton canceledCheckRadioButton, acDetailsRadioButton;
-    String bankId, mobile;
+    String bankId, mobile, userRoleAPI;
     private RequestQueue mQueue;
 
     private UserService userService;
@@ -160,6 +159,7 @@ public class BankDetailsActivity extends AppCompatActivity {
         bankService = retrofit.create(BankService.class);
 
         mQueue = Volley.newRequestQueue(BankDetailsActivity.this);
+        getUserDetails();
 
         bankName.setFilters(new InputFilter[]{filter});
         ifscCode.setFilters(new InputFilter[]{filter});
@@ -456,11 +456,11 @@ public class BankDetailsActivity extends AppCompatActivity {
 
                         updateUserIsBankDetailsGiven();
                         dialogInterface.dismiss();
-                        Intent i8 = new Intent(BankDetailsActivity.this, DashboardActivity.class);
-                        i8.putExtra("mobile2", mobile);
-                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(i8);
-                        overridePendingTransition(0, 0);
+
+                        Intent intent = new Intent(BankDetailsActivity.this, ViewBankDetailsActivity.class);
+                        intent.putExtra("userId", userId);
+                        intent.putExtra("mobile", mobile);
+                        startActivity(intent);
                         BankDetailsActivity.this.finish();
                     }
                 });
@@ -483,6 +483,32 @@ public class BankDetailsActivity extends AppCompatActivity {
             });
             my_alert.show();
         }
+    }
+
+    private void getUserDetails() {
+        String url = getString(R.string.baseURL) + "/user/" + userId;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+                        userRoleAPI = obj.getString("user_type");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        mQueue.add(request);
+
     }
 
     private TextWatcher bankDetailsWatcher = new TextWatcher() {

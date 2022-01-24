@@ -28,6 +28,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.UpdateUserDetails.UpdateUserIsPersonalDetailsAdded;
 import com.nlpl.services.UserService;
@@ -36,6 +41,10 @@ import com.nlpl.model.Responses.ImageResponse;
 import com.nlpl.model.Responses.UploadImageResponse;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.FileUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -52,6 +61,7 @@ import okhttp3.RequestBody;
 
 public class PersonalDetailsActivity extends AppCompatActivity {
 
+    private RequestQueue mQueue;
     View action_bar;
     TextView actionBarTitle;
     ImageView actionBarBackButton;
@@ -85,6 +95,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             userId = bundle.getString("userId");
             mobile = bundle.getString("mobile");
         }
+        mQueue = Volley.newRequestQueue(PersonalDetailsActivity.this);
 
         if (isPanUploaded && isFrontUploaded ) {
             okPersonalDetails.setBackgroundResource((R.drawable.button_active));
@@ -477,12 +488,13 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
-                    Intent i8 = new Intent(PersonalDetailsActivity.this, DashboardActivity.class);
-                    i8.putExtra("mobile2", mobile);
-                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i8);
-                    overridePendingTransition(0, 0);
+
+                    Intent intent = new Intent(PersonalDetailsActivity.this, ViewPersonalDetailsActivity.class);
+                    intent.putExtra("userId", userId);
+                    intent.putExtra("mobile", mobile);
+                    startActivity(intent);
                     PersonalDetailsActivity.this.finish();
+
                 }
             });
             my_alert.show();

@@ -93,6 +93,15 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
                         userPinCodeAPI = obj.getString("pin_code");
                         userRoleAPI = obj.getString("user_type");
 
+                        if (userRoleAPI.equals("Customer")){
+                            userFirmTitle.setVisibility(View.GONE);
+                            userFirmNameTitleTextView.setVisibility(View.GONE);
+                            userEditFirmDetailsTextView.setVisibility(View.GONE);
+                            userFirmNameTextView.setVisibility(View.GONE);
+                            userFirmAddressTitleTextView.setVisibility(View.GONE);
+                            userFirmAddressTextView.setVisibility(View.GONE);
+                        }
+
                         userEmailIdAPI = obj.getString("email_id");
 
                         isPersonalDetailsDoneAPI = obj.getString("isPersonal_dt_added");

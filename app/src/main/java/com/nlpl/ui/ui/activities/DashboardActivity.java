@@ -251,18 +251,15 @@ public class DashboardActivity extends AppCompatActivity {
                     getUserDetails();
 
                     //---------------------------- Get Load Details -------------------------------------------
-
                     getLoadNotificationList();
 
-
                     LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(getApplicationContext());
-                    linearLayoutManagerBank.setReverseLayout(true);
+                    linearLayoutManagerBank.setReverseLayout(false);
                     loadListRecyclerView.setLayoutManager(linearLayoutManagerBank);
                     loadListRecyclerView.setHasFixedSize(true);
 
-
                     LinearLayoutManager linearLayoutManagerBank1 = new LinearLayoutManager(getApplicationContext());
-                    linearLayoutManagerBank1.setReverseLayout(true);
+                    linearLayoutManagerBank1.setReverseLayout(false);
                     loadSubmittedRecyclerView.setLayoutManager(linearLayoutManagerBank1);
                     loadSubmittedRecyclerView.setHasFixedSize(true);
 
@@ -275,6 +272,7 @@ public class DashboardActivity extends AppCompatActivity {
                     loadListRecyclerView.scrollToPosition(loadListAdapter.getItemCount() - 1);
 
                     //------------------------------------------------------------------------------------------
+                    RearrangeItems();
 
                 } catch (JSONException e) {
                     e.printStackTrace();

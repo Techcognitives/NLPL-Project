@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -30,6 +31,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.auth.FirebaseAuth;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BidsAcceptedModel;
 import com.nlpl.model.ModelForRecyclerView.BidsReceivedModel;
@@ -76,6 +78,13 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
     private BidsResponsesAdapter bidsResponsesAdapter;
     private BidLoadService bidService;
+
+    Dialog menuDialog;
+    TextView userNameTextViewMenu, mobileTextViewMenu;
+    ImageView personalDetailsLogoImageView, bankDetailsLogoImageView;
+
+    String isPersonalDetailsDone, isBankDetailsDone;
+
     View actionBar;
     TextView actionBarTitle;
     ImageView actionBarBackButton, actionBarMenuButton;
@@ -112,7 +121,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                 RearrangeItems();
             }
         });
-
+//--------------------------- action bar -----------------------------------------------------------
         actionBar = findViewById(R.id.customer_dashboard_action_bar);
         actionBarTitle = (TextView) actionBar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) actionBar.findViewById(R.id.action_bar_back_button);
@@ -120,7 +129,19 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
         actionBarTitle.setText("Load Poster Dashboard");
         actionBarBackButton.setVisibility(View.GONE);
+        actionBarMenuButton.setVisibility(View.VISIBLE);
+        //------------------------------------------------------------------------------------------
+        //------------------------------- menu button ----------------------------------------------
+        menuDialog = new Dialog(CustomerDashboardActivity.this);
+        menuDialog.setContentView(R.layout.dialog_customer_menu);
+        menuDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+        userNameTextViewMenu = (TextView) menuDialog.findViewById(R.id.customer_menu_name_text);
+        mobileTextViewMenu = (TextView) menuDialog.findViewById(R.id.customer_menu_mobile);
+        personalDetailsLogoImageView = (ImageView) menuDialog.findViewById(R.id.customer_menu_personal_details_logo_image_view);
+        bankDetailsLogoImageView = (ImageView) menuDialog.findViewById(R.id.customer_menu_bank_details_logo_image_view);
+        //------------------------------------------------------------------------------------------
+        //------------------------------- bottom nav -----------------------------------------------
         bottomNav = (View) findViewById(R.id.customer_dashboard_bottom_nav_bar);
         bottomNav.setVisibility(View.GONE);
         spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
@@ -184,7 +205,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     }
 
     private void getUserId(String userMobileNumber) {
-        ArrayList<String> arrayUserId = new ArrayList<>(), arrayMobileNo = new ArrayList<>();
+        ArrayList<String> arrayUserId = new ArrayList<>(), arrayMobileNo = new ArrayList<>(), arrayCustomerName = new ArrayList<>(), isPersonalD = new ArrayList<>(), isBankD = new ArrayList<>();
         //------------------------------get user details by mobile Number---------------------------------
         //-----------------------------------Get User Details---------------------------------------
         String url = getString(R.string.baseURL) + "/user/get";
@@ -201,12 +222,37 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         arrayUserId.add(userIdAPI);
                         String mobileNoAPI = data.getString("phone_number");
                         arrayMobileNo.add(mobileNoAPI);
+                        String userName = data.getString("name");
+                        arrayCustomerName.add(userName);
+
+                        String isPer = data.getString("isPersonal_dt_added");
+                        isPersonalD.add(isPer);
+                        String isBank = data.getString("isBankDetails_given");
+                        isBankD.add(isBank);
                     }
 
                     for (int j = 0; j < arrayMobileNo.size(); j++) {
                         if (arrayMobileNo.get(j).equals(userMobileNumber)) {
                             userId = arrayUserId.get(j);
-                            Log.i("userIDAPI:", userId);
+                            String customerNameAPI = arrayCustomerName.get(j);
+                            userNameTextViewMenu.setText(customerNameAPI);
+                            String customerNumberAPI = arrayMobileNo.get(j);
+                            mobileTextViewMenu.setText("+" + customerNumberAPI);
+
+                            isPersonalDetailsDone = isPersonalD.get(j);
+                            isBankDetailsDone = isBankD.get(j);
+
+                            if (isPersonalDetailsDone.equals("1")) {
+                                personalDetailsLogoImageView.setImageDrawable(getResources().getDrawable(R.drawable.personal_success));
+                            } else {
+                                personalDetailsLogoImageView.setImageDrawable(getResources().getDrawable(R.drawable.personal));
+                            }
+
+                            if (isBankDetailsDone.equals("1")) {
+                                bankDetailsLogoImageView.setImageDrawable(getResources().getDrawable(R.drawable.bank_success));
+                            } else {
+                                bankDetailsLogoImageView.setImageDrawable(getResources().getDrawable(R.drawable.bank));
+                            }
                         }
                     }
                     getBidsReceived();
@@ -283,7 +329,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                     if (acceptedList.size() > 0) {
                         noAcceptedLoads.setVisibility(View.GONE);
                         bidsAcceptedAdapter.updateData(acceptedList);
-                    }else{
+                    } else {
                         noAcceptedLoads.setVisibility(View.VISIBLE);
                     }
 //                        }
@@ -949,7 +995,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                     for (int i = 0; i < bidResponsesLists.length(); i++) {
                         JSONObject obj = bidResponsesLists.getJSONObject(i);
                         spQuoteByApi = obj.getString("sp_quote");
-                        noteByApi =  obj.getString("notes");
+                        noteByApi = obj.getString("notes");
                         bid_idByAPI = obj.getString("sp_bid_id");
                     }
 
@@ -1039,4 +1085,62 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         //-------------------------------------------------------------------------------------------
 
     }
+
+    //--------------------------------- menu -------------------------------------------------------
+    public void onCLickShowMenu(View view) {
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(menuDialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.END;
+        menuDialog.show();
+        menuDialog.setCancelable(true);
+        menuDialog.getWindow().setAttributes(lp);
+    }
+    
+    public void onClickDismissDialog(View view) {
+        menuDialog.dismiss();
+    }
+
+    public void onClickLogOutCustomer(View view) {
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(CustomerDashboardActivity.this, LogInActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
+
+    public void onClickProfileAndRegisterCustomer(View view) {
+        switch (view.getId()) {
+            case R.id.customer_menu_personal_details_button:
+                if (isPersonalDetailsDone.equals("1")) {
+                    Intent intent = new Intent(CustomerDashboardActivity.this, ViewPersonalDetailsActivity.class);
+                    intent.putExtra("userId", userId);
+                    intent.putExtra("mobile", phone);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(CustomerDashboardActivity.this, PersonalDetailsActivity.class);
+                    intent.putExtra("userId", userId);
+                    intent.putExtra("mobile", phone);
+                    startActivity(intent);
+                }
+                break;
+
+            case R.id.customer_menu_bank_details_button:
+                if (isBankDetailsDone.equals("1")) {
+                    Intent intent = new Intent(CustomerDashboardActivity.this, ViewBankDetailsActivity.class);
+                    intent.putExtra("userId", userId);
+                    intent.putExtra("mobile", phone);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(CustomerDashboardActivity.this, BankDetailsActivity.class);
+                    intent.putExtra("isEdit", false);
+                    intent.putExtra("userId", userId);
+                    intent.putExtra("mobile", phone);
+                    startActivity(intent);
+                }
+                break;
+        }
+    }
+    //----------------------------------------------------------------------------------------------
 }
