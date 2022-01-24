@@ -105,7 +105,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     private AddTruckService addTruckService;
 
     String userId, truckId, vehicleNumberAPI, vehicleTypeAPI, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI, truckModelAPI, truckFtAPI, truckCapacityAPI;
-    Boolean isEdit, isRcUploaded=false, isInsurance=false, truckSelected=false, isModelSelected = false;
+    Boolean fromBidNow = true, isEdit, isRcUploaded = false, isInsurance = false, truckSelected = false, isModelSelected = false;
 
     RadioButton openSelected, closeSelected, tarpaulinSelected;
 
@@ -124,6 +124,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         if (bundle != null) {
             userId = bundle.getString("userId");
             isEdit = bundle.getBoolean("isEdit");
+            fromBidNow = bundle.getBoolean("fromBidNow");
             truckId = bundle.getString("truckId");
             mobile = bundle.getString("mobile");
         }
@@ -199,16 +200,16 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         userService = retrofit.create(UserService.class);
         addTruckService = retrofit.create(AddTruckService.class);
 
-        okVehicleDetails= findViewById(R.id.vehicle_details_ok_button);
+        okVehicleDetails = findViewById(R.id.vehicle_details_ok_button);
 //        okVehicleDetails.setEnabled(false);
 
         vehicleNumberEdit.addTextChangedListener(vehicleTextWatecher);
 
         vehicleNumberEdit.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        vehicleNumberEdit.setFilters(new InputFilter[] { filter });
+        vehicleNumberEdit.setFilters(new InputFilter[]{filter});
 
-        if (isEdit){
+        if (isEdit) {
 
             isRcUploaded = true;
             isInsurance = true;
@@ -403,9 +404,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     }
 
     public void onClickVehicle(View view) {
-        truckSelected=true;
+        truckSelected = true;
         String vehicleNum = vehicleNumberEdit.getText().toString();
-        if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected && isModelSelected ){
+        if (!vehicleNum.isEmpty() && isRcUploaded && isInsurance && truckSelected && isModelSelected) {
             okVehicleDetails.setEnabled(true);
             okVehicleDetails.setBackgroundResource(R.drawable.button_active);
         }
@@ -443,9 +444,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     }
 
     public void onClickRadioButtons(View view) {
-        truckSelected=true;
+        truckSelected = true;
         String vehicleNum = vehicleNumberEdit.getText().toString();
-        if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected && isModelSelected  ){
+        if (!vehicleNum.isEmpty() && isRcUploaded && isInsurance && truckSelected && isModelSelected) {
             okVehicleDetails.setEnabled(true);
             okVehicleDetails.setBackgroundResource(R.drawable.button_active);
         }
@@ -498,7 +499,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
     }
 
-    private String rcImagePickerWithoutAlert(){
+    private String rcImagePickerWithoutAlert() {
         //Detects request code for PAN
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
 
@@ -508,22 +509,22 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             previewRcBook.setVisibility(View.VISIBLE);
             previewInsurance.setVisibility(View.VISIBLE);
 
-            isRcUploaded=true;
+            isRcUploaded = true;
             String vehicleNum = vehicleNumberEdit.getText().toString();
-            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected && isModelSelected  ){
+            if (!vehicleNum.isEmpty() && isRcUploaded && isInsurance && truckSelected && isModelSelected) {
                 okVehicleDetails.setEnabled(true);
                 okVehicleDetails.setBackgroundResource(R.drawable.button_active);
             }
 
             Uri selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-            Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
             cursor.moveToFirst();
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath1 = cursor.getString(columnIndex);
             cursor.close();
 
-            Log.i("path on Activity",picturePath1);
+            Log.i("path on Activity", picturePath1);
 
             imgRC.setImageURI(selectedImage);
 
@@ -556,7 +557,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         return "";
     }
 
-    private String insuranceImagePickerWithoutAlert(){
+    private String insuranceImagePickerWithoutAlert() {
         //Detects request code for PAN
         if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
 
@@ -564,16 +565,16 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             uploadInsurance.setVisibility(View.INVISIBLE);
             editInsurance.setVisibility(View.VISIBLE);
 
-            isInsurance=true;
+            isInsurance = true;
             String vehicleNum = vehicleNumberEdit.getText().toString();
-            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected && isModelSelected){
+            if (!vehicleNum.isEmpty() && isRcUploaded && isInsurance && truckSelected && isModelSelected) {
                 okVehicleDetails.setEnabled(true);
                 okVehicleDetails.setBackgroundResource(R.drawable.button_active);
             }
 
             Uri selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-            Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
             cursor.moveToFirst();
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath2 = cursor.getString(columnIndex);
@@ -609,8 +610,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     }
 
 
-
-    private String rcImagePicker(){
+    private String rcImagePicker() {
         //Detects request code for PAN
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
 
@@ -630,23 +630,23 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             previewRcBook.setVisibility(View.VISIBLE);
             previewInsurance.setVisibility(View.VISIBLE);
 
-            isRcUploaded=true;
+            isRcUploaded = true;
             String vehicleNum = vehicleNumberEdit.getText().toString();
-            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected && isModelSelected  ){
+            if (!vehicleNum.isEmpty() && isRcUploaded && isInsurance && truckSelected && isModelSelected) {
                 okVehicleDetails.setEnabled(true);
                 okVehicleDetails.setBackgroundResource(R.drawable.button_active);
             }
 
             Uri selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-            Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
             cursor.moveToFirst();
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath3 = cursor.getString(columnIndex);
             cursor.close();
 
             imgRC.setImageURI(selectedImage);
-            Log.i("path onActivityResult",picturePath3);
+            Log.i("path onActivityResult", picturePath3);
             pathForRC = picturePath3;
             return picturePath3;
 
@@ -685,7 +685,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         return "";
     }
 
-    private String insuranceImagePicker(){
+    private String insuranceImagePicker() {
         //Detects request code for PAN
         if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
             AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
@@ -701,16 +701,16 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             uploadInsurance.setVisibility(View.INVISIBLE);
             editInsurance.setVisibility(View.VISIBLE);
 
-            isInsurance=true;
+            isInsurance = true;
             String vehicleNum = vehicleNumberEdit.getText().toString();
-            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected && isModelSelected){
+            if (!vehicleNum.isEmpty() && isRcUploaded && isInsurance && truckSelected && isModelSelected) {
                 okVehicleDetails.setEnabled(true);
                 okVehicleDetails.setBackgroundResource(R.drawable.button_active);
             }
 
             Uri selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-            Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
             cursor.moveToFirst();
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath4 = cursor.getString(columnIndex);
@@ -753,28 +753,28 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
     public void onClickVehicleDetailsOk(View view) {
         String vehicleNum = vehicleNumberEdit.getText().toString();
-        if (!vehicleNum.isEmpty()&&isRcUploaded&&isInsurance&&truckSelected && isModelSelected) {
-            if (isEdit){
+        if (!vehicleNum.isEmpty() && isRcUploaded && isInsurance && truckSelected && isModelSelected) {
 
+            if (isEdit) {
                 String insurancePath = insuranceImagePickerWithoutAlert();
                 uploadTruckInsurance(truckId, insurancePath);
 
                 okVehicleDetails.setEnabled(true);
                 okVehicleDetails.setBackground(getResources().getDrawable(R.drawable.button_active));
 
-                if (vehicleNumberEdit.getText().toString() != null){
+                if (vehicleNumberEdit.getText().toString() != null) {
                     updateTruckNumber();
                 }
-                if (selectModel.getText().toString() != null){
+                if (selectModel.getText().toString() != null) {
                     updateTruckType();
                 }
-                if (selectCapacity.getText().toString() != null){
+                if (selectCapacity.getText().toString() != null) {
                     updateTruckCarryingCapacity();
                 }
-                if (bodyTypeSelected != null){
+                if (bodyTypeSelected != null) {
                     updateVehicleType();
                 }
-                if (selectFt.getText().toString() != null){
+                if (selectFt.getText().toString() != null) {
                     updateTruckFeet();
                 }
 
@@ -785,8 +785,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 startActivity(i8);
                 overridePendingTransition(0, 0);
                 VehicleDetailsActivity.this.finish();
-
-            }else{
+            } else {
                 saveTruck(createTruck());
                 updateUserIsTruckAdded();
 
@@ -795,16 +794,19 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 my_alert.setNegativeButton("+ Add Truck Driver", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                        Intent i8 = new Intent(VehicleDetailsActivity.this, DriverDetailsActivity.class);
-                        i8.putExtra("userId", userId);
-                        i8.putExtra("isEdit", false);
-                        i8.putExtra("mobile", mobile);
-                        i8.putExtra("truckIdPass", truckIdPass);
-                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(i8);
-                        overridePendingTransition(0, 0);
-                        VehicleDetailsActivity.this.finish();
+
+                            dialogInterface.dismiss();
+                            Intent i8 = new Intent(VehicleDetailsActivity.this, DriverDetailsActivity.class);
+                            i8.putExtra("userId", userId);
+                            i8.putExtra("isEdit", false);
+                            i8.putExtra("fromBidNow",false);
+                            i8.putExtra("mobile", mobile);
+                            i8.putExtra("truckIdPass", truckIdPass);
+                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(i8);
+                            overridePendingTransition(0, 0);
+                            VehicleDetailsActivity.this.finish();
+
                     }
                 });
                 my_alert.setPositiveButton("Skip", new DialogInterface.OnClickListener() {
@@ -812,42 +814,51 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
                         if (isDriverDetailsDoneAPI.equals("1")) {
-                            Intent i8 = new Intent(VehicleDetailsActivity.this, ViewTruckDetailsActivity.class);
-                            i8.putExtra("mobile", mobile);
-                            i8.putExtra("userId", userId);
-                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(i8);
-                            overridePendingTransition(0, 0);
-                            VehicleDetailsActivity.this.finish();
-                        }else{
+                            if (fromBidNow){
+                                VehicleDetailsActivity.this.finish();
+                            }else {
+                                Intent i8 = new Intent(VehicleDetailsActivity.this, ViewTruckDetailsActivity.class);
+                                i8.putExtra("mobile", mobile);
+                                i8.putExtra("userId", userId);
+                                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(i8);
+                                overridePendingTransition(0, 0);
+                                VehicleDetailsActivity.this.finish();
+                            }
+                        } else {
                             AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
                             my_alert.setTitle("You cannot bid unless you have a Driver");
                             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    dialogInterface.dismiss();
-                                    Intent i8 = new Intent(VehicleDetailsActivity.this, ViewTruckDetailsActivity.class);
-                                    i8.putExtra("mobile", mobile);
-                                    i8.putExtra("userId", userId);
-                                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    startActivity(i8);
-                                    overridePendingTransition(0, 0);
-                                    VehicleDetailsActivity.this.finish();
+                                    if (fromBidNow){
+                                        VehicleDetailsActivity.this.finish();
+                                    } else {
+                                        dialogInterface.dismiss();
+                                        Intent i8 = new Intent(VehicleDetailsActivity.this, ViewTruckDetailsActivity.class);
+                                        i8.putExtra("mobile", mobile);
+                                        i8.putExtra("userId", userId);
+                                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(i8);
+                                        overridePendingTransition(0, 0);
+                                        VehicleDetailsActivity.this.finish();
+                                    }
                                 }
                             });
                             my_alert.setNegativeButton("+ Add Truck Driver", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    dialogInterface.dismiss();
-                                    Intent i8 = new Intent(VehicleDetailsActivity.this, DriverDetailsActivity.class);
-                                    i8.putExtra("userId", userId);
-                                    i8.putExtra("isEdit", false);
-                                    i8.putExtra("mobile", mobile);
-                                    i8.putExtra("truckIdPass", truckIdPass);
-                                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    startActivity(i8);
-                                    overridePendingTransition(0, 0);
-                                    VehicleDetailsActivity.this.finish();
+                                        dialogInterface.dismiss();
+                                        Intent i8 = new Intent(VehicleDetailsActivity.this, DriverDetailsActivity.class);
+                                        i8.putExtra("userId", userId);
+                                        i8.putExtra("isEdit", false);
+                                        i8.putExtra("fromBidNow", false);
+                                        i8.putExtra("mobile", mobile);
+                                        i8.putExtra("truckIdPass", truckIdPass);
+                                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(i8);
+                                        overridePendingTransition(0, 0);
+                                        VehicleDetailsActivity.this.finish();
                                 }
                             });
                             my_alert.show();
@@ -857,7 +868,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 my_alert.show();
             }
 
-        }else{
+        } else {
 //            okVehicleDetails.setEnabled(false);
 //            okVehicleDetails.setBackground(getResources().getDrawable(R.drawable.button_de_active));
         }
@@ -870,7 +881,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         addTruckRequest.setVehicle_no(vehicleNumberEdit.getText().toString());
         addTruckRequest.setVehicle_type(bodyTypeSelected);
         addTruckRequest.setTruck_type(selectModel.getText().toString());
-        addTruckRequest.setTruck_ft(selectFt.getText().toString()+" Ft");
+        addTruckRequest.setTruck_ft(selectFt.getText().toString() + " Ft");
         addTruckRequest.setTruck_carrying_capacity(selectCapacity.getText().toString());
         return addTruckRequest;
     }
@@ -889,8 +900,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 //                String insurancePath = insuranceImagePickerWithoutAlert();
 
                 uploadTruckInsurance(truckId, pathForInsurance);
-                uploadTruckRC(truckId,pathForRC);
+                uploadTruckRC(truckId, pathForRC);
             }
+
             @Override
             public void onFailure(Call<AddTruckResponse> call, Throwable t) {
             }
@@ -912,13 +924,13 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
 
-    private void uploadTruckRC(String truckId, String picPath){
+    private void uploadTruckRC(String truckId, String picPath) {
 
         File file = new File(picPath);
 
         MultipartBody.Part body = prepareFilePart("rc", Uri.fromFile(file));
 
-        Call<UploadTruckRCResponse> call = ApiClient.getUploadTruckRCBookService().UploadTruckRCBook(truckId,body);
+        Call<UploadTruckRCResponse> call = ApiClient.getUploadTruckRCBookService().UploadTruckRCBook(truckId, body);
         call.enqueue(new Callback<UploadTruckRCResponse>() {
             @Override
             public void onResponse(Call<UploadTruckRCResponse> call, Response<UploadTruckRCResponse> response) {
@@ -946,14 +958,14 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
 
-    private void uploadTruckInsurance(String truckId, String picPath){
+    private void uploadTruckInsurance(String truckId, String picPath) {
 
         File file = new File(picPath);
 //        File file = new File(getExternalFilesDir("/").getAbsolutePath(), file);
 
         MultipartBody.Part body = prepareFilePart1("insurence", Uri.fromFile(file));
 
-        Call<UploadTruckInsuranceResponse> call = ApiClient.getTuckInsuranceService().uploadTruckInsurance(truckId,body);
+        Call<UploadTruckInsuranceResponse> call = ApiClient.getTuckInsuranceService().uploadTruckInsurance(truckId, body);
         call.enqueue(new Callback<UploadTruckInsuranceResponse>() {
             @Override
             public void onResponse(Call<UploadTruckInsuranceResponse> call, Response<UploadTruckInsuranceResponse> response) {
@@ -976,10 +988,10 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             String vehicleNum = vehicleNumberEdit.getText().toString().trim();
-            if (!vehicleNum.isEmpty()&&isRcUploaded&&isInsurance&&truckSelected&& isModelSelected) {
+            if (!vehicleNum.isEmpty() && isRcUploaded && isInsurance && truckSelected && isModelSelected) {
                 okVehicleDetails.setEnabled(true);
                 okVehicleDetails.setBackgroundResource((R.drawable.button_active));
-            }else{
+            } else {
                 okVehicleDetails.setEnabled(false);
                 okVehicleDetails.setBackground(getResources().getDrawable(R.drawable.button_de_active));
             }
@@ -991,7 +1003,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         }
     };
 
-    private String blockCharacterSet ="~#^|$%&*!+@₹_-()':;?/={}";
+    private String blockCharacterSet = "~#^|$%&*!+@₹_-()':;?/={}";
 
     private InputFilter filter = new InputFilter() {
 
@@ -1007,7 +1019,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     };
 
 
-    private void getVehicleTypeList(){
+    private void getVehicleTypeList() {
         String url = getString(R.string.baseURL) + "/trucktype/getAllTruckType";
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -1073,7 +1085,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                         new DownloadImageTask(previewInsurance).execute(selfieURL);
                         new DownloadImageTask(imgI).execute(selfieURL);
 
-                        if (vehicleTypeAPI.equals("Open")){
+                        if (vehicleTypeAPI.equals("Open")) {
                             openType.setBackgroundResource(R.drawable.image_view_border_selected);
                             closedType.setBackgroundResource(R.drawable.image_view_border);
                             openSelected.setChecked(true);
@@ -1081,7 +1093,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                             tarpaulinSelected.setChecked(false);
                             tarpaulinType.setBackgroundResource(R.drawable.image_view_border);
                             bodyTypeSelected = "Open";
-                        }else if (vehicleTypeAPI.equals("Closed")){
+                        } else if (vehicleTypeAPI.equals("Closed")) {
                             openType.setBackgroundResource(R.drawable.image_view_border);
                             closedType.setBackgroundResource(R.drawable.image_view_border_selected);
                             openSelected.setChecked(false);
@@ -1089,7 +1101,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                             tarpaulinSelected.setChecked(false);
                             tarpaulinType.setBackgroundResource(R.drawable.image_view_border);
                             bodyTypeSelected = "Closed";
-                        }else if (vehicleTypeAPI.equals("Tarpaulin")){
+                        } else if (vehicleTypeAPI.equals("Tarpaulin")) {
                             openType.setBackgroundResource(R.drawable.image_view_border);
                             closedType.setBackgroundResource(R.drawable.image_view_border);
                             openSelected.setChecked(false);
@@ -1097,7 +1109,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                             tarpaulinSelected.setChecked(true);
                             tarpaulinType.setBackgroundResource(R.drawable.image_view_border_selected);
                             bodyTypeSelected = "Tarpaulin";
-                        }else{
+                        } else {
 
                         }
                     }
@@ -1162,6 +1174,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         });
 //--------------------------------------------------------------------------------------------------
     }
+
     //-------------------------------- Update User is Truck Added ----------------------------------
     private void updateTruckType() {
 
@@ -1258,7 +1271,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     }
 
     public void selectVehicleModelFeetCapacity(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.vehicle_details_select_model:
                 selectModelDialog = new Dialog(VehicleDetailsActivity.this);
                 selectModelDialog.setContentView(R.layout.dialog_spinner);
@@ -1269,7 +1282,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 model_title.setText("Select Vehicle Model");
 
                 ListView modelList = (ListView) selectModelDialog.findViewById(R.id.list_state);
-                ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this,R.layout.custom_list_row, arrayVehicleType);
+                ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, R.layout.custom_list_row, arrayVehicleType);
                 modelList.setAdapter(adapter1);
 
                 modelList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -1278,10 +1291,10 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                         selectModel.setText(adapter1.getItem(i));
                         isModelSelected = true;
                         String vehicleNum = vehicleNumberEdit.getText().toString().trim();
-                        if (!vehicleNum.isEmpty()&&isRcUploaded&&isInsurance&&truckSelected&& isModelSelected) {
+                        if (!vehicleNum.isEmpty() && isRcUploaded && isInsurance && truckSelected && isModelSelected) {
                             okVehicleDetails.setEnabled(true);
                             okVehicleDetails.setBackgroundResource((R.drawable.button_active));
-                        }else{
+                        } else {
                             okVehicleDetails.setEnabled(false);
                             okVehicleDetails.setBackground(getResources().getDrawable(R.drawable.button_de_active));
                         }
@@ -1353,7 +1366,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 feetTitle.setText("Select Vehicle Feet");
 
                 ListView feetList = (ListView) selectFeetDialog.findViewById(R.id.list_state);
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.custom_list_row, arrayTruckFt);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.custom_list_row, arrayTruckFt);
                 feetList.setAdapter(adapter);
 
                 feetList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -1378,7 +1391,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 capacity_title.setText("Select Vehicle Capacity");
 
                 ListView capacityList = (ListView) selectCapacityDialog.findViewById(R.id.list_state);
-                ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this,R.layout.custom_list_row, arrayCapacity);
+                ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, R.layout.custom_list_row, arrayCapacity);
                 capacityList.setAdapter(adapter2);
 
                 capacityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

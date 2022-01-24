@@ -147,6 +147,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
         Intent intent = new Intent(ViewTruckDetailsActivity.this, VehicleDetailsActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("isEdit", true);
+        intent.putExtra("fromBidNow", false);
         intent.putExtra("truckId", obj.getTruck_id());
         intent.putExtra("mobile", phone);
 
@@ -186,6 +187,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
     public void onClickAddTruckDetails(View view) {
         Intent intent3 = new Intent(ViewTruckDetailsActivity.this, VehicleDetailsActivity.class);
         intent3.putExtra("userId", userId);
+        intent3.putExtra("fromBidNow", false);
         intent3.putExtra("isEdit", false);
         intent3.putExtra("mobile", phone);
 
