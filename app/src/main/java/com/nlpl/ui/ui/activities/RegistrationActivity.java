@@ -455,7 +455,6 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     public void onClickRegistration(View view) {
-
         String nameWatcher = name.getText().toString().trim();
         String stateWatcher = selectStateText.getText().toString().trim();
         String cityWatcher = selectDistrictText.getText().toString().trim();
@@ -477,11 +476,21 @@ public class RegistrationActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
-                    Intent i8 = new Intent(RegistrationActivity.this, DashboardActivity.class);
-                    i8.putExtra("mobile2", mobile);
-                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i8);
-                    overridePendingTransition(0, 0);
+                    if (role.equals("Customer")) {
+                        Intent i8 = new Intent(RegistrationActivity.this, DashboardActivity.class);
+                        i8.putExtra("mobile2", mobile);
+                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i8);
+                        overridePendingTransition(0, 0);
+                        finish();
+                    }else{
+                        Intent i8 = new Intent(RegistrationActivity.this, CustomerDashboardActivity.class);
+                        i8.putExtra("mobile", mobile);
+                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i8);
+                        overridePendingTransition(0, 0);
+                        finish();
+                    }
                 }
             });
             my_alert.show();
@@ -581,8 +590,8 @@ public class RegistrationActivity extends AppCompatActivity {
                     stateByPinCode = object.getString("stateCode");
                     distByPinCode = object.getString("district");
 
-                    Log.i("state By PIncode", stateByPinCode);
-                    Log.i("Dist By PIncode", distByPinCode);
+                    Log.i("state By PIN Code", stateByPinCode);
+                    Log.i("Dist By PIN Code", distByPinCode);
 
                     selectStateText.setText(stateByPinCode);
                     selectDistrictText.setText(distByPinCode);

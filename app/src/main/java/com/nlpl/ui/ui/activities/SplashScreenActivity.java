@@ -63,10 +63,10 @@ public class SplashScreenActivity extends AppCompatActivity {
                 mFireAuth = FirebaseAuth.getInstance();
                 FirebaseUser mFireBaseUser = mFireAuth.getCurrentUser();
 
-                if (mFireBaseUser!=null){
-                mobileNoFirebase = mFireBaseUser.getPhoneNumber();
-                mobileNoFirebase= mobileNoFirebase.substring(1,13);
-                Log.i("Mobile Number for JSON", mobileNoFirebase);
+                if (mFireBaseUser != null) {
+                    mobileNoFirebase = mFireBaseUser.getPhoneNumber();
+                    mobileNoFirebase = mobileNoFirebase.substring(1, 13);
+                    Log.i("Mobile Number for JSON", mobileNoFirebase);
 
                     //------------------------------get user details by mobile Number---------------------------------
                     //-----------------------------------Get User Details---------------------------------------
@@ -112,20 +112,28 @@ public class SplashScreenActivity extends AppCompatActivity {
                                     }
                                 }
 
-                                if (isRegistrationDone!=null) {
+                                if (isRegistrationDone != null) {
 
                                     Log.i("userIDAPI:", userId);
                                     Log.i("userName", name);
                                     Log.i("isregDone:", isRegistrationDone);
                                     Log.i("Mobile No API Matches", phone);
 
-                                    Intent i8 = new Intent(SplashScreenActivity.this, DashboardActivity.class);
-                                    i8.putExtra("mobile2", phone);
-                                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    startActivity(i8);
-                                    overridePendingTransition(0, 0);
-                                    finish();
-
+                                    if (role.equals("Customer")) {
+                                        Intent i8 = new Intent(SplashScreenActivity.this, DashboardActivity.class);
+                                        i8.putExtra("mobile2", phone);
+                                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(i8);
+                                        overridePendingTransition(0, 0);
+                                        finish();
+                                    }else{
+                                        Intent i8 = new Intent(SplashScreenActivity.this, CustomerDashboardActivity.class);
+                                        i8.putExtra("mobile", phone);
+                                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(i8);
+                                        overridePendingTransition(0, 0);
+                                        finish();
+                                    }
                                 } else {
 //                                            Log.i("mobile no not equal", mobileNoAPI);
                                     Intent i8 = new Intent(SplashScreenActivity.this, RegistrationActivity.class);
@@ -150,7 +158,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                     //------------------------------------------------------------------------------------------------
 
-                }else {
+                } else {
                     Intent intent = new Intent(SplashScreenActivity.this, LogInActivity.class);
                     startActivity(intent);
                     finish();
@@ -163,7 +171,9 @@ public class SplashScreenActivity extends AppCompatActivity {
         try {
             File dir = context.getCacheDir();
             deleteDir(dir);
-        } catch (Exception e) { e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static boolean deleteDir(File dir) {
@@ -176,7 +186,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 }
             }
             return dir.delete();
-        } else if(dir!= null && dir.isFile()) {
+        } else if (dir != null && dir.isFile()) {
             return dir.delete();
         } else {
             return false;

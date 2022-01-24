@@ -347,17 +347,6 @@ public class DashboardActivity extends AppCompatActivity {
                             driverDetailsLogoImageView.setImageDrawable(getResources().getDrawable(R.drawable.driver));
                         }
 
-                        if (role.equals("Customer")) {
-                            Intent intent = new Intent(DashboardActivity.this, CustomerDashboardActivity.class);
-                            intent.putExtra("userId", userId);
-                            intent.putExtra("mobile", phone);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            overridePendingTransition(0, 0);
-                            startActivity(intent);
-                            DashboardActivity.this.finish();
-                        } else {
-
-                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

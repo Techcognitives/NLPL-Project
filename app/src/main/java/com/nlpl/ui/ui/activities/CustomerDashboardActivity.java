@@ -45,6 +45,8 @@ import com.nlpl.services.PostLoadService;
 import com.nlpl.ui.ui.adapters.BidsAcceptedAdapter;
 import com.nlpl.ui.ui.adapters.BidsReceivedAdapter;
 import com.nlpl.ui.ui.adapters.BidsResponsesAdapter;
+import com.nlpl.ui.ui.adapters.LoadNotificationAdapter;
+import com.nlpl.ui.ui.adapters.LoadSubmittedAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -97,9 +99,10 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             phone = bundle.getString("mobile");
-            userId = bundle.getString("userId");
         }
         mQueue = Volley.newRequestQueue(CustomerDashboardActivity.this);
+
+        getUserId(phone);
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -143,7 +146,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
         bidsListAdapter = new BidsReceivedAdapter(CustomerDashboardActivity.this, bidsList);
         bidsListRecyclerView.setAdapter(bidsListAdapter);
-        getBidsReceived();
         //------------------------------------------------------------------------------------------
 
         //---------------------------- Get Accepted Load Details -----------------------------------
@@ -157,7 +159,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
         bidsAcceptedAdapter = new BidsAcceptedAdapter(CustomerDashboardActivity.this, acceptedList);
         bidsAcceptedRecyclerView.setAdapter(bidsAcceptedAdapter);
-        getBidsAccepted();
         //------------------------------------------------------------------------------------------
 
         previewDialogAcceptANdBid = new Dialog(CustomerDashboardActivity.this);
@@ -179,6 +180,51 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
         bidService = retrofit.create(BidLoadService.class);
         postLoadService = retrofit.create(PostLoadService.class);
+
+    }
+
+    private void getUserId(String userMobileNumber) {
+        ArrayList<String> arrayUserId = new ArrayList<>(), arrayMobileNo = new ArrayList<>();
+        //------------------------------get user details by mobile Number---------------------------------
+        //-----------------------------------Get User Details---------------------------------------
+        String url = getString(R.string.baseURL) + "/user/get";
+        Log.i("URL at Profile:", url);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray jsonArray = response.getJSONArray("data");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject data = jsonArray.getJSONObject(i);
+                        String userIdAPI = data.getString("user_id");
+                        arrayUserId.add(userIdAPI);
+                        String mobileNoAPI = data.getString("phone_number");
+                        arrayMobileNo.add(mobileNoAPI);
+                    }
+
+                    for (int j = 0; j < arrayMobileNo.size(); j++) {
+                        if (arrayMobileNo.get(j).equals(userMobileNumber)) {
+                            userId = arrayUserId.get(j);
+                            Log.i("userIDAPI:", userId);
+                        }
+                    }
+                    getBidsReceived();
+                    getBidsAccepted();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        mQueue.add(request);
+
+        //------------------------------------------------------------------------------------------------
 
     }
 
