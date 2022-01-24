@@ -249,7 +249,6 @@ public class DashboardActivity extends AppCompatActivity {
                     }
 
                     getUserDetails();
-
                     //---------------------------- Get Load Details -------------------------------------------
                     getLoadNotificationList();
 
