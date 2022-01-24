@@ -552,14 +552,14 @@ public class DashboardActivity extends AppCompatActivity {
                     if (loadList.size() > 0) {
                         noLoadAvailable.setVisibility(View.GONE);
 
-                        for (int i=0; i<loadList.size(); i++){
-                            for (int j=0; j<arrayBidStatus.size(); j++){
-                                if (arrayBidStatus.get(j).equals("submitted")){
-                                    loadList.remove(i);
-                                    arrayBidStatus.remove(j);
-                                }
-                            }
-                        }
+//                        for (int i=0; i<loadList.size(); i++){
+//                            for (int j=0; j<arrayBidStatus.size(); j++){
+//                                if (arrayBidStatus.get(j).equals("submitted")){
+//                                    loadList.remove(i);
+//                                    arrayBidStatus.remove(j);
+//                                }
+//                            }
+//                        }
 //                        loadListAdapter.updateData(loadList);
                     }else{
                         noLoadAvailable.setVisibility(View.VISIBLE);
