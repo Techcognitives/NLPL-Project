@@ -1037,7 +1037,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
                             updateLoadStatusSubmitted(obj.getIdpost_load());
                             updateBidStatusFinalAccepted(bid_idByAPI);
-                            AlertDialog.Builder my_alert = new AlertDialog.Builder(CustomerDashboardActivity.this);
+                            AlertDialog.Builder my_alert = new AlertDialog.Builder(CustomerDashboardActivity.this).setCancelable(false);
                             my_alert.setTitle("Withdrawn Successfully");
                             my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                 @Override
@@ -1052,7 +1052,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                                 }
                             });
                             my_alert.show();
-                            my_alert.setCancelable(false);
                         }
                     });
 

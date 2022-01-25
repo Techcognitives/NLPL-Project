@@ -516,15 +516,6 @@ public class DashboardActivity extends AppCompatActivity {
             }
         }
 
-        for (int i=0; i<loadListToCompare.size(); i++){
-            for (int j=0; j<arrayBidStatus.size(); j++){
-                if (arrayBidStatus.get(j).equals("submitted")){
-                    loadListToCompare.remove(i);
-                    arrayBidStatus.remove(j);
-                }
-            }
-        }
-
         loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadListToCompare);
         loadListRecyclerView.setAdapter(loadListAdapter);
         loadListRecyclerView.scrollToPosition(loadListAdapter.getItemCount() - 1);
@@ -578,10 +569,18 @@ public class DashboardActivity extends AppCompatActivity {
                         arrayBidStatus.add(bidStatusToCompare);
                         loadList.add(modelLoadNotification);
                     }
-
                     TextView noLoadAvailable = (TextView) findViewById(R.id.dashboard_load_here_text);
                     if (loadList.size() > 0) {
                         noLoadAvailable.setVisibility(View.GONE);
+
+//                        for (int i=0; i<loadList.size(); i++){
+//                            for (int j=0; j<arrayBidStatus.size(); j++){
+//                                if (arrayBidStatus.get(j).equals("submitted")){
+//                                    loadList.remove(i);
+//                                    arrayBidStatus.remove(j);
+//                                }
+//                            }
+//                        }
 //                        loadListAdapter.updateData(loadList);
                     }else{
                         noLoadAvailable.setVisibility(View.VISIBLE);
@@ -705,7 +704,12 @@ public class DashboardActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                previewDialogBidNow.dismiss();
+                Intent i8 = new Intent(DashboardActivity.this, DashboardActivity.class);
+                i8.putExtra("mobile2", phone);
+                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i8);
+                overridePendingTransition(0, 0);
+                finish();
             }
         });
 

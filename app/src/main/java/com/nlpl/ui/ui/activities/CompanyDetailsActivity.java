@@ -202,7 +202,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 //                dialog.getWindow().setLayout(1000,3000);
                 selectStateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 selectStateDialog.show();
-                selectStateDialog.setCancelable(false);
+                selectStateDialog.setCancelable(true);
                 ListView stateList = (ListView) selectStateDialog.findViewById(R.id.list_state);
 
                 selectStateArray = ArrayAdapter.createFromResource(CompanyDetailsActivity.this, R.array.array_indian_states, R.layout.custom_list_row);

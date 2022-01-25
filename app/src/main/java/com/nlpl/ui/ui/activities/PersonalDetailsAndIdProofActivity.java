@@ -333,7 +333,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 //                dialog.getWindow().setLayout(1000,3000);
                 selectStateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 selectStateDialog.show();
-                selectStateDialog.setCancelable(false);
+                selectStateDialog.setCancelable(true);
                 ListView stateList = (ListView) selectStateDialog.findViewById(R.id.list_state);
 
                 selectStateArray = ArrayAdapter.createFromResource(PersonalDetailsAndIdProofActivity.this, R.array.array_indian_states, R.layout.custom_list_row);
@@ -757,8 +757,8 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
-                    AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this);
-                    my_alert.setTitle("OTP is sent to " + "+91" + mobileEdit.getText().toString());
+                    AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsAndIdProofActivity.this).setCancelable(false);
+                    my_alert.setTitle("OTP sent to " + "+91" + mobileEdit.getText().toString());
                     my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -774,7 +774,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                         }
                     });
                     my_alert.show();
-                    my_alert.setCancelable(false);
                 }
             });
             my_alert.setNegativeButton("No", new DialogInterface.OnClickListener() {

@@ -106,7 +106,7 @@ public class RegistrationActivity extends AppCompatActivity {
         lp2.gravity = Gravity.BOTTOM;
 
         language.show();
-        language.setCancelable(false);
+        language.setCancelable(true);
         language.getWindow().setAttributes(lp2);
 
         english = language.findViewById(R.id.english);
@@ -244,7 +244,7 @@ public class RegistrationActivity extends AppCompatActivity {
 //                dialog.getWindow().setLayout(1000,3000);
                 selectStateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 selectStateDialog.show();
-                selectStateDialog.setCancelable(false);
+                selectStateDialog.setCancelable(true);
                 ListView stateList = (ListView) selectStateDialog.findViewById(R.id.list_state);
 
                 selectStateArray = ArrayAdapter.createFromResource(RegistrationActivity.this, R.array.array_indian_states, R.layout.custom_list_row);

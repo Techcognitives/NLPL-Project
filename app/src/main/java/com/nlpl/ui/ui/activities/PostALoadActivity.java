@@ -318,6 +318,7 @@ public class PostALoadActivity extends AppCompatActivity {
                         intent.putExtra("userId", userId);
                         intent.putExtra("mobile", phone);
                         startActivity(intent);
+                        finish();
                     }
                 });
                 my_alert.show();
@@ -521,7 +522,7 @@ public class PostALoadActivity extends AppCompatActivity {
         selectModelDialog.setContentView(R.layout.dialog_spinner);
         selectModelDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         selectModelDialog.show();
-        selectModelDialog.setCancelable(false);
+        selectModelDialog.setCancelable(true);
         TextView model_title = selectModelDialog.findViewById(R.id.dialog_spinner_title);
         model_title.setText("Select Vehicle Model");
 
@@ -687,7 +688,7 @@ public class PostALoadActivity extends AppCompatActivity {
 //                dialog.getWindow().setLayout(1000,3000);
         selectStateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         selectStateDialog.show();
-        selectStateDialog.setCancelable(false);
+        selectStateDialog.setCancelable(true);
         ListView stateList = (ListView) selectStateDialog.findViewById(R.id.list_state);
 
         selectStateArray = ArrayAdapter.createFromResource(PostALoadActivity.this, R.array.array_indian_states, R.layout.custom_list_row);
@@ -870,7 +871,7 @@ public class PostALoadActivity extends AppCompatActivity {
 //                dialog.getWindow().setLayout(1000,3000);
         selectStateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         selectStateDialog.show();
-        selectStateDialog.setCancelable(false);
+        selectStateDialog.setCancelable(true);
         ListView stateList = (ListView) selectStateDialog.findViewById(R.id.list_state);
 
         selectStateArray = ArrayAdapter.createFromResource(PostALoadActivity.this, R.array.array_indian_states, R.layout.custom_list_row);
@@ -1068,7 +1069,7 @@ public class PostALoadActivity extends AppCompatActivity {
         postLoadRequest.setDrop_state(drop_state.getText().toString());
         postLoadRequest.setDrop_country(drop_state.getText().toString());
         postLoadRequest.setUser_id(userId);
-        postLoadRequest.setKm_approx(select_capacity.getText().toString());
+//        postLoadRequest.setKm_approx(select_capacity.getText().toString());
         postLoadRequest.setNotes_meterial_des(note_to_post_load.getText().toString());
         postLoadRequest.setBid_status("pending");
         return postLoadRequest;

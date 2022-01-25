@@ -498,7 +498,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 }
             });
             my_alert.show();
-            my_alert.setCancelable(false);
         }
     }
 
