@@ -312,34 +312,37 @@ public class PostALoadActivity extends AppCompatActivity {
         Ok_PostLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (isEdit){
 
-                if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
-                        && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                        && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
-                        && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                        && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()){
-                    Ok_PostLoad.setEnabled(true);
-                    Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
                 } else {
-                    Ok_PostLoad.setEnabled(false);
-                    Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
-                }
-
-                saveLoad(createLoadRequest());
-                AlertDialog.Builder my_alert = new AlertDialog.Builder(PostALoadActivity.this).setCancelable(false);
-                my_alert.setTitle("Load Posted Successfully");
-                my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                        Intent intent = new Intent(PostALoadActivity.this, CustomerDashboardActivity.class);
-                        intent.putExtra("userId", userId);
-                        intent.putExtra("mobile", phone);
-                        startActivity(intent);
-                        finish();
+                    if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
+                            && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
+                            && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
+                            && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
+                            && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
+                        Ok_PostLoad.setEnabled(true);
+                        Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
+                    } else {
+                        Ok_PostLoad.setEnabled(false);
+                        Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
                     }
-                });
-                my_alert.show();
+
+                    saveLoad(createLoadRequest());
+                    AlertDialog.Builder my_alert = new AlertDialog.Builder(PostALoadActivity.this).setCancelable(false);
+                    my_alert.setTitle("Load Posted Successfully");
+                    my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                            Intent intent = new Intent(PostALoadActivity.this, CustomerDashboardActivity.class);
+                            intent.putExtra("userId", userId);
+                            intent.putExtra("mobile", phone);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                    my_alert.show();
+                }
             }
         });
     }
@@ -416,7 +419,6 @@ public class PostALoadActivity extends AppCompatActivity {
                 setBudget.dismiss();
             }
         });
-
 
     }
 
@@ -536,36 +538,40 @@ public class PostALoadActivity extends AppCompatActivity {
     }
 
     private void selectModel() {
-        selectModelDialog = new Dialog(PostALoadActivity.this);
-        selectModelDialog.setContentView(R.layout.dialog_spinner);
-        selectModelDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        selectModelDialog.show();
-        selectModelDialog.setCancelable(true);
-        TextView model_title = selectModelDialog.findViewById(R.id.dialog_spinner_title);
-        model_title.setText("Select Vehicle Model");
+        if (!isEdit) {
+            selectModelDialog = new Dialog(PostALoadActivity.this);
+            selectModelDialog.setContentView(R.layout.dialog_spinner);
+            selectModelDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            selectModelDialog.show();
+            selectModelDialog.setCancelable(true);
+            TextView model_title = selectModelDialog.findViewById(R.id.dialog_spinner_title);
+            model_title.setText("Select Vehicle Model");
 
-        ListView modelList = (ListView) selectModelDialog.findViewById(R.id.list_state);
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, R.layout.custom_list_row, arrayVehicleType);
-        modelList.setAdapter(adapter1);
+            ListView modelList = (ListView) selectModelDialog.findViewById(R.id.list_state);
+            ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, R.layout.custom_list_row, arrayVehicleType);
+            modelList.setAdapter(adapter1);
 
-        modelList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
-                        && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                        && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
-                        && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                        && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()){
-                    Ok_PostLoad.setEnabled(true);
-                    Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
-                } else {
-                    Ok_PostLoad.setEnabled(false);
-                    Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
+            modelList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
+                            && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
+                            && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
+                            && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
+                            && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
+                        Ok_PostLoad.setEnabled(true);
+                        Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
+                    } else {
+                        Ok_PostLoad.setEnabled(false);
+                        Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
+                    }
+                    select_model.setText(adapter1.getItem(i));
+                    selectModelDialog.dismiss();
                 }
-                select_model.setText(adapter1.getItem(i));
-                selectModelDialog.dismiss();
-            }
-        });
+            });
+        } else {
+
+        }
     }
 
     private void selectFeet() {
