@@ -90,6 +90,7 @@ public class PostALoadActivity extends AppCompatActivity {
     private RequestQueue mQueue;
     private PostLoadService postLoadService;
     Boolean isEdit;
+    String loadId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +102,7 @@ public class PostALoadActivity extends AppCompatActivity {
             phone = bundle.getString("mobile");
             userId = bundle.getString("userId");
             isEdit = bundle.getBoolean("isEdit");
+            loadId = bundle.getString("loadId");
         }
 
 //        bottomNav = (View) findViewById(R.id.post_a_load_bottom_nav_bar0);
