@@ -193,7 +193,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         mobileEdit.addTextChangedListener(mobileNumberTextWatcher);
         emailIdEdit.addTextChangedListener(proofAndPersonalWatcher);
 
-
         emailIdEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -238,11 +237,8 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 //    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-        name.setFilters(new InputFilter[]
-
-                {
-                        filter
-                });
+        name.setFilters(new InputFilter[]{filter});
+        address.setFilters(new InputFilter[]{filter});
 
 //        if (!name.getText().toString().isEmpty() && !selectStateText.getText().toString().isEmpty() && !selectDistrictText.getText().toString().isEmpty() && role != null){
 //            okButton.setBackground(getDrawable(R.drawable.button_active));
@@ -816,8 +812,13 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         }
 
         @Override
-        public void afterTextChanged(Editable editable) {
-
+        public void afterTextChanged(Editable s) {
+            for (int i = s.length() - 1; i >= 0; i--) {
+                if (s.charAt(i) == '\n') {
+                    s.delete(i, i + 1);
+                    return;
+                }
+            }
         }
     };
 

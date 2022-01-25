@@ -56,6 +56,13 @@ public class BanksAdapter extends RecyclerView.Adapter<BanksAdapter.BankViewHold
             }
         });
 
+        String chequeURL = obj.getCancelled_cheque();
+        if (chequeURL.length() < 6){
+            holder.list_preview_bank_details.setVisibility(View.GONE);
+        }else{
+            holder.list_preview_bank_details.setVisibility(View.VISIBLE);
+        }
+
         holder.list_preview_bank_details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -507,14 +507,14 @@ public class DashboardActivity extends AppCompatActivity {
         Log.i("Load list", String.valueOf(loadListToCompare.size()));
         Log.i("array bidStatus", String.valueOf(arrayBidStatus.size()));
 
-        for (int i = 0; i < loadListToCompare.size(); i++) {
-            for (int j = 0; j < updatedLoadSubmittedList.size(); j++) {
-                if (loadListToCompare.get(i).getIdpost_load().equals(updatedLoadSubmittedList.get(j).getIdpost_load())) {
-                    loadListToCompare.remove(i);
-                    arrayBidStatus.remove(j);
-                }
-            }
-        }
+//        for (int i = 0; i < loadListToCompare.size(); i++) {
+//            for (int j = 0; j < updatedLoadSubmittedList.size(); j++) {
+//                if (loadListToCompare.get(i).getIdpost_load().equals(updatedLoadSubmittedList.get(j).getIdpost_load())) {
+//                    loadListToCompare.remove(i);
+//                    arrayBidStatus.remove(j);
+//                }
+//            }
+//        }
 
         loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadListToCompare);
         loadListRecyclerView.setAdapter(loadListAdapter);
