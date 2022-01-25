@@ -1889,7 +1889,35 @@ public class DriverDetailsActivity extends AppCompatActivity {
     public void onClickIsSelf(View view) {
         if (selfCheckBox.isChecked()) {
             getUserDetails();
+
+            driverName.setCursorVisible(false);
+            driverName.setEnabled(false);
+            driverMobile.setCursorVisible(false);
+            driverMobile.setEnabled(false);
+            address.setCursorVisible(false);
+            address.setEnabled(false);
+            pinCode.setCursorVisible(false);
+            pinCode.setEnabled(false);
+            driverEmailId.setCursorVisible(false);
+            driverEmailId.setEnabled(false);
+            selectDistrictText.setEnabled(false);
+            selectStateText.setEnabled(false);
+
         } else if (!selfCheckBox.isChecked()) {
+
+            driverName.setCursorVisible(true);
+            driverName.setEnabled(true);
+            driverMobile.setCursorVisible(true);
+            driverMobile.setEnabled(true);
+            address.setCursorVisible(true);
+            address.setEnabled(true);
+            pinCode.setCursorVisible(true);
+            pinCode.setEnabled(true);
+            driverEmailId.setCursorVisible(true);
+            driverEmailId.setEnabled(true);
+            selectDistrictText.setEnabled(true);
+            selectStateText.setEnabled(true);
+
             driverName.getText().clear();
             driverMobile.getText().clear();
             address.getText().clear();

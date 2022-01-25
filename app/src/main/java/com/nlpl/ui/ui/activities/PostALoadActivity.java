@@ -325,7 +325,23 @@ public class PostALoadActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isEdit){
+                    Ok_PostLoad.setEnabled(true);
+                    Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
                     updateLoadPost(loadId);
+                    AlertDialog.Builder my_alert = new AlertDialog.Builder(PostALoadActivity.this).setCancelable(false);
+                    my_alert.setTitle("Load Updated Successfully");
+                    my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                            Intent intent = new Intent(PostALoadActivity.this, CustomerDashboardActivity.class);
+                            intent.putExtra("userId", userId);
+                            intent.putExtra("mobile", phone);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                    my_alert.show();
                 } else {
                     if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
                             && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
@@ -338,7 +354,6 @@ public class PostALoadActivity extends AppCompatActivity {
                         Ok_PostLoad.setEnabled(false);
                         Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
                     }
-
                     saveLoad(createLoadRequest());
                     AlertDialog.Builder my_alert = new AlertDialog.Builder(PostALoadActivity.this).setCancelable(false);
                     my_alert.setTitle("Load Posted Successfully");
@@ -442,7 +457,24 @@ public class PostALoadActivity extends AppCompatActivity {
         mTimePicker = new TimePickerDialog(PostALoadActivity.this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                pick_up_time.setText(selectedHour + ":" + selectedMinute);
+//                pick_up_time.setText(selectedHour + ":" + selectedMinute);
+
+                int sizeOfHr = String.valueOf(selectedHour).length();
+                int sizeOfMin = String.valueOf(selectedMinute).length();
+                if (sizeOfHr==2 && sizeOfMin == 2){
+                    pick_up_time.setText(selectedHour + ":" + selectedMinute);
+                } else if (sizeOfHr==1 && sizeOfMin == 2) {
+                    String selectedHr = "0"+String.valueOf(selectedHour);
+                    pick_up_time.setText(selectedHr + ":" + selectedMinute);
+                } else if (sizeOfHr==1 && sizeOfMin == 1){
+                    String selectedHr = "0"+String.valueOf(selectedHour);
+                    String selectedMin = "0"+String.valueOf(selectedMinute);
+                    pick_up_time.setText(selectedHr + ":" + selectedMin);
+                } else if (sizeOfHr==2 && sizeOfMin == 1){
+                    String selectedMin = "0"+String.valueOf(selectedMinute);
+                    pick_up_time.setText(selectedHour + ":" + selectedMin);
+                }
+
                 if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
                         && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
                         && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
