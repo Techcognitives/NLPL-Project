@@ -752,7 +752,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         });
     }
 
-
     public void onClickEditLoadPost(BidsReceivedModel obj) {
         Intent intent = new Intent(CustomerDashboardActivity.this, PostALoadActivity.class);
         intent.putExtra("userId", userId);
