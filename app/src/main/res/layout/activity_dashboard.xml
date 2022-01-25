@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <include
             android:id="@+id/profile_registration_action_bar"
             layout="@layout/action_bar"
@@ -93,6 +92,7 @@
             android:drawableStart="@drawable/google_location_small"
             android:paddingTop="2dp"
             android:paddingBottom="2dp"
+            android:singleLine="true"
             android:text="Current Location"
             android:textColor="@color/teal_700"
             android:textSize="12sp"

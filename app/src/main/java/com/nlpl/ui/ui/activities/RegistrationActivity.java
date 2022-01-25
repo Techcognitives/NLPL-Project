@@ -1,16 +1,24 @@
 package com.nlpl.ui.ui.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.media.Image;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextWatcher;
@@ -32,6 +40,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.nlpl.R;
 import com.nlpl.model.Requests.UserRequest;
 import com.nlpl.model.Responses.UserResponse;
@@ -40,6 +52,10 @@ import com.nlpl.utils.ApiClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -60,10 +76,12 @@ public class RegistrationActivity extends AppCompatActivity {
     Dialog language;
 
     EditText name, pinCode, address, mobileNoEdit, email_id;
-    TextView series;
+    TextView series, getCurrentLocation;
     Button okButton;
     View personalAndAddress;
     private RequestQueue mQueue;
+
+    FusedLocationProviderClient fusedLocationProviderClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +94,7 @@ public class RegistrationActivity extends AppCompatActivity {
             Log.i("Mobile No Registration", mobile);
         }
 
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         language = new Dialog(RegistrationActivity.this);
         language.setContentView(R.layout.dialog_language);
         language.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -139,6 +158,8 @@ public class RegistrationActivity extends AppCompatActivity {
         selectDistrictText = (TextView) personalAndAddress.findViewById(R.id.registration_select_city);
         okButton = (Button) findViewById(R.id.registration_ok);
         email_id = personalAndAddress.findViewById(R.id.registration_email_id_edit);
+        getCurrentLocation = (TextView) personalAndAddress.findViewById(R.id.personal_and_address_get_current_location);
+        getCurrentLocation.setVisibility(View.VISIBLE);
 
         name.addTextChangedListener(registrationWatcher);
         selectStateText.addTextChangedListener(registrationWatcher);
@@ -447,11 +468,15 @@ public class RegistrationActivity extends AppCompatActivity {
         }
     }
 
-    public void onClickSkip(View view){
+    public void onClickSkip(View view) {
         Intent i8 = new Intent(RegistrationActivity.this, SliderActivity.class);
         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i8);
         overridePendingTransition(0, 0);
+    }
+
+    public void onClickGetCurrentLocation(View view) {
+        getLocation();
     }
 
     public void onClickRegistration(View view) {
@@ -483,7 +508,7 @@ public class RegistrationActivity extends AppCompatActivity {
                         startActivity(i8);
                         overridePendingTransition(0, 0);
                         finish();
-                    }else{
+                    } else {
                         Intent i8 = new Intent(RegistrationActivity.this, DashboardActivity.class);
                         i8.putExtra("mobile2", mobile);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -643,4 +668,41 @@ public class RegistrationActivity extends AppCompatActivity {
         });
     }
     //----------------------------------------------------------------------------------------------
+
+    private void getLocation() {
+        if (ActivityCompat.checkSelfPermission(RegistrationActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+                @Override
+                public void onComplete(@NonNull Task<Location> task) {
+                    Location location = task.getResult();
+                    if (location != null) {
+                        Geocoder geocoder = new Geocoder(RegistrationActivity.this, Locale.getDefault());
+                        try {
+                            String latitudeCurrent, longitudeCurrent, countryCurrent, stateCurrent, cityCurrent, subCityCurrent, addressCurrent, pinCodeCurrent;
+                            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                            latitudeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLatitude()));
+                            longitudeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLongitude()));
+                            countryCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getCountryName()));
+                            stateCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getAdminArea()));
+                            cityCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLocality()));
+                            subCityCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getSubLocality()));
+                            addressCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getAddressLine(0)));
+                            pinCodeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getPostalCode()));
+
+                            address.setText(addressCurrent);
+                            pinCode.setText(pinCodeCurrent);
+                            selectStateText.setText(stateCurrent);
+                            selectDistrictText.setText(cityCurrent);
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+            });
+        } else {
+            ActivityCompat.requestPermissions(RegistrationActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+        }
+    }
 }

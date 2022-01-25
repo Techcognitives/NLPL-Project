@@ -17,10 +17,14 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
+import android.text.Html;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextWatcher;
@@ -42,6 +46,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.nlpl.R;
 import com.nlpl.model.Requests.ImageRequest;
 import com.nlpl.model.Responses.ImageResponse;
@@ -72,6 +80,9 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -108,7 +119,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     Dialog previewDialogPan, previewDialogAadhar;
     Boolean isPanAdded = false, isAadharAdded = false, noChange = true;
 
-    TextView panCardText, editPAN, editFront, frontText, backText;
+    TextView panCardText, editPAN, editFront, frontText, backText, getCurrentLocation;
     ImageView imgPAN, imgF, previewPan, previewAadhar;
 
     String nameAPI, mobileAPI, addressAPI, pinCodeAPI, roleAPI, cityAPI, stateAPI, emailAPI;
@@ -123,6 +134,8 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     private RequestQueue mQueue;
     String userId, mobileString, panImageURL, aadharImageURL;
 
+    FusedLocationProviderClient fusedLocationProviderClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,6 +147,8 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             Log.i("Mobile No", userId);
             mobileString = bundle.getString("mobile");
         }
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         action_bar = findViewById(R.id.personal_details_id_proof_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
@@ -167,6 +182,8 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         okButton = (Button) findViewById(R.id.personal_details_id_proof_ok_button);
         previewPan = (ImageView) panAndAadharView.findViewById(R.id.pan_aadhar_preview_pan);
         previewAadhar = (ImageView) panAndAadharView.findViewById(R.id.pan_aadhar_preview_aadhar);
+        getCurrentLocation = (TextView) personalAndAddressView.findViewById(R.id.personal_and_address_get_current_location);
+        getCurrentLocation.setVisibility(View.VISIBLE);
 
         name.addTextChangedListener(proofAndPersonalWatcher);
         selectStateText.addTextChangedListener(proofAndPersonalWatcher);
@@ -1625,6 +1642,47 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             }
         });
         mQueue.add(request);
+    }
+
+    public void onClickGetCurrentLocation(View view) {
+        getLocation();
+    }
+
+    private void getLocation() {
+        if (ActivityCompat.checkSelfPermission(PersonalDetailsAndIdProofActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+                @Override
+                public void onComplete(@NonNull Task<Location> task) {
+                    Location location = task.getResult();
+                    if (location != null) {
+                        Geocoder geocoder = new Geocoder(PersonalDetailsAndIdProofActivity.this, Locale.getDefault());
+                        try {
+                            String latitudeCurrent, longitudeCurrent, countryCurrent, stateCurrent, cityCurrent, subCityCurrent, addressCurrent, pinCodeCurrent;
+                            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                            latitudeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLatitude()));
+                            longitudeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLongitude()));
+                            countryCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getCountryName()));
+                            stateCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getAdminArea()));
+                            cityCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLocality()));
+                            subCityCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getSubLocality()));
+                            addressCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getAddressLine(0)));
+                            pinCodeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getPostalCode()));
+
+                            address.setText(addressCurrent);
+                            pinCode.setText(pinCodeCurrent);
+                            selectStateText.setText(stateCurrent);
+                            selectDistrictText.setText(cityCurrent);
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+            });
+        } else {
+            ActivityCompat.requestPermissions(PersonalDetailsAndIdProofActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+        }
     }
 
 }
