@@ -542,7 +542,7 @@ public class PostALoadActivity extends AppCompatActivity {
     }
 
     private void selectModel() {
-        if (!isEdit) {
+//        if (!isEdit) {
             selectModelDialog = new Dialog(PostALoadActivity.this);
             selectModelDialog.setContentView(R.layout.dialog_spinner);
             selectModelDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -576,14 +576,14 @@ public class PostALoadActivity extends AppCompatActivity {
 
                 }
             });
-        } else {
-
-        }
+//        } else {
+//
+//        }
     }
 
     private void selectFeet() {
 
-        if (!isEdit) {
+//        if (!isEdit) {
             selectFeetDialog = new Dialog(PostALoadActivity.this);
             selectFeetDialog.setContentView(R.layout.dialog_spinner);
             selectFeetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -617,13 +617,13 @@ public class PostALoadActivity extends AppCompatActivity {
 
                 }
             });
-        }else {
-
-        }
+//        }else {
+//
+//        }
     }
 
     private void selectCapacity() {
-        if (!isEdit) {
+//        if (!isEdit) {
             if (arrayToDisplayCapacity.size()==1){
 
             } else {
@@ -659,13 +659,13 @@ public class PostALoadActivity extends AppCompatActivity {
                     }
                 });
             }
-        } else {
-
-        }
+//        } else {
+//
+//        }
     }
 
     private void selectTruckBodyType() {
-        if (!isEdit) {
+//        if (!isEdit) {
             selectBodyTypeDialog = new Dialog(PostALoadActivity.this);
             selectBodyTypeDialog.setContentView(R.layout.dialog_spinner);
             selectBodyTypeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -697,9 +697,9 @@ public class PostALoadActivity extends AppCompatActivity {
                     selectBodyTypeDialog.dismiss();
                 }
             });
-        } else {
-
-        }
+//        } else {
+//
+//        }
     }
 
     private void getVehicleCapacityByFeet(String selectedFeet){
