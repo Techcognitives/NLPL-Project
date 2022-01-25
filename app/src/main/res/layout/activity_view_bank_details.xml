@@ -6,52 +6,39 @@
     android:layout_height="match_parent"
     tools:context=".ui.ui.activities.ViewBankDetailsActivity">
 
-    <TextView
-        android:id="@+id/view_bank_details_title"
-        android:layout_width="match_parent"
+    <include
+        android:id="@+id/view_bank_details_action_bar"
+        layout="@layout/action_bar"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/button_active"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:text="@string/BankDetails"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/view_bank_details_constrain"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/view_bank_details_back_image_view"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:onClick="onClickBackViewBankDetails"
-        android:paddingStart="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/view_bank_details_title"
-        app:layout_constraintStart_toStartOf="@+id/view_bank_details_title"
-        app:layout_constraintTop_toTopOf="@+id/view_bank_details_title"
-        app:layout_constraintVertical_bias="0.458"
-        app:srcCompat="@drawable/ic_back_small"
-        app:tint="@color/white" />
+    <include
+        android:id="@+id/view_bank_details_bottom_nav_bar"
+        layout="@layout/bottom_nav_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_bank_details_constrain" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/view_bank_details_constrain"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
         android:paddingTop="5dp"
         android:paddingBottom="10dp"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/view_bank_details_bottom_nav_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_bank_details_title">
+        app:layout_constraintTop_toBottomOf="@+id/view_bank_details_action_bar">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/bank_list_view"
@@ -72,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        app:tint="@color/white"
+        app:fabSize="mini"
         android:onClick="onClickAddBankDetails"
         android:backgroundTint="@color/button_blue"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -80,7 +67,26 @@
         app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.972"
-        app:srcCompat="@drawable/ic_bank" />
+        app:layout_constraintVertical_bias="0.87"
+        app:srcCompat="@android:drawable/ic_input_add"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/textView62"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:background="@drawable/button_active"
+        android:gravity="center"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="2dp"
+        android:text="@string/addBank"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/view_bank_details_fab_button"
+        app:layout_constraintEnd_toStartOf="@+id/view_bank_details_fab_button"
+        app:layout_constraintTop_toTopOf="@+id/view_bank_details_fab_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

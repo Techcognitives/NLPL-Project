@@ -15,6 +15,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
@@ -30,6 +32,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -68,6 +71,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PostALoadActivity extends AppCompatActivity {
+
+    View action_bar;
+    TextView actionBarTitle;
+    ImageView actionBarBackButton;
 
     View bottomNav;
     ConstraintLayout spDashboard, customerDashboard;
@@ -110,6 +117,18 @@ public class PostALoadActivity extends AppCompatActivity {
 //        customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
 //        spDashboard.setBackgroundColor(getResources().getColor(R.color.nav_unselected_blue));
 //        customerDashboard.setBackgroundColor(getResources().getColor(R.color.nav_selected_blue));
+
+        action_bar = findViewById(R.id.post_a_load_action_bar);
+
+        actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
+        actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
+        actionBarTitle.setText("Post A Load");
+        actionBarBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PostALoadActivity.this.finish();
+            }
+        });
 
 //-------------------------------------- Today's Date ----------------------------------------------
         currentDate = Calendar.getInstance().getTime();
@@ -168,6 +187,9 @@ public class PostALoadActivity extends AppCompatActivity {
         pick_up_city.addTextChangedListener(cityStateTextWatcher);
         drop_state.addTextChangedListener(cityStateTextWatcher);
         drop_city.addTextChangedListener(cityStateTextWatcher);
+
+        pick_up_address.setFilters(new InputFilter[]{filter});
+        drop_address.setFilters(new InputFilter[]{filter});
 
         mQueue = Volley.newRequestQueue(PostALoadActivity.this);
 
@@ -621,6 +643,21 @@ public class PostALoadActivity extends AppCompatActivity {
 //
 //        }
     }
+
+    private String blockCharacterSet = ".,[]`~#^|$%&*!+@₹_-()':;?/={}";
+
+    private InputFilter filter = new InputFilter() {
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+
+
+            if (source != null && blockCharacterSet.contains(("" + source))) {
+                return "";
+            }
+            return null;
+        }
+    };
 
     private void selectCapacity() {
 //        if (!isEdit) {
@@ -1237,8 +1274,13 @@ public class PostALoadActivity extends AppCompatActivity {
         }
 
         @Override
-        public void afterTextChanged(Editable editable) {
-
+        public void afterTextChanged(Editable s) {
+            for(int i = s.length()-1; i >= 0; i--){
+                if(s.charAt(i) == '\n'){
+                    s.delete(i, i + 1);
+                    return;
+                }
+            }
         }
     };
 
@@ -1333,8 +1375,13 @@ public class PostALoadActivity extends AppCompatActivity {
         }
 
         @Override
-        public void afterTextChanged(Editable editable) {
-
+        public void afterTextChanged(Editable s) {
+            for(int i = s.length()-1; i >= 0; i--){
+                if(s.charAt(i) == '\n'){
+                    s.delete(i, i + 1);
+                    return;
+                }
+            }
         }
     };
 
@@ -1452,6 +1499,7 @@ public class PostALoadActivity extends AppCompatActivity {
     //----------------------------------------------------------------------------------------------
 //-------------------------------- Update Post Load Details ----------------------------------------
     private void updateLoadPost(String loadId) {
+        Log.i("Load Id", loadId);
 
         String pickUpDate = pick_up_date.getText().toString();
         String pickUpTime = pick_up_time.getText().toString();
@@ -1472,9 +1520,7 @@ public class PostALoadActivity extends AppCompatActivity {
         String dropCountry = drop_state.getText().toString();
         String notesFromLP = note_to_post_load.getText().toString();
 
-        UpdateLoadPost updateLoadPost = new UpdateLoadPost(pickUpDate,pickUpTime,budget,vehicleModel,vehicleFeet,
-                vehicleCapacity,vehicleBodyType,pickUpAddress, pickUpPinCode,pickUpCity,pickUpState, pickUpCountry, dropAddress,
-                dropPinCode,dropCity, dropState,dropCountry,"",notesFromLP);
+        UpdateLoadPost updateLoadPost = new UpdateLoadPost(pickUpDate,pickUpTime,budget,vehicleModel,vehicleFeet, vehicleCapacity,vehicleBodyType,pickUpAddress, pickUpPinCode,pickUpCity,pickUpState, pickUpCountry, dropAddress, dropPinCode,dropCity, dropState,dropCountry,"123",notesFromLP);
 
         Call<UpdateLoadPost> call = postLoadService.updateLoadPost("" + loadId, updateLoadPost);
 

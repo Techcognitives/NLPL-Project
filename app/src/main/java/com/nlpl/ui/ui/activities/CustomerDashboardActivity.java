@@ -237,7 +237,8 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                             String customerNameAPI = arrayCustomerName.get(j);
                             userNameTextViewMenu.setText(customerNameAPI);
                             String customerNumberAPI = arrayMobileNo.get(j);
-                            mobileTextViewMenu.setText("+" + customerNumberAPI);
+                            String s1 = customerNumberAPI.substring(2, 12);
+                            mobileTextViewMenu.setText("+91 " + s1);
 
                             isPersonalDetailsDone = isPersonalD.get(j);
                             isBankDetailsDone = isBankD.get(j);

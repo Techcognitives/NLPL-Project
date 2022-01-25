@@ -1,10 +1,13 @@
 package com.nlpl.ui.ui.activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -31,6 +34,7 @@ import com.nlpl.utils.DownloadImageTask;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -45,6 +49,13 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
     Dialog previewDialogCancelledCheque;
     ImageView previewDialogCancelledChequeImageView;
 
+    View actionBar;
+    TextView actionBarTitle;
+    ImageView actionBarBackButton, actionBarMenuButton;
+
+    View bottomNav;
+    ConstraintLayout spDashboard, customerDashboard;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,13 +64,33 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             phone = bundle.getString("mobile");
-            Log.i("Mobile No View Personal", phone);
+            Log.i("Mobile No View Bank", phone);
             userId = bundle.getString("userId");
         }
 
         mQueue = Volley.newRequestQueue(ViewBankDetailsActivity.this);
+        getUserDetails();
+        //-------------------------------- Action Bar ----------------------------------------------
+        actionBar = findViewById(R.id.view_bank_details_action_bar);
+        actionBarTitle = (TextView) actionBar.findViewById(R.id.action_bar_title);
+        actionBarBackButton = (ImageView) actionBar.findViewById(R.id.action_bar_back_button);
+        actionBarMenuButton = (ImageView) actionBar.findViewById(R.id.action_bar_menu);
 
-        //---------------------------- Get Bank Details -------------------------------------------
+        actionBarTitle.setText("My Bank");
+        actionBarMenuButton.setVisibility(View.GONE);
+        actionBarBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ViewBankDetailsActivity.this.finish();
+            }
+        });
+        //---------------------------- Bottom Nav --------------------------------------------------
+        bottomNav = (View) findViewById(R.id.view_bank_details_bottom_nav_bar);
+        spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
+        customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
+        spDashboard.setBackgroundColor(getResources().getColor(R.color.nav_unselected_blue));
+        customerDashboard.setBackgroundColor(getResources().getColor(R.color.nav_selected_blue));
+        //---------------------------- Get Bank Details --------------------------------------------
         bankListRecyclerView = (RecyclerView) findViewById(R.id.bank_list_view);
 
         LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(getApplicationContext());
@@ -155,6 +186,7 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
 
         String cancelledChequeURL = obj.getCancelled_cheque();
         Log.i("IMAGE CHEQUE URL", cancelledChequeURL);
+
         new DownloadImageTask((ImageView) previewDialogCancelledCheque.findViewById(R.id.dialog_preview_image_view)).execute(cancelledChequeURL);
 
     }
@@ -167,4 +199,64 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
 
         startActivity(intent2);
     }
+
+    public void onClickBottomNavigation(View view) {
+        switch (view.getId()) {
+            case R.id.bottom_nav_sp_dashboard:
+                Intent intent = new Intent(ViewBankDetailsActivity.this, DashboardActivity.class);
+                intent.putExtra("mobile2", phone);
+                startActivity(intent);
+                break;
+
+            case R.id.bottom_nav_customer_dashboard:
+
+                break;
+        }
+    }
+
+    private void getUserDetails() {
+
+        String url = getString(R.string.baseURL) + "/user/" + userId;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+                        String nameAPI = obj.getString("name");
+                        String mobileAPI = obj.getString("phone_number");
+                        String addressAPI = obj.getString("address");
+                        String stateAPI = obj.getString("state_code");
+                        String cityAPI = obj.getString("preferred_location");
+                        String pinCodeAPI = obj.getString("pin_code");
+                        String roleAPI = obj.getString("user_type");
+                        String emailAPI = obj.getString("email_id");
+
+//                        name.setText(nameAPI);
+//
+//                        String s1 = mobileAPI.substring(2, 12);
+//                        mobileEdit.setText(s1);
+
+                        if (roleAPI.equals("Customer")) {
+                            bottomNav.setVisibility(View.GONE);
+                        }else {
+                            bottomNav.setVisibility(View.VISIBLE);
+                        }
+
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+    }
+
 }

@@ -166,6 +166,7 @@ public class RegistrationActivity extends AppCompatActivity {
         selectDistrictText.addTextChangedListener(registrationWatcher);
         pinCode.addTextChangedListener(pinCodeWatcher);
         address.addTextChangedListener(registrationWatcher);
+
         email_id.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -200,6 +201,7 @@ public class RegistrationActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         name.setFilters(new InputFilter[]{filter});
+        address.setFilters(new InputFilter[]{filter});
 
 //        if (!name.getText().toString().isEmpty() && !selectStateText.getText().toString().isEmpty() && !selectDistrictText.getText().toString().isEmpty() && role != null){
 //            okButton.setBackground(getDrawable(R.drawable.button_active));
@@ -552,8 +554,13 @@ public class RegistrationActivity extends AppCompatActivity {
         }
 
         @Override
-        public void afterTextChanged(Editable editable) {
-
+        public void afterTextChanged(Editable s) {
+            for(int i = s.length()-1; i >= 0; i--){
+                if(s.charAt(i) == '\n'){
+                    s.delete(i, i + 1);
+                    return;
+                }
+            }
         }
     };
 
@@ -582,7 +589,7 @@ public class RegistrationActivity extends AppCompatActivity {
         }
     };
 
-    private String blockCharacterSet = "~#^|$%&*!+@₹_-()':;?/={}";
+    private String blockCharacterSet = ".,[]`~#^|$%&*!+@₹_-()':;?/={}";
 
     private InputFilter filter = new InputFilter() {
 

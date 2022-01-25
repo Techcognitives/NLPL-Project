@@ -147,6 +147,7 @@
                     android:id="@+id/dialog_accept_bid_body_type_textview"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
                     android:text="@string/tarpaulin"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@+id/textView52"
@@ -294,7 +295,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/textView52"
                     app:layout_constraintEnd_toStartOf="@+id/dialog_accept_bid_feet_textview"
                     app:layout_constraintStart_toStartOf="@+id/textView52"
-                    app:layout_constraintTop_toBottomOf="@+id/textView40" />
+                    app:layout_constraintTop_toBottomOf="@+id/dialog_accept_bid_driver_name" />
 
                 <TextView
                     android:id="@+id/textView52"
@@ -326,8 +327,8 @@
                     android:numStars="4"
                     android:stepSize="0.1"
                     android:theme="@style/RatingBar"
-                    app:layout_constraintBottom_toTopOf="@+id/textView46"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/dialog_accept_bid_company_name"
+                    app:layout_constraintEnd_toStartOf="@+id/dialog_accept_bid_sp_number"
                     app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_pick_up_date_textview"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -338,6 +339,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:text="4.0"
+                    android:textColor="@color/black"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@+id/textView40"
                     app:layout_constraintEnd_toStartOf="@+id/textView40"
@@ -382,6 +384,109 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/dialog_accept_bid_received_notes_textview" />
+
+                <TextView
+                    android:id="@+id/dialog_accept_bid_sp_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/underline_blue"
+                    android:text="+91 9999999999"
+                    android:visibility="gone"
+                    android:textColor="@color/button_blue"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView40"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView40"
+                    app:layout_constraintTop_toTopOf="@+id/textView40" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:text="Company Name:"
+                    android:visibility="gone"
+                    android:background="@drawable/button_active"
+                    android:backgroundTint="@color/grey"
+                    android:paddingLeft="2dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="2dp"
+                    android:paddingBottom="2dp"
+                    android:textSize="13dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/dialog_accept_bid_company_name"
+                    app:layout_constraintEnd_toStartOf="@+id/dialog_accept_bid_company_name"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/dialog_accept_bid_company_name" />
+
+                <TextView
+                    android:id="@+id/dialog_accept_bid_company_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:text="Company Name"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@+id/dialog_accept_bid_driver_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView5"
+                    app:layout_constraintTop_toBottomOf="@+id/textView40" />
+
+                <TextView
+                    android:id="@+id/textView24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:text="Driver:"
+                    android:visibility="gone"
+                    android:background="@drawable/button_active"
+                    android:backgroundTint="@color/grey"
+                    android:paddingLeft="2dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="2dp"
+                    android:paddingBottom="2dp"
+                    android:textSize="13dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/dialog_accept_bid_driver_name"
+                    app:layout_constraintEnd_toStartOf="@+id/dialog_accept_bid_driver_name"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/dialog_accept_bid_driver_name" />
+
+                <TextView
+                    android:id="@+id/dialog_accept_bid_driver_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Driver Name"
+                    android:visibility="gone"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toTopOf="@+id/textView46"
+                    app:layout_constraintEnd_toStartOf="@+id/dialog_accept_bid_driver_number"
+                    app:layout_constraintStart_toEndOf="@+id/textView24"
+                    app:layout_constraintTop_toBottomOf="@+id/dialog_accept_bid_company_name" />
+
+                <TextView
+                    android:id="@+id/dialog_accept_bid_driver_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/underline_blue"
+                    android:text="+91 9999999999"
+                    android:visibility="gone"
+                    android:textColor="@color/button_blue"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/dialog_accept_bid_driver_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/dialog_accept_bid_driver_name"
+                    app:layout_constraintTop_toTopOf="@+id/dialog_accept_bid_driver_name" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -158,6 +158,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         companyName.setFilters(new InputFilter[]{filter});
+        address.setFilters(new InputFilter[]{filter});
 
         mQueue = Volley.newRequestQueue(CompanyDetailsActivity.this);
         if (isEdit) {
@@ -363,7 +364,6 @@ public class CompanyDetailsActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private TextWatcher companyWatcher = new TextWatcher() {
@@ -392,8 +392,13 @@ public class CompanyDetailsActivity extends AppCompatActivity {
         }
 
         @Override
-        public void afterTextChanged(Editable editable) {
-
+        public void afterTextChanged(Editable s) {
+            for(int i = s.length()-1; i >= 0; i--){
+                if(s.charAt(i) == '\n'){
+                    s.delete(i, i + 1);
+                    return;
+                }
+            }
         }
     };
 

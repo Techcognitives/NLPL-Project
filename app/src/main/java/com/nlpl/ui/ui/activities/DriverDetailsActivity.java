@@ -213,6 +213,9 @@ public class DriverDetailsActivity extends AppCompatActivity {
         driverName.addTextChangedListener(driverNameWatcher);
         driverMobile.addTextChangedListener(driverMobileWatcher);
         pinCode.addTextChangedListener(pinCodeWatcher);
+        address.addTextChangedListener(driverNameWatcher);
+
+        address.setFilters(new InputFilter[]{filter});
 
         driverEmailId.addTextChangedListener(new TextWatcher() {
             @Override
@@ -1184,8 +1187,13 @@ public class DriverDetailsActivity extends AppCompatActivity {
         }
 
         @Override
-        public void afterTextChanged(Editable editable) {
-
+        public void afterTextChanged(Editable s) {
+            for(int i = s.length()-1; i >= 0; i--){
+                if(s.charAt(i) == '\n'){
+                    s.delete(i, i + 1);
+                    return;
+                }
+            }
         }
     };
 
