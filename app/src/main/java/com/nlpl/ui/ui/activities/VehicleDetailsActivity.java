@@ -1092,7 +1092,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
                     }
                     int size3 = arrayTruckFt.size();
-                    Log.i("array of selected spc: ", String.valueOf(data));
 
                     if (size3 == 1) {
                         updatedArrayTruckFt.add(arrayTruckFt.get(0));
