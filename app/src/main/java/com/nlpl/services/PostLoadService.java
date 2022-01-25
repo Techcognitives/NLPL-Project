@@ -3,6 +3,7 @@ package com.nlpl.services;
 import com.nlpl.model.Requests.PostLoadRequest;
 import com.nlpl.model.Responses.PostLoadResponse;
 import com.nlpl.model.UpdateCustomerBudget;
+import com.nlpl.model.UpdateLoadPost.UpdateLoadPost;
 import com.nlpl.model.UpdateLoadStatusSubmitted;
 
 import retrofit2.Call;
@@ -18,4 +19,6 @@ public interface PostLoadService {
     @PUT("/loadpost/updatePostByPID/{loadId}")
     Call<UpdateLoadStatusSubmitted> updateBidStatusSubmitted(@Path("loadId") String loadId, @Body UpdateLoadStatusSubmitted updateLoadStatusSubmitted);
 
+    @PUT("/loadpost/updatePostByPID/{loadId}")
+    Call<UpdateLoadPost> updateLoadPost(@Path("loadId") String loadId, @Body UpdateLoadPost updateLoadPost);
 }

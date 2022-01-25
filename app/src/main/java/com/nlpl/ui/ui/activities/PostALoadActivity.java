@@ -44,7 +44,11 @@ import com.nlpl.model.Requests.BankRequest;
 import com.nlpl.model.Requests.PostLoadRequest;
 import com.nlpl.model.Responses.BankResponse;
 import com.nlpl.model.Responses.PostLoadResponse;
+import com.nlpl.model.UpdateDriverDetails.UpdateDriverEmailId;
+import com.nlpl.model.UpdateLoadPost.UpdateLoadPost;
+import com.nlpl.services.AddDriverService;
 import com.nlpl.services.PostLoadService;
+import com.nlpl.services.UserService;
 import com.nlpl.utils.ApiClient;
 
 import org.json.JSONArray;
@@ -60,6 +64,8 @@ import java.util.Date;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PostALoadActivity extends AppCompatActivity {
 
@@ -82,6 +88,8 @@ public class PostALoadActivity extends AppCompatActivity {
     ArrayList<String> arrayTruckBodyType, arrayVehicleType, arrayTruckFt, arrayCapacity;
 
     private RequestQueue mQueue;
+    private PostLoadService postLoadService;
+    Boolean isEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +100,7 @@ public class PostALoadActivity extends AppCompatActivity {
         if (bundle != null) {
             phone = bundle.getString("mobile");
             userId = bundle.getString("userId");
+            isEdit = bundle.getBoolean("isEdit");
         }
 
 //        bottomNav = (View) findViewById(R.id.post_a_load_bottom_nav_bar0);
@@ -137,6 +146,13 @@ public class PostALoadActivity extends AppCompatActivity {
         arrayTruckBodyType.add("Open");
         arrayTruckBodyType.add("Closed");
         arrayTruckBodyType.add("Tarpulian");
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.baseURL))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        postLoadService = retrofit.create(PostLoadService.class);
 
         pick_up_address.addTextChangedListener(PickAddressTextWatcher);
         pick_up_pinCode.addTextChangedListener(PickPinCodeTextWatcher);
@@ -1333,6 +1349,28 @@ public class PostALoadActivity extends AppCompatActivity {
     }
 
     //----------------------------------------------------------------------------------------------
+//-------------------------------- Update Post Load Details ----------------------------------------
+    private void updateLoadPost(String loadId) {
 
+        UpdateLoadPost updateLoadPost = new UpdateLoadPost("","","","","","","","", "","","", "", "", "","", "","","","","");
+
+        Call<UpdateLoadPost> call = postLoadService.updateLoadPost("" + loadId, updateLoadPost);
+
+        call.enqueue(new Callback<UpdateLoadPost>() {
+            @Override
+            public void onResponse(Call<UpdateLoadPost> call, Response<UpdateLoadPost> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "Load Post Details Updated");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateLoadPost> call, Throwable t) {
+                Log.i("Not Successful", "User is Driver Added");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
 
 }

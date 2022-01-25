@@ -118,7 +118,7 @@
                     android:backgroundTint="#ff7600"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:text="Load Posted"
+                    android:text="Edit Load Post"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="20sp"

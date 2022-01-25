@@ -371,6 +371,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         Intent intent = new Intent(CustomerDashboardActivity.this, PostALoadActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("mobile", phone);
+        intent.putExtra("isEdit", false);
         startActivity(intent);
     }
 
