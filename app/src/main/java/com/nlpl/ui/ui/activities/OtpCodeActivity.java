@@ -187,7 +187,7 @@ public class OtpCodeActivity extends AppCompatActivity {
         reSendOtp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                initiateOtp();
+//                initiateOtp();
                 setCountdown();
             }
         });
@@ -344,6 +344,7 @@ public class OtpCodeActivity extends AppCompatActivity {
             // When the task is over it will print 00:00:00 there
             public void onFinish() {
                 countdown.setText("00:00");
+                reSendOtp.setVisibility(View.VISIBLE);
 //                otpEdit.setEnabled(false);
             }
         }.start();
