@@ -313,7 +313,7 @@ public class PostALoadActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isEdit){
-
+                    updateLoadPost(loadId);
                 } else {
                     if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
                             && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
@@ -1360,7 +1360,28 @@ public class PostALoadActivity extends AppCompatActivity {
 //-------------------------------- Update Post Load Details ----------------------------------------
     private void updateLoadPost(String loadId) {
 
-        UpdateLoadPost updateLoadPost = new UpdateLoadPost("","","","","","","","", "","","", "", "", "","", "","","","","");
+        String pickUpDate = pick_up_date.getText().toString();
+        String pickUpTime = pick_up_time.getText().toString();
+        String budget = select_budget.getText().toString();
+        String vehicleModel = select_model.getText().toString();
+        String vehicleFeet = select_feet.getText().toString()+" Ft";
+        String vehicleCapacity = select_capacity.getText().toString();
+        String vehicleBodyType = select_truck_body_type.getText().toString();
+        String pickUpAddress = pick_up_address.getText().toString();
+        String pickUpCity = pick_up_city.getText().toString();
+        String pickUpPinCode = pick_up_pinCode.getText().toString();
+        String pickUpState = pick_up_state.getText().toString();
+        String pickUpCountry = pick_up_state.getText().toString();
+        String dropAddress = drop_address.getText().toString();
+        String dropCity = drop_city.getText().toString();
+        String dropPinCode = drop_pinCode.getText().toString();
+        String dropState = drop_state.getText().toString();
+        String dropCountry = drop_state.getText().toString();
+        String notesFromLP = note_to_post_load.getText().toString();
+
+        UpdateLoadPost updateLoadPost = new UpdateLoadPost(pickUpDate,pickUpTime,budget,vehicleModel,vehicleFeet,
+                vehicleCapacity,vehicleBodyType,pickUpAddress, pickUpPinCode,pickUpCity,pickUpState, pickUpCountry, dropAddress,
+                dropPinCode,dropCity, dropState,dropCountry,"",notesFromLP);
 
         Call<UpdateLoadPost> call = postLoadService.updateLoadPost("" + loadId, updateLoadPost);
 
@@ -1374,7 +1395,7 @@ public class PostALoadActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<UpdateLoadPost> call, Throwable t) {
-                Log.i("Not Successful", "User is Driver Added");
+                Log.i("Not Successful", "Load Post Details Not Updated");
 
             }
         });

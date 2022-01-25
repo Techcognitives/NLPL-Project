@@ -2,13 +2,12 @@ package com.nlpl.model.UpdateLoadPost;
 
 public class UpdateLoadPost {
 
-    private String pick_up_date, pick_up_time, budget, bid_status, vehicle_model, feet, capacity, body_type, pick_add, pick_pin_code, pick_city, pick_state, pick_country, drop_add, drop_pin_code, drop_city, drop_state, drop_country, km_approx, notes_meterial_des;
+    private String pick_up_date, pick_up_time, budget, vehicle_model, feet, capacity, body_type, pick_add, pick_pin_code, pick_city, pick_state, pick_country, drop_add, drop_pin_code, drop_city, drop_state, drop_country, km_approx, notes_meterial_des;
 
-    public UpdateLoadPost(String pick_up_date, String pick_up_time, String budget, String bid_status, String vehicle_model, String feet, String capacity, String body_type, String pick_add, String pick_pin_code, String pick_city, String pick_state, String pick_country, String drop_add, String drop_pin_code, String drop_city, String drop_state, String drop_country, String km_approx, String notes_meterial_des) {
+    public UpdateLoadPost(String pick_up_date, String pick_up_time, String budget, String vehicle_model, String feet, String capacity, String body_type, String pick_add, String pick_pin_code, String pick_city, String pick_state, String pick_country, String drop_add, String drop_pin_code, String drop_city, String drop_state, String drop_country, String km_approx, String notes_meterial_des) {
         this.pick_up_date = pick_up_date;
         this.pick_up_time = pick_up_time;
         this.budget = budget;
-        this.bid_status = bid_status;
         this.vehicle_model = vehicle_model;
         this.feet = feet;
         this.capacity = capacity;
@@ -33,7 +32,6 @@ public class UpdateLoadPost {
                 "pick_up_date='" + pick_up_date + '\'' +
                 ", pick_up_time='" + pick_up_time + '\'' +
                 ", budget='" + budget + '\'' +
-                ", bid_status='" + bid_status + '\'' +
                 ", vehicle_model='" + vehicle_model + '\'' +
                 ", feet='" + feet + '\'' +
                 ", capacity='" + capacity + '\'' +
@@ -75,14 +73,6 @@ public class UpdateLoadPost {
 
     public void setBudget(String budget) {
         this.budget = budget;
-    }
-
-    public String getBid_status() {
-        return bid_status;
-    }
-
-    public void setBid_status(String bid_status) {
-        this.bid_status = bid_status;
     }
 
     public String getVehicle_model() {
