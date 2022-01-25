@@ -683,7 +683,12 @@ public class DashboardActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                previewDialogBidNow.dismiss();
+                Intent i8 = new Intent(DashboardActivity.this, DashboardActivity.class);
+                i8.putExtra("mobile2", phone);
+                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i8);
+                overridePendingTransition(0, 0);
+                finish();
             }
         });
 

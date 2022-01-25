@@ -956,7 +956,7 @@
 
     //---------------------------- OTP Code Activity -----------------------------------------------
     <string name="otp_code">OTP Code</string>
-    <string name="enter_code">Please Enter OTP code sent to\n</string>
+    <string name="enter_code">Please Enter OTP sent to\n</string>
     <string name="verify_otp">Verify OTP</string>
     <string name="copy_otp">Copy OTP</string>
     <string name="resend_otp">Resend OTP</string>
