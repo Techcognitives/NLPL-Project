@@ -327,9 +327,11 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 //                    for (int i=0; i< acceptedList.size(); i++){
 //                        if (acceptedList.get(i).getBid_status().equals("FinalAccepted")){
                     if (acceptedList.size() > 0) {
+                        bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
                         noAcceptedLoads.setVisibility(View.GONE);
                         bidsAcceptedAdapter.updateData(acceptedList);
                     } else {
+                        bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
                         noAcceptedLoads.setVisibility(View.VISIBLE);
                     }
 //                        }
@@ -354,15 +356,33 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             case R.id.customer_dashboard_bids_received_button:
                 loadAcceptedConstrain.setVisibility(View.INVISIBLE);
                 bidsReceivedConstrain.setVisibility(View.VISIBLE);
-                loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
-                bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
+                if (acceptedList.size() > 0) {
+                    bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
+                } else {
+                    bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+                }
+
+                if (bidsList.size() > 0) {
+                    loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
+                } else {
+                    loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+                }
                 break;
 
             case R.id.customer_dashboard_loads_accepted_button:
                 loadAcceptedConstrain.setVisibility(View.VISIBLE);
                 bidsReceivedConstrain.setVisibility(View.INVISIBLE);
-                loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
-                bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+                if (acceptedList.size() > 0) {
+                    bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
+                } else {
+                    bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+                }
+
+                if (bidsList.size() > 0) {
+                    loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
+                } else {
+                    loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+                }
                 break;
         }
     }
