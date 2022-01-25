@@ -1,20 +1,28 @@
 package com.nlpl.ui.ui.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.media.Image;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -38,6 +46,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BidSubmittedModel;
@@ -62,7 +74,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -72,6 +87,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DashboardActivity extends AppCompatActivity {
 
     SwipeRefreshLayout swipeRefreshLayout;
+    FusedLocationProviderClient fusedLocationProviderClient;
+
     private RequestQueue mQueue;
     private PostLoadService postLoadService;
     private BidLoadService bidService;
@@ -108,7 +125,7 @@ public class DashboardActivity extends AppCompatActivity {
     ImageView personalDetailsLogoImageView, bankDetailsLogoImageView, truckDetailsLogoImageView, driverDetailsLogoImageView;
 
     ConstraintLayout loadNotificationConstrain, bidsSubmittedConstrain;
-    TextView loadNotificationTextView, bidsSubmittedTextView;
+    TextView loadNotificationTextView, bidsSubmittedTextView, currentLocationText;
 
     View bottomNav;
     ConstraintLayout spDashboard, customerDashboard;
@@ -129,6 +146,9 @@ public class DashboardActivity extends AppCompatActivity {
             Log.i("Mobile No Registration", phone);
         }
         mQueue = Volley.newRequestQueue(DashboardActivity.this);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        currentLocationText = (TextView) findViewById(R.id.dashboard_current_location_text_view);
+        getLocation();
 
         actionBar = findViewById(R.id.profile_registration_action_bar);
         actionBarTitle = (TextView) actionBar.findViewById(R.id.action_bar_title);
@@ -218,6 +238,7 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     public void RearrangeItems() {
+        getLocation();
         loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadList);
         loadListRecyclerView.setAdapter(loadListAdapter);
         loadSubmittedAdapter = new LoadSubmittedAdapter(DashboardActivity.this, updatedLoadSubmittedList);
@@ -1743,6 +1764,37 @@ public class DashboardActivity extends AppCompatActivity {
 
     }
     //--------------------------------------------------------------------------------------------------
+    private void getLocation() {
+        if (ActivityCompat.checkSelfPermission(DashboardActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+                @Override
+                public void onComplete(@NonNull Task<Location> task) {
+                    Location location = task.getResult();
+                    if (location != null) {
+                        Geocoder geocoder = new Geocoder(DashboardActivity.this, Locale.getDefault());
+                        try {
+                            String latitudeCurrent, longitudeCurrent, countryCurrent, stateCurrent, cityCurrent, subCityCurrent, addressCurrent, pinCodeCurrent;
+                            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                            latitudeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLatitude()));
+                            longitudeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLongitude()));
+                            countryCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getCountryName()));
+                            stateCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getAdminArea()));
+                            cityCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLocality()));
+                            subCityCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getSubLocality()));
+                            addressCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getAddressLine(0)));
+                            pinCodeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getPostalCode()));
 
+                            currentLocationText.setText(addressCurrent);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+            });
+        } else {
+            ActivityCompat.requestPermissions(DashboardActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+        }
+    }
 
 }

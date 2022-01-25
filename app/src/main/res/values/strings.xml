@@ -971,12 +971,12 @@
     <string name="select_city">City</string>
     <string name="pin_code">PIN Code</string>
     <string name="address">Address</string>
-    <string name="are_u_sp">Are you a Truck Owner / Driver / Broker? </string>
+    <string name="are_u_sp">Truck Owner / Driver / Broker? </string>
     <string name="truck_owner">Truck Owner / Driver / Broker</string>
     <string name="driver">Driver</string>
     <string name="broker">Broker</string>
     <string name="ok">OK</string>
-    <string name="customer">Are you a Load Poster?</string>
+    <string name="customer">Load Poster?</string>
     <string name="yes">YES</string>
     //----------------------------------------------------------------------------------------------
 
@@ -1080,7 +1080,7 @@
     //-----------------------------------Post A Load------------------------------------------------
     <string name="pick_up_date">Pick-up Date</string>
     <string name="pick_up_time">Pick-up Time</string>
-    <string name="enterYourBudget">Enter expected budget</string>
+    <string name="enterYourBudget">Enter Your Budget</string>
     <string name="budget">Budget</string>
     <string name="truckTypeAndCapacity">Truck Type &amp; Capacity</string>
     <string name="SelectVehicleModel">Select Vehicle Model</string>

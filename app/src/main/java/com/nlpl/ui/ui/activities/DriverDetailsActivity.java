@@ -18,10 +18,14 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
+import android.text.Html;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextWatcher;
@@ -46,6 +50,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.nlpl.R;
 import com.nlpl.model.Requests.AddDriverRequest;
 import com.nlpl.model.Requests.UserRequest;
@@ -81,7 +89,10 @@ import org.xmlpull.v1.sax2.Driver;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -130,7 +141,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
     View personalAndAddress;
 
     ArrayAdapter<CharSequence> selectStateArray, selectDistrictArray, selectStateUnionCode;
-    TextView selectStateText, selectDistrictText;
+    TextView selectStateText, selectDistrictText, getCurrentLocation;
     Dialog selectStateDialog, selectDistrictDialog;
     String selectedDistrict, selectedState;
     EditText pinCode, address;
@@ -139,6 +150,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
     ArrayList<String> arrayUserId, arrayMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayState;
     Boolean alreadyDriver = true, isSelfie= false, isDL = false, idDLEdited = false, isSelfieEdited = false;
     String truckIdPass, driverIdPass;
+
+    FusedLocationProviderClient fusedLocationProviderClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,6 +168,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
             truckIdPass = bundle.getString("truckIdPass");
         }
 
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
         personalAndAddress = (View) findViewById(R.id.driver_details_personal_and_address);
         action_bar = (View) findViewById(R.id.driver_details_action_bar);
 
@@ -169,6 +184,9 @@ public class DriverDetailsActivity extends AppCompatActivity {
         okDriverDetails = findViewById(R.id.driver_details_ok_button);
         series = (TextView) personalAndAddress.findViewById(R.id.registration_prefix);
         driverEmailId = (EditText) personalAndAddress.findViewById(R.id.registration_email_id_edit);
+        getCurrentLocation = (TextView) personalAndAddress.findViewById(R.id.personal_and_address_get_current_location);
+        getCurrentLocation.setVisibility(View.VISIBLE);
+
         previewDLImageView = (ImageView) findViewById(R.id.driver_details_preview_driving_license);
         previewSelfieImageView = (ImageView) findViewById(R.id.driver_details_preview_selfie);
         ConstraintLayout personalConstrain = (ConstraintLayout) personalAndAddress.findViewById(R.id.personal_registration_sp_constrain);
@@ -1045,7 +1063,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
                     AlertDialog.Builder my_alert = new AlertDialog.Builder(DriverDetailsActivity.this).setCancelable(false);
                     my_alert.setTitle("Driver Details added successfully");
-                    my_alert.setMessage("Do you want to add Driver's Bank Details");
+                    my_alert.setMessage("Would you like to add Driver's Bank Details?");
                     my_alert.setPositiveButton("May be Later", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -1927,5 +1945,46 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         mQueue.add(request);
 
+    }
+
+    public void onClickGetCurrentLocation(View view) {
+        getLocation();
+    }
+
+    private void getLocation() {
+        if (ActivityCompat.checkSelfPermission(DriverDetailsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+                @Override
+                public void onComplete(@NonNull Task<Location> task) {
+                    Location location = task.getResult();
+                    if (location != null) {
+                        Geocoder geocoder = new Geocoder(DriverDetailsActivity.this, Locale.getDefault());
+                        try {
+                            String latitudeCurrent, longitudeCurrent, countryCurrent, stateCurrent, cityCurrent, subCityCurrent, addressCurrent, pinCodeCurrent;
+                            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                            latitudeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLatitude()));
+                            longitudeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLongitude()));
+                            countryCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getCountryName()));
+                            stateCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getAdminArea()));
+                            cityCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLocality()));
+                            subCityCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getSubLocality()));
+                            addressCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getAddressLine(0)));
+                            pinCodeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getPostalCode()));
+
+                            address.setText(addressCurrent);
+                            pinCode.setText(pinCodeCurrent);
+                            selectStateText.setText(stateCurrent);
+                            selectDistrictText.setText(cityCurrent);
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+            });
+        } else {
+            ActivityCompat.requestPermissions(DriverDetailsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+        }
     }
 }
