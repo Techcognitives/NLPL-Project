@@ -109,6 +109,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             phone = bundle.getString("mobile");
+
         }
         mQueue = Volley.newRequestQueue(CustomerDashboardActivity.this);
 
@@ -144,11 +145,8 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
         //------------------------------- bottom nav -----------------------------------------------
         bottomNav = (View) findViewById(R.id.customer_dashboard_bottom_nav_bar);
-        bottomNav.setVisibility(View.GONE);
         spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
         customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
-        spDashboard.setBackgroundColor(getResources().getColor(R.color.nav_unselected_blue));
-        customerDashboard.setBackgroundColor(getResources().getColor(R.color.nav_selected_blue));
 
         loadAcceptedConstrain = (ConstraintLayout) findViewById(R.id.customer_dashboard_loads_accepted_constrain);
         bidsReceivedConstrain = (ConstraintLayout) findViewById(R.id.customer_dashboard_bids_received_constrain);
@@ -400,9 +398,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     public void onClickBottomNavigation(View view) {
         switch (view.getId()) {
             case R.id.bottom_nav_sp_dashboard:
-                Intent intent = new Intent(CustomerDashboardActivity.this, DashboardActivity.class);
-                intent.putExtra("mobile2", phone);
-                startActivity(intent);
 
                 break;
 
