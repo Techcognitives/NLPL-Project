@@ -112,7 +112,7 @@ public class DashboardActivity extends AppCompatActivity {
     SwipeListener swipeListener;
 
     View actionBar;
-    TextView customerFirstBudget, customerSecondBudget, cancel, acceptAndBid, spQuote, addDriver, selectDriver, addTruck, selectTruck, selectedTruckModel, selectedTruckFeet, selectedTruckCapacity, selectedTruckBodyType, actionBarTitle;
+    TextView customerNumber, customerNumberHeading, customerName, customerNameHeading, customerFirstBudget, customerSecondBudget, cancel, acceptAndBid, spQuote, addDriver, selectDriver, addTruck, selectTruck, selectedTruckModel, selectedTruckFeet, selectedTruckCapacity, selectedTruckBodyType, actionBarTitle;
     EditText notesSp;
     CheckBox declaration;
     RadioButton negotiable_yes, negotiable_no;
@@ -1384,6 +1384,16 @@ public class DashboardActivity extends AppCompatActivity {
         TextView dropLocation = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_drop_location_textview);
         TextView receivedNotes = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_received_notes_textview);
         TextView loadIdHeading = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_loadId_heading);
+        customerNameHeading = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_customerName_heading);
+        customerName = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_customerName);
+        customerNumberHeading = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_customer_phone_heading);
+        customerNumber = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_customer_mobile_no);
+
+
+        customerNameHeading.setVisibility(View.GONE);
+        customerName.setVisibility(View.GONE);
+        customerNumber.setVisibility(View.GONE);
+        customerNumberHeading.setVisibility(View.GONE);
 
         pickUpDate.setText(pick_up_date);
         pickUpTime.setText(pick_up_time);
@@ -1588,6 +1598,15 @@ public class DashboardActivity extends AppCompatActivity {
         TextView dropLocation = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_drop_location_textview);
         TextView receivedNotes = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_received_notes_textview);
         TextView loadIdHeading = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_loadId_heading);
+        customerNameHeading = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_customerName_heading);
+        customerName = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_customerName);
+        customerNumberHeading = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_customer_phone_heading);
+        customerNumber = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_customer_mobile_no);
+
+        customerNameHeading.setVisibility(View.VISIBLE);
+        customerName.setVisibility(View.VISIBLE);
+        customerNumber.setVisibility(View.VISIBLE);
+        customerNumberHeading.setVisibility(View.VISIBLE);
 
         pickUpDate.setText(pick_up_date);
         pickUpTime.setText(pick_up_time);
@@ -1637,6 +1656,7 @@ public class DashboardActivity extends AppCompatActivity {
         declaration.setVisibility(View.INVISIBLE);
 
         getBidDetailsByBidId(obj.getBidId());
+        getCustomerNameAndNumber(obj.getUser_id());
 
         cancel.setText("Withdraw");
         cancel.setEnabled(false);
@@ -1685,6 +1705,33 @@ public class DashboardActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void getCustomerNameAndNumber(String user_id) {
+        //-------------------------------------------------------------------------------------------
+        String url = getString(R.string.baseURL) + "/user/" + user_id;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj1 = truckLists.getJSONObject(i);
+                        customerName.setText(obj1.getString("name"));
+                        customerNumber.setText(obj1.getString("phone_number"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+        //----------------------------------------------------------
     }
 
 
