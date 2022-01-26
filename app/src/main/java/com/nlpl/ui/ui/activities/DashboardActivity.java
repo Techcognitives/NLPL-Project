@@ -21,6 +21,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.media.Image;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -39,6 +40,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -92,6 +94,7 @@ public class DashboardActivity extends AppCompatActivity {
     private RequestQueue mQueue;
     private PostLoadService postLoadService;
     private BidLoadService bidService;
+    boolean isBackPressed = false;
 
     private ArrayList<LoadNotificationModel> loadList = new ArrayList<>();
     private ArrayList<LoadNotificationModel> loadListToCompare = new ArrayList<>();
@@ -904,7 +907,7 @@ public class DashboardActivity extends AppCompatActivity {
                         TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
                         alertTitle.setText("Add a Driver");
-                        alertMessage.setText("");
+                        alertMessage.setText("Please add a Driver to submit your response");
                         alertPositiveButton.setVisibility(View.GONE);
                         alertNegativeButton.setText("OK");
                         alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -1347,7 +1350,7 @@ public class DashboardActivity extends AppCompatActivity {
                         TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
                         alertTitle.setText("Add a Truck");
-                        alertMessage.setText("");
+                        alertMessage.setText("Please add a Truck to submit your response");
                         alertPositiveButton.setVisibility(View.GONE);
                         alertNegativeButton.setText("OK");
                         alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -1976,6 +1979,25 @@ public class DashboardActivity extends AppCompatActivity {
         } else {
             ActivityCompat.requestPermissions(DashboardActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isBackPressed) {
+            finishAffinity();
+            System.exit(0);
+        } else {
+            Toast.makeText(getApplicationContext(), "Please click back again to exit", Toast.LENGTH_SHORT).show();
+            isBackPressed = true;
+        }
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                isBackPressed = false;
+            }
+        };
+        new Handler().postDelayed(runnable, 3000);
     }
 
 }

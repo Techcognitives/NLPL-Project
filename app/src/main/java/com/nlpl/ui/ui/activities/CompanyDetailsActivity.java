@@ -476,8 +476,8 @@ public class CompanyDetailsActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Company Details added Successfully");
-            alertMessage.setText("");
+            alertTitle.setText("Company Details");
+            alertMessage.setText("Company Details added Successfully");
             alertPositiveButton.setVisibility(View.GONE);
             alertNegativeButton.setText("OK");
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));

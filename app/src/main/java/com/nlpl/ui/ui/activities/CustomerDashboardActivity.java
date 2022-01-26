@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -25,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -79,6 +81,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
     private BidsResponsesAdapter bidsResponsesAdapter;
     private BidLoadService bidService;
+    boolean isBackPressed = false;
 
     Dialog menuDialog;
     TextView userNameTextViewMenu, mobileTextViewMenu;
@@ -1336,4 +1339,23 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         }
     }
     //----------------------------------------------------------------------------------------------
+
+    @Override
+    public void onBackPressed() {
+        if (isBackPressed) {
+            finishAffinity();
+            System.exit(0);
+        } else {
+            Toast.makeText(getApplicationContext(), "Please click back again to exit", Toast.LENGTH_SHORT).show();
+            isBackPressed = true;
+        }
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                isBackPressed = false;
+            }
+        };
+        new Handler().postDelayed(runnable, 3000);
+    }
 }

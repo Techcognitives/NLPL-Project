@@ -1,6 +1,7 @@
 package com.nlpl.ui.ui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -8,6 +9,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -35,6 +38,13 @@ public class FindLoadsActivity extends AppCompatActivity {
     private FindLoadAdapter bidsListAdapter;
     private RecyclerView bidsListRecyclerView;
 
+    View actionBar;
+    TextView actionBarTitle;
+    ImageView actionBarBackButton, actionBarMenuButton;
+
+    View bottomNav;
+    ConstraintLayout spDashboard, customerDashboard;
+
     String phone, userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +57,27 @@ public class FindLoadsActivity extends AppCompatActivity {
             Log.i("Mobile No View Personal", phone);
             userId = bundle.getString("userId");
         }
+        //-------------------------------- Action Bar ----------------------------------------------
+        actionBar = findViewById(R.id.find_loads_action_bar);
+        actionBarTitle = (TextView) actionBar.findViewById(R.id.action_bar_title);
+        actionBarBackButton = (ImageView) actionBar.findViewById(R.id.action_bar_back_button);
+        actionBarMenuButton = (ImageView) actionBar.findViewById(R.id.action_bar_menu);
+
+        actionBarTitle.setText("Load Notifications");
+        actionBarMenuButton.setVisibility(View.GONE);
+        actionBarBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FindLoadsActivity.this.finish();
+            }
+        });
+        //---------------------------- Bottom Nav --------------------------------------------------
+        bottomNav = (View) findViewById(R.id.find_loads_bottom_nav_bar);
+        spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
+        customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
+        spDashboard.setBackgroundColor(getResources().getColor(R.color.nav_unselected_blue));
+        customerDashboard.setBackgroundColor(getResources().getColor(R.color.nav_selected_blue));
+        //---------------------------- Get Bank Details --------------------------------------------
 
         mQueue = Volley.newRequestQueue(FindLoadsActivity.this);
         bidsListRecyclerView = (RecyclerView) findViewById(R.id.find_loads_recycler_view);
