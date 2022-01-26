@@ -627,7 +627,7 @@
                     android:paddingTop="7dp"
                     android:paddingEnd="2dp"
                     android:paddingBottom="7dp"
-                    android:textColor="@color/redDark"
+                    android:textColor="@color/green"
                     android:textSize="12dp"
                     app:layout_constraintBottom_toTopOf="@+id/textView74"
                     app:layout_constraintEnd_toStartOf="@+id/textView65"
