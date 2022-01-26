@@ -130,10 +130,6 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
                             userFirmNameTextView.setVisibility(View.GONE);
                             userFirmAddressTitleTextView.setVisibility(View.GONE);
                             userFirmAddressTextView.setVisibility(View.GONE);
-
-                            bottomNav.setVisibility(View.GONE);
-                        }else{
-                            bottomNav.setVisibility(View.VISIBLE);
                         }
 
                         userEmailIdAPI = obj.getString("email_id");
@@ -313,16 +309,31 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
     }
 
     public void onClickBottomNavigation(View view) {
-        switch (view.getId()) {
-            case R.id.bottom_nav_sp_dashboard:
-                Intent intent = new Intent(ViewPersonalDetailsActivity.this, DashboardActivity.class);
-                intent.putExtra("mobile2", phone);
-                startActivity(intent);
-                break;
+        if (userRoleAPI.equals("Customer")){
+            switch (view.getId()) {
+                case R.id.bottom_nav_sp_dashboard:
+                    Intent intent = new Intent(ViewPersonalDetailsActivity.this, CustomerDashboardActivity.class);
+                    intent.putExtra("mobile", phone);
+                    startActivity(intent);
+                    break;
 
-            case R.id.bottom_nav_customer_dashboard:
+                case R.id.bottom_nav_customer_dashboard:
 
-                break;
+                    break;
+            }
+        }else{
+            switch (view.getId()) {
+                case R.id.bottom_nav_sp_dashboard:
+                    Intent intent = new Intent(ViewPersonalDetailsActivity.this, DashboardActivity.class);
+                    intent.putExtra("mobile2", phone);
+                    startActivity(intent);
+                    break;
+
+                case R.id.bottom_nav_customer_dashboard:
+
+                    break;
+            }
         }
+
     }
 }

@@ -45,7 +45,7 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
     private BanksAdapter bankListAdapter;
     private RecyclerView bankListRecyclerView;
 
-    String phone, userId;
+    String phone, userId, roleAPI;
     Dialog previewDialogCancelledCheque;
     ImageView previewDialogCancelledChequeImageView;
 
@@ -197,17 +197,32 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
     }
 
     public void onClickBottomNavigation(View view) {
-        switch (view.getId()) {
-            case R.id.bottom_nav_sp_dashboard:
-                Intent intent = new Intent(ViewBankDetailsActivity.this, DashboardActivity.class);
-                intent.putExtra("mobile2", phone);
-                startActivity(intent);
-                break;
+        if (roleAPI.equals("Customer")) {
+            switch (view.getId()) {
+                case R.id.bottom_nav_sp_dashboard:
+                    Intent intent = new Intent(ViewBankDetailsActivity.this, CustomerDashboardActivity.class);
+                    intent.putExtra("mobile", phone);
+                    startActivity(intent);
+                    break;
 
-            case R.id.bottom_nav_customer_dashboard:
+                case R.id.bottom_nav_customer_dashboard:
 
-                break;
+                    break;
+            }
+        } else {
+            switch (view.getId()) {
+                case R.id.bottom_nav_sp_dashboard:
+                    Intent intent = new Intent(ViewBankDetailsActivity.this, DashboardActivity.class);
+                    intent.putExtra("mobile2", phone);
+                    startActivity(intent);
+                    break;
+
+                case R.id.bottom_nav_customer_dashboard:
+
+                    break;
+            }
         }
+
     }
 
     private void getUserDetails() {
@@ -226,20 +241,13 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
                         String stateAPI = obj.getString("state_code");
                         String cityAPI = obj.getString("preferred_location");
                         String pinCodeAPI = obj.getString("pin_code");
-                        String roleAPI = obj.getString("user_type");
+                        roleAPI = obj.getString("user_type");
                         String emailAPI = obj.getString("email_id");
 
 //                        name.setText(nameAPI);
 //
 //                        String s1 = mobileAPI.substring(2, 12);
 //                        mobileEdit.setText(s1);
-
-                        if (roleAPI.equals("Customer")) {
-                            bottomNav.setVisibility(View.GONE);
-                        }else {
-                            bottomNav.setVisibility(View.VISIBLE);
-                        }
-
 
                     }
                 } catch (JSONException e) {
