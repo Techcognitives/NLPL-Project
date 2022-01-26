@@ -9,10 +9,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BidsAcceptedModel;
 import com.nlpl.ui.ui.activities.CustomerDashboardActivity;
 import com.nlpl.ui.ui.activities.DashboardActivity;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -20,6 +29,7 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
 
     private ArrayList<BidsAcceptedModel> acceptedList;
     private CustomerDashboardActivity activity;
+    private RequestQueue mQueue;
 
     public BidsAcceptedAdapter(CustomerDashboardActivity activity, ArrayList<BidsAcceptedModel> acceptedList) {
         this.acceptedList = acceptedList;
@@ -28,6 +38,7 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
 
     @Override
     public BidsAcceptedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        mQueue = Volley.newRequestQueue(activity);
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.load_list, parent, false);
         return new BidsAcceptedViewHolder(view);
     }
@@ -41,9 +52,6 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
 
         String dropCity = obj.getDrop_city();
         holder.destinationEnd.setText("  " + dropCity);
-
-        String budget = obj.getBudget();
-        holder.budget.setText("₹" + budget);
 
         String date = obj.getPick_up_date();
         holder.date.setText("Date: " + date);
@@ -69,8 +77,33 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
         String pickUpLocation = obj.getPick_add();
         holder.pickUpLocation.setText(" "+pickUpLocation);
 
+        //----------------------------------------------------------
+        String url1 = activity.getString(R.string.baseURL) + "/loadpost/getLoadDtByPostId/" + obj.getIdpost_load();
+        JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+                        holder.budget.setText("₹" + obj.getString("budget"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request1);
+        //----------------------------------------------------------
+
 
         holder.bidNowButton.setText("View Consignment");
+        holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.green));
         holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

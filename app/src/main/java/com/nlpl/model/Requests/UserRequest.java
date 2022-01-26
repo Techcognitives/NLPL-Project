@@ -2,7 +2,7 @@ package com.nlpl.model.Requests;
 
 public class UserRequest {
     String name, phone_number, user_type, preferred_location, address, state_code, pin_code, preferred_language, email_id;
-    int isRegistration_done;
+    int isRegistration_done, isTruck_added, isDriver_added, isBankDetails_given, isCompany_added,isPersonal_dt_added;
 
     public UserRequest() {
         this.name = name;
@@ -10,11 +10,57 @@ public class UserRequest {
         this.user_type = user_type;
         this.preferred_location = preferred_location;
         this.address = address;
+        this.isPersonal_dt_added = isPersonal_dt_added;
         this.state_code = state_code;
         this.isRegistration_done = isRegistration_done;
         this.pin_code = pin_code;
         this.preferred_language = preferred_language;
         this.email_id = email_id;
+        this.isBankDetails_given = isBankDetails_given;
+        this.isTruck_added = isTruck_added;
+        this.isDriver_added = isDriver_added;
+        this.isCompany_added = isCompany_added;
+
+    }
+
+    public int getIsTruck_added() {
+        return isTruck_added;
+    }
+
+    public void setIsTruck_added(int isTruck_added) {
+        this.isTruck_added = isTruck_added;
+    }
+
+    public int getIsDriver_added() {
+        return isDriver_added;
+    }
+
+    public void setIsDriver_added(int isDriver_added) {
+        this.isDriver_added = isDriver_added;
+    }
+
+    public int getIsBankDetails_given() {
+        return isBankDetails_given;
+    }
+
+    public void setIsBankDetails_given(int isBankDetails_given) {
+        this.isBankDetails_given = isBankDetails_given;
+    }
+
+    public int getIsCompany_added() {
+        return isCompany_added;
+    }
+
+    public void setIsCompany_added(int isCompany_added) {
+        this.isCompany_added = isCompany_added;
+    }
+
+    public int getIsPersonal_dt_added() {
+        return isPersonal_dt_added;
+    }
+
+    public void setIsPersonal_dt_added(int isPersonal_dt_added) {
+        this.isPersonal_dt_added = isPersonal_dt_added;
     }
 
     public String getEmail_id() {

@@ -107,12 +107,12 @@ public class DashboardActivity extends AppCompatActivity {
 
     Dialog setBudget, selectTruckDialog, previewDialogBidNow, dialogAcceptRevisedBid, dialogViewConsignment;
 
-    String bidStatusToCompare, bidStatus, vehicle_no, truckId, isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
+    String spQuoteOnClickBidNow, bidStatusToCompare, bidStatus, vehicle_no, truckId, isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
 
     SwipeListener swipeListener;
 
     View actionBar;
-    TextView reqBudget, cancel, acceptAndBid, spQuote, addDriver, selectDriver, addTruck, selectTruck, selectedTruckModel, selectedTruckFeet, selectedTruckCapacity, selectedTruckBodyType, actionBarTitle;
+    TextView customerFirstBudget, customerSecondBudget, cancel, acceptAndBid, spQuote, addDriver, selectDriver, addTruck, selectTruck, selectedTruckModel, selectedTruckFeet, selectedTruckCapacity, selectedTruckBodyType, actionBarTitle;
     EditText notesSp;
     CheckBox declaration;
     RadioButton negotiable_yes, negotiable_no;
@@ -629,7 +629,7 @@ public class DashboardActivity extends AppCompatActivity {
         //-------------------------------------------Display Load Information---------------------------------------------
         TextView pickUpDate = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_pick_up_date_textview);
         TextView pickUpTime = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_pick_up_time_textview);
-        TextView reqBudget = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_budget_textview);
+        customerFirstBudget = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_budget_textview);
         TextView approxDistance = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_distance_textview);
         TextView reqModel = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_req_model_textview);
         TextView reqFeet = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_req_feet_textview);
@@ -642,7 +642,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         pickUpDate.setText(pick_up_date);
         pickUpTime.setText(pick_up_time);
-        reqBudget.setText(required_budget);
+        customerFirstBudget.setText(required_budget);
         approxDistance.setText(distance);
         reqModel.setText(required_model);
         reqFeet.setText(required_feet);
@@ -718,7 +718,14 @@ public class DashboardActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
 
-                    saveBid(createBidRequest());
+                    if (spQuote.getText().toString().equals(customerFirstBudget.getText().toString())){
+                        Log.i("status send as", "RespondedBySP");
+                        saveBid(createBidRequest("RespondedBySP",spQuote.getText().toString()));
+                    } else {
+                        Log.i("status send as", "submitted");
+                        saveBid(createBidRequest("submitted",""));
+                    }
+
                     Log.i("loadId bidded", obj.getIdpost_load());
 
                     AlertDialog.Builder my_alert = new AlertDialog.Builder(DashboardActivity.this).setCancelable(false);
@@ -786,6 +793,7 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 budgetSet(spQuote.getText().toString());
+
             }
         });
 
@@ -1219,6 +1227,14 @@ public class DashboardActivity extends AppCompatActivity {
                 String budgetEditText = budget.getText().toString();
                 if (!budgetEditText.isEmpty()) {
                     spQuote.setText(budgetEditText);
+
+                    if (spQuote.getText().toString().equals(customerFirstBudget.getText().toString())){
+                        spQuote.setTextColor(getResources().getColor(R.color.green));
+                    } else {
+                        spQuote.setTextColor(getResources().getColor(R.color.redDark));
+                    }
+
+
                     okBudget.setEnabled(true);
                     okBudget.setBackgroundResource((R.drawable.button_active));
                 } else {
@@ -1298,13 +1314,13 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     //--------------------------------------create Bank Details in API -------------------------------------
-    public BidLoadRequest createBidRequest() {
+    public BidLoadRequest createBidRequest(String status, String spFinal) {
         BidLoadRequest bidLoadRequest = new BidLoadRequest();
         bidLoadRequest.setUser_id(userId);
         bidLoadRequest.setAssigned_truck_id(truckId);
         bidLoadRequest.setAssigned_driver_id(selectedDriverId);
         bidLoadRequest.setIdpost_load(loadId);
-        bidLoadRequest.setBid_status("submitted");
+        bidLoadRequest.setBid_status(status);
         bidLoadRequest.setBody_type(selectedTruckBodyType.getText().toString());
         bidLoadRequest.setVehicle_model(selectedTruckModel.getText().toString());
         bidLoadRequest.setFeet(selectedTruckFeet.getText().toString());
@@ -1312,6 +1328,7 @@ public class DashboardActivity extends AppCompatActivity {
         bidLoadRequest.setNotes(notesSp.getText().toString());
         bidLoadRequest.setIs_negatiable(negotiable);
         bidLoadRequest.setSp_quote(spQuote.getText().toString());
+        bidLoadRequest.setIs_bid_accpted_by_sp(spFinal);
         return bidLoadRequest;
     }
 
@@ -1357,7 +1374,7 @@ public class DashboardActivity extends AppCompatActivity {
         //-------------------------------------------Display Load Information---------------------------------------------
         TextView pickUpDate = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_pick_up_date_textview);
         TextView pickUpTime = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_pick_up_time_textview);
-        reqBudget = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_budget_textview);
+        customerSecondBudget = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_budget_textview);
         TextView approxDistance = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_distance_textview);
         TextView reqModel = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_req_model_textview);
         TextView reqFeet = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_req_feet_textview);
@@ -1518,7 +1535,7 @@ public class DashboardActivity extends AppCompatActivity {
                         String driver_id = obj1.getString("assigned_driver_id");
                         getDriverDetailsByDriverId(driver_id);
                         spQuote.setText(obj1.getString("is_bid_accpted_by_sp"));
-                        reqBudget.setText(obj1.getString("is_bid_accpted_by_sp"));
+                        customerSecondBudget.setText(obj1.getString("is_bid_accpted_by_sp"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1561,7 +1578,7 @@ public class DashboardActivity extends AppCompatActivity {
         //-------------------------------------------Display Load Information---------------------------------------------
         TextView pickUpDate = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_pick_up_date_textview);
         TextView pickUpTime = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_pick_up_time_textview);
-        reqBudget = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_budget_textview);
+        customerSecondBudget = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_budget_textview);
         TextView approxDistance = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_distance_textview);
         TextView reqModel = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_req_model_textview);
         TextView reqFeet = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_req_feet_textview);
