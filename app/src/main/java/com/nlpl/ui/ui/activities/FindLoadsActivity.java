@@ -46,6 +46,7 @@ public class FindLoadsActivity extends AppCompatActivity {
     ConstraintLayout spDashboard, customerDashboard;
 
     String phone, userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +100,8 @@ public class FindLoadsActivity extends AppCompatActivity {
                 Intent intent = new Intent(FindLoadsActivity.this, DashboardActivity.class);
                 intent.putExtra("mobile2", phone);
                 startActivity(intent);
+                finish();
+                overridePendingTransition(0, 0);
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
@@ -145,8 +148,8 @@ public class FindLoadsActivity extends AppCompatActivity {
                         bidsList.add(findLoadsModel);
                     }
 
-                    for (int i=0; i< bidsList.size(); i++){
-                        if (bidsList.get(i).getBid_status().equals("pending")){
+                    for (int i = 0; i < bidsList.size(); i++) {
+                        if (bidsList.get(i).getBid_status().equals("pending")) {
                             if (bidsList.size() == 0) {
                                 bidsListRecyclerView.setVisibility(View.GONE);
                             } else if (bidsList.size() == 1) {
@@ -182,5 +185,18 @@ public class FindLoadsActivity extends AppCompatActivity {
 
     public void onClickShiftRecyclerviewToRight(View view) {
         bidsListRecyclerView.scrollToPosition(bidsListAdapter.getItemCount() - 1);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent i8 = new Intent(FindLoadsActivity.this, DashboardActivity.class);
+        i8.putExtra("mobile2", phone);
+        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i8);
+        finish();
+        overridePendingTransition(0, 0);
+
     }
 }

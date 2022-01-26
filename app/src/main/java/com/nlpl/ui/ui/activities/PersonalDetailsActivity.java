@@ -79,7 +79,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
     private UserService userService;
 
-    String userId, mobile;
+    String userRoleAPI,userId, mobile;
     Boolean isPanUploaded = false, isFrontUploaded = false;
     String img_type;
 
@@ -155,6 +155,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 //        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 //        //------------------------------------------------------------------------------------------
 
+        getUserDetails();
         previewPan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -631,10 +632,10 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                     intent.putExtra("userId", userId);
                     intent.putExtra("mobile", mobile);
                     startActivity(intent);
-                    PersonalDetailsActivity.this.finish();
+                    finish();
+                    overridePendingTransition(0, 0);
                 }
             });
-            //------------------------------------------------------------------------------------------
         }
     }
 
@@ -772,4 +773,51 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         }
     }
 
+    private void getUserDetails() {
+
+        String url = getString(R.string.baseURL) + "/user/" + userId;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+                        userRoleAPI = obj.getString("user_type");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if (userRoleAPI.equals("Customer")) {
+            Intent i8 = new Intent(PersonalDetailsActivity.this, CustomerDashboardActivity.class);
+            i8.putExtra("mobile", mobile);
+            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i8);
+            finish();
+            overridePendingTransition(0, 0);
+
+        } else {
+            Intent i8 = new Intent(PersonalDetailsActivity.this, DashboardActivity.class);
+            i8.putExtra("mobile2", mobile);
+            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i8);
+            finish();
+            overridePendingTransition(0, 0);
+        }
+    }
 }

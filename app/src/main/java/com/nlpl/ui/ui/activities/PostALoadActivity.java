@@ -72,7 +72,7 @@ public class PostALoadActivity extends AppCompatActivity {
     TextView pick_up_date, pick_up_time, select_budget, select_model, select_feet, select_capacity, select_truck_body_type, pick_up_state, pick_up_city, drop_state, drop_city, auto_calculated_KM;
     EditText pick_up_address, drop_address, pick_up_pinCode, drop_pinCode, note_to_post_load;
 
-    String distByPinCode,stateByPinCode, phone, userId, selectedDistrict, selectedState, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI, customerBudget, sDate, eDate, monthS, monthE, startingDate, endingDate, todayDate;
+    String distByPinCode, stateByPinCode, phone, userId, selectedDistrict, selectedState, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI, customerBudget, sDate, eDate, monthS, monthE, startingDate, endingDate, todayDate;
     int sMonth, eMonth, count, startCount;
     Date currentDate, date1, date2, date3, date4;
     ArrayList currentSepDate;
@@ -82,7 +82,7 @@ public class PostALoadActivity extends AppCompatActivity {
     Button Ok_PostLoad;
 
     ArrayAdapter<CharSequence> selectStateArray, selectDistrictArray, selectStateUnionCode;
-    ArrayList<String> arrayTruckBodyType, arrayVehicleType, updatedArrayTruckFt,arrayCapacityForCompare, arrayTruckFtForCompare,arrayToDisplayCapacity,arrayTruckFt, arrayCapacity;
+    ArrayList<String> arrayTruckBodyType, arrayVehicleType, updatedArrayTruckFt, arrayCapacityForCompare, arrayTruckFtForCompare, arrayToDisplayCapacity, arrayTruckFt, arrayCapacity;
 
     private RequestQueue mQueue;
     private PostLoadService postLoadService;
@@ -234,7 +234,7 @@ public class PostALoadActivity extends AppCompatActivity {
         todayDate = dateC + "/" + count + "/" + yearC;
         Log.i("Today's Date", todayDate);
 
-        if (isEdit){
+        if (isEdit) {
             Ok_PostLoad.setEnabled(true);
             Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
             getLoadDetails();
@@ -334,7 +334,7 @@ public class PostALoadActivity extends AppCompatActivity {
         Ok_PostLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isEdit){
+                if (isEdit) {
                     Ok_PostLoad.setEnabled(true);
                     Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
                     updateLoadPost(loadId);
@@ -373,6 +373,7 @@ public class PostALoadActivity extends AppCompatActivity {
                             intent.putExtra("mobile", phone);
                             startActivity(intent);
                             finish();
+                            overridePendingTransition(0, 0);
                         }
                     });
                     //------------------------------------------------------------------------------------------
@@ -424,6 +425,7 @@ public class PostALoadActivity extends AppCompatActivity {
                             intent.putExtra("mobile", phone);
                             startActivity(intent);
                             finish();
+                            overridePendingTransition(0, 0);
                         }
                     });
                     //------------------------------------------------------------------------------------------
@@ -477,7 +479,7 @@ public class PostALoadActivity extends AppCompatActivity {
                             && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
                             && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
                             && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                            && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()){
+                            && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
                         Ok_PostLoad.setEnabled(true);
                         Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
                     } else {
@@ -519,17 +521,17 @@ public class PostALoadActivity extends AppCompatActivity {
 
                 int sizeOfHr = String.valueOf(selectedHour).length();
                 int sizeOfMin = String.valueOf(selectedMinute).length();
-                if (sizeOfHr==2 && sizeOfMin == 2){
+                if (sizeOfHr == 2 && sizeOfMin == 2) {
                     pick_up_time.setText(selectedHour + ":" + selectedMinute);
-                } else if (sizeOfHr==1 && sizeOfMin == 2) {
-                    String selectedHr = "0"+String.valueOf(selectedHour);
+                } else if (sizeOfHr == 1 && sizeOfMin == 2) {
+                    String selectedHr = "0" + String.valueOf(selectedHour);
                     pick_up_time.setText(selectedHr + ":" + selectedMinute);
-                } else if (sizeOfHr==1 && sizeOfMin == 1){
-                    String selectedHr = "0"+String.valueOf(selectedHour);
-                    String selectedMin = "0"+String.valueOf(selectedMinute);
+                } else if (sizeOfHr == 1 && sizeOfMin == 1) {
+                    String selectedHr = "0" + String.valueOf(selectedHour);
+                    String selectedMin = "0" + String.valueOf(selectedMinute);
                     pick_up_time.setText(selectedHr + ":" + selectedMin);
-                } else if (sizeOfHr==2 && sizeOfMin == 1){
-                    String selectedMin = "0"+String.valueOf(selectedMinute);
+                } else if (sizeOfHr == 2 && sizeOfMin == 1) {
+                    String selectedMin = "0" + String.valueOf(selectedMinute);
                     pick_up_time.setText(selectedHour + ":" + selectedMin);
                 }
 
@@ -537,7 +539,7 @@ public class PostALoadActivity extends AppCompatActivity {
                         && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
                         && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
                         && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                        && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()){
+                        && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
                     Ok_PostLoad.setEnabled(true);
                     Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
                 } else {
@@ -605,7 +607,7 @@ public class PostALoadActivity extends AppCompatActivity {
                         && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
                         && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
                         && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                        && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()){
+                        && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
                     Ok_PostLoad.setEnabled(true);
                     Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
                 } else {
@@ -641,39 +643,39 @@ public class PostALoadActivity extends AppCompatActivity {
 
     private void selectModel() {
 //        if (!isEdit) {
-            selectModelDialog = new Dialog(PostALoadActivity.this);
-            selectModelDialog.setContentView(R.layout.dialog_spinner);
-            selectModelDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            selectModelDialog.show();
-            selectModelDialog.setCancelable(true);
-            TextView model_title = selectModelDialog.findViewById(R.id.dialog_spinner_title);
-            model_title.setText("Select Vehicle Model");
+        selectModelDialog = new Dialog(PostALoadActivity.this);
+        selectModelDialog.setContentView(R.layout.dialog_spinner);
+        selectModelDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        selectModelDialog.show();
+        selectModelDialog.setCancelable(true);
+        TextView model_title = selectModelDialog.findViewById(R.id.dialog_spinner_title);
+        model_title.setText("Select Vehicle Model");
 
-            ListView modelList = (ListView) selectModelDialog.findViewById(R.id.list_state);
-            ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, R.layout.custom_list_row, arrayVehicleType);
-            modelList.setAdapter(adapter1);
+        ListView modelList = (ListView) selectModelDialog.findViewById(R.id.list_state);
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, R.layout.custom_list_row, arrayVehicleType);
+        modelList.setAdapter(adapter1);
 
-            modelList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
-                            && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                            && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
-                            && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                            && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
-                        Ok_PostLoad.setEnabled(true);
-                        Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
-                    } else {
-                        Ok_PostLoad.setEnabled(false);
-                        Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
-                    }
-                    select_model.setText(adapter1.getItem(i));
-                    selectModelDialog.dismiss();
-
-                    selectFeet();
-
+        modelList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
+                        && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
+                        && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
+                        && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
+                        && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
+                    Ok_PostLoad.setEnabled(true);
+                    Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
+                } else {
+                    Ok_PostLoad.setEnabled(false);
+                    Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
                 }
-            });
+                select_model.setText(adapter1.getItem(i));
+                selectModelDialog.dismiss();
+
+                selectFeet();
+
+            }
+        });
 //        } else {
 //
 //        }
@@ -682,39 +684,39 @@ public class PostALoadActivity extends AppCompatActivity {
     private void selectFeet() {
 
 //        if (!isEdit) {
-            selectFeetDialog = new Dialog(PostALoadActivity.this);
-            selectFeetDialog.setContentView(R.layout.dialog_spinner);
-            selectFeetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            selectFeetDialog.show();
-            selectFeetDialog.setCancelable(true);
+        selectFeetDialog = new Dialog(PostALoadActivity.this);
+        selectFeetDialog.setContentView(R.layout.dialog_spinner);
+        selectFeetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        selectFeetDialog.show();
+        selectFeetDialog.setCancelable(true);
 
-            TextView feetTitle = selectFeetDialog.findViewById(R.id.dialog_spinner_title);
-            feetTitle.setText("Select Vehicle Feet");
+        TextView feetTitle = selectFeetDialog.findViewById(R.id.dialog_spinner_title);
+        feetTitle.setText("Select Vehicle Feet");
 
-            ListView feetList = (ListView) selectFeetDialog.findViewById(R.id.list_state);
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.custom_list_row, updatedArrayTruckFt);
-            feetList.setAdapter(adapter);
+        ListView feetList = (ListView) selectFeetDialog.findViewById(R.id.list_state);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.custom_list_row, updatedArrayTruckFt);
+        feetList.setAdapter(adapter);
 
-            feetList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
-                            && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                            && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
-                            && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                            && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
-                        Ok_PostLoad.setEnabled(true);
-                        Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
-                    } else {
-                        Ok_PostLoad.setEnabled(false);
-                        Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
-                    }
-                    select_feet.setText(adapter.getItem(i));
-                    selectFeetDialog.dismiss();
-                    getVehicleCapacityByFeet(select_feet.getText().toString());
-
+        feetList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
+                        && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
+                        && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
+                        && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
+                        && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
+                    Ok_PostLoad.setEnabled(true);
+                    Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
+                } else {
+                    Ok_PostLoad.setEnabled(false);
+                    Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
                 }
-            });
+                select_feet.setText(adapter.getItem(i));
+                selectFeetDialog.dismiss();
+                getVehicleCapacityByFeet(select_feet.getText().toString());
+
+            }
+        });
 //        }else {
 //
 //        }
@@ -737,59 +739,20 @@ public class PostALoadActivity extends AppCompatActivity {
 
     private void selectCapacity() {
 //        if (!isEdit) {
-            if (arrayToDisplayCapacity.size()==1){
+        if (arrayToDisplayCapacity.size() == 1) {
 
-            } else {
-                selectCapacityDialog = new Dialog(PostALoadActivity.this);
-                selectCapacityDialog.setContentView(R.layout.dialog_spinner);
-                selectCapacityDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                selectCapacityDialog.show();
-                selectCapacityDialog.setCancelable(true);
+        } else {
+            selectCapacityDialog = new Dialog(PostALoadActivity.this);
+            selectCapacityDialog.setContentView(R.layout.dialog_spinner);
+            selectCapacityDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            selectCapacityDialog.show();
+            selectCapacityDialog.setCancelable(true);
 
-                TextView capacity_title = selectCapacityDialog.findViewById(R.id.dialog_spinner_title);
-                capacity_title.setText("Select Vehicle Capacity");
+            TextView capacity_title = selectCapacityDialog.findViewById(R.id.dialog_spinner_title);
+            capacity_title.setText("Select Vehicle Capacity");
 
-                ListView capacityList = (ListView) selectCapacityDialog.findViewById(R.id.list_state);
-                ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, R.layout.custom_list_row, arrayToDisplayCapacity);
-                capacityList.setAdapter(adapter2);
-
-                capacityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
-                                && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                                && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
-                                && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                                && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
-                            Ok_PostLoad.setEnabled(true);
-                            Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
-                        } else {
-                            Ok_PostLoad.setEnabled(false);
-                            Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
-                        }
-                        select_capacity.setText(adapter2.getItem(i));
-                        selectCapacityDialog.dismiss();
-                    }
-                });
-            }
-//        } else {
-//
-//        }
-    }
-
-    private void selectTruckBodyType() {
-//        if (!isEdit) {
-            selectBodyTypeDialog = new Dialog(PostALoadActivity.this);
-            selectBodyTypeDialog.setContentView(R.layout.dialog_spinner);
-            selectBodyTypeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            selectBodyTypeDialog.show();
-            selectBodyTypeDialog.setCancelable(true);
-
-            TextView capacity_title = selectBodyTypeDialog.findViewById(R.id.dialog_spinner_title);
-            capacity_title.setText("Select Vehicle Body Type");
-
-            ListView capacityList = (ListView) selectBodyTypeDialog.findViewById(R.id.list_state);
-            ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, R.layout.custom_list_row, arrayTruckBodyType);
+            ListView capacityList = (ListView) selectCapacityDialog.findViewById(R.id.list_state);
+            ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, R.layout.custom_list_row, arrayToDisplayCapacity);
             capacityList.setAdapter(adapter2);
 
             capacityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -806,16 +769,55 @@ public class PostALoadActivity extends AppCompatActivity {
                         Ok_PostLoad.setEnabled(false);
                         Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
                     }
-                    select_truck_body_type.setText(adapter2.getItem(i));
-                    selectBodyTypeDialog.dismiss();
+                    select_capacity.setText(adapter2.getItem(i));
+                    selectCapacityDialog.dismiss();
                 }
             });
+        }
 //        } else {
 //
 //        }
     }
 
-    private void getVehicleCapacityByFeet(String selectedFeet){
+    private void selectTruckBodyType() {
+//        if (!isEdit) {
+        selectBodyTypeDialog = new Dialog(PostALoadActivity.this);
+        selectBodyTypeDialog.setContentView(R.layout.dialog_spinner);
+        selectBodyTypeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        selectBodyTypeDialog.show();
+        selectBodyTypeDialog.setCancelable(true);
+
+        TextView capacity_title = selectBodyTypeDialog.findViewById(R.id.dialog_spinner_title);
+        capacity_title.setText("Select Vehicle Body Type");
+
+        ListView capacityList = (ListView) selectBodyTypeDialog.findViewById(R.id.list_state);
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, R.layout.custom_list_row, arrayTruckBodyType);
+        capacityList.setAdapter(adapter2);
+
+        capacityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
+                        && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
+                        && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
+                        && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
+                        && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
+                    Ok_PostLoad.setEnabled(true);
+                    Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
+                } else {
+                    Ok_PostLoad.setEnabled(false);
+                    Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
+                }
+                select_truck_body_type.setText(adapter2.getItem(i));
+                selectBodyTypeDialog.dismiss();
+            }
+        });
+//        } else {
+//
+//        }
+    }
+
+    private void getVehicleCapacityByFeet(String selectedFeet) {
         arrayToDisplayCapacity.clear();
         arrayTruckFtForCompare.clear();
         String url = getString(R.string.baseURL) + "/trucktype/getAllTruckType";
@@ -838,8 +840,8 @@ public class PostALoadActivity extends AppCompatActivity {
 
                     }
 
-                    for (int i=0; i<arrayTruckFtForCompare.size();i++){
-                        if (selectedFeet.equals(arrayTruckFtForCompare.get(i))){
+                    for (int i = 0; i < arrayTruckFtForCompare.size(); i++) {
+                        if (selectedFeet.equals(arrayTruckFtForCompare.get(i))) {
                             arrayToDisplayCapacity.add(arrayCapacityForCompare.get(i));
                         }
                     }
@@ -932,7 +934,7 @@ public class PostALoadActivity extends AppCompatActivity {
                         && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
                         && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
                         && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                        && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()){
+                        && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
                     Ok_PostLoad.setEnabled(true);
                     Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
                 } else {
@@ -946,7 +948,7 @@ public class PostALoadActivity extends AppCompatActivity {
         });
     }
 
-    private void selectCity(){
+    private void selectCity() {
         if (!pick_up_state.getText().toString().isEmpty()) {
             selectedState = pick_up_state.getText().toString();
             selectDistrictDialog = new Dialog(PostALoadActivity.this);
@@ -1079,7 +1081,7 @@ public class PostALoadActivity extends AppCompatActivity {
                             && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
                             && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
                             && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                            && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()){
+                            && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
                         Ok_PostLoad.setEnabled(true);
                         Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
                     } else {
@@ -1094,7 +1096,7 @@ public class PostALoadActivity extends AppCompatActivity {
         }
     }
 
-    private void selectStateDrop(){
+    private void selectStateDrop() {
         selectStateDialog = new Dialog(PostALoadActivity.this);
         selectStateDialog.setContentView(R.layout.dialog_spinner);
 //                dialog.getWindow().setLayout(1000,3000);
@@ -1115,7 +1117,7 @@ public class PostALoadActivity extends AppCompatActivity {
                         && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
                         && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
                         && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                        && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()){
+                        && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
                     Ok_PostLoad.setEnabled(true);
                     Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
                 } else {
@@ -1129,7 +1131,7 @@ public class PostALoadActivity extends AppCompatActivity {
         });
     }
 
-    private void selectCityDrop(){
+    private void selectCityDrop() {
         if (!drop_state.getText().toString().isEmpty()) {
             selectedState = drop_state.getText().toString();
             selectDistrictDialog = new Dialog(PostALoadActivity.this);
@@ -1262,7 +1264,7 @@ public class PostALoadActivity extends AppCompatActivity {
                             && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
                             && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
                             && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                            && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()){
+                            && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
                         Ok_PostLoad.setEnabled(true);
                         Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
                     } else {
@@ -1284,7 +1286,7 @@ public class PostALoadActivity extends AppCompatActivity {
         postLoadRequest.setPick_up_time(pick_up_time.getText().toString());
         postLoadRequest.setBudget(select_budget.getText().toString());
         postLoadRequest.setVehicle_model(select_model.getText().toString());
-        postLoadRequest.setFeet(select_feet.getText().toString()+" Ft");
+        postLoadRequest.setFeet(select_feet.getText().toString() + " Ft");
         postLoadRequest.setCapacity(select_capacity.getText().toString());
         postLoadRequest.setBody_type(select_truck_body_type.getText().toString());
         postLoadRequest.setPick_add(pick_up_address.getText().toString());
@@ -1329,9 +1331,9 @@ public class PostALoadActivity extends AppCompatActivity {
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            if (!pick_up_address.getText().toString().isEmpty()){
+            if (!pick_up_address.getText().toString().isEmpty()) {
                 pick_up_address.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
-            }else {
+            } else {
                 pick_up_address.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
             }
 
@@ -1339,7 +1341,7 @@ public class PostALoadActivity extends AppCompatActivity {
                     && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
                     && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
                     && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                    && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()){
+                    && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
                 Ok_PostLoad.setEnabled(true);
                 Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
             } else {
@@ -1350,8 +1352,8 @@ public class PostALoadActivity extends AppCompatActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
-            for(int i = s.length()-1; i >= 0; i--){
-                if(s.charAt(i) == '\n'){
+            for (int i = s.length() - 1; i >= 0; i--) {
+                if (s.charAt(i) == '\n') {
                     s.delete(i, i + 1);
                     return;
                 }
@@ -1371,7 +1373,7 @@ public class PostALoadActivity extends AppCompatActivity {
                     && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
                     && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
                     && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                    && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()){
+                    && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
                 Ok_PostLoad.setEnabled(true);
                 Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
             } else {
@@ -1395,10 +1397,10 @@ public class PostALoadActivity extends AppCompatActivity {
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            if (drop_pinCode.getText().toString().length() == 6){
+            if (drop_pinCode.getText().toString().length() == 6) {
                 getDropStateAndDistrict(drop_pinCode.getText().toString());
                 drop_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
-            }else {
+            } else {
                 drop_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
             }
 
@@ -1406,7 +1408,7 @@ public class PostALoadActivity extends AppCompatActivity {
                     && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
                     && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
                     && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                    && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()){
+                    && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
                 Ok_PostLoad.setEnabled(true);
                 Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
             } else {
@@ -1430,9 +1432,9 @@ public class PostALoadActivity extends AppCompatActivity {
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            if (!drop_address.getText().toString().isEmpty()){
+            if (!drop_address.getText().toString().isEmpty()) {
                 drop_address.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
-            }else {
+            } else {
                 drop_address.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
             }
 
@@ -1440,7 +1442,7 @@ public class PostALoadActivity extends AppCompatActivity {
                     && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
                     && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
                     && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                    && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()){
+                    && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
                 Ok_PostLoad.setEnabled(true);
                 Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
             } else {
@@ -1451,8 +1453,8 @@ public class PostALoadActivity extends AppCompatActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
-            for(int i = s.length()-1; i >= 0; i--){
-                if(s.charAt(i) == '\n'){
+            for (int i = s.length() - 1; i >= 0; i--) {
+                if (s.charAt(i) == '\n') {
                     s.delete(i, i + 1);
                     return;
                 }
@@ -1469,10 +1471,10 @@ public class PostALoadActivity extends AppCompatActivity {
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            if (pick_up_pinCode.getText().toString().length() == 6){
+            if (pick_up_pinCode.getText().toString().length() == 6) {
                 getPickStateAndDistrict(pick_up_pinCode.getText().toString());
                 pick_up_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
-            }else {
+            } else {
                 pick_up_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
             }
 
@@ -1480,7 +1482,7 @@ public class PostALoadActivity extends AppCompatActivity {
                     && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
                     && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
                     && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                    && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()){
+                    && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
                 Ok_PostLoad.setEnabled(true);
                 Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
             } else {
@@ -1579,7 +1581,7 @@ public class PostALoadActivity extends AppCompatActivity {
         String pickUpTime = pick_up_time.getText().toString();
         String budget = select_budget.getText().toString();
         String vehicleModel = select_model.getText().toString();
-        String vehicleFeet = select_feet.getText().toString()+" Ft";
+        String vehicleFeet = select_feet.getText().toString() + " Ft";
         String vehicleCapacity = select_capacity.getText().toString();
         String vehicleBodyType = select_truck_body_type.getText().toString();
         String pickUpAddress = pick_up_address.getText().toString();
@@ -1594,7 +1596,7 @@ public class PostALoadActivity extends AppCompatActivity {
         String dropCountry = drop_state.getText().toString();
         String notesFromLP = note_to_post_load.getText().toString();
 
-        UpdateLoadPostPickUpDate updateLoadPost = new UpdateLoadPostPickUpDate(pickUpDate,pickUpTime,budget,vehicleModel,vehicleFeet, vehicleCapacity,vehicleBodyType,pickUpAddress, pickUpPinCode,pickUpCity,pickUpState, pickUpCountry, dropAddress, dropPinCode,dropCity, dropState,dropCountry,"123",notesFromLP);
+        UpdateLoadPostPickUpDate updateLoadPost = new UpdateLoadPostPickUpDate(pickUpDate, pickUpTime, budget, vehicleModel, vehicleFeet, vehicleCapacity, vehicleBodyType, pickUpAddress, pickUpPinCode, pickUpCity, pickUpState, pickUpCountry, dropAddress, dropPinCode, dropCity, dropState, dropCountry, "123", notesFromLP);
 
         Call<UpdateLoadPostPickUpDate> call = postLoadService.updateLoadPost("" + loadId, updateLoadPost);
 
@@ -1681,4 +1683,15 @@ public class PostALoadActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent i8 = new Intent(PostALoadActivity.this, CustomerDashboardActivity.class);
+        i8.putExtra("mobile", phone);
+        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i8);
+        finish();
+        overridePendingTransition(0, 0);
+    }
 }

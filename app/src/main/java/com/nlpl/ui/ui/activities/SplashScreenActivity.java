@@ -157,7 +157,6 @@ public class SplashScreenActivity extends AppCompatActivity {
                         }
                     });
                     mQueue.add(request);
-
                     //------------------------------------------------------------------------------------------------
 
                 } else {

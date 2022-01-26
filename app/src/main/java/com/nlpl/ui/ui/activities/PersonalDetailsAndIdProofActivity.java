@@ -157,7 +157,22 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PersonalDetailsAndIdProofActivity.this.finish();
+                if (roleAPI.equals("Customer")) {
+                    Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, CustomerDashboardActivity.class);
+                    i8.putExtra("mobile", mobileAPI);
+                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i8);
+                    overridePendingTransition(0, 0);
+                    finish();
+
+                } else {
+                    Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, DashboardActivity.class);
+                    i8.putExtra("mobile2", mobileAPI);
+                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i8);
+                    finish();
+                    overridePendingTransition(0, 0);
+                }
             }
         });
         //------------------------------------------------------------------------------------------
@@ -741,8 +756,8 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             i8.putExtra("userId", userId);
             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i8);
+            finish();
             overridePendingTransition(0, 0);
-            PersonalDetailsAndIdProofActivity.this.finish();
 
         } else {
             //----------------------- Alert Dialog -------------------------------------------------
@@ -806,11 +821,10 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                             i8.putExtra("userId", userId);
                             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i8);
+                            finish();
                             overridePendingTransition(0, 0);
-                            PersonalDetailsAndIdProofActivity.this.finish();
                         }
                     });
-                    //------------------------------------------------------------------------------------------
                 }
             });
 
@@ -1818,6 +1832,28 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             });
         } else {
             ActivityCompat.requestPermissions(PersonalDetailsAndIdProofActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if (roleAPI.equals("Customer")) {
+            Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, CustomerDashboardActivity.class);
+            i8.putExtra("mobile", mobileAPI);
+            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i8);
+            finish();
+            overridePendingTransition(0, 0);
+
+        } else {
+            Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, DashboardActivity.class);
+            i8.putExtra("mobile2", mobileAPI);
+            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i8);
+            finish();
+            overridePendingTransition(0, 0);
         }
     }
 

@@ -609,15 +609,15 @@ public class OtpCodeActivity extends AppCompatActivity {
                             i8.putExtra("mobile", phone);
                             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i8);
-                            overridePendingTransition(0, 0);
                             finish();
+                            overridePendingTransition(0, 0);
                         }else{
                             Intent i8 = new Intent(OtpCodeActivity.this, DashboardActivity.class);
                             i8.putExtra("mobile2", phone);
                             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i8);
-                            overridePendingTransition(0, 0);
                             finish();
+                            overridePendingTransition(0, 0);
                         }
 
                     } else {
@@ -626,8 +626,8 @@ public class OtpCodeActivity extends AppCompatActivity {
                         i8.putExtra("mobile1", receivedMobile);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);
-                        overridePendingTransition(0, 0);
                         finish();
+                        overridePendingTransition(0, 0);
                     }
 //
                 } catch (JSONException e) {
@@ -705,25 +705,24 @@ public class OtpCodeActivity extends AppCompatActivity {
                             i8.putExtra("mobile", phone);
                             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i8);
-                            overridePendingTransition(0, 0);
                             finish();
+                            overridePendingTransition(0, 0);
                         }else{
                             Intent i8 = new Intent(OtpCodeActivity.this, DashboardActivity.class);
                             i8.putExtra("mobile2", phone);
                             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i8);
-                            overridePendingTransition(0, 0);
                             finish();
+                            overridePendingTransition(0, 0);
                         }
 
                     } else {
-//                                            Log.i("mobile no not equal", mobileNoAPI);
                         Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
                         i8.putExtra("mobile1", getMobileReceived);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);
-                        overridePendingTransition(0, 0);
                         finish();
+                        overridePendingTransition(0, 0);
                     }
 //
                 } catch (JSONException e) {
@@ -741,6 +740,5 @@ public class OtpCodeActivity extends AppCompatActivity {
         //------------------------------------------------------------------------------------------------
 
     }
-
 
 }

@@ -242,10 +242,12 @@ public class DashboardActivity extends AppCompatActivity {
 
     public void RearrangeItems() {
         getLocation();
-        loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadListToCompare);
-        loadListRecyclerView.setAdapter(loadListAdapter);
-        loadSubmittedAdapter = new LoadSubmittedAdapter(DashboardActivity.this, updatedLoadSubmittedList);
-        loadSubmittedRecyclerView.setAdapter(loadSubmittedAdapter);
+        Intent i8 = new Intent(DashboardActivity.this, DashboardActivity.class);
+        i8.putExtra("mobile2", phone);
+        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i8);
+        finish();
+        overridePendingTransition(0, 0);
     }
 
     private void getUserId(String userMobileNumber) {
@@ -275,6 +277,7 @@ public class DashboardActivity extends AppCompatActivity {
                         }
                     }
 
+
                     getUserDetails();
                     //---------------------------- Get Load Details -------------------------------------------
                     getLoadNotificationList();
@@ -293,8 +296,11 @@ public class DashboardActivity extends AppCompatActivity {
                     loadSubmittedRecyclerView.setAdapter(loadSubmittedAdapter);
                     loadSubmittedRecyclerView.scrollToPosition(loadSubmittedAdapter.getItemCount() - 1);
 
+                    loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadListToCompare);
+                    loadListRecyclerView.setAdapter(loadListAdapter);
+                    loadListRecyclerView.scrollToPosition(loadListAdapter.getItemCount() - 1);
+
                     //------------------------------------------------------------------------------------------
-                    RearrangeItems();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -378,11 +384,9 @@ public class DashboardActivity extends AppCompatActivity {
                 error.printStackTrace();
             }
         });
-
         mQueue.add(request);
 
     }
-
 
     public void onClickProfileAndRegister(View view) {
         switch (view.getId()) {
@@ -467,6 +471,7 @@ public class DashboardActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
+        overridePendingTransition(0, 0);
     }
 
     public void onClickDismiss(View view) {
@@ -711,8 +716,8 @@ public class DashboardActivity extends AppCompatActivity {
                 i8.putExtra("mobile2", phone);
                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i8);
-                overridePendingTransition(0, 0);
                 finish();
+                overridePendingTransition(0, 0);
             }
         });
 
@@ -764,8 +769,8 @@ public class DashboardActivity extends AppCompatActivity {
                             i8.putExtra("mobile2", phone);
                             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i8);
-                            overridePendingTransition(0, 0);
                             finish();
+                            overridePendingTransition(0, 0);
 
                             previewDialogBidNow.dismiss();
                         }
@@ -1504,6 +1509,7 @@ public class DashboardActivity extends AppCompatActivity {
         declaration.setVisibility(View.INVISIBLE);
 
         getBidDetailsByBidId(obj.getBidId());
+        spQuote.setTextColor(getResources().getColor(R.color.green));
 
         cancel.setEnabled(true);
         cancel.setBackgroundResource((R.drawable.button_active));
@@ -1515,8 +1521,8 @@ public class DashboardActivity extends AppCompatActivity {
                 i8.putExtra("mobile2", phone);
                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i8);
-                overridePendingTransition(0, 0);
                 finish();
+                overridePendingTransition(0, 0);
                 previewDialogBidNow.dismiss();
             }
         });
@@ -1565,8 +1571,8 @@ public class DashboardActivity extends AppCompatActivity {
                         i8.putExtra("mobile2", phone);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);
-                        overridePendingTransition(0, 0);
                         finish();
+                        overridePendingTransition(0, 0);
 
                         previewDialogBidNow.dismiss();
                     }
@@ -1764,8 +1770,8 @@ public class DashboardActivity extends AppCompatActivity {
                 i8.putExtra("mobile2", phone);
                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i8);
-                overridePendingTransition(0, 0);
                 finish();
+                overridePendingTransition(0, 0);
                 dialogViewConsignment.dismiss();
             }
         });
@@ -1812,8 +1818,8 @@ public class DashboardActivity extends AppCompatActivity {
                         i8.putExtra("mobile2", phone);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);
-                        overridePendingTransition(0, 0);
                         finish();
+                        overridePendingTransition(0, 0);
 
                         dialogViewConsignment.dismiss();
                     }

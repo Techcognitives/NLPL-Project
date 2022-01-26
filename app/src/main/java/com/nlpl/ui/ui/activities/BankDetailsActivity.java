@@ -490,8 +490,8 @@ public class BankDetailsActivity extends AppCompatActivity {
                 i8.putExtra("userId", userId);
                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i8);
+                finish();
                 overridePendingTransition(0, 0);
-                BankDetailsActivity.this.finish();
 
             } else {
                 saveBank(createBankAcc());
@@ -531,10 +531,10 @@ public class BankDetailsActivity extends AppCompatActivity {
                         intent.putExtra("userId", userId);
                         intent.putExtra("mobile", mobile);
                         startActivity(intent);
-                        BankDetailsActivity.this.finish();
+                        finish();
+                        overridePendingTransition(0, 0);
                     }
                 });
-                //------------------------------------------------------------------------------------------
             }
             reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
 
@@ -1148,6 +1148,28 @@ public class BankDetailsActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
             return file;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if (userRoleAPI.equals("Customer")) {
+            Intent i8 = new Intent(BankDetailsActivity.this, CustomerDashboardActivity.class);
+            i8.putExtra("mobile", mobile);
+            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i8);
+            finish();
+            overridePendingTransition(0, 0);
+
+        } else {
+            Intent i8 = new Intent(BankDetailsActivity.this, DashboardActivity.class);
+            i8.putExtra("mobile2", mobile);
+            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i8);
+            finish();
+            overridePendingTransition(0, 0);
         }
     }
 
