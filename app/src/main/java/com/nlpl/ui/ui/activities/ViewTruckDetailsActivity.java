@@ -81,6 +81,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
                 intent.putExtra("mobile2", phone);
                 startActivity(intent);
                 finish();
+                overridePendingTransition(0, 0);
             }
         });
         //---------------------------- Bottom Nav --------------------------------------------------
@@ -229,6 +230,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
                 intent.putExtra("mobile2", phone);
                 startActivity(intent);
                 finish();
+                overridePendingTransition(0, 0);
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
@@ -245,8 +247,8 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
         i8.putExtra("mobile2", phone);
         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i8);
-        overridePendingTransition(0, 0);
         finish();
+        overridePendingTransition(0, 0);
 
     }
 }

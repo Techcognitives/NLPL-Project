@@ -530,15 +530,15 @@ public class RegistrationActivity extends AppCompatActivity {
                         i8.putExtra("mobile", mobile);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);
-                        overridePendingTransition(0, 0);
                         finish();
+                        overridePendingTransition(0, 0);
                     } else {
                         Intent i8 = new Intent(RegistrationActivity.this, DashboardActivity.class);
                         i8.putExtra("mobile2", mobile);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);
-                        overridePendingTransition(0, 0);
                         finish();
+                        overridePendingTransition(0, 0);
                     }
                 }
             });

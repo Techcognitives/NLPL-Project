@@ -489,8 +489,8 @@ public class BankDetailsActivity extends AppCompatActivity {
                 i8.putExtra("userId", userId);
                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i8);
-                overridePendingTransition(0, 0);
                 finish();
+                overridePendingTransition(0, 0);
 
             } else {
                 saveBank(createBankAcc());
@@ -530,6 +530,7 @@ public class BankDetailsActivity extends AppCompatActivity {
                         intent.putExtra("mobile", mobile);
                         startActivity(intent);
                         finish();
+                        overridePendingTransition(0, 0);
                     }
                 });
             }
@@ -1157,16 +1158,16 @@ public class BankDetailsActivity extends AppCompatActivity {
             i8.putExtra("mobile", mobile);
             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i8);
-            overridePendingTransition(0, 0);
             finish();
+            overridePendingTransition(0, 0);
 
         } else {
             Intent i8 = new Intent(BankDetailsActivity.this, DashboardActivity.class);
             i8.putExtra("mobile2", mobile);
             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i8);
-            overridePendingTransition(0, 0);
             finish();
+            overridePendingTransition(0, 0);
         }
     }
 

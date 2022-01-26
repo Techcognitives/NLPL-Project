@@ -273,6 +273,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                     intent.putExtra("mobile", mobile);
                     startActivity(intent);
                     finish();
+                    overridePendingTransition(0, 0);
                 } else {
                     //----------------------- Alert Dialog -------------------------------------------------
                     Dialog alert = new Dialog(DriverDetailsActivity.this);
@@ -316,8 +317,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
                             i8.putExtra("userId", userId);
                             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i8);
-                            overridePendingTransition(0, 0);
                             finish();
+                            overridePendingTransition(0, 0);
                         }
                     });
                     //------------------------------------------------------------------------------------------
@@ -1198,9 +1199,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
                     i8.putExtra("mobile", mobile);
                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i8);
-                    overridePendingTransition(0, 0);
                     finish();
-
+                    overridePendingTransition(0, 0);
                 } else {
 
                     if (alreadyDriver) {
@@ -1246,6 +1246,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                             intent2.putExtra("mobile", mobile);
                             startActivity(intent2);
                             finish();
+                            overridePendingTransition(0, 0);
                         }
                     });
 
@@ -1264,8 +1265,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
                                 i8.putExtra("userId", userId);
                                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(i8);
-                                overridePendingTransition(0, 0);
                                 finish();
+                                overridePendingTransition(0, 0);
                             }
                         }
                     });
@@ -2198,8 +2199,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         i8.putExtra("mobile2", mobile);
         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i8);
-        overridePendingTransition(0, 0);
         finish();
-
+        overridePendingTransition(0, 0);
     }
 }

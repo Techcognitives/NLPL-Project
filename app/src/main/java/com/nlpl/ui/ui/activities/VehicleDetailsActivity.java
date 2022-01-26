@@ -888,8 +888,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 i8.putExtra("userId", userId);
                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i8);
-                overridePendingTransition(0, 0);
                 finish();
+                overridePendingTransition(0, 0);
 
             } else {
                 saveTruck(createTruck());
@@ -928,8 +928,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                         i8.putExtra("truckIdPass", truckIdPass);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);
-                        overridePendingTransition(0, 0);
                         finish();
+                        overridePendingTransition(0, 0);
                     }
                 });
 
@@ -950,8 +950,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                                 i8.putExtra("userId", userId);
                                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(i8);
-                                overridePendingTransition(0, 0);
                                 finish();
+                                overridePendingTransition(0, 0);
                             }
                         } else {
                             //----------------------- Alert Dialog -------------------------------------------------
@@ -988,8 +988,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                                     i8.putExtra("truckIdPass", truckIdPass);
                                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(i8);
-                                    overridePendingTransition(0, 0);
                                     finish();
+                                    overridePendingTransition(0, 0);
                                 }
                             });
 
@@ -1009,8 +1009,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                                         i8.putExtra("userId", userId);
                                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(i8);
-                                        overridePendingTransition(0, 0);
                                         finish();
+                                        overridePendingTransition(0, 0);
                                     }
                                 }
                             });
@@ -1708,8 +1708,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         i8.putExtra("mobile2", mobile);
         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i8);
-        overridePendingTransition(0, 0);
         finish();
+        overridePendingTransition(0, 0);
 
     }
 

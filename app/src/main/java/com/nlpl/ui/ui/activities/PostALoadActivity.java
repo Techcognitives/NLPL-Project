@@ -372,7 +372,8 @@ public class PostALoadActivity extends AppCompatActivity {
                             intent.putExtra("userId", userId);
                             intent.putExtra("mobile", phone);
                             startActivity(intent);
-                            PostALoadActivity.this.finish();
+                            finish();
+                            overridePendingTransition(0, 0);
                         }
                     });
                     //------------------------------------------------------------------------------------------
@@ -423,7 +424,8 @@ public class PostALoadActivity extends AppCompatActivity {
                             intent.putExtra("userId", userId);
                             intent.putExtra("mobile", phone);
                             startActivity(intent);
-                            PostALoadActivity.this.finish();
+                            finish();
+                            overridePendingTransition(0, 0);
                         }
                     });
                     //------------------------------------------------------------------------------------------
@@ -1689,7 +1691,7 @@ public class PostALoadActivity extends AppCompatActivity {
         i8.putExtra("mobile", phone);
         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i8);
-        overridePendingTransition(0, 0);
         finish();
+        overridePendingTransition(0, 0);
     }
 }
