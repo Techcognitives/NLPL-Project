@@ -564,10 +564,10 @@
                     app:layout_constraintBottom_toTopOf="@+id/dialog_accept_bid_submit_response_btn"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView74" />
+                    app:layout_constraintTop_toBottomOf="@+id/notes_text_heading_view_consignment_customer" />
 
                 <TextView
-                    android:id="@+id/textView74"
+                    android:id="@+id/notes_text_heading_view_consignment_customer"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -629,7 +629,7 @@
                     android:paddingBottom="7dp"
                     android:textColor="@color/green"
                     android:textSize="12dp"
-                    app:layout_constraintBottom_toTopOf="@+id/textView74"
+                    app:layout_constraintBottom_toTopOf="@+id/notes_text_heading_view_consignment_customer"
                     app:layout_constraintEnd_toStartOf="@+id/textView65"
                     app:layout_constraintStart_toEndOf="@+id/textView63"
                     app:layout_constraintTop_toTopOf="parent" />
