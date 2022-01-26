@@ -220,6 +220,7 @@
                     android:singleLine="true"
                     android:text="@string/addressForPickUpLocation"
                     android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView58"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView58"
                     app:layout_constraintTop_toTopOf="@+id/textView58" />
@@ -321,7 +322,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="3dp"
                     android:background="@drawable/button_active"
                     android:backgroundTint="@color/grey"
                     android:drawableStart="@drawable/end_small"
@@ -485,6 +486,7 @@
                     android:paddingEnd="2dp"
                     android:paddingBottom="2dp"
                     android:text="Customer Name:"
+                    android:visibility="gone"
                     android:textSize="13sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/dialog_bid_now_customerName"
@@ -500,6 +502,7 @@
                     android:layout_marginEnd="5dp"
                     android:text="Customer Name"
                     android:textSize="12sp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/dialog_bid_now_customer_phone_heading"
                     app:layout_constraintEnd_toStartOf="@+id/dialog_bid_now_customer_phone_heading"
                     app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_customerName_heading"
@@ -519,6 +522,7 @@
                     android:paddingEnd="2dp"
                     android:paddingBottom="2dp"
                     android:text="Phone:"
+                    android:visibility="gone"
                     android:textSize="13sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -536,6 +540,7 @@
                     android:textColor="@color/button_blue"
                     android:textSize="12sp"
                     android:textStyle="bold"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/dialog_bid_now_customer_phone_heading"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_customer_phone_heading"
@@ -690,7 +695,7 @@
                     app:layout_constraintTop_toTopOf="@+id/dialog_bid_now_truck_model_textview" />
 
                 <TextView
-                    android:id="@+id/textView74"
+                    android:id="@+id/notes_text_heading_view_consignment_customer"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -966,7 +971,7 @@
                     android:textSize="12sp"
                     app:layout_constraintBottom_toTopOf="@+id/dialog_bid_now_notes_editText"
                     app:layout_constraintEnd_toStartOf="@+id/textView76"
-                    app:layout_constraintStart_toEndOf="@+id/textView74"
+                    app:layout_constraintStart_toEndOf="@+id/notes_text_heading_view_consignment_customer"
                     app:layout_constraintTop_toBottomOf="@+id/dialog_bid_now_truck_model_textview" />
 
                 <CheckBox

@@ -1060,6 +1060,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         TextView driverName = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_driver_name);
         TextView driverNumber = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_driver_number);
 
+        spNumber.setVisibility(View.VISIBLE);
         driverName.setVisibility(View.VISIBLE);
         driverNumber.setVisibility(View.VISIBLE);
         driverNameHeading.setVisibility(View.VISIBLE);
@@ -1182,12 +1183,15 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                     cancleBtn = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_cancel_btn);
                     timeLeftTextview = viewConsignmentCustomer.findViewById(R.id.accept_bid_time_left_textview);
                     timeLeft00 = viewConsignmentCustomer.findViewById(R.id.accept_bid_time_left_00_textview);
+                    TextView noteHeading = viewConsignmentCustomer.findViewById(R.id.notes_text_heading_view_consignment_customer);
 
                     timeLeftTextview.setText("CONSIGNMENT");
                     timeLeft00.setVisibility(View.GONE);
                     timeLeftTextview.setTextColor(getResources().getColorStateList(R.color.black));
                     timeLeftTextview.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
 
+                    noteHeading.setVisibility(View.GONE);
+                    notesCustomer.setVisibility(View.GONE);
                     negotiable_yes.setChecked(false);
                     negotiable_yes.setEnabled(false);
                     negotiable_no.setChecked(true);
