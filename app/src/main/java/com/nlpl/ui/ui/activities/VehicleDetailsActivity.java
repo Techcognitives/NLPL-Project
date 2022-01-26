@@ -1,7 +1,6 @@
 package com.nlpl.ui.ui.activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -13,6 +12,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -185,7 +185,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         arrayTruckFt = new ArrayList<>();
         arrayTruckFtForCompare = new ArrayList<>();
         arrayCapacityForCompare = new ArrayList<>();
-        arrayToDisplayCapacity= new ArrayList<>();
+        arrayToDisplayCapacity = new ArrayList<>();
         updatedArrayTruckFt = new ArrayList<>();
 
         arrayVehicleType.add("Tata");
@@ -619,16 +619,40 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     private String rcImagePicker() {
         //Detects request code for PAN
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(VehicleDetailsActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
 
-            AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
-            my_alert.setTitle("RC Uploaded Successfully");
-            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(true);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText("RC Uploaded Successfully");
+            alertMessage.setText("");
+            alertPositiveButton.setVisibility(View.GONE);
+            alertNegativeButton.setText("OK");
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
+                public void onClick(View view) {
+                    alert.dismiss();
+
                 }
             });
-            my_alert.show();
+            //------------------------------------------------------------------------------------------
 
             textRC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadRC.setVisibility(View.INVISIBLE);
@@ -656,17 +680,41 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             pathForRC = picturePath3;
             return picturePath3;
 
-//        } else  if (requestCode == CAMERA_PIC_REQUEST1) {
+//        } else if (requestCode == CAMERA_PIC_REQUEST1) {
+//            //----------------------- Alert Dialog -------------------------------------------------
+//            Dialog alert = new Dialog(VehicleDetailsActivity.this);
+//            alert.setContentView(R.layout.dialog_alert);
+//            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+//            lp.copyFrom(alert.getWindow().getAttributes());
+//            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+//            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+//            lp.gravity = Gravity.CENTER;
 //
-//            AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
-//            my_alert.setTitle("RC Uploaded Successfully");
-//            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//            alert.show();
+//            alert.getWindow().setAttributes(lp);
+//            alert.setCancelable(true);
+//
+//            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+//            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+//            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+//            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+//
+//            alertTitle.setText("RC Uploaded Successfully");
+//            alertMessage.setText("");
+//            alertPositiveButton.setVisibility(View.GONE);
+//            alertNegativeButton.setText("OK");
+//            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+//            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+//
+//            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
 //                @Override
-//                public void onClick(DialogInterface dialogInterface, int i) {
-//                    dialogInterface.dismiss();
+//                public void onClick(View view) {
+//                    alert.dismiss();
+//
 //                }
 //            });
-//            my_alert.show();
+//            //------------------------------------------------------------------------------------------
 //
 //            textRC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
 //            uploadRC.setVisibility(View.INVISIBLE);
@@ -674,15 +722,15 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 //            previewRcBook.setVisibility(View.VISIBLE);
 //            previewInsurance.setVisibility(View.VISIBLE);
 //
-//            isRcUploaded=true;
+//            isRcUploaded = true;
 //            String vehicleNum = vehicleNumberEdit.getText().toString();
-//            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected && isModelSelected  ){
+//            if (!vehicleNum.isEmpty() && isRcUploaded && isInsurance && truckSelected && isModelSelected) {
 //                okVehicleDetails.setEnabled(true);
 //                okVehicleDetails.setBackgroundResource(R.drawable.button_active);
 //            }
 //
 //            Bitmap image = (Bitmap) data.getExtras().get("data");
-//            String path = getRealPathFromURI(getImageUri(this,image));
+//            String path = getRealPathFromURI(getImageUri(this, image));
 //            imgRC.setImageBitmap(BitmapFactory.decodeFile(path));
 //            pathForRC = path;
 //            return path;
@@ -694,15 +742,40 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     private String insuranceImagePicker() {
         //Detects request code for PAN
         if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
-            AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
-            my_alert.setTitle("Insurance Uploaded Successfully");
-            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(VehicleDetailsActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(true);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText("Insurance Uploaded Successfully");
+            alertMessage.setText("");
+            alertPositiveButton.setVisibility(View.GONE);
+            alertNegativeButton.setText("OK");
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
+                public void onClick(View view) {
+                    alert.dismiss();
+
                 }
             });
-            my_alert.show();
+            //------------------------------------------------------------------------------------------
             textInsurance.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadInsurance.setVisibility(View.INVISIBLE);
             editInsurance.setVisibility(View.VISIBLE);
@@ -726,29 +799,55 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             pathForInsurance = picturePath4;
             return picturePath4;
 
-//        } else  if (requestCode == CAMERA_PIC_REQUEST2) {
-//            AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
-//            my_alert.setTitle("Insurance Uploaded Successfully");
-//            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//        } else if (requestCode == CAMERA_PIC_REQUEST2) {
+//            //----------------------- Alert Dialog -------------------------------------------------
+//            Dialog alert = new Dialog(VehicleDetailsActivity.this);
+//            alert.setContentView(R.layout.dialog_alert);
+//            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+//            lp.copyFrom(alert.getWindow().getAttributes());
+//            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+//            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+//            lp.gravity = Gravity.CENTER;
+//
+//            alert.show();
+//            alert.getWindow().setAttributes(lp);
+//            alert.setCancelable(true);
+//
+//            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+//            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+//            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+//            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+//
+//            alertTitle.setText("Insurance Uploaded Successfully");
+//            alertMessage.setText("");
+//            alertPositiveButton.setVisibility(View.GONE);
+//            alertNegativeButton.setText("OK");
+//            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+//            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+//
+//            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
 //                @Override
-//                public void onClick(DialogInterface dialogInterface, int i) {
-//                    dialogInterface.dismiss();
+//                public void onClick(View view) {
+//                    alert.dismiss();
+//
 //                }
 //            });
-//            my_alert.show();
+//            //------------------------------------------------------------------------------------------
+//
 //            textInsurance.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
 //            uploadInsurance.setVisibility(View.INVISIBLE);
 //            editInsurance.setVisibility(View.VISIBLE);
 //
-//            isInsurance=true;
+//            isInsurance = true;
 //            String vehicleNum = vehicleNumberEdit.getText().toString();
-//            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected && isModelSelected  ){
+//            if (!vehicleNum.isEmpty() && isRcUploaded && isInsurance && truckSelected && isModelSelected) {
 //                okVehicleDetails.setEnabled(true);
 //                okVehicleDetails.setBackgroundResource(R.drawable.button_active);
 //            }
 //
 //            Bitmap image = (Bitmap) data.getExtras().get("data");
-//            String path = getRealPathFromURI(getImageUri(this,image));
+//            String path = getRealPathFromURI(getImageUri(this, image));
 //            imgI.setImageBitmap(BitmapFactory.decodeFile(path));
 //            pathForInsurance = path;
 //            return path;
@@ -794,35 +893,57 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             } else {
                 saveTruck(createTruck());
                 updateUserIsTruckAdded();
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(VehicleDetailsActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
 
-                AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this).setCancelable(false);
-                my_alert.setTitle("Vehicle Details added successfully");
-                my_alert.setNegativeButton("+ Add Truck Driver", new DialogInterface.OnClickListener() {
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(false);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Vehicle Details added successfully");
+                alertMessage.setText("");
+                alertPositiveButton.setText("+ Add Truck Driver");
+                alertPositiveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                            dialogInterface.dismiss();
-                            Intent i8 = new Intent(VehicleDetailsActivity.this, DriverDetailsActivity.class);
-                            i8.putExtra("userId", userId);
-                            i8.putExtra("isEdit", false);
-                            i8.putExtra("fromBidNow",false);
-                            i8.putExtra("mobile", mobile);
-                            i8.putExtra("truckIdPass", truckIdPass);
-                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(i8);
-                            overridePendingTransition(0, 0);
-                            VehicleDetailsActivity.this.finish();
-
+                    public void onClick(View view) {
+                        alert.dismiss();
+                        Intent i8 = new Intent(VehicleDetailsActivity.this, DriverDetailsActivity.class);
+                        i8.putExtra("userId", userId);
+                        i8.putExtra("isEdit", false);
+                        i8.putExtra("fromBidNow", false);
+                        i8.putExtra("mobile", mobile);
+                        i8.putExtra("truckIdPass", truckIdPass);
+                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i8);
+                        overridePendingTransition(0, 0);
+                        VehicleDetailsActivity.this.finish();
                     }
                 });
-                my_alert.setPositiveButton("Skip", new DialogInterface.OnClickListener() {
+
+                alertNegativeButton.setText("Skip");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
+                    public void onClick(View view) {
+                        alert.dismiss();
                         if (isDriverDetailsDoneAPI.equals("1")) {
-                            if (fromBidNow){
+                            if (fromBidNow) {
                                 VehicleDetailsActivity.this.finish();
-                            }else {
+                            } else {
                                 Intent i8 = new Intent(VehicleDetailsActivity.this, ViewTruckDetailsActivity.class);
                                 i8.putExtra("mobile", mobile);
                                 i8.putExtra("userId", userId);
@@ -832,15 +953,56 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                                 VehicleDetailsActivity.this.finish();
                             }
                         } else {
-                            AlertDialog.Builder my_alert = new AlertDialog.Builder(VehicleDetailsActivity.this);
-                            my_alert.setTitle("You cannot bid unless you have a Driver");
-                            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            //----------------------- Alert Dialog -------------------------------------------------
+                            Dialog alert = new Dialog(VehicleDetailsActivity.this);
+                            alert.setContentView(R.layout.dialog_alert);
+                            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                            lp.copyFrom(alert.getWindow().getAttributes());
+                            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                            lp.gravity = Gravity.CENTER;
+
+                            alert.show();
+                            alert.getWindow().setAttributes(lp);
+                            alert.setCancelable(false);
+
+                            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                            alertTitle.setText("You cannot bid unless you have a Driver");
+                            alertMessage.setText("");
+                            alertPositiveButton.setText("+ Add Truck Driver");
+                            alertPositiveButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    if (fromBidNow){
+                                public void onClick(View view) {
+                                    alert.dismiss();
+                                    Intent i8 = new Intent(VehicleDetailsActivity.this, DriverDetailsActivity.class);
+                                    i8.putExtra("userId", userId);
+                                    i8.putExtra("isEdit", false);
+                                    i8.putExtra("fromBidNow", false);
+                                    i8.putExtra("mobile", mobile);
+                                    i8.putExtra("truckIdPass", truckIdPass);
+                                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(i8);
+                                    overridePendingTransition(0, 0);
+                                    VehicleDetailsActivity.this.finish();
+                                }
+                            });
+
+                            alertNegativeButton.setText("OK");
+                            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    alert.dismiss();
+                                    if (fromBidNow) {
                                         VehicleDetailsActivity.this.finish();
                                     } else {
-                                        dialogInterface.dismiss();
                                         Intent i8 = new Intent(VehicleDetailsActivity.this, ViewTruckDetailsActivity.class);
                                         i8.putExtra("mobile", mobile);
                                         i8.putExtra("userId", userId);
@@ -851,29 +1013,12 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                                     }
                                 }
                             });
-                            my_alert.setNegativeButton("+ Add Truck Driver", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                        dialogInterface.dismiss();
-                                        Intent i8 = new Intent(VehicleDetailsActivity.this, DriverDetailsActivity.class);
-                                        i8.putExtra("userId", userId);
-                                        i8.putExtra("isEdit", false);
-                                        i8.putExtra("fromBidNow", false);
-                                        i8.putExtra("mobile", mobile);
-                                        i8.putExtra("truckIdPass", truckIdPass);
-                                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(i8);
-                                        overridePendingTransition(0, 0);
-                                        VehicleDetailsActivity.this.finish();
-                                }
-                            });
-                            my_alert.show();
+                            //------------------------------------------------------------------------------------------
                         }
                     }
                 });
-                my_alert.show();
+                //------------------------------------------------------------------------------------------
             }
-
         } else {
 //            okVehicleDetails.setEnabled(false);
 //            okVehicleDetails.setBackground(getResources().getDrawable(R.drawable.button_de_active));
@@ -1024,7 +1169,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         }
     };
 
-    private void getVehicleCapacityByFeet(String selectedFeet){
+    private void getVehicleCapacityByFeet(String selectedFeet) {
         arrayToDisplayCapacity.clear();
         arrayTruckFtForCompare.clear();
         String url = getString(R.string.baseURL) + "/trucktype/getAllTruckType";
@@ -1047,12 +1192,12 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
                     }
 
-                    for (int i=0; i<arrayTruckFtForCompare.size();i++){
-                        if (selectedFeet.equals(arrayTruckFtForCompare.get(i))){
+                    for (int i = 0; i < arrayTruckFtForCompare.size(); i++) {
+                        if (selectedFeet.equals(arrayTruckFtForCompare.get(i))) {
                             arrayToDisplayCapacity.add(arrayCapacityForCompare.get(i));
                         }
                     }
-                        selectCapacity.setText(arrayToDisplayCapacity.get(0));
+                    selectCapacity.setText(arrayToDisplayCapacity.get(0));
 
 
                 } catch (JSONException e) {
@@ -1428,7 +1573,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 break;
 
             case R.id.vehicle_details_select_capacity:
-                if (arrayToDisplayCapacity.size()==1){
+                if (arrayToDisplayCapacity.size() == 1) {
 
                 } else {
                     selectCapacityDialog = new Dialog(VehicleDetailsActivity.this);

@@ -1,7 +1,6 @@
 package com.nlpl.ui.ui.activities;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -10,6 +9,7 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -338,12 +338,36 @@ public class PostALoadActivity extends AppCompatActivity {
                     Ok_PostLoad.setEnabled(true);
                     Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
                     updateLoadPost(loadId);
-                    AlertDialog.Builder my_alert = new AlertDialog.Builder(PostALoadActivity.this).setCancelable(false);
-                    my_alert.setTitle("Load Updated Successfully");
-                    my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    //----------------------- Alert Dialog -------------------------------------------------
+                    Dialog alert = new Dialog(PostALoadActivity.this);
+                    alert.setContentView(R.layout.dialog_alert);
+                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(alert.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.gravity = Gravity.CENTER;
+
+                    alert.show();
+                    alert.getWindow().setAttributes(lp);
+                    alert.setCancelable(false);
+
+                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                    alertTitle.setText("Load Updated Successfully");
+                    alertMessage.setText("");
+                    alertPositiveButton.setVisibility(View.GONE);
+                    alertNegativeButton.setText("OK");
+                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
+                        public void onClick(View view) {
+                            alert.dismiss();
                             Intent intent = new Intent(PostALoadActivity.this, CustomerDashboardActivity.class);
                             intent.putExtra("userId", userId);
                             intent.putExtra("mobile", phone);
@@ -351,7 +375,7 @@ public class PostALoadActivity extends AppCompatActivity {
                             finish();
                         }
                     });
-                    my_alert.show();
+                    //------------------------------------------------------------------------------------------
                 } else {
                     if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
                             && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
@@ -365,12 +389,36 @@ public class PostALoadActivity extends AppCompatActivity {
                         Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
                     }
                     saveLoad(createLoadRequest());
-                    AlertDialog.Builder my_alert = new AlertDialog.Builder(PostALoadActivity.this).setCancelable(false);
-                    my_alert.setTitle("Load Posted Successfully");
-                    my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    //----------------------- Alert Dialog -------------------------------------------------
+                    Dialog alert = new Dialog(PostALoadActivity.this);
+                    alert.setContentView(R.layout.dialog_alert);
+                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(alert.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.gravity = Gravity.CENTER;
+
+                    alert.show();
+                    alert.getWindow().setAttributes(lp);
+                    alert.setCancelable(false);
+
+                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                    alertTitle.setText("Load Posted Successfully");
+                    alertMessage.setText("");
+                    alertPositiveButton.setVisibility(View.GONE);
+                    alertNegativeButton.setText("OK");
+                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
+                        public void onClick(View view) {
+                            alert.dismiss();
                             Intent intent = new Intent(PostALoadActivity.this, CustomerDashboardActivity.class);
                             intent.putExtra("userId", userId);
                             intent.putExtra("mobile", phone);
@@ -378,7 +426,7 @@ public class PostALoadActivity extends AppCompatActivity {
                             finish();
                         }
                     });
-                    my_alert.show();
+                    //------------------------------------------------------------------------------------------
                 }
             }
         });

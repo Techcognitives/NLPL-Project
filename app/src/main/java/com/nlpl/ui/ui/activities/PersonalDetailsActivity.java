@@ -1,7 +1,6 @@
 package com.nlpl.ui.ui.activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -13,6 +12,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -65,10 +65,10 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     View action_bar;
     TextView actionBarTitle;
     ImageView actionBarBackButton;
-    Dialog  chooseDialog;
+    Dialog chooseDialog;
 
     TextView panCardText, editPAN, editFront, frontText;
-    Button uploadPAN, uploadF,  okPersonalDetails;
+    Button uploadPAN, uploadF, okPersonalDetails;
     ImageView imgPAN, imgF, previewPan, previewAadhar;
     private int GET_FROM_GALLERY = 0;
     private int GET_FROM_GALLERY1 = 1;
@@ -97,7 +97,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         }
         mQueue = Volley.newRequestQueue(PersonalDetailsActivity.this);
 
-        if (isPanUploaded && isFrontUploaded ) {
+        if (isPanUploaded && isFrontUploaded) {
             okPersonalDetails.setBackgroundResource((R.drawable.button_active));
         }
 
@@ -189,8 +189,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 .build();
 
         userService = retrofit.create(UserService.class);
-            uploadF.setVisibility(View.VISIBLE);
-            editFront.setVisibility(View.INVISIBLE);
+        uploadF.setVisibility(View.VISIBLE);
+        editFront.setVisibility(View.INVISIBLE);
 
         uploadPAN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -375,17 +375,39 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
         //Detects request code for PAN
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(PersonalDetailsActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
 
-            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
-            my_alert.setTitle("PAN Card Uploaded Successfully");
-            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(true);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText("PAN Card Uploaded Successfully");
+            alertMessage.setText("");
+            alertPositiveButton.setVisibility(View.GONE);
+            alertNegativeButton.setText("OK");
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
+                public void onClick(View view) {
+                    alert.dismiss();
                 }
             });
-            my_alert.show();
-
+            //------------------------------------------------------------------------------------------
             panCardText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadPAN.setVisibility(View.INVISIBLE);
             editPAN.setVisibility(View.VISIBLE);
@@ -393,13 +415,13 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             previewAadhar.setVisibility(View.VISIBLE);
             isPanUploaded = true;
 
-            if (isPanUploaded && isFrontUploaded ) {
+            if (isPanUploaded && isFrontUploaded) {
                 okPersonalDetails.setBackgroundResource(R.drawable.button_active);
             }
 
             Uri selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-            Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
             cursor.moveToFirst();
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
@@ -412,29 +434,52 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             imgPAN.setImageURI(selectedImage);
 
         } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
+//----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(PersonalDetailsActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
 
-            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
-            my_alert.setTitle("Aadhar Card Uploaded Successfully");
-            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(true);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText("Aadhar Card Uploaded Successfully");
+            alertMessage.setText("");
+            alertPositiveButton.setVisibility(View.GONE);
+            alertNegativeButton.setText("OK");
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
+                public void onClick(View view) {
+                    alert.dismiss();
+
                 }
             });
-            my_alert.show();
-
+            //------------------------------------------------------------------------------------------
             frontText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadF.setVisibility(View.INVISIBLE);
             editFront.setVisibility(View.VISIBLE);
             isFrontUploaded = true;
 
-            if (isPanUploaded && isFrontUploaded ) {
+            if (isPanUploaded && isFrontUploaded) {
                 okPersonalDetails.setBackgroundResource(R.drawable.button_active);
             }
 
             Uri selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-            Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
             cursor.moveToFirst();
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
@@ -447,15 +492,40 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             imgF.setImageURI(selectedImage);
 
 //        } else  if (requestCode == CAMERA_PIC_REQUEST) {
-//            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
-//            my_alert.setTitle("PAN Card Uploaded Successfully");
-//            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//            //----------------------- Alert Dialog -------------------------------------------------
+//            Dialog alert = new Dialog(PersonalDetailsActivity.this);
+//            alert.setContentView(R.layout.dialog_alert);
+//            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+//            lp.copyFrom(alert.getWindow().getAttributes());
+//            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+//            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+//            lp.gravity = Gravity.CENTER;
+//
+//            alert.show();
+//            alert.getWindow().setAttributes(lp);
+//            alert.setCancelable(true);
+//
+//            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+//            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+//            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+//            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+//
+//            alertTitle.setText("PAN Card Uploaded Successfully");
+//            alertMessage.setText("");
+//            alertPositiveButton.setVisibility(View.GONE);
+//            alertNegativeButton.setText("OK");
+//            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+//            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+//
+//            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
 //                @Override
-//                public void onClick(DialogInterface dialogInterface, int i) {
-//                    dialogInterface.dismiss();
+//                public void onClick(View view) {
+//                    alert.dismiss();
+//
 //                }
 //            });
-//            my_alert.show();
+//            //------------------------------------------------------------------------------------------
 //
 //            panCardText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
 //            uploadPAN.setVisibility(View.INVISIBLE);
@@ -470,17 +540,42 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 //            String path = getRealPathFromURI(getImageUri(this,image));
 //            imgPAN.setImageBitmap(BitmapFactory.decodeFile(path));
 //            uploadImage(path);
-
+//
 //        } else  if (requestCode == CAMERA_PIC_REQUEST1) {
-//            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this);
-//            my_alert.setTitle("Aadhar Card Uploaded Successfully");
-//            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//            //----------------------- Alert Dialog -------------------------------------------------
+//            Dialog alert = new Dialog(PersonalDetailsActivity.this);
+//            alert.setContentView(R.layout.dialog_alert);
+//            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+//            lp.copyFrom(alert.getWindow().getAttributes());
+//            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+//            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+//            lp.gravity = Gravity.CENTER;
+//
+//            alert.show();
+//            alert.getWindow().setAttributes(lp);
+//            alert.setCancelable(true);
+//
+//            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+//            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+//            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+//            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+//
+//            alertTitle.setText("Aadhar Card Uploaded Successfully");
+//            alertMessage.setText("");
+//            alertPositiveButton.setVisibility(View.GONE);
+//            alertNegativeButton.setText("OK");
+//            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+//            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+//
+//            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
 //                @Override
-//                public void onClick(DialogInterface dialogInterface, int i) {
-//                    dialogInterface.dismiss();
+//                public void onClick(View view) {
+//                    alert.dismiss();
+//
 //                }
 //            });
-//            my_alert.show();
+//            //------------------------------------------------------------------------------------------
 //
 //            frontText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
 //            uploadF.setVisibility(View.INVISIBLE);
@@ -500,24 +595,46 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     //-------------------------------------------------------------------------------------------------------------------
 
     public void onClickOKPersonal(View view) {
-        if (isPanUploaded && isFrontUploaded ) {
+        if (isPanUploaded && isFrontUploaded) {
             updateUserIsPersonalDetailsAdded();
-            AlertDialog.Builder my_alert = new AlertDialog.Builder(PersonalDetailsActivity.this).setCancelable(false);
-            my_alert.setTitle("Personal Details added successfully");
-            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(PersonalDetailsActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
 
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(false);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText("Personal Details added successfully");
+            alertMessage.setText("");
+            alertPositiveButton.setVisibility(View.GONE);
+            alertNegativeButton.setText("OK");
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.dismiss();
                     Intent intent = new Intent(PersonalDetailsActivity.this, ViewPersonalDetailsActivity.class);
                     intent.putExtra("userId", userId);
                     intent.putExtra("mobile", mobile);
                     startActivity(intent);
                     PersonalDetailsActivity.this.finish();
-
                 }
             });
-            my_alert.show();
+            //------------------------------------------------------------------------------------------
         }
     }
 
@@ -532,17 +649,17 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
     public void saveImage(ImageRequest imageRequest) {
         Call<ImageResponse> imageResponseCall = ApiClient.getImageService().saveImage(imageRequest);
-       imageResponseCall.enqueue(new Callback<ImageResponse>() {
-           @Override
-           public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
+        imageResponseCall.enqueue(new Callback<ImageResponse>() {
+            @Override
+            public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
 
-           }
+            }
 
-           @Override
-           public void onFailure(Call<ImageResponse> call, Throwable t) {
+            @Override
+            public void onFailure(Call<ImageResponse> call, Throwable t) {
 
-           }
-       });
+            }
+        });
     }
 
     @NonNull
@@ -567,19 +684,19 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
         MultipartBody.Part body = prepareFilePart("file", Uri.fromFile(file));
 
-        Call<UploadImageResponse> call = ApiClient.getImageUploadService().uploadImage(userId,img_type,body);
+        Call<UploadImageResponse> call = ApiClient.getImageUploadService().uploadImage(userId, img_type, body);
         call.enqueue(new Callback<UploadImageResponse>() {
-           @Override
-           public void onResponse(Call<UploadImageResponse> call, Response<UploadImageResponse> response) {
+            @Override
+            public void onResponse(Call<UploadImageResponse> call, Response<UploadImageResponse> response) {
                 Log.i("successful:", "success");
-           }
+            }
 
-           @Override
-           public void onFailure(Call<UploadImageResponse> call, Throwable t) {
-               t.printStackTrace();
-                Log.i("failed:","failed");
-           }
-       });
+            @Override
+            public void onFailure(Call<UploadImageResponse> call, Throwable t) {
+                t.printStackTrace();
+                Log.i("failed:", "failed");
+            }
+        });
     }
 
     //-------------------------------- Update User is Personal Details -----------------------------
@@ -605,6 +722,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         });
 //--------------------------------------------------------------------------------------------------
     }
+
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);

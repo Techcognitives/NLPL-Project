@@ -1,15 +1,18 @@
 package com.nlpl.ui.ui.activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.icu.text.DecimalFormat;
 import android.icu.text.NumberFormat;
 import android.os.Build;
@@ -18,6 +21,7 @@ import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -153,24 +157,45 @@ public class OtpCodeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 otp = otp1.getText().toString() + otp2.getText().toString() + otp3.getText().toString() + otp4.getText().toString() + otp5.getText().toString() + otp6.getText().toString();
 
-                AlertDialog.Builder my_alert = new AlertDialog.Builder(OtpCodeActivity.this).setCancelable(false);
-                my_alert.setTitle("OTP validated successfully");
-                my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(OtpCodeActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(false);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("OTP validated successfully");
+                alertMessage.setText("");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    public void onClick(View view) {
+                        alert.dismiss();
                         if (isEditPhone) {
                             updateUserPhoneNumber(userIdBundle);
                             OtpCodeActivity.this.finish();
                         } else {
                             checkPhoneInAPI(mobileNoFirebase);
                         }
-
-                        dialogInterface.dismiss();
-
                     }
                 });
-                my_alert.show();
-                my_alert.setCancelable(false);
+                //------------------------------------------------------------------------------------------
 
 //                if (otp1.getText().toString().isEmpty() || otp2.getText().toString().isEmpty() || otp3.getText().toString().isEmpty() || otp4.getText().toString().isEmpty() || otp5.getText().toString().isEmpty() || otp6.getText().toString().isEmpty()) {
 //                    Toast.makeText(getApplicationContext(), "Field is blank", Toast.LENGTH_LONG).show();
@@ -380,34 +405,80 @@ public class OtpCodeActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    AlertDialog.Builder my_alert = new AlertDialog.Builder(OtpCodeActivity.this).setCancelable(false);
-                    my_alert.setTitle("OTP validated successfully");
-                    my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    //----------------------- Alert Dialog -------------------------------------------------
+                    Dialog alert = new Dialog(OtpCodeActivity.this);
+                    alert.setContentView(R.layout.dialog_alert);
+                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(alert.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.gravity = Gravity.CENTER;
+
+                    alert.show();
+                    alert.getWindow().setAttributes(lp);
+                    alert.setCancelable(false);
+
+                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                    alertTitle.setText("OTP validated successfully");
+                    alertMessage.setText("");
+                    alertPositiveButton.setVisibility(View.GONE);
+                    alertNegativeButton.setText("OK");
+                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
+                        public void onClick(View view) {
+                            alert.dismiss();
                             if (isEditPhone) {
                                 updateUserPhoneNumber(mobileNoFirebase);
                                 OtpCodeActivity.this.finish();
                             } else {
                                 checkMobileNumberWithOTP(mobileNoFirebase);
                             }
-                            dialogInterface.dismiss();
+                        }
+                    });
+                    //------------------------------------------------------------------------------------------
+                } else {
+                    //----------------------- Alert Dialog -------------------------------------------------
+                    Dialog alert = new Dialog(OtpCodeActivity.this);
+                    alert.setContentView(R.layout.dialog_alert);
+                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(alert.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.gravity = Gravity.CENTER;
+
+                    alert.show();
+                    alert.getWindow().setAttributes(lp);
+                    alert.setCancelable(true);
+
+                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                    alertTitle.setText("Invalid OTP");
+                    alertMessage.setText("Please enter a 6 digit OTP sent to your mobile number.");
+                    alertPositiveButton.setVisibility(View.GONE);
+                    alertNegativeButton.setText("OK");
+                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alert.dismiss();
 
                         }
                     });
-                    my_alert.show();
-                } else {
-                    AlertDialog.Builder my_alert = new AlertDialog.Builder(OtpCodeActivity.this);
-                    my_alert.setTitle("Invalid OTP");
-                    my_alert.setMessage("Please enter a 6 digit OTP sent to your mobile number.");
-                    my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    });
-                    my_alert.show();
-                    my_alert.setCancelable(false);
+                    //------------------------------------------------------------------------------------------
                 }
             }
         });

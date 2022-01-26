@@ -71,7 +71,6 @@ public class FindLoadsActivity extends AppCompatActivity {
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
-
                 break;
         }
     }

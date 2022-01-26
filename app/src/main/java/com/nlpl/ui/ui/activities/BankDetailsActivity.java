@@ -534,7 +534,6 @@ public class BankDetailsActivity extends AppCompatActivity {
                 });
                 //------------------------------------------------------------------------------------------
             }
-
             reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
 
         } else {

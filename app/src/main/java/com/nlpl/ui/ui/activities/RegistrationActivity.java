@@ -1,7 +1,6 @@
 package com.nlpl.ui.ui.activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -10,6 +9,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
@@ -496,13 +496,36 @@ public class RegistrationActivity extends AppCompatActivity {
             okButton.setEnabled(true);
             okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
             saveUser(createUser());
-            AlertDialog.Builder my_alert = new AlertDialog.Builder(RegistrationActivity.this).setCancelable(false);
-            my_alert.setTitle("Registration Successful");
-            my_alert.setMessage("Welcome to " + getString(R.string.app_name) + "\n\nPlease update your profile and explore the platform benefits.");
-            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(RegistrationActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(false);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText("Registration Successful");
+            alertMessage.setText("Welcome to " + getString(R.string.app_name) + "\n\nPlease update your profile and explore the platform benefits.");
+            alertPositiveButton.setVisibility(View.GONE);
+            alertNegativeButton.setText("OK");
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
+                public void onClick(View view) {
+                    alert.dismiss();
                     if (role.equals("Customer")) {
                         Intent i8 = new Intent(RegistrationActivity.this, CustomerDashboardActivity.class);
                         i8.putExtra("mobile", mobile);
@@ -520,7 +543,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     }
                 }
             });
-            my_alert.show();
+            //------------------------------------------------------------------------------------------
 
         }
 //            RegistrationActivity.this.finish();

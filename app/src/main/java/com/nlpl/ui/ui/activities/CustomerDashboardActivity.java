@@ -1,6 +1,5 @@
 package com.nlpl.ui.ui.activities;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,6 +9,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
@@ -581,21 +581,45 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                 updateBidStatusAsAccepted(obj.getSp_bid_id());
                 updateCustomerBudgetForSP(obj.getIdpost_load(), "22");
                 updateCustomerBudgetOnResponse(obj.getSp_bid_id(), customerQuote.getText().toString());
-                AlertDialog.Builder my_alert = new AlertDialog.Builder(CustomerDashboardActivity.this);
-                my_alert.setTitle("Response submitted Successfully");
-                my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(CustomerDashboardActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(false);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Response submitted Successfully");
+                alertMessage.setText("");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    public void onClick(View view) {
+                        alert.dismiss();
                         Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
                         intent.putExtra("userId", userId);
                         intent.putExtra("mobile", phone);
                         startActivity(intent);
                         finish();
-                        dialogInterface.dismiss();
-                        previewDialogAcceptANdBid.dismiss();
                     }
                 });
-                my_alert.show();
+                //------------------------------------------------------------------------------------------
             }
         });
     }
@@ -620,7 +644,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         });
     }
     //--------------------------------------------------------------------------------------------------
-
 
     //----------------------------------------------------------------------------------------------------------------
     private void updateCustomerBudgetOnResponse(String bidId, String cQuote) {
@@ -957,21 +980,45 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                 updateBidStatusFinalAccepted(obj.getSp_bid_id());
                 updateCustomerBudgetForSP(obj.getIdpost_load(), obj.getSp_quote());
                 updateCustomerBudgetOnResponse(obj.getSp_bid_id(), obj.getSp_quote());
-                AlertDialog.Builder my_alert = new AlertDialog.Builder(CustomerDashboardActivity.this);
-                my_alert.setTitle("Final Offer accepted Successfully");
-                my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(CustomerDashboardActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(false);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Final Offer accepted Successfully");
+                alertMessage.setText("");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    public void onClick(View view) {
+                        alert.dismiss();
                         Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
                         intent.putExtra("userId", userId);
                         intent.putExtra("mobile", phone);
                         startActivity(intent);
                         finish();
-                        dialogInterface.dismiss();
                         acceptFinalBid.dismiss();
                     }
                 });
-                my_alert.show();
+                //------------------------------------------------------------------------------------------
             }
         });
 
@@ -1161,21 +1208,45 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
                             updateLoadStatusSubmitted(obj.getIdpost_load());
                             updateBidStatusFinalAccepted(bid_idByAPI);
-                            AlertDialog.Builder my_alert = new AlertDialog.Builder(CustomerDashboardActivity.this).setCancelable(false);
-                            my_alert.setTitle("Withdrawn Successfully");
-                            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            //----------------------- Alert Dialog -------------------------------------------------
+                            Dialog alert = new Dialog(CustomerDashboardActivity.this);
+                            alert.setContentView(R.layout.dialog_alert);
+                            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                            lp.copyFrom(alert.getWindow().getAttributes());
+                            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                            lp.gravity = Gravity.CENTER;
+
+                            alert.show();
+                            alert.getWindow().setAttributes(lp);
+                            alert.setCancelable(false);
+
+                            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                            alertTitle.setText("Withdrawn Successfully");
+                            alertMessage.setText("");
+                            alertPositiveButton.setVisibility(View.GONE);
+                            alertNegativeButton.setText("OK");
+                            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
+                                public void onClick(View view) {
+                                    alert.dismiss();
                                     Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
                                     intent.putExtra("userId", userId);
                                     intent.putExtra("mobile", phone);
                                     startActivity(intent);
                                     finish();
-                                    dialogInterface.dismiss();
                                     viewConsignmentCustomer.dismiss();
                                 }
                             });
-                            my_alert.show();
+                            //------------------------------------------------------------------------------------------
                         }
                     });
 

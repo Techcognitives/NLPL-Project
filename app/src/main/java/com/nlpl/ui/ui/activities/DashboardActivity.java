@@ -1,7 +1,6 @@
 package com.nlpl.ui.ui.activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
@@ -14,6 +13,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
@@ -727,13 +727,36 @@ public class DashboardActivity extends AppCompatActivity {
                     }
 
                     Log.i("loadId bidded", obj.getIdpost_load());
+                    //----------------------- Alert Dialog -------------------------------------------------
+                    Dialog alert = new Dialog(DashboardActivity.this);
+                    alert.setContentView(R.layout.dialog_alert);
+                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(alert.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.gravity = Gravity.CENTER;
 
-                    AlertDialog.Builder my_alert = new AlertDialog.Builder(DashboardActivity.this).setCancelable(false);
-                    my_alert.setTitle("Bid Posted Successfully");
-                    my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    alert.show();
+                    alert.getWindow().setAttributes(lp);
+                    alert.setCancelable(false);
+
+                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                    alertTitle.setText("Bid Posted Successfully");
+                    alertMessage.setText("");
+                    alertPositiveButton.setVisibility(View.GONE);
+                    alertNegativeButton.setText("OK");
+                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
+                        public void onClick(View view) {
+                            alert.dismiss();
                             Intent i8 = new Intent(DashboardActivity.this, DashboardActivity.class);
                             i8.putExtra("mobile2", phone);
                             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -741,12 +764,10 @@ public class DashboardActivity extends AppCompatActivity {
                             overridePendingTransition(0, 0);
                             finish();
 
-                            dialogInterface.dismiss();
                             previewDialogBidNow.dismiss();
                         }
                     });
-                    my_alert.show();
-
+                    //------------------------------------------------------------------------------------------
                 }
             }
         });
@@ -863,11 +884,36 @@ public class DashboardActivity extends AppCompatActivity {
                         arrayDriverName.add(selectedDriverName);
                     }
                     if (arrayDriverName.size()==0){
-                         AlertDialog.Builder my_alert = new AlertDialog.Builder(DashboardActivity.this);
-                        my_alert.setTitle("Add a Driver");
-                        my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        //----------------------- Alert Dialog -------------------------------------------------
+                        Dialog alert = new Dialog(DashboardActivity.this);
+                        alert.setContentView(R.layout.dialog_alert);
+                        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                        lp.copyFrom(alert.getWindow().getAttributes());
+                        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                        lp.gravity = Gravity.CENTER;
+
+                        alert.show();
+                        alert.getWindow().setAttributes(lp);
+                        alert.setCancelable(true);
+
+                        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                        alertTitle.setText("Add a Driver");
+                        alertMessage.setText("");
+                        alertPositiveButton.setVisibility(View.GONE);
+                        alertNegativeButton.setText("OK");
+                        alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                        alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
+                            public void onClick(View view) {
+                                alert.dismiss();
                                 Intent i8 = new Intent(DashboardActivity.this, DriverDetailsActivity.class);
                                 i8.putExtra("userId", userId);
                                 i8.putExtra("isEdit", false);
@@ -878,7 +924,7 @@ public class DashboardActivity extends AppCompatActivity {
                                 overridePendingTransition(0, 0);
                             }
                         });
-                        my_alert.show();
+                        //------------------------------------------------------------------------------------------
                     } else {
                         selectDriverToBid(arrayDriverId);
                     }
@@ -1281,11 +1327,36 @@ public class DashboardActivity extends AppCompatActivity {
                         arrayTruckId.add(truckId);
                     }
                     if (arrayTruckId.size()==0){
-                        AlertDialog.Builder my_alert = new AlertDialog.Builder(DashboardActivity.this);
-                        my_alert.setTitle("Add a Truck");
-                        my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        //----------------------- Alert Dialog -------------------------------------------------
+                        Dialog alert = new Dialog(DashboardActivity.this);
+                        alert.setContentView(R.layout.dialog_alert);
+                        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                        lp.copyFrom(alert.getWindow().getAttributes());
+                        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                        lp.gravity = Gravity.CENTER;
+
+                        alert.show();
+                        alert.getWindow().setAttributes(lp);
+                        alert.setCancelable(true);
+
+                        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                        alertTitle.setText("Add a Truck");
+                        alertMessage.setText("");
+                        alertPositiveButton.setVisibility(View.GONE);
+                        alertNegativeButton.setText("OK");
+                        alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                        alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
+                            public void onClick(View view) {
+                                alert.dismiss();
                                 Intent intent3 = new Intent(DashboardActivity.this, VehicleDetailsActivity.class);
                                 intent3.putExtra("userId", userId);
                                 intent3.putExtra("isEdit", false);
@@ -1294,8 +1365,7 @@ public class DashboardActivity extends AppCompatActivity {
                                 startActivity(intent3);
                             }
                         });
-                        my_alert.show();
-
+                        //------------------------------------------------------------------------------------------
                     } else {
                         selectTruckToBid(arrayTruckId);
                     }
@@ -1448,12 +1518,36 @@ public class DashboardActivity extends AppCompatActivity {
                 updateBidStatusRespondedBySP(obj.getBidId());
                 updateSPQuoteFinal(obj.getBidId(), spQuote.getText().toString());
 
-                AlertDialog.Builder my_alert = new AlertDialog.Builder(DashboardActivity.this);
-                my_alert.setTitle("Bid Revised and Responded Successfully");
-                my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(DashboardActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
 
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(true);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Bid Revised and Responded Successfully");
+                alertMessage.setText("");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
                         Intent i8 = new Intent(DashboardActivity.this, DashboardActivity.class);
                         i8.putExtra("mobile2", phone);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -1461,12 +1555,10 @@ public class DashboardActivity extends AppCompatActivity {
                         overridePendingTransition(0, 0);
                         finish();
 
-                        dialogInterface.dismiss();
                         previewDialogBidNow.dismiss();
                     }
                 });
-                my_alert.show();
-
+                //------------------------------------------------------------------------------------------
             }
 
         });
@@ -1663,13 +1755,36 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                AlertDialog.Builder my_alert = new AlertDialog.Builder(DashboardActivity.this);
-                my_alert.setTitle("Trip Started Successfully");
-                my_alert.setMessage("You can track your trip in track section");
-                my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(DashboardActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
 
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(true);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Trip Started Successfully");
+                alertMessage.setText("You can track your trip in track section");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
                         Intent i8 = new Intent(DashboardActivity.this, DashboardActivity.class);
                         i8.putExtra("mobile2", phone);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -1677,12 +1792,10 @@ public class DashboardActivity extends AppCompatActivity {
                         overridePendingTransition(0, 0);
                         finish();
 
-                        dialogInterface.dismiss();
                         dialogViewConsignment.dismiss();
                     }
                 });
-                my_alert.show();
-
+                //------------------------------------------------------------------------------------------
             }
         });
     }

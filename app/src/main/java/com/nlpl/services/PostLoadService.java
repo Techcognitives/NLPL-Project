@@ -2,6 +2,7 @@ package com.nlpl.services;
 
 import com.nlpl.model.Requests.PostLoadRequest;
 import com.nlpl.model.Responses.PostLoadResponse;
+import com.nlpl.model.UpdateCustomerBudget;
 import com.nlpl.model.UpdateLoadPost.UpdateLoadPostPickUpDate;
 import com.nlpl.model.UpdateLoadStatusSubmitted;
 
