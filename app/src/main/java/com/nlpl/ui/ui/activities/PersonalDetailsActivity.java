@@ -395,8 +395,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("PAN Card Uploaded Successfully");
-            alertMessage.setText("");
+            alertTitle.setText("Personal Details");
+            alertMessage.setText("PAN Card Uploaded Successfully");
             alertPositiveButton.setVisibility(View.GONE);
             alertNegativeButton.setText("OK");
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -454,8 +454,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Aadhar Card Uploaded Successfully");
-            alertMessage.setText("");
+            alertTitle.setText("Personal Details");
+            alertMessage.setText("Aadhar Card Uploaded Successfully");
             alertPositiveButton.setVisibility(View.GONE);
             alertNegativeButton.setText("OK");
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -512,8 +512,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 //            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
 //            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 //
-//            alertTitle.setText("PAN Card Uploaded Successfully");
-//            alertMessage.setText("");
+//            alertTitle.setText("Personal Details");
+//            alertMessage.setText("PAN Card Uploaded Successfully");
 //            alertPositiveButton.setVisibility(View.GONE);
 //            alertNegativeButton.setText("OK");
 //            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -562,8 +562,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 //            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
 //            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 //
-//            alertTitle.setText("Aadhar Card Uploaded Successfully");
-//            alertMessage.setText("");
+//            alertTitle.setText("Personal Details");
+//            alertMessage.setText("Aadhar Card Uploaded Successfully");
 //            alertPositiveButton.setVisibility(View.GONE);
 //            alertNegativeButton.setText("OK");
 //            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -617,8 +617,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Personal Details added successfully");
-            alertMessage.setText("");
+            alertTitle.setText("Personal Details");
+            alertMessage.setText("Personal Details added successfully");
             alertPositiveButton.setVisibility(View.GONE);
             alertNegativeButton.setText("OK");
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));

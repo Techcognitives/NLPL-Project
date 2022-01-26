@@ -638,8 +638,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("RC Uploaded Successfully");
-            alertMessage.setText("");
+            alertTitle.setText("Truck Details");
+            alertMessage.setText("RC Uploaded Successfully");
             alertPositiveButton.setVisibility(View.GONE);
             alertNegativeButton.setText("OK");
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -700,8 +700,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 //            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
 //            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 //
-//            alertTitle.setText("RC Uploaded Successfully");
-//            alertMessage.setText("");
+//            alertTitle.setText("Truck Details");
+//            alertMessage.setText("RC Uploaded Successfully");
 //            alertPositiveButton.setVisibility(View.GONE);
 //            alertNegativeButton.setText("OK");
 //            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -761,8 +761,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Insurance Uploaded Successfully");
-            alertMessage.setText("");
+            alertTitle.setText("Truck Details");
+            alertMessage.setText("Insurance Uploaded Successfully");
             alertPositiveButton.setVisibility(View.GONE);
             alertNegativeButton.setText("OK");
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -819,8 +819,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 //            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
 //            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 //
-//            alertTitle.setText("Insurance Uploaded Successfully");
-//            alertMessage.setText("");
+//            alertTitle.setText("Truck Details");
+//            alertMessage.setText("Insurance Uploaded Successfully");
 //            alertPositiveButton.setVisibility(View.GONE);
 //            alertNegativeButton.setText("OK");
 //            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -913,8 +913,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Vehicle Details added successfully");
-                alertMessage.setText("");
+                alertTitle.setText("Truck Details");
+                alertMessage.setText("Vehicle Details added successfully");
                 alertPositiveButton.setText("+ Add Truck Driver");
                 alertPositiveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -973,8 +973,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                            alertTitle.setText("You cannot bid unless you have a Driver");
-                            alertMessage.setText("");
+                            alertTitle.setText("Driver Details");
+                            alertMessage.setText("You cannot bid unless you have a Driver");
                             alertPositiveButton.setText("+ Add Truck Driver");
                             alertPositiveButton.setOnClickListener(new View.OnClickListener() {
                                 @Override

@@ -357,8 +357,8 @@ public class PostALoadActivity extends AppCompatActivity {
                     TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                    alertTitle.setText("Load Updated Successfully");
-                    alertMessage.setText("");
+                    alertTitle.setText("Post a Load");
+                    alertMessage.setText("Load Updated Successfully");
                     alertPositiveButton.setVisibility(View.GONE);
                     alertNegativeButton.setText("OK");
                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -409,8 +409,8 @@ public class PostALoadActivity extends AppCompatActivity {
                     TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                    alertTitle.setText("Load Posted Successfully");
-                    alertMessage.setText("");
+                    alertTitle.setText("Post a Load");
+                    alertMessage.setText("Load Posted Successfully");
                     alertPositiveButton.setVisibility(View.GONE);
                     alertNegativeButton.setText("OK");
                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));

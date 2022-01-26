@@ -867,8 +867,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Driving License uploaded successfully");
-            alertMessage.setText("");
+            alertTitle.setText("Driver Details");
+            alertMessage.setText("Driving License uploaded successfully");
             alertPositiveButton.setVisibility(View.GONE);
             alertNegativeButton.setText("OK");
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -930,8 +930,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
 //            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
 //            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 //
-//            alertTitle.setText("Driving License uploaded successfully");
-//            alertMessage.setText("");
+//            alertTitle.setText("Driver Details");
+//            alertMessage.setText("Driving License uploaded successfully");
 //            alertPositiveButton.setVisibility(View.GONE);
 //            alertNegativeButton.setText("OK");
 //            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -998,8 +998,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Driver Selfie uploaded successfully");
-            alertMessage.setText("");
+            alertTitle.setText("Driver Details");
+            alertMessage.setText("Driver Selfie uploaded successfully");
             alertPositiveButton.setVisibility(View.GONE);
             alertNegativeButton.setText("OK");
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -1066,8 +1066,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
 //            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
 //            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 //
-//            alertTitle.setText("Driver Selfie uploaded successfully");
-//            alertMessage.setText("");
+//            alertTitle.setText("Driver Details");
+//            alertMessage.setText("Driver Selfie uploaded successfully");
 //            alertPositiveButton.setVisibility(View.GONE);
 //            alertNegativeButton.setText("OK");
 //            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
