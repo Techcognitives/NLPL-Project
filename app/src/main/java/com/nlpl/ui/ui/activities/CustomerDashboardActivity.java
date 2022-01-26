@@ -358,7 +358,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                 loadAcceptedConstrain.setVisibility(View.INVISIBLE);
                 bidsReceivedConstrain.setVisibility(View.VISIBLE);
 //                if (acceptedList.size() > 0) {
-                    bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
+                bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
 //                } else {
 //                    bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
 //                }
@@ -366,7 +366,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 //                if (bidsList.size() > 0) {
 //                    loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
 //                } else {
-                    loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+                loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
 //                }
                 break;
 
@@ -376,11 +376,11 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 //                if (acceptedList.size() > 0) {
 //                    bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
 //                } else {
-                    bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+                bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
 //                }
 
 //                if (bidsList.size() > 0) {
-                    loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
+                loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
 //                } else {
 //                    loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
 //                }
@@ -1094,7 +1094,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
                                         int isCompAded = obj.getInt("isCompany_added");
 
-                                        if (isCompAded==1) {
+                                        if (isCompAded == 1) {
                                             companyName.setVisibility(View.VISIBLE);
                                             companyNameHeading.setVisibility(View.VISIBLE);
                                             //----------------------------------------------------------
