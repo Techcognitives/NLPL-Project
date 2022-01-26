@@ -5,6 +5,7 @@ import com.nlpl.model.Responses.BidLadResponse;
 import com.nlpl.model.UpdateBidStatusAccepted;
 import com.nlpl.model.UpdateBidStatusFinalAccepted;
 import com.nlpl.model.UpdateBidStatusRespondedBySP;
+import com.nlpl.model.UpdateBudgetCustomerForSP;
 import com.nlpl.model.UpdateCustomerBudget;
 import com.nlpl.model.UpdateSPQuoteFinal;
 
@@ -28,7 +29,7 @@ public interface BidLoadService {
     Call<UpdateSPQuoteFinal> updateSPQuoteFinal(@Path("bidId") String bidId, @Body UpdateSPQuoteFinal updateSPQuoteFinal);
 
     @PUT("/spbid/updateBidByBID/{bidId}")
-    Call<UpdateCustomerBudget> updateCustomerBudget(@Path("bidId") String bidId, @Body UpdateCustomerBudget updateCustomerBudget);
+    Call<UpdateBudgetCustomerForSP> updateBudgetCustomerForSP(@Path("bidId") String bidId, @Body UpdateBudgetCustomerForSP updateBudgetCustomerForSP);
 
     @PUT("/spbid/updateBidByBID/{bidId}")
     Call<UpdateBidStatusFinalAccepted> updateFinalAccepted(@Path("bidId") String bidId, @Body UpdateBidStatusFinalAccepted updateBidStatusFinalAccepted);

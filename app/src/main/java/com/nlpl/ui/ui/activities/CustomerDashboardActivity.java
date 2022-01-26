@@ -40,6 +40,7 @@ import com.nlpl.model.ModelForRecyclerView.FindLoadsModel;
 import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
 import com.nlpl.model.UpdateBidStatusAccepted;
 import com.nlpl.model.UpdateBidStatusFinalAccepted;
+import com.nlpl.model.UpdateBudgetCustomerForSP;
 import com.nlpl.model.UpdateCustomerBudget;
 import com.nlpl.model.UpdateLoadStatusSubmitted;
 import com.nlpl.services.BidLoadService;
@@ -578,6 +579,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 updateBidStatusAsAccepted(obj.getSp_bid_id());
+                updateCustomerBudgetForSP(obj.getIdpost_load(), "22");
                 updateCustomerBudgetOnResponse(obj.getSp_bid_id(), customerQuote.getText().toString());
                 AlertDialog.Builder my_alert = new AlertDialog.Builder(CustomerDashboardActivity.this);
                 my_alert.setTitle("Response submitted Successfully");
@@ -599,11 +601,33 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     }
 
     //----------------------------------------------------------------------------------------------------------------
+    private void updateCustomerBudgetForSP(String bidId, String cQuote) {
+
+        UpdateBudgetCustomerForSP updateBudgetCustomerForSP = new UpdateBudgetCustomerForSP(cQuote);
+
+        Call<UpdateBudgetCustomerForSP> call = bidService.updateBudgetCustomerForSP("" + bidId, updateBudgetCustomerForSP);
+
+        call.enqueue(new Callback<UpdateBudgetCustomerForSP>() {
+            @Override
+            public void onResponse(Call<UpdateBudgetCustomerForSP> call, Response<UpdateBudgetCustomerForSP> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UpdateBudgetCustomerForSP> call, Throwable t) {
+
+            }
+        });
+    }
+    //--------------------------------------------------------------------------------------------------
+
+
+    //----------------------------------------------------------------------------------------------------------------
     private void updateCustomerBudgetOnResponse(String bidId, String cQuote) {
 
         UpdateCustomerBudget updateCustomerBudget = new UpdateCustomerBudget(cQuote);
 
-        Call<UpdateCustomerBudget> call = bidService.updateCustomerBudget("" + bidId, updateCustomerBudget);
+        Call<UpdateCustomerBudget> call = postLoadService.updateCustomerBudget("" + bidId, updateCustomerBudget);
 
         call.enqueue(new Callback<UpdateCustomerBudget>() {
             @Override
@@ -931,6 +955,8 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
                 updateLoadStatusSubmitted(obj.getIdpost_load());
                 updateBidStatusFinalAccepted(obj.getSp_bid_id());
+                updateCustomerBudgetForSP(obj.getIdpost_load(), obj.getSp_quote());
+                updateCustomerBudgetOnResponse(obj.getSp_bid_id(), obj.getSp_quote());
                 AlertDialog.Builder my_alert = new AlertDialog.Builder(CustomerDashboardActivity.this);
                 my_alert.setTitle("Final Offer accepted Successfully");
                 my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -973,6 +999,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp.gravity = Gravity.CENTER;
         viewConsignmentCustomer.show();
+        viewConsignmentCustomer.setCancelable(false);
         viewConsignmentCustomer.getWindow().setAttributes(lp);
 
         //-------------------------------------------Display Load Information---------------------------------------------
@@ -984,32 +1011,16 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         TextView quoteBySP = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_bidder_quote_textview);
         TextView negotiableBySP = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_negotiable_textview);
         TextView notesBySP = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_received_notes_textview);
+        TextView spNumber = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_sp_number);
+        TextView companyNameHeading = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_company_name_heading);
+        TextView companyName = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_company_name);
+        TextView driverNameHeading = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_driver_name_heading);
+        TextView driverName = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_driver_name);
+        TextView driverNumber = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_driver_number);
 
-        //----------------------------------------------------------
-        String url = getString(R.string.baseURL) + "/user/" + obj.getUser_id();
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray truckLists = response.getJSONArray("data");
-                    for (int i = 0; i < truckLists.length(); i++) {
-                        JSONObject obj = truckLists.getJSONObject(i);
-                        String spName = obj.getString("name");
-                        nameSP.setText(spName);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request);
-        //----------------------------------------------------------
-
+        driverName.setVisibility(View.VISIBLE);
+        driverNumber.setVisibility(View.VISIBLE);
+        driverNameHeading.setVisibility(View.VISIBLE);
 
         String url1 = getString(R.string.baseURL) + "/spbid/getBidDtByPostId/" + obj.getIdpost_load();
         Log.i("URL: ", url1);
@@ -1024,6 +1035,92 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         spQuoteByApi = obj.getString("sp_quote");
                         noteByApi = obj.getString("notes");
                         bid_idByAPI = obj.getString("sp_bid_id");
+
+                        //----------------------------------------------------------
+                        String url = getString(R.string.baseURL) + "/user/" + obj.getString("user_id");
+                        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    JSONArray truckLists = response.getJSONArray("data");
+                                    for (int i = 0; i < truckLists.length(); i++) {
+                                        JSONObject obj = truckLists.getJSONObject(i);
+                                        nameSP.setText(obj.getString("name"));
+                                        spNumber.setText(obj.getString("phone_number"));
+
+                                        int isCompAded = obj.getInt("isCompany_added");
+
+                                        if (isCompAded==1) {
+                                            companyName.setVisibility(View.VISIBLE);
+                                            companyNameHeading.setVisibility(View.VISIBLE);
+                                            //----------------------------------------------------------
+                                            String url2 = getString(R.string.baseURL) + "/company/get/" + obj.getString("user_id");
+                                            JsonObjectRequest request2 = new JsonObjectRequest(Request.Method.GET, url2, null, new com.android.volley.Response.Listener<JSONObject>() {
+                                                @Override
+                                                public void onResponse(JSONObject response) {
+                                                    try {
+                                                        JSONArray truckLists = response.getJSONArray("data");
+                                                        for (int i = 0; i < truckLists.length(); i++) {
+                                                            JSONObject obj = truckLists.getJSONObject(i);
+                                                            companyName.setText(obj.getString("company_name"));
+                                                        }
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+                                            }, new com.android.volley.Response.ErrorListener() {
+                                                @Override
+                                                public void onErrorResponse(VolleyError error) {
+                                                    error.printStackTrace();
+                                                }
+                                            });
+                                            mQueue.add(request2);
+                                            //----------------------------------------------------------
+                                        } else {
+                                            companyName.setVisibility(View.GONE);
+                                            companyNameHeading.setVisibility(View.GONE);
+                                        }
+
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new com.android.volley.Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                error.printStackTrace();
+                            }
+                        });
+                        mQueue.add(request);
+                        //----------------------------------------------------------
+
+                        //----------------------------------------------------------
+                        String url1 = getString(R.string.baseURL) + "/driver/driverId/" + obj.getString("assigned_driver_id");
+                        JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    JSONArray truckLists = response.getJSONArray("data");
+                                    for (int i = 0; i < truckLists.length(); i++) {
+                                        JSONObject obj = truckLists.getJSONObject(i);
+                                        driverName.setText(obj.getString("driver_name"));
+                                        driverNumber.setText(obj.getString("driver_number"));
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new com.android.volley.Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                error.printStackTrace();
+                            }
+                        });
+                        mQueue.add(request1);
+                        //----------------------------------------------------------
+
+
                     }
 
                     quoteBySP.setText(spQuoteByApi);
@@ -1123,7 +1220,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         menuDialog.setCancelable(true);
         menuDialog.getWindow().setAttributes(lp);
     }
-    
+
     public void onClickDismissDialog(View view) {
         menuDialog.dismiss();
     }

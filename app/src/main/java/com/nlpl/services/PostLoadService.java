@@ -21,4 +21,8 @@ public interface PostLoadService {
 
     @PUT("/loadpost/updatePostByPID/{loadId}")
     Call<UpdateLoadPost> updateLoadPost(@Path("loadId") String loadId, @Body UpdateLoadPost updateLoadPost);
+
+    @PUT("/spbid/updateBidByBID/{loadId}")
+    Call<UpdateCustomerBudget> updateCustomerBudget(@Path("loadId") String loadId, @Body UpdateCustomerBudget updateCustomerBudget);
+
 }

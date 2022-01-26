@@ -655,6 +655,11 @@ public class RegistrationActivity extends AppCompatActivity {
         userRequest.setPin_code(pinCode.getText().toString());
         userRequest.setPreferred_location(selectDistrictText.getText().toString());
         userRequest.setState_code(selectStateText.getText().toString());
+        userRequest.setIsCompany_added(0);
+        userRequest.setIsBankDetails_given(0);
+        userRequest.setIsPersonal_dt_added(0);
+        userRequest.setIsDriver_added(0);
+        userRequest.setIsTruck_added(0);
         return userRequest;
     }
 
