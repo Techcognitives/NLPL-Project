@@ -8,7 +8,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,15 +16,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.Spanned;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -43,17 +38,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
-import com.nlpl.model.Requests.BankRequest;
 import com.nlpl.model.Requests.PostLoadRequest;
-import com.nlpl.model.Responses.BankResponse;
 import com.nlpl.model.Responses.PostLoadResponse;
-import com.nlpl.model.UpdateDriverDetails.UpdateDriverEmailId;
-import com.nlpl.model.UpdateLoadPost.UpdateLoadPost;
-import com.nlpl.services.AddDriverService;
+import com.nlpl.model.UpdateLoadPost.UpdateLoadPostPickUpDate;
 import com.nlpl.services.PostLoadService;
-import com.nlpl.services.UserService;
 import com.nlpl.utils.ApiClient;
-import com.nlpl.utils.DownloadImageTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1557,20 +1546,20 @@ public class PostALoadActivity extends AppCompatActivity {
         String dropCountry = drop_state.getText().toString();
         String notesFromLP = note_to_post_load.getText().toString();
 
-        UpdateLoadPost updateLoadPost = new UpdateLoadPost(pickUpDate,pickUpTime,budget,vehicleModel,vehicleFeet, vehicleCapacity,vehicleBodyType,pickUpAddress, pickUpPinCode,pickUpCity,pickUpState, pickUpCountry, dropAddress, dropPinCode,dropCity, dropState,dropCountry,"123",notesFromLP);
+        UpdateLoadPostPickUpDate updateLoadPost = new UpdateLoadPostPickUpDate(pickUpDate,pickUpTime,budget,vehicleModel,vehicleFeet, vehicleCapacity,vehicleBodyType,pickUpAddress, pickUpPinCode,pickUpCity,pickUpState, pickUpCountry, dropAddress, dropPinCode,dropCity, dropState,dropCountry,"123",notesFromLP);
 
-        Call<UpdateLoadPost> call = postLoadService.updateLoadPost("" + loadId, updateLoadPost);
+        Call<UpdateLoadPostPickUpDate> call = postLoadService.updateLoadPost("" + loadId, updateLoadPost);
 
-        call.enqueue(new Callback<UpdateLoadPost>() {
+        call.enqueue(new Callback<UpdateLoadPostPickUpDate>() {
             @Override
-            public void onResponse(Call<UpdateLoadPost> call, Response<UpdateLoadPost> response) {
+            public void onResponse(Call<UpdateLoadPostPickUpDate> call, Response<UpdateLoadPostPickUpDate> response) {
                 if (response.isSuccessful()) {
                     Log.i("Successful", "Load Post Details Updated");
                 }
             }
 
             @Override
-            public void onFailure(Call<UpdateLoadPost> call, Throwable t) {
+            public void onFailure(Call<UpdateLoadPostPickUpDate> call, Throwable t) {
                 Log.i("Not Successful", "Load Post Details Not Updated");
 
             }

@@ -232,9 +232,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
 //        name.requestFocus();
 
-        getWindow().
-
-                setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 //    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         name.setFilters(new InputFilter[]{filter});
@@ -1056,6 +1054,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                         selectDistrictText.setText(cityAPI);
 
                         if (roleAPI.equals("Customer")) {
+
                             customerButton.setChecked(true);
                             ownerButton.setChecked(false);
                             driverButton.setChecked(false);
@@ -1064,21 +1063,14 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                         } else if (roleAPI.equals("Owner")) {
                             customerButton.setChecked(false);
                             ownerButton.setChecked(true);
-                            driverButton.setChecked(false);
-                            brokerButton.setChecked(false);
 
                         } else if (roleAPI.equals("Driver")) {
                             customerButton.setChecked(false);
-                            ownerButton.setChecked(false);
-                            driverButton.setChecked(true);
-                            brokerButton.setChecked(false);
+                            ownerButton.setChecked(true);
 
                         } else if (roleAPI.equals("Broker")) {
                             customerButton.setChecked(false);
-                            ownerButton.setChecked(false);
-                            driverButton.setChecked(false);
-                            brokerButton.setChecked(true);
-
+                            ownerButton.setChecked(true);
                         } else {
 
                         }

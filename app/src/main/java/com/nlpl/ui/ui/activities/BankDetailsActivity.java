@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -358,18 +359,40 @@ public class BankDetailsActivity extends AppCompatActivity {
         //Detects request code for PAN
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
 
-            AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
-            my_alert.setTitle("Cancelled cheque uploaded successfully");
-            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(BankDetailsActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(true);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText("Cancelled cheque uploaded successfully");
+            alertPositiveButton.setVisibility(View.GONE);
+            alertNegativeButton.setText("OK");
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
+                public void onClick(View view) {
+                    alert.dismiss();
                     okButton.setEnabled(true);
                     okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                    dialogInterface.dismiss();
                 }
             });
-            my_alert.show();
-
+            //------------------------------------------------------------------------------------------
             textCC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadCC.setVisibility(View.INVISIBLE);
             editCC.setVisibility(View.VISIBLE);
@@ -391,17 +414,40 @@ public class BankDetailsActivity extends AppCompatActivity {
 
 //        } else if (requestCode == CAMERA_PIC_REQUEST1) {
 //
-//            AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
-//            my_alert.setTitle("Cancelled cheque uploaded successfully");
-//            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//            //----------------------- Alert Dialog -------------------------------------------------
+//            Dialog alert = new Dialog(BankDetailsActivity.this);
+//            alert.setContentView(R.layout.dialog_alert);
+//            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+//            lp.copyFrom(alert.getWindow().getAttributes());
+//            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+//            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+//            lp.gravity = Gravity.CENTER;
+//
+//            alert.show();
+//            alert.getWindow().setAttributes(lp);
+//            alert.setCancelable(true);
+//
+//            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+//            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+//            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+//            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+//
+//            alertTitle.setText("Cancelled cheque uploaded successfully");
+//            alertPositiveButton.setVisibility(View.GONE);
+//            alertNegativeButton.setText("OK");
+//            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+//            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+//
+//            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
 //                @Override
-//                public void onClick(DialogInterface dialogInterface, int i) {
+//                public void onClick(View view) {
+//                    alert.dismiss();
 //                    okButton.setEnabled(true);
 //                    okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-//                    dialogInterface.dismiss();
 //                }
 //            });
-//            my_alert.show();
+//            //------------------------------------------------------------------------------------------
 //
 //            textCC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
 //            uploadCC.setVisibility(View.INVISIBLE);
@@ -448,14 +494,36 @@ public class BankDetailsActivity extends AppCompatActivity {
 
             } else {
                 saveBank(createBankAcc());
-                AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this).setCancelable(false);
-                my_alert.setTitle("Bank Details added successfully");
-                my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(BankDetailsActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
 
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(true);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Bank Details added successfully");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
                         updateUserIsBankDetailsGiven();
-                        dialogInterface.dismiss();
 
                         Intent intent = new Intent(BankDetailsActivity.this, ViewBankDetailsActivity.class);
                         intent.putExtra("userId", userId);
@@ -464,24 +532,46 @@ public class BankDetailsActivity extends AppCompatActivity {
                         BankDetailsActivity.this.finish();
                     }
                 });
-                my_alert.show();
-
+                //------------------------------------------------------------------------------------------
             }
 
             reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
 
         } else {
             reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
-            AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
-            my_alert.setTitle("Account number does not match");
-            my_alert.setMessage("Please enter correct account number as above.");
-            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(BankDetailsActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(true);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText("Account number does not match");
+            alertMessage.setText("Please enter correct account number as above.");
+            alertPositiveButton.setVisibility(View.GONE);
+            alertNegativeButton.setText("OK");
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
+                public void onClick(View view) {
+                    alert.dismiss();
                 }
             });
-            my_alert.show();
+            //------------------------------------------------------------------------------------------
         }
     }
 
@@ -601,18 +691,40 @@ public class BankDetailsActivity extends AppCompatActivity {
             reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
         } else {
             reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
-            AlertDialog.Builder my_alert = new AlertDialog.Builder(BankDetailsActivity.this);
-            my_alert.setTitle("Account number does not match");
-            my_alert.setMessage("Please enter correct account number as above.");
-            my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(BankDetailsActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(true);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText("Account number does not match");
+            alertMessage.setText("Please enter correct account number as above.");
+            alertPositiveButton.setVisibility(View.GONE);
+            alertNegativeButton.setText("OK");
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
+                public void onClick(View view) {
+                    alert.dismiss();
                 }
             });
-            my_alert.show();
+            //------------------------------------------------------------------------------------------
         }
-
     }
 
     public void onClickBankDetailsChoose(View view) {

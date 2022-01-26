@@ -1,6 +1,7 @@
 package com.nlpl.ui.ui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,6 +46,13 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
     String phone, userId;
     ImageView previewRcBook, previewInsurance;
 
+    View actionBar;
+    TextView actionBarTitle;
+    ImageView actionBarBackButton, actionBarMenuButton;
+
+    View bottomNav;
+    ConstraintLayout spDashboard, customerDashboard;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +66,27 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
         }
 
         mQueue = Volley.newRequestQueue(ViewTruckDetailsActivity.this);
+        //-------------------------------- Action Bar ----------------------------------------------
+        actionBar = findViewById(R.id.view_truck_details_action_bar);
+        actionBarTitle = (TextView) actionBar.findViewById(R.id.action_bar_title);
+        actionBarBackButton = (ImageView) actionBar.findViewById(R.id.action_bar_back_button);
+        actionBarMenuButton = (ImageView) actionBar.findViewById(R.id.action_bar_menu);
+
+        actionBarTitle.setText("My Trucks");
+        actionBarMenuButton.setVisibility(View.GONE);
+        actionBarBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ViewTruckDetailsActivity.this.finish();
+            }
+        });
+        //---------------------------- Bottom Nav --------------------------------------------------
+        bottomNav = (View) findViewById(R.id.view_truck_details_bottom_nav_bar);
+        spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
+        customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
+        spDashboard.setBackgroundColor(getResources().getColor(R.color.nav_unselected_blue));
+        customerDashboard.setBackgroundColor(getResources().getColor(R.color.nav_selected_blue));
+
         //---------------------------- Get Truck Details -------------------------------------------
         truckListRecyclerView = (RecyclerView) findViewById(R.id.trucks_list_view);
 
@@ -84,10 +113,6 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
         previewInsurance = (ImageView) previewDialogInsurance.findViewById(R.id.dialog_preview_image_view);
 
 
-    }
-
-    public void onClickBackViewTruckDetails(View view) {
-        ViewTruckDetailsActivity.this.finish();
     }
 
     public void getTruckList() {
@@ -192,5 +217,19 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
         intent3.putExtra("mobile", phone);
 
         startActivity(intent3);
+    }
+
+    public void onClickBottomNavigation(View view) {
+        switch (view.getId()) {
+            case R.id.bottom_nav_sp_dashboard:
+                Intent intent = new Intent(ViewTruckDetailsActivity.this, DashboardActivity.class);
+                intent.putExtra("mobile2", phone);
+                startActivity(intent);
+                break;
+
+            case R.id.bottom_nav_customer_dashboard:
+
+                break;
+        }
     }
 }

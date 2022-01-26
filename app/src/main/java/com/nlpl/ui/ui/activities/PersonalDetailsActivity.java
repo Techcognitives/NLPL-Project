@@ -135,6 +135,26 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         previewDialogAadhar.setContentView(R.layout.dialog_preview_images);
         previewDialogAadhar.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+//        //----------------------- Alert Dialog -----------------------------------------------------
+//        Dialog alert = new Dialog(PersonalDetailsActivity.this);
+//        alert.setContentView(R.layout.dialog_alert);
+//        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+//        lp.copyFrom(alert.getWindow().getAttributes());
+//        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+//        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+//        lp.gravity = Gravity.CENTER;
+//
+//        alert.show();
+//        alert.getWindow().setAttributes(lp);
+//        alert.setCancelable(true);
+//
+//        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+//        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+//        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+//        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+//        //------------------------------------------------------------------------------------------
+
         previewPan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

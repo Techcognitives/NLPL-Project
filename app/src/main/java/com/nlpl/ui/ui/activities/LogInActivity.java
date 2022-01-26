@@ -7,14 +7,19 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -85,12 +90,36 @@ public class LogInActivity extends AppCompatActivity {
             public void onClick(View view) {
                 mobile = "+91" + mobileNo.getText().toString();
                 if (mobileNo.getText().length()==10) {
-                    AlertDialog.Builder my_alert = new AlertDialog.Builder(LogInActivity.this).setCancelable(false);
-                    my_alert.setTitle("OTP sent to "+mobile);
-                    my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    //----------------------- Alert Dialog -----------------------------------------------------
+                    Dialog alert = new Dialog(LogInActivity.this);
+                    alert.setContentView(R.layout.dialog_alert);
+                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(alert.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.gravity = Gravity.CENTER;
+
+                    alert.show();
+                    alert.getWindow().setAttributes(lp);
+                    alert.setCancelable(false);
+
+                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                    alertTitle.setText("OTP sent successfully");
+                    alertMessage.setText("OTP sent to " + mobile);
+                    alertPositiveButton.setVisibility(View.GONE);
+                    alertNegativeButton.setText("OK");
+                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
+                        public void onClick(View view) {
+                            alert.dismiss();
                             Intent i5 = new Intent(LogInActivity.this, OtpCodeActivity.class);
                             i5.putExtra("mobile", mobile);
                             i5.putExtra("isEditPhone", false);
@@ -98,19 +127,41 @@ public class LogInActivity extends AppCompatActivity {
                             overridePendingTransition(0, 0);
                         }
                     });
-                    my_alert.show();
+                    //------------------------------------------------------------------------------------------
                 } else {
-                    AlertDialog.Builder my_alert = new AlertDialog.Builder(LogInActivity.this);
-                    my_alert.setTitle("Invalid mobile number");
-                    my_alert.setMessage("Please enter a 10 digit valid mobile number.");
-                    my_alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    //----------------------- Alert Dialog -----------------------------------------------------
+                    Dialog alert = new Dialog(LogInActivity.this);
+                    alert.setContentView(R.layout.dialog_alert);
+                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(alert.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.gravity = Gravity.CENTER;
+
+                    alert.show();
+                    alert.getWindow().setAttributes(lp);
+                    alert.setCancelable(false);
+
+                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                    alertTitle.setText("Invalid mobile number");
+                    alertMessage.setText("Please enter a 10 digit valid mobile number.");
+                    alertPositiveButton.setVisibility(View.GONE);
+                    alertNegativeButton.setText("OK");
+                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
+                        public void onClick(View view) {
+                            alert.dismiss();
                         }
                     });
-                    my_alert.show();
-                    my_alert.setCancelable(false);
+                    //------------------------------------------------------------------------------------------
                 }
             }
         });
@@ -157,31 +208,6 @@ public class LogInActivity extends AppCompatActivity {
 
         }
     };
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    //    public void onOtp(View view) {
-//        if (mobileNo.getText().length()==10) {
-//            Intent i5 = new Intent(LogInActivity.this, OtpCodeActivity.class);
-//            i5.putExtra("mobile", mobileNo.getText().toString());
-//            startActivity(i5);
-//            overridePendingTransition(0, 0);
-//        }else{
-//            AlertDialog.Builder my_alert = new AlertDialog.Builder(LogInActivity.this);
-//            my_alert.setTitle("Invalid Mobile Number");
-//            my_alert.setMessage("Please enter a valid mobile number");
-//            my_alert.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialogInterface, int i) {
-//                    dialogInterface.dismiss();
-//                }
-//            });
-//            my_alert.show();
-//        }
-//    }
 
     private void requestPermissionsForCamera() {
         if (ContextCompat.checkSelfPermission(LogInActivity.this, Manifest.permission.CAMERA)

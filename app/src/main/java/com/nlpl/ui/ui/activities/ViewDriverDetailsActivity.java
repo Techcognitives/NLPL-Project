@@ -1,6 +1,7 @@
 package com.nlpl.ui.ui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,6 +52,14 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
     ImageView previewDriverLicense, previewDriverSelfie;
 
     String phone, userId;
+
+    View actionBar;
+    TextView actionBarTitle;
+    ImageView actionBarBackButton, actionBarMenuButton;
+
+    View bottomNav;
+    ConstraintLayout spDashboard, customerDashboard;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +73,28 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
         }
 
         mQueue = Volley.newRequestQueue(ViewDriverDetailsActivity.this);
+
+        //-------------------------------- Action Bar ----------------------------------------------
+        actionBar = findViewById(R.id.view_driver_details_action_bar);
+        actionBarTitle = (TextView) actionBar.findViewById(R.id.action_bar_title);
+        actionBarBackButton = (ImageView) actionBar.findViewById(R.id.action_bar_back_button);
+        actionBarMenuButton = (ImageView) actionBar.findViewById(R.id.action_bar_menu);
+
+        actionBarTitle.setText("My Drivers");
+        actionBarMenuButton.setVisibility(View.GONE);
+        actionBarBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ViewDriverDetailsActivity.this.finish();
+            }
+        });
+        //---------------------------- Bottom Nav --------------------------------------------------
+        bottomNav = (View) findViewById(R.id.view_driver_details_bottom_nav_bar);
+        spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
+        customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
+        spDashboard.setBackgroundColor(getResources().getColor(R.color.nav_unselected_blue));
+        customerDashboard.setBackgroundColor(getResources().getColor(R.color.nav_selected_blue));
+        //------------------------------------------------------------------------------------------
 
         arrayUserDriverId = new ArrayList<>();
         arrayDriverMobileNo = new ArrayList<>();
@@ -234,10 +265,6 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
         mQueue.add(request);
     }
 
-    public void onClickBackViewDriverDetails(View view) {
-        ViewDriverDetailsActivity.this.finish();
-    }
-
     public void onClickPreviewDriverLicense(DriverModel obj) {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(previewDialogDL.getWindow().getAttributes());
@@ -295,5 +322,19 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
         intent.putExtra("driverId", obj.getDriver_id());
         intent.putExtra("mobile", phone);
         startActivity(intent);
+    }
+
+    public void onClickBottomNavigation(View view) {
+        switch (view.getId()) {
+            case R.id.bottom_nav_sp_dashboard:
+                Intent intent = new Intent(ViewDriverDetailsActivity.this, DashboardActivity.class);
+                intent.putExtra("mobile2", phone);
+                startActivity(intent);
+                break;
+
+            case R.id.bottom_nav_customer_dashboard:
+
+                break;
+        }
     }
 }

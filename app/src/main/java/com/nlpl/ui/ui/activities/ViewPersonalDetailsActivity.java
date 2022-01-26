@@ -1,6 +1,7 @@
 package com.nlpl.ui.ui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -36,6 +37,13 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
 
     Dialog previewDialogPan, previewDialogAadhar;
 
+    View actionBar;
+    TextView actionBarTitle;
+    ImageView actionBarBackButton, actionBarMenuButton;
+
+    View bottomNav;
+    ConstraintLayout spDashboard, customerDashboard;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +57,28 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
         }
 
         mQueue = Volley.newRequestQueue(ViewPersonalDetailsActivity.this);
+
+        //-------------------------------- Action Bar ----------------------------------------------
+        actionBar = findViewById(R.id.view_personal_details_action_bar);
+        actionBarTitle = (TextView) actionBar.findViewById(R.id.action_bar_title);
+        actionBarBackButton = (ImageView) actionBar.findViewById(R.id.action_bar_back_button);
+        actionBarMenuButton = (ImageView) actionBar.findViewById(R.id.action_bar_menu);
+
+        actionBarTitle.setText("Personal Details");
+        actionBarMenuButton.setVisibility(View.GONE);
+        actionBarBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ViewPersonalDetailsActivity.this.finish();
+            }
+        });
+        //---------------------------- Bottom Nav --------------------------------------------------
+        bottomNav = (View) findViewById(R.id.view_personal_details_bottom_nav_bar);
+        spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
+        customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
+        spDashboard.setBackgroundColor(getResources().getColor(R.color.nav_unselected_blue));
+        customerDashboard.setBackgroundColor(getResources().getColor(R.color.nav_selected_blue));
+        //------------------------------------------------------------------------------------------
 
         userNameTextView = (TextView) findViewById(R.id.view_personal_details_name_text_view);
         userPhoneNumberTextView = (TextView) findViewById(R.id.view_personal_details_phone_number_text_view);
@@ -100,6 +130,10 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
                             userFirmNameTextView.setVisibility(View.GONE);
                             userFirmAddressTitleTextView.setVisibility(View.GONE);
                             userFirmAddressTextView.setVisibility(View.GONE);
+
+                            bottomNav.setVisibility(View.GONE);
+                        }else{
+                            bottomNav.setVisibility(View.VISIBLE);
                         }
 
                         userEmailIdAPI = obj.getString("email_id");
@@ -275,6 +309,20 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
             intent.putExtra("mobile", phone);
             intent.putExtra("isEdit", false);
             startActivity(intent);
+        }
+    }
+
+    public void onClickBottomNavigation(View view) {
+        switch (view.getId()) {
+            case R.id.bottom_nav_sp_dashboard:
+                Intent intent = new Intent(ViewPersonalDetailsActivity.this, DashboardActivity.class);
+                intent.putExtra("mobile2", phone);
+                startActivity(intent);
+                break;
+
+            case R.id.bottom_nav_customer_dashboard:
+
+                break;
         }
     }
 }

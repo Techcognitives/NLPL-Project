@@ -1,10 +1,10 @@
 package com.nlpl.model.UpdateLoadPost;
 
-public class UpdateLoadPost {
+public class UpdateLoadPostPickUpDate {
 
     private String pick_up_date, pick_up_time, budget, vehicle_model, feet, capacity, body_type, pick_add, pick_pin_code, pick_city, pick_state, pick_country, drop_add, drop_pin_code, drop_city, drop_state, drop_country, km_approx, notes_meterial_des;
 
-    public UpdateLoadPost(String pick_up_date, String pick_up_time, String budget, String vehicle_model, String feet, String capacity, String body_type, String pick_add, String pick_pin_code, String pick_city, String pick_state, String pick_country, String drop_add, String drop_pin_code, String drop_city, String drop_state, String drop_country, String km_approx, String notes_meterial_des) {
+    public UpdateLoadPostPickUpDate(String pick_up_date, String pick_up_time, String budget, String vehicle_model, String feet, String capacity, String body_type, String pick_add, String pick_pin_code, String pick_city, String pick_state, String pick_country, String drop_add, String drop_pin_code, String drop_city, String drop_state, String drop_country, String km_approx, String notes_meterial_des) {
         this.pick_up_date = pick_up_date;
         this.pick_up_time = pick_up_time;
         this.budget = budget;

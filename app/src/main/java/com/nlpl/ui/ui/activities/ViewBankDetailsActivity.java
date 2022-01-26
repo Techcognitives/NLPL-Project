@@ -110,10 +110,6 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
         previewDialogCancelledChequeImageView = (ImageView) previewDialogCancelledCheque.findViewById(R.id.dialog_preview_image_view);
     }
 
-    public void onClickBackViewBankDetails(View view) {
-        ViewBankDetailsActivity.this.finish();
-    }
-
     public void getBankDetailsList() {
         //---------------------------- Get Bank Details -------------------------------------------
         String url1 = getString(R.string.baseURL) + "/bank/getBkByUserId/" + userId;
