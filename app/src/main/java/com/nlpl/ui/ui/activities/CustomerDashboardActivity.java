@@ -329,11 +329,11 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 //                    for (int i=0; i< acceptedList.size(); i++){
 //                        if (acceptedList.get(i).getBid_status().equals("FinalAccepted")){
                     if (acceptedList.size() > 0) {
-                        bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
+//                        bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
                         noAcceptedLoads.setVisibility(View.GONE);
                         bidsAcceptedAdapter.updateData(acceptedList);
                     } else {
-                        bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+//                        bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
                         noAcceptedLoads.setVisibility(View.VISIBLE);
                     }
 //                        }
@@ -358,33 +358,33 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             case R.id.customer_dashboard_bids_received_button:
                 loadAcceptedConstrain.setVisibility(View.INVISIBLE);
                 bidsReceivedConstrain.setVisibility(View.VISIBLE);
-                if (acceptedList.size() > 0) {
+//                if (acceptedList.size() > 0) {
                     bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
-                } else {
-                    bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
-                }
+//                } else {
+//                    bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+//                }
 
-                if (bidsList.size() > 0) {
-                    loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
-                } else {
+//                if (bidsList.size() > 0) {
+//                    loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
+//                } else {
                     loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
-                }
+//                }
                 break;
 
             case R.id.customer_dashboard_loads_accepted_button:
                 loadAcceptedConstrain.setVisibility(View.VISIBLE);
                 bidsReceivedConstrain.setVisibility(View.INVISIBLE);
-                if (acceptedList.size() > 0) {
-                    bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
-                } else {
+//                if (acceptedList.size() > 0) {
+//                    bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
+//                } else {
                     bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
-                }
+//                }
 
-                if (bidsList.size() > 0) {
+//                if (bidsList.size() > 0) {
                     loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
-                } else {
-                    loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
-                }
+//                } else {
+//                    loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+//                }
                 break;
         }
     }
@@ -579,7 +579,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 updateBidStatusAsAccepted(obj.getSp_bid_id());
-                updateCustomerBudgetForSP(obj.getIdpost_load(), "22");
+                updateCustomerBudgetForSP(obj.getSp_bid_id(), customerQuote.getText().toString());
                 updateCustomerBudgetOnResponse(obj.getSp_bid_id(), customerQuote.getText().toString());
 
                 //----------------------- Alert Dialog -------------------------------------------------
@@ -978,7 +978,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
                 updateLoadStatusSubmitted(obj.getIdpost_load());
                 updateBidStatusFinalAccepted(obj.getSp_bid_id());
-                updateCustomerBudgetForSP(obj.getIdpost_load(), obj.getSp_quote());
+                updateCustomerBudgetForSP(obj.getSp_bid_id(), obj.getSp_quote());
                 updateCustomerBudgetOnResponse(obj.getSp_bid_id(), obj.getSp_quote());
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(CustomerDashboardActivity.this);
