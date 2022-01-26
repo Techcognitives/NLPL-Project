@@ -272,6 +272,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                     intent.putExtra("userId", userId);
                     intent.putExtra("mobile", mobile);
                     startActivity(intent);
+                    finish();
                 }else{
                     //----------------------- Alert Dialog -------------------------------------------------
                     Dialog alert = new Dialog(DriverDetailsActivity.this);
@@ -1244,6 +1245,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                             intent2.putExtra("isEdit", false);
                             intent2.putExtra("mobile", mobile);
                             startActivity(intent2);
+                            finish();
                         }
                     });
 

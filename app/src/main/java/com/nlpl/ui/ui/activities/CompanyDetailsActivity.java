@@ -444,7 +444,6 @@ public class CompanyDetailsActivity extends AppCompatActivity {
             if(companyType != null){
                 updateCompanyType();
             }
-
             Intent i8 = new Intent(CompanyDetailsActivity.this, ViewPersonalDetailsActivity.class);
             i8.putExtra("mobile", mobile);
             i8.putExtra("userId", userId);

@@ -69,7 +69,18 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ViewPersonalDetailsActivity.this.finish();
+
+                if (userRoleAPI.equals("Customer")) {
+                    Intent intent = new Intent(ViewPersonalDetailsActivity.this, CustomerDashboardActivity.class);
+                    intent.putExtra("mobile", phone);
+                    startActivity(intent);
+
+                } else {
+                    Intent intent = new Intent(ViewPersonalDetailsActivity.this, DashboardActivity.class);
+                    intent.putExtra("mobile2", phone);
+                    startActivity(intent);
+
+                }
             }
         });
         //---------------------------- Bottom Nav --------------------------------------------------
@@ -123,7 +134,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
                         userPinCodeAPI = obj.getString("pin_code");
                         userRoleAPI = obj.getString("user_type");
 
-                        if (userRoleAPI.equals("Customer")){
+                        if (userRoleAPI.equals("Customer")) {
                             userFirmTitle.setVisibility(View.GONE);
                             userFirmNameTitleTextView.setVisibility(View.GONE);
                             userEditFirmDetailsTextView.setVisibility(View.GONE);
@@ -194,7 +205,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
                         userEditFirmDetailsTextView.setVisibility(View.VISIBLE);
                         userFirmNameTextView.setText(companyNameAPI);
                         userFirmAddressTextView.setText(companyAddressAPI + ", " + companyCityAPI + ", " + companyZipAPI);
-                    }else{
+                    } else {
                         userFirmTitle.setText(getString(R.string.add_company));
                         userFirmNameTitleTextView.setVisibility(View.GONE);
                         userEditFirmDetailsTextView.setVisibility(View.GONE);
@@ -257,10 +268,6 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
         mQueue.add(request);
     }
 
-    public void onClickBackViewPersonalDetails(View view) {
-        ViewPersonalDetailsActivity.this.finish();
-    }
-
     public void onClickPreviewAadharCard(View view) {
         WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
         lp2.copyFrom(previewDialogAadhar.getWindow().getAttributes());
@@ -309,7 +316,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
     }
 
     public void onClickBottomNavigation(View view) {
-        if (userRoleAPI.equals("Customer")){
+        if (userRoleAPI.equals("Customer")) {
             switch (view.getId()) {
                 case R.id.bottom_nav_sp_dashboard:
                     Intent intent = new Intent(ViewPersonalDetailsActivity.this, CustomerDashboardActivity.class);
@@ -321,7 +328,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
 
                     break;
             }
-        }else{
+        } else {
             switch (view.getId()) {
                 case R.id.bottom_nav_sp_dashboard:
                     Intent intent = new Intent(ViewPersonalDetailsActivity.this, DashboardActivity.class);

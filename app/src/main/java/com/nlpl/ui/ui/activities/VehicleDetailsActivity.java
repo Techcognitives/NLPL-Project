@@ -890,6 +890,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 startActivity(i8);
                 overridePendingTransition(0, 0);
                 VehicleDetailsActivity.this.finish();
+
             } else {
                 saveTruck(createTruck());
                 updateUserIsTruckAdded();

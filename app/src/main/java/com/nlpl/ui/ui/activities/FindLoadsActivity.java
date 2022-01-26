@@ -68,6 +68,7 @@ public class FindLoadsActivity extends AppCompatActivity {
                 Intent intent = new Intent(FindLoadsActivity.this, DashboardActivity.class);
                 intent.putExtra("mobile2", phone);
                 startActivity(intent);
+                finish();
                 break;
 
             case R.id.bottom_nav_customer_dashboard:

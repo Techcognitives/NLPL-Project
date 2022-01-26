@@ -124,6 +124,7 @@ public class LogInActivity extends AppCompatActivity {
                             i5.putExtra("isEditPhone", false);
                             startActivity(i5);
                             overridePendingTransition(0, 0);
+                            finish();
                         }
                     });
                     //------------------------------------------------------------------------------------------

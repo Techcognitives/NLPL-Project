@@ -372,7 +372,7 @@ public class PostALoadActivity extends AppCompatActivity {
                             intent.putExtra("userId", userId);
                             intent.putExtra("mobile", phone);
                             startActivity(intent);
-                            finish();
+                            PostALoadActivity.this.finish();
                         }
                     });
                     //------------------------------------------------------------------------------------------
@@ -423,7 +423,7 @@ public class PostALoadActivity extends AppCompatActivity {
                             intent.putExtra("userId", userId);
                             intent.putExtra("mobile", phone);
                             startActivity(intent);
-                            finish();
+                            PostALoadActivity.this.finish();
                         }
                     });
                     //------------------------------------------------------------------------------------------

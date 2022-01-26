@@ -85,7 +85,10 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ViewDriverDetailsActivity.this.finish();
+                Intent intent = new Intent(ViewDriverDetailsActivity.this, DashboardActivity.class);
+                intent.putExtra("mobile2", phone);
+                startActivity(intent);
+                finish();
             }
         });
         //---------------------------- Bottom Nav --------------------------------------------------
@@ -330,6 +333,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
                 Intent intent = new Intent(ViewDriverDetailsActivity.this, DashboardActivity.class);
                 intent.putExtra("mobile2", phone);
                 startActivity(intent);
+                finish();
                 break;
 
             case R.id.bottom_nav_customer_dashboard:

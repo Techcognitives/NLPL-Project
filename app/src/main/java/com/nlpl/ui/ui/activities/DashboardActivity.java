@@ -375,11 +375,9 @@ public class DashboardActivity extends AppCompatActivity {
                 error.printStackTrace();
             }
         });
-
         mQueue.add(request);
 
     }
-
 
     public void onClickProfileAndRegister(View view) {
         switch (view.getId()) {
@@ -394,6 +392,7 @@ public class DashboardActivity extends AppCompatActivity {
                     intent.putExtra("userId", userId);
                     intent.putExtra("mobile", phone);
                     startActivity(intent);
+                    finish();
                 }
                 break;
 
@@ -409,6 +408,7 @@ public class DashboardActivity extends AppCompatActivity {
                     intent.putExtra("userId", userId);
                     intent.putExtra("mobile", phone);
                     startActivity(intent);
+                    finish();
                 }
                 break;
 
@@ -425,6 +425,7 @@ public class DashboardActivity extends AppCompatActivity {
                     intent2.putExtra("fromBidNow",false);
                     intent2.putExtra("mobile", phone);
                     startActivity(intent2);
+                    finish();
                 }
                 break;
 
@@ -441,6 +442,7 @@ public class DashboardActivity extends AppCompatActivity {
                     intent4.putExtra("fromBidNow",false);
                     intent4.putExtra("mobile", phone);
                     startActivity(intent4);
+                    finish();
                 }
 
                 break;

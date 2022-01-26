@@ -532,7 +532,6 @@ public class BankDetailsActivity extends AppCompatActivity {
                         BankDetailsActivity.this.finish();
                     }
                 });
-                //------------------------------------------------------------------------------------------
             }
             reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
 
@@ -1148,5 +1147,6 @@ public class BankDetailsActivity extends AppCompatActivity {
             return file;
         }
     }
+
 
 }

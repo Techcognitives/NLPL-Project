@@ -810,7 +810,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                             PersonalDetailsAndIdProofActivity.this.finish();
                         }
                     });
-                    //------------------------------------------------------------------------------------------
                 }
             });
 

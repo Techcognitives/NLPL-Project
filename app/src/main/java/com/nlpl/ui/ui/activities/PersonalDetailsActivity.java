@@ -634,7 +634,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                     PersonalDetailsActivity.this.finish();
                 }
             });
-            //------------------------------------------------------------------------------------------
         }
     }
 

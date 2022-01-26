@@ -77,7 +77,10 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ViewTruckDetailsActivity.this.finish();
+                Intent intent = new Intent(ViewTruckDetailsActivity.this, DashboardActivity.class);
+                intent.putExtra("mobile2", phone);
+                startActivity(intent);
+                finish();
             }
         });
         //---------------------------- Bottom Nav --------------------------------------------------
@@ -225,6 +228,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
                 Intent intent = new Intent(ViewTruckDetailsActivity.this, DashboardActivity.class);
                 intent.putExtra("mobile2", phone);
                 startActivity(intent);
+                finish();
                 break;
 
             case R.id.bottom_nav_customer_dashboard:

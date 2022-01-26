@@ -81,7 +81,18 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ViewBankDetailsActivity.this.finish();
+                if (roleAPI.equals("Customer")) {
+                    Intent intent = new Intent(ViewBankDetailsActivity.this, CustomerDashboardActivity.class);
+                    intent.putExtra("mobile", phone);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Intent intent = new Intent(ViewBankDetailsActivity.this, DashboardActivity.class);
+                    intent.putExtra("mobile2", phone);
+                    startActivity(intent);
+                    finish();
+                }
+
             }
         });
         //---------------------------- Bottom Nav --------------------------------------------------
@@ -169,6 +180,7 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
         Log.i("Bank Id in P and R", obj.getBank_id());
         intent.putExtra("mobile", phone);
         startActivity(intent);
+
     }
 
     public void onClickPreviewBankDetails(BankModel obj) {
@@ -203,6 +215,7 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
                     Intent intent = new Intent(ViewBankDetailsActivity.this, CustomerDashboardActivity.class);
                     intent.putExtra("mobile", phone);
                     startActivity(intent);
+                    finish();
                     break;
 
                 case R.id.bottom_nav_customer_dashboard:
@@ -215,6 +228,7 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
                     Intent intent = new Intent(ViewBankDetailsActivity.this, DashboardActivity.class);
                     intent.putExtra("mobile2", phone);
                     startActivity(intent);
+                    finish();
                     break;
 
                 case R.id.bottom_nav_customer_dashboard:

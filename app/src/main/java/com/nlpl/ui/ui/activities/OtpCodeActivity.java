@@ -717,7 +717,6 @@ public class OtpCodeActivity extends AppCompatActivity {
                         }
 
                     } else {
-//                                            Log.i("mobile no not equal", mobileNoAPI);
                         Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
                         i8.putExtra("mobile1", getMobileReceived);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

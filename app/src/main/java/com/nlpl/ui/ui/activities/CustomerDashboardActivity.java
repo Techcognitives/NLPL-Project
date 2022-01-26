@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -1316,6 +1317,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                     intent.putExtra("userId", userId);
                     intent.putExtra("mobile", phone);
                     startActivity(intent);
+                    finish();
                 }
                 break;
 
@@ -1331,9 +1333,10 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                     intent.putExtra("userId", userId);
                     intent.putExtra("mobile", phone);
                     startActivity(intent);
+                    finish();
                 }
                 break;
         }
     }
-    //----------------------------------------------------------------------------------------------
+
 }

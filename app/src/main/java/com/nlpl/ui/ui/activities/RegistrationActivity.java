@@ -465,7 +465,6 @@ public class RegistrationActivity extends AppCompatActivity {
                 brokerButton.setChecked(false);
                 customerButton.setChecked(true);
                 role = "Customer";
-
                 break;
         }
     }
