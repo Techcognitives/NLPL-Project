@@ -22,7 +22,7 @@ public interface PostLoadService {
     @PUT("/loadpost/updatePostByPID/{loadId}")
     Call<UpdateLoadPostPickUpDate> updateLoadPost(@Path("loadId") String loadId, @Body UpdateLoadPostPickUpDate updateLoadPost);
 
-    @PUT("/spbid/updateBidByBID/{loadId}")
+    @PUT("/loadpost/updatePostByPID/{loadId}")
     Call<UpdateCustomerBudget> updateCustomerBudget(@Path("loadId") String loadId, @Body UpdateCustomerBudget updateCustomerBudget);
 
 }
