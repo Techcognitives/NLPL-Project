@@ -1317,7 +1317,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                     intent.putExtra("userId", userId);
                     intent.putExtra("mobile", phone);
                     startActivity(intent);
-                    finish();
                 }
                 break;
 
@@ -1333,7 +1332,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                     intent.putExtra("userId", userId);
                     intent.putExtra("mobile", phone);
                     startActivity(intent);
-                    finish();
                 }
                 break;
         }

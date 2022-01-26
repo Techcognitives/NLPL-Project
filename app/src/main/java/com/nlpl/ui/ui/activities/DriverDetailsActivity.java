@@ -114,7 +114,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
     Intent data;
     int requestCode;
     int resultCode;
-    String   isDriverDetailsDoneAPI;
+    String isDriverDetailsDoneAPI;
     CheckBox selfCheckBox;
 
     Button uploadDL, okDriverDetails, uploadSelfie;
@@ -148,7 +148,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
     String userIdAPI, nameAPI, stateAPI, pinCodeAPI, addressAPI, mobileNoAPI, cityAPI, roleAPI;
     ArrayList<String> arrayUserId, arrayMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayState;
-    Boolean alreadyDriver = true, isSelfie= false, isDL = false, idDLEdited = false, isSelfieEdited = false;
+    Boolean alreadyDriver = true, isSelfie = false, isDL = false, idDLEdited = false, isSelfieEdited = false;
     String truckIdPass, driverIdPass;
 
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -267,13 +267,13 @@ public class DriverDetailsActivity extends AppCompatActivity {
         actionBarSkipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isDriverDetailsDoneAPI.equals("1")){
+                if (isDriverDetailsDoneAPI.equals("1")) {
                     Intent intent = new Intent(DriverDetailsActivity.this, ViewTruckDetailsActivity.class);
                     intent.putExtra("userId", userId);
                     intent.putExtra("mobile", mobile);
                     startActivity(intent);
                     finish();
-                }else{
+                } else {
                     //----------------------- Alert Dialog -------------------------------------------------
                     Dialog alert = new Dialog(DriverDetailsActivity.this);
                     alert.setContentView(R.layout.dialog_alert);
@@ -317,7 +317,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i8);
                             overridePendingTransition(0, 0);
-                            DriverDetailsActivity.this.finish();
+                            finish();
                         }
                     });
                     //------------------------------------------------------------------------------------------
@@ -358,7 +358,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         mQueue = Volley.newRequestQueue(DriverDetailsActivity.this);
 
-        if (userId!=null){
+        if (userId != null) {
             getUserDetails();
         }
 
@@ -708,10 +708,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
         this.requestCode = requestCode;
         this.data = data;
 
-            DLimagePicker();
-            DLimagePickerWithoutAlert();
-            selfieImagePicker();
-            selfieImagePickerWithoutAlert();
+        DLimagePicker();
+        DLimagePickerWithoutAlert();
+        selfieImagePicker();
+        selfieImagePickerWithoutAlert();
 
     }
 
@@ -1199,7 +1199,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i8);
                     overridePendingTransition(0, 0);
-                    DriverDetailsActivity.this.finish();
+                    finish();
 
                 } else {
 
@@ -1237,9 +1237,9 @@ public class DriverDetailsActivity extends AppCompatActivity {
                         public void onClick(View view) {
                             alert.dismiss();
                             Intent intent2 = new Intent(DriverDetailsActivity.this, BankDetailsActivity.class);
-                            if (alreadyDriver){
+                            if (alreadyDriver) {
                                 intent2.putExtra("userId", userId);
-                            }else{
+                            } else {
                                 intent2.putExtra("userId", driverUserId);
                             }
                             intent2.putExtra("isEdit", false);
@@ -1256,7 +1256,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             alert.dismiss();
-                            if (fromBidNow){
+                            if (fromBidNow) {
                                 DriverDetailsActivity.this.finish();
                             } else {
                                 Intent i8 = new Intent(DriverDetailsActivity.this, ViewDriverDetailsActivity.class);
@@ -1265,7 +1265,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(i8);
                                 overridePendingTransition(0, 0);
-                                DriverDetailsActivity.this.finish();
+                                finish();
                             }
                         }
                     });
@@ -1354,8 +1354,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
-            for(int i = s.length()-1; i >= 0; i--){
-                if(s.charAt(i) == '\n'){
+            for (int i = s.length() - 1; i >= 0; i--) {
+                if (s.charAt(i) == '\n') {
                     s.delete(i, i + 1);
                     return;
                 }
@@ -2188,5 +2188,18 @@ public class DriverDetailsActivity extends AppCompatActivity {
         } else {
             ActivityCompat.requestPermissions(DriverDetailsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent i8 = new Intent(DriverDetailsActivity.this, DashboardActivity.class);
+        i8.putExtra("mobile2", mobile);
+        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i8);
+        overridePendingTransition(0, 0);
+        finish();
+
     }
 }

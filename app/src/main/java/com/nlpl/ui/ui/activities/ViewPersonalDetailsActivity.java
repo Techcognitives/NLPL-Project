@@ -74,11 +74,13 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
                     Intent intent = new Intent(ViewPersonalDetailsActivity.this, CustomerDashboardActivity.class);
                     intent.putExtra("mobile", phone);
                     startActivity(intent);
+                    finish();
 
                 } else {
                     Intent intent = new Intent(ViewPersonalDetailsActivity.this, DashboardActivity.class);
                     intent.putExtra("mobile2", phone);
                     startActivity(intent);
+                    finish();
 
                 }
             }
@@ -342,5 +344,26 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (userRoleAPI.equals("Customer")) {
+            Intent i8 = new Intent(ViewPersonalDetailsActivity.this, CustomerDashboardActivity.class);
+            i8.putExtra("mobile", phone);
+            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i8);
+            overridePendingTransition(0, 0);
+            finish();
+
+        } else {
+            Intent i8 = new Intent(ViewPersonalDetailsActivity.this, DashboardActivity.class);
+            i8.putExtra("mobile2", phone);
+            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i8);
+            overridePendingTransition(0, 0);
+            finish();
+        }
     }
 }

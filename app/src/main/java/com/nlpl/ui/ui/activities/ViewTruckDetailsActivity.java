@@ -236,4 +236,17 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent i8 = new Intent(ViewTruckDetailsActivity.this, DashboardActivity.class);
+        i8.putExtra("mobile2", phone);
+        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i8);
+        overridePendingTransition(0, 0);
+        finish();
+
+    }
 }

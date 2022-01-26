@@ -889,7 +889,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i8);
                 overridePendingTransition(0, 0);
-                VehicleDetailsActivity.this.finish();
+                finish();
 
             } else {
                 saveTruck(createTruck());
@@ -929,7 +929,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);
                         overridePendingTransition(0, 0);
-                        VehicleDetailsActivity.this.finish();
+                        finish();
                     }
                 });
 
@@ -951,7 +951,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(i8);
                                 overridePendingTransition(0, 0);
-                                VehicleDetailsActivity.this.finish();
+                                finish();
                             }
                         } else {
                             //----------------------- Alert Dialog -------------------------------------------------
@@ -989,7 +989,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                                     i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(i8);
                                     overridePendingTransition(0, 0);
-                                    VehicleDetailsActivity.this.finish();
+                                    finish();
                                 }
                             });
 
@@ -1010,7 +1010,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(i8);
                                         overridePendingTransition(0, 0);
-                                        VehicleDetailsActivity.this.finish();
+                                        finish();
                                     }
                                 }
                             });
@@ -1698,6 +1698,19 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         });
 
         mQueue.add(request);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent i8 = new Intent(VehicleDetailsActivity.this, DashboardActivity.class);
+        i8.putExtra("mobile2", mobile);
+        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i8);
+        overridePendingTransition(0, 0);
+        finish();
+
     }
 
 }

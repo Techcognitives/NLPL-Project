@@ -741,5 +741,4 @@ public class OtpCodeActivity extends AppCompatActivity {
 
     }
 
-
 }

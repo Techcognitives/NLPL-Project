@@ -393,8 +393,8 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
-            for(int i = s.length()-1; i >= 0; i--){
-                if(s.charAt(i) == '\n'){
+            for (int i = s.length() - 1; i >= 0; i--) {
+                if (s.charAt(i) == '\n') {
                     s.delete(i, i + 1);
                     return;
                 }
@@ -418,7 +418,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
     };
 
     public void onClickCompanyDetailsOK(View view) {
-        if (isEdit){
+        if (isEdit) {
 
             if (companyName.getText().toString() != null) {
                 updateCompanyName();
@@ -441,7 +441,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
             if (pinCode.getText().toString() != null) {
                 updateCompanyZip();
             }
-            if(companyType != null){
+            if (companyType != null) {
                 updateCompanyType();
             }
             Intent i8 = new Intent(CompanyDetailsActivity.this, ViewPersonalDetailsActivity.class);
@@ -452,7 +452,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
             overridePendingTransition(0, 0);
             finish();
 
-        }else{
+        } else {
             saveCompany(createCompany());
 
             updateUserIsCompanyAdded();
@@ -631,7 +631,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 //------------------------------------- Update Type ------------------------------------------------
         UpdateCompanyName updateCompanyName = new UpdateCompanyName(companyName.getText().toString());
 
-        Call<UpdateCompanyName> call = companyService.updateCompanyName(""+companyIdAPI, updateCompanyName);
+        Call<UpdateCompanyName> call = companyService.updateCompanyName("" + companyIdAPI, updateCompanyName);
 
         call.enqueue(new Callback<UpdateCompanyName>() {
             @Override
@@ -657,7 +657,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 //------------------------------------- Update Type ------------------------------------------------
         UpdateCompanyGSTNumber updateCompanyGSTNumber = new UpdateCompanyGSTNumber(gstNumber.getText().toString());
 
-        Call<UpdateCompanyGSTNumber> call = companyService.updateCompanyGSTNumber(""+companyIdAPI, updateCompanyGSTNumber);
+        Call<UpdateCompanyGSTNumber> call = companyService.updateCompanyGSTNumber("" + companyIdAPI, updateCompanyGSTNumber);
 
         call.enqueue(new Callback<UpdateCompanyGSTNumber>() {
             @Override
@@ -683,7 +683,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 //------------------------------------- Update Type ------------------------------------------------
         UpdateCompanyPAN updateCompanyPAN = new UpdateCompanyPAN(panNumber.getText().toString());
 
-        Call<UpdateCompanyPAN> call = companyService.updateCompanyPAN(""+companyIdAPI, updateCompanyPAN);
+        Call<UpdateCompanyPAN> call = companyService.updateCompanyPAN("" + companyIdAPI, updateCompanyPAN);
 
         call.enqueue(new Callback<UpdateCompanyPAN>() {
             @Override
@@ -708,7 +708,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 //------------------------------------- Update Type ------------------------------------------------
         UpdateCompanyState updateCompanyState = new UpdateCompanyState(selectStateText.getText().toString());
 
-        Call<UpdateCompanyState> call = companyService.updateCompanyState(""+companyIdAPI, updateCompanyState);
+        Call<UpdateCompanyState> call = companyService.updateCompanyState("" + companyIdAPI, updateCompanyState);
 
         call.enqueue(new Callback<UpdateCompanyState>() {
             @Override
@@ -733,7 +733,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 //------------------------------------- Update Type ------------------------------------------------
         UpdateCompanyCity updateCompanyCity = new UpdateCompanyCity(selectDistrictText.getText().toString());
 
-        Call<UpdateCompanyCity> call = companyService.updateCompanyCity(""+companyIdAPI, updateCompanyCity);
+        Call<UpdateCompanyCity> call = companyService.updateCompanyCity("" + companyIdAPI, updateCompanyCity);
 
         call.enqueue(new Callback<UpdateCompanyCity>() {
             @Override
@@ -758,7 +758,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 //------------------------------------- Update Type ------------------------------------------------
         UpdateCompanyZip updateCompanyZip = new UpdateCompanyZip(pinCode.getText().toString());
 
-        Call<UpdateCompanyZip> call = companyService.updateCompanyZip(""+companyIdAPI, updateCompanyZip);
+        Call<UpdateCompanyZip> call = companyService.updateCompanyZip("" + companyIdAPI, updateCompanyZip);
 
         call.enqueue(new Callback<UpdateCompanyZip>() {
             @Override
@@ -783,7 +783,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 //------------------------------------- Update Type ------------------------------------------------
         UpdateCompanyAddress updateCompanyAddress = new UpdateCompanyAddress(address.getText().toString());
 
-        Call<UpdateCompanyAddress> call = companyService.updateCompanyAddress(""+companyIdAPI, updateCompanyAddress);
+        Call<UpdateCompanyAddress> call = companyService.updateCompanyAddress("" + companyIdAPI, updateCompanyAddress);
 
         call.enqueue(new Callback<UpdateCompanyAddress>() {
             @Override
@@ -802,12 +802,13 @@ public class CompanyDetailsActivity extends AppCompatActivity {
         });
 //--------------------------------------------------------------------------------------------------
     }
+
     private void updateCompanyType() {
 
 //------------------------------------- Update Type ------------------------------------------------
         UpdateCompanyType updateCompanyType = new UpdateCompanyType(companyType);
 
-        Call<UpdateCompanyType> call = companyService.updateCompanyType(""+companyIdAPI, updateCompanyType);
+        Call<UpdateCompanyType> call = companyService.updateCompanyType("" + companyIdAPI, updateCompanyType);
 
         call.enqueue(new Callback<UpdateCompanyType>() {
             @Override
@@ -970,4 +971,17 @@ public class CompanyDetailsActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(CompanyDetailsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent i8 = new Intent(CompanyDetailsActivity.this, DashboardActivity.class);
+        i8.putExtra("mobile2", mobile);
+        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i8);
+        overridePendingTransition(0, 0);
+        finish();
+    }
+
 }

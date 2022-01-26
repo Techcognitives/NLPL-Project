@@ -277,4 +277,26 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
         mQueue.add(request);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if (roleAPI.equals("Customer")) {
+            Intent i8 = new Intent(ViewBankDetailsActivity.this, CustomerDashboardActivity.class);
+            i8.putExtra("mobile", phone);
+            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i8);
+            overridePendingTransition(0, 0);
+            finish();
+
+        } else {
+            Intent i8 = new Intent(ViewBankDetailsActivity.this, DashboardActivity.class);
+            i8.putExtra("mobile2", phone);
+            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i8);
+            overridePendingTransition(0, 0);
+            finish();
+        }
+    }
+
 }
