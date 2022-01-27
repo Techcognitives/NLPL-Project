@@ -28,12 +28,10 @@
 
     <TextView
         android:id="@+id/dialog_driver_details_driver_bank_details"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="5dp"
         android:background="@drawable/button_active"
         android:onClick="onClickAddDriverBankDetails"
         android:paddingTop="5dp"
@@ -43,19 +41,17 @@
         android:textColor="@color/white"
         android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/dialog_driver_details_close_dialog"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_driver_details_close_dialog"
+        app:layout_constraintEnd_toStartOf="@+id/dialog_driver_details_close_dialog"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_driver_details_ifsc_code" />
+        app:layout_constraintTop_toTopOf="@+id/dialog_driver_details_close_dialog" />
 
     <TextView
         android:id="@+id/dialog_driver_details_close_dialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/button_active"
         android:onClick="onClickCloseDialogDriverBankDetails"
         android:paddingStart="40dp"
@@ -69,7 +65,9 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_driver_details_driver_bank_details" />
+        app:layout_constraintStart_toEndOf="@+id/dialog_driver_details_driver_bank_details"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_driver_details_ifsc_code" />
+
     <TextView
         android:id="@+id/dialog_driver_details_bank_name"
         android:layout_width="match_parent"
@@ -109,7 +107,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="20dp"
         android:paddingStart="5dp"
         android:paddingTop="5dp"
         android:paddingEnd="5dp"
@@ -117,7 +115,7 @@
         android:text=""
         android:textColor="#000000"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/dialog_driver_details_driver_bank_details"
+        app:layout_constraintBottom_toTopOf="@+id/dialog_driver_details_close_dialog"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialog_driver_details_account_number" />
