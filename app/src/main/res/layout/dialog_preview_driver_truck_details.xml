@@ -21,7 +21,7 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/dialog_driver_details_bank_name"
+        app:layout_constraintBottom_toTopOf="@+id/dialog_driver_truck_details_vehicle_number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -41,13 +41,13 @@
         android:textColor="@color/white"
         android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/dialog_driver_details_close_dialog"
-        app:layout_constraintEnd_toStartOf="@+id/dialog_driver_details_close_dialog"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_driver_truck_details_ok_button"
+        app:layout_constraintEnd_toStartOf="@+id/dialog_driver_truck_details_ok_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/dialog_driver_details_close_dialog" />
+        app:layout_constraintTop_toTopOf="@+id/dialog_driver_truck_details_ok_button" />
 
     <TextView
-        android:id="@+id/dialog_driver_details_close_dialog"
+        android:id="@+id/dialog_driver_truck_details_ok_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -67,10 +67,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/dialog_driver_truck_details_reassign_button"
-        app:layout_constraintTop_toBottomOf="@+id/my_truck_list_preview_rc_book_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/dialog_driver_truck_details_rc_book_preview" />
 
     <TextView
-        android:id="@+id/dialog_driver_details_bank_name"
+        android:id="@+id/dialog_driver_truck_details_vehicle_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -81,13 +81,13 @@
         android:text="MH 12 TG 5977"
         android:textColor="@color/black"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/dialog_driver_details_account_number"
+        app:layout_constraintBottom_toTopOf="@+id/dialog_driver_truck_details_vehicle_model"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialog_driver_truck_details_title" />
 
     <TextView
-        android:id="@+id/dialog_driver_details_account_number"
+        android:id="@+id/dialog_driver_truck_details_vehicle_model"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -100,13 +100,13 @@
         android:text="model"
         android:textColor="#000000"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/dialog_driver_details_ifsc_code"
-        app:layout_constraintEnd_toStartOf="@+id/asdfghj"
+        app:layout_constraintBottom_toTopOf="@+id/dialog_driver_truck_details_capacity"
+        app:layout_constraintEnd_toStartOf="@+id/dialog_driver_truck_details_title_feet"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_driver_details_bank_name" />
+        app:layout_constraintTop_toBottomOf="@+id/dialog_driver_truck_details_vehicle_number" />
 
     <TextView
-        android:id="@+id/asdfghj"
+        android:id="@+id/dialog_driver_truck_details_title_feet"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
@@ -117,13 +117,13 @@
         android:text="feet"
         android:textColor="#000000"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/dialog_driver_details_account_number"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_driver_truck_details_vehicle_model"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/dialog_driver_details_account_number"
-        app:layout_constraintTop_toTopOf="@+id/dialog_driver_details_account_number" />
+        app:layout_constraintStart_toEndOf="@+id/dialog_driver_truck_details_vehicle_model"
+        app:layout_constraintTop_toTopOf="@+id/dialog_driver_truck_details_vehicle_model" />
 
     <TextView
-        android:id="@+id/dialog_driver_details_ifsc_code"
+        android:id="@+id/dialog_driver_truck_details_capacity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -137,13 +137,13 @@
         android:text="capacity"
         android:textColor="#000000"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/my_truck_list_preview_rc_book_text_view"
-        app:layout_constraintEnd_toStartOf="@+id/asdfghgbhjk"
+        app:layout_constraintBottom_toTopOf="@+id/dialog_driver_truck_details_rc_book_preview"
+        app:layout_constraintEnd_toStartOf="@+id/dialog_driver_truck_details_type"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_driver_details_account_number" />
+        app:layout_constraintTop_toBottomOf="@+id/dialog_driver_truck_details_vehicle_model" />
 
     <TextView
-        android:id="@+id/asdfghgbhjk"
+        android:id="@+id/dialog_driver_truck_details_type"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
@@ -154,13 +154,13 @@
         android:text="type"
         android:textColor="@color/black"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/dialog_driver_details_ifsc_code"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_driver_truck_details_capacity"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/dialog_driver_details_ifsc_code"
-        app:layout_constraintTop_toTopOf="@+id/dialog_driver_details_ifsc_code" />
+        app:layout_constraintStart_toEndOf="@+id/dialog_driver_truck_details_capacity"
+        app:layout_constraintTop_toTopOf="@+id/dialog_driver_truck_details_capacity" />
 
     <TextView
-        android:id="@+id/my_truck_list_preview_insurance_text_view"
+        android:id="@+id/dialog_driver_truck_details_insurance_preview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
@@ -171,14 +171,14 @@
         android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/my_truck_list_preview_rc_book_text_view"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_driver_truck_details_rc_book_preview"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/my_truck_list_preview_rc_book_text_view"
-        app:layout_constraintTop_toTopOf="@+id/my_truck_list_preview_rc_book_text_view"
+        app:layout_constraintStart_toEndOf="@+id/dialog_driver_truck_details_rc_book_preview"
+        app:layout_constraintTop_toTopOf="@+id/dialog_driver_truck_details_rc_book_preview"
         tools:ignore="RtlCompat" />
 
     <TextView
-        android:id="@+id/my_truck_list_preview_rc_book_text_view"
+        android:id="@+id/dialog_driver_truck_details_rc_book_preview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -191,10 +191,10 @@
         android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/dialog_driver_details_close_dialog"
-        app:layout_constraintEnd_toStartOf="@+id/my_truck_list_preview_insurance_text_view"
+        app:layout_constraintBottom_toTopOf="@+id/dialog_driver_truck_details_ok_button"
+        app:layout_constraintEnd_toStartOf="@+id/dialog_driver_truck_details_insurance_preview"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_driver_details_ifsc_code"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_driver_truck_details_capacity"
         tools:ignore="RtlCompat" />
 
     <!--    <TextView-->

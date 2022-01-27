@@ -121,7 +121,15 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
         previewDialogAssignedTruck.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         TextView previewAssignedTruckTitle = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_details_title);
-        TextView previewAssignedTruck
+        TextView previewAssignedTruckNumber = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_vehicle_number);
+        TextView previewAssignedTruckModel = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_vehicle_number);
+        TextView previewAssignedTruckFeet = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_vehicle_number);
+        TextView previewAssignedTruckCapacity = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_vehicle_number);
+        TextView previewAssignedTruckType = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_vehicle_number);
+        TextView previewAssignedTruckRcBook = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_vehicle_number);
+        TextView previewAssignedTruckInsurance = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_vehicle_number);
+        TextView previewAssignedTruckReAssign = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_vehicle_number);
+        TextView previewAssignedTruckOkButton = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_vehicle_number);
 
         previewDialogDL = new Dialog(ViewDriverDetailsActivity.this);
         previewDialogDL.setContentView(R.layout.dialog_preview_images);
