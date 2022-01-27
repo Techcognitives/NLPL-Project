@@ -52,7 +52,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     <TextView
         android:id="@+id/my_truck_list_preview_rc_book_text_view"
         android:layout_width="0dp"

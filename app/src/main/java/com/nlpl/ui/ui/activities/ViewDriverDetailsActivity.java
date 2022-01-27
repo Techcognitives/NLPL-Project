@@ -45,7 +45,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
     private RequestQueue mQueue;
 
     ArrayList<String> arrayUserDriverId, arrayDriverMobileNo;
-    Dialog previewDialogDriverDetails;
+    Dialog previewDialogDriverDetails, previewDialogAssignedTruck;
     TextView previewDriverDetailsDriverBankName, previewDriverDetailsLabelAddDriverBank, previewDriverDetailsAddDriverBank, previewDriverDetailsDriverBankAccountNumber, previewDriverDetailsDriverBankIFSICode, previewDriverDetailsDriverBankDetailsTitle;
 
     String mobileNoDriverAPI, userDriverIdAPI, driverUserIdGet;
@@ -116,6 +116,12 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
         previewDriverDetailsAddDriverBank = (TextView) previewDialogDriverDetails.findViewById(R.id.dialog_driver_details_driver_bank_details);
         previewDriverDetailsLabelAddDriverBank = (TextView) previewDialogDriverDetails.findViewById(R.id.dialog_driver_details_label_add_driver_bank);
 
+        previewDialogAssignedTruck = new Dialog(ViewDriverDetailsActivity.this);
+        previewDialogAssignedTruck.setContentView(R.layout.dialog_preview_driver_truck_details);
+        previewDialogAssignedTruck.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        TextView previewAssignedTruckTitle = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_details_title);
+        TextView previewAssignedTruck
 
         previewDialogDL = new Dialog(ViewDriverDetailsActivity.this);
         previewDialogDL.setContentView(R.layout.dialog_preview_images);
@@ -390,6 +396,10 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
         startActivity(i8);
         finish();
         overridePendingTransition(0, 0);
+
+    }
+
+    public void onClickPreviewAssignedTruckDetails(DriverModel obj) {
 
     }
 }
