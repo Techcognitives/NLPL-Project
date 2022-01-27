@@ -89,7 +89,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     EditText vehicleNumberEdit;
     TextView selectModel, selectFt, selectCapacity;
     ImageView openType, closedType, tarpaulinType, imgRC, imgI;
-    String bodyTypeSelected, mobile, truckIdPass;
+    String bodyTypeSelected, mobile, truckIdPass, driverIdBundle;
 
     Dialog selectModelDialog, selectFeetDialog, selectCapacityDialog;
     String isDriverDetailsDoneAPI, pathForRC, pathForInsurance;
@@ -106,7 +106,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     private AddTruckService addTruckService;
 
     String userId, truckId, vehicleNumberAPI, vehicleTypeAPI, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI, truckModelAPI, truckFtAPI, truckCapacityAPI;
-    Boolean isRcEdited = false, isInsuranceEdited = false, fromBidNow = true, isEdit, isRcUploaded = false, isInsurance = false, truckSelected = false, isModelSelected = false;
+    Boolean isRcEdited = false, isInsuranceEdited = false, fromBidNow = true, isEdit, isRcUploaded = false, isInsurance = false, truckSelected = false, isModelSelected = false, isAssignTruck = false;
 
     RadioButton openSelected, closeSelected, tarpaulinSelected;
 
@@ -128,6 +128,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             fromBidNow = bundle.getBoolean("fromBidNow");
             truckId = bundle.getString("truckId");
             mobile = bundle.getString("mobile");
+            isAssignTruck = bundle.getBoolean("assignTruck");
+            driverIdBundle = bundle.getString("driverId");
         }
         mQueue = Volley.newRequestQueue(VehicleDetailsActivity.this);
         getUserDetails(userId);
@@ -1009,6 +1011,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         addTruckRequest.setTruck_type(selectModel.getText().toString());
         addTruckRequest.setTruck_ft(selectFt.getText().toString() + " Ft");
         addTruckRequest.setTruck_carrying_capacity(selectCapacity.getText().toString());
+        if (isAssignTruck){
+            addTruckRequest.setDriver_id(driverIdBundle);
+        }
         return addTruckRequest;
     }
 
@@ -1263,13 +1268,13 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                         selectCapacity.setText(truckCapacityAPI);
 
                         String drivingLicenseURL = obj.getString("rc_book");
-                        String selfieURL = obj.getString("vehicle_insurance");
+                        String insuranceURL = obj.getString("vehicle_insurance");
 
                         new DownloadImageTask(previewRcBook).execute(drivingLicenseURL);
                         new DownloadImageTask(imgRC).execute(drivingLicenseURL);
 
-                        new DownloadImageTask(previewInsurance).execute(selfieURL);
-                        new DownloadImageTask(imgI).execute(selfieURL);
+                        new DownloadImageTask(previewInsurance).execute(insuranceURL);
+                        new DownloadImageTask(imgI).execute(insuranceURL);
 
                         if (vehicleTypeAPI.equals("Open")) {
                             openType.setBackgroundResource(R.drawable.image_view_border_selected);

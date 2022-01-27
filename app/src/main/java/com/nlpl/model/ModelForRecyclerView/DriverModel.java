@@ -8,6 +8,7 @@ public class DriverModel {
     private String driver_number;
     private String driver_emailId;
     private String driver_selfie;
+    private String truck_id;
 
     public String getUser_id() {
         return user_id;
@@ -63,5 +64,13 @@ public class DriverModel {
 
     public void setDriver_selfie(String driver_selfie) {
         this.driver_selfie = driver_selfie;
+    }
+
+    public String getTruck_id() {
+        return truck_id;
+    }
+
+    public void setTruck_id(String truck_id) {
+        this.truck_id = truck_id;
     }
 }

@@ -427,6 +427,7 @@ public class DashboardActivity extends AppCompatActivity {
                     intent2.putExtra("userId", userId);
                     intent2.putExtra("isEdit", false);
                     intent2.putExtra("fromBidNow", false);
+                    intent2.putExtra("assignTruck", false);
                     intent2.putExtra("mobile", phone);
                     startActivity(intent2);
                 }
@@ -844,6 +845,7 @@ public class DashboardActivity extends AppCompatActivity {
                 intent3.putExtra("userId", userId);
                 intent3.putExtra("isEdit", false);
                 intent3.putExtra("fromBidNow", true);
+                intent3.putExtra("assignTruck", false);
                 intent3.putExtra("mobile", phone);
                 startActivity(intent3);
             }
@@ -1396,6 +1398,7 @@ public class DashboardActivity extends AppCompatActivity {
                                 intent3.putExtra("userId", userId);
                                 intent3.putExtra("isEdit", false);
                                 intent3.putExtra("fromBidNow", true);
+                                intent3.putExtra("assignTruck", false);
                                 intent3.putExtra("mobile", phone);
                                 startActivity(intent3);
                             }
@@ -1636,6 +1639,7 @@ public class DashboardActivity extends AppCompatActivity {
                 intent3.putExtra("userId", userId);
                 intent3.putExtra("isEdit", false);
                 intent3.putExtra("fromBidNow", true);
+                intent3.putExtra("assignTruck", false);
                 intent3.putExtra("mobile", phone);
                 startActivity(intent3);
             }

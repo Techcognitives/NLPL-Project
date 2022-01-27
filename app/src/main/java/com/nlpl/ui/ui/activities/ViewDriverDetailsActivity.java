@@ -28,14 +28,28 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.DriverModel;
+import com.nlpl.model.ModelForRecyclerView.TruckModel;
+import com.nlpl.model.UpdateDriverDetails.UpdateDriverTruckId;
+import com.nlpl.model.UpdateTruckDetails.UpdateTruckDriverId;
+import com.nlpl.services.AddDriverService;
+import com.nlpl.services.AddTruckService;
 import com.nlpl.ui.ui.adapters.DriversAdapter;
+import com.nlpl.ui.ui.adapters.TrucksAdapter;
+import com.nlpl.ui.ui.adapters.TrucksListAdapter;
 import com.nlpl.utils.DownloadImageTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ViewDriverDetailsActivity extends AppCompatActivity {
 
@@ -44,16 +58,27 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
     private RecyclerView driverListRecyclerView;
     private RequestQueue mQueue;
 
+    private ArrayList<TruckModel> truckList = new ArrayList<>();
+    private TrucksListAdapter truckListAdapter;
+    private RecyclerView truckListRecyclerView;
+
+    private AddDriverService addDriverService;
+
     ArrayList<String> arrayUserDriverId, arrayDriverMobileNo;
     Dialog previewDialogDriverDetails, previewDialogAssignedTruck;
     TextView previewDriverDetailsDriverBankName, previewDriverDetailsLabelAddDriverBank, previewDriverDetailsAddDriverBank, previewDriverDetailsDriverBankAccountNumber, previewDriverDetailsDriverBankIFSICode, previewDriverDetailsDriverBankDetailsTitle;
+    String userIdTruckDetails, truckIdTruckDetails, vehicleNumberTruckDetails, modelTruckDetails, typeTruckDetails, feetTruckDetails, capacityTruckDetails, rcBookTruckDetails, insuranceTruckDetails, driverIdTruckDetails;
 
     String mobileNoDriverAPI, userDriverIdAPI, driverUserIdGet;
 
+    Dialog previewDialogRcBook, previewDialogInsurance, previewDialogSpinner;
+    ImageView previewRcBook, previewInsurance;
+
     Dialog previewDialogDL, previewDialogSelfie;
+    TextView previewAssignedTruckTitle, previewAssignedTruckNumber, previewAssignedTruckModel, previewAssignedTruckFeet, previewAssignedTruckCapacity, previewAssignedTruckType, previewAssignedTruckRcBook, previewAssignedTruckInsurance, previewAssignedTruckReAssign, previewAssignedTruckOkButton, previewAssignedTruckMessage;
     ImageView previewDriverLicense, previewDriverSelfie;
 
-    String phone, userId;
+    String phone, userId, driverId;
 
     View actionBar;
     TextView actionBarTitle;
@@ -75,6 +100,12 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
         }
 
         mQueue = Volley.newRequestQueue(ViewDriverDetailsActivity.this);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://13.234.163.179:3000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        addDriverService = retrofit.create(AddDriverService.class);
 
         //-------------------------------- Action Bar ----------------------------------------------
         actionBar = findViewById(R.id.view_driver_details_action_bar);
@@ -120,16 +151,29 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
         previewDialogAssignedTruck.setContentView(R.layout.dialog_preview_driver_truck_details);
         previewDialogAssignedTruck.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        TextView previewAssignedTruckTitle = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_details_title);
-        TextView previewAssignedTruckNumber = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_vehicle_number);
-        TextView previewAssignedTruckModel = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_vehicle_number);
-        TextView previewAssignedTruckFeet = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_vehicle_number);
-        TextView previewAssignedTruckCapacity = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_vehicle_number);
-        TextView previewAssignedTruckType = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_vehicle_number);
-        TextView previewAssignedTruckRcBook = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_vehicle_number);
-        TextView previewAssignedTruckInsurance = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_vehicle_number);
-        TextView previewAssignedTruckReAssign = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_vehicle_number);
-        TextView previewAssignedTruckOkButton = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_vehicle_number);
+        previewAssignedTruckTitle = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_details_title);
+        previewAssignedTruckNumber = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_vehicle_number);
+        previewAssignedTruckModel = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_vehicle_model);
+        previewAssignedTruckFeet = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_title_feet);
+        previewAssignedTruckCapacity = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_capacity);
+        previewAssignedTruckType = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_type);
+        previewAssignedTruckRcBook = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_rc_book_preview);
+        previewAssignedTruckInsurance = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_insurance_preview);
+        previewAssignedTruckReAssign = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_reassign_button);
+        previewAssignedTruckOkButton = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_ok_button);
+        previewAssignedTruckMessage = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_label_add_driver_bank);
+
+        previewDialogRcBook = new Dialog(ViewDriverDetailsActivity.this);
+        previewDialogRcBook.setContentView(R.layout.dialog_preview_images);
+        previewDialogRcBook.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        previewRcBook = (ImageView) previewDialogRcBook.findViewById(R.id.dialog_preview_image_view);
+
+        previewDialogInsurance = new Dialog(ViewDriverDetailsActivity.this);
+        previewDialogInsurance.setContentView(R.layout.dialog_preview_images);
+        previewDialogInsurance.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        previewInsurance = (ImageView) previewDialogInsurance.findViewById(R.id.dialog_preview_image_view);
 
         previewDialogDL = new Dialog(ViewDriverDetailsActivity.this);
         previewDialogDL.setContentView(R.layout.dialog_preview_images);
@@ -143,6 +187,17 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
 
         previewDriverSelfie = (ImageView) previewDialogSelfie.findViewById(R.id.dialog_preview_image_view);
 
+        previewDialogSpinner = new Dialog(ViewDriverDetailsActivity.this);
+        previewDialogSpinner.setContentView(R.layout.dialog_spinner_bind);
+        previewDialogSpinner.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        TextView previewSpinnerTitle = (TextView) previewDialogSpinner.findViewById(R.id.dialog_spinner_bind_title);
+        TextView previewSpinnerAddTruck = (TextView) previewDialogSpinner.findViewById(R.id.dialog_spinner_bind_add_details);
+        TextView previewSpinnerOkButton = (TextView) previewDialogSpinner.findViewById(R.id.dialog_spinner_bind_cancel);
+
+        previewSpinnerTitle.setText("Select Truck");
+        previewSpinnerAddTruck.setText("+ Add Truck");
+
         //---------------------------- Get Driver Details -------------------------------------------
         driverListRecyclerView = (RecyclerView) findViewById(R.id.driver_list_view);
 
@@ -154,6 +209,19 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
         driverListAdapter = new DriversAdapter(ViewDriverDetailsActivity.this, driverList);
         driverListRecyclerView.setAdapter(driverListAdapter);
         getDriverDetailsList();
+        //------------------------------------------------------------------------------------------
+
+        //---------------------------- Get Truck Details -------------------------------------------
+        truckListRecyclerView = previewDialogSpinner.findViewById(R.id.dialog_spinner_bind_recycler_view);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager.setReverseLayout(true);
+        truckListRecyclerView.setLayoutManager(linearLayoutManager);
+        truckListRecyclerView.setHasFixedSize(true);
+
+        truckListAdapter = new TrucksListAdapter(ViewDriverDetailsActivity.this, truckList);
+        truckListRecyclerView.setAdapter(truckListAdapter);
+        getTruckList();
         //------------------------------------------------------------------------------------------
     }
 
@@ -172,6 +240,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
                         JSONObject obj = driverLists.getJSONObject(i);
                         DriverModel modelDriver = new DriverModel();
                         modelDriver.setUser_id(obj.getString("user_id"));
+                        modelDriver.setTruck_id(obj.getString("truck_id"));
                         modelDriver.setDriver_id(obj.getString("driver_id"));
                         modelDriver.setDriver_name(obj.getString("driver_name"));
                         modelDriver.setUpload_lc(obj.getString("upload_dl"));
@@ -268,13 +337,13 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
                         String bankAccountNumber = obj.getString("account_number");
                         String ifsiCode = obj.getString("IFSI_CODE");
 
-                        if (bankName.length()==0){
+                        if (bankName.length() == 0) {
                             previewDriverDetailsLabelAddDriverBank.setVisibility(View.VISIBLE);
                             previewDriverDetailsAddDriverBank.setVisibility(View.VISIBLE);
                             previewDriverDetailsDriverBankName.setVisibility(View.INVISIBLE);
                             previewDriverDetailsDriverBankAccountNumber.setVisibility(View.INVISIBLE);
                             previewDriverDetailsDriverBankIFSICode.setVisibility(View.INVISIBLE);
-                        }else{
+                        } else {
                             previewDriverDetailsDriverBankName.setVisibility(View.VISIBLE);
                             previewDriverDetailsDriverBankAccountNumber.setVisibility(View.VISIBLE);
                             previewDriverDetailsDriverBankIFSICode.setVisibility(View.VISIBLE);
@@ -349,6 +418,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
     }
 
     public void onClickCloseDialogDriverBankDetails(View view) {
+        previewDialogAssignedTruck.dismiss();
         previewDialogDriverDetails.dismiss();
         Intent intent = new Intent(ViewDriverDetailsActivity.this, ViewDriverDetailsActivity.class);
         intent.putExtra("userId", userId);
@@ -408,6 +478,233 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
     }
 
     public void onClickPreviewAssignedTruckDetails(DriverModel obj) {
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(previewDialogAssignedTruck.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.gravity = Gravity.CENTER;
+        previewDialogAssignedTruck.show();
+        previewDialogAssignedTruck.setCancelable(false);
+        previewDialogAssignedTruck.getWindow().setAttributes(lp);
 
+        driverId = obj.getDriver_id();
+        getTruckDetails(obj.getTruck_id());
     }
+
+    public void getTruckDetails(String truckId) {
+        //---------------------------- Get Truck Details -------------------------------------------
+        String url1 = getString(R.string.baseURL) + "/truck/" + truckId;
+        Log.i("URL: ", url1);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+                        userIdTruckDetails = obj.getString("user_id");
+                        truckIdTruckDetails = obj.getString("truck_id");
+                        vehicleNumberTruckDetails = obj.getString("vehicle_no");
+                        modelTruckDetails = obj.getString("truck_type");
+                        typeTruckDetails = obj.getString("vehicle_type");
+                        feetTruckDetails = obj.getString("truck_ft");
+                        capacityTruckDetails = obj.getString("truck_carrying_capacity");
+                        rcBookTruckDetails = obj.getString("rc_book");
+                        insuranceTruckDetails = obj.getString("vehicle_insurance");
+                        driverIdTruckDetails = obj.getString("driver_id");
+                    }
+
+                    previewAssignedTruckNumber.setText(vehicleNumberTruckDetails);
+                    previewAssignedTruckModel.setText("Model: " + modelTruckDetails);
+                    previewAssignedTruckFeet.setText("Feet: " + feetTruckDetails);
+                    previewAssignedTruckCapacity.setText("Capacity: " + capacityTruckDetails);
+                    previewAssignedTruckType.setText("Type: " + typeTruckDetails);
+
+                    if (vehicleNumberTruckDetails == null) {
+                        previewAssignedTruckNumber.setVisibility(View.INVISIBLE);
+                        previewAssignedTruckModel.setVisibility(View.INVISIBLE);
+                        previewAssignedTruckFeet.setVisibility(View.INVISIBLE);
+                        previewAssignedTruckCapacity.setVisibility(View.INVISIBLE);
+                        previewAssignedTruckType.setVisibility(View.INVISIBLE);
+                        previewAssignedTruckRcBook.setVisibility(View.INVISIBLE);
+                        previewAssignedTruckInsurance.setVisibility(View.INVISIBLE);
+                        previewAssignedTruckMessage.setVisibility(View.VISIBLE);
+                        previewAssignedTruckReAssign.setText("Assign Truck");
+                    } else {
+                        previewAssignedTruckNumber.setVisibility(View.VISIBLE);
+                        previewAssignedTruckModel.setVisibility(View.VISIBLE);
+                        previewAssignedTruckFeet.setVisibility(View.VISIBLE);
+                        previewAssignedTruckCapacity.setVisibility(View.VISIBLE);
+                        previewAssignedTruckType.setVisibility(View.VISIBLE);
+                        previewAssignedTruckRcBook.setVisibility(View.VISIBLE);
+                        previewAssignedTruckInsurance.setVisibility(View.VISIBLE);
+                        previewAssignedTruckMessage.setVisibility(View.INVISIBLE);
+                        previewAssignedTruckReAssign.setText("Re-Assign Truck");
+                    }
+
+                    new DownloadImageTask(previewRcBook).execute(rcBookTruckDetails);
+                    new DownloadImageTask(previewInsurance).execute(insuranceTruckDetails);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+        //-------------------------------------------------------------------------------------------
+    }
+
+    public void onClickPreviewRcBookAssigned(View view) {
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(previewDialogRcBook.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        previewDialogRcBook.show();
+        previewDialogRcBook.getWindow().setAttributes(lp);
+    }
+
+    public void onClickPreviewInsuranceAssigned(View view) {
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(previewDialogInsurance.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        previewDialogInsurance.show();
+        previewDialogInsurance.getWindow().setAttributes(lp);
+    }
+
+    public void onClickReAssignTruck(View view) {
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(previewDialogSpinner.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        previewDialogSpinner.show();
+        previewDialogSpinner.getWindow().setAttributes(lp);
+    }
+
+    public void onClickCancelSelectBind(View view) {
+        previewDialogSpinner.dismiss();
+        previewDialogAssignedTruck.dismiss();
+        Intent intent = new Intent(ViewDriverDetailsActivity.this, ViewDriverDetailsActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("mobile", phone);
+        startActivity(intent);
+        finish();
+    }
+
+    public void onClickAddDriverDetailsAssigned(View view) {
+        previewDialogSpinner.dismiss();
+        previewDialogAssignedTruck.dismiss();
+        Intent intent2 = new Intent(ViewDriverDetailsActivity.this, VehicleDetailsActivity.class);
+        intent2.putExtra("userId", userId);
+        intent2.putExtra("isEdit", false);
+        intent2.putExtra("fromBidNow", false);
+        intent2.putExtra("assignTruck", true);
+        intent2.putExtra("mobile", phone);
+        intent2.putExtra("driverId", driverId);
+        startActivity(intent2);
+    }
+
+    public void getTruckList() {
+        //---------------------------- Get Truck Details -------------------------------------------
+        String url1 = getString(R.string.baseURL) + "/truck/truckbyuserID/" + userId;
+        Log.i("URL: ", url1);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    truckList = new ArrayList<>();
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+                        TruckModel model = new TruckModel();
+                        model.setUser_id(obj.getString("user_id"));
+                        model.setVehicle_no(obj.getString("vehicle_no"));
+                        model.setTruck_type(obj.getString("truck_type"));
+                        model.setVehicle_type(obj.getString("vehicle_type"));
+                        model.setTruck_ft(obj.getString("truck_ft"));
+                        model.setTruck_carrying_capacity(obj.getString("truck_carrying_capacity"));
+                        model.setRc_book(obj.getString("rc_book"));
+                        model.setVehicle_insurance(obj.getString("vehicle_insurance"));
+                        model.setTruck_id(obj.getString("truck_id"));
+                        truckList.add(model);
+                    }
+                    if (truckList.size() > 0) {
+                        truckListAdapter.updateData(truckList);
+                    } else {
+                    }
+
+//                    if (truckList.size() > 5) {
+//                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                        params.height = 235; //height recycleviewer
+//                        truckListRecyclerView.setLayoutParams(params);
+//                    } else {
+//                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                        truckListRecyclerView.setLayoutParams(params);
+//                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+        //-------------------------------------------------------------------------------------------
+    }
+
+    public void onClickAssignTruckFromList(TruckModel obj) {
+        Log.i("TruckId", obj.getTruck_id());
+        updateDriverTruckId(obj.getTruck_id());
+        previewDialogAssignedTruck.dismiss();
+        previewDialogSpinner.dismiss();
+        Intent intent = new Intent(ViewDriverDetailsActivity.this, ViewDriverDetailsActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("mobile", phone);
+        startActivity(intent);
+        finish();
+    }
+
+    private void updateDriverTruckId(String truckIdPass) {
+
+        Log.i("DriverID Truck", driverId);
+        Log.i("TruckId Truck", truckIdPass);
+
+        UpdateDriverTruckId updateDriverTruckId = new UpdateDriverTruckId(truckIdPass);
+
+        Call<UpdateDriverTruckId> call = addDriverService.updateDriverTruckId("" + driverId, updateDriverTruckId);
+
+        call.enqueue(new Callback<UpdateDriverTruckId>() {
+            @Override
+            public void onResponse(Call<UpdateDriverTruckId> call, Response<UpdateDriverTruckId> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Driver Truck Id");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateDriverTruckId> call, Throwable t) {
+                Log.i("Not Successful", "User is Driver Added");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+    }
+
 }
