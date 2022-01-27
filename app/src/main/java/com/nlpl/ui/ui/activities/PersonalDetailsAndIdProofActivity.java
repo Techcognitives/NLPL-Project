@@ -15,6 +15,7 @@ import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
@@ -126,8 +127,8 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
     private int GET_FROM_GALLERY = 0;
     private int GET_FROM_GALLERY1 = 1;
-//    int CAMERA_PIC_REQUEST1 = 5;
-//    int CAMERA_PIC_REQUEST2 = 15;
+    int CAMERA_PIC_REQUEST1 = 5;
+    int CAMERA_PIC_REQUEST2 = 15;
 
     private UserService userService;
 
@@ -555,14 +556,14 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
                 ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
 
-//                camera.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
-//                        chooseDialog.dismiss();
-//                    }
-//                });
+                camera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
+                        chooseDialog.dismiss();
+                    }
+                });
 
                 gallery.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -600,14 +601,14 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
                 ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
 
-//                camera.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST2);
-//                        chooseDialog.dismiss();
-//                    }
-//                });
+                camera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST2);
+                        chooseDialog.dismiss();
+                    }
+                });
 
                 gallery.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -908,15 +909,17 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             String pinCodeWatcher = pinCode.getText().toString().trim();
 
-            if (pinCodeWatcher.length() == 6) {
+            if (pinCodeWatcher.length() != 6) {
+                selectStateText.setText("");
+                selectDistrictText.setText("");
+                okButton.setEnabled(false);
+                okButton.setBackground(getDrawable(R.drawable.button_de_active));
+                pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+            } else {
                 getStateAndDistrict(pinCode.getText().toString());
                 okButton.setEnabled(true);
                 okButton.setBackground(getDrawable(R.drawable.button_active));
                 pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
-            } else {
-                okButton.setEnabled(false);
-                okButton.setBackground(getDrawable(R.drawable.button_de_active));
-                pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
             }
         }
 
@@ -1075,102 +1078,102 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
             imgF.setImageURI(selectedImage);
 
-//        } else if (requestCode == CAMERA_PIC_REQUEST1) {
-//            //----------------------- Alert Dialog -------------------------------------------------
-//            Dialog alert = new Dialog(PersonalDetailsAndIdProofActivity.this);
-//            alert.setContentView(R.layout.dialog_alert);
-//            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-//            lp.copyFrom(alert.getWindow().getAttributes());
-//            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-//            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-//            lp.gravity = Gravity.CENTER;
-//
-//            alert.show();
-//            alert.getWindow().setAttributes(lp);
-//            alert.setCancelable(true);
-//
-//            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-//            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-//            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-//            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-//
-//            alertTitle.setText("Personal Details");
-//            alertMessage.setText("PAN Card Uploaded Successfully");
-//            alertPositiveButton.setVisibility(View.GONE);
-//            alertNegativeButton.setText("OK");
-//            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-//            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
-//
-//            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    alert.dismiss();
-//                    isPanAdded = true;
-//                    noChange = false;
-//                }
-//            });
-//            //------------------------------------------------------------------------------------------
-//
-//            panCardText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-//            uploadPAN.setVisibility(View.INVISIBLE);
-//            editPAN.setVisibility(View.VISIBLE);
-//            previewPan.setVisibility(View.VISIBLE);
-//            previewAadhar.setVisibility(View.VISIBLE);
-//
-//            Bitmap image = (Bitmap) data.getExtras().get("data");
-//            String path = getRealPathFromURI(getImageUri(this, image));
-//            ImageView editedPan = (ImageView) previewDialogPan.findViewById(R.id.dialog_preview_image_view);
-//            editedPan.setImageBitmap(BitmapFactory.decodeFile(path));
-//            imgPAN.setImageBitmap(BitmapFactory.decodeFile(path));
-//            uploadImage(path);
-//
-//        } else if (requestCode == CAMERA_PIC_REQUEST2) {
-//            //----------------------- Alert Dialog -------------------------------------------------
-//            Dialog alert = new Dialog(PersonalDetailsAndIdProofActivity.this);
-//            alert.setContentView(R.layout.dialog_alert);
-//            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-//            lp.copyFrom(alert.getWindow().getAttributes());
-//            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-//            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-//            lp.gravity = Gravity.CENTER;
-//
-//            alert.show();
-//            alert.getWindow().setAttributes(lp);
-//            alert.setCancelable(true);
-//
-//            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-//            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-//            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-//            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-//
-//            alertTitle.setText("Personal Details");
-//            alertMessage.setText("Aadhar Card Uploaded Successfully");
-//            alertPositiveButton.setVisibility(View.GONE);
-//            alertNegativeButton.setText("OK");
-//            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-//            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
-//
-//            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    alert.dismiss();
-//                    isAadharAdded = true;
-//                    noChange = false;
-//                }
-//            });
-//            //------------------------------------------------------------------------------------------
-//            frontText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-//            uploadF.setVisibility(View.INVISIBLE);
-//            editFront.setVisibility(View.VISIBLE);
-//
-//            Bitmap image = (Bitmap) data.getExtras().get("data");
-//            ImageView editedAadhar = (ImageView) previewDialogAadhar.findViewById(R.id.dialog_preview_image_view);
-//            editedAadhar.setImageBitmap(image);
-//            String path = getRealPathFromURI(getImageUri(this, image));
-//            imgF.setImageBitmap(BitmapFactory.decodeFile(path));
-//            uploadImage(path);
+        } else if (requestCode == CAMERA_PIC_REQUEST1) {
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(PersonalDetailsAndIdProofActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(true);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText("Personal Details");
+            alertMessage.setText("PAN Card Uploaded Successfully");
+            alertPositiveButton.setVisibility(View.GONE);
+            alertNegativeButton.setText("OK");
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.dismiss();
+                    isPanAdded = true;
+                    noChange = false;
+                }
+            });
+            //------------------------------------------------------------------------------------------
+
+            panCardText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadPAN.setVisibility(View.INVISIBLE);
+            editPAN.setVisibility(View.VISIBLE);
+            previewPan.setVisibility(View.VISIBLE);
+            previewAadhar.setVisibility(View.VISIBLE);
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            String path = getRealPathFromURI(getImageUri(this, image));
+            ImageView editedPan = (ImageView) previewDialogPan.findViewById(R.id.dialog_preview_image_view);
+            editedPan.setImageBitmap(BitmapFactory.decodeFile(path));
+            imgPAN.setImageBitmap(BitmapFactory.decodeFile(path));
+            uploadImage(path);
+
+        } else if (requestCode == CAMERA_PIC_REQUEST2) {
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(PersonalDetailsAndIdProofActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(true);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText("Personal Details");
+            alertMessage.setText("Aadhar Card Uploaded Successfully");
+            alertPositiveButton.setVisibility(View.GONE);
+            alertNegativeButton.setText("OK");
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.dismiss();
+                    isAadharAdded = true;
+                    noChange = false;
+                }
+            });
+            //------------------------------------------------------------------------------------------
+            frontText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadF.setVisibility(View.INVISIBLE);
+            editFront.setVisibility(View.VISIBLE);
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            ImageView editedAadhar = (ImageView) previewDialogAadhar.findViewById(R.id.dialog_preview_image_view);
+            editedAadhar.setImageBitmap(image);
+            String path = getRealPathFromURI(getImageUri(this, image));
+            imgF.setImageBitmap(BitmapFactory.decodeFile(path));
+            uploadImage(path);
         }
     }
     //-------------------------------------------------------------------------------------------------------------------
@@ -1711,13 +1714,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         });
     }
 
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
-    }
-
     public String getRealPathFromURI(Uri uri) {
         String path = "";
         if (getContentResolver() != null) {
@@ -1731,6 +1727,14 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         }
         return path;
     }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
 
     private void requestPermissionsForCamera() {
         if (ContextCompat.checkSelfPermission(PersonalDetailsAndIdProofActivity.this, Manifest.permission.CAMERA)
@@ -1763,20 +1767,16 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         Log.i("Entered PIN", enteredPin);
 
-        String url = getString(R.string.baseURL) + "/user/locationData/" + enteredPin;
+        String url = "https://findyourtruck-393a4-default-rtdb.asia-southeast1.firebasedatabase.app/indianPinCodes.json?orderBy=%22pincode%22&equalTo=%22"+enteredPin+"%22";
         Log.i("url for truckByTruckId", url);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
 
-                    JSONObject object = response.getJSONObject("data");
-
-                    stateByPinCode = object.getString("stateCode");
-                    distByPinCode = object.getString("district");
-
-                    Log.i("state By PIncode", stateByPinCode);
-                    Log.i("Dist By PIncode", distByPinCode);
+                    JSONObject obj = response.getJSONObject("81066");
+                    String stateByPinCode = obj.getString("stateCode");
+                    String  distByPinCode = obj.getString("district");
 
                     selectStateText.setText(stateByPinCode);
                     selectDistrictText.setText(distByPinCode);

@@ -538,6 +538,8 @@ public class CompanyDetailsActivity extends AppCompatActivity {
             String pinCodeWatcher = pinCode.getText().toString().trim();
 
             if (pinCodeWatcher.length() != 6) {
+                selectStateText.setText("");
+                selectDistrictText.setText("");
                 pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
             } else {
                 String enteredPinCode = pinCode.getText().toString();
@@ -557,20 +559,19 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 
         Log.i("Entered PIN", enteredPin);
 
-        String url = getString(R.string.baseURL) + "/user/locationData/" + enteredPin;
+        String url = "https://findyourtruck-393a4-default-rtdb.asia-southeast1.firebasedatabase.app/indianPinCodes.json?orderBy=%22pincode%22&equalTo=%22"+enteredPin+"%22";
         Log.i("url for truckByTruckId", url);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
 
-                    JSONObject object = response.getJSONObject("data");
+                    JSONObject obj = response.getJSONObject("81066");
+                    stateByPinCode = obj.getString("stateCode");
+                    distByPinCode = obj.getString("district");
 
-                    stateByPinCode = object.getString("stateCode");
-                    distByPinCode = object.getString("district");
-
-                    Log.i("state By PIncode", stateByPinCode);
-                    Log.i("Dist By PIncode", distByPinCode);
+                    Log.i("state By PIN Code", stateByPinCode);
+                    Log.i("Dist By PIN Code", distByPinCode);
 
                     selectStateText.setText(stateByPinCode);
                     selectDistrictText.setText(distByPinCode);

@@ -15,6 +15,7 @@ import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -72,8 +73,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     ImageView imgPAN, imgF, previewPan, previewAadhar;
     private int GET_FROM_GALLERY = 0;
     private int GET_FROM_GALLERY1 = 1;
-//    private int CAMERA_PIC_REQUEST = 3;
-//    private int CAMERA_PIC_REQUEST1 = 2;
+    private int CAMERA_PIC_REQUEST = 3;
+    private int CAMERA_PIC_REQUEST1 = 2;
 
     View panAndAadharView;
 
@@ -217,14 +218,14 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
                 ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
 
-//                camera.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
-//                        chooseDialog.dismiss();
-//                    }
-//                });
+                camera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
+                        chooseDialog.dismiss();
+                    }
+                });
 
                 gallery.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -261,14 +262,14 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
                 ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
 
-//                camera.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
-//                        chooseDialog.dismiss();
-//                    }
-//                });
+                camera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
+                        chooseDialog.dismiss();
+                    }
+                });
 
                 gallery.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -304,14 +305,14 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
                 ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
 
-//                camera.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
-//                        chooseDialog.dismiss();
-//                    }
-//                });
+                camera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
+                        chooseDialog.dismiss();
+                    }
+                });
 
                 gallery.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -347,14 +348,14 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
                 ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
 
-//                camera.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
-//                        chooseDialog.dismiss();
-//                    }
-//                });
+                camera.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
+                        chooseDialog.dismiss();
+                    }
+                });
 
                 gallery.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -492,105 +493,105 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             editedAadhar.setImageURI(selectedImage);
             imgF.setImageURI(selectedImage);
 
-//        } else  if (requestCode == CAMERA_PIC_REQUEST) {
-//            //----------------------- Alert Dialog -------------------------------------------------
-//            Dialog alert = new Dialog(PersonalDetailsActivity.this);
-//            alert.setContentView(R.layout.dialog_alert);
-//            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-//            lp.copyFrom(alert.getWindow().getAttributes());
-//            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-//            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-//            lp.gravity = Gravity.CENTER;
-//
-//            alert.show();
-//            alert.getWindow().setAttributes(lp);
-//            alert.setCancelable(true);
-//
-//            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-//            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-//            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-//            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-//
-//            alertTitle.setText("Personal Details");
-//            alertMessage.setText("PAN Card Uploaded Successfully");
-//            alertPositiveButton.setVisibility(View.GONE);
-//            alertNegativeButton.setText("OK");
-//            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-//            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
-//
-//            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    alert.dismiss();
-//
-//                }
-//            });
-//            //------------------------------------------------------------------------------------------
-//
-//            panCardText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-//            uploadPAN.setVisibility(View.INVISIBLE);
-//            editPAN.setVisibility(View.VISIBLE);
-//            isPanUploaded = true;
-//
-//            if (isPanUploaded && isFrontUploaded ) {
-//                okPersonalDetails.setBackgroundResource(R.drawable.button_active);
-//            }
-//
-//            Bitmap image = (Bitmap) data.getExtras().get("data");
-//            String path = getRealPathFromURI(getImageUri(this,image));
-//            imgPAN.setImageBitmap(BitmapFactory.decodeFile(path));
-//            uploadImage(path);
-//
-//        } else  if (requestCode == CAMERA_PIC_REQUEST1) {
-//            //----------------------- Alert Dialog -------------------------------------------------
-//            Dialog alert = new Dialog(PersonalDetailsActivity.this);
-//            alert.setContentView(R.layout.dialog_alert);
-//            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-//            lp.copyFrom(alert.getWindow().getAttributes());
-//            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-//            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-//            lp.gravity = Gravity.CENTER;
-//
-//            alert.show();
-//            alert.getWindow().setAttributes(lp);
-//            alert.setCancelable(true);
-//
-//            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-//            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-//            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-//            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-//
-//            alertTitle.setText("Personal Details");
-//            alertMessage.setText("Aadhar Card Uploaded Successfully");
-//            alertPositiveButton.setVisibility(View.GONE);
-//            alertNegativeButton.setText("OK");
-//            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-//            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
-//
-//            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    alert.dismiss();
-//
-//                }
-//            });
-//            //------------------------------------------------------------------------------------------
-//
-//            frontText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-//            uploadF.setVisibility(View.INVISIBLE);
-//            editFront.setVisibility(View.VISIBLE);
-//            isFrontUploaded = true;
-//
-//            if (isPanUploaded && isFrontUploaded ) {
-//                okPersonalDetails.setBackgroundResource(R.drawable.button_active);
-//            }
-//
-//            Bitmap image = (Bitmap) data.getExtras().get("data");
-//            String path = getRealPathFromURI(getImageUri(this,image));
-//            imgF.setImageBitmap(BitmapFactory.decodeFile(path));
-//            uploadImage(path);
+        } else  if (requestCode == CAMERA_PIC_REQUEST) {
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(PersonalDetailsActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(true);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText("Personal Details");
+            alertMessage.setText("PAN Card Uploaded Successfully");
+            alertPositiveButton.setVisibility(View.GONE);
+            alertNegativeButton.setText("OK");
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.dismiss();
+
+                }
+            });
+            //------------------------------------------------------------------------------------------
+
+            panCardText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadPAN.setVisibility(View.INVISIBLE);
+            editPAN.setVisibility(View.VISIBLE);
+            isPanUploaded = true;
+
+            if (isPanUploaded && isFrontUploaded ) {
+                okPersonalDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            String path = getRealPathFromURI(getImageUri(this,image));
+            imgPAN.setImageBitmap(BitmapFactory.decodeFile(path));
+            uploadImage(path);
+
+        } else  if (requestCode == CAMERA_PIC_REQUEST1) {
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(PersonalDetailsActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(true);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText("Personal Details");
+            alertMessage.setText("Aadhar Card Uploaded Successfully");
+            alertPositiveButton.setVisibility(View.GONE);
+            alertNegativeButton.setText("OK");
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.dismiss();
+
+                }
+            });
+            //------------------------------------------------------------------------------------------
+
+            frontText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadF.setVisibility(View.INVISIBLE);
+            editFront.setVisibility(View.VISIBLE);
+            isFrontUploaded = true;
+
+            if (isPanUploaded && isFrontUploaded ) {
+                okPersonalDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            String path = getRealPathFromURI(getImageUri(this,image));
+            imgF.setImageBitmap(BitmapFactory.decodeFile(path));
+            uploadImage(path);
         }
     }
     //-------------------------------------------------------------------------------------------------------------------
@@ -724,13 +725,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 //--------------------------------------------------------------------------------------------------
     }
 
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
-    }
-
     public String getRealPathFromURI(Uri uri) {
         String path = "";
         if (getContentResolver() != null) {
@@ -744,7 +738,13 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         }
         return path;
     }
-    //----------------------------------------------------------------------------------------------
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
 
     private void requestPermissionsForCamera() {
         if (ContextCompat.checkSelfPermission(PersonalDetailsActivity.this, Manifest.permission.CAMERA)

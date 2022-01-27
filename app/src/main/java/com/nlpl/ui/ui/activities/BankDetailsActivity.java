@@ -89,7 +89,7 @@ public class BankDetailsActivity extends AppCompatActivity {
     View action_bar;
     TextView actionBarTitle;
     ImageView actionBarBackButton;
-    String userId;
+    String userId, PathForCC = "";
 
     int requestCode;
     int resultCode;
@@ -101,7 +101,7 @@ public class BankDetailsActivity extends AppCompatActivity {
     Button uploadCC;
     TextView textCC, editCC;
     int GET_FROM_GALLERY = 0;
-    //    int CAMERA_PIC_REQUEST1 = 1;
+    int CAMERA_PIC_REQUEST1 = 1;
     ImageView cancelledCheckImage, previewCancelledCheque, previewDialogCancelledChequeImageView, canceledCheckBlurImage, accountDetailsBlurImage;
     Boolean isEdit, isImgUploaded = false;
 
@@ -211,90 +211,60 @@ public class BankDetailsActivity extends AppCompatActivity {
         uploadCC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                requestPermissionsForGalleryWRITE();
-                requestPermissionsForGalleryREAD();
-                requestPermissionsForCamera();
-                Dialog chooseDialog;
-                chooseDialog = new Dialog(BankDetailsActivity.this);
-                chooseDialog.setContentView(R.layout.dialog_choose);
-                chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-                lp2.copyFrom(chooseDialog.getWindow().getAttributes());
-                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                lp2.gravity = Gravity.BOTTOM;
-
-                chooseDialog.show();
-                chooseDialog.getWindow().setAttributes(lp2);
-
-                ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
-                ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
-
-//                camera.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
-//                        chooseDialog.dismiss();
-//                    }
-//                });
-
-                gallery.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
-                        chooseDialog.dismiss();
-                    }
-                });
-
+                DialogChoose();
             }
         });
 
         editCC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Dialog chooseDialog;
-                chooseDialog = new Dialog(BankDetailsActivity.this);
-                chooseDialog.setContentView(R.layout.dialog_choose);
-                chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-                lp2.copyFrom(chooseDialog.getWindow().getAttributes());
-                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                lp2.gravity = Gravity.BOTTOM;
-
-                chooseDialog.show();
-                chooseDialog.getWindow().setAttributes(lp2);
-
-                ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
-                ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
-
-//                    camera.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//
-//                            Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//                            startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
-//                            chooseDialog.dismiss();
-//                        }
-//                    });
-
-                gallery.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
-                        chooseDialog.dismiss();
-                    }
-                });
-
+                DialogChoose();
             }
         });
 
     }
+
+    private void DialogChoose(){
+
+        requestPermissionsForGalleryWRITE();
+        requestPermissionsForGalleryREAD();
+        requestPermissionsForCamera();
+        Dialog chooseDialog;
+
+        chooseDialog = new Dialog(BankDetailsActivity.this);
+        chooseDialog.setContentView(R.layout.dialog_choose);
+        chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+        lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+        lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.gravity = Gravity.BOTTOM;
+
+        chooseDialog.show();
+        chooseDialog.getWindow().setAttributes(lp2);
+
+        ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
+        ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
+
+        camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
+                chooseDialog.dismiss();
+            }
+        });
+
+        gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+                chooseDialog.dismiss();
+            }
+        });
+    }
+
 
     //-----------------------------------------------upload Image------------------------------------------------------------
     @Override
@@ -310,6 +280,7 @@ public class BankDetailsActivity extends AppCompatActivity {
     }
 
     private String imagePickerWithoutAlert() {
+
         //Detects request code for PAN
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
 
@@ -330,26 +301,26 @@ public class BankDetailsActivity extends AppCompatActivity {
 
             cancelledCheckImage.setImageURI(selectedImage);
             previewDialogCancelledChequeImageView.setImageURI(selectedImage);
-            return picturePath;
 
-//        } else if (requestCode == CAMERA_PIC_REQUEST1) {
-//
-//            textCC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-//            uploadCC.setVisibility(View.INVISIBLE);
-//            editCC.setVisibility(View.VISIBLE);
-//            previewCancelledCheque.setVisibility(View.VISIBLE);
-//
-//            isImgUploaded = true;
-//
-//            Bitmap image = (Bitmap) data.getExtras().get("data");
-//
-//            String path = getRealPathFromURI(getImageUri(this, image));
-//
-//            cancelledCheckImage.setImageBitmap(BitmapFactory.decodeFile(path));
-//            previewDialogCancelledChequeImageView.setImageBitmap(BitmapFactory.decodeFile(path));
-//
-//            return path;
-//
+            PathForCC = picturePath;
+
+        } else if (requestCode == CAMERA_PIC_REQUEST1) {
+
+            textCC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadCC.setVisibility(View.INVISIBLE);
+            editCC.setVisibility(View.VISIBLE);
+            previewCancelledCheque.setVisibility(View.VISIBLE);
+
+            isImgUploaded = true;
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+
+            String path = getRealPathFromURI(getImageUri(this, image));
+
+            cancelledCheckImage.setImageBitmap(BitmapFactory.decodeFile(path));
+            previewDialogCancelledChequeImageView.setImageBitmap(BitmapFactory.decodeFile(path));
+
+            PathForCC = path;
         }
         return "";
     }
@@ -411,59 +382,60 @@ public class BankDetailsActivity extends AppCompatActivity {
 
             cancelledCheckImage.setImageURI(selectedImage);
             previewDialogCancelledChequeImageView.setImageURI(selectedImage);
-            return picturePath;
 
-//        } else if (requestCode == CAMERA_PIC_REQUEST1) {
-//
-//            //----------------------- Alert Dialog -------------------------------------------------
-//            Dialog alert = new Dialog(BankDetailsActivity.this);
-//            alert.setContentView(R.layout.dialog_alert);
-//            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-//            lp.copyFrom(alert.getWindow().getAttributes());
-//            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-//            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-//            lp.gravity = Gravity.CENTER;
-//
-//            alert.show();
-//            alert.getWindow().setAttributes(lp);
-//            alert.setCancelable(true);
-//
-//            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-//            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-//            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-//            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-//
-//            alertTitle.setText("Cancelled cheque uploaded successfully");
-//            alertPositiveButton.setVisibility(View.GONE);
-//            alertNegativeButton.setText("OK");
-//            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-//            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
-//
-//            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    alert.dismiss();
-//                    okButton.setEnabled(true);
-//                    okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-//                }
-//            });
-//            //------------------------------------------------------------------------------------------
-//
-//            textCC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-//            uploadCC.setVisibility(View.INVISIBLE);
-//            editCC.setVisibility(View.VISIBLE);
-//            previewCancelledCheque.setVisibility(View.VISIBLE);
-//
-//            isImgUploaded = true;
-//
-//            Bitmap image = (Bitmap) data.getExtras().get("data");
-//
-//            String path = getRealPathFromURI(getImageUri(this, image));
-//            cancelledCheckImage.setImageBitmap(BitmapFactory.decodeFile(path));
-//            previewDialogCancelledChequeImageView.setImageBitmap(BitmapFactory.decodeFile(path));
-//
-//            return path;
+            PathForCC = picturePath;
+
+        } else if (requestCode == CAMERA_PIC_REQUEST1) {
+
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(BankDetailsActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(true);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText("Cancelled cheque uploaded successfully");
+            alertPositiveButton.setVisibility(View.GONE);
+            alertNegativeButton.setText("OK");
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.dismiss();
+                    okButton.setEnabled(true);
+                    okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                }
+            });
+            //------------------------------------------------------------------------------------------
+
+            textCC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadCC.setVisibility(View.INVISIBLE);
+            editCC.setVisibility(View.VISIBLE);
+            previewCancelledCheque.setVisibility(View.VISIBLE);
+
+            isImgUploaded = true;
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+
+            String path = getRealPathFromURI(getImageUri(this, image));
+            cancelledCheckImage.setImageBitmap(BitmapFactory.decodeFile(path));
+            previewDialogCancelledChequeImageView.setImageBitmap(BitmapFactory.decodeFile(path));
+
+            PathForCC = path;
 
         }
         return "";
@@ -475,10 +447,7 @@ public class BankDetailsActivity extends AppCompatActivity {
         if (accountNo.getText().toString().equals(reAccount.getText().toString())) {
             if (isEdit) {
 
-                String path = imagePickerWithoutAlert();
-                Log.i("path of cc on edit", path);
-                uploadCheque(bankId, path);
-                Log.i("bankId of cc on edit", bankId);
+                uploadCheque(bankId, PathForCC);
 
                 updateBankName();
                 updateBankAccountNumber();
@@ -658,10 +627,7 @@ public class BankDetailsActivity extends AppCompatActivity {
             public void onResponse(Call<BankResponse> call, Response<BankResponse> response) {
                 BankResponse bankResponse = response.body();
                 String bankIdOnResponse = bankResponse.getData().getBank_id();
-                Log.i("bank id on save", bankIdOnResponse);
-                String path = imagePickerWithoutAlert();
-                Log.i("path on saveBank", path);
-                uploadCheque(bankIdOnResponse, path);
+                uploadCheque(bankIdOnResponse, PathForCC);
             }
 
             @Override
@@ -1070,13 +1036,6 @@ public class BankDetailsActivity extends AppCompatActivity {
         });
     }
 
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
-    }
-
     public String getRealPathFromURI(Uri uri) {
         String path = "";
         if (getContentResolver() != null) {
@@ -1089,6 +1048,13 @@ public class BankDetailsActivity extends AppCompatActivity {
             }
         }
         return path;
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
     }
 
     public void onClickPreviewCancelledCheque(View view) {
@@ -1126,28 +1092,6 @@ public class BankDetailsActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(BankDetailsActivity.this, new String[]{
                     Manifest.permission.READ_EXTERNAL_STORAGE
             }, 100);
-        }
-    }
-
-    public static File bitmapToFile(Context context, Bitmap bitmap, String fileNameToSave) {
-        File file = null;
-        try {
-            file = new File(Environment.getExternalStorageDirectory() + File.separator + fileNameToSave);
-            file.createNewFile();
-
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos); // YOU can also save it in JPEG
-            byte[] bitmapdata = bos.toByteArray();
-
-            FileOutputStream fos = new FileOutputStream(file);
-            fos.write(bitmapdata);
-            fos.flush();
-            fos.close();
-            return file;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return file;
         }
     }
 
