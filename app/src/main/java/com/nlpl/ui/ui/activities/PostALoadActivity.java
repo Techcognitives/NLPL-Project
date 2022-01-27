@@ -477,7 +477,45 @@ public class PostALoadActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String budgetEditText = budget.getText().toString();
                 if (!budgetEditText.isEmpty()) {
-                    select_budget.setText(budgetEditText);
+
+                    String finalBudget, lastThree="";
+                    String budget1 = budget.getText().toString();
+                    if (budget1.length()>3) {
+                        lastThree = budget1.substring(budget1.length() - 3);
+                    }
+                    if (budget1.length() == 1) {
+                        finalBudget = budget1;
+                        select_budget.setText(finalBudget);
+                    } else if (budget1.length() == 2) {
+                        finalBudget = budget1;
+                        select_budget.setText(finalBudget);
+                    } else if (budget1.length() == 3) {
+                        finalBudget = budget1;
+                        select_budget.setText(finalBudget);
+                    } else if (budget1.length() == 4) {
+                        Character fourth = budget1.charAt(0);
+                        finalBudget = fourth+","+lastThree;
+                        select_budget.setText(finalBudget);
+                    } else if (budget1.length() == 5) {
+                        Character fifth = budget1.charAt(0);
+                        Character fourth = budget1.charAt(1);
+                        finalBudget = fifth+""+fourth+","+lastThree;
+                        select_budget.setText(finalBudget);
+                    } else if (budget1.length() == 6) {
+                        Character fifth = budget1.charAt(1);
+                        Character fourth = budget1.charAt(2);
+                        Character sixth = budget1.charAt(0);
+                        finalBudget = sixth+","+fifth+""+fourth+","+lastThree;
+                        select_budget.setText(finalBudget);
+                    }else if (budget1.length() == 7) {
+                        Character seventh = budget1.charAt(0);
+                        Character sixth = budget1.charAt(1);
+                        Character fifth = budget1.charAt(2);
+                        Character fourth = budget1.charAt(3);
+                        finalBudget = seventh+""+ sixth+","+fifth+""+fourth+","+lastThree;
+                        select_budget.setText(finalBudget);
+                    }
+
                     if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
                             && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
                             && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
@@ -1408,11 +1446,11 @@ public class PostALoadActivity extends AppCompatActivity {
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            if (drop_pinCode.getText().toString().length() == 6) {
-                getDropStateAndDistrict(drop_pinCode.getText().toString());
-                drop_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
-            } else {
+            if (drop_pinCode.getText().toString().length() != 6) {
                 drop_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+            } else {
+                getStateAndDistrict(drop_pinCode.getText().toString());
+                drop_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
             }
 
             if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
@@ -1482,11 +1520,13 @@ public class PostALoadActivity extends AppCompatActivity {
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            if (pick_up_pinCode.getText().toString().length() == 6) {
-                getPickStateAndDistrict(pick_up_pinCode.getText().toString());
-                pick_up_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
-            } else {
+            if (pick_up_pinCode.getText().toString().length() != 6) {
+                pick_up_state.setText("");
+                pick_up_city.setText("");
                 pick_up_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+            } else {
+                getStateAndDistrict(pick_up_pinCode.getText().toString());
+                pick_up_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
             }
 
             if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
@@ -1509,24 +1549,20 @@ public class PostALoadActivity extends AppCompatActivity {
     };
 
     //--------------------------------------Get State and city by PinCode---------------------------
-    private void getPickStateAndDistrict(String enteredPin) {
+    private void getStateAndDistrict(String enteredPin) {
 
         Log.i("Entered PIN", enteredPin);
 
-        String url = getString(R.string.baseURL) + "/user/locationData/" + enteredPin;
+        String url = "https://findyourtruck-393a4-default-rtdb.asia-southeast1.firebasedatabase.app/indianPinCodes.json?orderBy=%22pincode%22&equalTo=%22"+enteredPin+"%22";
         Log.i("url for truckByTruckId", url);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
 
-                    JSONObject object = response.getJSONObject("data");
-
-                    stateByPinCode = object.getString("stateCode");
-                    distByPinCode = object.getString("district");
-
-                    Log.i("state By PIncode", stateByPinCode);
-                    Log.i("Dist By PIncode", distByPinCode);
+                    JSONObject obj = response.getJSONObject("81066");
+                    String stateByPinCode = obj.getString("stateCode");
+                    String  distByPinCode = obj.getString("district");
 
                     pick_up_state.setText(stateByPinCode);
                     pick_up_city.setText(distByPinCode);
@@ -1546,45 +1582,7 @@ public class PostALoadActivity extends AppCompatActivity {
 
     //----------------------------------------------------------------------------------------------
 
-    //--------------------------------------Get State and city by PinCode---------------------------
-
-    private void getDropStateAndDistrict(String enteredPin) {
-
-        Log.i("Entered PIN", enteredPin);
-
-        String url = getString(R.string.baseURL) + "/user/locationData/" + enteredPin;
-        Log.i("url for truckByTruckId", url);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-
-                    JSONObject object = response.getJSONObject("data");
-
-                    stateByPinCode = object.getString("stateCode");
-                    distByPinCode = object.getString("district");
-
-                    Log.i("state By PIncode", stateByPinCode);
-                    Log.i("Dist By PIncode", distByPinCode);
-
-                    drop_state.setText(stateByPinCode);
-                    drop_city.setText(distByPinCode);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request);
-    }
-
-    //----------------------------------------------------------------------------------------------
-//-------------------------------- Update Post Load Details ----------------------------------------
+    //-------------------------------- Update Post Load Details ----------------------------------------
     private void updateLoadPost(String loadId) {
         Log.i("Load Id", loadId);
 

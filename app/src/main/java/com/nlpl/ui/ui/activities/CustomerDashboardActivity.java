@@ -100,6 +100,9 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     String spQuoteByApi, bid_idByAPI, noteByApi;
     private PostLoadService postLoadService;
 
+    ArrayList<String> arrayAssignedDriverId, arrayUserId, arrayBidStatus;
+    String assignedDriverId, assignedDriverIdAPI, assignedUserId,  assignedUserIdAPI, bidStatusAPI;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,6 +156,9 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         bidsReceivedTextView = (TextView) findViewById(R.id.customer_dashboard_bids_received_button);
 
         acceptedList = new ArrayList<>();
+        arrayAssignedDriverId = new ArrayList<>();
+        arrayUserId = new ArrayList<>();
+        arrayBidStatus = new ArrayList<>();
 
         //---------------------------- Get Load Details -------------------------------------------
         bidsListRecyclerView = (RecyclerView) findViewById(R.id.customer_dashboard_load_notification_recycler_view);
@@ -765,7 +771,45 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String budgetEditText = budget.getText().toString();
                 if (!budgetEditText.isEmpty()) {
-                    customerQuote.setText(budgetEditText);
+
+                    String finalBudget, lastThree="";
+                    String budget1 = budget.getText().toString();
+                    if (budget1.length()>3) {
+                        lastThree = budget1.substring(budget1.length() - 3);
+                    }
+                    if (budget1.length() == 1) {
+                        finalBudget = budget1;
+                        customerQuote.setText(finalBudget);
+                    } else if (budget1.length() == 2) {
+                        finalBudget = budget1;
+                        customerQuote.setText(finalBudget);
+                    } else if (budget1.length() == 3) {
+                        finalBudget = budget1;
+                        customerQuote.setText(finalBudget);
+                    } else if (budget1.length() == 4) {
+                        Character fourth = budget1.charAt(0);
+                        finalBudget = fourth+","+lastThree;
+                        customerQuote.setText(finalBudget);
+                    } else if (budget1.length() == 5) {
+                        Character fifth = budget1.charAt(0);
+                        Character fourth = budget1.charAt(1);
+                        finalBudget = fifth+""+fourth+","+lastThree;
+                        customerQuote.setText(finalBudget);
+                    } else if (budget1.length() == 6) {
+                        Character fifth = budget1.charAt(1);
+                        Character fourth = budget1.charAt(2);
+                        Character sixth = budget1.charAt(0);
+                        finalBudget = sixth+","+fifth+""+fourth+","+lastThree;
+                        customerQuote.setText(finalBudget);
+                    }else if (budget1.length() == 7) {
+                        Character seventh = budget1.charAt(0);
+                        Character sixth = budget1.charAt(1);
+                        Character fifth = budget1.charAt(2);
+                        Character fourth = budget1.charAt(3);
+                        finalBudget = seventh+""+ sixth+","+fifth+""+fourth+","+lastThree;
+                        customerQuote.setText(finalBudget);
+                    }
+
                     okBudget.setEnabled(true);
                     okBudget.setBackgroundResource((R.drawable.button_active));
                 } else {
@@ -1086,93 +1130,112 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         spQuoteByApi = obj.getString("sp_quote");
                         noteByApi = obj.getString("notes");
                         bid_idByAPI = obj.getString("sp_bid_id");
+                        assignedDriverIdAPI = obj.getString("assigned_driver_id");
+                        assignedUserIdAPI = obj.getString("user_id");
+                        bidStatusAPI = obj.getString("bid_status");
 
-                        //----------------------------------------------------------
-                        String url = getString(R.string.baseURL) + "/user/" + obj.getString("user_id");
-                        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                try {
-                                    JSONArray truckLists = response.getJSONArray("data");
-                                    for (int i = 0; i < truckLists.length(); i++) {
-                                        JSONObject obj = truckLists.getJSONObject(i);
-                                        nameSP.setText(obj.getString("name"));
-                                        spNumber.setText(obj.getString("phone_number"));
-
-                                        int isCompAded = obj.getInt("isCompany_added");
-
-                                        if (isCompAded == 1) {
-                                            companyName.setVisibility(View.VISIBLE);
-                                            companyNameHeading.setVisibility(View.VISIBLE);
-                                            //----------------------------------------------------------
-                                            String url2 = getString(R.string.baseURL) + "/company/get/" + obj.getString("user_id");
-                                            JsonObjectRequest request2 = new JsonObjectRequest(Request.Method.GET, url2, null, new com.android.volley.Response.Listener<JSONObject>() {
-                                                @Override
-                                                public void onResponse(JSONObject response) {
-                                                    try {
-                                                        JSONArray truckLists = response.getJSONArray("data");
-                                                        for (int i = 0; i < truckLists.length(); i++) {
-                                                            JSONObject obj = truckLists.getJSONObject(i);
-                                                            companyName.setText(obj.getString("company_name"));
-                                                        }
-                                                    } catch (JSONException e) {
-                                                        e.printStackTrace();
-                                                    }
-                                                }
-                                            }, new com.android.volley.Response.ErrorListener() {
-                                                @Override
-                                                public void onErrorResponse(VolleyError error) {
-                                                    error.printStackTrace();
-                                                }
-                                            });
-                                            mQueue.add(request2);
-                                            //----------------------------------------------------------
-                                        } else {
-                                            companyName.setVisibility(View.GONE);
-                                            companyNameHeading.setVisibility(View.GONE);
-                                        }
-
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }, new com.android.volley.Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                error.printStackTrace();
-                            }
-                        });
-                        mQueue.add(request);
-                        //----------------------------------------------------------
-
-                        //----------------------------------------------------------
-                        String url1 = getString(R.string.baseURL) + "/driver/driverId/" + obj.getString("assigned_driver_id");
-                        JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                try {
-                                    JSONArray truckLists = response.getJSONArray("data");
-                                    for (int i = 0; i < truckLists.length(); i++) {
-                                        JSONObject obj = truckLists.getJSONObject(i);
-                                        driverName.setText(obj.getString("driver_name"));
-                                        driverNumber.setText(obj.getString("driver_number"));
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }, new com.android.volley.Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                error.printStackTrace();
-                            }
-                        });
-                        mQueue.add(request1);
-                        //----------------------------------------------------------
-
-
+                        arrayUserId.add(assignedUserIdAPI);
+                        arrayAssignedDriverId.add(assignedDriverIdAPI);
+                        arrayBidStatus.add(bidStatusAPI);
                     }
+
+                    Log.i("array of userId", String.valueOf(arrayUserId));
+                    Log.i("array of DriverId", String.valueOf(arrayAssignedDriverId));
+                    Log.i("array of bidStatus", String.valueOf(arrayBidStatus));
+
+                    for (int j=0; j<arrayBidStatus.size(); j++){
+                        if (arrayBidStatus.get(j).equals("FinalAccepted")) {
+                            Log.i("finalAcceptedFound", "" );
+                            assignedUserId = arrayUserId.get(j);
+                            assignedDriverId = arrayAssignedDriverId.get(j);
+                        }
+
+                            //----------------------------------------------------------
+                            String url = getString(R.string.baseURL) + "/user/" + assignedUserId;
+                            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    try {
+                                        JSONArray truckLists = response.getJSONArray("data");
+                                        for (int i = 0; i < truckLists.length(); i++) {
+                                            JSONObject obj = truckLists.getJSONObject(i);
+                                            nameSP.setText(obj.getString("name"));
+                                            spNumber.setText(obj.getString("phone_number"));
+
+                                            int isCompAded = obj.getInt("isCompany_added");
+
+                                            if (isCompAded == 1) {
+                                                companyName.setVisibility(View.VISIBLE);
+                                                companyNameHeading.setVisibility(View.VISIBLE);
+                                                //----------------------------------------------------------
+                                                String url2 = getString(R.string.baseURL) + "/company/get/" + obj.getString("user_id");
+                                                JsonObjectRequest request2 = new JsonObjectRequest(Request.Method.GET, url2, null, new com.android.volley.Response.Listener<JSONObject>() {
+                                                    @Override
+                                                    public void onResponse(JSONObject response) {
+                                                        try {
+                                                            JSONArray truckLists = response.getJSONArray("data");
+                                                            for (int i = 0; i < truckLists.length(); i++) {
+                                                                JSONObject obj = truckLists.getJSONObject(i);
+                                                                companyName.setText(obj.getString("company_name"));
+                                                            }
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                }, new com.android.volley.Response.ErrorListener() {
+                                                    @Override
+                                                    public void onErrorResponse(VolleyError error) {
+                                                        error.printStackTrace();
+                                                    }
+                                                });
+                                                mQueue.add(request2);
+                                                //----------------------------------------------------------
+                                            } else {
+                                                companyName.setVisibility(View.GONE);
+                                                companyNameHeading.setVisibility(View.GONE);
+                                            }
+
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }, new com.android.volley.Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    error.printStackTrace();
+                                }
+                            });
+                            mQueue.add(request);
+                            //----------------------------------------------------------
+
+                            //----------------------------------------------------------
+                            String url1 = getString(R.string.baseURL) + "/driver/driverId/" + assignedDriverId;
+                            JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    try {
+                                        JSONArray truckLists = response.getJSONArray("data");
+                                        for (int i = 0; i < truckLists.length(); i++) {
+                                            JSONObject obj = truckLists.getJSONObject(i);
+                                            driverName.setText(obj.getString("driver_name"));
+                                            driverNumber.setText(obj.getString("driver_number"));
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }, new com.android.volley.Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    error.printStackTrace();
+                                }
+                            });
+                            mQueue.add(request1);
+                            //----------------------------------------------------------
+
+
+                        }
 
                     quoteBySP.setText(spQuoteByApi);
                     modelBySP.setText(obj.getVehicle_model());

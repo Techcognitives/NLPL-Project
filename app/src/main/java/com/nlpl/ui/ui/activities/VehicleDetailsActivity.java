@@ -99,14 +99,14 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     TextView textInsurance, editInsurance;
     int GET_FROM_GALLERY = 4;
     int GET_FROM_GALLERY1 = 1;
-//    int CAMERA_PIC_REQUEST1 = 7;
-//    int CAMERA_PIC_REQUEST2 = 12;
+    int CAMERA_PIC_REQUEST1 = 7;
+    int CAMERA_PIC_REQUEST2 = 12;
 
     private UserService userService;
     private AddTruckService addTruckService;
 
     String userId, truckId, vehicleNumberAPI, vehicleTypeAPI, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI, truckModelAPI, truckFtAPI, truckCapacityAPI;
-    Boolean fromBidNow = true, isEdit, isRcUploaded = false, isInsurance = false, truckSelected = false, isModelSelected = false;
+    Boolean isRcEdited = false, isInsuranceEdited = false, fromBidNow = true, isEdit, isRcUploaded = false, isInsurance = false, truckSelected = false, isModelSelected = false;
 
     RadioButton openSelected, closeSelected, tarpaulinSelected;
 
@@ -242,169 +242,30 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         uploadRC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                requestPermissionsForGalleryWRITE();
-                requestPermissionsForGalleryREAD();
-                requestPermissionsForCamera();
-                Dialog chooseDialog;
-                chooseDialog = new Dialog(VehicleDetailsActivity.this);
-                chooseDialog.setContentView(R.layout.dialog_choose);
-                chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-                lp2.copyFrom(chooseDialog.getWindow().getAttributes());
-                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                lp2.gravity = Gravity.BOTTOM;
-
-                chooseDialog.show();
-                chooseDialog.getWindow().setAttributes(lp2);
-
-                ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
-                ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
-
-//                camera.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
-//                        chooseDialog.dismiss();
-//                    }
-//                });
-
-                gallery.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
-                        chooseDialog.dismiss();
-                    }
-                });
-
-
+                DialogChooseRC();
             }
         });
 
         editRC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Dialog chooseDialog;
-                chooseDialog = new Dialog(VehicleDetailsActivity.this);
-                chooseDialog.setContentView(R.layout.dialog_choose);
-                chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-                lp2.copyFrom(chooseDialog.getWindow().getAttributes());
-                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                lp2.gravity = Gravity.BOTTOM;
-
-                chooseDialog.show();
-                chooseDialog.getWindow().setAttributes(lp2);
-
-                ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
-                ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
-
-//                camera.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
-//                        chooseDialog.dismiss();
-//                    }
-//                });
-
-                gallery.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
-                        chooseDialog.dismiss();
-                    }
-                });
-
+                isRcEdited = true;
+                DialogChooseRC();
             }
         });
 
         uploadInsurance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                requestPermissionsForGalleryWRITE();
-                requestPermissionsForGalleryREAD();
-                requestPermissionsForCamera();
-                Dialog chooseDialog;
-                chooseDialog = new Dialog(VehicleDetailsActivity.this);
-                chooseDialog.setContentView(R.layout.dialog_choose);
-                chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-                lp2.copyFrom(chooseDialog.getWindow().getAttributes());
-                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                lp2.gravity = Gravity.BOTTOM;
-
-                chooseDialog.show();
-                chooseDialog.getWindow().setAttributes(lp2);
-
-                ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
-                ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
-
-//                camera.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST2);
-//                        chooseDialog.dismiss();
-//                    }
-//                });
-
-                gallery.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY1);
-                        chooseDialog.dismiss();
-                    }
-                });
-
+                isInsuranceEdited = true;
+                DialogChooseInsurance();
             }
         });
 
         editInsurance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Dialog chooseDialog;
-                chooseDialog = new Dialog(VehicleDetailsActivity.this);
-                chooseDialog.setContentView(R.layout.dialog_choose);
-                chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-                lp2.copyFrom(chooseDialog.getWindow().getAttributes());
-                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                lp2.gravity = Gravity.BOTTOM;
-
-                chooseDialog.show();
-                chooseDialog.getWindow().setAttributes(lp2);
-
-                ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
-                ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
-
-//                camera.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//                        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST2);
-//                        chooseDialog.dismiss();
-//                    }
-//                });
-
-                gallery.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY1);
-                        chooseDialog.dismiss();
-                    }
-                });
+                DialogChooseInsurance();
             }
         });
     }
@@ -490,6 +351,89 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         }
     }
 
+    private void DialogChooseRC() {
+
+        requestPermissionsForGalleryWRITE();
+        requestPermissionsForGalleryREAD();
+        requestPermissionsForCamera();
+        Dialog chooseDialog;
+
+        chooseDialog = new Dialog(VehicleDetailsActivity.this);
+        chooseDialog.setContentView(R.layout.dialog_choose);
+        chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+        lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+        lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.gravity = Gravity.BOTTOM;
+
+        chooseDialog.show();
+        chooseDialog.getWindow().setAttributes(lp2);
+
+        ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
+        ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
+
+        camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST1);
+                chooseDialog.dismiss();
+            }
+        });
+
+        gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+                chooseDialog.dismiss();
+            }
+        });
+    }
+
+    private void DialogChooseInsurance() {
+
+        requestPermissionsForGalleryWRITE();
+        requestPermissionsForGalleryREAD();
+        requestPermissionsForCamera();
+        Dialog chooseDialog;
+
+        chooseDialog = new Dialog(VehicleDetailsActivity.this);
+        chooseDialog.setContentView(R.layout.dialog_choose);
+        chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+        lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+        lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.gravity = Gravity.BOTTOM;
+
+        chooseDialog.show();
+        chooseDialog.getWindow().setAttributes(lp2);
+
+        ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
+        ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
+
+        camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST2);
+                chooseDialog.dismiss();
+            }
+        });
+
+        gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY1);
+                chooseDialog.dismiss();
+            }
+        });
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -538,26 +482,26 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
             return picturePath1;
 
-//        } else  if (requestCode == CAMERA_PIC_REQUEST1) {
-//
-//            textRC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-//            uploadRC.setVisibility(View.INVISIBLE);
-//            editRC.setVisibility(View.VISIBLE);
-//            previewRcBook.setVisibility(View.VISIBLE);
-//            previewInsurance.setVisibility(View.VISIBLE);
-//
-//            isRcUploaded=true;
-//            String vehicleNum = vehicleNumberEdit.getText().toString();
-//            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected && isModelSelected  ){
-//                okVehicleDetails.setEnabled(true);
-//                okVehicleDetails.setBackgroundResource(R.drawable.button_active);
-//            }
-//
-//            Bitmap image = (Bitmap) data.getExtras().get("data");
-//            String path = getRealPathFromURI(getImageUri(this,image));
-//            imgRC.setImageBitmap(BitmapFactory.decodeFile(path));
-//            pathForRC = path;
-//            return path;
+        } else if (requestCode == CAMERA_PIC_REQUEST1) {
+
+            textRC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadRC.setVisibility(View.INVISIBLE);
+            editRC.setVisibility(View.VISIBLE);
+            previewRcBook.setVisibility(View.VISIBLE);
+            previewInsurance.setVisibility(View.VISIBLE);
+
+            isRcUploaded = true;
+            String vehicleNum = vehicleNumberEdit.getText().toString();
+            if (!vehicleNum.isEmpty() && isRcUploaded && isInsurance && truckSelected && isModelSelected) {
+                okVehicleDetails.setEnabled(true);
+                okVehicleDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            String path = getRealPathFromURI(getImageUri(this, image));
+            imgRC.setImageBitmap(BitmapFactory.decodeFile(path));
+            pathForRC = path;
+            return path;
 
         }
         return "";
@@ -592,24 +536,24 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
             return picturePath2;
 
-//        } else  if (requestCode == CAMERA_PIC_REQUEST2) {
-//
-//            textInsurance.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-//            uploadInsurance.setVisibility(View.INVISIBLE);
-//            editInsurance.setVisibility(View.VISIBLE);
-//
-//            isInsurance=true;
-//            String vehicleNum = vehicleNumberEdit.getText().toString();
-//            if (!vehicleNum.isEmpty()&&isRcUploaded && isInsurance && truckSelected && isModelSelected  ){
-//                okVehicleDetails.setEnabled(true);
-//                okVehicleDetails.setBackgroundResource(R.drawable.button_active);
-//            }
-//
-//            Bitmap image = (Bitmap) data.getExtras().get("data");
-//            String path = getRealPathFromURI(getImageUri(this,image));
-//            imgI.setImageBitmap(BitmapFactory.decodeFile(path));
-//            pathForInsurance = path;
-//            return path;
+        } else if (requestCode == CAMERA_PIC_REQUEST2) {
+
+            textInsurance.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadInsurance.setVisibility(View.INVISIBLE);
+            editInsurance.setVisibility(View.VISIBLE);
+
+            isInsurance = true;
+            String vehicleNum = vehicleNumberEdit.getText().toString();
+            if (!vehicleNum.isEmpty() && isRcUploaded && isInsurance && truckSelected && isModelSelected) {
+                okVehicleDetails.setEnabled(true);
+                okVehicleDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            String path = getRealPathFromURI(getImageUri(this, image));
+            imgI.setImageBitmap(BitmapFactory.decodeFile(path));
+            pathForInsurance = path;
+            return path;
 
         }
         return "";
@@ -680,60 +624,60 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             pathForRC = picturePath3;
             return picturePath3;
 
-//        } else if (requestCode == CAMERA_PIC_REQUEST1) {
-//            //----------------------- Alert Dialog -------------------------------------------------
-//            Dialog alert = new Dialog(VehicleDetailsActivity.this);
-//            alert.setContentView(R.layout.dialog_alert);
-//            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-//            lp.copyFrom(alert.getWindow().getAttributes());
-//            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-//            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-//            lp.gravity = Gravity.CENTER;
-//
-//            alert.show();
-//            alert.getWindow().setAttributes(lp);
-//            alert.setCancelable(true);
-//
-//            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-//            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-//            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-//            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-//
-//            alertTitle.setText("Truck Details");
-//            alertMessage.setText("RC Uploaded Successfully");
-//            alertPositiveButton.setVisibility(View.GONE);
-//            alertNegativeButton.setText("OK");
-//            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-//            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
-//
-//            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    alert.dismiss();
-//
-//                }
-//            });
-//            //------------------------------------------------------------------------------------------
-//
-//            textRC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-//            uploadRC.setVisibility(View.INVISIBLE);
-//            editRC.setVisibility(View.VISIBLE);
-//            previewRcBook.setVisibility(View.VISIBLE);
-//            previewInsurance.setVisibility(View.VISIBLE);
-//
-//            isRcUploaded = true;
-//            String vehicleNum = vehicleNumberEdit.getText().toString();
-//            if (!vehicleNum.isEmpty() && isRcUploaded && isInsurance && truckSelected && isModelSelected) {
-//                okVehicleDetails.setEnabled(true);
-//                okVehicleDetails.setBackgroundResource(R.drawable.button_active);
-//            }
-//
-//            Bitmap image = (Bitmap) data.getExtras().get("data");
-//            String path = getRealPathFromURI(getImageUri(this, image));
-//            imgRC.setImageBitmap(BitmapFactory.decodeFile(path));
-//            pathForRC = path;
-//            return path;
+        } else if (requestCode == CAMERA_PIC_REQUEST1) {
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(VehicleDetailsActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(true);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText("Truck Details");
+            alertMessage.setText("RC Uploaded Successfully");
+            alertPositiveButton.setVisibility(View.GONE);
+            alertNegativeButton.setText("OK");
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.dismiss();
+
+                }
+            });
+            //------------------------------------------------------------------------------------------
+
+            textRC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadRC.setVisibility(View.INVISIBLE);
+            editRC.setVisibility(View.VISIBLE);
+            previewRcBook.setVisibility(View.VISIBLE);
+            previewInsurance.setVisibility(View.VISIBLE);
+
+            isRcUploaded = true;
+            String vehicleNum = vehicleNumberEdit.getText().toString();
+            if (!vehicleNum.isEmpty() && isRcUploaded && isInsurance && truckSelected && isModelSelected) {
+                okVehicleDetails.setEnabled(true);
+                okVehicleDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            String path = getRealPathFromURI(getImageUri(this, image));
+            imgRC.setImageBitmap(BitmapFactory.decodeFile(path));
+            pathForRC = path;
+            return path;
 
         }
         return "";
@@ -799,58 +743,58 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             pathForInsurance = picturePath4;
             return picturePath4;
 
-//        } else if (requestCode == CAMERA_PIC_REQUEST2) {
-//            //----------------------- Alert Dialog -------------------------------------------------
-//            Dialog alert = new Dialog(VehicleDetailsActivity.this);
-//            alert.setContentView(R.layout.dialog_alert);
-//            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-//            lp.copyFrom(alert.getWindow().getAttributes());
-//            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-//            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-//            lp.gravity = Gravity.CENTER;
-//
-//            alert.show();
-//            alert.getWindow().setAttributes(lp);
-//            alert.setCancelable(true);
-//
-//            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-//            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-//            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-//            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-//
-//            alertTitle.setText("Truck Details");
-//            alertMessage.setText("Insurance Uploaded Successfully");
-//            alertPositiveButton.setVisibility(View.GONE);
-//            alertNegativeButton.setText("OK");
-//            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-//            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
-//
-//            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    alert.dismiss();
-//
-//                }
-//            });
-//            //------------------------------------------------------------------------------------------
-//
-//            textInsurance.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-//            uploadInsurance.setVisibility(View.INVISIBLE);
-//            editInsurance.setVisibility(View.VISIBLE);
-//
-//            isInsurance = true;
-//            String vehicleNum = vehicleNumberEdit.getText().toString();
-//            if (!vehicleNum.isEmpty() && isRcUploaded && isInsurance && truckSelected && isModelSelected) {
-//                okVehicleDetails.setEnabled(true);
-//                okVehicleDetails.setBackgroundResource(R.drawable.button_active);
-//            }
-//
-//            Bitmap image = (Bitmap) data.getExtras().get("data");
-//            String path = getRealPathFromURI(getImageUri(this, image));
-//            imgI.setImageBitmap(BitmapFactory.decodeFile(path));
-//            pathForInsurance = path;
-//            return path;
+        } else if (requestCode == CAMERA_PIC_REQUEST2) {
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(VehicleDetailsActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(true);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText("Truck Details");
+            alertMessage.setText("Insurance Uploaded Successfully");
+            alertPositiveButton.setVisibility(View.GONE);
+            alertNegativeButton.setText("OK");
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.dismiss();
+
+                }
+            });
+            //------------------------------------------------------------------------------------------
+
+            textInsurance.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadInsurance.setVisibility(View.INVISIBLE);
+            editInsurance.setVisibility(View.VISIBLE);
+
+            isInsurance = true;
+            String vehicleNum = vehicleNumberEdit.getText().toString();
+            if (!vehicleNum.isEmpty() && isRcUploaded && isInsurance && truckSelected && isModelSelected) {
+                okVehicleDetails.setEnabled(true);
+                okVehicleDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            String path = getRealPathFromURI(getImageUri(this, image));
+            imgI.setImageBitmap(BitmapFactory.decodeFile(path));
+            pathForInsurance = path;
+            return path;
         }
         return "";
     }
@@ -861,8 +805,14 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         if (!vehicleNum.isEmpty() && isRcUploaded && isInsurance && truckSelected && isModelSelected) {
 
             if (isEdit) {
-                String insurancePath = insuranceImagePickerWithoutAlert();
-                uploadTruckInsurance(truckId, insurancePath);
+
+                if (isRcEdited) {
+                    uploadTruckRC(truckId, pathForRC);
+                }
+                if (isInsuranceEdited) {
+                    uploadTruckInsurance(truckId, pathForInsurance);
+                }
+
 
                 okVehicleDetails.setEnabled(true);
                 okVehicleDetails.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -919,6 +869,18 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 alertPositiveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        if (fromBidNow) {
+                            Intent i8 = new Intent(VehicleDetailsActivity.this, DriverDetailsActivity.class);
+                            i8.putExtra("userId", userId);
+                            i8.putExtra("isEdit", false);
+                            i8.putExtra("fromBidNow", true);
+                            i8.putExtra("mobile", mobile);
+                            i8.putExtra("truckIdPass", truckIdPass);
+                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(i8);
+                            VehicleDetailsActivity.this.finish();
+                            overridePendingTransition(0, 0);
+                        }
                         alert.dismiss();
                         Intent i8 = new Intent(VehicleDetailsActivity.this, DriverDetailsActivity.class);
                         i8.putExtra("userId", userId);
@@ -979,6 +941,18 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                             alertPositiveButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
+                                    if (fromBidNow) {
+                                        Intent i8 = new Intent(VehicleDetailsActivity.this, DriverDetailsActivity.class);
+                                        i8.putExtra("userId", userId);
+                                        i8.putExtra("isEdit", false);
+                                        i8.putExtra("fromBidNow", true);
+                                        i8.putExtra("mobile", mobile);
+                                        i8.putExtra("truckIdPass", truckIdPass);
+                                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(i8);
+                                        VehicleDetailsActivity.this.finish();
+                                        overridePendingTransition(0, 0);
+                                    }
                                     alert.dismiss();
                                     Intent i8 = new Intent(VehicleDetailsActivity.this, DriverDetailsActivity.class);
                                     i8.putExtra("userId", userId);
@@ -1047,9 +1021,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
                 String truckId = addTruckResponse.getData().getTruck_id();
                 truckIdPass = addTruckResponse.getData().getTruck_id();
-
-//                String rcPath = rcImagePickerWithoutAlert();
-//                String insurancePath = insuranceImagePickerWithoutAlert();
 
                 uploadTruckInsurance(truckId, pathForInsurance);
                 uploadTruckRC(truckId, pathForRC);
@@ -1603,14 +1574,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         }
     }
 
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-//        String path = getRealPathFromURI(getImageUri(this,inImage));
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
-    }
-
     public String getRealPathFromURI(Uri uri) {
         String path = "";
         if (getContentResolver() != null) {
@@ -1623,6 +1586,13 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             }
         }
         return path;
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
     }
 
     public void onClickPreviewRcBook(View view) {

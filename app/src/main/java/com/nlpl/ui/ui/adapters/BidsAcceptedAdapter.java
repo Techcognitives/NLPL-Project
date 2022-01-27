@@ -88,6 +88,7 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
                         JSONObject obj = truckLists.getJSONObject(i);
                         holder.budget.setText("₹" + obj.getString("budget"));
                     }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
