@@ -37,7 +37,7 @@
         android:paddingTop="5dp"
         android:paddingBottom="10dp"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/dialog_driver_details_close_dialog"
+        app:layout_constraintBottom_toTopOf="@+id/dialog_spinner_bind_cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialog_spinner_title">
@@ -54,7 +54,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/dialog_driver_details_driver_bank_details"
+        android:id="@+id/dialog_spinner_bind_add_details"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -67,13 +67,13 @@
         android:textColor="@color/white"
         android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/dialog_driver_details_close_dialog"
-        app:layout_constraintEnd_toStartOf="@+id/dialog_driver_details_close_dialog"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_spinner_bind_cancel"
+        app:layout_constraintEnd_toStartOf="@+id/dialog_spinner_bind_cancel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/dialog_driver_details_close_dialog" />
+        app:layout_constraintTop_toTopOf="@+id/dialog_spinner_bind_cancel" />
 
     <TextView
-        android:id="@+id/dialog_driver_details_close_dialog"
+        android:id="@+id/dialog_spinner_bind_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -92,7 +92,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/dialog_driver_details_driver_bank_details"
+        app:layout_constraintStart_toEndOf="@+id/dialog_spinner_bind_add_details"
         app:layout_constraintTop_toBottomOf="@+id/dialog_spinner_bind_title" />
 
 
