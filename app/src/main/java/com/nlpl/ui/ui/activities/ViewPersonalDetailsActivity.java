@@ -5,6 +5,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -200,6 +201,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
 
                     if (companyNameAPI != null) {
                         userFirmTitle.setText("Firm Details");
+                        userFirmTitle.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
                         userFirmNameTitleTextView.setVisibility(View.VISIBLE);
                         userFirmNameTextView.setVisibility(View.VISIBLE);
                         userFirmAddressTitleTextView.setVisibility(View.VISIBLE);
@@ -209,6 +211,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
                         userFirmAddressTextView.setText(companyAddressAPI + ", " + companyCityAPI + ", " + companyZipAPI);
                     } else {
                         userFirmTitle.setText(getString(R.string.add_company));
+                        userFirmTitle.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.redDark)));
                         userFirmNameTitleTextView.setVisibility(View.GONE);
                         userEditFirmDetailsTextView.setVisibility(View.GONE);
                         userFirmNameTextView.setVisibility(View.GONE);
