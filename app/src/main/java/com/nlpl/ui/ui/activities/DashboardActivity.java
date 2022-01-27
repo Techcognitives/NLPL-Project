@@ -1,6 +1,7 @@
 package com.nlpl.ui.ui.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
@@ -20,6 +21,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.media.Image;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -392,17 +394,11 @@ public class DashboardActivity extends AppCompatActivity {
     public void onClickProfileAndRegister(View view) {
         switch (view.getId()) {
             case R.id.menu_personal_details_button:
-                if (isPersonalDetailsDone.equals("1")) {
-                    Intent intent = new Intent(DashboardActivity.this, ViewPersonalDetailsActivity.class);
-                    intent.putExtra("userId", userId);
-                    intent.putExtra("mobile", phone);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(DashboardActivity.this, PersonalDetailsActivity.class);
-                    intent.putExtra("userId", userId);
-                    intent.putExtra("mobile", phone);
-                    startActivity(intent);
-                }
+                    Intent i1 = new Intent(DashboardActivity.this, ViewPersonalDetailsActivity.class);
+                    i1.putExtra("userId", userId);
+                    i1.putExtra("mobile", phone);
+                    startActivity(i1);
+
                 break;
 
             case R.id.menu_bank_details_button:
@@ -1262,6 +1258,7 @@ public class DashboardActivity extends AppCompatActivity {
 
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String budgetEditText = budget.getText().toString();

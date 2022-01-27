@@ -30,15 +30,17 @@ import org.json.JSONObject;
 public class ViewPersonalDetailsActivity extends AppCompatActivity {
 
     private RequestQueue mQueue;
-    TextView userNameTextView, userPhoneNumberTextView, userEmailTextView, userAddressTextView, userFirmNameTextView, userFirmAddressTextView, userFirmNameTitleTextView, userFirmAddressTitleTextView, userFirmTitle, userEditFirmDetailsTextView;
+    TextView userFirmGSTTextview, userFirmGSTTextviewTitle, userFirmPANTextview, userFirmPANTextviewTitle, userNameTextView, userPhoneNumberTextView, userEmailTextView, userAddressTextView, userFirmNameTextView, userFirmAddressTextView, userFirmNameTitleTextView, userFirmAddressTitleTextView, userFirmTitle, userEditFirmDetailsTextView;
     String userNameAPI, userMobileNumberAPI, userAddressAPI, userCityAPI, userPinCodeAPI, userRoleAPI, userEmailIdAPI, isPersonalDetailsDoneAPI, isFirmDetailsDoneAPI, isBankDetailsDoneAPI, isTruckDetailsDoneAPI, isDriverDetailsDoneAPI;
-    String companyNameAPI, companyAddressAPI, companyCityAPI, companyZipAPI;
-    String phone, userId;
+    String companyNameAPI, companyAddressAPI, companyCityAPI, companyZipAPI, companyPanAPI, companyGstAPI;
+    String phone, userId, isPersonalDetailsDone;
+
+    TextView uploadPanAAdharBtn,  uploadPanAAdharBtnTitle;
 
     Dialog previewDialogPan, previewDialogAadhar;
 
     View actionBar;
-    TextView actionBarTitle;
+    TextView actionBarTitle, previewAadharBtn, previewPANBtn;
     ImageView actionBarBackButton, actionBarMenuButton;
 
     View bottomNav;
@@ -98,12 +100,22 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
         userEmailTextView = (TextView) findViewById(R.id.view_personal_details_email_id_text_view);
         userAddressTextView = (TextView) findViewById(R.id.view_personal_details_address_text_view);
 
+        uploadPanAAdharBtnTitle = (TextView) findViewById(R.id.view_personal_details_complete_personal_details_text);
+        uploadPanAAdharBtn = (TextView) findViewById(R.id.view_personal_details_add_personal_details);
+        userFirmGSTTextview = (TextView) findViewById(R.id.view_personal_details_firm_gst_number_set);
+        userFirmGSTTextviewTitle = (TextView) findViewById(R.id.view_personal_details_firm_gst_number);
+        userFirmPANTextview = (TextView) findViewById(R.id.view_personal_details_firm_pan_number_set);
+        userFirmPANTextviewTitle = (TextView) findViewById(R.id.view_personal_details_firm_pan_number);
+
         userFirmTitle = (TextView) findViewById(R.id.view_personal_details_firm_title);
         userFirmNameTitleTextView = (TextView) findViewById(R.id.view_personal_details_firm_name_title);
         userFirmNameTextView = (TextView) findViewById(R.id.view_personal_details_firm_name_text_view);
         userFirmAddressTitleTextView = (TextView) findViewById(R.id.view_personal_details_firm_address_title);
         userFirmAddressTextView = (TextView) findViewById(R.id.view_personal_details_firm_address_text_view);
         userEditFirmDetailsTextView = (TextView) findViewById(R.id.view_personal_details_edit_firm_details);
+
+        previewAadharBtn = findViewById(R.id.view_personal_details_preview_aadhar_card);
+        previewPANBtn = findViewById(R.id.view_personal_details_preview_pan_card);
 
         previewDialogPan = new Dialog(ViewPersonalDetailsActivity.this);
         previewDialogPan.setContentView(R.layout.dialog_preview_images);
@@ -116,6 +128,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
         getUserDetails();
         getCompanyDetails();
         getImageURL();
+
     }
 
     private void getUserDetails() {
@@ -135,6 +148,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
                         userCityAPI = obj.getString("preferred_location");
                         userPinCodeAPI = obj.getString("pin_code");
                         userRoleAPI = obj.getString("user_type");
+                        isPersonalDetailsDone = obj.getString("isPersonal_dt_added");
 
                         if (userRoleAPI.equals("Customer")) {
                             userFirmTitle.setVisibility(View.GONE);
@@ -143,6 +157,18 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
                             userFirmNameTextView.setVisibility(View.GONE);
                             userFirmAddressTitleTextView.setVisibility(View.GONE);
                             userFirmAddressTextView.setVisibility(View.GONE);
+                        }
+
+                        if (isPersonalDetailsDone.equals("1")) {
+                            previewAadharBtn.setVisibility(View.VISIBLE);
+                            previewPANBtn.setVisibility(View.VISIBLE);
+                            uploadPanAAdharBtn.setVisibility(View.GONE);
+                            uploadPanAAdharBtnTitle.setVisibility(View.GONE);
+                        } else {
+                            previewAadharBtn.setVisibility(View.GONE);
+                            previewPANBtn.setVisibility(View.GONE);
+                            uploadPanAAdharBtn.setVisibility(View.VISIBLE);
+                            uploadPanAAdharBtnTitle.setVisibility(View.VISIBLE);
                         }
 
                         userEmailIdAPI = obj.getString("email_id");
@@ -154,7 +180,6 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
                         isDriverDetailsDoneAPI = obj.getString("isDriver_added");
 
                         userNameTextView.setText(userNameAPI);
-
 
                         String s1 = userMobileNumberAPI.substring(2, 12);
 
@@ -196,6 +221,8 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
                         companyAddressAPI = data.getString("comp_add");
                         companyCityAPI = data.getString("comp_city");
                         companyZipAPI = data.getString("comp_zip");
+                        companyPanAPI = data.getString("company_pan");
+                        companyGstAPI = data.getString("company_gst_no");
                     }
 
                     if (companyNameAPI != null) {
