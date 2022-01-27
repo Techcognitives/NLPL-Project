@@ -28,7 +28,7 @@ public class UpdateLoadPostPickUpDate {
 
     @Override
     public String toString() {
-        return "UpdateLoadPost{" +
+        return "UpdateLoadPostPickUpDate{" +
                 "pick_up_date='" + pick_up_date + '\'' +
                 ", pick_up_time='" + pick_up_time + '\'' +
                 ", budget='" + budget + '\'' +

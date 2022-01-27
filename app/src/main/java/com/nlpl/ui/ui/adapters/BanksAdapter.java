@@ -44,8 +44,7 @@ public class BanksAdapter extends RecyclerView.Adapter<BanksAdapter.BankViewHold
         String bankName = obj.getBank_name();
 
         holder.list_bank_name.setText(bankName);
-        holder.list_acc_no.setText(" A/C No: " + accNumber);
-        holder.list_acc_holder_name.setText(" A/C Name: " + name1);
+        holder.list_acc_no.setText(" A/C: " + accNumber);
         holder.list_ifsi.setText(" IFSI: "+ ifsiNumber);
 
 //--------------------------------------------------------------------------------------------------
@@ -82,12 +81,11 @@ public class BanksAdapter extends RecyclerView.Adapter<BanksAdapter.BankViewHold
     }
 
     public class BankViewHolder extends RecyclerView.ViewHolder {
-        private TextView list_acc_holder_name, list_acc_no, list_edit, list_bank_name, list_ifsi, list_preview_bank_details;
+        private TextView list_acc_no, list_edit, list_bank_name, list_ifsi, list_preview_bank_details;
 
         public BankViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            list_acc_holder_name = itemView.findViewById(R.id.bank_list_account_holder_name_text);
             list_acc_no = itemView.findViewById(R.id.bank_list_account_number_text);
             list_edit = itemView.findViewById(R.id.bank_list_edit_bank_details_text);
             list_bank_name = itemView.findViewById(R.id.bank_list_bank_name);

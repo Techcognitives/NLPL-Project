@@ -6,10 +6,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -44,7 +46,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
 
     ArrayList<String> arrayUserDriverId, arrayDriverMobileNo;
     Dialog previewDialogDriverDetails;
-    TextView previewDriverDetailsDriverBankName, previewDriverDetailsDriverBankAccountNumber, previewDriverDetailsDriverBankIFSICode, previewDriverDetailsDriverBankDetailsTitle;
+    TextView previewDriverDetailsDriverBankName, previewDriverDetailsLabelAddDriverBank, previewDriverDetailsAddDriverBank, previewDriverDetailsDriverBankAccountNumber, previewDriverDetailsDriverBankIFSICode, previewDriverDetailsDriverBankDetailsTitle;
 
     String mobileNoDriverAPI, userDriverIdAPI, driverUserIdGet;
 
@@ -106,6 +108,14 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
         previewDialogDriverDetails = new Dialog(ViewDriverDetailsActivity.this);
         previewDialogDriverDetails.setContentView(R.layout.dialog_preview_driver_details);
         previewDialogDriverDetails.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        previewDriverDetailsDriverBankName = (TextView) previewDialogDriverDetails.findViewById(R.id.dialog_driver_details_bank_name);
+        previewDriverDetailsDriverBankAccountNumber = (TextView) previewDialogDriverDetails.findViewById(R.id.dialog_driver_details_account_number);
+        previewDriverDetailsDriverBankIFSICode = (TextView) previewDialogDriverDetails.findViewById(R.id.dialog_driver_details_ifsc_code);
+        previewDriverDetailsDriverBankDetailsTitle = (TextView) previewDialogDriverDetails.findViewById(R.id.dialog_driver_details_title);
+        previewDriverDetailsAddDriverBank = (TextView) previewDialogDriverDetails.findViewById(R.id.dialog_driver_details_driver_bank_details);
+        previewDriverDetailsLabelAddDriverBank = (TextView) previewDialogDriverDetails.findViewById(R.id.dialog_driver_details_label_add_driver_bank);
+
 
         previewDialogDL = new Dialog(ViewDriverDetailsActivity.this);
         previewDialogDL.setContentView(R.layout.dialog_preview_images);
@@ -244,14 +254,23 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
                         String bankAccountNumber = obj.getString("account_number");
                         String ifsiCode = obj.getString("IFSI_CODE");
 
-                        previewDriverDetailsDriverBankName = (TextView) previewDialogDriverDetails.findViewById(R.id.dialog_driver_details_bank_name);
-                        previewDriverDetailsDriverBankAccountNumber = (TextView) previewDialogDriverDetails.findViewById(R.id.dialog_driver_details_account_number);
-                        previewDriverDetailsDriverBankIFSICode = (TextView) previewDialogDriverDetails.findViewById(R.id.dialog_driver_details_ifsc_code);
-                        previewDriverDetailsDriverBankDetailsTitle = (TextView) previewDialogDriverDetails.findViewById(R.id.dialog_driver_details_title);
+                        if (bankName.length()==0){
+                            previewDriverDetailsLabelAddDriverBank.setVisibility(View.VISIBLE);
+                            previewDriverDetailsAddDriverBank.setVisibility(View.VISIBLE);
+                            previewDriverDetailsDriverBankName.setVisibility(View.INVISIBLE);
+                            previewDriverDetailsDriverBankAccountNumber.setVisibility(View.INVISIBLE);
+                            previewDriverDetailsDriverBankIFSICode.setVisibility(View.INVISIBLE);
+                        }else{
+                            previewDriverDetailsDriverBankName.setVisibility(View.VISIBLE);
+                            previewDriverDetailsDriverBankAccountNumber.setVisibility(View.VISIBLE);
+                            previewDriverDetailsDriverBankIFSICode.setVisibility(View.VISIBLE);
+                            previewDriverDetailsDriverBankName.setText(" Name: " + bankName);
+                            previewDriverDetailsDriverBankAccountNumber.setText(" Account No.: " + bankAccountNumber);
+                            previewDriverDetailsDriverBankIFSICode.setText(" IFSI Code: " + ifsiCode);
+                            previewDriverDetailsLabelAddDriverBank.setVisibility(View.GONE);
+                            previewDriverDetailsAddDriverBank.setVisibility(View.GONE);
+                        }
 
-                        previewDriverDetailsDriverBankName.setText(" Bank Name: " + bankName);
-                        previewDriverDetailsDriverBankAccountNumber.setText(" Account Number: " + bankAccountNumber);
-                        previewDriverDetailsDriverBankIFSICode.setText(" IFSI Code: " + ifsiCode);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -305,6 +324,25 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
         startActivity(intent4);
     }
 
+    public void onClickAddDriverBankDetails(View view) {
+        Intent intent2 = new Intent(ViewDriverDetailsActivity.this, BankDetailsActivity.class);
+        intent2.putExtra("userId", driverUserIdGet);
+        intent2.putExtra("isEdit", false);
+        intent2.putExtra("mobile", phone);
+        startActivity(intent2);
+        finish();
+        overridePendingTransition(0, 0);
+    }
+
+    public void onClickCloseDialogDriverBankDetails(View view) {
+        previewDialogDriverDetails.dismiss();
+        Intent intent = new Intent(ViewDriverDetailsActivity.this, ViewDriverDetailsActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("mobile", phone);
+        startActivity(intent);
+        finish();
+    }
+
     public void onClickPreviewDriverBankDetails(DriverModel obj) {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(previewDialogDriverDetails.getWindow().getAttributes());
@@ -312,6 +350,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         lp.gravity = Gravity.CENTER;
         previewDialogDriverDetails.show();
+        previewDialogDriverDetails.setCancelable(false);
         previewDialogDriverDetails.getWindow().setAttributes(lp);
 
         getUserDriverId(obj.getDriver_number());
@@ -345,13 +384,12 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-            Intent i8 = new Intent(ViewDriverDetailsActivity.this, DashboardActivity.class);
-            i8.putExtra("mobile2", phone);
-            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i8);
-            finish();
-            overridePendingTransition(0, 0);
+        Intent i8 = new Intent(ViewDriverDetailsActivity.this, DashboardActivity.class);
+        i8.putExtra("mobile2", phone);
+        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i8);
+        finish();
+        overridePendingTransition(0, 0);
 
     }
 }
