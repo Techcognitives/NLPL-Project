@@ -366,4 +366,11 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
             overridePendingTransition(0, 0);
         }
     }
+
+    public void onClickAddPersonalDetails(View view) {
+        Intent intent = new Intent(ViewPersonalDetailsActivity.this, PersonalDetailsActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("mobile", phone);
+        startActivity(intent);
+    }
 }

@@ -49,10 +49,8 @@
 
                 <TextView
                     android:id="@+id/view_personal_details_name_text_view"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     android:background="@drawable/edit_text_border"
                     android:paddingStart="10dp"
@@ -61,16 +59,15 @@
                     android:text="Name"
                     android:textColor="@color/black"
                     android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+                    app:layout_constraintStart_toEndOf="@+id/textView"
+                    app:layout_constraintTop_toTopOf="@+id/textView" />
 
                 <TextView
                     android:id="@+id/view_personal_details_phone_number_text_view"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     android:background="@drawable/edit_text_border"
                     android:paddingStart="10dp"
@@ -79,16 +76,15 @@
                     android:text="Phone"
                     android:textColor="@color/black"
                     android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView9"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView9" />
+                    app:layout_constraintStart_toEndOf="@+id/textView9"
+                    app:layout_constraintTop_toTopOf="@+id/textView9" />
 
                 <TextView
                     android:id="@+id/view_personal_details_email_id_text_view"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     android:background="@drawable/edit_text_border"
                     android:paddingStart="10dp"
@@ -97,10 +93,11 @@
                     android:text="Email"
                     android:textColor="@color/black"
                     android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView11"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView11" />
+                    app:layout_constraintStart_toEndOf="@+id/textView11"
+                    app:layout_constraintTop_toTopOf="@+id/textView11" />
 
                 <TextView
                     android:id="@+id/view_personal_details_address_text_view"
@@ -123,10 +120,8 @@
 
                 <TextView
                     android:id="@+id/view_personal_details_firm_name_text_view"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     android:background="@drawable/edit_text_border"
                     android:paddingStart="10dp"
@@ -135,17 +130,16 @@
                     android:text="Firm Name"
                     android:textColor="@color/black"
                     android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/view_personal_details_firm_name_title"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view_personal_details_firm_name_title" />
+                    app:layout_constraintStart_toEndOf="@+id/view_personal_details_firm_name_title"
+                    app:layout_constraintTop_toTopOf="@+id/view_personal_details_firm_name_title" />
 
                 <TextView
                     android:id="@+id/view_personal_details_firm_address_text_view"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     android:background="@drawable/edit_text_border"
                     android:paddingStart="10dp"
@@ -155,37 +149,75 @@
                     android:text="Firm Address"
                     android:textColor="@color/black"
                     android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/view_personal_details_firm_address_title"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view_personal_details_firm_address_title" />
+                    app:layout_constraintStart_toEndOf="@+id/view_personal_details_firm_address_title"
+                    app:layout_constraintTop_toTopOf="@+id/view_personal_details_firm_address_title" />
+
+                <TextView
+                    android:id="@+id/view_personal_details_firm_gst_number_set"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/edit_text_border"
+                    android:paddingStart="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:singleLine="true"
+                    android:text="Firm GST"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/view_personal_details_firm_gst_number"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/view_personal_details_firm_gst_number"
+                    app:layout_constraintTop_toTopOf="@+id/view_personal_details_firm_gst_number" />
+
+                <TextView
+                    android:id="@+id/view_personal_details_firm_pan_number_set"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/edit_text_border"
+                    android:paddingStart="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:singleLine="true"
+                    android:text="Firm PAN"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/view_personal_details_firm_pan_number"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/view_personal_details_firm_pan_number"
+                    app:layout_constraintTop_toTopOf="@+id/view_personal_details_firm_pan_number" />
 
                 <TextView
                     android:id="@+id/textView"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:layout_marginEnd="5dp"
                     android:paddingStart="5dp"
                     android:text="Name:"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintEnd_toStartOf="@+id/view_personal_details_name_text_view"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/textView9"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:layout_marginEnd="5dp"
                     android:paddingStart="5dp"
                     android:text="Phone:"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/view_personal_details_phone_number_text_view"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view_personal_details_name_text_view" />
 
@@ -206,15 +238,16 @@
 
                 <TextView
                     android:id="@+id/textView11"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:layout_marginEnd="5dp"
                     android:paddingStart="5dp"
-                    android:text="Email Id:"
+                    android:text="Email:"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/view_personal_details_email_id_text_view"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view_personal_details_phone_number_text_view" />
 
@@ -238,50 +271,106 @@
                     app:layout_constraintTop_toTopOf="@+id/view_personal_details_preview_pan_card" />
 
                 <TextView
-                    android:id="@+id/view_personal_details_firm_title"
+                    android:id="@+id/view_personal_details_add_personal_details"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     android:background="@drawable/button_active"
-                    android:onClick="onClickAddCompanyDetails"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:text="Firm Details"
+                    android:backgroundTint="@color/redDark"
+                    android:onClick="onClickAddPersonalDetails"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="Upload PAN and AADHAR"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view_personal_details_edit_personal_details" />
+                    app:layout_constraintTop_toBottomOf="@+id/view_personal_details_complete_personal_details_text" />
+
+                <TextView
+                    android:id="@+id/view_personal_details_firm_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/button_active"
+                    android:onClick="onClickAddCompanyDetails"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="Firm Details"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view_personal_details_add_personal_details" />
 
                 <TextView
                     android:id="@+id/view_personal_details_firm_name_title"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:layout_marginEnd="5dp"
                     android:paddingStart="5dp"
-                    android:text="Firm Name:"
+                    android:text="Name:"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/view_personal_details_firm_name_text_view"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view_personal_details_firm_title" />
 
                 <TextView
-                    android:id="@+id/view_personal_details_firm_address_title"
-                    android:layout_width="0dp"
+                    android:id="@+id/view_personal_details_firm_gst_number"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginEnd="5dp"
                     android:paddingStart="5dp"
-                    android:text="Firm Address:"
+                    android:text="GST No.:"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/view_personal_details_firm_gst_number_set"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view_personal_details_firm_address_title" />
+
+                <TextView
+                    android:id="@+id/view_personal_details_firm_pan_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:paddingStart="5dp"
+                    android:text="PAN No.:"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/view_personal_details_firm_pan_number_set"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view_personal_details_firm_gst_number_set" />
+
+                <TextView
+                    android:id="@+id/view_personal_details_firm_address_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:paddingStart="5dp"
+                    android:text="Address:"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/view_personal_details_firm_address_text_view"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view_personal_details_firm_name_text_view" />
 
@@ -289,7 +378,7 @@
                     android:id="@+id/view_personal_details_edit_firm_details"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     android:drawableStart="@drawable/ic_edit_small"
                     android:drawableTint="@color/button_blue"
@@ -301,7 +390,7 @@
                     android:textSize="12sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view_personal_details_firm_address_text_view" />
+                    app:layout_constraintTop_toBottomOf="@+id/view_personal_details_firm_pan_number_set" />
 
                 <TextView
                     android:id="@+id/view_personal_details_preview_aadhar_card"
@@ -335,6 +424,20 @@
                     app:layout_constraintEnd_toStartOf="@+id/view_personal_details_edit_personal_details"
                     app:layout_constraintStart_toEndOf="@+id/view_personal_details_preview_aadhar_card"
                     app:layout_constraintTop_toTopOf="@+id/view_personal_details_preview_aadhar_card" />
+
+                <TextView
+                    android:id="@+id/view_personal_details_complete_personal_details_text"
+                    android:layout_width="0dp"
+                    android:paddingStart="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Please complete your profile"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view_personal_details_preview_aadhar_card" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
