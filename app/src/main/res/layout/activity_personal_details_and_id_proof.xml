@@ -29,7 +29,8 @@
         android:text="@string/pan_and_aadhar"
         android:textAllCaps="false"
         android:textColor="@color/background"
-        android:textSize="18sp"
+        android:textSize="16sp"
+        android:visibility="visible"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/personal_details_id_proof_personal_address_button"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,16 +42,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="15dp"
         android:layout_marginEnd="3dp"
-        android:onClick="onClickPersonalOrAadhar"
         android:background="@drawable/personal_details_buttons_active"
+        android:onClick="onClickPersonalOrAadhar"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
         android:text="@string/personal"
         android:textAllCaps="false"
         android:textColor="@color/background"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/personal_details_id_proof_pan_aadhar"
         app:layout_constraintStart_toStartOf="parent"
@@ -103,7 +103,7 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_pan_view">
+        app:layout_constraintTop_toBottomOf="@+id/personal_details_id_proof_personal_address_button">
 
         <include
             android:id="@+id/personal_details_id_proof_personal_and_address_layout"
@@ -113,6 +113,7 @@
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

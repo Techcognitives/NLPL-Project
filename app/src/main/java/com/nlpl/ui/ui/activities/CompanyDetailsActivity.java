@@ -975,13 +975,10 @@ public class CompanyDetailsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-        Intent i8 = new Intent(CompanyDetailsActivity.this, DashboardActivity.class);
-        i8.putExtra("mobile2", mobile);
-        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Intent i8 = new Intent(CompanyDetailsActivity.this, ViewPersonalDetailsActivity.class);
+        i8.putExtra("userId", userId);
+        i8.putExtra("mobile", mobile);
         startActivity(i8);
-        finish();
-        overridePendingTransition(0, 0);
     }
 
 }

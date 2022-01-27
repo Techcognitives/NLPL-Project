@@ -31,7 +31,7 @@ import org.json.JSONObject;
 public class ViewPersonalDetailsActivity extends AppCompatActivity {
 
     private RequestQueue mQueue;
-    TextView userFirmGSTTextview, userFirmGSTTextviewTitle, userFirmPANTextview, userFirmPANTextviewTitle, userNameTextView, userPhoneNumberTextView, userEmailTextView, userAddressTextView, userFirmNameTextView, userFirmAddressTextView, userFirmNameTitleTextView, userFirmAddressTitleTextView, userFirmTitle, userEditFirmDetailsTextView;
+    TextView userFirmGSTTextview, userFirmGSTTextviewTitle, userFirmPANTextview, userFirmPANTextviewTitle, userNameTextView, userPhoneNumberTextView, userEmailTextView, userAddressTextView, userFirmNameTextView, userFirmAddressTextView, userFirmNameTitleTextView, userFirmAddressTitleTextView, userFirmTitle, userFirmAddCompany, userEditFirmDetailsTextView;
     String userNameAPI, userMobileNumberAPI, userAddressAPI, userCityAPI, userPinCodeAPI, userRoleAPI, userEmailIdAPI, isPersonalDetailsDoneAPI, isFirmDetailsDoneAPI, isBankDetailsDoneAPI, isTruckDetailsDoneAPI, isDriverDetailsDoneAPI;
     String companyNameAPI, companyAddressAPI, companyCityAPI, companyZipAPI, companyPanAPI, companyGstAPI;
     String phone, userId, isPersonalDetailsDone;
@@ -109,6 +109,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
         userFirmPANTextviewTitle = (TextView) findViewById(R.id.view_personal_details_firm_pan_number);
 
         userFirmTitle = (TextView) findViewById(R.id.view_personal_details_firm_title);
+        userFirmAddCompany = findViewById(R.id.view_personal_details_firm_btn);
         userFirmNameTitleTextView = (TextView) findViewById(R.id.view_personal_details_firm_name_title);
         userFirmNameTextView = (TextView) findViewById(R.id.view_personal_details_firm_name_text_view);
         userFirmAddressTitleTextView = (TextView) findViewById(R.id.view_personal_details_firm_address_title);
@@ -152,7 +153,12 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
                         isPersonalDetailsDone = obj.getString("isPersonal_dt_added");
 
                         if (userRoleAPI.equals("Customer")) {
+                            userFirmAddCompany.setVisibility(View.GONE);
                             userFirmTitle.setVisibility(View.GONE);
+                            userFirmGSTTextview.setVisibility(View.GONE);
+                            userFirmGSTTextviewTitle.setVisibility(View.GONE);
+                            userFirmPANTextviewTitle.setVisibility(View.GONE);
+                            userFirmPANTextview.setVisibility(View.GONE);
                             userFirmNameTitleTextView.setVisibility(View.GONE);
                             userEditFirmDetailsTextView.setVisibility(View.GONE);
                             userFirmNameTextView.setVisibility(View.GONE);
@@ -166,8 +172,8 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
                             uploadPanAAdharBtn.setVisibility(View.GONE);
                             uploadPanAAdharBtnTitle.setVisibility(View.GONE);
                         } else {
-                            previewAadharBtn.setVisibility(View.GONE);
-                            previewPANBtn.setVisibility(View.GONE);
+                            previewAadharBtn.setVisibility(View.INVISIBLE);
+                            previewPANBtn.setVisibility(View.INVISIBLE);
                             uploadPanAAdharBtn.setVisibility(View.VISIBLE);
                             uploadPanAAdharBtnTitle.setVisibility(View.VISIBLE);
                         }
@@ -227,8 +233,18 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
                     }
 
                     if (companyNameAPI != null) {
+                        userFirmGSTTextview.setVisibility(View.VISIBLE);
+                        userFirmGSTTextviewTitle.setVisibility(View.VISIBLE);
+                        userFirmPANTextviewTitle.setVisibility(View.VISIBLE);
+                        userFirmPANTextview.setVisibility(View.VISIBLE);
+
+                        userFirmGSTTextview.setText(companyGstAPI);
+                        userFirmPANTextview.setText(companyPanAPI);
+
+                        userFirmAddCompany.setVisibility(View.INVISIBLE);
+                        userFirmTitle.setVisibility(View.VISIBLE);
                         userFirmTitle.setText("Firm Details");
-                        userFirmTitle.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                        userFirmTitle.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.redDark)));
                         userFirmNameTitleTextView.setVisibility(View.VISIBLE);
                         userFirmNameTextView.setVisibility(View.VISIBLE);
                         userFirmAddressTitleTextView.setVisibility(View.VISIBLE);
@@ -237,8 +253,12 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
                         userFirmNameTextView.setText(companyNameAPI);
                         userFirmAddressTextView.setText(companyAddressAPI + ", " + companyCityAPI + ", " + companyZipAPI);
                     } else {
-                        userFirmTitle.setText(getString(R.string.add_company));
-                        userFirmTitle.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.redDark)));
+                        userFirmAddCompany.setVisibility(View.VISIBLE);
+                        userFirmTitle.setVisibility(View.GONE);
+                        userFirmGSTTextview.setVisibility(View.GONE);
+                        userFirmGSTTextviewTitle.setVisibility(View.GONE);
+                        userFirmPANTextviewTitle.setVisibility(View.GONE);
+                        userFirmPANTextview.setVisibility(View.GONE);
                         userFirmNameTitleTextView.setVisibility(View.GONE);
                         userEditFirmDetailsTextView.setVisibility(View.GONE);
                         userFirmNameTextView.setVisibility(View.GONE);

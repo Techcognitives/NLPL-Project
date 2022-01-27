@@ -1377,17 +1377,10 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     public void onClickProfileAndRegisterCustomer(View view) {
         switch (view.getId()) {
             case R.id.customer_menu_personal_details_button:
-                if (isPersonalDetailsDone.equals("1")) {
-                    Intent intent = new Intent(CustomerDashboardActivity.this, ViewPersonalDetailsActivity.class);
-                    intent.putExtra("userId", userId);
-                    intent.putExtra("mobile", phone);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(CustomerDashboardActivity.this, PersonalDetailsActivity.class);
-                    intent.putExtra("userId", userId);
-                    intent.putExtra("mobile", phone);
-                    startActivity(intent);
-                }
+                    Intent i8 = new Intent(CustomerDashboardActivity.this, ViewPersonalDetailsActivity.class);
+                    i8.putExtra("userId", userId);
+                    i8.putExtra("mobile", phone);
+                    startActivity(i8);
                 break;
 
             case R.id.customer_menu_bank_details_button:
