@@ -252,8 +252,6 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
                         previewDriverDetailsDriverBankName.setText(" Bank Name: " + bankName);
                         previewDriverDetailsDriverBankAccountNumber.setText(" Account Number: " + bankAccountNumber);
                         previewDriverDetailsDriverBankIFSICode.setText(" IFSI Code: " + ifsiCode);
-
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -1,5 +1,6 @@
 package com.nlpl.ui.ui.activities;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -7,12 +8,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -38,8 +38,6 @@ import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BidsAcceptedModel;
 import com.nlpl.model.ModelForRecyclerView.BidsReceivedModel;
 import com.nlpl.model.ModelForRecyclerView.BidsResponsesModel;
-import com.nlpl.model.ModelForRecyclerView.FindLoadsModel;
-import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
 import com.nlpl.model.UpdateBidStatusAccepted;
 import com.nlpl.model.UpdateBidStatusFinalAccepted;
 import com.nlpl.model.UpdateBudgetCustomerForSP;
@@ -50,13 +48,11 @@ import com.nlpl.services.PostLoadService;
 import com.nlpl.ui.ui.adapters.BidsAcceptedAdapter;
 import com.nlpl.ui.ui.adapters.BidsReceivedAdapter;
 import com.nlpl.ui.ui.adapters.BidsResponsesAdapter;
-import com.nlpl.ui.ui.adapters.LoadNotificationAdapter;
-import com.nlpl.ui.ui.adapters.LoadSubmittedAdapter;
+import com.nlpl.utils.EnglishNumberToWords;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -764,6 +760,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String budgetEditText = budget.getText().toString();
@@ -774,6 +771,14 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                 } else {
                     okBudget.setEnabled(false);
                     okBudget.setBackgroundResource((R.drawable.button_de_active));
+                }
+
+                TextView amountInWords = setBudget.findViewById(R.id.dialog_budget_amount_in_words);
+                if (budgetEditText.length()>0){
+                    String return_val_in_english = EnglishNumberToWords.convert(Long.parseLong(budgetEditText));
+                    amountInWords.setText(return_val_in_english);
+                } else {
+                    amountInWords.setText("");
                 }
             }
 

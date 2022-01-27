@@ -71,6 +71,7 @@ import com.nlpl.ui.ui.adapters.BidsResponsesAdapter;
 import com.nlpl.ui.ui.adapters.LoadNotificationAdapter;
 import com.nlpl.ui.ui.adapters.LoadSubmittedAdapter;
 import com.nlpl.utils.ApiClient;
+import com.nlpl.utils.EnglishNumberToWords;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1287,13 +1288,19 @@ public class DashboardActivity extends AppCompatActivity {
                     } else {
                         spQuote.setTextColor(getResources().getColor(R.color.redDark));
                     }
-
-
                     okBudget.setEnabled(true);
                     okBudget.setBackgroundResource((R.drawable.button_active));
                 } else {
                     okBudget.setEnabled(false);
                     okBudget.setBackgroundResource((R.drawable.button_de_active));
+                }
+
+                TextView amountInWords = setBudget.findViewById(R.id.dialog_budget_amount_in_words);
+                if (budgetEditText.length()>0){
+                    String return_val_in_english = EnglishNumberToWords.convert(Long.parseLong(budgetEditText));
+                    amountInWords.setText(return_val_in_english);
+                } else {
+                    amountInWords.setText("");
                 }
             }
 

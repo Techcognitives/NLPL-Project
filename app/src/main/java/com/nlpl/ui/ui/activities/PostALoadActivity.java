@@ -43,6 +43,7 @@ import com.nlpl.model.Responses.PostLoadResponse;
 import com.nlpl.model.UpdateLoadPost.UpdateLoadPostPickUpDate;
 import com.nlpl.services.PostLoadService;
 import com.nlpl.utils.ApiClient;
+import com.nlpl.utils.EnglishNumberToWords;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -451,6 +452,8 @@ public class PostALoadActivity extends AppCompatActivity {
 
         EditText budget = setBudget.findViewById(R.id.dialog_budget_edit);
         Button okBudget = setBudget.findViewById(R.id.dialog_budget_ok_btn);
+        TextView amountInWords = setBudget.findViewById(R.id.dialog_budget_amount_in_words);
+
         budget.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
@@ -491,6 +494,14 @@ public class PostALoadActivity extends AppCompatActivity {
                 } else {
                     okBudget.setEnabled(false);
                     okBudget.setBackgroundResource((R.drawable.button_de_active));
+                }
+
+                TextView amountInWords = setBudget.findViewById(R.id.dialog_budget_amount_in_words);
+                if (budgetEditText.length()>0){
+                    String return_val_in_english = EnglishNumberToWords.convert(Long.parseLong(budgetEditText));
+                    amountInWords.setText(return_val_in_english);
+                } else {
+                    amountInWords.setText("");
                 }
             }
 

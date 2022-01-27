@@ -244,7 +244,7 @@
                     android:layout_marginStart="5dp"
                     android:background="@drawable/button_active"
                     android:backgroundTint="@color/grey"
-                    android:paddingLeft="2dp"
+                    android:paddingStart="2dp"
                     android:paddingTop="2dp"
                     android:paddingEnd="2dp"
                     android:paddingBottom="2dp"
