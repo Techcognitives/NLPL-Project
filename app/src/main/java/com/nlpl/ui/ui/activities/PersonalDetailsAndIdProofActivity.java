@@ -158,22 +158,10 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (roleAPI.equals("Customer")) {
-                    Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, CustomerDashboardActivity.class);
-                    i8.putExtra("mobile", mobileAPI);
-                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i8);
-                    overridePendingTransition(0, 0);
-                    finish();
-
-                } else {
-                    Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, DashboardActivity.class);
-                    i8.putExtra("mobile2", mobileAPI);
-                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i8);
-                    finish();
-                    overridePendingTransition(0, 0);
-                }
+                Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, ViewPersonalDetailsActivity.class);
+                i8.putExtra("userId", userId);
+                i8.putExtra("mobile", mobileAPI);
+                startActivity(i8);
             }
         });
         //------------------------------------------------------------------------------------------
