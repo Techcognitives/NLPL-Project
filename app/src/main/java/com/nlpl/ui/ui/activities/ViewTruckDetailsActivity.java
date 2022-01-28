@@ -27,8 +27,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
+import com.nlpl.model.ModelForRecyclerView.DriverModel;
 import com.nlpl.model.ModelForRecyclerView.TruckModel;
+import com.nlpl.model.UpdateTruckDetails.UpdateTruckDriverId;
+import com.nlpl.services.AddTruckService;
+import com.nlpl.ui.ui.adapters.DriversAdapter;
+import com.nlpl.ui.ui.adapters.DriversListAdapter;
 import com.nlpl.ui.ui.adapters.TrucksAdapter;
+import com.nlpl.ui.ui.adapters.TrucksListAdapter;
 import com.nlpl.utils.DownloadImageTask;
 
 import org.json.JSONArray;
@@ -37,6 +43,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class ViewTruckDetailsActivity extends AppCompatActivity {
 
     private RequestQueue mQueue;
@@ -44,9 +56,17 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
     private TrucksAdapter truckListAdapter;
     private RecyclerView truckListRecyclerView;
 
+    private ArrayList<DriverModel> driverList = new ArrayList<>();
+    private DriversListAdapter driverListAdapter;
+    private RecyclerView driverListRecyclerView;
+    private AddTruckService addTruckService;
+
     Dialog previewDialogRcBook, previewDialogInsurance;
-    String phone, userId;
+    String phone, userId, truckIdPass;
     ImageView previewRcBook, previewInsurance;
+
+    Dialog previewDialogDL, previewDialogSelfie, previewDialogSpinner;
+    ImageView previewDL, previewSelfie;
 
     ArrayList<String> arrayuserAllDrivers;
 
@@ -56,6 +76,9 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
 
     View bottomNav;
     ConstraintLayout spDashboard, customerDashboard;
+
+    Dialog previewDialogDriverDetails;
+    TextView previewDriverDetailsTitle, previewDriverDetailsDriverName, previewDriverDetailsDriverNumber, textviewGone, textviewGone2, previewDriverDetailsDriverEmails, previewDriverDetailsDriverLicence, previewDriverDetailsDriverSelfie, previewDriverDetailsAssignDriverButton, previewDriverDetailsOKButton, previewDriverDetailsMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +93,12 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
         }
 
         mQueue = Volley.newRequestQueue(ViewTruckDetailsActivity.this);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.baseURL))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        addTruckService = retrofit.create(AddTruckService.class);
         //-------------------------------- Action Bar ----------------------------------------------
         actionBar = findViewById(R.id.view_truck_details_action_bar);
         actionBarTitle = (TextView) actionBar.findViewById(R.id.action_bar_title);
@@ -109,6 +138,55 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
         truckListRecyclerView.setAdapter(truckListAdapter);
 
         getTruckList();
+        //------------------------------------------------------------------------------------------
+        previewDialogDL = new Dialog(ViewTruckDetailsActivity.this);
+        previewDialogDL.setContentView(R.layout.dialog_preview_images);
+        previewDialogDL.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        previewDL = (ImageView) previewDialogDL.findViewById(R.id.dialog_preview_image_view);
+
+        previewDialogSelfie = new Dialog(ViewTruckDetailsActivity.this);
+        previewDialogSelfie.setContentView(R.layout.dialog_preview_images);
+        previewDialogSelfie.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        previewSelfie = (ImageView) previewDialogSelfie.findViewById(R.id.dialog_preview_image_view);
+        //----------------------- Alert Dialog -------------------------------------------------
+        previewDialogDriverDetails = new Dialog(ViewTruckDetailsActivity.this);
+        previewDialogDriverDetails.setContentView(R.layout.dialog_preview_driver_truck_details);
+        previewDialogDriverDetails.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        previewDriverDetailsTitle = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_title);
+        previewDriverDetailsDriverName = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_vehicle_number);
+        previewDriverDetailsDriverNumber = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_vehicle_model);
+        textviewGone = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_title_feet);
+        textviewGone2 = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_type);
+        previewDriverDetailsDriverEmails = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_capacity);
+        previewDriverDetailsDriverLicence = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_rc_book_preview);
+        previewDriverDetailsDriverSelfie = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_insurance_preview);
+        previewDriverDetailsAssignDriverButton = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_reassign_button);
+        previewDriverDetailsOKButton = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_ok_button);
+        previewDriverDetailsMessage = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_label_add_driver_bank);
+        //------------------------------------------------------------------------------------------
+        previewDialogSpinner = new Dialog(ViewTruckDetailsActivity.this);
+        previewDialogSpinner.setContentView(R.layout.dialog_spinner_bind);
+        previewDialogSpinner.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        TextView previewSpinnerTitle = (TextView) previewDialogSpinner.findViewById(R.id.dialog_spinner_bind_title);
+        TextView previewSpinnerAddTruck = (TextView) previewDialogSpinner.findViewById(R.id.dialog_spinner_bind_add_details);
+        TextView previewSpinnerOkButton = (TextView) previewDialogSpinner.findViewById(R.id.dialog_spinner_bind_cancel);
+        //------------------------------------------------------------------------------------------
+
+        //---------------------------- Get Driver Details ------------------------------------------
+        driverListRecyclerView = previewDialogSpinner.findViewById(R.id.dialog_spinner_bind_recycler_view);
+
+        LinearLayoutManager linearLayoutManagerDriver = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManagerDriver.setReverseLayout(true);
+        driverListRecyclerView.setLayoutManager(linearLayoutManagerDriver);
+        driverListRecyclerView.setHasFixedSize(true);
+
+        driverListAdapter = new DriversListAdapter(ViewTruckDetailsActivity.this, driverList);
+        driverListRecyclerView.setAdapter(driverListAdapter);
+        getDriverDetailsList();
         //------------------------------------------------------------------------------------------
 
         previewDialogRcBook = new Dialog(ViewTruckDetailsActivity.this);
@@ -260,118 +338,240 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
     }
 
     public void getDriverDetailsOnTruckActivity(TruckModel obj) {
-
-        //----------------------- Alert Dialog -------------------------------------------------
-        Dialog alert = new Dialog(ViewTruckDetailsActivity.this);
-        alert.setContentView(R.layout.dialog_preview_driver_truck_details);
-        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        truckIdPass = obj.getTruck_id();
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(alert.getWindow().getAttributes());
+        lp.copyFrom(previewDialogDriverDetails.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp.gravity = Gravity.CENTER;
 
-        alert.show();
-        alert.getWindow().setAttributes(lp);
-        alert.setCancelable(true);
+        previewDialogDriverDetails.show();
+        previewDialogDriverDetails.getWindow().setAttributes(lp);
+        previewDialogDriverDetails.setCancelable(true);
 
-        TextView driverDetailsHeading = alert.findViewById(R.id.dialog_driver_truck_details_title);
-        TextView driverName = alert.findViewById(R.id.dialog_driver_truck_details_vehicle_number);
-        TextView driverNumber = alert.findViewById(R.id.dialog_driver_truck_details_vehicle_model);
-        TextView textviewGone = alert.findViewById(R.id.dialog_driver_truck_details_title_feet);
-        TextView textviewGone2 = alert.findViewById(R.id.dialog_driver_truck_details_type);
-        TextView textviewGone3 = alert.findViewById(R.id.dialog_driver_truck_details_capacity);
-        TextView driverLicence = alert.findViewById(R.id.dialog_driver_truck_details_rc_book_preview);
-        TextView driverSelfie = alert.findViewById(R.id.dialog_driver_truck_details_insurance_preview);
-        TextView assignDriver = alert.findViewById(R.id.dialog_driver_truck_details_reassign_button);
-        TextView ok = alert.findViewById(R.id.dialog_driver_truck_details_ok_button);
-        TextView pleaseAddDriver = alert.findViewById(R.id.dialog_driver_truck_details_label_add_driver_bank);
-
-        driverDetailsHeading.setText("Driver Details");
+        previewDriverDetailsTitle.setText("Driver Details");
         textviewGone.setVisibility(View.GONE);
         textviewGone2.setVisibility(View.GONE);
-        textviewGone3.setVisibility(View.GONE);
-        driverLicence.setText("Driver Licence");
-        driverSelfie.setText("Driver Selfie");
-        pleaseAddDriver.setText("Please add a Driver");
-        pleaseAddDriver.setVisibility(View.INVISIBLE);
-
+        previewDriverDetailsDriverLicence.setText("Driver Licence");
+        previewDriverDetailsDriverSelfie.setText("Driver Selfie");
+        previewDriverDetailsMessage.setText("Please add a Driver");
+        previewDriverDetailsMessage.setVisibility(View.INVISIBLE);
 
         if (obj.getDriver_id().equals("null")) {
-            pleaseAddDriver.setVisibility(View.VISIBLE);
-            driverLicence.setVisibility(View.INVISIBLE);
-            driverSelfie.setVisibility(View.INVISIBLE);
-            driverName.setVisibility(View.INVISIBLE);
-            driverNumber.setVisibility(View.INVISIBLE);
-            assignDriver.setText("Assign Driver");
-
-            assignDriver.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    getDriverListDialog(obj.getUser_id());
-                }
-            });
-
+            previewDriverDetailsMessage.setVisibility(View.VISIBLE);
+            previewDriverDetailsDriverLicence.setVisibility(View.INVISIBLE);
+            previewDriverDetailsDriverSelfie.setVisibility(View.INVISIBLE);
+            previewDriverDetailsDriverName.setVisibility(View.INVISIBLE);
+            previewDriverDetailsDriverNumber.setVisibility(View.INVISIBLE);
+            previewDriverDetailsDriverEmails.setVisibility(View.INVISIBLE);
+            previewDriverDetailsAssignDriverButton.setText("Assign Driver");
         } else {
-
-            assignDriver.setText("Reassign Driver");
-            pleaseAddDriver.setVisibility(View.INVISIBLE);
-            driverLicence.setVisibility(View.VISIBLE);
-            driverSelfie.setVisibility(View.VISIBLE);
-            driverName.setVisibility(View.VISIBLE);
-            driverNumber.setVisibility(View.VISIBLE);
-            //---------------------------- Get Driver Details -------------------------------------------
-            String url1 = getString(R.string.baseURL) + "/driver/driverId/" + obj.getDriver_id();
-            Log.i("URL: ", url1);
-
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        truckList = new ArrayList<>();
-                        JSONArray truckLists = response.getJSONArray("data");
-                        for (int i = 0; i < truckLists.length(); i++) {
-                            JSONObject obj = truckLists.getJSONObject(i);
-                            driverName.setText(obj.getString("driver_name"));
-                            driverNumber.setText(obj.getString("driver_number"));
-                        }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }, new com.android.volley.Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    error.printStackTrace();
-                }
-            });
-            mQueue.add(request);
-            //-------------------------------------------------------------------------------------------
+            previewDriverDetailsAssignDriverButton.setText("Re-Assign Driver");
+            previewDriverDetailsMessage.setVisibility(View.INVISIBLE);
+            previewDriverDetailsDriverLicence.setVisibility(View.VISIBLE);
+            previewDriverDetailsDriverSelfie.setVisibility(View.VISIBLE);
+            previewDriverDetailsDriverName.setVisibility(View.VISIBLE);
+            previewDriverDetailsDriverNumber.setVisibility(View.VISIBLE);
+            previewDriverDetailsDriverEmails.setVisibility(View.VISIBLE);
+            getDriverDetailsAssigned(obj.getDriver_id());
         }
     }
 
-    private void getDriverListDialog(String userId) {
-        //----------------------- Alert Dialog -------------------------------------------------
-        Dialog alert = new Dialog(ViewTruckDetailsActivity.this);
-        alert.setContentView(R.layout.dialog_spinner_bind);
-        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+    public void getDriverDetailsAssigned(String driverId){
+        //---------------------------- Get Driver Details -------------------------------------------
+        String url1 = getString(R.string.baseURL) + "/driver/driverId/" + driverId;
+        Log.i("URL: ", url1);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    truckList = new ArrayList<>();
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+                        previewDriverDetailsDriverName.setText(obj.getString("driver_name"));
+                        previewDriverDetailsDriverNumber.setText(obj.getString("driver_number"));
+                        String driverEmail = obj.getString("driver_emailId");
+                        String driverDlURL = obj.getString("upload_dl");
+                        String driverSelfieURL = obj.getString("driver_selfie");
+
+                        new DownloadImageTask(previewDL).execute(driverDlURL);
+                        new DownloadImageTask(previewSelfie).execute(driverSelfieURL);
+
+                        if (driverEmail == null){
+                            previewDriverDetailsDriverEmails.setVisibility(View.INVISIBLE);
+                        }else{
+                            previewDriverDetailsDriverEmails.setVisibility(View.VISIBLE);
+                            previewDriverDetailsDriverEmails.setText(driverEmail);
+                        }
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+        //-------------------------------------------------------------------------------------------
+    }
+
+    public void onClickPreviewRcBookAssigned(View view) {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(alert.getWindow().getAttributes());
+        lp.copyFrom(previewDialogDL.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp.gravity = Gravity.CENTER;
 
-        alert.show();
-        alert.getWindow().setAttributes(lp);
-        alert.setCancelable(true);
+        previewDialogDL.show();
+        previewDialogDL.getWindow().setAttributes(lp);
+    }
 
-        TextView addDriver = alert.findViewById(R.id.dialog_spinner_bind_add_details);
-        TextView cancel = alert.findViewById(R.id.dialog_spinner_bind_cancel);
+    public void onClickPreviewInsuranceAssigned(View view) {
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(previewDialogSelfie.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
 
-        RecyclerView driverNames = alert.findViewById(R.id.dialog_spinner_bind_recycler_view);
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(ViewTruckDetailsActivity.this, R.layout.custom_list_row, arrayuserAllDrivers);
-//        driverNames.setAdapter(adapter1);
+        previewDialogSelfie.show();
+        previewDialogSelfie.getWindow().setAttributes(lp);
+    }
 
+    public void onClickCloseDialogDriverBankDetails(View view) {
+        previewDialogDriverDetails.dismiss();
+        Intent intent = new Intent(ViewTruckDetailsActivity.this, ViewTruckDetailsActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("mobile", phone);
+        startActivity(intent);
+        finish();
+    }
+
+    public void onClickReAssignTruck(View view) {
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(previewDialogSpinner.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        previewDialogSpinner.show();
+        previewDialogSpinner.getWindow().setAttributes(lp);
+    }
+
+    public void onClickAddDriverDetailsAssigned(View view) {
+        previewDialogSpinner.dismiss();
+        previewDialogDriverDetails.dismiss();
+
+        Intent i8 = new Intent(ViewTruckDetailsActivity.this, DriverDetailsActivity.class);
+        i8.putExtra("userId", userId);
+        i8.putExtra("isEdit", false);
+        i8.putExtra("fromBidNow", false);
+        i8.putExtra("mobile", phone);
+        i8.putExtra("truckIdPass", truckIdPass);
+        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i8);
+        ViewTruckDetailsActivity.this.finish();
+        overridePendingTransition(0, 0);
+    }
+
+    public void getDriverDetailsList() {
+        //---------------------------- Get Driver Details ------------------------------------------
+        String url1 = getString(R.string.baseURL) + "/driver/userId/" + userId;
+        Log.i("URL: ", url1);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    driverList = new ArrayList<>();
+                    JSONArray driverLists = response.getJSONArray("data");
+                    for (int i = 0; i < driverLists.length(); i++) {
+                        JSONObject obj = driverLists.getJSONObject(i);
+                        DriverModel modelDriver = new DriverModel();
+                        modelDriver.setUser_id(obj.getString("user_id"));
+                        modelDriver.setTruck_id(obj.getString("truck_id"));
+                        modelDriver.setDriver_id(obj.getString("driver_id"));
+                        modelDriver.setDriver_name(obj.getString("driver_name"));
+                        modelDriver.setUpload_lc(obj.getString("upload_dl"));
+                        modelDriver.setDriver_selfie(obj.getString("driver_selfie"));
+                        modelDriver.setDriver_number(obj.getString("driver_number"));
+                        modelDriver.setDriver_emailId(obj.getString("driver_emailId"));
+                        driverList.add(modelDriver);
+                    }
+                    if (driverList.size() > 0) {
+                        driverListAdapter.updateData(driverList);
+                    } else {
+
+                    }
+
+//                    if (driverList.size() > 5) {
+//                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                        params.height = 235; //height recycleviewer
+//                        driverListRecyclerView.setLayoutParams(params);
+//                    } else {
+//                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                        driverListRecyclerView.setLayoutParams(params);
+//                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+        //-------------------------------------------------------------------------------------------
+    }
+
+    public void onClickCancelSelectBind(View view) {
+        previewDialogSpinner.dismiss();
+        previewDialogDriverDetails.dismiss();
+        Intent intent = new Intent(ViewTruckDetailsActivity.this, ViewTruckDetailsActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("mobile", phone);
+        startActivity(intent);
+        finish();
+    }
+
+    public void onClickReAssignDriver(DriverModel obj) {
+        updateTruckDriverId(obj.getDriver_id());
+        Intent intent = new Intent(ViewTruckDetailsActivity.this, ViewTruckDetailsActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("mobile", phone);
+        startActivity(intent);
+        finish();
+    }
+
+    private void updateTruckDriverId(String truckDriverId) {
+
+        UpdateTruckDriverId updateTruckDriverId = new UpdateTruckDriverId(truckDriverId);
+
+        Call<UpdateTruckDriverId> call = addTruckService.updateTruckDriverId("" + truckIdPass, updateTruckDriverId);
+
+        call.enqueue(new Callback<UpdateTruckDriverId>() {
+            @Override
+            public void onResponse(Call<UpdateTruckDriverId> call, Response<UpdateTruckDriverId> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Truck Added");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateTruckDriverId> call, Throwable t) {
+                Log.i("Not Successful", "User is Truck Added");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
     }
 }
