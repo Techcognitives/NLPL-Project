@@ -682,7 +682,6 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
     }
 
     private void updateDriverTruckId(String truckIdPass) {
-
         Log.i("DriverID Truck", driverId);
         Log.i("TruckId Truck", truckIdPass);
 
