@@ -286,12 +286,12 @@ public class DashboardActivity extends AppCompatActivity {
                     getLoadNotificationList();
 
                     LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(getApplicationContext());
-                    linearLayoutManagerBank.setReverseLayout(false);
+//                    linearLayoutManagerBank.setReverseLayout(false);
                     loadListRecyclerView.setLayoutManager(linearLayoutManagerBank);
                     loadListRecyclerView.setHasFixedSize(true);
 
                     LinearLayoutManager linearLayoutManagerBank1 = new LinearLayoutManager(getApplicationContext());
-                    linearLayoutManagerBank1.setReverseLayout(false);
+//                    linearLayoutManagerBank1.setReverseLayout(false);
                     loadSubmittedRecyclerView.setLayoutManager(linearLayoutManagerBank1);
                     loadSubmittedRecyclerView.setHasFixedSize(true);
 
