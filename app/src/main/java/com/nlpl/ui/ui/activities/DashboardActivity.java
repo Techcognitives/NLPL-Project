@@ -1244,7 +1244,8 @@ public class DashboardActivity extends AppCompatActivity {
         budget.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-        budget.setText(previousBudget);
+        String newPreviousBudget = previousBudget.replaceAll(",","");
+        budget.setText(newPreviousBudget);
 
         if (!previousBudget.isEmpty()) {
             okBudget.setEnabled(true);
@@ -1307,6 +1308,9 @@ public class DashboardActivity extends AppCompatActivity {
 
                     if (spQuote.getText().toString().equals(customerFirstBudget.getText().toString())) {
                         spQuote.setTextColor(getResources().getColor(R.color.green));
+                        negotiable_no.setChecked(true);
+                        negotiable_yes.setChecked(false);
+                        negotiable_yes.setEnabled(false);
                     } else {
                         spQuote.setTextColor(getResources().getColor(R.color.redDark));
                     }

@@ -750,7 +750,8 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         budget.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-        budget.setText(previousBudget);
+        String newPreviousBudget = previousBudget.replaceAll(",","");
+        budget.setText(newPreviousBudget);
 
         if (!previousBudget.isEmpty()) {
             okBudget.setEnabled(true);

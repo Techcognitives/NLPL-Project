@@ -457,7 +457,8 @@ public class PostALoadActivity extends AppCompatActivity {
         budget.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-        budget.setText(previousBudget);
+        String newPreviousBudget = previousBudget.replaceAll(",","");
+        budget.setText(newPreviousBudget);
 
         if (!previousBudget.isEmpty()) {
             okBudget.setEnabled(true);
@@ -473,6 +474,7 @@ public class PostALoadActivity extends AppCompatActivity {
 
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String budgetEditText = budget.getText().toString();
@@ -1449,7 +1451,7 @@ public class PostALoadActivity extends AppCompatActivity {
             if (drop_pinCode.getText().toString().length() != 6) {
                 drop_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
             } else {
-                getStateAndDistrict(drop_pinCode.getText().toString());
+                getStateAndDistrictForDrop(drop_pinCode.getText().toString());
                 drop_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
             }
 
@@ -1525,7 +1527,7 @@ public class PostALoadActivity extends AppCompatActivity {
                 pick_up_city.setText("");
                 pick_up_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
             } else {
-                getStateAndDistrict(pick_up_pinCode.getText().toString());
+                getStateAndDistrictForPickUp(pick_up_pinCode.getText().toString());
                 pick_up_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
             }
 
@@ -1549,18 +1551,52 @@ public class PostALoadActivity extends AppCompatActivity {
     };
 
     //--------------------------------------Get State and city by PinCode---------------------------
-    private void getStateAndDistrict(String enteredPin) {
+    private void getStateAndDistrictForDrop(String enteredPin) {
 
         Log.i("Entered PIN", enteredPin);
 
-        String url = "https://findyourtruck-393a4-default-rtdb.asia-southeast1.firebasedatabase.app/indianPinCodes.json?orderBy=%22pincode%22&equalTo=%22"+enteredPin+"%22";
+        String url = "http://13.234.163.179:3000/user/locationData/"+enteredPin;
         Log.i("url for truckByTruckId", url);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
 
-                    JSONObject obj = response.getJSONObject("81066");
+                    JSONObject obj = response.getJSONObject("data");
+                    String stateByPinCode = obj.getString("stateCode");
+                    String  distByPinCode = obj.getString("district");
+
+                    drop_state.setText(stateByPinCode);
+                    drop_city.setText(distByPinCode);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+    }
+    //----------------------------------------------------------------------------------------------
+
+
+    //--------------------------------------Get State and city by PinCode---------------------------
+    private void getStateAndDistrictForPickUp(String enteredPin) {
+
+        Log.i("Entered PIN", enteredPin);
+
+        String url = "http://13.234.163.179:3000/user/locationData/"+enteredPin;
+        Log.i("url for truckByTruckId", url);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+
+                    JSONObject obj = response.getJSONObject("data");
                     String stateByPinCode = obj.getString("stateCode");
                     String  distByPinCode = obj.getString("district");
 
@@ -1579,7 +1615,6 @@ public class PostALoadActivity extends AppCompatActivity {
         });
         mQueue.add(request);
     }
-
     //----------------------------------------------------------------------------------------------
 
     //-------------------------------- Update Post Load Details ----------------------------------------
