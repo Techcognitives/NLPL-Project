@@ -510,15 +510,6 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
 
                     }
 
-//                    if (driverList.size() > 5) {
-//                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//                        params.height = 235; //height recycleviewer
-//                        driverListRecyclerView.setLayoutParams(params);
-//                    } else {
-//                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//                        driverListRecyclerView.setLayoutParams(params);
-//                    }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
