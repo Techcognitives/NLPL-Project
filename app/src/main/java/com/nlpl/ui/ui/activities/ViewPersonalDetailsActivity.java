@@ -128,7 +128,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
         previewDialogAadhar.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         getUserDetails();
-        getCompanyDetails();
+
         getImageURL();
 
     }
@@ -152,19 +152,19 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
                         userRoleAPI = obj.getString("user_type");
                         isPersonalDetailsDone = obj.getString("isPersonal_dt_added");
 
-                        if (userRoleAPI.equals("Customer")) {
-                            userFirmAddCompany.setVisibility(View.GONE);
-                            userFirmTitle.setVisibility(View.GONE);
-                            userFirmGSTTextview.setVisibility(View.GONE);
-                            userFirmGSTTextviewTitle.setVisibility(View.GONE);
-                            userFirmPANTextviewTitle.setVisibility(View.GONE);
-                            userFirmPANTextview.setVisibility(View.GONE);
-                            userFirmNameTitleTextView.setVisibility(View.GONE);
-                            userEditFirmDetailsTextView.setVisibility(View.GONE);
-                            userFirmNameTextView.setVisibility(View.GONE);
-                            userFirmAddressTitleTextView.setVisibility(View.GONE);
-                            userFirmAddressTextView.setVisibility(View.GONE);
-                        }
+//                        if (userRoleAPI.equals("Customer")) {
+//                            userFirmAddCompany.setVisibility(View.GONE);
+//                            userFirmTitle.setVisibility(View.GONE);
+//                            userFirmGSTTextview.setVisibility(View.GONE);
+//                            userFirmGSTTextviewTitle.setVisibility(View.GONE);
+//                            userFirmPANTextviewTitle.setVisibility(View.GONE);
+//                            userFirmPANTextview.setVisibility(View.GONE);
+//                            userFirmNameTitleTextView.setVisibility(View.GONE);
+//                            userEditFirmDetailsTextView.setVisibility(View.GONE);
+//                            userFirmNameTextView.setVisibility(View.GONE);
+//                            userFirmAddressTitleTextView.setVisibility(View.GONE);
+//                            userFirmAddressTextView.setVisibility(View.GONE);
+//                        }
 
                         if (isPersonalDetailsDone.equals("1")) {
                             previewAadharBtn.setVisibility(View.VISIBLE);
@@ -177,6 +177,8 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
                             uploadPanAAdharBtn.setVisibility(View.VISIBLE);
                             uploadPanAAdharBtnTitle.setVisibility(View.VISIBLE);
                         }
+
+                        getCompanyDetails();
 
                         userEmailIdAPI = obj.getString("email_id");
 

@@ -1,4 +1,4 @@
-package com.nlpl.model;
+package com.nlpl.model.UpdateBids;
 
 public class UpdateBudgetCustomerForSP {
     private String is_bid_accpted_by_sp;

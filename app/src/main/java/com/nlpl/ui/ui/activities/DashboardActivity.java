@@ -11,7 +11,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -20,7 +19,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -57,19 +55,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BidSubmittedModel;
-import com.nlpl.model.ModelForRecyclerView.BidsResponsesModel;
 import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
 import com.nlpl.model.Requests.BidLoadRequest;
 import com.nlpl.model.Responses.BidLadResponse;
-import com.nlpl.model.UpdateBidStatusAccepted;
-import com.nlpl.model.UpdateBidStatusRespondedBySP;
-import com.nlpl.model.UpdateLoadStatusSubmitted;
-import com.nlpl.model.UpdateSPQuoteFinal;
+import com.nlpl.model.UpdateBids.UpdateBidStatusRespondedBySP;
+import com.nlpl.model.UpdateBids.UpdateSPQuoteFinal;
 import com.nlpl.services.BidLoadService;
 import com.nlpl.services.PostLoadService;
-import com.nlpl.ui.ui.adapters.BidsAcceptedAdapter;
-import com.nlpl.ui.ui.adapters.BidsReceivedAdapter;
-import com.nlpl.ui.ui.adapters.BidsResponsesAdapter;
 import com.nlpl.ui.ui.adapters.LoadNotificationAdapter;
 import com.nlpl.ui.ui.adapters.LoadSubmittedAdapter;
 import com.nlpl.utils.ApiClient;
@@ -101,7 +93,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     private ArrayList<LoadNotificationModel> loadList = new ArrayList<>();
     private ArrayList<LoadNotificationModel> loadListToCompare = new ArrayList<>();
-    private ArrayList<LoadNotificationModel> bidStatusLoadListToCompare = new ArrayList<>();
+    private ArrayList<LoadNotificationModel> reverseLoadList = new ArrayList<>();
 
 
     private ArrayList<BidSubmittedModel> loadSubmittedList = new ArrayList<>();
@@ -575,6 +567,7 @@ public class DashboardActivity extends AppCompatActivity {
                         loadList.add(modelLoadNotification);
                     }
                     TextView noLoadAvailable = (TextView) findViewById(R.id.dashboard_load_here_text);
+
 
                     loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadList);
                     loadListRecyclerView.setAdapter(loadListAdapter);

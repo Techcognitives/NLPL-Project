@@ -2,12 +2,11 @@ package com.nlpl.services;
 
 import com.nlpl.model.Requests.BidLoadRequest;
 import com.nlpl.model.Responses.BidLadResponse;
-import com.nlpl.model.UpdateBidStatusAccepted;
-import com.nlpl.model.UpdateBidStatusFinalAccepted;
-import com.nlpl.model.UpdateBidStatusRespondedBySP;
-import com.nlpl.model.UpdateBudgetCustomerForSP;
-import com.nlpl.model.UpdateCustomerBudget;
-import com.nlpl.model.UpdateSPQuoteFinal;
+import com.nlpl.model.UpdateBids.UpdateBidStatusAccepted;
+import com.nlpl.model.UpdateBids.UpdateBidStatusFinalAccepted;
+import com.nlpl.model.UpdateBids.UpdateBidStatusRespondedBySP;
+import com.nlpl.model.UpdateBids.UpdateBudgetCustomerForSP;
+import com.nlpl.model.UpdateBids.UpdateSPQuoteFinal;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

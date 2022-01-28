@@ -1083,9 +1083,9 @@
     <string name="pick_up_time">Pick-up Time</string>
     <string name="enterYourBudget">Enter Your Budget</string>
     <string name="budget">Budget</string>
-    <string name="budgetRs">Budget Rs.</string>
+    <string name="budgetRs">Budget ₹</string>
     <string name="truckTypeAndCapacity">Truck Type &amp; Capacity</string>
-    <string name="SelectVehicleModel">Select Vehicle Model</string>
+    <string name="SelectVehicleModel">Vehicle Model</string>
     <string name="bodyType">Body Type</string>
     <string name="pickUpLocationDetails">Pick-up Location Details</string>
     <string name="dropLocationDetails">Drop Location Details</string>

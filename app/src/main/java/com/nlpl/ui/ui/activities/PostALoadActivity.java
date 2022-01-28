@@ -130,7 +130,7 @@ public class PostALoadActivity extends AppCompatActivity {
 
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
-        actionBarTitle.setText("Post A Load");
+        actionBarTitle.setText("Post a Load");
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

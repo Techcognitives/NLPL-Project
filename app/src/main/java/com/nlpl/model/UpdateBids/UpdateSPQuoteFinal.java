@@ -1,4 +1,4 @@
-package com.nlpl.model;
+package com.nlpl.model.UpdateBids;
 
 public class UpdateSPQuoteFinal {
     private String sp_quote;

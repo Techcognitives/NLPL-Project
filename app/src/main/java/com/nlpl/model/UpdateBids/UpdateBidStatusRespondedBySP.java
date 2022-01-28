@@ -1,15 +1,15 @@
-package com.nlpl.model;
+package com.nlpl.model.UpdateBids;
 
-public class UpdateBidStatusFinalAccepted {
+public class UpdateBidStatusRespondedBySP {
     private String bid_status;
 
-    public UpdateBidStatusFinalAccepted(String bid_status) {
+    public UpdateBidStatusRespondedBySP(String bid_status) {
         this.bid_status = bid_status;
     }
 
     @Override
     public String toString() {
-        return "UpdateBidStatusFinalAccepted{" +
+        return "UpdateBidStatusRespondedBySP{" +
                 "bid_status='" + bid_status + '\'' +
                 '}';
     }

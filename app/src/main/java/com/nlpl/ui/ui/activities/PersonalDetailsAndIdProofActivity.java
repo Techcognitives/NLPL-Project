@@ -303,8 +303,8 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             }
         });
 
-        okButton.setEnabled(true);
-        okButton.setBackground(getDrawable(R.drawable.button_active));
+//        okButton.setEnabled(true);
+//        okButton.setBackground(getDrawable(R.drawable.button_active));
 
         ownerButton = (RadioButton) personalAndAddressView.findViewById(R.id.registration_truck_owner);
         driverButton = (RadioButton) personalAndAddressView.findViewById(R.id.registration_driver);
@@ -883,6 +883,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         //Detects request code for PAN
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
             //----------------------- Alert Dialog -------------------------------------------------
+            saveImage(imageRequest());
             Dialog alert = new Dialog(PersonalDetailsAndIdProofActivity.this);
             alert.setContentView(R.layout.dialog_alert);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -941,6 +942,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
             //----------------------- Alert Dialog -------------------------------------------------
+            saveImage(imageRequest());
             Dialog alert = new Dialog(PersonalDetailsAndIdProofActivity.this);
             alert.setContentView(R.layout.dialog_alert);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -998,6 +1000,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         } else if (requestCode == CAMERA_PIC_REQUEST1) {
             //----------------------- Alert Dialog -------------------------------------------------
+            saveImage(imageRequest());
             Dialog alert = new Dialog(PersonalDetailsAndIdProofActivity.this);
             alert.setContentView(R.layout.dialog_alert);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -1048,6 +1051,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         } else if (requestCode == CAMERA_PIC_REQUEST2) {
             //----------------------- Alert Dialog -------------------------------------------------
+            saveImage(imageRequest());
             Dialog alert = new Dialog(PersonalDetailsAndIdProofActivity.this);
             alert.setContentView(R.layout.dialog_alert);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -1704,14 +1708,14 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         Log.i("Entered PIN", enteredPin);
 
-        String url = "https://findyourtruck-393a4-default-rtdb.asia-southeast1.firebasedatabase.app/indianPinCodes.json?orderBy=%22pincode%22&equalTo=%22"+enteredPin+"%22";
+        String url = "http://13.234.163.179:3000/user/locationData/"+enteredPin;
         Log.i("url for truckByTruckId", url);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
 
-                    JSONObject obj = response.getJSONObject("81066");
+                    JSONObject obj = response.getJSONObject("data");
                     String stateByPinCode = obj.getString("stateCode");
                     String  distByPinCode = obj.getString("district");
 
@@ -1782,11 +1786,11 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     }
 
     private void uploadPanDialogChoose(){
+
         requestPermissionsForCamera();
         requestPermissionsForGalleryWRITE();
         requestPermissionsForGalleryREAD();
         img_type = "pan";
-        saveImage(imageRequest());
         Dialog chooseDialog;
         chooseDialog = new Dialog(PersonalDetailsAndIdProofActivity.this);
         chooseDialog.setContentView(R.layout.dialog_choose);
@@ -1828,7 +1832,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         requestPermissionsForGalleryWRITE();
         requestPermissionsForGalleryREAD();
         img_type = "aadhar";
-        saveImage(imageRequest());
         Dialog chooseDialog;
         chooseDialog = new Dialog(PersonalDetailsAndIdProofActivity.this);
         chooseDialog.setContentView(R.layout.dialog_choose);

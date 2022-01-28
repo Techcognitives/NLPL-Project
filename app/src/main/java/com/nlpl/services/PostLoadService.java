@@ -2,9 +2,9 @@ package com.nlpl.services;
 
 import com.nlpl.model.Requests.PostLoadRequest;
 import com.nlpl.model.Responses.PostLoadResponse;
-import com.nlpl.model.UpdateCustomerBudget;
+import com.nlpl.model.UpdateLoadPost.UpdateCustomerBudget;
 import com.nlpl.model.UpdateLoadPost.UpdateLoadPostPickUpDate;
-import com.nlpl.model.UpdateLoadStatusSubmitted;
+import com.nlpl.model.UpdateLoadPost.UpdateLoadStatusSubmitted;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
