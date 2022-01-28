@@ -1,19 +1,27 @@
 package com.nlpl.ui.ui.activities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.view.View;
@@ -37,6 +45,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.nlpl.R;
 import com.nlpl.model.Requests.PostLoadRequest;
 import com.nlpl.model.Responses.PostLoadResponse;
@@ -49,11 +61,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -66,6 +81,7 @@ public class PostALoadActivity extends AppCompatActivity {
     View action_bar;
     TextView actionBarTitle;
     ImageView actionBarBackButton;
+    FusedLocationProviderClient fusedLocationProviderClient;
 
     View bottomNav;
     ConstraintLayout spDashboard, customerDashboard;
@@ -81,6 +97,7 @@ public class PostALoadActivity extends AppCompatActivity {
     Dialog selectDistrictDialog, selectStateDialog, setBudget, selectFeetDialog, selectCapacityDialog, selectBodyTypeDialog, selectModelDialog;
     boolean isModelSelected;
     Button Ok_PostLoad;
+    String latitudeCurrent, longitudeCurrent, countryCurrent, stateCurrent, cityCurrent, subCityCurrent, addressCurrent, pinCodeCurrent;
 
     ArrayAdapter<CharSequence> selectStateArray, selectDistrictArray, selectStateUnionCode;
     ArrayList<String> arrayTruckBodyType, arrayVehicleType, updatedArrayTruckFt, arrayCapacityForCompare, arrayTruckFtForCompare, arrayToDisplayCapacity, arrayTruckFt, arrayCapacity;
@@ -121,6 +138,7 @@ public class PostALoadActivity extends AppCompatActivity {
             }
         });
 
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 //-------------------------------------- Today's Date ----------------------------------------------
         currentDate = Calendar.getInstance().getTime();
         Log.i("Current/Today's Date", String.valueOf(currentDate));
@@ -1737,5 +1755,55 @@ public class PostALoadActivity extends AppCompatActivity {
         startActivity(i8);
         finish();
         overridePendingTransition(0, 0);
+    }
+
+    public void onClickGetCurrentLocationPickDrop(View view) {
+        getLocation();
+        switch (view.getId()) {
+            case R.id.post_a_load_get_current_location_pick_up:
+                pick_up_address.setText(addressCurrent);
+                pick_up_pinCode.setText(pinCodeCurrent);
+                pick_up_state.setText(stateCurrent);
+                pick_up_city.setText(cityCurrent);
+                break;
+
+            case R.id.post_a_load_get_current_location_drop:
+                drop_address.setText(addressCurrent);
+                drop_pinCode.setText(pinCodeCurrent);
+                drop_state.setText(stateCurrent);
+                drop_city.setText(cityCurrent);
+                break;
+        }
+    }
+
+    private void getLocation() {
+        if (ActivityCompat.checkSelfPermission(PostALoadActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+                @Override
+                public void onComplete(@NonNull Task<Location> task) {
+                    Location location = task.getResult();
+                    if (location != null) {
+                        Geocoder geocoder = new Geocoder(PostALoadActivity.this, Locale.getDefault());
+                        try {
+                            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                            latitudeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLatitude()));
+                            longitudeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLongitude()));
+                            countryCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getCountryName()));
+                            stateCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getAdminArea()));
+                            cityCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLocality()));
+                            subCityCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getSubLocality()));
+                            addressCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getAddressLine(0)));
+                            pinCodeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getPostalCode()));
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+            });
+        } else {
+            ActivityCompat.requestPermissions(PostALoadActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+        }
     }
 }
