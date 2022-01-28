@@ -109,7 +109,10 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PersonalDetailsActivity.this.finish();
+                Intent i8 = new Intent(PersonalDetailsActivity.this, ViewPersonalDetailsActivity.class);
+                i8.putExtra("userId", userId);
+                i8.putExtra("mobile", mobile);
+                startActivity(i8);
             }
         });
 //--------------------------------------------------------------------------------------------------
