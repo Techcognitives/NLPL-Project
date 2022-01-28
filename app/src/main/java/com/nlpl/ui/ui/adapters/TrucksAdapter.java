@@ -62,6 +62,13 @@ public class TrucksAdapter extends RecyclerView.Adapter<TrucksAdapter.TruckViewH
             }
         });
 
+        holder.list_view_driver_details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.getDriverDetailsOnTruckActivity(obj);
+            }
+        });
+
         holder.list_truck_type.setText("Model: " + obj.getTruck_type());
         holder.list_feet.setText("Feet: " + obj.getTruck_ft());
         holder.list_capacity.setText("Capacity: " + obj.getTruck_carrying_capacity());
@@ -79,7 +86,7 @@ public class TrucksAdapter extends RecyclerView.Adapter<TrucksAdapter.TruckViewH
     }
 
     public class TruckViewHolder extends RecyclerView.ViewHolder {
-        private TextView list_title, list_edit, list_truck_type, list_feet, list_capacity, list_vehicle_type, list_preview_rc_book, list_preview_insurance;
+        private TextView list_view_driver_details,  list_title, list_edit, list_truck_type, list_feet, list_capacity, list_vehicle_type, list_preview_rc_book, list_preview_insurance;
 
         public TruckViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -92,6 +99,7 @@ public class TrucksAdapter extends RecyclerView.Adapter<TrucksAdapter.TruckViewH
             list_feet = itemView.findViewById(R.id.my_truck_list_ft);
             list_capacity = itemView.findViewById(R.id.my_truck_list_capacity);
             list_vehicle_type = itemView.findViewById(R.id.my_truck_list_vehicle_type);
+            list_view_driver_details = itemView.findViewById(R.id.my_truck_list_driver_details);
 
         }
 
