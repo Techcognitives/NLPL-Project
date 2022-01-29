@@ -198,9 +198,9 @@ public class BankDetailsActivity extends AppCompatActivity {
             acDetailsRadioButton.setChecked(false);
             Log.i("Bank Id in Bank Details", bankId);
             isImgUploaded = true;
-            okButton.setEnabled(true);
+//            okButton.setEnabled(true);
             editCC.setEnabled(false);
-            okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+//            okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
             uploadCC.setVisibility(View.INVISIBLE);
             editCC.setVisibility(View.VISIBLE);
             previewCancelledCheque.setVisibility(View.VISIBLE);

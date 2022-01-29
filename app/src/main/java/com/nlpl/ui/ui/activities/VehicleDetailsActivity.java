@@ -223,8 +223,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             truckSelected = true;
             isModelSelected = true;
 
-            okVehicleDetails.setEnabled(true);
-            okVehicleDetails.setBackgroundResource(R.drawable.button_active);
+//            okVehicleDetails.setEnabled(true);
+//            okVehicleDetails.setBackgroundResource(R.drawable.button_active);
 
             uploadRC.setVisibility(View.INVISIBLE);
             uploadInsurance.setVisibility(View.INVISIBLE);

@@ -1,4 +1,4 @@
-package com.nlpl.model;
+package com.nlpl.model.UpdateBids;
 
 public class UpdateBidStatusAccepted {
     private String bid_status;

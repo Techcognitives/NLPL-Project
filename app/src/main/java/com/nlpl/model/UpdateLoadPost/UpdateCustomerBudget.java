@@ -1,4 +1,4 @@
-package com.nlpl.model;
+package com.nlpl.model.UpdateLoadPost;
 
 public class UpdateCustomerBudget {
     private String budget;

@@ -164,7 +164,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
         if (isEdit) {
             getCompanyDetails();
         }
-
+//
 //        if (!name.getText().toString().isEmpty() && !selectStateText.getText().toString().isEmpty() && !selectDistrictText.getText().toString().isEmpty() && role != null){
 //            okButton.setBackground(getDrawable(R.drawable.button_active));
 //        }else if (name.getText().toString().isEmpty() || selectStateText.getText().toString().isEmpty() || selectDistrictText.getText().toString().isEmpty() || role == null) {
@@ -382,7 +382,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
             String gstNumberWatcher = gstNumber.getText().toString().trim();
             String panNumberWatcher = panNumber.getText().toString().trim();
 
-            if (!nameWatcher.isEmpty() && !gstNumberWatcher.isEmpty() && !panNumberWatcher.isEmpty() && !pinCodeWatcher.isEmpty() && !addressWatcher.isEmpty() && pinCodeWatcher.length() == 6 && !stateWatcher.isEmpty() && !cityWatcher.isEmpty()) {
+            if ( !nameWatcher.isEmpty() && !gstNumberWatcher.isEmpty() && !panNumberWatcher.isEmpty() && !pinCodeWatcher.isEmpty() && !addressWatcher.isEmpty() && pinCodeWatcher.length() == 6 && !stateWatcher.isEmpty() && !cityWatcher.isEmpty()) {
                 okButton.setEnabled(true);
                 okButton.setBackgroundResource((R.drawable.button_active));
             } else {
@@ -506,6 +506,22 @@ public class CompanyDetailsActivity extends AppCompatActivity {
                 partnershipRadioButton.setChecked(false);
                 pvtLtdRadioButton.setChecked(false);
 
+                String nameWatcher = companyName.getText().toString().trim();
+                String stateWatcher = selectStateText.getText().toString().trim();
+                String cityWatcher = selectDistrictText.getText().toString().trim();
+                String pinCodeWatcher = pinCode.getText().toString().trim();
+                String addressWatcher = address.getText().toString().trim();
+                String gstNumberWatcher = gstNumber.getText().toString().trim();
+                String panNumberWatcher = panNumber.getText().toString().trim();
+
+                if ( !nameWatcher.isEmpty() && !gstNumberWatcher.isEmpty() && !panNumberWatcher.isEmpty() && !pinCodeWatcher.isEmpty() && !addressWatcher.isEmpty() && pinCodeWatcher.length() == 6 && !stateWatcher.isEmpty() && !cityWatcher.isEmpty()) {
+                    okButton.setEnabled(true);
+                    okButton.setBackgroundResource((R.drawable.button_active));
+                } else {
+                    okButton.setEnabled(false);
+                    okButton.setBackground(getResources().getDrawable(R.drawable.button_de_active));
+                }
+
                 companyType = "Proprietary";
                 break;
 
@@ -514,6 +530,22 @@ public class CompanyDetailsActivity extends AppCompatActivity {
                 partnershipRadioButton.setChecked(true);
                 pvtLtdRadioButton.setChecked(false);
 
+                String nameWatcher1 = companyName.getText().toString().trim();
+                String stateWatcher1 = selectStateText.getText().toString().trim();
+                String cityWatcher1 = selectDistrictText.getText().toString().trim();
+                String pinCodeWatcher1 = pinCode.getText().toString().trim();
+                String addressWatcher1 = address.getText().toString().trim();
+                String gstNumberWatcher1 = gstNumber.getText().toString().trim();
+                String panNumberWatcher1 = panNumber.getText().toString().trim();
+
+                if ( !nameWatcher1.isEmpty() && !gstNumberWatcher1.isEmpty() && !panNumberWatcher1.isEmpty() && !pinCodeWatcher1.isEmpty() && !addressWatcher1.isEmpty() && pinCodeWatcher1.length() == 6 && !stateWatcher1.isEmpty() && !cityWatcher1.isEmpty()) {
+                    okButton.setEnabled(true);
+                    okButton.setBackgroundResource((R.drawable.button_active));
+                } else {
+                    okButton.setEnabled(false);
+                    okButton.setBackground(getResources().getDrawable(R.drawable.button_de_active));
+                }
+
                 companyType = "Partnership";
                 break;
 
@@ -521,6 +553,22 @@ public class CompanyDetailsActivity extends AppCompatActivity {
                 proprietaryRadioButton.setChecked(false);
                 partnershipRadioButton.setChecked(false);
                 pvtLtdRadioButton.setChecked(true);
+
+                String nameWatcher2 = companyName.getText().toString().trim();
+                String stateWatcher2 = selectStateText.getText().toString().trim();
+                String cityWatcher2 = selectDistrictText.getText().toString().trim();
+                String pinCodeWatcher2 = pinCode.getText().toString().trim();
+                String addressWatcher2 = address.getText().toString().trim();
+                String gstNumberWatcher2 = gstNumber.getText().toString().trim();
+                String panNumberWatcher2 = panNumber.getText().toString().trim();
+
+                if ( !nameWatcher2.isEmpty() && !gstNumberWatcher2.isEmpty() && !panNumberWatcher2.isEmpty() && !pinCodeWatcher2.isEmpty() && !addressWatcher2.isEmpty() && pinCodeWatcher2.length() == 6 && !stateWatcher2.isEmpty() && !cityWatcher2.isEmpty()) {
+                    okButton.setEnabled(true);
+                    okButton.setBackgroundResource((R.drawable.button_active));
+                } else {
+                    okButton.setEnabled(false);
+                    okButton.setBackground(getResources().getDrawable(R.drawable.button_de_active));
+                }
 
                 companyType = "Pvt. Ltd.";
                 break;
@@ -876,6 +924,8 @@ public class CompanyDetailsActivity extends AppCompatActivity {
                         companyTypeAPI = data.getString("company_type");
                     }
 
+                    Log.i("company Type", companyTypeAPI);
+
                     if (companyNameAPI != null) {
                         companyName.setText(companyNameAPI);
                     }
@@ -899,18 +949,18 @@ public class CompanyDetailsActivity extends AppCompatActivity {
                     }
 
                     if (companyTypeAPI != null) {
-                        companyTypeAPI = companyType;
+                        companyType = companyTypeAPI;
                         if (companyTypeAPI.equals("Proprietary")) {
                             proprietaryRadioButton.setChecked(true);
                             partnershipRadioButton.setChecked(false);
                             pvtLtdRadioButton.setChecked(false);
 
-                        } else if (companyTypeAPI.equals("Partnership")) {
+                        }  if (companyTypeAPI.equals("Partnership")) {
                             proprietaryRadioButton.setChecked(false);
                             partnershipRadioButton.setChecked(true);
                             pvtLtdRadioButton.setChecked(false);
 
-                        } else if (companyTypeAPI.equals("Pvt. Ltd.")) {
+                        }  if (companyTypeAPI.equals("Pvt. Ltd.")) {
                             proprietaryRadioButton.setChecked(false);
                             partnershipRadioButton.setChecked(false);
                             pvtLtdRadioButton.setChecked(true);

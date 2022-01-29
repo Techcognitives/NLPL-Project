@@ -175,7 +175,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:text="Time: HH:MMpm"
+        android:text="Pick-up Time: HH:MMpm"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="14sp"

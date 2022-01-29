@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:background="@drawable/button_active"
-    android:backgroundTint="@color/white">
+    android:background="@drawable/edit_text_border_small"
+    android:backgroundTint="@color/white"
+    android:layout_gravity="center">
 
     <Button
         android:id="@+id/dialog_budget_ok_btn"

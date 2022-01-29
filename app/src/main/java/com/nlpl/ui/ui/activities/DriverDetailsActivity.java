@@ -338,10 +338,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
         String mobileNoWatcher = driverMobile.getText().toString().trim();
         String nameWatcher = driverName.getText().toString().trim();
 
-        if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && isDLUploaded && isSelfieUploded) {
-            okDriverDetails.setEnabled(true);
-            okDriverDetails.setBackgroundResource(R.drawable.button_active);
-        }
+//        if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && isDLUploaded && isSelfieUploded) {
+//            okDriverDetails.setEnabled(true);
+//            okDriverDetails.setBackgroundResource(R.drawable.button_active);
+//        }
 
         mQueue = Volley.newRequestQueue(DriverDetailsActivity.this);
 
@@ -361,8 +361,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
         if (isEdit) {
             isDLUploaded = true;
             isSelfieUploded = true;
-            okDriverDetails.setEnabled(true);
-            okDriverDetails.setBackgroundResource(R.drawable.button_active);
+            okDriverDetails.setEnabled(false);
+            okDriverDetails.setBackgroundResource(R.drawable.button_de_active);
             uploadDL.setVisibility(View.INVISIBLE);
             uploadSelfie.setVisibility(View.INVISIBLE);
             editDS.setVisibility(View.VISIBLE);
