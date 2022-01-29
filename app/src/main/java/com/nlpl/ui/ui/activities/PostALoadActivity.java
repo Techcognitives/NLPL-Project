@@ -142,7 +142,6 @@ public class PostALoadActivity extends AppCompatActivity {
 //-------------------------------------- Today's Date ----------------------------------------------
         currentDate = Calendar.getInstance().getTime();
         Log.i("Current/Today's Date", String.valueOf(currentDate));
-
         pick_up_date = (TextView) findViewById(R.id.post_a_load_date_text_view);
         pick_up_time = (TextView) findViewById(R.id.post_a_load_time_text_view);
         select_budget = (TextView) findViewById(R.id.post_a_load_budget_text_view);
