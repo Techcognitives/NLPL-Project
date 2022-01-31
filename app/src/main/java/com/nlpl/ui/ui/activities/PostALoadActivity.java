@@ -10,7 +10,6 @@ import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -21,6 +20,8 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Html;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -56,6 +57,9 @@ import com.nlpl.model.UpdateLoadPost.UpdateLoadPostPickUpDate;
 import com.nlpl.services.PostLoadService;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.EnglishNumberToWords;
+import com.nlpl.utils.GetCurrentLocation;
+import com.nlpl.utils.GetLocationDrop;
+import com.nlpl.utils.GetLocationPickUp;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -81,23 +85,29 @@ public class PostALoadActivity extends AppCompatActivity {
     View action_bar;
     TextView actionBarTitle;
     ImageView actionBarBackButton;
-    FusedLocationProviderClient fusedLocationProviderClient;
+
 
     View bottomNav;
     ConstraintLayout spDashboard, customerDashboard;
 
-    TextView pick_up_date, pick_up_time, select_budget, select_model, select_feet, select_capacity, select_truck_body_type, pick_up_state, pick_up_city, drop_state, drop_city, auto_calculated_KM;
-    EditText pick_up_address, drop_address, pick_up_pinCode, drop_pinCode, note_to_post_load;
+    double latitude1, latitude2, longitude1, longitude2;
+
+    Dialog pickUpAddressDialog;
+
+    String isPickDrop = "0", pickUpAddress, pickUpPinCode, pickupState, pickUpCity, dropAddress, dropPinCode, dropState, dropCiy;
+
+    TextView pick_up_date, pick_up_time, select_budget, select_model, select_feet, select_capacity, select_truck_body_type, addressDialogState, addressDialogCity;
+    EditText addressDialogAddress, addressDialogPinCode, note_to_post_load;
 
     String distByPinCode, stateByPinCode, phone, userId, selectedDistrict, selectedState, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI, customerBudget, sDate, eDate, monthS, monthE, startingDate, endingDate, todayDate;
     int sMonth, eMonth, count, startCount;
     Date currentDate, date1, date2, date3, date4;
     ArrayList currentSepDate;
+    TextView setApproxDistance;
     long startD, endD, todayD, diff, diff1;
     Dialog selectDistrictDialog, selectStateDialog, setBudget, selectFeetDialog, selectCapacityDialog, selectBodyTypeDialog, selectModelDialog;
     boolean isModelSelected;
     Button Ok_PostLoad;
-    String latitudeCurrent, longitudeCurrent, countryCurrent, stateCurrent, cityCurrent, subCityCurrent, addressCurrent, pinCodeCurrent;
 
     ArrayAdapter<CharSequence> selectStateArray, selectDistrictArray, selectStateUnionCode;
     ArrayList<String> arrayTruckBodyType, arrayVehicleType, updatedArrayTruckFt, arrayCapacityForCompare, arrayTruckFtForCompare, arrayToDisplayCapacity, arrayTruckFt, arrayCapacity;
@@ -137,8 +147,6 @@ public class PostALoadActivity extends AppCompatActivity {
                 PostALoadActivity.this.finish();
             }
         });
-
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 //-------------------------------------- Today's Date ----------------------------------------------
         currentDate = Calendar.getInstance().getTime();
         Log.i("Current/Today's Date", String.valueOf(currentDate));
@@ -149,16 +157,34 @@ public class PostALoadActivity extends AppCompatActivity {
         select_feet = (TextView) findViewById(R.id.post_a_load_feet_text_view);
         select_capacity = (TextView) findViewById(R.id.post_a_load_capacity_text_view);
         select_truck_body_type = (TextView) findViewById(R.id.post_a_load_body_type_text_view);
-        pick_up_state = (TextView) findViewById(R.id.post_a_load_pick_up_state_text_view);
-        pick_up_city = (TextView) findViewById(R.id.post_a_load_pick_up_city_text_view);
-        drop_state = (TextView) findViewById(R.id.post_a_load_drop_state_text_view);
-        drop_city = (TextView) findViewById(R.id.post_a_load_drop_city_text_view);
-        auto_calculated_KM = (TextView) findViewById(R.id.post_a_load_auto_calculated_km_edit_text);
-        pick_up_address = (EditText) findViewById(R.id.post_a_load_address_edit_text);
-        drop_address = (EditText) findViewById(R.id.post_a_load_drop_address_text_view);
-        pick_up_pinCode = (EditText) findViewById(R.id.post_a_load_pin_code_pick_up_edit_text);
-        drop_pinCode = (EditText) findViewById(R.id.post_a_load_drop_pin_edit_text);
         note_to_post_load = (EditText) findViewById(R.id.post_a_load_notes_edit_text);
+        setApproxDistance = (TextView) findViewById(R.id.post_a_load_auto_calculated_km_edit_text);
+
+        //------------------------------------------------------------------------------------------
+        pickUpAddressDialog = new Dialog(PostALoadActivity.this);
+        pickUpAddressDialog.setContentView(R.layout.dialog_address);
+        pickUpAddressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        addressDialogState = (TextView) pickUpAddressDialog.findViewById(R.id.dialog_address_state_text_view);
+        addressDialogCity = (TextView) pickUpAddressDialog.findViewById(R.id.dialog_address_city_text_view);
+        addressDialogAddress = (EditText) pickUpAddressDialog.findViewById(R.id.dialog_address_address_edit_text);
+        addressDialogPinCode = (EditText) pickUpAddressDialog.findViewById(R.id.dialog_address_pin_code_edit_text);
+
+        if (isPickDrop.equals("1")) {
+            pickUpAddress = addressDialogAddress.getText().toString();
+            pickUpPinCode = addressDialogPinCode.getText().toString();
+            pickupState = addressDialogState.getText().toString();
+            pickUpCity = addressDialogCity.getText().toString();
+        } else if (isPickDrop.equals("2")) {
+            dropAddress = addressDialogAddress.getText().toString();
+            dropPinCode = addressDialogPinCode.getText().toString();
+            dropState = addressDialogState.getText().toString();
+            dropCiy = addressDialogCity.getText().toString();
+        } else {
+
+        }
+
+        //------------------------------------------------------------------------------------------
 
         Ok_PostLoad = (Button) findViewById(R.id.post_a_load_ok_button);
         currentSepDate = new ArrayList<>();
@@ -187,17 +213,12 @@ public class PostALoadActivity extends AppCompatActivity {
 
         postLoadService = retrofit.create(PostLoadService.class);
 
-        pick_up_address.addTextChangedListener(PickAddressTextWatcher);
-        pick_up_pinCode.addTextChangedListener(PickPinCodeTextWatcher);
-        drop_address.addTextChangedListener(DropAddressTextWatcher);
-        drop_pinCode.addTextChangedListener(DropPinCodeTextWatcher);
-        pick_up_state.addTextChangedListener(cityStateTextWatcher);
-        pick_up_city.addTextChangedListener(cityStateTextWatcher);
-        drop_state.addTextChangedListener(cityStateTextWatcher);
-        drop_city.addTextChangedListener(cityStateTextWatcher);
+        addressDialogAddress.addTextChangedListener(PickAddressTextWatcher);
+        addressDialogPinCode.addTextChangedListener(PickPinCodeTextWatcher);
+        addressDialogState.addTextChangedListener(cityStateTextWatcher);
+        addressDialogCity.addTextChangedListener(cityStateTextWatcher);
 
-        pick_up_address.setFilters(new InputFilter[]{filter});
-        drop_address.setFilters(new InputFilter[]{filter});
+        addressDialogAddress.setFilters(new InputFilter[]{filter});
 
         mQueue = Volley.newRequestQueue(PostALoadActivity.this);
 
@@ -259,9 +280,9 @@ public class PostALoadActivity extends AppCompatActivity {
         } else {
             if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
                     && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                    && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
-                    && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                    && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
+                    && !select_truck_body_type.getText().toString().isEmpty() && pickUpAddress != null && pickUpCity != null
+                    && pickUpPinCode != null && pickupState != null && dropAddress != null
+                    && dropCiy != null && dropPinCode != null && dropState != null) {
                 Ok_PostLoad.setEnabled(true);
                 Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
             } else {
@@ -320,34 +341,19 @@ public class PostALoadActivity extends AppCompatActivity {
             }
         });
 
-        pick_up_state.setOnClickListener(new View.OnClickListener() {
+        addressDialogState.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectState();
             }
         });
 
-        pick_up_city.setOnClickListener(new View.OnClickListener() {
+        addressDialogCity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectCity();
             }
         });
-
-        drop_state.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectStateDrop();
-            }
-        });
-
-        drop_city.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectCityDrop();
-            }
-        });
-
 
         Ok_PostLoad.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -398,9 +404,9 @@ public class PostALoadActivity extends AppCompatActivity {
                 } else {
                     if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
                             && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                            && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
-                            && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                            && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
+                            && !select_truck_body_type.getText().toString().isEmpty() && pickUpAddress != null && pickUpCity != null
+                            && pickUpPinCode != null && pickupState != null && dropAddress != null
+                            && dropCiy != null && dropPinCode != null && dropState != null) {
                         Ok_PostLoad.setEnabled(true);
                         Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
                     } else {
@@ -453,7 +459,6 @@ public class PostALoadActivity extends AppCompatActivity {
     }
 
     private void budgetSet(String previousBudget) {
-
         setBudget = new Dialog(PostALoadActivity.this);
         setBudget.setContentView(R.layout.dialog_budget);
 
@@ -474,7 +479,7 @@ public class PostALoadActivity extends AppCompatActivity {
         budget.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-        String newPreviousBudget = previousBudget.replaceAll(",","");
+        String newPreviousBudget = previousBudget.replaceAll(",", "");
         budget.setText(newPreviousBudget);
 
         if (!previousBudget.isEmpty()) {
@@ -497,9 +502,9 @@ public class PostALoadActivity extends AppCompatActivity {
                 String budgetEditText = budget.getText().toString();
                 if (!budgetEditText.isEmpty()) {
 
-                    String finalBudget, lastThree="";
+                    String finalBudget, lastThree = "";
                     String budget1 = budget.getText().toString();
-                    if (budget1.length()>3) {
+                    if (budget1.length() > 3) {
                         lastThree = budget1.substring(budget1.length() - 3);
                     }
                     if (budget1.length() == 1) {
@@ -513,33 +518,33 @@ public class PostALoadActivity extends AppCompatActivity {
                         select_budget.setText(finalBudget);
                     } else if (budget1.length() == 4) {
                         Character fourth = budget1.charAt(0);
-                        finalBudget = fourth+","+lastThree;
+                        finalBudget = fourth + "," + lastThree;
                         select_budget.setText(finalBudget);
                     } else if (budget1.length() == 5) {
                         Character fifth = budget1.charAt(0);
                         Character fourth = budget1.charAt(1);
-                        finalBudget = fifth+""+fourth+","+lastThree;
+                        finalBudget = fifth + "" + fourth + "," + lastThree;
                         select_budget.setText(finalBudget);
                     } else if (budget1.length() == 6) {
                         Character fifth = budget1.charAt(1);
                         Character fourth = budget1.charAt(2);
                         Character sixth = budget1.charAt(0);
-                        finalBudget = sixth+","+fifth+""+fourth+","+lastThree;
+                        finalBudget = sixth + "," + fifth + "" + fourth + "," + lastThree;
                         select_budget.setText(finalBudget);
-                    }else if (budget1.length() == 7) {
+                    } else if (budget1.length() == 7) {
                         Character seventh = budget1.charAt(0);
                         Character sixth = budget1.charAt(1);
                         Character fifth = budget1.charAt(2);
                         Character fourth = budget1.charAt(3);
-                        finalBudget = seventh+""+ sixth+","+fifth+""+fourth+","+lastThree;
+                        finalBudget = seventh + "" + sixth + "," + fifth + "" + fourth + "," + lastThree;
                         select_budget.setText(finalBudget);
                     }
 
                     if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
                             && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                            && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
-                            && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                            && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
+                            && !select_truck_body_type.getText().toString().isEmpty() && pickUpAddress != null && pickUpCity != null
+                            && pickUpPinCode != null && pickupState != null && dropAddress != null
+                            && dropCiy != null && dropPinCode != null && dropState != null) {
                         Ok_PostLoad.setEnabled(true);
                         Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
                     } else {
@@ -554,7 +559,7 @@ public class PostALoadActivity extends AppCompatActivity {
                 }
 
                 TextView amountInWords = setBudget.findViewById(R.id.dialog_budget_amount_in_words);
-                if (budgetEditText.length()>0){
+                if (budgetEditText.length() > 0) {
                     String return_val_in_english = EnglishNumberToWords.convert(Long.parseLong(budgetEditText));
                     amountInWords.setText(return_val_in_english);
                 } else {
@@ -605,9 +610,9 @@ public class PostALoadActivity extends AppCompatActivity {
 
                 if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
                         && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                        && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
-                        && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                        && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
+                        && !select_truck_body_type.getText().toString().isEmpty() && pickUpAddress != null && pickUpCity != null
+                        && pickUpPinCode != null && pickupState != null && dropAddress != null
+                        && dropCiy != null && dropPinCode != null && dropState != null) {
                     Ok_PostLoad.setEnabled(true);
                     Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
                 } else {
@@ -673,9 +678,9 @@ public class PostALoadActivity extends AppCompatActivity {
                 pick_up_date.setText(sDate);
                 if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
                         && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                        && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
-                        && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                        && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
+                        && !select_truck_body_type.getText().toString().isEmpty() && pickUpAddress != null && pickUpCity != null
+                        && pickUpPinCode != null && pickupState != null && dropAddress != null
+                        && dropCiy != null && dropPinCode != null && dropState != null) {
                     Ok_PostLoad.setEnabled(true);
                     Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
                 } else {
@@ -728,9 +733,9 @@ public class PostALoadActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
                         && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                        && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
-                        && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                        && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
+                        && !select_truck_body_type.getText().toString().isEmpty() && pickUpAddress != null && pickUpCity != null
+                        && pickUpPinCode != null && pickupState != null && dropAddress != null
+                        && dropCiy != null && dropPinCode != null && dropState != null) {
                     Ok_PostLoad.setEnabled(true);
                     Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
                 } else {
@@ -770,9 +775,9 @@ public class PostALoadActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
                         && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                        && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
-                        && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                        && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
+                        && !select_truck_body_type.getText().toString().isEmpty() && pickUpAddress != null && pickUpCity != null
+                        && pickUpPinCode != null && pickupState != null && dropAddress != null
+                        && dropCiy != null && dropPinCode != null && dropState != null) {
                     Ok_PostLoad.setEnabled(true);
                     Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
                 } else {
@@ -828,9 +833,9 @@ public class PostALoadActivity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
                             && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                            && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
-                            && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                            && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
+                            && !select_truck_body_type.getText().toString().isEmpty() && pickUpAddress != null && pickUpCity != null
+                            && pickUpPinCode != null && pickupState != null && dropAddress != null
+                            && dropCiy != null && dropPinCode != null && dropState != null) {
                         Ok_PostLoad.setEnabled(true);
                         Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
                     } else {
@@ -867,9 +872,9 @@ public class PostALoadActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
                         && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                        && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
-                        && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                        && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
+                        && !select_truck_body_type.getText().toString().isEmpty() && pickUpAddress != null && pickUpCity != null
+                        && pickUpPinCode != null && pickupState != null && dropAddress != null
+                        && dropCiy != null && dropPinCode != null && dropState != null) {
                     Ok_PostLoad.setEnabled(true);
                     Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
                 } else {
@@ -1000,25 +1005,25 @@ public class PostALoadActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
                 if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
                         && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                        && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
-                        && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                        && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
+                        && !select_truck_body_type.getText().toString().isEmpty() && pickUpAddress != null && pickUpCity != null
+                        && pickUpPinCode != null && pickupState != null && dropAddress != null
+                        && dropCiy != null && dropPinCode != null && dropState != null) {
                     Ok_PostLoad.setEnabled(true);
                     Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
                 } else {
                     Ok_PostLoad.setEnabled(false);
                     Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
                 }
-                pick_up_state.setText(selectStateUnionCode.getItem(i)); //Set Selected Credentials
+                addressDialogState.setText(selectStateUnionCode.getItem(i)); //Set Selected Credentials
                 selectStateDialog.dismiss();
-                pick_up_city.performClick();
+                addressDialogCity.performClick();
             }
         });
     }
 
     private void selectCity() {
-        if (!pick_up_state.getText().toString().isEmpty()) {
-            selectedState = pick_up_state.getText().toString();
+        if (addressDialogState!=null) {
+            selectedState = addressDialogState.getText().toString();
             selectDistrictDialog = new Dialog(PostALoadActivity.this);
             selectDistrictDialog.setContentView(R.layout.dialog_spinner);
 //                dialog.getWindow().setLayout(1000,3000);
@@ -1147,199 +1152,16 @@ public class PostALoadActivity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
                             && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                            && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
-                            && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                            && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
+                            && !select_truck_body_type.getText().toString().isEmpty() && pickUpAddress != null && pickUpCity != null
+                            && pickUpPinCode != null && pickupState != null && dropAddress != null
+                            && dropCiy != null && dropPinCode != null && dropState != null) {
                         Ok_PostLoad.setEnabled(true);
                         Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
                     } else {
                         Ok_PostLoad.setEnabled(false);
                         Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
                     }
-                    pick_up_city.setText(selectDistrictArray.getItem(i)); //Set Selected Credentials
-                    selectDistrictDialog.dismiss();
-                    selectedDistrict = selectDistrictArray.getItem(i).toString();
-                }
-            });
-        }
-    }
-
-    private void selectStateDrop() {
-        selectStateDialog = new Dialog(PostALoadActivity.this);
-        selectStateDialog.setContentView(R.layout.dialog_spinner);
-//                dialog.getWindow().setLayout(1000,3000);
-        selectStateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        selectStateDialog.show();
-        selectStateDialog.setCancelable(true);
-        ListView stateList = (ListView) selectStateDialog.findViewById(R.id.list_state);
-
-        selectStateArray = ArrayAdapter.createFromResource(PostALoadActivity.this, R.array.array_indian_states, R.layout.custom_list_row);
-        selectStateUnionCode = ArrayAdapter.createFromResource(PostALoadActivity.this, R.array.array_indian_states_union_territory_codes, R.layout.custom_list_row);
-
-        stateList.setAdapter(selectStateArray);
-
-        stateList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
-                if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
-                        && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                        && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
-                        && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                        && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
-                    Ok_PostLoad.setEnabled(true);
-                    Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
-                } else {
-                    Ok_PostLoad.setEnabled(false);
-                    Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
-                }
-                drop_state.setText(selectStateUnionCode.getItem(i)); //Set Selected Credentials
-                selectStateDialog.dismiss();
-                drop_city.performClick();
-            }
-        });
-    }
-
-    private void selectCityDrop() {
-        if (!drop_state.getText().toString().isEmpty()) {
-            selectedState = drop_state.getText().toString();
-            selectDistrictDialog = new Dialog(PostALoadActivity.this);
-            selectDistrictDialog.setContentView(R.layout.dialog_spinner);
-//                dialog.getWindow().setLayout(1000,3000);
-            selectDistrictDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            selectDistrictDialog.show();
-            TextView title = selectDistrictDialog.findViewById(R.id.dialog_spinner_title);
-            title.setText("Select City");
-            ListView districtList = (ListView) selectDistrictDialog.findViewById(R.id.list_state);
-
-            if (selectedState.equals("AP")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_andhra_pradesh_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("AR")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_arunachal_pradesh_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("AS")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_assam_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("BR")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_bihar_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("CG")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_chhattisgarh_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("GA")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_goa_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("GJ")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_gujarat_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("HR")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_haryana_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("HP")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_himachal_pradesh_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("JH")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_jharkhand_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("KA")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_karnataka_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("KL")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_kerala_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("MP")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_madhya_pradesh_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("MH")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_maharashtra_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("MN")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_manipur_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("ML")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_meghalaya_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("MZ")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_mizoram_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("NL")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_nagaland_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("OD")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_odisha_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("PB")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_punjab_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("RJ")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_rajasthan_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("SK")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_sikkim_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("TN")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_tamil_nadu_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("TS")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_telangana_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("TR")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_tripura_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("UP")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_uttar_pradesh_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("UK")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_uttarakhand_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("WB")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_west_bengal_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("AN")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_andaman_nicobar_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("CH/PB")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_chandigarh_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("DD")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_dadra_nagar_haveli_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("DD2")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_daman_diu_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("DL")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_delhi_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("JK")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_jammu_kashmir_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("LD")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_lakshadweep_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("LA")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_ladakh_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("PY")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_puducherry_districts, R.layout.custom_list_row);
-            }
-            districtList.setAdapter(selectDistrictArray);
-
-            districtList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
-                            && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                            && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
-                            && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                            && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
-                        Ok_PostLoad.setEnabled(true);
-                        Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
-                    } else {
-                        Ok_PostLoad.setEnabled(false);
-                        Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
-                    }
-                    drop_city.setText(selectDistrictArray.getItem(i)); //Set Selected Credentials
+                    addressDialogCity.setText(selectDistrictArray.getItem(i)); //Set Selected Credentials
                     selectDistrictDialog.dismiss();
                     selectedDistrict = selectDistrictArray.getItem(i).toString();
                 }
@@ -1357,16 +1179,16 @@ public class PostALoadActivity extends AppCompatActivity {
         postLoadRequest.setFeet(select_feet.getText().toString() + " Ft");
         postLoadRequest.setCapacity(select_capacity.getText().toString());
         postLoadRequest.setBody_type(select_truck_body_type.getText().toString());
-        postLoadRequest.setPick_add(pick_up_address.getText().toString());
-        postLoadRequest.setPick_city(pick_up_city.getText().toString());
-        postLoadRequest.setPick_pin_code(pick_up_pinCode.getText().toString());
-        postLoadRequest.setPick_state(pick_up_state.getText().toString());
-        postLoadRequest.setPick_country(pick_up_state.getText().toString());
-        postLoadRequest.setDrop_add(drop_address.getText().toString());
-        postLoadRequest.setDrop_city(drop_city.getText().toString());
-        postLoadRequest.setDrop_pin_code(drop_pinCode.getText().toString());
-        postLoadRequest.setDrop_state(drop_state.getText().toString());
-        postLoadRequest.setDrop_country(drop_state.getText().toString());
+        postLoadRequest.setPick_add(pickUpAddress);
+        postLoadRequest.setPick_city(pickUpCity);
+        postLoadRequest.setPick_pin_code(pickUpPinCode);
+        postLoadRequest.setPick_state(pickupState);
+        postLoadRequest.setPick_country("India");
+        postLoadRequest.setDrop_add(dropAddress);
+        postLoadRequest.setDrop_city(dropCiy);
+        postLoadRequest.setDrop_pin_code(dropPinCode);
+        postLoadRequest.setDrop_state(dropState);
+        postLoadRequest.setDrop_country("India");
         postLoadRequest.setUser_id(userId);
 //        postLoadRequest.setKm_approx(select_capacity.getText().toString());
         postLoadRequest.setNotes_meterial_des(note_to_post_load.getText().toString());
@@ -1399,22 +1221,35 @@ public class PostALoadActivity extends AppCompatActivity {
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            if (!pick_up_address.getText().toString().isEmpty()) {
-                pick_up_address.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+            if (pickUpAddress != null) {
+                addressDialogAddress.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
             } else {
-                pick_up_address.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+                addressDialogAddress.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
             }
 
             if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
                     && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                    && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
-                    && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                    && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
+                    && !select_truck_body_type.getText().toString().isEmpty() && pickUpAddress != null && pickUpCity != null
+                    && pickUpPinCode != null && pickupState != null && dropAddress != null
+                    && dropCiy != null && dropPinCode != null && dropState != null) {
                 Ok_PostLoad.setEnabled(true);
                 Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
             } else {
                 Ok_PostLoad.setEnabled(false);
                 Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
+            }
+
+            if (pickUpAddress!=null
+                    && pickUpCity!=null
+                    && pickUpPinCode!=null
+                    && pickupState!=null) {
+                getPickUpLocation();
+            }
+            if (dropAddress!=null
+                    && dropCiy!=null
+                    && dropPinCode!=null
+                    && dropState!=null) {
+                getDropLocation();
             }
         }
 
@@ -1439,94 +1274,33 @@ public class PostALoadActivity extends AppCompatActivity {
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
                     && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                    && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
-                    && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                    && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
+                    && !select_truck_body_type.getText().toString().isEmpty() && pickUpAddress != null && pickUpCity != null
+                    && pickUpPinCode != null && pickupState != null && dropAddress != null
+                    && dropCiy != null && dropPinCode != null && dropState != null) {
                 Ok_PostLoad.setEnabled(true);
                 Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
             } else {
                 Ok_PostLoad.setEnabled(false);
                 Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
+            }
+
+            if (pickUpAddress!=null
+                    && pickUpCity!=null
+                    && pickUpPinCode!=null
+                    && pickupState!=null) {
+                getPickUpLocation();
+            }
+            if (dropAddress!=null
+                    && dropCiy!=null
+                    && dropPinCode!=null
+                    && dropState!=null) {
+                getDropLocation();
             }
         }
 
         @Override
         public void afterTextChanged(Editable editable) {
 
-        }
-    };
-
-    private TextWatcher DropPinCodeTextWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            if (drop_pinCode.getText().toString().length() != 6) {
-                drop_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
-            } else {
-                getStateAndDistrictForDrop(drop_pinCode.getText().toString());
-                drop_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
-            }
-
-            if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
-                    && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                    && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
-                    && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                    && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
-                Ok_PostLoad.setEnabled(true);
-                Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
-            } else {
-                Ok_PostLoad.setEnabled(false);
-                Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
-            }
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-
-        }
-    };
-
-    private TextWatcher DropAddressTextWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            if (!drop_address.getText().toString().isEmpty()) {
-                drop_address.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
-            } else {
-                drop_address.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
-            }
-
-            if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
-                    && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                    && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
-                    && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                    && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
-                Ok_PostLoad.setEnabled(true);
-                Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
-            } else {
-                Ok_PostLoad.setEnabled(false);
-                Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
-            }
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            for (int i = s.length() - 1; i >= 0; i--) {
-                if (s.charAt(i) == '\n') {
-                    s.delete(i, i + 1);
-                    return;
-                }
-            }
         }
     };
 
@@ -1539,25 +1313,38 @@ public class PostALoadActivity extends AppCompatActivity {
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            if (pick_up_pinCode.getText().toString().length() != 6) {
-                pick_up_state.setText("");
-                pick_up_city.setText("");
-                pick_up_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+            if (addressDialogPinCode.getText().toString().length() != 6) {
+                addressDialogState.setText("");
+                addressDialogCity.setText("");
+                addressDialogPinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
             } else {
-                getStateAndDistrictForPickUp(pick_up_pinCode.getText().toString());
-                pick_up_pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+                getStateAndDistrictForPickUp(addressDialogPinCode.getText().toString());
+                addressDialogPinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
             }
 
             if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
                     && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                    && !select_truck_body_type.getText().toString().isEmpty() && !pick_up_address.getText().toString().isEmpty() && !pick_up_city.getText().toString().isEmpty()
-                    && !pick_up_pinCode.getText().toString().isEmpty() && !pick_up_state.getText().toString().isEmpty() && !drop_address.getText().toString().isEmpty()
-                    && !drop_city.getText().toString().isEmpty() && !drop_pinCode.getText().toString().isEmpty() && !drop_state.getText().toString().isEmpty()) {
+                    && !select_truck_body_type.getText().toString().isEmpty() && pickUpAddress != null && pickUpCity != null
+                    && pickUpPinCode != null && pickupState != null && dropAddress != null
+                    && dropCiy != null && dropPinCode != null && dropState != null) {
                 Ok_PostLoad.setEnabled(true);
                 Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
             } else {
                 Ok_PostLoad.setEnabled(false);
                 Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
+            }
+
+            if (pickUpAddress != null
+                    && pickUpCity != null
+                    && pickUpPinCode != null
+                    && pickupState != null) {
+                getPickUpLocation();
+            }
+            if (dropAddress != null
+                    && dropCiy != null
+                    && dropPinCode != null
+                    && dropState != null) {
+                getDropLocation();
             }
         }
 
@@ -1567,46 +1354,13 @@ public class PostALoadActivity extends AppCompatActivity {
         }
     };
 
-    //--------------------------------------Get State and city by PinCode---------------------------
-    private void getStateAndDistrictForDrop(String enteredPin) {
-
-        Log.i("Entered PIN", enteredPin);
-
-        String url = "http://13.234.163.179:3000/user/locationData/"+enteredPin;
-        Log.i("url for truckByTruckId", url);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-
-                    JSONObject obj = response.getJSONObject("data");
-                    String stateByPinCode = obj.getString("stateCode");
-                    String  distByPinCode = obj.getString("district");
-
-                    drop_state.setText(stateByPinCode);
-                    drop_city.setText(distByPinCode);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request);
-    }
-    //----------------------------------------------------------------------------------------------
-
 
     //--------------------------------------Get State and city by PinCode---------------------------
     private void getStateAndDistrictForPickUp(String enteredPin) {
 
         Log.i("Entered PIN", enteredPin);
 
-        String url = "http://13.234.163.179:3000/user/locationData/"+enteredPin;
+        String url = "http://13.234.163.179:3000/user/locationData/" + enteredPin;
         Log.i("url for truckByTruckId", url);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
@@ -1615,10 +1369,10 @@ public class PostALoadActivity extends AppCompatActivity {
 
                     JSONObject obj = response.getJSONObject("data");
                     String stateByPinCode = obj.getString("stateCode");
-                    String  distByPinCode = obj.getString("district");
+                    String distByPinCode = obj.getString("district");
 
-                    pick_up_state.setText(stateByPinCode);
-                    pick_up_city.setText(distByPinCode);
+                    addressDialogState.setText(stateByPinCode);
+                    addressDialogCity.setText(distByPinCode);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1645,19 +1399,11 @@ public class PostALoadActivity extends AppCompatActivity {
         String vehicleFeet = select_feet.getText().toString() + " Ft";
         String vehicleCapacity = select_capacity.getText().toString();
         String vehicleBodyType = select_truck_body_type.getText().toString();
-        String pickUpAddress = pick_up_address.getText().toString();
-        String pickUpCity = pick_up_city.getText().toString();
-        String pickUpPinCode = pick_up_pinCode.getText().toString();
-        String pickUpState = pick_up_state.getText().toString();
-        String pickUpCountry = pick_up_state.getText().toString();
-        String dropAddress = drop_address.getText().toString();
-        String dropCity = drop_city.getText().toString();
-        String dropPinCode = drop_pinCode.getText().toString();
-        String dropState = drop_state.getText().toString();
-        String dropCountry = drop_state.getText().toString();
+        String pickUpCountry = "India";
+        String dropCountry = "India";
         String notesFromLP = note_to_post_load.getText().toString();
 
-        UpdateLoadPostPickUpDate updateLoadPost = new UpdateLoadPostPickUpDate(pickUpDate, pickUpTime, budget, vehicleModel, vehicleFeet, vehicleCapacity, vehicleBodyType, pickUpAddress, pickUpPinCode, pickUpCity, pickUpState, pickUpCountry, dropAddress, dropPinCode, dropCity, dropState, dropCountry, "123", notesFromLP);
+        UpdateLoadPostPickUpDate updateLoadPost = new UpdateLoadPostPickUpDate(pickUpDate, pickUpTime, budget, vehicleModel, vehicleFeet, vehicleCapacity, vehicleBodyType, pickUpAddress, pickUpPinCode, pickUpCity, pickupState, pickUpCountry, dropAddress, dropPinCode, dropCiy, dropState, dropCountry, "123", notesFromLP);
 
         Call<UpdateLoadPostPickUpDate> call = postLoadService.updateLoadPost("" + loadId, updateLoadPost);
 
@@ -1696,15 +1442,15 @@ public class PostALoadActivity extends AppCompatActivity {
                         String vehicleFeet = obj.getString("feet");
                         String vehicleCapacity = obj.getString("capacity");
                         String vehicleBodyType = obj.getString("body_type");
-                        String pickUpAddress = obj.getString("pick_add");
-                        String pickUpCity = obj.getString("pick_city");
-                        String pickUpPinCode = obj.getString("pick_pin_code");
+                        String pickUpAddress1 = obj.getString("pick_add");
+                        String pickUpCities = obj.getString("pick_city");
+                        String pickUpPinCodes = obj.getString("pick_pin_code");
                         String pickUpState = obj.getString("pick_state");
                         String pickUpCountry = obj.getString("pick_country");
-                        String dropAddress = obj.getString("drop_add");
-                        String dropCity = obj.getString("drop_city");
-                        String dropPinCode = obj.getString("drop_pin_code");
-                        String dropState = obj.getString("drop_state");
+                        String dropAddress1 = obj.getString("drop_add");
+                        String dropCities = obj.getString("drop_city");
+                        String dropPinCodes = obj.getString("drop_pin_code");
+                        String dropStates = obj.getString("drop_state");
                         String dropCountry = obj.getString("drop_country");
                         String approxKM = obj.getString("km_approx");
                         String notesFromLP = obj.getString("notes_meterial_des");
@@ -1717,15 +1463,15 @@ public class PostALoadActivity extends AppCompatActivity {
                         select_feet.setText(vehicleFeet);
                         select_capacity.setText(vehicleCapacity);
                         select_truck_body_type.setText(vehicleBodyType);
-                        pick_up_state.setText(pickUpState);
-                        pick_up_city.setText(pickUpCity);
-                        drop_state.setText(dropState);
-                        drop_city.setText(dropCity);
-                        auto_calculated_KM.setText(approxKM);
-                        pick_up_address.setText(pickUpAddress);
-                        drop_address.setText(dropAddress);
-                        pick_up_pinCode.setText(pickUpPinCode);
-                        drop_pinCode.setText(dropPinCode);
+                        addressDialogState.setText(pickUpState);
+                        pickUpCity = pickUpCities;
+                        dropState = dropStates;
+                        dropCiy = dropCities;
+                        setApproxDistance.setText(approxKM);
+                        pickUpAddress = pickUpAddress1;
+                        dropAddress = dropAddress1;
+                        pickUpPinCode = pickUpPinCodes;
+                        dropPinCode = dropPinCodes;
                         note_to_post_load.setText(notesFromLP);
                     }
 
@@ -1756,53 +1502,170 @@ public class PostALoadActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 
-    public void onClickGetCurrentLocationPickDrop(View view) {
-        getLocation();
-        switch (view.getId()) {
-            case R.id.post_a_load_get_current_location_pick_up:
-                pick_up_address.setText(addressCurrent);
-                pick_up_pinCode.setText(pinCodeCurrent);
-                pick_up_state.setText(stateCurrent);
-                pick_up_city.setText(cityCurrent);
-                break;
+    private void getPickUpLocation() {
+        String pickUpAddress = addressDialogAddress.getText().toString();
 
-            case R.id.post_a_load_get_current_location_drop:
-                drop_address.setText(addressCurrent);
-                drop_pinCode.setText(pinCodeCurrent);
-                drop_state.setText(stateCurrent);
-                drop_city.setText(cityCurrent);
-                break;
-        }
+        GetLocationPickUp geoLocation = new GetLocationPickUp();
+        geoLocation.geLatLongPickUp(pickUpAddress, getApplicationContext(), new GeoHandlerLatitude());
     }
 
-    private void getLocation() {
-        if (ActivityCompat.checkSelfPermission(PostALoadActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
-                @Override
-                public void onComplete(@NonNull Task<Location> task) {
-                    Location location = task.getResult();
-                    if (location != null) {
-                        Geocoder geocoder = new Geocoder(PostALoadActivity.this, Locale.getDefault());
-                        try {
-                            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                            latitudeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLatitude()));
-                            longitudeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLongitude()));
-                            countryCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getCountryName()));
-                            stateCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getAdminArea()));
-                            cityCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLocality()));
-                            subCityCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getSubLocality()));
-                            addressCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getAddressLine(0)));
-                            pinCodeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getPostalCode()));
+    public void onClickGetCurrentLocationAddress(View view) {
+        GetCurrentLocation.getCurrentLocation(PostALoadActivity.this, addressDialogAddress, addressDialogPinCode, addressDialogState, addressDialogCity);
+    }
 
-                        } catch (IOException e) {
-                            e.printStackTrace();
+    public void onClickSetPickUpLocation(View view) {
+        isPickDrop = "1";
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(pickUpAddressDialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+        pickUpAddressDialog.show();
+        pickUpAddressDialog.getWindow().setAttributes(lp);
+    }
+
+    public void onClickDropLocation(View view) {
+        isPickDrop = "2";
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(pickUpAddressDialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+        pickUpAddressDialog.show();
+        pickUpAddressDialog.getWindow().setAttributes(lp);
+    }
+
+    public void onClickOkAddressDetails(View view) {
+        if (isPickDrop.equals("1")) {
+            pickUpAddress = addressDialogAddress.getText().toString();
+            pickUpPinCode = addressDialogPinCode.getText().toString();
+            pickupState = addressDialogState.getText().toString();
+            pickUpCity = addressDialogCity.getText().toString();
+        } else if (isPickDrop.equals("2")) {
+            dropAddress = addressDialogAddress.getText().toString();
+            dropPinCode = addressDialogPinCode.getText().toString();
+            dropState = addressDialogState.getText().toString();
+            dropCiy = addressDialogCity.getText().toString();
+        } else {
+
+        }
+        pickUpAddressDialog.dismiss();
+
+        if (pickUpAddress!=null
+                && pickUpCity!=null
+                && pickUpPinCode!=null
+                && pickupState!=null
+                && dropAddress!=null
+                && dropCiy!=null
+                && dropPinCode!=null
+                && dropState!=null) {
+            distanceInKm(latitude1, longitude1, latitude2, longitude2);
+        }
+
+    }
+
+    public void onClickCancelAddressDetails(View view) {
+        pickUpAddressDialog.dismiss();
+    }
+
+    private class GeoHandlerLatitude extends Handler {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            String latLong, lat = null, lon = null;
+            switch (msg.what) {
+                case 1:
+                    try {
+                        Bundle bundle = msg.getData();
+                        latLong = bundle.getString("latLong1");
+                        String[] arrSplit = latLong.split(" ");
+                        for (int i = 0; i < arrSplit.length; i++) {
+                            lat = arrSplit[0];
+                            lon = arrSplit[1];
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
 
-                }
-            });
-        } else {
-            ActivityCompat.requestPermissions(PostALoadActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+                    break;
+                default:
+                    lat = null;
+                    lon = null;
+            }
+            try {
+                latitude1 = Double.parseDouble(lat);
+                longitude1 = Double.parseDouble(lon);
+                Log.i("Lat and long 1", String.valueOf(latitude1 + " " + longitude1));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
     }
+
+    private void getDropLocation() {
+        GetLocationDrop geoLocation = new GetLocationDrop();
+        geoLocation.geLatLongDrop(dropAddress, getApplicationContext(), new GeoHandlerLongitude());
+    }
+
+    private class GeoHandlerLongitude extends Handler {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            String latLong, lat = null, lon = null;
+            switch (msg.what) {
+                case 1:
+                    try {
+                        Bundle bundle = msg.getData();
+                        latLong = bundle.getString("latLong2");
+                        String[] arrSplit = latLong.split(" ");
+                        for (int i = 0; i < arrSplit.length; i++) {
+                            lat = arrSplit[0];
+                            lon = arrSplit[1];
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
+                default:
+                    lat = null;
+                    lon = null;
+            }
+            try {
+                latitude2 = Double.parseDouble(lat);
+                longitude2 = Double.parseDouble(lon);
+                Log.i("Lat and long 2", String.valueOf(latitude2 + " " + longitude2));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    private void distanceInKm(double lat1, double long1, double lat2, double long2) {
+        double longDiff = long1 - long2;
+        double distanceApprox = Math.sin(deg2rad(lat1))
+                * Math.sin(deg2rad(lat2))
+                + Math.cos(deg2rad(lat1))
+                * Math.cos(deg2rad(lat2))
+                * Math.cos(deg2rad(longDiff));
+        distanceApprox = Math.acos(distanceApprox);
+        //Convert Distance radian to degree
+        distanceApprox = rad2deg(distanceApprox);
+        //Distance in Miles
+        distanceApprox = distanceApprox * 60 * 1.1515;
+        //Distance in kilometer
+        distanceApprox = distanceApprox * 1.609344;
+        //set distance on Text View
+        setApproxDistance.setText(String.format(Locale.US, "%2f kilometers", distanceApprox));
+    }
+
+    private double rad2deg(double distance) {
+        return (distance * 180.0 / Math.PI);
+    }
+
+    private double deg2rad(double lat1) {
+        return (lat1 * Math.PI / 180.0);
+    }
+
+
 }
