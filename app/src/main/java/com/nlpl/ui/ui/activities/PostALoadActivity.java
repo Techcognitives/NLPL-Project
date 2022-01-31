@@ -1192,7 +1192,7 @@ public class PostALoadActivity extends AppCompatActivity {
         postLoadRequest.setUser_id(userId);
 //        postLoadRequest.setKm_approx(select_capacity.getText().toString());
         postLoadRequest.setNotes_meterial_des(note_to_post_load.getText().toString());
-        postLoadRequest.setBid_status("pending");
+        postLoadRequest.setBid_status("loadPosted");
         return postLoadRequest;
     }
 

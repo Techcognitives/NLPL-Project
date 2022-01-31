@@ -560,6 +560,27 @@
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout7">
 
                 <TextView
+                    android:id="@+id/dialog_bid_now_cancel_btn2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/button_de_active"
+                    android:paddingStart="20dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="20dp"
+                    android:paddingBottom="5dp"
+                    android:text="@string/cancel"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/dialog_bid_now_cancel_btn"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_cancel_btn"
+                    app:layout_constraintTop_toTopOf="@+id/dialog_bid_now_cancel_btn" />
+
+                <TextView
                     android:id="@+id/bid_now_middle_textview_partition"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -583,7 +604,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginEnd="5dp"
                     android:background="@drawable/button_de_active"
                     android:paddingStart="20dp"
                     android:paddingTop="5dp"
@@ -594,7 +615,7 @@
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="@+id/dialog_bid_now_accept_and_bid_btn"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/dialog_bid_now_cancel_btn2"
                     app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_accept_and_bid_btn"
                     app:layout_constraintTop_toTopOf="@+id/dialog_bid_now_accept_and_bid_btn" />
 

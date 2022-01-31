@@ -2,11 +2,15 @@ package com.nlpl.services;
 
 import com.nlpl.model.Requests.BidLoadRequest;
 import com.nlpl.model.Responses.BidLadResponse;
+import com.nlpl.model.UpdateBids.UpdateAssignedDriverId;
+import com.nlpl.model.UpdateBids.UpdateAssignedTruckIdToBid;
 import com.nlpl.model.UpdateBids.UpdateBidStatusAccepted;
 import com.nlpl.model.UpdateBids.UpdateBidStatusFinalAccepted;
 import com.nlpl.model.UpdateBids.UpdateBidStatusRespondedBySP;
 import com.nlpl.model.UpdateBids.UpdateBudgetCustomerForSP;
 import com.nlpl.model.UpdateBids.UpdateSPQuoteFinal;
+import com.nlpl.model.UpdateBids.UpdateSpNoteForCustomer;
+import com.nlpl.model.UpdateLoadPost.UpdateCustomerNoteForSP;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -32,5 +36,14 @@ public interface BidLoadService {
 
     @PUT("/spbid/updateBidByBID/{bidId}")
     Call<UpdateBidStatusFinalAccepted> updateFinalAccepted(@Path("bidId") String bidId, @Body UpdateBidStatusFinalAccepted updateBidStatusFinalAccepted);
+
+    @PUT("/spbid/updateBidByBID/{bidId}")
+    Call<UpdateAssignedTruckIdToBid> updateAssignedTruckId(@Path("bidId") String bidId, @Body UpdateAssignedTruckIdToBid updateAssignedTruckIdToBid);
+
+    @PUT("/spbid/updateBidByBID/{bidId}")
+    Call<UpdateAssignedDriverId> updateAssignedDriverId(@Path("bidId") String bidId, @Body UpdateAssignedDriverId updateAssignedDriverId);
+
+    @PUT("/spbid/updateBidByBID/{bidId}")
+    Call<UpdateSpNoteForCustomer> updateSPNoteForCustomer(@Path("bidId") String bidId, @Body UpdateSpNoteForCustomer updateSpNoteForCustomer);
 
 }

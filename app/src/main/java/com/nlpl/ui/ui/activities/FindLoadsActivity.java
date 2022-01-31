@@ -155,7 +155,7 @@ public class FindLoadsActivity extends AppCompatActivity {
                     }
 
                     for (int i = 0; i < bidsList.size(); i++) {
-                        if (bidsList.get(i).getBid_status().equals("pending")) {
+                        if (bidsList.get(i).getBid_status().equals("loadPosted")) {
                             if (bidsList.size() == 0) {
                                 bidsListRecyclerView.setVisibility(View.GONE);
                             } else if (bidsList.size() == 1) {
