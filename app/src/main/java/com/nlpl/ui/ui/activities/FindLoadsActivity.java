@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -72,12 +73,17 @@ public class FindLoadsActivity extends AppCompatActivity {
                 FindLoadsActivity.this.finish();
             }
         });
+
         //---------------------------- Bottom Nav --------------------------------------------------
         bottomNav = (View) findViewById(R.id.find_loads_bottom_nav_bar);
         spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
         customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
         spDashboard.setBackgroundColor(getResources().getColor(R.color.nav_unselected_blue));
         customerDashboard.setBackgroundColor(getResources().getColor(R.color.nav_selected_blue));
+        TextView profileText = (TextView) bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
+        ImageView profileImageView = (ImageView) bottomNav.findViewById(R.id.bottom_nav_profile_image_view);
+        profileText.setText("Find Loads");
+        profileImageView.setImageDrawable(getDrawable(R.drawable.find_small));
         //---------------------------- Get Bank Details --------------------------------------------
 
         mQueue = Volley.newRequestQueue(FindLoadsActivity.this);

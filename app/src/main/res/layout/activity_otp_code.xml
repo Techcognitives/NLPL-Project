@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".ui.ui.activities.OtpCodeActivity">
 
     <TextView
@@ -88,113 +89,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/otp_button" />
 
-    <EditText
-        android:id="@+id/enter_otp_1"
-        android:layout_width="45dp"
-        android:layout_height="35dp"
-        android:background="@drawable/otp_underline"
-        android:gravity="center"
-        android:imeOptions="actionNext"
-        android:importantForAutofill="no"
+    <com.chaos.view.PinView
+        android:id="@+id/pin_view"
+        style="@style/PinWidget.PinView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:cursorVisible="true"
         android:inputType="number"
-        android:maxLength="1"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        android:textStyle="bold"
+        android:itemBackground="@color/grey"
+        app:cursorColor="@color/black"
+        app:hideLineWhenFilled="true"
+        app:itemCount="6"
+        app:itemHeight="50dp"
+        app:itemRadius="5dp"
+        app:itemWidth="50dp"
+        app:lineColor="@color/dark_grey"
         app:layout_constraintBottom_toTopOf="@+id/otp_button"
-        app:layout_constraintEnd_toStartOf="@+id/enter_otp_2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/countdown" />
-
-    <EditText
-        android:id="@+id/enter_otp_2"
-        android:layout_width="45dp"
-        android:layout_height="35dp"
-        android:background="@drawable/otp_underline"
-        android:gravity="center"
-        android:imeOptions="actionNext"
-        android:importantForAutofill="no"
-        android:inputType="number"
-        android:maxLength="1"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/enter_otp_1"
-        app:layout_constraintEnd_toStartOf="@+id/enter_otp_3"
-        app:layout_constraintStart_toEndOf="@+id/enter_otp_1"
-        app:layout_constraintTop_toTopOf="@+id/enter_otp_1" />
-
-    <EditText
-        android:id="@+id/enter_otp_3"
-        android:layout_width="45dp"
-        android:layout_height="35dp"
-        android:background="@drawable/otp_underline"
-        android:gravity="center"
-        android:imeOptions="actionNext"
-        android:importantForAutofill="no"
-        android:inputType="number"
-        android:maxLength="1"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/enter_otp_2"
-        app:layout_constraintEnd_toStartOf="@+id/enter_otp_4"
-        app:layout_constraintStart_toEndOf="@+id/enter_otp_2"
-        app:layout_constraintTop_toTopOf="@+id/enter_otp_2" />
-
-    <EditText
-        android:id="@+id/enter_otp_4"
-        android:layout_width="45dp"
-        android:layout_height="35dp"
-        android:background="@drawable/otp_underline"
-        android:gravity="center"
-        android:imeOptions="actionNext"
-        android:importantForAutofill="no"
-        android:inputType="number"
-        android:maxLength="1"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/enter_otp_3"
-        app:layout_constraintEnd_toStartOf="@+id/enter_otp_5"
-        app:layout_constraintStart_toEndOf="@+id/enter_otp_3"
-        app:layout_constraintTop_toTopOf="@+id/enter_otp_3" />
-
-    <EditText
-        android:id="@+id/enter_otp_5"
-        android:layout_width="45dp"
-        android:layout_height="35dp"
-        android:background="@drawable/otp_underline"
-        android:gravity="center"
-        android:imeOptions="actionNext"
-        android:importantForAutofill="no"
-        android:inputType="number"
-        android:maxLength="1"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/enter_otp_4"
-        app:layout_constraintEnd_toStartOf="@+id/enter_otp_6"
-        app:layout_constraintStart_toEndOf="@+id/enter_otp_4"
-        app:layout_constraintTop_toTopOf="@+id/enter_otp_4" />
-
-    <EditText
-        android:id="@+id/enter_otp_6"
-        android:layout_width="45dp"
-        android:layout_height="35dp"
-        android:background="@drawable/otp_underline"
-        android:gravity="center"
-        android:imeOptions="actionDone"
-        android:importantForAutofill="no"
-        android:inputType="number"
-        android:maxLength="1"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/enter_otp_5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/enter_otp_5"
-        app:layout_constraintTop_toTopOf="@+id/enter_otp_5" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/countdown"
+        app:lineWidth="1dp" />
 
     <ImageView
         android:id="@+id/imageView2"

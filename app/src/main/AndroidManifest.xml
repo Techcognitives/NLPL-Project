@@ -112,7 +112,7 @@
         </activity>
 
         <receiver
-            android:name=".ui.ui.adapters.OTPReceiver"
+            android:name=".utils.OTPReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />

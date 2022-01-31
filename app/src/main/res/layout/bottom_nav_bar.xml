@@ -59,29 +59,29 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/dscufsd"
+            android:id="@+id/bottom_nav_profile_image_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingTop="5dp"
-            app:layout_constraintBottom_toTopOf="@+id/dfuhcisdekcf"
+            app:layout_constraintBottom_toTopOf="@+id/bottom_nav_profile_text_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/find_small" />
+            app:srcCompat="@drawable/blue_profile_medium" />
 
         <TextView
-            android:id="@+id/dfuhcisdekcf"
+            android:id="@+id/bottom_nav_profile_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"
-            android:text="Find Loads"
+            android:text="Profile"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dscufsd" />
+            app:layout_constraintTop_toBottomOf="@+id/bottom_nav_profile_image_view" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

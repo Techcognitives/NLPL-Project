@@ -7,7 +7,6 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -25,7 +24,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +33,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.chaos.view.PinView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -45,7 +44,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.nlpl.R;
 import com.nlpl.model.UpdateUserDetails.UpdateUserPhoneNumber;
 import com.nlpl.services.UserService;
-import com.nlpl.ui.ui.adapters.OTPReceiver;
+import com.nlpl.utils.OTPReceiver;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,6 +53,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.CertificatePinner;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -63,7 +63,6 @@ public class OtpCodeActivity extends AppCompatActivity {
 
     TextView countdown, otpTitle, reSendOtp;
     String mobile, otpId;
-    EditText otp1, otp2, otp3, otp4, otp5, otp6;
     Button otpButton;
     String mobileNoFirebase, otp, userId, userIdAPI, name, nameAPI, phone, isRegistrationDone, isRegistrationDoneAPI, pinCode, pinCodeAPI, address, addressAPI, mobileNoAPI, cityAPI, city, roleAPI, role;
     FirebaseAuth mAuth;
@@ -72,6 +71,7 @@ public class OtpCodeActivity extends AppCompatActivity {
     ArrayList<String> arrayUserId, arrayMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
     Boolean isEditPhone;
     String userIdBundle;
+    PinView otpCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,26 +97,16 @@ public class OtpCodeActivity extends AppCompatActivity {
         mobileNoFirebase = mobile.substring(1, 13);
         otpTitle.setText(enterCode + "+91 " + s);
 
-        otp1 = (EditText) findViewById(R.id.enter_otp_1);
-        otp2 = (EditText) findViewById(R.id.enter_otp_2);
-        otp3 = (EditText) findViewById(R.id.enter_otp_3);
-        otp4 = (EditText) findViewById(R.id.enter_otp_4);
-        otp5 = (EditText) findViewById(R.id.enter_otp_5);
-        otp6 = (EditText) findViewById(R.id.enter_otp_6);
+        otpCode = (PinView) findViewById(R.id.pin_view);
 
+        otpCode.addTextChangedListener(otpWatcher);
 
-        otp1.addTextChangedListener(otpWatcher);
-        otp2.addTextChangedListener(otpWatcher);
-        otp3.addTextChangedListener(otpWatcher);
-        otp4.addTextChangedListener(otpWatcher);
-        otp5.addTextChangedListener(otpWatcher);
-        otp6.addTextChangedListener(otpWatcher);
-
-        otp1.requestFocus();
+        otpCode.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-        setupOTPInputs();
+
         mAuth = FirebaseAuth.getInstance();
+        new OTPReceiver().setEditText_otp(otpCode, otpButton);
 
         mQueue = Volley.newRequestQueue(OtpCodeActivity.this); //To Select Specialty and Credentials
         arrayUserId = new ArrayList<>();
@@ -155,7 +145,7 @@ public class OtpCodeActivity extends AppCompatActivity {
         otpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                otp = otp1.getText().toString() + otp2.getText().toString() + otp3.getText().toString() + otp4.getText().toString() + otp5.getText().toString() + otp6.getText().toString();
+                otp = "";
 
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(OtpCodeActivity.this);
@@ -216,136 +206,6 @@ public class OtpCodeActivity extends AppCompatActivity {
                 setCountdown();
             }
         });
-    }
-
-    private void setupOTPInputs() {
-        otp1.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!charSequence.toString().trim().isEmpty()) {
-                    otp2.setFocusableInTouchMode(true);
-                    otp2.requestFocus();
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-        otp2.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!charSequence.toString().trim().isEmpty()) {
-                    otp3.setFocusableInTouchMode(true);
-                    otp3.requestFocus();
-                } else {
-                    otp1.setFocusableInTouchMode(true);
-                    otp1.requestFocus();
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-        otp3.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!charSequence.toString().trim().isEmpty()) {
-                    otp4.setFocusableInTouchMode(true);
-                    otp4.requestFocus();
-                } else {
-                    otp2.setFocusableInTouchMode(true);
-                    otp2.requestFocus();
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-        otp4.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!charSequence.toString().trim().isEmpty()) {
-                    otp5.setFocusableInTouchMode(true);
-                    otp5.requestFocus();
-                } else {
-                    otp3.setFocusableInTouchMode(true);
-                    otp3.requestFocus();
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-        otp5.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!charSequence.toString().trim().isEmpty()) {
-                    otp6.setFocusableInTouchMode(true);
-                    otp6.requestFocus();
-                } else {
-                    otp4.setFocusableInTouchMode(true);
-                    otp4.requestFocus();
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-        otp6.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.toString().trim().isEmpty()) {
-                    otp5.setFocusableInTouchMode(true);
-                    otp5.requestFocus();
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        new OTPReceiver().setEditText_otp(otp1, otp2, otp3, otp4, otp5, otp6, otpButton);
     }
 
     private void setCountdown() {
@@ -500,14 +360,9 @@ public class OtpCodeActivity extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            String otpEdit1 = otp1.getText().toString().trim();
-            String otpEdit2 = otp2.getText().toString().trim();
-            String otpEdit3 = otp3.getText().toString().trim();
-            String otpEdit4 = otp4.getText().toString().trim();
-            String otpEdit5 = otp5.getText().toString().trim();
-            String otpEdit6 = otp6.getText().toString().trim();
+            String otpEdit1 = otpCode.getText().toString().trim();
 
-            if (!otpEdit1.isEmpty() && !otpEdit2.isEmpty() && !otpEdit3.isEmpty() && !otpEdit4.isEmpty() && !otpEdit5.isEmpty() && !otpEdit6.isEmpty()) {
+            if (!otpEdit1.isEmpty()) {
                 otpButton.setEnabled(true);
                 otpButton.setBackground(getResources().getDrawable(R.drawable.button_active));
             } else {

@@ -162,6 +162,10 @@ public class DashboardActivity extends AppCompatActivity {
         customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
         customerDashboard.setBackgroundColor(getResources().getColor(R.color.nav_unselected_blue));
         spDashboard.setBackgroundColor(getResources().getColor(R.color.nav_selected_blue));
+        TextView profileText = (TextView) bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
+        ImageView profileImageView = (ImageView) bottomNav.findViewById(R.id.bottom_nav_profile_image_view);
+        profileText.setText("Find Loads");
+        profileImageView.setImageDrawable(getDrawable(R.drawable.find_small));
 
         loadNotificationConstrain = (ConstraintLayout) findViewById(R.id.dashboard_load_notification_constrain);
         bidsSubmittedConstrain = (ConstraintLayout) findViewById(R.id.dashboard_bids_submitted_constrain);

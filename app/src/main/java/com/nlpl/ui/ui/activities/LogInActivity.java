@@ -109,7 +109,8 @@ public class LogInActivity extends AppCompatActivity {
                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
                     alertTitle.setText("OTP sent successfully");
-                    alertMessage.setText("OTP sent to " + mobile);
+                    String s = mobile.substring(3, 13);
+                    alertMessage.setText("OTP sent to " + "+91 "+s);
                     alertPositiveButton.setVisibility(View.GONE);
                     alertNegativeButton.setText("OK");
                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
