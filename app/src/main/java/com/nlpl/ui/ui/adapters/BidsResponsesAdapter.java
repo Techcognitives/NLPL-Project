@@ -91,7 +91,6 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
         }
 
         if (obj.getBid_status().equals("submitted")) {
-
             holder.acceptViewBidButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -99,14 +98,14 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
                 }
             });
             holder.acceptViewBidButton.setDrawingCacheBackgroundColor(R.color.orange);
+        }
 
-        } else if (obj.getBid_status().equals("Accepted")) {
-
+        if (obj.getBid_status().equals("Accepted")) {
             holder.acceptViewBidButton.setText("You\nResponded");
             holder.acceptViewBidButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.button_blue));
+        }
 
-        } else if (obj.getBid_status().equals("RespondedBySP")) {
-
+        if (obj.getBid_status().equals("RespondedBySP")) {
             holder.negotiable.setText("Non-Nego");
             holder.acceptViewBidButton.setText("Accept\n Final Offer");
             holder.acceptViewBidButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.green));
@@ -116,10 +115,10 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
                 public void onClick(View view) {
                     activity.acceptFinalOffer(obj);
                 }
-
             });
+        }
 
-        } else if (obj.getBid_status().equals("FinalAccepted")) {
+        if (obj.getBid_status().equals("FinalAccepted")) {
             holder.acceptViewBidButton.setText("Finally Accepted");
         }
 

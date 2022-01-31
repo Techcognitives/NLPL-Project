@@ -58,8 +58,11 @@ import com.nlpl.model.ModelForRecyclerView.BidSubmittedModel;
 import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
 import com.nlpl.model.Requests.BidLoadRequest;
 import com.nlpl.model.Responses.BidLadResponse;
+import com.nlpl.model.UpdateBids.UpdateAssignedDriverId;
+import com.nlpl.model.UpdateBids.UpdateAssignedTruckIdToBid;
 import com.nlpl.model.UpdateBids.UpdateBidStatusRespondedBySP;
 import com.nlpl.model.UpdateBids.UpdateSPQuoteFinal;
+import com.nlpl.model.UpdateBids.UpdateSpNoteForCustomer;
 import com.nlpl.services.BidLoadService;
 import com.nlpl.services.PostLoadService;
 import com.nlpl.ui.ui.adapters.LoadNotificationAdapter;
@@ -73,6 +76,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -93,8 +97,6 @@ public class DashboardActivity extends AppCompatActivity {
 
     private ArrayList<LoadNotificationModel> loadList = new ArrayList<>();
     private ArrayList<LoadNotificationModel> loadListToCompare = new ArrayList<>();
-    private ArrayList<LoadNotificationModel> reverseLoadList = new ArrayList<>();
-
 
     private ArrayList<BidSubmittedModel> loadSubmittedList = new ArrayList<>();
     private ArrayList<BidSubmittedModel> updatedLoadSubmittedList = new ArrayList<>();
@@ -105,12 +107,12 @@ public class DashboardActivity extends AppCompatActivity {
 
     Dialog setBudget, selectTruckDialog, previewDialogBidNow, dialogAcceptRevisedBid, dialogViewConsignment;
 
-    String spQuoteOnClickBidNow, bidStatusToCompare, bidStatus, vehicle_no, truckId, isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
+    String updateAssignedDriverId, updateAssignedTruckId, spQuoteOnClickBidNow, bidStatus, vehicle_no, truckId, isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
 
     SwipeListener swipeListener;
 
     View actionBar;
-    TextView customerNumber, customerNumberHeading, customerName, customerNameHeading, customerFirstBudget, customerSecondBudget, cancel, acceptAndBid, spQuote, addDriver, selectDriver, addTruck, selectTruck, selectedTruckModel, selectedTruckFeet, selectedTruckCapacity, selectedTruckBodyType, actionBarTitle;
+    TextView customerNumber, customerNumberHeading, customerName, customerNameHeading, customerFirstBudget, customerSecondBudget, cancel2, cancel, acceptAndBid, spQuote, addDriver, selectDriver, addTruck, selectTruck, selectedTruckModel, selectedTruckFeet, selectedTruckCapacity, selectedTruckBodyType, actionBarTitle;
     EditText notesSp;
     CheckBox declaration;
     RadioButton negotiable_yes, negotiable_no;
@@ -129,7 +131,7 @@ public class DashboardActivity extends AppCompatActivity {
     ConstraintLayout spDashboard, customerDashboard;
 
     String loadId, selectedDriverId, selectedDriverName, userId, userIdAPI, phone, mobileNoAPI;
-    ArrayList<String> arrayBidStatus, arrayUserId, arrayTruckId, arrayDriverId, arrayDriverName, arrayTruckList, arrayMobileNo, arrayDriverMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
+    ArrayList<String> arrayUserId, arrayTruckId, arrayDriverId, arrayDriverName, arrayTruckList, arrayMobileNo, arrayDriverMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
 
     String mobile, name, address, pinCode, city, role, emailIdAPI;
 
@@ -185,7 +187,6 @@ public class DashboardActivity extends AppCompatActivity {
         arrayTruckId = new ArrayList<>();
         arrayDriverId = new ArrayList<>();
         arrayDriverName = new ArrayList<>();
-        arrayBidStatus = new ArrayList<>();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.baseURL))
@@ -390,10 +391,10 @@ public class DashboardActivity extends AppCompatActivity {
     public void onClickProfileAndRegister(View view) {
         switch (view.getId()) {
             case R.id.menu_personal_details_button:
-                    Intent i1 = new Intent(DashboardActivity.this, ViewPersonalDetailsActivity.class);
-                    i1.putExtra("userId", userId);
-                    i1.putExtra("mobile", phone);
-                    startActivity(i1);
+                Intent i1 = new Intent(DashboardActivity.this, ViewPersonalDetailsActivity.class);
+                i1.putExtra("userId", userId);
+                i1.putExtra("mobile", phone);
+                startActivity(i1);
 
                 break;
 
@@ -504,19 +505,19 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
-    private void compareAndRemove(ArrayList<LoadNotificationModel> loadListToCompare, ArrayList<String> arrayBidStatus) {
+    private void compareAndRemove(ArrayList<LoadNotificationModel> loadListToCompare) {
 
         Log.i("Load list", String.valueOf(loadListToCompare.size()));
-        Log.i("array bidStatus", String.valueOf(arrayBidStatus.size()));
 
         for (int i = 0; i < loadListToCompare.size(); i++) {
             for (int j = 0; j < updatedLoadSubmittedList.size(); j++) {
                 if (loadListToCompare.get(i).getIdpost_load().equals(updatedLoadSubmittedList.get(j).getIdpost_load())) {
                     loadListToCompare.remove(i);
-                    arrayBidStatus.remove(j);
                 }
             }
         }
+
+        Collections.reverse(loadListToCompare);
 
         loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadListToCompare);
         loadListRecyclerView.setAdapter(loadListAdapter);
@@ -566,12 +567,11 @@ public class DashboardActivity extends AppCompatActivity {
                         modelLoadNotification.setKm_approx(obj.getString("km_approx"));
                         modelLoadNotification.setNotes_meterial_des(obj.getString("notes_meterial_des"));
 
-                        bidStatusToCompare = obj.getString("bid_status");
-                        arrayBidStatus.add(bidStatusToCompare);
-                        loadList.add(modelLoadNotification);
+                        if (obj.getString("bid_status").equals("loadPosted")) {
+                            loadList.add(modelLoadNotification);
+                        }
                     }
                     TextView noLoadAvailable = (TextView) findViewById(R.id.dashboard_load_here_text);
-
 
                     loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadList);
                     loadListRecyclerView.setAdapter(loadListAdapter);
@@ -583,7 +583,7 @@ public class DashboardActivity extends AppCompatActivity {
                         noLoadAvailable.setVisibility(View.VISIBLE);
                     }
 
-                    getBidListByUserId(loadList, arrayBidStatus);
+                    getBidListByUserId(loadList);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -715,11 +715,10 @@ public class DashboardActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
 
-                    if (spQuote.getText().toString().equals(customerFirstBudget.getText().toString())) {
-                        Log.i("status send as", "RespondedBySP");
+                    if (spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) || !negotiable) {
+                        isNegotiableSelected = true;
                         saveBid(createBidRequest("RespondedBySP", spQuote.getText().toString()));
                     } else {
-                        Log.i("status send as", "submitted");
                         saveBid(createBidRequest("submitted", ""));
                     }
 
@@ -1017,6 +1016,8 @@ public class DashboardActivity extends AppCompatActivity {
 
     private void getDriverDetailsByDriverId(String driverIdSelected) {
 
+        updateAssignedDriverId = driverIdSelected;
+
         Log.i("Driver selected", driverIdSelected);
         String url = getString(R.string.baseURL) + "/driver/driverId/" + driverIdSelected;
         Log.i("url for truckByTruckId", url);
@@ -1029,6 +1030,7 @@ public class DashboardActivity extends AppCompatActivity {
                         JSONObject obj = truckLists.getJSONObject(i);
                         selectedDriverName = obj.getString("driver_name");
                     }
+
                     selectDriver.setText(selectedDriverName);
 
                 } catch (JSONException e) {
@@ -1045,6 +1047,9 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private void getTruckDetailsByTruckId(String truckIdSelected) {
+
+        updateAssignedTruckId = truckIdSelected;
+
 
         Log.i("truckId selected", truckIdSelected);
         truckId = truckIdSelected;
@@ -1063,6 +1068,7 @@ public class DashboardActivity extends AppCompatActivity {
                         String bodyType = obj.getString("vehicle_type");
                         String vehicleNo = obj.getString("vehicle_no");
                         selectedDriverId = obj.getString("driver_id");
+
                         selectTruck.setText(vehicleNo);
                         selectedTruckModel.setText(truckModel);
                         selectedTruckFeet.setText(truckFeet);
@@ -1070,7 +1076,12 @@ public class DashboardActivity extends AppCompatActivity {
                         selectedTruckCapacity.setText(truckCapacity);
                     }
 
-                    getDriverDetailsByDriverId(selectedDriverId);
+                    if (selectedDriverId.equals("null")){
+                        selectDriver.setText("");
+                        Log.i("driverId null", "There is no driver Id for this truck");
+                    } else {
+                        getDriverDetailsByDriverId(selectedDriverId);
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1085,7 +1096,7 @@ public class DashboardActivity extends AppCompatActivity {
         mQueue.add(request);
     }
 
-    private void getBidListByUserId(ArrayList<LoadNotificationModel> loadListToCompare, ArrayList<String> arrayBidStatus) {
+    private void getBidListByUserId(ArrayList<LoadNotificationModel> loadListToCompare) {
 
         String url = getString(R.string.baseURL) + "/spbid/getBidDtByUserId/" + userId;
         Log.i("url betBidByUserID", url);
@@ -1098,7 +1109,7 @@ public class DashboardActivity extends AppCompatActivity {
                         JSONObject obj = truckLists.getJSONObject(i);
                         String postId = obj.getString("idpost_load");
                         String bidId = obj.getString("sp_bid_id");
-                        getBidSubmittedList(postId, bidId, loadListToCompare, arrayBidStatus);
+                        getBidSubmittedList(postId, bidId, loadListToCompare);
                     }
 
                 } catch (JSONException e) {
@@ -1114,7 +1125,7 @@ public class DashboardActivity extends AppCompatActivity {
         mQueue.add(request);
     }
 
-    public void getBidSubmittedList(String loadIdReceived, String bidId, ArrayList<LoadNotificationModel> loadListToCompare, ArrayList<String> arrayBidStatus) {
+    public void getBidSubmittedList(String loadIdReceived, String bidId, ArrayList<LoadNotificationModel> loadListToCompare) {
         //---------------------------- Get Bank Details ------------------------------------------
         String url1 = getString(R.string.baseURL) + "/loadpost/getLoadDtByPostId/" + loadIdReceived;
         Log.i("URL: ", url1);
@@ -1154,6 +1165,9 @@ public class DashboardActivity extends AppCompatActivity {
                         bidSubmittedModel.setNotes_meterial_des(obj.getString("notes_meterial_des"));
                         bidSubmittedModel.setBidId(bidId);
 
+//                        if (obj.getString("bid_status").equals("loadPosted")) {
+//
+//                        }
                         loadSubmittedList.add(bidSubmittedModel);
                     }
 
@@ -1162,7 +1176,7 @@ public class DashboardActivity extends AppCompatActivity {
                         updatedLoadSubmittedList.addAll(loadSubmittedList);
                         loadSubmittedAdapter.updateData(updatedLoadSubmittedList);
                         noBidsSubmittedTextView.setVisibility(View.GONE);
-                        compareAndRemove(loadListToCompare, arrayBidStatus);
+                        compareAndRemove(loadListToCompare);
                     } else {
                         noBidsSubmittedTextView.setVisibility(View.VISIBLE);
                     }
@@ -1241,7 +1255,7 @@ public class DashboardActivity extends AppCompatActivity {
         budget.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-        String newPreviousBudget = previousBudget.replaceAll(",","");
+        String newPreviousBudget = previousBudget.replaceAll(",", "");
         budget.setText(newPreviousBudget);
 
         if (!previousBudget.isEmpty()) {
@@ -1264,9 +1278,9 @@ public class DashboardActivity extends AppCompatActivity {
                 String budgetEditText = budget.getText().toString();
                 if (!budgetEditText.isEmpty()) {
 
-                    String finalBudget, lastThree="";
+                    String finalBudget, lastThree = "";
                     String budget1 = budget.getText().toString();
-                    if (budget1.length()>3) {
+                    if (budget1.length() > 3) {
                         lastThree = budget1.substring(budget1.length() - 3);
                     }
                     if (budget1.length() == 1) {
@@ -1280,34 +1294,34 @@ public class DashboardActivity extends AppCompatActivity {
                         spQuote.setText(finalBudget);
                     } else if (budget1.length() == 4) {
                         Character fourth = budget1.charAt(0);
-                        finalBudget = fourth+","+lastThree;
+                        finalBudget = fourth + "," + lastThree;
                         spQuote.setText(finalBudget);
                     } else if (budget1.length() == 5) {
                         Character fifth = budget1.charAt(0);
                         Character fourth = budget1.charAt(1);
-                        finalBudget = fifth+""+fourth+","+lastThree;
+                        finalBudget = fifth + "" + fourth + "," + lastThree;
                         spQuote.setText(finalBudget);
                     } else if (budget1.length() == 6) {
                         Character fifth = budget1.charAt(1);
                         Character fourth = budget1.charAt(2);
                         Character sixth = budget1.charAt(0);
-                        finalBudget = sixth+","+fifth+""+fourth+","+lastThree;
+                        finalBudget = sixth + "," + fifth + "" + fourth + "," + lastThree;
                         spQuote.setText(finalBudget);
-                    }else if (budget1.length() == 7) {
+                    } else if (budget1.length() == 7) {
                         Character seventh = budget1.charAt(0);
                         Character sixth = budget1.charAt(1);
                         Character fifth = budget1.charAt(2);
                         Character fourth = budget1.charAt(3);
-                        finalBudget = seventh+""+ sixth+","+fifth+""+fourth+","+lastThree;
+                        finalBudget = seventh + "" + sixth + "," + fifth + "" + fourth + "," + lastThree;
                         spQuote.setText(finalBudget);
                     }
-
 
                     if (spQuote.getText().toString().equals(customerFirstBudget.getText().toString())) {
                         spQuote.setTextColor(getResources().getColor(R.color.green));
                         negotiable_no.setChecked(true);
                         negotiable_yes.setChecked(false);
                         negotiable_yes.setEnabled(false);
+                        isNegotiableSelected = true;
                     } else {
                         spQuote.setTextColor(getResources().getColor(R.color.redDark));
                     }
@@ -1319,7 +1333,7 @@ public class DashboardActivity extends AppCompatActivity {
                 }
 
                 TextView amountInWords = setBudget.findViewById(R.id.dialog_budget_amount_in_words);
-                if (budgetEditText.length()>0){
+                if (budgetEditText.length() > 0) {
                     String return_val_in_english = EnglishNumberToWords.convert(Long.parseLong(budgetEditText));
                     amountInWords.setText(return_val_in_english);
                 } else {
@@ -1478,6 +1492,7 @@ public class DashboardActivity extends AppCompatActivity {
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp.gravity = Gravity.CENTER;
         dialogAcceptRevisedBid.show();
+        dialogAcceptRevisedBid.setCancelable(false);
         dialogAcceptRevisedBid.getWindow().setAttributes(lp);
 
         //-------------------------------------------Display Load Information---------------------------------------------
@@ -1497,7 +1512,6 @@ public class DashboardActivity extends AppCompatActivity {
         customerName = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_customerName);
         customerNumberHeading = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_customer_phone_heading);
         customerNumber = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_customer_mobile_no);
-
 
         customerNameHeading.setVisibility(View.GONE);
         customerName.setVisibility(View.GONE);
@@ -1565,8 +1579,11 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                updateSPNoteForCustomer(obj.getBidId(), notesSp.getText().toString());
                 updateBidStatusRespondedBySP(obj.getBidId());
                 updateSPQuoteFinal(obj.getBidId(), spQuote.getText().toString());
+                updateAssignedTruckId(obj.getBidId(), updateAssignedTruckId);
+                updateAssignedDriverId(obj.getBidId(), updateAssignedDriverId);
 
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(DashboardActivity.this);
@@ -1716,6 +1733,7 @@ public class DashboardActivity extends AppCompatActivity {
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp.gravity = Gravity.CENTER;
         dialogViewConsignment.show();
+        dialogViewConsignment.setCancelable(false);
         dialogViewConsignment.getWindow().setAttributes(lp);
 
         //-------------------------------------------Display Load Information---------------------------------------------
@@ -1773,6 +1791,23 @@ public class DashboardActivity extends AppCompatActivity {
         partitionTextview = dialogViewConsignment.findViewById(R.id.bid_now_middle_textview_partition);
         timeLeftTextview = dialogViewConsignment.findViewById(R.id.bid_now_time_left_textView);
         timeLeft00 = dialogViewConsignment.findViewById(R.id.bid_now_time_left_00_textview);
+        cancel2 = dialogViewConsignment.findViewById(R.id.dialog_bid_now_cancel_btn2);
+
+        cancel2.setVisibility(View.VISIBLE);
+        cancel2.setEnabled(true);
+        cancel2.setBackgroundTintList(getResources().getColorStateList(R.color.button_blue));
+
+        cancel2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i8 = new Intent(DashboardActivity.this, DashboardActivity.class);
+                i8.putExtra("mobile2", phone);
+                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i8);
+                finish();
+                overridePendingTransition(0, 0);
+            }
+        });
 
         notesSp.setVisibility(View.GONE);
         addTruck.setVisibility(View.INVISIBLE);
@@ -1787,6 +1822,8 @@ public class DashboardActivity extends AppCompatActivity {
         negotiable_yes.setChecked(false);
         negotiable_no.setChecked(true);
         declaration.setVisibility(View.INVISIBLE);
+
+        spQuote.setTextColor(getResources().getColor(R.color.green));
 
         getBidDetailsByBidId(obj.getBidId());
         getCustomerNameAndNumber(obj.getUser_id());
@@ -1966,6 +2003,49 @@ public class DashboardActivity extends AppCompatActivity {
     //--------------------------------------------------------------------------------------------------
 
     //----------------------------------------------------------------------------------------------------------------
+    private void updateAssignedTruckId(String bidId, String assignedTruckId) {
+
+        UpdateAssignedTruckIdToBid updateAssignedTruckIdToBid = new UpdateAssignedTruckIdToBid(assignedTruckId);
+
+        Call<UpdateAssignedTruckIdToBid> call = bidService.updateAssignedTruckId("" + bidId, updateAssignedTruckIdToBid);
+
+        call.enqueue(new Callback<UpdateAssignedTruckIdToBid>() {
+            @Override
+            public void onResponse(Call<UpdateAssignedTruckIdToBid> call, retrofit2.Response<UpdateAssignedTruckIdToBid> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UpdateAssignedTruckIdToBid> call, Throwable t) {
+
+            }
+        });
+    }
+    //--------------------------------------------------------------------------------------------------
+
+    //----------------------------------------------------------------------------------------------------------------
+    private void updateAssignedDriverId(String bidId, String assignedDriverId) {
+
+        UpdateAssignedDriverId updateAssignedDriverId = new UpdateAssignedDriverId(assignedDriverId);
+
+        Call<UpdateAssignedDriverId> call = bidService.updateAssignedDriverId("" + bidId, updateAssignedDriverId);
+
+        call.enqueue(new Callback<UpdateAssignedDriverId>() {
+            @Override
+            public void onResponse(Call<UpdateAssignedDriverId> call, retrofit2.Response<UpdateAssignedDriverId> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UpdateAssignedDriverId> call, Throwable t) {
+
+            }
+        });
+    }
+    //--------------------------------------------------------------------------------------------------
+
+
+    //----------------------------------------------------------------------------------------------------------------
     private void updateSPQuoteFinal(String bidId, String spQuote) {
 
         UpdateSPQuoteFinal updateSPQuoteFinal = new UpdateSPQuoteFinal(spQuote);
@@ -1985,8 +2065,31 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
     }
-
     //--------------------------------------------------------------------------------------------------
+
+    //----------------------------------------------------------------------------------------------------------------
+    private void updateSPNoteForCustomer(String bidId, String spNote) {
+
+        UpdateSpNoteForCustomer updateSpNoteForCustomer = new UpdateSpNoteForCustomer(spNote);
+
+        Call<UpdateSpNoteForCustomer> call = bidService.updateSPNoteForCustomer("" + bidId, updateSpNoteForCustomer);
+
+        call.enqueue(new Callback<UpdateSpNoteForCustomer>() {
+            @Override
+            public void onResponse(Call<UpdateSpNoteForCustomer> call, retrofit2.Response<UpdateSpNoteForCustomer> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UpdateSpNoteForCustomer> call, Throwable t) {
+
+            }
+        });
+
+    }
+    //--------------------------------------------------------------------------------------------------
+
+
     private void getLocation() {
         if (ActivityCompat.checkSelfPermission(DashboardActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {

@@ -106,7 +106,7 @@ public class BankDetailsActivity extends AppCompatActivity {
     Boolean isEdit, isImgUploaded = false;
 
     RadioButton canceledCheckRadioButton, acDetailsRadioButton;
-    String bankId, mobile, userRoleAPI;
+    String bankId, mobile, userRoleAPI, ccUploadedAPI;
     private RequestQueue mQueue;
 
     private UserService userService;
@@ -196,15 +196,6 @@ public class BankDetailsActivity extends AppCompatActivity {
         if (isEdit) {
             canceledCheckRadioButton.setChecked(true);
             acDetailsRadioButton.setChecked(false);
-            Log.i("Bank Id in Bank Details", bankId);
-            isImgUploaded = true;
-//            okButton.setEnabled(true);
-            editCC.setEnabled(false);
-//            okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            uploadCC.setVisibility(View.INVISIBLE);
-            editCC.setVisibility(View.VISIBLE);
-            previewCancelledCheque.setVisibility(View.VISIBLE);
-            textCC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             getBankDetails();
         }
 
@@ -224,7 +215,7 @@ public class BankDetailsActivity extends AppCompatActivity {
 
     }
 
-    private void DialogChoose(){
+    private void DialogChoose() {
 
         requestPermissionsForGalleryWRITE();
         requestPermissionsForGalleryREAD();
@@ -725,11 +716,21 @@ public class BankDetailsActivity extends AppCompatActivity {
 
                 if (isEdit) {
                     canceledCheckRadioButton.setChecked(true);
-                    editCC.setEnabled(true);
-                    okButton.setEnabled(true);
-                    okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                    uploadCC.setVisibility(View.INVISIBLE);
-                    editCC.setVisibility(View.VISIBLE);
+                    if (ccUploadedAPI.equals("null")) {
+                        uploadCC.setVisibility(View.VISIBLE);
+                        editCC.setVisibility(View.INVISIBLE);
+                        uploadCC.setEnabled(true);
+                        isImgUploaded = false;
+                        previewCancelledCheque.setVisibility(View.INVISIBLE);
+                        textCC.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                    } else {
+                        isImgUploaded = true;
+                        uploadCC.setVisibility(View.INVISIBLE);
+                        editCC.setVisibility(View.VISIBLE);
+                        editCC.setEnabled(true);
+                        okButton.setEnabled(true);
+                        okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                    }
                 } else if (isImgUploaded) {
                     editCC.setEnabled(true);
                     okButton.setEnabled(true);
@@ -802,9 +803,17 @@ public class BankDetailsActivity extends AppCompatActivity {
                     }
 //                    okButton.setEnabled(true);
 //                    okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                    uploadCC.setVisibility(View.INVISIBLE);
-                    editCC.setVisibility(View.VISIBLE);
-                    editCC.setEnabled(false);
+
+                    if (ccUploadedAPI.equals("null")) {
+                        previewCancelledCheque.setVisibility(View.INVISIBLE);
+                        uploadCC.setVisibility(View.VISIBLE);
+                        editCC.setVisibility(View.INVISIBLE);
+                        uploadCC.setEnabled(false);
+                    } else {
+                        uploadCC.setVisibility(View.INVISIBLE);
+                        editCC.setVisibility(View.VISIBLE);
+                        editCC.setEnabled(false);
+                    }
 
                 } else if (isImgUploaded) {
                     okButton.setEnabled(false);
@@ -840,6 +849,21 @@ public class BankDetailsActivity extends AppCompatActivity {
                         accountNo.setText(obj.getString("account_number"));
                         reAccount.setText(obj.getString("re_enter_acc_num"));
                         ifscCode.setText(obj.getString("IFSI_CODE"));
+                        ccUploadedAPI = obj.getString("cancelled_cheque");
+
+                        if (obj.getString("cancelled_cheque").equals("null")) {
+                            uploadCC.setVisibility(View.VISIBLE);
+                            editCC.setVisibility(View.INVISIBLE);
+                            isImgUploaded = false;
+                            previewCancelledCheque.setVisibility(View.INVISIBLE);
+                            textCC.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                        } else {
+                            uploadCC.setVisibility(View.INVISIBLE);
+                            editCC.setVisibility(View.VISIBLE);
+                            isImgUploaded = true;
+                            previewCancelledCheque.setVisibility(View.VISIBLE);
+                            textCC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+                        }
 
                         String cancelledChequeURL = obj.getString("cancelled_cheque");
                         new DownloadImageTask(cancelledCheckImage).execute(cancelledChequeURL);
