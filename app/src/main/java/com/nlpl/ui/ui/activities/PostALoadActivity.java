@@ -18,6 +18,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -53,7 +54,25 @@ import com.google.android.gms.tasks.Task;
 import com.nlpl.R;
 import com.nlpl.model.Requests.PostLoadRequest;
 import com.nlpl.model.Responses.PostLoadResponse;
+import com.nlpl.model.UpdateLoadPost.UpdateCustomerBudget;
+import com.nlpl.model.UpdateLoadPost.UpdateCustomerNoteForSP;
+import com.nlpl.model.UpdateLoadPost.UpdateLoadBodyType;
+import com.nlpl.model.UpdateLoadPost.UpdateLoadCapacity;
+import com.nlpl.model.UpdateLoadPost.UpdateLoadDropAdd;
+import com.nlpl.model.UpdateLoadPost.UpdateLoadDropCity;
+import com.nlpl.model.UpdateLoadPost.UpdateLoadDropCountry;
+import com.nlpl.model.UpdateLoadPost.UpdateLoadDropPinCode;
+import com.nlpl.model.UpdateLoadPost.UpdateLoadDropState;
+import com.nlpl.model.UpdateLoadPost.UpdateLoadFeet;
+import com.nlpl.model.UpdateLoadPost.UpdateLoadKmApprox;
+import com.nlpl.model.UpdateLoadPost.UpdateLoadPickAdd;
+import com.nlpl.model.UpdateLoadPost.UpdateLoadPickCity;
+import com.nlpl.model.UpdateLoadPost.UpdateLoadPickCountry;
+import com.nlpl.model.UpdateLoadPost.UpdateLoadPickPinCode;
+import com.nlpl.model.UpdateLoadPost.UpdateLoadPickState;
 import com.nlpl.model.UpdateLoadPost.UpdateLoadPostPickUpDate;
+import com.nlpl.model.UpdateLoadPost.UpdateLoadPostPickUpTime;
+import com.nlpl.model.UpdateLoadPost.UpdateLoadVehicleModel;
 import com.nlpl.services.PostLoadService;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.EnglishNumberToWords;
@@ -64,6 +83,7 @@ import com.nlpl.utils.GetLocationPickUp;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -96,7 +116,7 @@ public class PostALoadActivity extends AppCompatActivity {
 
     String isPickDrop = "0", pickUpAddress, pickUpPinCode, pickupState, pickUpCity, dropAddress, dropPinCode, dropState, dropCiy;
 
-    TextView pick_up_date, pick_up_time, select_budget, select_model, select_feet, select_capacity, select_truck_body_type, addressDialogState, addressDialogCity;
+    TextView pick_up_date, pick_up_time, select_budget, select_model, select_feet, select_capacity, select_truck_body_type, addressDialogState, addressDialogCity, addressDialogOkButton, addressDialogTitle;
     EditText addressDialogAddress, addressDialogPinCode, note_to_post_load;
 
     String distByPinCode, stateByPinCode, phone, userId, selectedDistrict, selectedState, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI, customerBudget, sDate, eDate, monthS, monthE, startingDate, endingDate, todayDate;
@@ -113,7 +133,6 @@ public class PostALoadActivity extends AppCompatActivity {
     ArrayList<String> arrayTruckBodyType, arrayVehicleType, updatedArrayTruckFt, arrayCapacityForCompare, arrayTruckFtForCompare, arrayToDisplayCapacity, arrayTruckFt, arrayCapacity;
 
     private RequestQueue mQueue;
-    private PostLoadService postLoadService;
     Boolean isEdit;
     String loadId;
 
@@ -169,21 +188,8 @@ public class PostALoadActivity extends AppCompatActivity {
         addressDialogCity = (TextView) pickUpAddressDialog.findViewById(R.id.dialog_address_city_text_view);
         addressDialogAddress = (EditText) pickUpAddressDialog.findViewById(R.id.dialog_address_address_edit_text);
         addressDialogPinCode = (EditText) pickUpAddressDialog.findViewById(R.id.dialog_address_pin_code_edit_text);
-
-        if (isPickDrop.equals("1")) {
-            pickUpAddress = addressDialogAddress.getText().toString();
-            pickUpPinCode = addressDialogPinCode.getText().toString();
-            pickupState = addressDialogState.getText().toString();
-            pickUpCity = addressDialogCity.getText().toString();
-        } else if (isPickDrop.equals("2")) {
-            dropAddress = addressDialogAddress.getText().toString();
-            dropPinCode = addressDialogPinCode.getText().toString();
-            dropState = addressDialogState.getText().toString();
-            dropCiy = addressDialogCity.getText().toString();
-        } else {
-
-        }
-
+        addressDialogOkButton = (TextView) pickUpAddressDialog.findViewById(R.id.dialog_address_ok_button);
+        addressDialogTitle = (TextView) pickUpAddressDialog.findViewById(R.id.dialog_address_title);
         //------------------------------------------------------------------------------------------
 
         Ok_PostLoad = (Button) findViewById(R.id.post_a_load_ok_button);
@@ -205,13 +211,6 @@ public class PostALoadActivity extends AppCompatActivity {
         arrayTruckBodyType.add("Open");
         arrayTruckBodyType.add("Closed");
         arrayTruckBodyType.add("Tarpulian");
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getString(R.string.baseURL))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        postLoadService = retrofit.create(PostLoadService.class);
 
         addressDialogAddress.addTextChangedListener(PickAddressTextWatcher);
         addressDialogPinCode.addTextChangedListener(PickPinCodeTextWatcher);
@@ -1022,7 +1021,7 @@ public class PostALoadActivity extends AppCompatActivity {
     }
 
     private void selectCity() {
-        if (addressDialogState!=null) {
+        if (addressDialogState != null) {
             selectedState = addressDialogState.getText().toString();
             selectDistrictDialog = new Dialog(PostALoadActivity.this);
             selectDistrictDialog.setContentView(R.layout.dialog_spinner);
@@ -1190,7 +1189,7 @@ public class PostALoadActivity extends AppCompatActivity {
         postLoadRequest.setDrop_state(dropState);
         postLoadRequest.setDrop_country("India");
         postLoadRequest.setUser_id(userId);
-//        postLoadRequest.setKm_approx(select_capacity.getText().toString());
+        postLoadRequest.setKm_approx(setApproxDistance.getText().toString());
         postLoadRequest.setNotes_meterial_des(note_to_post_load.getText().toString());
         postLoadRequest.setBid_status("loadPosted");
         return postLoadRequest;
@@ -1221,36 +1220,20 @@ public class PostALoadActivity extends AppCompatActivity {
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            if (pickUpAddress != null) {
+            if (!addressDialogAddress.getText().toString().isEmpty()) {
                 addressDialogAddress.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
             } else {
                 addressDialogAddress.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
             }
 
-            if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
-                    && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                    && !select_truck_body_type.getText().toString().isEmpty() && pickUpAddress != null && pickUpCity != null
-                    && pickUpPinCode != null && pickupState != null && dropAddress != null
-                    && dropCiy != null && dropPinCode != null && dropState != null) {
-                Ok_PostLoad.setEnabled(true);
-                Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
+            if (!addressDialogAddress.getText().toString().isEmpty() && !addressDialogPinCode.getText().toString().isEmpty() && !addressDialogCity.getText().toString().isEmpty() && !addressDialogState.getText().toString().isEmpty()) {
+                addressDialogOkButton.setEnabled(true);
+                addressDialogOkButton.setBackgroundResource((R.drawable.button_active));
             } else {
-                Ok_PostLoad.setEnabled(false);
-                Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
+                addressDialogOkButton.setEnabled(false);
+                addressDialogOkButton.setBackgroundResource((R.drawable.button_de_active));
             }
 
-            if (pickUpAddress!=null
-                    && pickUpCity!=null
-                    && pickUpPinCode!=null
-                    && pickupState!=null) {
-                getPickUpLocation();
-            }
-            if (dropAddress!=null
-                    && dropCiy!=null
-                    && dropPinCode!=null
-                    && dropState!=null) {
-                getDropLocation();
-            }
         }
 
         @Override
@@ -1272,29 +1255,12 @@ public class PostALoadActivity extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
-                    && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                    && !select_truck_body_type.getText().toString().isEmpty() && pickUpAddress != null && pickUpCity != null
-                    && pickUpPinCode != null && pickupState != null && dropAddress != null
-                    && dropCiy != null && dropPinCode != null && dropState != null) {
-                Ok_PostLoad.setEnabled(true);
-                Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
+            if (!addressDialogAddress.getText().toString().isEmpty() && !addressDialogPinCode.getText().toString().isEmpty() && !addressDialogCity.getText().toString().isEmpty() && !addressDialogState.getText().toString().isEmpty()) {
+                addressDialogOkButton.setEnabled(true);
+                addressDialogOkButton.setBackgroundResource((R.drawable.button_active));
             } else {
-                Ok_PostLoad.setEnabled(false);
-                Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
-            }
-
-            if (pickUpAddress!=null
-                    && pickUpCity!=null
-                    && pickUpPinCode!=null
-                    && pickupState!=null) {
-                getPickUpLocation();
-            }
-            if (dropAddress!=null
-                    && dropCiy!=null
-                    && dropPinCode!=null
-                    && dropState!=null) {
-                getDropLocation();
+                addressDialogOkButton.setEnabled(false);
+                addressDialogOkButton.setBackgroundResource((R.drawable.button_de_active));
             }
         }
 
@@ -1322,29 +1288,12 @@ public class PostALoadActivity extends AppCompatActivity {
                 addressDialogPinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
             }
 
-            if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
-                    && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                    && !select_truck_body_type.getText().toString().isEmpty() && pickUpAddress != null && pickUpCity != null
-                    && pickUpPinCode != null && pickupState != null && dropAddress != null
-                    && dropCiy != null && dropPinCode != null && dropState != null) {
-                Ok_PostLoad.setEnabled(true);
-                Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
+            if (!addressDialogAddress.getText().toString().isEmpty() && !addressDialogPinCode.getText().toString().isEmpty() && !addressDialogCity.getText().toString().isEmpty() && !addressDialogState.getText().toString().isEmpty()) {
+                addressDialogOkButton.setEnabled(true);
+                addressDialogOkButton.setBackgroundResource((R.drawable.button_active));
             } else {
-                Ok_PostLoad.setEnabled(false);
-                Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
-            }
-
-            if (pickUpAddress != null
-                    && pickUpCity != null
-                    && pickUpPinCode != null
-                    && pickupState != null) {
-                getPickUpLocation();
-            }
-            if (dropAddress != null
-                    && dropCiy != null
-                    && dropPinCode != null
-                    && dropState != null) {
-                getDropLocation();
+                addressDialogOkButton.setEnabled(false);
+                addressDialogOkButton.setBackgroundResource((R.drawable.button_de_active));
             }
         }
 
@@ -1402,26 +1351,371 @@ public class PostALoadActivity extends AppCompatActivity {
         String pickUpCountry = "India";
         String dropCountry = "India";
         String notesFromLP = note_to_post_load.getText().toString();
+        String kmApprox = setApproxDistance.getText().toString();
 
-        UpdateLoadPostPickUpDate updateLoadPost = new UpdateLoadPostPickUpDate(pickUpDate, pickUpTime, budget, vehicleModel, vehicleFeet, vehicleCapacity, vehicleBodyType, pickUpAddress, pickUpPinCode, pickUpCity, pickupState, pickUpCountry, dropAddress, dropPinCode, dropCiy, dropState, dropCountry, "123", notesFromLP);
+        UpdateLoadPostPickUpDate updateLoadPostPickUpDate = new UpdateLoadPostPickUpDate(pickUpDate);
 
-        Call<UpdateLoadPostPickUpDate> call = postLoadService.updateLoadPost("" + loadId, updateLoadPost);
+        Call<UpdateLoadPostPickUpDate> callPickUpDate = ApiClient.getPostLoadService().updateLoadPostPickUpDate("" + loadId, updateLoadPostPickUpDate);
 
-        call.enqueue(new Callback<UpdateLoadPostPickUpDate>() {
+        callPickUpDate.enqueue(new Callback<UpdateLoadPostPickUpDate>() {
             @Override
             public void onResponse(Call<UpdateLoadPostPickUpDate> call, Response<UpdateLoadPostPickUpDate> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "Load Post update Pick up Date");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateLoadPostPickUpDate> call, Throwable t) {
+                Log.i("Not Successful", "Load Post update pick-up Not Updated");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+        UpdateLoadPostPickUpTime updateLoadPostPickUpTime = new UpdateLoadPostPickUpTime(pickUpTime);
+
+        Call<UpdateLoadPostPickUpTime> callPickUpTime = ApiClient.getPostLoadService().updateLoadPostPickUpTime("" + loadId, updateLoadPostPickUpTime);
+
+        callPickUpTime.enqueue(new Callback<UpdateLoadPostPickUpTime>() {
+            @Override
+            public void onResponse(Call<UpdateLoadPostPickUpTime> call, Response<UpdateLoadPostPickUpTime> response) {
                 if (response.isSuccessful()) {
                     Log.i("Successful", "Load Post Details Updated");
                 }
             }
 
             @Override
-            public void onFailure(Call<UpdateLoadPostPickUpDate> call, Throwable t) {
+            public void onFailure(Call<UpdateLoadPostPickUpTime> call, Throwable t) {
                 Log.i("Not Successful", "Load Post Details Not Updated");
 
             }
         });
 //--------------------------------------------------------------------------------------------------
+        UpdateCustomerBudget updateCustomerBudget = new UpdateCustomerBudget(budget);
+
+        Call<UpdateCustomerBudget> callBudget = ApiClient.getPostLoadService().updateCustomerBudget("" + loadId, updateCustomerBudget);
+
+        callBudget.enqueue(new Callback<UpdateCustomerBudget>() {
+            @Override
+            public void onResponse(Call<UpdateCustomerBudget> call, Response<UpdateCustomerBudget> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "Load Post Details Updated");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateCustomerBudget> call, Throwable t) {
+                Log.i("Not Successful", "Load Post Details Not Updated");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+        UpdateLoadVehicleModel updateLoadVehicleModel = new UpdateLoadVehicleModel(vehicleModel);
+
+        Call<UpdateLoadVehicleModel> callVehicleModel = ApiClient.getPostLoadService().updateLoadVehicleModel("" + loadId, updateLoadVehicleModel);
+
+        callVehicleModel.enqueue(new Callback<UpdateLoadVehicleModel>() {
+            @Override
+            public void onResponse(Call<UpdateLoadVehicleModel> call, Response<UpdateLoadVehicleModel> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "Load Post Details Updated");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateLoadVehicleModel> call, Throwable t) {
+                Log.i("Not Successful", "Load Post Details Not Updated");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+        UpdateLoadFeet updateLoadFeet = new UpdateLoadFeet(vehicleFeet);
+
+        Call<UpdateLoadFeet> callFeet = ApiClient.getPostLoadService().updateLoadFeet("" + loadId, updateLoadFeet);
+
+        callFeet.enqueue(new Callback<UpdateLoadFeet>() {
+            @Override
+            public void onResponse(Call<UpdateLoadFeet> call, Response<UpdateLoadFeet> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "Load Post Details Updated");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateLoadFeet> call, Throwable t) {
+                Log.i("Not Successful", "Load Post Details Not Updated");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+        UpdateLoadCapacity updateLoadCapacity = new UpdateLoadCapacity(vehicleCapacity);
+
+        Call<UpdateLoadCapacity> callCapacity = ApiClient.getPostLoadService().updateLoadCapacity("" + loadId, updateLoadCapacity);
+
+        callCapacity.enqueue(new Callback<UpdateLoadCapacity>() {
+            @Override
+            public void onResponse(Call<UpdateLoadCapacity> call, Response<UpdateLoadCapacity> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "Load Post Details Updated");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateLoadCapacity> call, Throwable t) {
+                Log.i("Not Successful", "Load Post Details Not Updated");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+        UpdateLoadBodyType updateLoadBodyType = new UpdateLoadBodyType(vehicleBodyType);
+
+        Call<UpdateLoadBodyType> callBodyType = ApiClient.getPostLoadService().updateLoadBodyType("" + loadId, updateLoadBodyType);
+
+        callBodyType.enqueue(new Callback<UpdateLoadBodyType>() {
+            @Override
+            public void onResponse(Call<UpdateLoadBodyType> call, Response<UpdateLoadBodyType> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "Load Post Details Updated");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateLoadBodyType> call, Throwable t) {
+                Log.i("Not Successful", "Load Post Details Not Updated");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+        UpdateLoadPickAdd updateLoadPickAdd = new UpdateLoadPickAdd(pickUpAddress);
+
+        Call<UpdateLoadPickAdd> callPickAdd = ApiClient.getPostLoadService().updateLoadPickAdd("" + loadId, updateLoadPickAdd);
+
+        callPickAdd.enqueue(new Callback<UpdateLoadPickAdd>() {
+            @Override
+            public void onResponse(Call<UpdateLoadPickAdd> call, Response<UpdateLoadPickAdd> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "Load Post Details Updated");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateLoadPickAdd> call, Throwable t) {
+                Log.i("Not Successful", "Load Post Details Not Updated");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+        UpdateLoadPickPinCode updateLoadPickPinCode = new UpdateLoadPickPinCode(pickUpPinCode);
+
+        Call<UpdateLoadPickPinCode> callPinCode = ApiClient.getPostLoadService().updateLoadPickPinCode("" + loadId, updateLoadPickPinCode);
+
+        callPinCode.enqueue(new Callback<UpdateLoadPickPinCode>() {
+            @Override
+            public void onResponse(Call<UpdateLoadPickPinCode> call, Response<UpdateLoadPickPinCode> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "Load Post Details Updated");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateLoadPickPinCode> call, Throwable t) {
+                Log.i("Not Successful", "Load Post Details Not Updated");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+        UpdateLoadPickState updateLoadPickState = new UpdateLoadPickState(pickupState);
+
+        Call<UpdateLoadPickState> callPickState = ApiClient.getPostLoadService().updateLoadPickState("" + loadId, updateLoadPickState);
+
+        callPickState.enqueue(new Callback<UpdateLoadPickState>() {
+            @Override
+            public void onResponse(Call<UpdateLoadPickState> call, Response<UpdateLoadPickState> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "Load Post Details Updated");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateLoadPickState> call, Throwable t) {
+                Log.i("Not Successful", "Load Post Details Not Updated");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+        UpdateLoadPickCity updateLoadPickCity = new UpdateLoadPickCity(pickUpCity);
+
+        Call<UpdateLoadPickCity> callPickCity = ApiClient.getPostLoadService().updateLoadPickCity("" + loadId, updateLoadPickCity);
+
+        callPickCity.enqueue(new Callback<UpdateLoadPickCity>() {
+            @Override
+            public void onResponse(Call<UpdateLoadPickCity> call, Response<UpdateLoadPickCity> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "Load Post Details Updated");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateLoadPickCity> call, Throwable t) {
+                Log.i("Not Successful", "Load Post Details Not Updated");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+        UpdateLoadDropAdd updateLoadDropAdd = new UpdateLoadDropAdd(dropAddress);
+
+        Call<UpdateLoadDropAdd> callDropAdd = ApiClient.getPostLoadService().updateLoadDropAdd("" + loadId, updateLoadDropAdd);
+
+        callDropAdd.enqueue(new Callback<UpdateLoadDropAdd>() {
+            @Override
+            public void onResponse(Call<UpdateLoadDropAdd> call, Response<UpdateLoadDropAdd> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "Load Post Details Updated");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateLoadDropAdd> call, Throwable t) {
+                Log.i("Not Successful", "Load Post Details Not Updated");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+        UpdateLoadDropPinCode updateLoadDropPinCode = new UpdateLoadDropPinCode(dropPinCode);
+
+        Call<UpdateLoadDropPinCode> callDropPinCode = ApiClient.getPostLoadService().updateLoadDropPinCode("" + loadId, updateLoadDropPinCode);
+
+        callDropPinCode.enqueue(new Callback<UpdateLoadDropPinCode>() {
+            @Override
+            public void onResponse(Call<UpdateLoadDropPinCode> call, Response<UpdateLoadDropPinCode> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "Load Post Details Updated");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateLoadDropPinCode> call, Throwable t) {
+                Log.i("Not Successful", "Load Post Details Not Updated");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+        UpdateLoadDropState updateLoadDropState = new UpdateLoadDropState(dropState);
+
+        Call<UpdateLoadDropState> callDropState = ApiClient.getPostLoadService().updateLoadDropState("" + loadId, updateLoadDropState);
+
+        callDropState.enqueue(new Callback<UpdateLoadDropState>() {
+            @Override
+            public void onResponse(Call<UpdateLoadDropState> call, Response<UpdateLoadDropState> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "Load Post Details Updated");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateLoadDropState> call, Throwable t) {
+                Log.i("Not Successful", "Load Post Details Not Updated");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+        UpdateLoadDropCity updateLoadDropCity = new UpdateLoadDropCity(dropCiy);
+
+        Call<UpdateLoadDropCity> callDropCity = ApiClient.getPostLoadService().updateLoadDropCity("" + loadId, updateLoadDropCity);
+
+        callDropCity.enqueue(new Callback<UpdateLoadDropCity>() {
+            @Override
+            public void onResponse(Call<UpdateLoadDropCity> call, Response<UpdateLoadDropCity> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "Load Post Details Updated");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateLoadDropCity> call, Throwable t) {
+                Log.i("Not Successful", "Load Post Details Not Updated");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+        UpdateLoadKmApprox updateLoadKmApprox = new UpdateLoadKmApprox(kmApprox);
+
+        Call<UpdateLoadKmApprox> callKmApprox = ApiClient.getPostLoadService().updateLoadKmApprox("" + loadId, updateLoadKmApprox);
+
+        callKmApprox.enqueue(new Callback<UpdateLoadKmApprox>() {
+            @Override
+            public void onResponse(Call<UpdateLoadKmApprox> call, Response<UpdateLoadKmApprox> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "Load Post Details Updated");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateLoadKmApprox> call, Throwable t) {
+                Log.i("Not Successful", "Load Post Details Not Updated");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+        UpdateCustomerNoteForSP updateCustomerNoteForSP = new UpdateCustomerNoteForSP(notesFromLP);
+
+        Call<UpdateCustomerNoteForSP> call = ApiClient.getPostLoadService().updateCustomerNoteForSP("" + loadId, updateCustomerNoteForSP);
+
+        call.enqueue(new Callback<UpdateCustomerNoteForSP>() {
+            @Override
+            public void onResponse(Call<UpdateCustomerNoteForSP> call, Response<UpdateCustomerNoteForSP> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "Load Post Details Updated");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateCustomerNoteForSP> call, Throwable t) {
+                Log.i("Not Successful", "Load Post Details Not Updated");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+
+        UpdateLoadPickCountry updateLoadPickCountry = new UpdateLoadPickCountry(pickUpCountry);
+
+        Call<UpdateLoadPickCountry> callPickCountry = ApiClient.getPostLoadService().updateLoadPickCountry("" + loadId, updateLoadPickCountry);
+
+        callPickCountry.enqueue(new Callback<UpdateLoadPickCountry>() {
+            @Override
+            public void onResponse(Call<UpdateLoadPickCountry> call, Response<UpdateLoadPickCountry> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "Load Post Details Updated");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateLoadPickCountry> call, Throwable t) {
+                Log.i("Not Successful", "Load Post Details Not Updated");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+        UpdateLoadDropCountry updateLoadDropCountry = new UpdateLoadDropCountry(dropCountry);
+
+        Call<UpdateLoadDropCountry> callDropCountry = ApiClient.getPostLoadService().updateLoadDropCountry("" + loadId, updateLoadDropCountry);
+
+        callDropCountry.enqueue(new Callback<UpdateLoadDropCountry>() {
+            @Override
+            public void onResponse(Call<UpdateLoadDropCountry> call, Response<UpdateLoadDropCountry> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "Load Post Details Updated");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateLoadDropCountry> call, Throwable t) {
+                Log.i("Not Successful", "Load Post Details Not Updated");
+
+            }
+        });
+//--------------------------------------------------------------------------------------------------
+
     }
 
 
@@ -1445,7 +1739,7 @@ public class PostALoadActivity extends AppCompatActivity {
                         String pickUpAddress1 = obj.getString("pick_add");
                         String pickUpCities = obj.getString("pick_city");
                         String pickUpPinCodes = obj.getString("pick_pin_code");
-                        String pickUpState = obj.getString("pick_state");
+                        String pickUpStates = obj.getString("pick_state");
                         String pickUpCountry = obj.getString("pick_country");
                         String dropAddress1 = obj.getString("drop_add");
                         String dropCities = obj.getString("drop_city");
@@ -1463,7 +1757,7 @@ public class PostALoadActivity extends AppCompatActivity {
                         select_feet.setText(vehicleFeet);
                         select_capacity.setText(vehicleCapacity);
                         select_truck_body_type.setText(vehicleBodyType);
-                        addressDialogState.setText(pickUpState);
+                        pickupState = pickUpStates;
                         pickUpCity = pickUpCities;
                         dropState = dropStates;
                         dropCiy = dropCities;
@@ -1503,8 +1797,6 @@ public class PostALoadActivity extends AppCompatActivity {
     }
 
     private void getPickUpLocation() {
-        String pickUpAddress = addressDialogAddress.getText().toString();
-
         GetLocationPickUp geoLocation = new GetLocationPickUp();
         geoLocation.geLatLongPickUp(pickUpAddress, getApplicationContext(), new GeoHandlerLatitude());
     }
@@ -1514,7 +1806,19 @@ public class PostALoadActivity extends AppCompatActivity {
     }
 
     public void onClickSetPickUpLocation(View view) {
+        addressDialogTitle.setText("Pick-up Address");
         isPickDrop = "1";
+        if (pickUpAddress != null && pickUpCity != null && pickUpPinCode != null && pickupState != null) {
+            addressDialogAddress.setText(pickUpAddress);
+            addressDialogPinCode.setText(pickUpPinCode);
+            addressDialogState.setText(pickupState);
+            addressDialogCity.setText(pickUpCity);
+        } else {
+            addressDialogAddress.setText("");
+            addressDialogPinCode.setText("");
+            addressDialogState.setText("");
+            addressDialogCity.setText("");
+        }
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(pickUpAddressDialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -1525,7 +1829,19 @@ public class PostALoadActivity extends AppCompatActivity {
     }
 
     public void onClickDropLocation(View view) {
+        addressDialogTitle.setText("Drop Address");
         isPickDrop = "2";
+        if (dropAddress != null && dropCiy != null && dropPinCode != null && dropState != null) {
+            addressDialogAddress.setText(dropAddress);
+            addressDialogPinCode.setText(dropPinCode);
+            addressDialogState.setText(dropState);
+            addressDialogCity.setText(dropCiy);
+        } else {
+            addressDialogAddress.setText("");
+            addressDialogPinCode.setText("");
+            addressDialogState.setText("");
+            addressDialogCity.setText("");
+        }
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(pickUpAddressDialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -1537,29 +1853,42 @@ public class PostALoadActivity extends AppCompatActivity {
 
     public void onClickOkAddressDetails(View view) {
         if (isPickDrop.equals("1")) {
+
             pickUpAddress = addressDialogAddress.getText().toString();
             pickUpPinCode = addressDialogPinCode.getText().toString();
             pickupState = addressDialogState.getText().toString();
             pickUpCity = addressDialogCity.getText().toString();
+
+            getPickUpLocation();
         } else if (isPickDrop.equals("2")) {
+
             dropAddress = addressDialogAddress.getText().toString();
             dropPinCode = addressDialogPinCode.getText().toString();
             dropState = addressDialogState.getText().toString();
             dropCiy = addressDialogCity.getText().toString();
+            getDropLocation();
         } else {
-
         }
         pickUpAddressDialog.dismiss();
 
-        if (pickUpAddress!=null
-                && pickUpCity!=null
-                && pickUpPinCode!=null
-                && pickupState!=null
-                && dropAddress!=null
-                && dropCiy!=null
-                && dropPinCode!=null
-                && dropState!=null) {
-            distanceInKm(latitude1, longitude1, latitude2, longitude2);
+        String latitude1Check = String.valueOf(latitude1);
+        String latitude2Check = String.valueOf(latitude2);
+        String longitude1Check = String.valueOf(longitude1);
+        String longitude2Check = String.valueOf(longitude2);
+        if (latitude1Check != null && latitude2Check != null && longitude1Check != null && longitude2Check != null) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(2000);
+                        distanceInKm(latitude1, longitude1, latitude2, longitude2);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }).start();
+        } else {
+            setApproxDistance.setText("KM auto calculated");
         }
 
     }
