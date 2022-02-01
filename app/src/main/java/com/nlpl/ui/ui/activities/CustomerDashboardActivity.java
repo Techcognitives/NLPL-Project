@@ -86,9 +86,8 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     Dialog menuDialog;
     TextView userNameTextViewMenu, mobileTextViewMenu, spNumber, driverNumber;
     ImageView personalDetailsLogoImageView, bankDetailsLogoImageView;
-    Dialog menuDialog, previewDialogProfile;
-    TextView userNameTextViewMenu, mobileTextViewMenu;
-    ImageView personalDetailsLogoImageView, bankDetailsLogoImageView, profilePic;
+    Dialog  previewDialogProfile;
+    ImageView profilePic;
 
     String isPersonalDetailsDone, isBankDetailsDone;
 
