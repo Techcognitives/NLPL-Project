@@ -19,9 +19,11 @@ import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -70,6 +72,8 @@ import com.nlpl.ui.ui.adapters.LoadSubmittedAdapter;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.EnglishNumberToWords;
+import com.nlpl.utils.GetLocationDrop;
+import com.nlpl.utils.GetLocationPickUp;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -111,6 +115,7 @@ public class DashboardActivity extends AppCompatActivity {
     String updateAssignedDriverId, updateAssignedTruckId, spQuoteOnClickBidNow, bidStatus, vehicle_no, truckId, isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
 
     SwipeListener swipeListener;
+    double latitude1, latitude2, longitude1, longitude2;
 
     View actionBar;
     TextView customerNumber, customerNumberHeading, customerName, customerNameHeading, customerFirstBudget, customerSecondBudget, cancel2, cancel, acceptAndBid, spQuote, addDriver, selectDriver, addTruck, selectTruck, selectedTruckModel, selectedTruckFeet, selectedTruckCapacity, selectedTruckBodyType, actionBarTitle;
@@ -1086,7 +1091,7 @@ public class DashboardActivity extends AppCompatActivity {
                         selectedTruckCapacity.setText(truckCapacity);
                     }
 
-                    if (selectedDriverId.equals("null")){
+                    if (selectedDriverId.equals("null")) {
                         selectDriver.setText("");
                         Log.i("driverId null", "There is no driver Id for this truck");
                     } else {
@@ -1977,6 +1982,28 @@ public class DashboardActivity extends AppCompatActivity {
         mQueue.add(request1);
     }
 
+    public void openMaps(LoadNotificationModel obj) {
+        String sDestination = obj.getPick_add() + obj.getPick_city();
+        DisplayTrack("", sDestination);
+
+    }
+
+    private void DisplayTrack(String sSource, String sDestination) {
+        try {
+            Uri uri = Uri.parse("https://www.google.co.in/maps/dir/" + sSource + "/" + sDestination);
+
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            intent.setPackage("com.google.android.apps.maps");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } catch (Exception e) {
+            Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.apps.maps");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+
+        }
+    }
 
     private class SwipeListener implements View.OnTouchListener {
         GestureDetector gestureDetector;
