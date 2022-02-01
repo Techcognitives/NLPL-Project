@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -82,6 +83,9 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     private BidLoadService bidService;
     boolean isBackPressed = false;
 
+    Dialog menuDialog;
+    TextView userNameTextViewMenu, mobileTextViewMenu, spNumber, driverNumber;
+    ImageView personalDetailsLogoImageView, bankDetailsLogoImageView;
     Dialog menuDialog, previewDialogProfile;
     TextView userNameTextViewMenu, mobileTextViewMenu;
     ImageView personalDetailsLogoImageView, bankDetailsLogoImageView, profilePic;
@@ -1152,12 +1156,12 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         TextView quoteBySP = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_bidder_quote_textview);
         TextView negotiableBySP = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_negotiable_textview);
         TextView notesBySP = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_received_notes_textview);
-        TextView spNumber = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_sp_number);
+        spNumber = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_sp_number);
         TextView companyNameHeading = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_company_name_heading);
         TextView companyName = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_company_name);
         TextView driverNameHeading = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_driver_name_heading);
         TextView driverName = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_driver_name);
-        TextView driverNumber = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_driver_number);
+        driverNumber = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_driver_number);
 
         spNumber.setVisibility(View.VISIBLE);
         driverName.setVisibility(View.VISIBLE);
@@ -1460,6 +1464,22 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             }
         };
         new Handler().postDelayed(runnable, 3000);
+    }
+
+    public void onClickOpenDialer(View view) {
+        switch (view.getId()) {
+            case R.id.dialog_accept_bid_sp_number:
+                String numberOpen = spNumber.getText().toString();
+                Intent i1 = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + numberOpen));
+                startActivity(i1);
+                break;
+            case R.id.dialog_accept_bid_driver_number:
+                String numberOpened = driverNumber.getText().toString();
+                Intent i2 = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + numberOpened));
+                startActivity(i2);
+                break;
+        }
+
     }
 
     public void ViewProfileOfSPToCustomer(BidsResponsesModel obj) {
