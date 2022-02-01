@@ -68,12 +68,21 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
         String pickUpLocation = obj.getPick_add();
         holder.pickUpLocation.setText(" "+pickUpLocation);
 
+        holder.pickUpLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.openMaps(obj);
+            }
+        });
+
         holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 activity.onClickBidNow(obj);
             }
         });
+
+        activity.getPickUpPointKm(obj, holder.distanceFromUser);
     }
 
     @Override
@@ -87,7 +96,7 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
     }
 
     public class LoadNotificationViewHolder extends RecyclerView.ViewHolder {
-        private TextView destinationStart, destinationEnd, budget, date, time, distance, model, feet, capacity, body, pickUpLocation, bidNowButton;
+        private TextView destinationStart, destinationEnd, budget, date, time, distance, model, feet, capacity, body, pickUpLocation, bidNowButton, distanceFromUser;
 
         public LoadNotificationViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -104,7 +113,7 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
             body = itemView.findViewById(R.id.load_list_body);
             pickUpLocation = itemView.findViewById(R.id.load_list_location);
             bidNowButton = itemView.findViewById(R.id.load_list_bid_now_button);
-
+            distanceFromUser = itemView.findViewById(R.id.load_list_pick_up_distance_from_user);
         }
 
     }

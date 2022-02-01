@@ -106,7 +106,6 @@ public class PostALoadActivity extends AppCompatActivity {
     TextView actionBarTitle;
     ImageView actionBarBackButton;
 
-
     View bottomNav;
     ConstraintLayout spDashboard, customerDashboard;
 

@@ -19,9 +19,11 @@ import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -69,6 +71,8 @@ import com.nlpl.ui.ui.adapters.LoadNotificationAdapter;
 import com.nlpl.ui.ui.adapters.LoadSubmittedAdapter;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.EnglishNumberToWords;
+import com.nlpl.utils.GetLocationDrop;
+import com.nlpl.utils.GetLocationPickUp;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -110,6 +114,7 @@ public class DashboardActivity extends AppCompatActivity {
     String updateAssignedDriverId, updateAssignedTruckId, spQuoteOnClickBidNow, bidStatus, vehicle_no, truckId, isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
 
     SwipeListener swipeListener;
+    double latitude1, latitude2, longitude1, longitude2;
 
     View actionBar;
     TextView customerNumber, customerNumberHeading, customerName, customerNameHeading, customerFirstBudget, customerSecondBudget, cancel2, cancel, acceptAndBid, spQuote, addDriver, selectDriver, addTruck, selectTruck, selectedTruckModel, selectedTruckFeet, selectedTruckCapacity, selectedTruckBodyType, actionBarTitle;
@@ -1076,7 +1081,7 @@ public class DashboardActivity extends AppCompatActivity {
                         selectedTruckCapacity.setText(truckCapacity);
                     }
 
-                    if (selectedDriverId.equals("null")){
+                    if (selectedDriverId.equals("null")) {
                         selectDriver.setText("");
                         Log.i("driverId null", "There is no driver Id for this truck");
                     } else {
@@ -1925,6 +1930,156 @@ public class DashboardActivity extends AppCompatActivity {
         //----------------------------------------------------------
     }
 
+    public void openMaps(LoadNotificationModel obj) {
+        String sDestination = obj.getPick_add() + obj.getPick_city();
+        DisplayTrack("", sDestination);
+
+    }
+
+    private void DisplayTrack(String sSource, String sDestination) {
+        try {
+            Uri uri = Uri.parse("https://www.google.co.in/maps/dir/" + sSource + "/" + sDestination);
+
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            intent.setPackage("com.google.android.apps.maps");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } catch (Exception e) {
+            Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.apps.maps");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+
+        }
+    }
+
+    public void getPickUpPointKm(LoadNotificationModel obj, TextView distanceFromUser) {
+        GetLocationPickUp geoLocation = new GetLocationPickUp();
+        geoLocation.geLatLongPickUp(obj.getPick_add(), getApplicationContext(), new GeoHandlerLatitude());
+
+        GetLocationDrop geoLocations = new GetLocationDrop();
+        geoLocations.geLatLongDrop(currentLocationText.getText().toString(), getApplicationContext(), new GeoHandlerLongitude());
+
+        String latitude1Check = String.valueOf(latitude1);
+        String latitude2Check = String.valueOf(latitude2);
+        String longitude1Check = String.valueOf(longitude1);
+        String longitude2Check = String.valueOf(longitude2);
+        if (latitude1Check != null && latitude2Check != null && longitude1Check != null && longitude2Check != null) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(2000);
+                        distanceInKm(latitude1, longitude1, latitude2, longitude2, distanceFromUser);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }).start();
+        } else {
+            distanceFromUser.setText("Pick-up 00Km away");
+        }
+    }
+
+    private void distanceInKm(double lat1, double long1, double lat2, double long2, TextView distanceFromUser) {
+        double longDiff = long1 - long2;
+        double distanceApprox = Math.sin(deg2rad(lat1))
+                * Math.sin(deg2rad(lat2))
+                + Math.cos(deg2rad(lat1))
+                * Math.cos(deg2rad(lat2))
+                * Math.cos(deg2rad(longDiff));
+        distanceApprox = Math.acos(distanceApprox);
+        //Convert Distance radian to degree
+        distanceApprox = rad2deg(distanceApprox);
+        //Distance in Miles
+        distanceApprox = distanceApprox * 60 * 1.1515;
+        //Distance in kilometer
+        distanceApprox = distanceApprox * 1.609344;
+        //set distance on Text View
+        try {
+            distanceFromUser.setText(String.format(Locale.US, "Pick-up %2f km away", distanceApprox));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    private double rad2deg(double distance) {
+        return (distance * 180.0 / Math.PI);
+    }
+
+    private double deg2rad(double lat1) {
+        return (lat1 * Math.PI / 180.0);
+    }
+
+
+    private class GeoHandlerLatitude extends Handler {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            String latLong, lat = null, lon = null;
+            switch (msg.what) {
+                case 1:
+                    try {
+                        Bundle bundle = msg.getData();
+                        latLong = bundle.getString("latLong1");
+                        String[] arrSplit = latLong.split(" ");
+                        for (int i = 0; i < arrSplit.length; i++) {
+                            lat = arrSplit[0];
+                            lon = arrSplit[1];
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
+                default:
+                    lat = null;
+                    lon = null;
+            }
+            try {
+                latitude1 = Double.parseDouble(lat);
+                longitude1 = Double.parseDouble(lon);
+                Log.i("Lat and long 1", String.valueOf(latitude1 + " " + longitude1));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    private class GeoHandlerLongitude extends Handler {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            String latLong, lat = null, lon = null;
+            switch (msg.what) {
+                case 1:
+                    try {
+                        Bundle bundle = msg.getData();
+                        latLong = bundle.getString("latLong2");
+                        String[] arrSplit = latLong.split(" ");
+                        for (int i = 0; i < arrSplit.length; i++) {
+                            lat = arrSplit[0];
+                            lon = arrSplit[1];
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
+                default:
+                    lat = null;
+                    lon = null;
+            }
+            try {
+                latitude2 = Double.parseDouble(lat);
+                longitude2 = Double.parseDouble(lon);
+                Log.i("Lat and long 2", String.valueOf(latitude2 + " " + longitude2));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
 
     private class SwipeListener implements View.OnTouchListener {
         GestureDetector gestureDetector;
