@@ -581,6 +581,7 @@ public class PostALoadActivity extends AppCompatActivity {
     }
 
     private void pickTime() {
+
         Calendar mcurrentTime = Calendar.getInstance();
         int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
         int minute = mcurrentTime.get(Calendar.MINUTE);

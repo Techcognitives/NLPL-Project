@@ -70,6 +70,7 @@ import com.nlpl.services.PostLoadService;
 import com.nlpl.ui.ui.adapters.LoadNotificationAdapter;
 import com.nlpl.ui.ui.adapters.LoadSubmittedAdapter;
 import com.nlpl.utils.ApiClient;
+import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.EnglishNumberToWords;
 import com.nlpl.utils.GetLocationDrop;
 import com.nlpl.utils.GetLocationPickUp;
@@ -122,9 +123,9 @@ public class DashboardActivity extends AppCompatActivity {
     CheckBox declaration;
     RadioButton negotiable_yes, negotiable_no;
     Boolean isTruckSelectedToBid = false, negotiable = null, isNegotiableSelected = false, fromAdapter = false;
-    ImageView actionBarBackButton, actionBarMenuButton;
+    ImageView actionBarBackButton, actionBarMenuButton, profilePic;
 
-    Dialog menuDialog;
+    Dialog menuDialog, previewDialogProfile;
     ConstraintLayout drawerLayout;
     TextView timeLeft00, timeLeftTextview, partitionTextview, menuUserNameTextView, mobileText, personalDetailsButton, bankDetailsTextView, addTrucksTextView;
     ImageView personalDetailsLogoImageView, bankDetailsLogoImageView, truckDetailsLogoImageView, driverDetailsLogoImageView;
@@ -218,6 +219,10 @@ public class DashboardActivity extends AppCompatActivity {
         menuDialog.setContentView(R.layout.dialog_menu);
         menuDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+        previewDialogProfile = new Dialog(DashboardActivity.this);
+        previewDialogProfile.setContentView(R.layout.dialog_preview_images);
+        previewDialogProfile.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.black)));
+
         drawerLayout = (ConstraintLayout) menuDialog.findViewById(R.id.drawer_menu);
         menuUserNameTextView = (TextView) menuDialog.findViewById(R.id.menu_name_text);
         mobileText = (TextView) menuDialog.findViewById(R.id.menu_mobile);
@@ -228,6 +233,8 @@ public class DashboardActivity extends AppCompatActivity {
         bankDetailsLogoImageView = (ImageView) menuDialog.findViewById(R.id.menu_bank_details_logo_image_view);
         truckDetailsLogoImageView = (ImageView) menuDialog.findViewById(R.id.menu_truck_details_logo_image_view);
         driverDetailsLogoImageView = (ImageView) menuDialog.findViewById(R.id.menu_driver_details_logo_image_view);
+        profilePic = (ImageView) menuDialog.findViewById(R.id.profile_picture_on_sp_menu);
+
 
 //        swipeListener = new SwipeListener(loadListRecyclerView);
 
@@ -282,8 +289,8 @@ public class DashboardActivity extends AppCompatActivity {
                         }
                     }
 
-
                     getUserDetails();
+                    getProfilePic();
                     //---------------------------- Get Load Details -------------------------------------------
                     getLoadNotificationList();
 
@@ -522,7 +529,7 @@ public class DashboardActivity extends AppCompatActivity {
             }
         }
 
-        Collections.reverse(loadListToCompare);
+//        Collections.reverse(loadListToCompare);
 
         loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadListToCompare);
         loadListRecyclerView.setAdapter(loadListAdapter);
@@ -571,11 +578,14 @@ public class DashboardActivity extends AppCompatActivity {
                         modelLoadNotification.setDrop_country(obj.getString("drop_country"));
                         modelLoadNotification.setKm_approx(obj.getString("km_approx"));
                         modelLoadNotification.setNotes_meterial_des(obj.getString("notes_meterial_des"));
+                        modelLoadNotification.setBid_ends_at(obj.getString("bid_ends_at"));
 
                         if (obj.getString("bid_status").equals("loadPosted")) {
                             loadList.add(modelLoadNotification);
                         }
                     }
+
+                    Collections.reverse(loadList);
                     TextView noLoadAvailable = (TextView) findViewById(R.id.dashboard_load_here_text);
 
                     loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadList);
@@ -1930,6 +1940,48 @@ public class DashboardActivity extends AppCompatActivity {
         //----------------------------------------------------------
     }
 
+    public void ViewSPProfile(View view) {
+        String url1 = getString(R.string.baseURL) + "/imgbucket/Images/" + userId;
+        JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray imageList = response.getJSONArray("data");
+                    for (int i = 0; i < imageList.length(); i++) {
+                        JSONObject obj = imageList.getJSONObject(i);
+                        String imageType = obj.getString("image_type");
+
+                        String profileImgUrl;
+                        if (imageType.equals("profile")) {
+                            profileImgUrl = obj.getString("image_url");
+                            if (profileImgUrl.equals("null")){
+
+                            } else {
+                                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+                                lp2.copyFrom(previewDialogProfile.getWindow().getAttributes());
+                                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+                                lp2.height = WindowManager.LayoutParams.MATCH_PARENT;
+                                lp2.gravity = Gravity.CENTER;
+
+                                previewDialogProfile.show();
+                                previewDialogProfile.getWindow().setAttributes(lp2);
+                                new DownloadImageTask((ImageView) previewDialogProfile.findViewById(R.id.dialog_preview_image_view)).execute(profileImgUrl);
+                            }
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request1);
+    }
+
     public void openMaps(LoadNotificationModel obj) {
         String sDestination = obj.getPick_add() + obj.getPick_city();
         DisplayTrack("", sDestination);
@@ -2174,5 +2226,38 @@ public class DashboardActivity extends AppCompatActivity {
         };
         new Handler().postDelayed(runnable, 3000);
     }
+
+    private void getProfilePic(){
+
+        String url1 = getString(R.string.baseURL) + "/imgbucket/Images/" + userId;
+        JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray imageList = response.getJSONArray("data");
+                    for (int i = 0; i < imageList.length(); i++) {
+                        JSONObject obj = imageList.getJSONObject(i);
+                        String imageType = obj.getString("image_type");
+
+                        String profileImgUrl;
+                        if (imageType.equals("profile")) {
+                            profileImgUrl = obj.getString("image_url");
+                            new DownloadImageTask(profilePic).execute(profileImgUrl);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request1);
+
+    }
+
 
 }

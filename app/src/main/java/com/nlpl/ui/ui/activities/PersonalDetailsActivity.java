@@ -9,7 +9,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -68,23 +67,26 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     ImageView actionBarBackButton;
     Dialog chooseDialog;
 
-    TextView panCardText, editPAN, editFront, frontText;
-    Button uploadPAN, uploadF, okPersonalDetails;
-    ImageView imgPAN, imgF, previewPan, previewAadhar;
+    TextView panCardText, editPAN, editFront, frontText, profileText, editProfile;
+    Button uploadPAN, uploadF, uploadProfile, okPersonalDetails;
+    ImageView imgPAN, imgF, imgProfile, previewProfile, previewPan, previewAadhar;
     private int GET_FROM_GALLERY = 0;
     private int GET_FROM_GALLERY1 = 1;
     private int CAMERA_PIC_REQUEST = 3;
     private int CAMERA_PIC_REQUEST1 = 2;
+    private int CAMERA_PIC_REQUEST2 = 4;
+    private int GET_FROM_GALLERY2 = 5;
+
 
     View panAndAadharView;
 
     private UserService userService;
 
     String userRoleAPI,userId, mobile;
-    Boolean isPanUploaded = false, isFrontUploaded = false;
+    Boolean isPanUploaded = false, isFrontUploaded = false, isProfileUploaded = false;
     String img_type;
 
-    Dialog previewDialogPan, previewDialogAadhar;
+    Dialog previewDialogPan, previewDialogAadhar, previewDialogProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +100,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         }
         mQueue = Volley.newRequestQueue(PersonalDetailsActivity.this);
 
-        if (isPanUploaded && isFrontUploaded) {
+        if (isPanUploaded && isFrontUploaded && isProfileUploaded) {
             okPersonalDetails.setBackgroundResource((R.drawable.button_active));
         }
 
@@ -129,6 +131,11 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         okPersonalDetails = findViewById(R.id.okPersonalDetails);
         previewPan = (ImageView) panAndAadharView.findViewById(R.id.pan_aadhar_preview_pan);
         previewAadhar = (ImageView) panAndAadharView.findViewById(R.id.pan_aadhar_preview_aadhar);
+        previewProfile = (ImageView) panAndAadharView.findViewById(R.id.preview_profile);
+        editProfile = panAndAadharView.findViewById(R.id.editProfile);
+        uploadProfile = panAndAadharView.findViewById(R.id.uploadProfile);
+        profileText = panAndAadharView.findViewById(R.id.ProfileText);
+        imgProfile = panAndAadharView.findViewById(R.id.imageProfile);
 
         previewDialogPan = new Dialog(PersonalDetailsActivity.this);
         previewDialogPan.setContentView(R.layout.dialog_preview_images);
@@ -138,6 +145,10 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         previewDialogAadhar = new Dialog(PersonalDetailsActivity.this);
         previewDialogAadhar.setContentView(R.layout.dialog_preview_images);
         previewDialogAadhar.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.black)));
+
+        previewDialogProfile = new Dialog(PersonalDetailsActivity.this);
+        previewDialogProfile.setContentView(R.layout.dialog_preview_images);
+        previewDialogProfile.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.black)));
 
 //        previewDialogAadhar.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -190,6 +201,20 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             }
         });
 
+        previewProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+                lp2.copyFrom(previewDialogProfile.getWindow().getAttributes());
+                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp2.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp2.gravity = Gravity.CENTER;
+
+                previewDialogProfile.show();
+                previewDialogProfile.getWindow().setAttributes(lp2);
+            }
+        });
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.baseURL))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -224,6 +249,20 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 uploadAadharDialogChoose();
+            }
+        });
+
+        uploadProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                uploadProfileDialogChoose();
+            }
+        });
+
+        editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                uploadProfileDialogChoose();
             }
         });
 
@@ -275,7 +314,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             previewPan.setVisibility(View.VISIBLE);
             isPanUploaded = true;
 
-            if (isPanUploaded && isFrontUploaded) {
+            if (isPanUploaded && isFrontUploaded && isProfileUploaded) {
                 okPersonalDetails.setBackgroundResource(R.drawable.button_active);
             }
 
@@ -286,7 +325,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
-
+            saveImage(imageRequest());
             uploadImage(picturePath);
             ImageView editedAadhar = (ImageView) previewDialogAadhar.findViewById(R.id.dialog_preview_image_view);
             ImageView editedPan = (ImageView) previewDialogPan.findViewById(R.id.dialog_preview_image_view);
@@ -334,7 +373,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             previewAadhar.setVisibility(View.VISIBLE);
             isFrontUploaded = true;
 
-            if (isPanUploaded && isFrontUploaded) {
+            if (isPanUploaded && isFrontUploaded && isProfileUploaded) {
                 okPersonalDetails.setBackgroundResource(R.drawable.button_active);
             }
 
@@ -345,7 +384,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
-
+            saveImage(imageRequest());
             uploadImage(picturePath);
             ImageView editedAadhar = (ImageView) previewDialogAadhar.findViewById(R.id.dialog_preview_image_view);
             ImageView editedPan = (ImageView) previewDialogPan.findViewById(R.id.dialog_preview_image_view);
@@ -394,13 +433,14 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             previewPan.setVisibility(View.VISIBLE);
             isPanUploaded = true;
 
-            if (isPanUploaded && isFrontUploaded ) {
+            if (isPanUploaded && isFrontUploaded && isProfileUploaded ) {
                 okPersonalDetails.setBackgroundResource(R.drawable.button_active);
             }
 
             Bitmap image = (Bitmap) data.getExtras().get("data");
             String path = getRealPathFromURI(getImageUri(this,image));
             imgPAN.setImageBitmap(BitmapFactory.decodeFile(path));
+            saveImage(imageRequest());
             uploadImage(path);
 
         } else  if (requestCode == CAMERA_PIC_REQUEST1) {
@@ -445,20 +485,131 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             previewAadhar.setVisibility(View.VISIBLE);
             isFrontUploaded = true;
 
-            if (isPanUploaded && isFrontUploaded ) {
+            if (isPanUploaded && isFrontUploaded && isProfileUploaded ) {
                 okPersonalDetails.setBackgroundResource(R.drawable.button_active);
             }
 
             Bitmap image = (Bitmap) data.getExtras().get("data");
             String path = getRealPathFromURI(getImageUri(this,image));
             imgF.setImageBitmap(BitmapFactory.decodeFile(path));
+            saveImage(imageRequest());
             uploadImage(path);
+        } else if (requestCode == GET_FROM_GALLERY2 && resultCode == Activity.RESULT_OK) {
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(PersonalDetailsActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(true);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText("Personal Details");
+            alertMessage.setText("Profile Uploaded Successfully");
+            alertPositiveButton.setVisibility(View.GONE);
+            alertNegativeButton.setText("OK");
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.dismiss();
+                }
+            });
+            //------------------------------------------------------------------------------------------
+            profileText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadProfile.setVisibility(View.INVISIBLE);
+            editProfile.setVisibility(View.VISIBLE);
+            previewProfile.setVisibility(View.VISIBLE);
+            isProfileUploaded = true;
+
+            if (isPanUploaded && isFrontUploaded && isProfileUploaded) {
+                okPersonalDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+            saveImage(imageRequest());
+            uploadImage(picturePath);
+            ImageView editedAadhar = (ImageView) previewDialogAadhar.findViewById(R.id.dialog_preview_image_view);
+            ImageView editedPan = (ImageView) previewDialogPan.findViewById(R.id.dialog_preview_image_view);
+            editedPan.setImageURI(selectedImage);
+            imgProfile.setImageURI(selectedImage);
+
+        } else  if (requestCode == CAMERA_PIC_REQUEST2) {
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(PersonalDetailsActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(true);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText("Personal Details");
+            alertMessage.setText("Profile Uploaded Successfully");
+            alertPositiveButton.setVisibility(View.GONE);
+            alertNegativeButton.setText("OK");
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.dismiss();
+
+                }
+            });
+            //------------------------------------------------------------------------------------------
+
+            profileText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadProfile.setVisibility(View.INVISIBLE);
+            editProfile.setVisibility(View.VISIBLE);
+            previewProfile.setVisibility(View.VISIBLE);
+            isProfileUploaded = true;
+
+            if (isPanUploaded && isFrontUploaded && isProfileUploaded) {
+                okPersonalDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            String path = getRealPathFromURI(getImageUri(this,image));
+            imgProfile.setImageBitmap(BitmapFactory.decodeFile(path));
+            saveImage(imageRequest());
+            uploadImage(path);
+
         }
     }
     //-------------------------------------------------------------------------------------------------------------------
 
     public void onClickOKPersonal(View view) {
-        if (isPanUploaded && isFrontUploaded) {
+        if (isPanUploaded && isFrontUploaded && isProfileUploaded) {
             updateUserIsPersonalDetailsAdded();
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(PersonalDetailsActivity.this);
@@ -664,7 +815,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         requestPermissionsForGalleryWRITE();
         requestPermissionsForGalleryREAD();
         img_type = "pan";
-        saveImage(imageRequest());
+
         Dialog chooseDialog;
         chooseDialog = new Dialog(PersonalDetailsActivity.this);
         chooseDialog.setContentView(R.layout.dialog_choose);
@@ -706,7 +857,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         requestPermissionsForGalleryWRITE();
         requestPermissionsForGalleryREAD();
         img_type = "aadhar";
-        saveImage(imageRequest());
+
         Dialog chooseDialog;
         chooseDialog = new Dialog(PersonalDetailsActivity.this);
         chooseDialog.setContentView(R.layout.dialog_choose);
@@ -742,7 +893,46 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         });
     }
 
+    private void uploadProfileDialogChoose(){
+        requestPermissionsForCamera();
+        requestPermissionsForGalleryWRITE();
+        requestPermissionsForGalleryREAD();
+        img_type = "profile";
 
+        Dialog chooseDialog;
+        chooseDialog = new Dialog(PersonalDetailsActivity.this);
+        chooseDialog.setContentView(R.layout.dialog_choose);
+        chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+        lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+        lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.gravity = Gravity.BOTTOM;
+
+        chooseDialog.show();
+        chooseDialog.getWindow().setAttributes(lp2);
+
+        ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
+        ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
+
+        camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST2);
+                chooseDialog.dismiss();
+            }
+        });
+
+        gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY2);
+                chooseDialog.dismiss();
+            }
+        });
+    }
 
     @Override
     public void onBackPressed() {
