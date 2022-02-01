@@ -541,6 +541,7 @@
                     android:textSize="12sp"
                     android:textStyle="bold"
                     android:visibility="gone"
+                    android:onClick="onClickOpenPhone"
                     app:layout_constraintBottom_toBottomOf="@+id/dialog_bid_now_customer_phone_heading"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_customer_phone_heading"

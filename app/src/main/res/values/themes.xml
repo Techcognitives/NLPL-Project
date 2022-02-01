@@ -18,4 +18,12 @@
         <item name="colorControlActivated">@android:color/holo_orange_dark</item>
         <item name="colorControlNormal">@android:color/holo_green_light</item>
     </style>
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/redDark</item>
+    </style>
+
+    <style name="TimePickerTheme"  parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/redDark</item>
+    </style>
 </resources>

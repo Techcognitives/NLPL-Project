@@ -1953,6 +1953,12 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
+    public void onClickOpenPhone(View view) {
+        String numberOpen = customerNumber.getText().toString();
+        Intent i2 = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + numberOpen));
+        startActivity(i2);
+    }
+
     private class SwipeListener implements View.OnTouchListener {
         GestureDetector gestureDetector;
 
