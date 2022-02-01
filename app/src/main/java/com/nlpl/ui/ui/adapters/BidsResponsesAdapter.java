@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ import com.nlpl.model.ModelForRecyclerView.BidsReceivedModel;
 import com.nlpl.model.ModelForRecyclerView.BidsResponsesModel;
 import com.nlpl.ui.ui.activities.CustomerDashboardActivity;
 import com.nlpl.ui.ui.activities.DashboardActivity;
+import com.nlpl.utils.DownloadImageTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -83,6 +85,43 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
         mQueue.add(request);
         //----------------------------------------------------------
 
+
+        String url1 = activity.getString(R.string.baseURL) + "/imgbucket/Images/" + obj.getUser_id();
+        JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray imageList = response.getJSONArray("data");
+                    for (int i = 0; i < imageList.length(); i++) {
+                        JSONObject obj = imageList.getJSONObject(i);
+                        String imageType = obj.getString("image_type");
+
+                        String profileImgUrl;
+                        if (imageType.equals("profile")) {
+                            profileImgUrl = obj.getString("image_url");
+                            new DownloadImageTask(holder.profilePictureSP).execute(profileImgUrl);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request1);
+
+
+        holder.profilePictureSP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.ViewProfileOfSPToCustomer(obj);
+            }
+        });
+
         String isNegotiable = obj.getIs_negatiable();
         if (isNegotiable.equals("1")) {
             holder.negotiable.setText("Negotiable");
@@ -139,6 +178,7 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
 
     public class BidsResponsesViewHolder extends RecyclerView.ViewHolder {
         private TextView spName, ratingFloat, negotiable, budget, acceptViewBidButton;
+        private ImageView profilePictureSP;
         private RatingBar starRatings;
 
         public BidsResponsesViewHolder(@NonNull View itemView) {
@@ -150,6 +190,7 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
             budget = itemView.findViewById(R.id.bids_responses_budget_sp);
             acceptViewBidButton = itemView.findViewById(R.id.bids_responses_view_accept_bids);
             starRatings = itemView.findViewById(R.id.bids_responses_star_rating);
+            profilePictureSP = itemView.findViewById(R.id.bids_responses_sp_profilePhto);
 
         }
 

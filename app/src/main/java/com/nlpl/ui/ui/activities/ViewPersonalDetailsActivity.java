@@ -38,10 +38,10 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
 
     TextView uploadPanAAdharBtn,  uploadPanAAdharBtnTitle;
 
-    Dialog previewDialogPan, previewDialogAadhar;
+    Dialog previewDialogPan, previewDialogAadhar, previewDialogProfile;
 
     View actionBar;
-    TextView actionBarTitle, previewAadharBtn, previewPANBtn;
+    TextView actionBarTitle, previewAadharBtn, previewPANBtn, previewProfileBtn;
     ImageView actionBarBackButton, actionBarMenuButton;
 
     View bottomNav;
@@ -118,6 +118,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
 
         previewAadharBtn = findViewById(R.id.view_personal_details_preview_aadhar_card);
         previewPANBtn = findViewById(R.id.view_personal_details_preview_pan_card);
+        previewProfileBtn = findViewById(R.id.view_personal_details_preview_profile);
 
         previewDialogPan = new Dialog(ViewPersonalDetailsActivity.this);
         previewDialogPan.setContentView(R.layout.dialog_preview_images);
@@ -126,6 +127,10 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
         previewDialogAadhar = new Dialog(ViewPersonalDetailsActivity.this);
         previewDialogAadhar.setContentView(R.layout.dialog_preview_images);
         previewDialogAadhar.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        previewDialogProfile = new Dialog(ViewPersonalDetailsActivity.this);
+        previewDialogProfile.setContentView(R.layout.dialog_preview_images);
+        previewDialogProfile.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         getUserDetails();
 
@@ -169,11 +174,13 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
                         if (isPersonalDetailsDone.equals("1")) {
                             previewAadharBtn.setVisibility(View.VISIBLE);
                             previewPANBtn.setVisibility(View.VISIBLE);
+                            previewProfileBtn.setVisibility(View.VISIBLE);
                             uploadPanAAdharBtn.setVisibility(View.GONE);
                             uploadPanAAdharBtnTitle.setVisibility(View.GONE);
                         } else {
                             previewAadharBtn.setVisibility(View.INVISIBLE);
                             previewPANBtn.setVisibility(View.INVISIBLE);
+                            previewProfileBtn.setVisibility(View.INVISIBLE);
                             uploadPanAAdharBtn.setVisibility(View.VISIBLE);
                             uploadPanAAdharBtnTitle.setVisibility(View.VISIBLE);
                         }
@@ -294,7 +301,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
                         JSONObject obj = imageList.getJSONObject(i);
                         String imageType = obj.getString("image_type");
 
-                        String panImageURL, aadharImageURL;
+                        String panImageURL, aadharImageURL, profileImgUrl;
 
                         if (imageType.equals("aadhar")) {
                             aadharImageURL = obj.getString("image_url");
@@ -306,6 +313,12 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
                             panImageURL = obj.getString("image_url");
                             Log.i("IMAGE PAN URL", panImageURL);
                             new DownloadImageTask((ImageView) previewDialogPan.findViewById(R.id.dialog_preview_image_view)).execute(panImageURL);
+                        }
+
+                        if (imageType.equals("profile")) {
+                            profileImgUrl = obj.getString("image_url");
+                            Log.i("IMAGE PAN URL", profileImgUrl);
+                            new DownloadImageTask((ImageView) previewDialogProfile.findViewById(R.id.dialog_preview_image_view)).execute(profileImgUrl);
                         }
 
                     }
@@ -342,6 +355,17 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
 
         previewDialogPan.show();
         previewDialogPan.getWindow().setAttributes(lp);
+    }
+
+    public void onClickPreviewProfile(View view) {
+        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+        lp2.copyFrom(previewDialogProfile.getWindow().getAttributes());
+        lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp2.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp2.gravity = Gravity.CENTER;
+
+        previewDialogProfile.show();
+        previewDialogProfile.getWindow().setAttributes(lp2);
     }
 
     public void onClickEditPersonalDetailsView(View view) {
@@ -425,4 +449,5 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
         intent.putExtra("mobile", phone);
         startActivity(intent);
     }
+
 }

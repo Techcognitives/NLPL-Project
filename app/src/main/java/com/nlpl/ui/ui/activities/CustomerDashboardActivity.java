@@ -49,6 +49,7 @@ import com.nlpl.services.PostLoadService;
 import com.nlpl.ui.ui.adapters.BidsAcceptedAdapter;
 import com.nlpl.ui.ui.adapters.BidsReceivedAdapter;
 import com.nlpl.ui.ui.adapters.BidsResponsesAdapter;
+import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.EnglishNumberToWords;
 
 import org.json.JSONArray;
@@ -81,9 +82,9 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     private BidLoadService bidService;
     boolean isBackPressed = false;
 
-    Dialog menuDialog;
+    Dialog menuDialog, previewDialogProfile;
     TextView userNameTextViewMenu, mobileTextViewMenu;
-    ImageView personalDetailsLogoImageView, bankDetailsLogoImageView;
+    ImageView personalDetailsLogoImageView, bankDetailsLogoImageView, profilePic;
 
     String isPersonalDetailsDone, isBankDetailsDone;
 
@@ -142,7 +143,12 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         menuDialog.setContentView(R.layout.dialog_customer_menu);
         menuDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+        previewDialogProfile = new Dialog(CustomerDashboardActivity.this);
+        previewDialogProfile.setContentView(R.layout.dialog_preview_images);
+        previewDialogProfile.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.black)));
+
         userNameTextViewMenu = (TextView) menuDialog.findViewById(R.id.customer_menu_name_text);
+        profilePic = (ImageView) menuDialog.findViewById(R.id.profile_picture_on_customer_menu);
         mobileTextViewMenu = (TextView) menuDialog.findViewById(R.id.customer_menu_mobile);
         personalDetailsLogoImageView = (ImageView) menuDialog.findViewById(R.id.customer_menu_personal_details_logo_image_view);
         bankDetailsLogoImageView = (ImageView) menuDialog.findViewById(R.id.customer_menu_bank_details_logo_image_view);
@@ -241,6 +247,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                     for (int j = 0; j < arrayMobileNo.size(); j++) {
                         if (arrayMobileNo.get(j).equals(userMobileNumber)) {
                             userId = arrayUserId.get(j);
+                            getProfilePic();
                             String customerNameAPI = arrayCustomerName.get(j);
                             userNameTextViewMenu.setText(customerNameAPI);
                             String customerNumberAPI = arrayMobileNo.get(j);
@@ -451,6 +458,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         bidsReceivedModel.setDrop_country(obj.getString("drop_country"));
                         bidsReceivedModel.setKm_approx(obj.getString("km_approx"));
                         bidsReceivedModel.setNotes_meterial_des(obj.getString("notes_meterial_des"));
+                        bidsReceivedModel.setBid_ends_at(obj.getString("bid_ends_at"));
 
                         if (obj.getString("bid_status").equals("loadPosted")) {
                             bidsList.add(bidsReceivedModel);
@@ -1451,5 +1459,122 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             }
         };
         new Handler().postDelayed(runnable, 3000);
+    }
+
+    public void ViewProfileOfSPToCustomer(BidsResponsesModel obj) {
+        String url1 = getString(R.string.baseURL) + "/imgbucket/Images/" + obj.getUser_id();
+        JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray imageList = response.getJSONArray("data");
+                    for (int i = 0; i < imageList.length(); i++) {
+                        JSONObject obj = imageList.getJSONObject(i);
+                        String imageType = obj.getString("image_type");
+
+                        String profileImgUrl;
+                        if (imageType.equals("profile")) {
+                            profileImgUrl = obj.getString("image_url");
+                            if (profileImgUrl.equals("null")){
+
+                            } else {
+                                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+                                lp2.copyFrom(previewDialogProfile.getWindow().getAttributes());
+                                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+                                lp2.height = WindowManager.LayoutParams.MATCH_PARENT;
+                                lp2.gravity = Gravity.CENTER;
+
+                                previewDialogProfile.show();
+                                previewDialogProfile.getWindow().setAttributes(lp2);
+                                new DownloadImageTask((ImageView) previewDialogProfile.findViewById(R.id.dialog_preview_image_view)).execute(profileImgUrl);
+                            }
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request1);
+    }
+
+    private void getProfilePic(){
+
+        String url1 = getString(R.string.baseURL) + "/imgbucket/Images/" + userId;
+        JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray imageList = response.getJSONArray("data");
+                    for (int i = 0; i < imageList.length(); i++) {
+                        JSONObject obj = imageList.getJSONObject(i);
+                        String imageType = obj.getString("image_type");
+
+                        String profileImgUrl;
+                        if (imageType.equals("profile")) {
+                            profileImgUrl = obj.getString("image_url");
+                            new DownloadImageTask(profilePic).execute(profileImgUrl);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request1);
+
+    }
+
+    public void ViewCustomerProfile(View view) {
+
+        String url1 = getString(R.string.baseURL) + "/imgbucket/Images/" + userId;
+        JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray imageList = response.getJSONArray("data");
+                    for (int i = 0; i < imageList.length(); i++) {
+                        JSONObject obj = imageList.getJSONObject(i);
+                        String imageType = obj.getString("image_type");
+
+                        String profileImgUrl;
+                        if (imageType.equals("profile")) {
+                            profileImgUrl = obj.getString("image_url");
+                            if (profileImgUrl.equals("null")){
+
+                            } else {
+                                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+                                lp2.copyFrom(previewDialogProfile.getWindow().getAttributes());
+                                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+                                lp2.height = WindowManager.LayoutParams.MATCH_PARENT;
+                                lp2.gravity = Gravity.CENTER;
+
+                                previewDialogProfile.show();
+                                previewDialogProfile.getWindow().setAttributes(lp2);
+                                new DownloadImageTask((ImageView) previewDialogProfile.findViewById(R.id.dialog_preview_image_view)).execute(profileImgUrl);
+                            }
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request1);
     }
 }

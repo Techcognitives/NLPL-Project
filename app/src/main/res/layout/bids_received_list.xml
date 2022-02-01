@@ -78,36 +78,21 @@
                 app:layout_constraintTop_toBottomOf="@+id/bids_responses_budget">
 
                 <TextView
-                    android:id="@+id/textView18"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:paddingTop="2dp"
-                    android:paddingEnd="7dp"
-                    android:paddingBottom="2dp"
-                    android:text="Time left"
-                    android:textAlignment="center"
-                    android:textColor="@color/redDark"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toTopOf="@+id/bids_responses_edit_load_button"
-                    app:layout_constraintEnd_toStartOf="@+id/bids_responses_time_left"
-                    app:layout_constraintStart_toEndOf="@+id/imageView14"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
                     android:id="@+id/bids_responses_time_left"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="3dp"
-                    android:paddingEnd="3dp"
-                    android:text="00:00"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="2dp"
+                    android:drawableLeft="@drawable/clock_small"
+                    android:text="  00:00:00"
                     android:textAlignment="center"
                     android:textColor="#ff0000"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView18"
+                    app:layout_constraintBottom_toTopOf="@+id/bids_responses_edit_load_button"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView18"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -126,18 +111,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView18" />
+                    app:layout_constraintTop_toBottomOf="@+id/bids_responses_time_left" />
 
-                <ImageView
-                    android:id="@+id/imageView14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView18"
-                    app:layout_constraintEnd_toStartOf="@+id/textView18"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView18"
-                    app:srcCompat="@drawable/clock_small" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
