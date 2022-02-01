@@ -262,8 +262,7 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
     }
 
     public class LoadNotificationViewHolder extends RecyclerView.ViewHolder {
-        private TextView timeLeft, destinationStart, destinationEnd, budget, date, time, distance, model, feet, capacity, body, pickUpLocation, bidNowButton;
-        private TextView destinationStart, destinationEnd, budget, date, time, distance, model, feet, capacity, body, pickUpLocation, bidNowButton, distanceFromUser;
+        private TextView timeLeft, destinationStart, destinationEnd, budget, date, time, distance, model, feet, capacity, body, pickUpLocation, bidNowButton, distanceFromUser;
 
         public LoadNotificationViewHolder(@NonNull View itemView) {
             super(itemView);
