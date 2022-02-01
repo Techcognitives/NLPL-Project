@@ -82,7 +82,6 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
             }
         });
 
-        activity.getPickUpPointKm(obj, holder.distanceFromUser);
     }
 
     @Override
