@@ -2,7 +2,15 @@ package com.nlpl.model.ModelForRecyclerView;
 
 public class BidsAcceptedModel {
 
-    private String idpost_load, user_id, pick_up_date, pick_up_time, budget, bid_status, vehicle_model, feet, capacity, body_type, pick_add, pick_pin_code, pick_city, pick_state, pick_country, drop_add, drop_pin_code, drop_city, drop_state, drop_country, km_approx, notes_meterial_des;
+    private String bid_ends_at, idpost_load, user_id, pick_up_date, pick_up_time, budget, bid_status, vehicle_model, feet, capacity, body_type, pick_add, pick_pin_code, pick_city, pick_state, pick_country, drop_add, drop_pin_code, drop_city, drop_state, drop_country, km_approx, notes_meterial_des;
+
+    public String getBid_ends_at() {
+        return bid_ends_at;
+    }
+
+    public void setBid_ends_at(String bid_ends_at) {
+        this.bid_ends_at = bid_ends_at;
+    }
 
     public String getIdpost_load() {
         return idpost_load;

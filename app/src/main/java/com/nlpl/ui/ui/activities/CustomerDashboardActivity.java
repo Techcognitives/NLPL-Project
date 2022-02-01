@@ -332,6 +332,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         bidsAcceptedModel.setDrop_country(obj.getString("drop_country"));
                         bidsAcceptedModel.setKm_approx(obj.getString("km_approx"));
                         bidsAcceptedModel.setNotes_meterial_des(obj.getString("notes_meterial_des"));
+                        bidsAcceptedModel.setBid_ends_at(obj.getString("bid_ends_at"));
 
                         if (obj.getString("bid_status").equals("loadSubmitted")) {
                             acceptedList.add(bidsAcceptedModel);

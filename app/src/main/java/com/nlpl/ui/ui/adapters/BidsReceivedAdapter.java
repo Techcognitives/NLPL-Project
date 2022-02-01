@@ -253,7 +253,7 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
         activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView, holder.bidsReceived, holder.showRecyclerView, loadList);
 
         if (loadExpired){
-            holder.editLoadButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.red));
+            holder.editLoadButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.dark_grey));
             holder.editLoadButton.setText("Reactivate Load");
         } else {
             holder.editLoadButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.orange));
