@@ -362,7 +362,7 @@ public class OtpCodeActivity extends AppCompatActivity {
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             String otpEdit1 = otpCode.getText().toString().trim();
 
-            if (!otpEdit1.isEmpty()) {
+            if (otpEdit1.length() == 6) {
                 otpButton.setEnabled(true);
                 otpButton.setBackground(getResources().getDrawable(R.drawable.button_active));
             } else {

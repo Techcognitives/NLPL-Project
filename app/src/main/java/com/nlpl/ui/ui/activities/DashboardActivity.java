@@ -1178,6 +1178,7 @@ public class DashboardActivity extends AppCompatActivity {
                         bidSubmittedModel.setDrop_country(obj.getString("drop_country"));
                         bidSubmittedModel.setKm_approx(obj.getString("km_approx"));
                         bidSubmittedModel.setNotes_meterial_des(obj.getString("notes_meterial_des"));
+                        bidSubmittedModel.setBid_ends_at(obj.getString("bid_ends_at"));
                         bidSubmittedModel.setBidId(bidId);
 
 //                        if (obj.getString("bid_status").equals("loadPosted")) {

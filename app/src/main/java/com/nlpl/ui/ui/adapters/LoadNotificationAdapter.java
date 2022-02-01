@@ -89,6 +89,7 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
         } else if (month == 11) {
             months = 12;
         }
+
         int sizeOfDay = String.valueOf(day).length();
         int sizeOfMonth = String.valueOf(months).length();
 
@@ -189,7 +190,6 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
         }
         //------------------------------------------------------------------------------------------
 
-
         String pickUpCity = obj.getPick_city();
         holder.destinationStart.setText("  " + pickUpCity);
 
@@ -224,7 +224,7 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
         holder.pickUpLocation.setText(" " + pickUpLocation);
 
         if (loadExpired){
-            holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.red));
+            holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.dark_grey));
             holder.bidNowButton.setText("Expired");
         } else {
             holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.orange));
