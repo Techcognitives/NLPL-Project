@@ -580,7 +580,7 @@ public class DashboardActivity extends AppCompatActivity {
                         modelLoadNotification.setNotes_meterial_des(obj.getString("notes_meterial_des"));
                         modelLoadNotification.setBid_ends_at(obj.getString("bid_ends_at"));
 
-                        if (obj.getString("bid_status").equals("loadPosted")) {
+                        if (obj.getString("bid_status").equals("loadPosted") || obj.getString("bid_status").equals("loadReactivated")) {
                             loadList.add(modelLoadNotification);
                         }
                     }
@@ -1181,20 +1181,21 @@ public class DashboardActivity extends AppCompatActivity {
                         bidSubmittedModel.setBid_ends_at(obj.getString("bid_ends_at"));
                         bidSubmittedModel.setBidId(bidId);
 
-//                        if (obj.getString("bid_status").equals("loadPosted")) {
-//
-//                        }
-                        loadSubmittedList.add(bidSubmittedModel);
+                        if (obj.getString("bid_status").equals("loadPosted") || obj.getString("bid_status").equals("loadReactivated")) {
+                            loadSubmittedList.add(bidSubmittedModel);
+                        }
                     }
 
                     TextView noBidsSubmittedTextView = (TextView) findViewById(R.id.dashboard_no_bids_submitted_text);
                     if (loadSubmittedList.size() > 0) {
                         updatedLoadSubmittedList.addAll(loadSubmittedList);
                         loadSubmittedAdapter.updateData(updatedLoadSubmittedList);
+                        if (updatedLoadSubmittedList.size() > 0){
                         noBidsSubmittedTextView.setVisibility(View.GONE);
-                        compareAndRemove(loadListToCompare);
-                    } else {
+                        }else {
                         noBidsSubmittedTextView.setVisibility(View.VISIBLE);
+                    }
+                        compareAndRemove(loadListToCompare);
                     }
 //
 //                    else {

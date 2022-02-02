@@ -210,6 +210,7 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
                 }
             }.start();
         } else {
+            loadExpired = true;
             holder.timeLeft.setText("  Load Expired");
         }
         //------------------------------------------------------------------------------------------
@@ -250,11 +251,19 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
         holder.bidsResponsesRecyclerView.setLayoutManager(linearLayoutManagerBank);
         holder.bidsResponsesRecyclerView.setHasFixedSize(true);
 
-        activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView, holder.bidsReceived, holder.showRecyclerView, loadList);
+        activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView, holder.bidsReceived, holder.showRecyclerView,  loadExpired );
 
         if (loadExpired){
             holder.editLoadButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.dark_grey));
             holder.editLoadButton.setText("Reactivate Load");
+
+            holder.editLoadButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    activity.reActivateLoad(obj);
+                }
+            });
+
         } else {
             holder.editLoadButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.orange));
             holder.editLoadButton.setOnClickListener(new View.OnClickListener() {

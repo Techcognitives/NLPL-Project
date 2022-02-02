@@ -21,8 +21,10 @@ import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BidSubmittedModel;
 import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
+import com.nlpl.model.UpdateLoadPost.UpdateLoadStatusSubmitted;
 import com.nlpl.ui.ui.activities.DashboardActivity;
 import com.nlpl.ui.ui.activities.PostALoadActivity;
+import com.nlpl.utils.ApiClient;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,6 +32,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdapter.LoadSubmittedViewHolder> {
 
@@ -193,11 +198,14 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
                 }
                 // When the task is over it will print 00:00:00 there
                 public void onFinish() {
+//                    updateLoadStatusSubmitted(obj.getIdpost_load());
                     loadExpired = true;
                     holder.timeLeft.setText("  Load Expired");
                 }
             }.start();
         } else {
+//            updateLoadStatusSubmitted(obj.getIdpost_load());
+            loadExpired = true;
             holder.timeLeft.setText("  Load Expired");
         }
         //------------------------------------------------------------------------------------------
@@ -310,6 +318,28 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
         this.loadSubmittedList = loadSubmittedList;
         notifyDataSetChanged();
     }
+
+    //----------------------------------------------------------------------------------------------------------------
+    private void updateLoadStatusSubmitted(String loadId) {
+
+        UpdateLoadStatusSubmitted updateLoadStatusSubmitted = new UpdateLoadStatusSubmitted("loadExpired");
+
+        Call<UpdateLoadStatusSubmitted> call = ApiClient.getPostLoadService().updateBidStatusSubmitted("" + loadId, updateLoadStatusSubmitted);
+
+        call.enqueue(new Callback<UpdateLoadStatusSubmitted>() {
+            @Override
+            public void onResponse(Call<UpdateLoadStatusSubmitted> call, retrofit2.Response<UpdateLoadStatusSubmitted> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UpdateLoadStatusSubmitted> call, Throwable t) {
+
+            }
+        });
+    }
+    //--------------------------------------------------------------------------------------------------
+
 
     public class LoadSubmittedViewHolder extends RecyclerView.ViewHolder {
         private TextView timeLeft, destinationStart, destinationEnd, budget, date, time, distance, model, feet, capacity, body, pickUpLocation, bidNowButton;
