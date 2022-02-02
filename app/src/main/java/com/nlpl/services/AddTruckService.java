@@ -2,19 +2,17 @@ package com.nlpl.services;
 
 import com.nlpl.model.Requests.AddTruckRequest;
 import com.nlpl.model.Responses.AddTruckResponse;
-import com.nlpl.model.UpdateDriverDetails.UpdateDriverEmailId;
-import com.nlpl.model.UpdateTruckDetails.UpdateTruckCarryingCapacity;
-import com.nlpl.model.UpdateTruckDetails.UpdateTruckDriverId;
-import com.nlpl.model.UpdateTruckDetails.UpdateTruckFeet;
-import com.nlpl.model.UpdateTruckDetails.UpdateTruckRcBook;
-import com.nlpl.model.UpdateTruckDetails.UpdateTruckType;
-import com.nlpl.model.UpdateTruckDetails.UpdateTruckVehicleInsurance;
-import com.nlpl.model.UpdateTruckDetails.UpdateTruckVehicleNumber;
-import com.nlpl.model.UpdateTruckDetails.UpdateVehicleType;
+import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckCarryingCapacity;
+import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckDriverId;
+import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckFeet;
+import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckRcBook;
+import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckType;
+import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckVehicleInsurance;
+import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckVehicleNumber;
+import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateVehicleType;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;

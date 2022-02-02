@@ -2,17 +2,15 @@ package com.nlpl.services;
 
 import com.nlpl.model.Requests.BankRequest;
 import com.nlpl.model.Responses.BankResponse;
-import com.nlpl.model.UpdateBankDetails.UpdateBankAccountHolderName;
-import com.nlpl.model.UpdateBankDetails.UpdateBankAccountNumber;
-import com.nlpl.model.UpdateBankDetails.UpdateBankCancelledCheque;
-import com.nlpl.model.UpdateBankDetails.UpdateBankIFSICode;
-import com.nlpl.model.UpdateBankDetails.UpdateBankName;
-import com.nlpl.model.UpdateBankDetails.UpdateBankReEnterAccountNumber;
-import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyName;
+import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankAccountHolderName;
+import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankAccountNumber;
+import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankCancelledCheque;
+import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankIFSICode;
+import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankName;
+import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankReEnterAccountNumber;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;

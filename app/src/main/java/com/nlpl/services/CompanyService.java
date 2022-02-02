@@ -1,19 +1,18 @@
 package com.nlpl.services;
 
-import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyAddress;
-import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyCity;
-import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyGSTNumber;
-import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyName;
+import com.nlpl.model.UpdateModel.Models.UpdateCompanyDetails.UpdateCompanyAddress;
+import com.nlpl.model.UpdateModel.Models.UpdateCompanyDetails.UpdateCompanyCity;
+import com.nlpl.model.UpdateModel.Models.UpdateCompanyDetails.UpdateCompanyGSTNumber;
+import com.nlpl.model.UpdateModel.Models.UpdateCompanyDetails.UpdateCompanyName;
 import com.nlpl.model.Requests.CompanyRequest;
 import com.nlpl.model.Responses.CompanyResponse;
-import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyPAN;
-import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyState;
-import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyType;
-import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyZip;
+import com.nlpl.model.UpdateModel.Models.UpdateCompanyDetails.UpdateCompanyPAN;
+import com.nlpl.model.UpdateModel.Models.UpdateCompanyDetails.UpdateCompanyState;
+import com.nlpl.model.UpdateModel.Models.UpdateCompanyDetails.UpdateCompanyType;
+import com.nlpl.model.UpdateModel.Models.UpdateCompanyDetails.UpdateCompanyZip;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;

@@ -9,7 +9,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -48,14 +47,13 @@ import com.nlpl.model.Requests.AddTruckRequest;
 import com.nlpl.model.Responses.AddTruckResponse;
 import com.nlpl.model.Responses.UploadTruckInsuranceResponse;
 import com.nlpl.model.Responses.UploadTruckRCResponse;
-import com.nlpl.model.UpdateTruckDetails.UpdateTruckCarryingCapacity;
-import com.nlpl.model.UpdateTruckDetails.UpdateTruckFeet;
-import com.nlpl.model.UpdateTruckDetails.UpdateTruckType;
-import com.nlpl.model.UpdateTruckDetails.UpdateTruckVehicleNumber;
-import com.nlpl.model.UpdateTruckDetails.UpdateVehicleType;
-import com.nlpl.model.UpdateUserDetails.UpdateUserIsTruckAdded;
-import com.nlpl.services.AddTruckService;
-import com.nlpl.services.UserService;
+import com.nlpl.model.UpdateMethods.UpdateUserDetails;
+import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckCarryingCapacity;
+import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckFeet;
+import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckType;
+import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckVehicleNumber;
+import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateVehicleType;
+import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsTruckAdded;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
@@ -67,7 +65,6 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -75,8 +72,6 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class VehicleDetailsActivity extends AppCompatActivity {
 
@@ -834,7 +829,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
             } else {
                 saveTruck(createTruck());
-                updateUserIsTruckAdded();
+                //Update User Truck (IsTruckAdded)
+                UpdateUserDetails.updateUserIsTruckAdded(userId, "1");
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(VehicleDetailsActivity.this);
                 alert.setContentView(R.layout.dialog_alert);
@@ -1305,30 +1301,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         });
         mQueue.add(request);
 
-    }
-
-    //-------------------------------- Update User is Truck Added ----------------------------------
-    private void updateUserIsTruckAdded() {
-
-        UpdateUserIsTruckAdded updateUserIsTruckAdded = new UpdateUserIsTruckAdded("1");
-
-        Call<UpdateUserIsTruckAdded> call = ApiClient.getUserService().updateUserIsTruckAdded("" + userId, updateUserIsTruckAdded);
-
-        call.enqueue(new Callback<UpdateUserIsTruckAdded>() {
-            @Override
-            public void onResponse(Call<UpdateUserIsTruckAdded> call, Response<UpdateUserIsTruckAdded> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Truck Added");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserIsTruckAdded> call, Throwable t) {
-                Log.i("Not Successful", "User is Truck Added");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
     }
 
     //-------------------------------- Update User is Truck Added ----------------------------------

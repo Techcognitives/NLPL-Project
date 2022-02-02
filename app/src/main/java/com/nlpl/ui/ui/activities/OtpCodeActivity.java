@@ -42,8 +42,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.nlpl.R;
-import com.nlpl.model.UpdateUserDetails.UpdateUserPhoneNumber;
-import com.nlpl.services.UserService;
+import com.nlpl.model.UpdateMethods.UpdateUserDetails;
+import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserPhoneNumber;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.OTPReceiver;
 
@@ -54,11 +54,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.CertificatePinner;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class OtpCodeActivity extends AppCompatActivity {
 
@@ -288,8 +285,9 @@ public class OtpCodeActivity extends AppCompatActivity {
                         public void onClick(View view) {
                             alert.dismiss();
                             if (isEditPhone) {
-                                updateUserPhoneNumber(mobileNoFirebase);
-                                OtpCodeActivity.this.finish();
+                                Log.i("userId at otp code", userIdBundle + " " + mobileNoFirebase);
+                                UpdateUserDetails.updateUserPhoneNumber(userIdBundle, mobileNoFirebase);
+                                checkMobileNumberWithOTP(mobileNoFirebase);
                             } else {
                                 checkMobileNumberWithOTP(mobileNoFirebase);
                             }
@@ -373,29 +371,6 @@ public class OtpCodeActivity extends AppCompatActivity {
         OtpCodeActivity.this.finish();
     }
 
-    //-------------------------------- Update User Phone Number ------------------------------------
-    private void updateUserPhoneNumber(String getUserId) {
-
-        UpdateUserPhoneNumber updateUserPhoneNumber = new UpdateUserPhoneNumber(mobileNoFirebase);
-
-        Call<UpdateUserPhoneNumber> call = ApiClient.getUserService().updateUserPhoneNumber("" + getUserId, updateUserPhoneNumber);
-
-        call.enqueue(new Callback<UpdateUserPhoneNumber>() {
-            @Override
-            public void onResponse(Call<UpdateUserPhoneNumber> call, retrofit2.Response<UpdateUserPhoneNumber> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "PhoneNumber");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserPhoneNumber> call, Throwable t) {
-                Log.i("Not Successful", "PhoneNumber");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
 
     private void checkPhoneInAPI(String getMobile) {
         String receivedMobile = getMobile;

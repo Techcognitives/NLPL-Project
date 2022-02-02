@@ -10,7 +10,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -34,8 +33,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -43,7 +40,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -62,23 +58,12 @@ import com.nlpl.model.Responses.AddDriverResponse;
 import com.nlpl.model.Responses.UploadDriverSelfieResponse;
 import com.nlpl.model.Responses.UserResponse;
 import com.nlpl.model.Responses.UploadDriverLicenseResponse;
-import com.nlpl.model.UpdateDriverDetails.UpdateDriverEmailId;
-import com.nlpl.model.UpdateDriverDetails.UpdateDriverName;
-import com.nlpl.model.UpdateDriverDetails.UpdateDriverNumber;
-import com.nlpl.model.UpdateDriverDetails.UpdateDriverTruckId;
-import com.nlpl.model.UpdateTruckDetails.UpdateTruckDriverId;
-import com.nlpl.model.UpdateTruckDetails.UpdateTruckVehicleNumber;
-import com.nlpl.model.UpdateUserDetails.UpdateUserAddress;
-import com.nlpl.model.UpdateUserDetails.UpdateUserEmailId;
-import com.nlpl.model.UpdateUserDetails.UpdateUserIsDriverAdded;
-import com.nlpl.model.UpdateUserDetails.UpdateUserName;
-import com.nlpl.model.UpdateUserDetails.UpdateUserPhoneNumber;
-import com.nlpl.model.UpdateUserDetails.UpdateUserPinCode;
-import com.nlpl.model.UpdateUserDetails.UpdateUserPreferredLocation;
-import com.nlpl.model.UpdateUserDetails.UpdateUserStateCode;
-import com.nlpl.services.AddDriverService;
-import com.nlpl.services.AddTruckService;
-import com.nlpl.services.UserService;
+import com.nlpl.model.UpdateMethods.UpdateUserDetails;
+import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverEmailId;
+import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverName;
+import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverNumber;
+import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverTruckId;
+import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckDriverId;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
@@ -86,7 +71,6 @@ import com.nlpl.utils.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.xmlpull.v1.sax2.Driver;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -101,8 +85,6 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DriverDetailsActivity extends AppCompatActivity {
 
@@ -163,7 +145,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
             mobile = bundle.getString("mobile");
             truckIdPass = bundle.getString("truckIdPass");
         }
-
+        mQueue = Volley.newRequestQueue(DriverDetailsActivity.this);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         personalAndAddress = (View) findViewById(R.id.driver_details_personal_and_address);
@@ -203,6 +185,11 @@ public class DriverDetailsActivity extends AppCompatActivity {
         address.addTextChangedListener(driverNameWatcher);
 
         address.setFilters(new InputFilter[]{filter});
+
+        if (isEdit) {
+            checkPhoneInAPI(mobile);
+        }
+
 
         driverEmailId.addTextChangedListener(new TextWatcher() {
             @Override
@@ -330,7 +317,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 //            okDriverDetails.setBackgroundResource(R.drawable.button_active);
 //        }
 
-        mQueue = Volley.newRequestQueue(DriverDetailsActivity.this);
+
 
         if (userId != null) {
             getUserDetails();
@@ -602,7 +589,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         Log.i("Entered PIN", enteredPin);
 
-        String url = "http://13.234.163.179:3000/user/locationData/"+enteredPin;
+        String url = "http://13.234.163.179:3000/user/locationData/" + enteredPin;
         Log.i("url for truckByTruckId", url);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
@@ -610,7 +597,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 try {
                     JSONObject obj = response.getJSONObject("data");
                     String stateByPinCode = obj.getString("stateCode");
-                    String  distByPinCode = obj.getString("district");
+                    String distByPinCode = obj.getString("district");
 
                     selectStateText.setText(stateByPinCode);
                     selectDistrictText.setText(distByPinCode);
@@ -969,8 +956,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 });
                 //------------------------------------------------------------------------------------------
             } else {
-
-                updateUserIsDriverAdded();
+                //update Driver as a user (IsDriverAdded)
+                UpdateUserDetails.updateUserIsDriverAdded(userId, "1");
 
 
                 if (isEdit) {
@@ -985,32 +972,39 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
                     if (driverName.getText().toString() != null) {
                         updateDriverName();
-                        updateUserDriverName();
+                        //update Driver as a user (Name)
+                        UpdateUserDetails.updateUserName(driverUserIdGet, driverName.getText().toString());
                     }
                     if (driverEmailId.getText().toString() != null) {
                         updateDriverEmailId();
-                        updateUserDriverEmailId();
+                        //update Driver as a user (Email)
+                        UpdateUserDetails.updateUserEmailId(driverUserIdGet, driverEmailId.getText().toString());
                     }
 
                     if (driverMobile.getText().toString() != null && !driverNumberAPI.equals("91" + driverMobile.getText().toString())) {
                         updateDriverNumber();
-                        updateUserDriverPhoneNumber();
+                        //update Driver as a user (Phone)
+                        UpdateUserDetails.updateUserPhoneNumber(driverUserIdGet, "91" + driverMobile.getText().toString());
                     }
 
                     if (address.getText().toString() != null) {
-                        updateUserDriverAddress();
+                        //update Driver as a user (Address)
+                        UpdateUserDetails.updateUserAddress(driverUserIdGet, address.getText().toString());
                     }
 
                     if (pinCode.getText().toString() != null) {
-                        updateUserDriverPinCode();
+                        //update Driver as a user (PinCode)
+                        UpdateUserDetails.updateUserPinCode(driverUserIdGet, pinCode.getText().toString());
                     }
 
                     if (selectStateText.getText().toString() != null) {
-                        updateUserDriverStateCode();
+                        //update Driver as a user (PinCode)
+                        UpdateUserDetails.updateUserState(driverUserIdGet, selectStateText.getText().toString());
                     }
 
                     if (selectDistrictText.getText().toString() != null) {
-                        updateUserDriverPreferredLocation();
+                        //update Driver as a user (City)
+                        UpdateUserDetails.updateUserCity(driverUserIdGet, selectDistrictText.getText().toString());
                     }
 
                     Intent i8 = new Intent(DriverDetailsActivity.this, ViewDriverDetailsActivity.class);
@@ -1020,6 +1014,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                     startActivity(i8);
                     finish();
                     overridePendingTransition(0, 0);
+
                 } else {
 
                     if (alreadyDriver) {
@@ -1028,6 +1023,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                         saveDriver(createDriver());
                         saveDriverUser(createDriverUser());
                     }
+
                     //----------------------- Alert Dialog -------------------------------------------------
                     Dialog alert = new Dialog(DriverDetailsActivity.this);
                     alert.setContentView(R.layout.dialog_alert);
@@ -1286,30 +1282,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         mQueue.add(request);
 
-    }
-
-    //-------------------------------- Update User is Driver Added ---------------------------------
-    private void updateUserIsDriverAdded() {
-
-        UpdateUserIsDriverAdded updateUserIsDriverAdded = new UpdateUserIsDriverAdded("1");
-
-        Call<UpdateUserIsDriverAdded> call = ApiClient.getUserService().updateUserIsDriverAdded("" + userId, updateUserIsDriverAdded);
-
-        call.enqueue(new Callback<UpdateUserIsDriverAdded>() {
-            @Override
-            public void onResponse(Call<UpdateUserIsDriverAdded> call, Response<UpdateUserIsDriverAdded> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Driver Added");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserIsDriverAdded> call, Throwable t) {
-                Log.i("Not Successful", "User is Driver Added");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
     }
 
     //-------------------------------- Update User is Driver Added ---------------------------------
@@ -1589,6 +1561,39 @@ public class DriverDetailsActivity extends AppCompatActivity {
                             alreadyDriver = true;
                             Log.i("Already", "Driver");
 
+                            if (receivedMobile.equals("91" + driverMobile.getText().toString())) {
+                                if (isEdit) {
+                                    selfCheckBox.setVisibility(View.GONE);
+                                    getCurrentLocation.setVisibility(View.INVISIBLE);
+                                    driverName.setCursorVisible(false);
+                                    driverName.setEnabled(false);
+                                    driverMobile.setCursorVisible(false);
+                                    driverMobile.setEnabled(false);
+                                    address.setCursorVisible(false);
+                                    address.setEnabled(false);
+                                    pinCode.setCursorVisible(false);
+                                    pinCode.setEnabled(false);
+                                    driverEmailId.setCursorVisible(false);
+                                    driverEmailId.setEnabled(false);
+                                    selectDistrictText.setEnabled(false);
+                                    selectStateText.setEnabled(false);
+                                } else {
+                                    selfCheckBox.setVisibility(View.VISIBLE);
+                                    getCurrentLocation.setVisibility(View.INVISIBLE);
+                                    driverName.setCursorVisible(true);
+                                    driverName.setEnabled(true);
+                                    driverMobile.setCursorVisible(true);
+                                    driverMobile.setEnabled(true);
+                                    address.setCursorVisible(true);
+                                    address.setEnabled(true);
+                                    pinCode.setCursorVisible(true);
+                                    pinCode.setEnabled(true);
+                                    driverEmailId.setCursorVisible(true);
+                                    driverEmailId.setEnabled(true);
+                                    selectDistrictText.setEnabled(true);
+                                    selectStateText.setEnabled(true);
+                                }
+                            }
 
                             break;
                         } else {
@@ -1684,171 +1689,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         //------------------------------------------------------------------------------------------------
 
-    }
-
-    //-------------------------------- Update User Name --------------------------------------------
-    private void updateUserDriverName() {
-
-        UpdateUserName updateUserName = new UpdateUserName(driverName.getText().toString());
-
-        Call<UpdateUserName> call = ApiClient.getUserService().updateUserName("" + driverUserIdGet, updateUserName);
-
-        call.enqueue(new Callback<UpdateUserName>() {
-            @Override
-            public void onResponse(Call<UpdateUserName> call, Response<UpdateUserName> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "UserName");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserName> call, Throwable t) {
-                Log.i("Not Successful", "UserName");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    private void updateUserDriverPhoneNumber() {
-
-        UpdateUserPhoneNumber updateUserPhoneNumber = new UpdateUserPhoneNumber("91" + driverMobile.getText().toString());
-
-        Call<UpdateUserPhoneNumber> call = ApiClient.getUserService().updateUserPhoneNumber("" + driverUserIdGet, updateUserPhoneNumber);
-
-        call.enqueue(new Callback<UpdateUserPhoneNumber>() {
-            @Override
-            public void onResponse(Call<UpdateUserPhoneNumber> call, Response<UpdateUserPhoneNumber> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "PhoneNumber");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserPhoneNumber> call, Throwable t) {
-                Log.i("Not Successful", "PhoneNumber");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    private void updateUserDriverEmailId() {
-
-        UpdateUserEmailId updateUserEmailId = new UpdateUserEmailId(driverEmailId.getText().toString());
-
-        Call<UpdateUserEmailId> call = ApiClient.getUserService().updateUserEmailId("" + driverUserIdGet, updateUserEmailId);
-
-        call.enqueue(new Callback<UpdateUserEmailId>() {
-            @Override
-            public void onResponse(Call<UpdateUserEmailId> call, Response<UpdateUserEmailId> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User Email Id");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserEmailId> call, Throwable t) {
-                Log.i("Not Successful", "User Email Id");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    private void updateUserDriverAddress() {
-
-        UpdateUserAddress updateUserAddress = new UpdateUserAddress(address.getText().toString());
-
-        Call<UpdateUserAddress> call = ApiClient.getUserService().updateUserAddress("" + driverUserIdGet, updateUserAddress);
-
-        call.enqueue(new Callback<UpdateUserAddress>() {
-            @Override
-            public void onResponse(Call<UpdateUserAddress> call, Response<UpdateUserAddress> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User Address");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserAddress> call, Throwable t) {
-                Log.i("Not Successful", "UserAddress");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    //-------------------------------- Update User Preferred Location ------------------------------
-    private void updateUserDriverPreferredLocation() {
-
-        UpdateUserPreferredLocation updateUserPreferredLocation = new UpdateUserPreferredLocation(selectDistrictText.getText().toString());
-
-        Call<UpdateUserPreferredLocation> call = ApiClient.getUserService().updateUserPreferredLocation("" + driverUserIdGet, updateUserPreferredLocation);
-
-        call.enqueue(new Callback<UpdateUserPreferredLocation>() {
-            @Override
-            public void onResponse(Call<UpdateUserPreferredLocation> call, Response<UpdateUserPreferredLocation> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User Preferred Location");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserPreferredLocation> call, Throwable t) {
-                Log.i("Not Successful", "User Preferred Location");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    //-------------------------------- Update User State Code --------------------------------------
-    private void updateUserDriverStateCode() {
-
-        UpdateUserStateCode updateUserStateCode = new UpdateUserStateCode(selectStateText.getText().toString());
-
-        Call<UpdateUserStateCode> call = ApiClient.getUserService().updateUserStateCode("" + driverUserIdGet, updateUserStateCode);
-
-        call.enqueue(new Callback<UpdateUserStateCode>() {
-            @Override
-            public void onResponse(Call<UpdateUserStateCode> call, Response<UpdateUserStateCode> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User State Code");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserStateCode> call, Throwable t) {
-                Log.i("Not Successful", "User State Code");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    //-------------------------------- Update User Pin Code ----------------------------------------
-    private void updateUserDriverPinCode() {
-
-        UpdateUserPinCode updateUserStateCode = new UpdateUserPinCode(pinCode.getText().toString());
-
-        Call<UpdateUserPinCode> call = ApiClient.getUserService().updateUserPinCode("" + driverUserIdGet, updateUserStateCode);
-
-        call.enqueue(new Callback<UpdateUserPinCode>() {
-            @Override
-            public void onResponse(Call<UpdateUserPinCode> call, Response<UpdateUserPinCode> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User Pin Code");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserPinCode> call, Throwable t) {
-                Log.i("Not Successful", "User Pin Code");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
     }
 
     private void requestPermissionsForCamera() {

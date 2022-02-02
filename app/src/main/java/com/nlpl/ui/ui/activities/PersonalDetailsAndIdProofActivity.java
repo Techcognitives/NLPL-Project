@@ -54,22 +54,7 @@ import com.nlpl.R;
 import com.nlpl.model.Requests.ImageRequest;
 import com.nlpl.model.Responses.ImageResponse;
 import com.nlpl.model.Responses.UploadImageResponse;
-import com.nlpl.model.UpdateUserDetails.UpdateUserAddress;
-import com.nlpl.model.UpdateUserDetails.UpdateUserEmailId;
-import com.nlpl.model.UpdateUserDetails.UpdateUserIsBankDetailsGiven;
-import com.nlpl.model.UpdateUserDetails.UpdateUserIsCompanyAdded;
-import com.nlpl.model.UpdateUserDetails.UpdateUserIsDriverAdded;
-import com.nlpl.model.UpdateUserDetails.UpdateUserIsPersonalDetailsAdded;
-import com.nlpl.model.UpdateUserDetails.UpdateUserIsRegistrationDone;
-import com.nlpl.model.UpdateUserDetails.UpdateUserIsTruckAdded;
-import com.nlpl.model.UpdateUserDetails.UpdateUserName;
-import com.nlpl.model.UpdateUserDetails.UpdateUserPhoneNumber;
-import com.nlpl.model.UpdateUserDetails.UpdateUserPinCode;
-import com.nlpl.model.UpdateUserDetails.UpdateUserPreferredLanguage;
-import com.nlpl.model.UpdateUserDetails.UpdateUserPreferredLocation;
-import com.nlpl.model.UpdateUserDetails.UpdateUserStateCode;
-import com.nlpl.model.UpdateUserDetails.UpdateUserType;
-import com.nlpl.services.UserService;
+import com.nlpl.model.UpdateMethods.UpdateUserDetails;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
@@ -90,8 +75,6 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
@@ -275,7 +258,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         getImageURL();
         getUserDetails();
-
 
         previewPan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -669,35 +651,34 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     public void onClickPersonalProof(View view) {
 
         if (name.getText().toString() != null) {
-            updateUserName();
+            UpdateUserDetails.updateUserName(userId, name.getText().toString());
         }
 
         if (emailIdEdit.getText().toString() != null) {
-            updateUserEmailId();
+            UpdateUserDetails.updateUserEmailId(userId, emailIdEdit.getText().toString());
         }
 
         if (address.getText().toString() != null) {
-            updateUserAddress();
+            UpdateUserDetails.updateUserAddress(userId, address.getText().toString());
         }
 
         if (pinCode.getText().toString() != null) {
-            updateUserPinCode();
+            UpdateUserDetails.updateUserPinCode(userId, pinCode.getText().toString());
         }
 
         if (selectStateText.getText().toString() != null) {
-            updateUserStateCode();
+            UpdateUserDetails.updateUserState(userId, selectStateText.getText().toString());
         }
 
         if (selectDistrictText.getText().toString() != null) {
-            updateUserPreferredLocation();
+            UpdateUserDetails.updateUserCity(userId, selectDistrictText.getText().toString());
         }
 
         if (role != null) {
-            updateUserType();
+            UpdateUserDetails.updateUserType(userId, role);
         }
 
         if (mobileString.equals("91" + mobileEdit.getText().toString()) || mobileEdit.getText().toString().isEmpty()) {
-
             Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, ViewPersonalDetailsActivity.class);
             i8.putExtra("mobile", mobileAPI);
             i8.putExtra("userId", userId);
@@ -903,7 +884,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         }
     };
-    //----------------------------------------------------------------------------------------------
 
     //-------------------------------upload Image---------------------------------------------------
     @Override
@@ -1329,366 +1309,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             }
         });
         mQueue.add(request);
-    }
-
-    //-------------------------------- Update User Name --------------------------------------------
-    private void updateUserName() {
-
-        UpdateUserName updateUserName = new UpdateUserName(name.getText().toString());
-
-        Call<UpdateUserName> call = ApiClient.getUserService().updateUserName("" + userId, updateUserName);
-
-        call.enqueue(new Callback<UpdateUserName>() {
-            @Override
-            public void onResponse(Call<UpdateUserName> call, Response<UpdateUserName> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "UserName");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserName> call, Throwable t) {
-                Log.i("Not Successful", "UserName");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    //-------------------------------- Update User Phone Number ------------------------------------
-    private void updateUserPhoneNumber() {
-
-        UpdateUserPhoneNumber updateUserPhoneNumber = new UpdateUserPhoneNumber("91" + mobileEdit.getText().toString());
-
-        Call<UpdateUserPhoneNumber> call = ApiClient.getUserService().updateUserPhoneNumber("" + userId, updateUserPhoneNumber);
-
-        call.enqueue(new Callback<UpdateUserPhoneNumber>() {
-            @Override
-            public void onResponse(Call<UpdateUserPhoneNumber> call, Response<UpdateUserPhoneNumber> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "PhoneNumber");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserPhoneNumber> call, Throwable t) {
-                Log.i("Not Successful", "PhoneNumber");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    //-------------------------------- Update User Type --------------------------------------------
-    private void updateUserType() {
-
-        UpdateUserType updateUserType = new UpdateUserType(role);
-
-        Call<UpdateUserType> call = ApiClient.getUserService().updateUserType("" + userId, updateUserType);
-
-        call.enqueue(new Callback<UpdateUserType>() {
-            @Override
-            public void onResponse(Call<UpdateUserType> call, Response<UpdateUserType> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "UserType");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserType> call, Throwable t) {
-                Log.i("Not Successful", "UserType");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    //-------------------------------- Update User Preferred Language ------------------------------
-    private void updateUserPreferredLanguage() {
-
-        UpdateUserPreferredLanguage updateUserPreferredLanguage = new UpdateUserPreferredLanguage(mobileEdit.getText().toString());
-
-        Call<UpdateUserPreferredLanguage> call = ApiClient.getUserService().updateUserPreferredLanguage("" + userId, updateUserPreferredLanguage);
-
-        call.enqueue(new Callback<UpdateUserPreferredLanguage>() {
-            @Override
-            public void onResponse(Call<UpdateUserPreferredLanguage> call, Response<UpdateUserPreferredLanguage> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User Preferred Language");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserPreferredLanguage> call, Throwable t) {
-                Log.i("Not Successful", "User Preferred Language");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    //---------------------------- Update User is Registration Done --------------------------------
-    private void updateUserIsRegistrationDone() {
-
-        UpdateUserIsRegistrationDone updateUserIsRegistrationDone = new UpdateUserIsRegistrationDone(mobileEdit.getText().toString());
-
-        Call<UpdateUserIsRegistrationDone> call = ApiClient.getUserService().updateUserIsRegistrationDone("" + userId, updateUserIsRegistrationDone);
-
-        call.enqueue(new Callback<UpdateUserIsRegistrationDone>() {
-            @Override
-            public void onResponse(Call<UpdateUserIsRegistrationDone> call, Response<UpdateUserIsRegistrationDone> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Registration Done");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserIsRegistrationDone> call, Throwable t) {
-                Log.i("Not Successful", "User is Registration Done");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    //------------------------------------ Update User Address -------------------------------------
-    private void updateUserAddress() {
-
-        UpdateUserAddress updateUserAddress = new UpdateUserAddress(address.getText().toString());
-
-        Call<UpdateUserAddress> call = ApiClient.getUserService().updateUserAddress("" + userId, updateUserAddress);
-
-        call.enqueue(new Callback<UpdateUserAddress>() {
-            @Override
-            public void onResponse(Call<UpdateUserAddress> call, Response<UpdateUserAddress> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User Address");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserAddress> call, Throwable t) {
-                Log.i("Not Successful", "UserAddress");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    //-------------------------------- Update User Preferred Location ------------------------------
-    private void updateUserPreferredLocation() {
-
-        UpdateUserPreferredLocation updateUserPreferredLocation = new UpdateUserPreferredLocation(selectDistrictText.getText().toString());
-
-        Call<UpdateUserPreferredLocation> call = ApiClient.getUserService().updateUserPreferredLocation("" + userId, updateUserPreferredLocation);
-
-        call.enqueue(new Callback<UpdateUserPreferredLocation>() {
-            @Override
-            public void onResponse(Call<UpdateUserPreferredLocation> call, Response<UpdateUserPreferredLocation> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User Preferred Location");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserPreferredLocation> call, Throwable t) {
-                Log.i("Not Successful", "User Preferred Location");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    //-------------------------------- Update User State Code --------------------------------------
-    private void updateUserStateCode() {
-
-        UpdateUserStateCode updateUserStateCode = new UpdateUserStateCode(selectStateText.getText().toString());
-
-        Call<UpdateUserStateCode> call = ApiClient.getUserService().updateUserStateCode("" + userId, updateUserStateCode);
-
-        call.enqueue(new Callback<UpdateUserStateCode>() {
-            @Override
-            public void onResponse(Call<UpdateUserStateCode> call, Response<UpdateUserStateCode> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User State Code");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserStateCode> call, Throwable t) {
-                Log.i("Not Successful", "User State Code");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    //-------------------------------- Update User Pin Code ----------------------------------------
-    private void updateUserPinCode() {
-
-        UpdateUserPinCode updateUserStateCode = new UpdateUserPinCode(pinCode.getText().toString());
-
-        Call<UpdateUserPinCode> call = ApiClient.getUserService().updateUserPinCode("" + userId, updateUserStateCode);
-
-        call.enqueue(new Callback<UpdateUserPinCode>() {
-            @Override
-            public void onResponse(Call<UpdateUserPinCode> call, Response<UpdateUserPinCode> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User Pin Code");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserPinCode> call, Throwable t) {
-                Log.i("Not Successful", "User Pin Code");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    //-------------------------------- Update User is Truck Added ----------------------------------
-    private void updateUserIsTruckAdded() {
-
-        UpdateUserIsTruckAdded updateUserIsTruckAdded = new UpdateUserIsTruckAdded(mobileEdit.getText().toString());
-
-        Call<UpdateUserIsTruckAdded> call = ApiClient.getUserService().updateUserIsTruckAdded("" + userId, updateUserIsTruckAdded);
-
-        call.enqueue(new Callback<UpdateUserIsTruckAdded>() {
-            @Override
-            public void onResponse(Call<UpdateUserIsTruckAdded> call, Response<UpdateUserIsTruckAdded> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Truck Added");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserIsTruckAdded> call, Throwable t) {
-                Log.i("Not Successful", "User is Truck Added");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    //-------------------------------- Update User is Driver Added ---------------------------------
-    private void updateUserIsDriverAdded() {
-
-        UpdateUserIsDriverAdded updateUserIsDriverAdded = new UpdateUserIsDriverAdded(mobileEdit.getText().toString());
-
-        Call<UpdateUserIsDriverAdded> call = ApiClient.getUserService().updateUserIsDriverAdded("" + userId, updateUserIsDriverAdded);
-
-        call.enqueue(new Callback<UpdateUserIsDriverAdded>() {
-            @Override
-            public void onResponse(Call<UpdateUserIsDriverAdded> call, Response<UpdateUserIsDriverAdded> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Driver Added");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserIsDriverAdded> call, Throwable t) {
-                Log.i("Not Successful", "User is Driver Added");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    //-------------------------------- Update User is Bank Added -----------------------------------
-    private void updateUserIsBankDetailsGiven() {
-
-        UpdateUserIsBankDetailsGiven updateUserIsDriverAdded = new UpdateUserIsBankDetailsGiven(mobileEdit.getText().toString());
-
-        Call<UpdateUserIsBankDetailsGiven> call = ApiClient.getUserService().updateUserIsBankDetailsGiven("" + userId, updateUserIsDriverAdded);
-
-        call.enqueue(new Callback<UpdateUserIsBankDetailsGiven>() {
-            @Override
-            public void onResponse(Call<UpdateUserIsBankDetailsGiven> call, Response<UpdateUserIsBankDetailsGiven> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Bank Added");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserIsBankDetailsGiven> call, Throwable t) {
-                Log.i("Not Successful", "User is Bank Added");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    //-------------------------------- Update User is Company Added -------------------------------
-    private void updateUserIsCompanyAdded() {
-
-        UpdateUserIsCompanyAdded updateUserIsCompanyAdded = new UpdateUserIsCompanyAdded(mobileEdit.getText().toString());
-
-        Call<UpdateUserIsCompanyAdded> call = ApiClient.getUserService().updateUserIsCompanyAdded("" + userId, updateUserIsCompanyAdded);
-
-        call.enqueue(new Callback<UpdateUserIsCompanyAdded>() {
-            @Override
-            public void onResponse(Call<UpdateUserIsCompanyAdded> call, Response<UpdateUserIsCompanyAdded> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Company Added");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserIsCompanyAdded> call, Throwable t) {
-                Log.i("Not Successful", "User is Company Added");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    //-------------------------------- Update User is Personal Details -----------------------------
-    private void updateUserIsPersonalDetailsAdded() {
-
-        UpdateUserIsPersonalDetailsAdded updateUserIsPersonalDetailsAdded = new UpdateUserIsPersonalDetailsAdded(mobileEdit.getText().toString());
-
-        Call<UpdateUserIsPersonalDetailsAdded> call = ApiClient.getUserService().updateUserIsPersonalDetailsAdded("" + userId, updateUserIsPersonalDetailsAdded);
-
-        call.enqueue(new Callback<UpdateUserIsPersonalDetailsAdded>() {
-            @Override
-            public void onResponse(Call<UpdateUserIsPersonalDetailsAdded> call, Response<UpdateUserIsPersonalDetailsAdded> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Personal Details");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserIsPersonalDetailsAdded> call, Throwable t) {
-                Log.i("Not Successful", "User is Personal Details");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    //-------------------------------- Update User Email Id ----------------------------------------
-    private void updateUserEmailId() {
-
-        UpdateUserEmailId updateUserEmailId = new UpdateUserEmailId(emailIdEdit.getText().toString());
-
-        Call<UpdateUserEmailId> call = ApiClient.getUserService().updateUserEmailId("" + userId, updateUserEmailId);
-
-        call.enqueue(new Callback<UpdateUserEmailId>() {
-            @Override
-            public void onResponse(Call<UpdateUserEmailId> call, Response<UpdateUserEmailId> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User Email Id");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserEmailId> call, Throwable t) {
-                Log.i("Not Successful", "User Email Id");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
     }
 
     private void getImageURL() {

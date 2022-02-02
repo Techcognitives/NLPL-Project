@@ -34,8 +34,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
-import com.nlpl.model.UpdateUserDetails.UpdateUserIsPersonalDetailsAdded;
-import com.nlpl.services.UserService;
+import com.nlpl.model.UpdateMethods.UpdateUserDetails;
+import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsPersonalDetailsAdded;
 import com.nlpl.model.Requests.ImageRequest;
 import com.nlpl.model.Responses.ImageResponse;
 import com.nlpl.model.Responses.UploadImageResponse;
@@ -52,8 +52,6 @@ import java.io.File;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -602,7 +600,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
     public void onClickOKPersonal(View view) {
         if (isPanUploaded && isFrontUploaded && isProfileUploaded) {
-            updateUserIsPersonalDetailsAdded();
+            UpdateUserDetails.updateUserIsPersonalDetailsAdded(userId, "1");
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(PersonalDetailsActivity.this);
             alert.setContentView(R.layout.dialog_alert);
@@ -703,30 +701,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 Log.i("failed:", "failed");
             }
         });
-    }
-
-    //-------------------------------- Update User is Personal Details -----------------------------
-    private void updateUserIsPersonalDetailsAdded() {
-
-        UpdateUserIsPersonalDetailsAdded updateUserIsPersonalDetailsAdded = new UpdateUserIsPersonalDetailsAdded("1");
-
-        Call<UpdateUserIsPersonalDetailsAdded> call = ApiClient.getUserService().updateUserIsPersonalDetailsAdded("" + userId, updateUserIsPersonalDetailsAdded);
-
-        call.enqueue(new Callback<UpdateUserIsPersonalDetailsAdded>() {
-            @Override
-            public void onResponse(Call<UpdateUserIsPersonalDetailsAdded> call, Response<UpdateUserIsPersonalDetailsAdded> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Personal Details");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserIsPersonalDetailsAdded> call, Throwable t) {
-                Log.i("Not Successful", "User is Personal Details");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
     }
 
     public String getRealPathFromURI(Uri uri) {

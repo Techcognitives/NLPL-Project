@@ -39,14 +39,12 @@ import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BidsAcceptedModel;
 import com.nlpl.model.ModelForRecyclerView.BidsReceivedModel;
 import com.nlpl.model.ModelForRecyclerView.BidsResponsesModel;
-import com.nlpl.model.UpdateBids.UpdateBidStatusAccepted;
-import com.nlpl.model.UpdateBids.UpdateBidStatusFinalAccepted;
-import com.nlpl.model.UpdateBids.UpdateBudgetCustomerForSP;
-import com.nlpl.model.UpdateLoadPost.UpdateCustomerNoteForSP;
-import com.nlpl.model.UpdateLoadPost.UpdateCustomerBudget;
-import com.nlpl.model.UpdateLoadPost.UpdateLoadStatusSubmitted;
-import com.nlpl.services.BidLoadService;
-import com.nlpl.services.PostLoadService;
+import com.nlpl.model.UpdateModel.Models.UpdateBids.UpdateBidStatusAccepted;
+import com.nlpl.model.UpdateModel.Models.UpdateBids.UpdateBidStatusFinalAccepted;
+import com.nlpl.model.UpdateModel.Models.UpdateBids.UpdateBudgetCustomerForSP;
+import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateCustomerNoteForSP;
+import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateCustomerBudget;
+import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadStatusSubmitted;
 import com.nlpl.ui.ui.adapters.BidsAcceptedAdapter;
 import com.nlpl.ui.ui.adapters.BidsReceivedAdapter;
 import com.nlpl.ui.ui.adapters.BidsResponsesAdapter;
@@ -64,8 +62,6 @@ import java.util.Collections;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CustomerDashboardActivity extends AppCompatActivity {
 

@@ -23,7 +23,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -60,20 +59,16 @@ import com.nlpl.model.ModelForRecyclerView.BidSubmittedModel;
 import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
 import com.nlpl.model.Requests.BidLoadRequest;
 import com.nlpl.model.Responses.BidLadResponse;
-import com.nlpl.model.UpdateBids.UpdateAssignedDriverId;
-import com.nlpl.model.UpdateBids.UpdateAssignedTruckIdToBid;
-import com.nlpl.model.UpdateBids.UpdateBidStatusRespondedBySP;
-import com.nlpl.model.UpdateBids.UpdateSPQuoteFinal;
-import com.nlpl.model.UpdateBids.UpdateSpNoteForCustomer;
-import com.nlpl.services.BidLoadService;
-import com.nlpl.services.PostLoadService;
+import com.nlpl.model.UpdateModel.Models.UpdateBids.UpdateAssignedDriverId;
+import com.nlpl.model.UpdateModel.Models.UpdateBids.UpdateAssignedTruckIdToBid;
+import com.nlpl.model.UpdateModel.Models.UpdateBids.UpdateBidStatusRespondedBySP;
+import com.nlpl.model.UpdateModel.Models.UpdateBids.UpdateSPQuoteFinal;
+import com.nlpl.model.UpdateModel.Models.UpdateBids.UpdateSpNoteForCustomer;
 import com.nlpl.ui.ui.adapters.LoadNotificationAdapter;
 import com.nlpl.ui.ui.adapters.LoadSubmittedAdapter;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.EnglishNumberToWords;
-import com.nlpl.utils.GetLocationDrop;
-import com.nlpl.utils.GetLocationPickUp;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -87,8 +82,6 @@ import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DashboardActivity extends AppCompatActivity {
 

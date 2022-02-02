@@ -6,7 +6,6 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -43,22 +42,19 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.nlpl.R;
 import com.nlpl.model.Requests.CompanyRequest;
 import com.nlpl.model.Responses.CompanyResponse;
-import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyAddress;
-import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyCity;
-import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyGSTNumber;
-import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyName;
-import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyPAN;
-import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyState;
-import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyType;
-import com.nlpl.model.UpdateCompanyDetails.UpdateCompanyZip;
-import com.nlpl.model.UpdateUserDetails.UpdateUserIsCompanyAdded;
-import com.nlpl.services.CompanyService;
-import com.nlpl.services.UserService;
+import com.nlpl.model.UpdateMethods.UpdateUserDetails;
+import com.nlpl.model.UpdateModel.Models.UpdateCompanyDetails.UpdateCompanyAddress;
+import com.nlpl.model.UpdateModel.Models.UpdateCompanyDetails.UpdateCompanyCity;
+import com.nlpl.model.UpdateModel.Models.UpdateCompanyDetails.UpdateCompanyGSTNumber;
+import com.nlpl.model.UpdateModel.Models.UpdateCompanyDetails.UpdateCompanyName;
+import com.nlpl.model.UpdateModel.Models.UpdateCompanyDetails.UpdateCompanyPAN;
+import com.nlpl.model.UpdateModel.Models.UpdateCompanyDetails.UpdateCompanyState;
+import com.nlpl.model.UpdateModel.Models.UpdateCompanyDetails.UpdateCompanyType;
+import com.nlpl.model.UpdateModel.Models.UpdateCompanyDetails.UpdateCompanyZip;
+import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsCompanyAdded;
 import com.nlpl.utils.ApiClient;
 
 import org.json.JSONArray;
@@ -72,8 +68,6 @@ import java.util.Locale;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CompanyDetailsActivity extends AppCompatActivity {
 
@@ -441,8 +435,8 @@ public class CompanyDetailsActivity extends AppCompatActivity {
             overridePendingTransition(0, 0);
         } else {
             saveCompany(createCompany());
-
-            updateUserIsCompanyAdded();
+            //Update User Company (isCompanyAdded)
+            UpdateUserDetails.updateUserIsCompanyAdded(userId, "1");
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(CompanyDetailsActivity.this);
             alert.setContentView(R.layout.dialog_alert);
@@ -859,30 +853,6 @@ public class CompanyDetailsActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<UpdateCompanyType> call, Throwable t) {
                 Log.i("Not Successful", "Company Details Update");
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    //-------------------------------- Update User is Company Added -------------------------------
-    private void updateUserIsCompanyAdded() {
-
-        UpdateUserIsCompanyAdded updateUserIsCompanyAdded = new UpdateUserIsCompanyAdded("1");
-
-        Call<UpdateUserIsCompanyAdded> call = ApiClient.getUserService().updateUserIsCompanyAdded("" + userId, updateUserIsCompanyAdded);
-
-        call.enqueue(new Callback<UpdateUserIsCompanyAdded>() {
-            @Override
-            public void onResponse(Call<UpdateUserIsCompanyAdded> call, Response<UpdateUserIsCompanyAdded> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Company Added");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserIsCompanyAdded> call, Throwable t) {
-                Log.i("Not Successful", "User is Company Added");
-
             }
         });
 //--------------------------------------------------------------------------------------------------

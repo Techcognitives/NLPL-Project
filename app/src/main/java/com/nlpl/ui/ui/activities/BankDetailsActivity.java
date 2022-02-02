@@ -1,7 +1,6 @@
 package com.nlpl.ui.ui.activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -10,7 +9,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -20,9 +18,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -43,23 +39,16 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.nlpl.R;
 import com.nlpl.model.Requests.BankRequest;
-import com.nlpl.model.Requests.ImageRequest;
 import com.nlpl.model.Responses.BankResponse;
-import com.nlpl.model.Responses.ImageResponse;
 import com.nlpl.model.Responses.UploadChequeResponse;
-import com.nlpl.model.Responses.UploadImageResponse;
-import com.nlpl.model.UpdateBankDetails.UpdateBankAccountHolderName;
-import com.nlpl.model.UpdateBankDetails.UpdateBankAccountNumber;
-import com.nlpl.model.UpdateBankDetails.UpdateBankIFSICode;
-import com.nlpl.model.UpdateBankDetails.UpdateBankName;
-import com.nlpl.model.UpdateBankDetails.UpdateBankReEnterAccountNumber;
-import com.nlpl.model.UpdateUserDetails.UpdateUserIsBankDetailsGiven;
-import com.nlpl.services.BankService;
-import com.nlpl.services.UserService;
+import com.nlpl.model.UpdateMethods.UpdateUserDetails;
+import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankAccountNumber;
+import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankIFSICode;
+import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankName;
+import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankReEnterAccountNumber;
+import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsBankDetailsGiven;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
@@ -70,10 +59,6 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -81,8 +66,6 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BankDetailsActivity extends AppCompatActivity {
 
@@ -475,7 +458,8 @@ public class BankDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         alert.dismiss();
-                        updateUserIsBankDetailsGiven();
+                        //Update User Bank (IsBankAdded)
+                        UpdateUserDetails.updateUserIsBankDetailsGiven(userId, "1");
 
                         Intent intent = new Intent(BankDetailsActivity.this, ViewBankDetailsActivity.class);
                         intent.putExtra("userId", userId);
@@ -897,29 +881,6 @@ public class BankDetailsActivity extends AppCompatActivity {
 
         mQueue.add(request);
 
-    }
-
-    private void updateUserIsBankDetailsGiven() {
-
-        UpdateUserIsBankDetailsGiven updateUserIsDriverAdded = new UpdateUserIsBankDetailsGiven("1");
-
-        Call<UpdateUserIsBankDetailsGiven> call = ApiClient.getUserService().updateUserIsBankDetailsGiven("" + userId, updateUserIsDriverAdded);
-
-        call.enqueue(new Callback<UpdateUserIsBankDetailsGiven>() {
-            @Override
-            public void onResponse(Call<UpdateUserIsBankDetailsGiven> call, Response<UpdateUserIsBankDetailsGiven> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Bank Added");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateUserIsBankDetailsGiven> call, Throwable t) {
-                Log.i("Not Successful", "User is Bank Added");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
     }
 
     private void updateBankName() {

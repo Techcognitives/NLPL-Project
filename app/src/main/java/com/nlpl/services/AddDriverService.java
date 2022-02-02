@@ -2,16 +2,14 @@ package com.nlpl.services;
 
 import com.nlpl.model.Requests.AddDriverRequest;
 import com.nlpl.model.Responses.AddDriverResponse;
-import com.nlpl.model.UpdateBankDetails.UpdateBankIFSICode;
-import com.nlpl.model.UpdateDriverDetails.UpdateDriverEmailId;
-import com.nlpl.model.UpdateDriverDetails.UpdateDriverName;
-import com.nlpl.model.UpdateDriverDetails.UpdateDriverNumber;
-import com.nlpl.model.UpdateDriverDetails.UpdateDriverTruckId;
-import com.nlpl.model.UpdateDriverDetails.UpdateDriverUploadLicense;
+import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverEmailId;
+import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverName;
+import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverNumber;
+import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverTruckId;
+import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverUploadLicense;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;

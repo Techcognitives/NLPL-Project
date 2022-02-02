@@ -14,12 +14,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -30,12 +26,10 @@ import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.DriverModel;
 import com.nlpl.model.ModelForRecyclerView.TruckModel;
-import com.nlpl.model.UpdateTruckDetails.UpdateTruckDriverId;
+import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckDriverId;
 import com.nlpl.services.AddTruckService;
-import com.nlpl.ui.ui.adapters.DriversAdapter;
 import com.nlpl.ui.ui.adapters.DriversListAdapter;
 import com.nlpl.ui.ui.adapters.TrucksAdapter;
-import com.nlpl.ui.ui.adapters.TrucksListAdapter;
 import com.nlpl.utils.DownloadImageTask;
 
 import org.json.JSONArray;

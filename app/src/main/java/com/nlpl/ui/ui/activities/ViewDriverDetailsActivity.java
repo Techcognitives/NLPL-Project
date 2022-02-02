@@ -7,19 +7,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -30,19 +26,15 @@ import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.DriverModel;
 import com.nlpl.model.ModelForRecyclerView.TruckModel;
-import com.nlpl.model.UpdateDriverDetails.UpdateDriverTruckId;
-import com.nlpl.model.UpdateTruckDetails.UpdateTruckDriverId;
+import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverTruckId;
 import com.nlpl.services.AddDriverService;
-import com.nlpl.services.AddTruckService;
 import com.nlpl.ui.ui.adapters.DriversAdapter;
-import com.nlpl.ui.ui.adapters.TrucksAdapter;
 import com.nlpl.ui.ui.adapters.TrucksListAdapter;
 import com.nlpl.utils.DownloadImageTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
