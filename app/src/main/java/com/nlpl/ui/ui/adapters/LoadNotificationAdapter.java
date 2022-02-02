@@ -16,10 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
+import com.nlpl.model.UpdateLoadPost.UpdateLoadStatusSubmitted;
 import com.nlpl.ui.ui.activities.DashboardActivity;
+import com.nlpl.utils.ApiClient;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificationAdapter.LoadNotificationViewHolder> {
 
@@ -181,11 +186,14 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
 
                 // When the task is over it will print 00:00:00 there
                 public void onFinish() {
+                    updateLoadStatusSubmitted(obj.getIdpost_load());
                     loadExpired = true;
                     holder.timeLeft.setText("  Load Expired");
                 }
             }.start();
         } else {
+            loadExpired = true;
+            updateLoadStatusSubmitted(obj.getIdpost_load());
             holder.timeLeft.setText("  Load Expired");
         }
         //------------------------------------------------------------------------------------------
@@ -260,6 +268,28 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
         this.loadList = loadList;
         notifyDataSetChanged();
     }
+
+    //----------------------------------------------------------------------------------------------------------------
+    private void updateLoadStatusSubmitted(String loadId) {
+
+        UpdateLoadStatusSubmitted updateLoadStatusSubmitted = new UpdateLoadStatusSubmitted("loadExpired");
+
+        Call<UpdateLoadStatusSubmitted> call = ApiClient.getPostLoadService().updateBidStatusSubmitted("" + loadId, updateLoadStatusSubmitted);
+
+        call.enqueue(new Callback<UpdateLoadStatusSubmitted>() {
+            @Override
+            public void onResponse(Call<UpdateLoadStatusSubmitted> call, retrofit2.Response<UpdateLoadStatusSubmitted> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UpdateLoadStatusSubmitted> call, Throwable t) {
+
+            }
+        });
+    }
+    //--------------------------------------------------------------------------------------------------
+
 
     public class LoadNotificationViewHolder extends RecyclerView.ViewHolder {
         private TextView timeLeft, destinationStart, destinationEnd, budget, date, time, distance, model, feet, capacity, body, pickUpLocation, bidNowButton, distanceFromUser;

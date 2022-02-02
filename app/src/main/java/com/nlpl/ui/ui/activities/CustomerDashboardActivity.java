@@ -279,10 +279,11 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     }
 
     public void RearrangeItems() {
-        bidsListAdapter = new BidsReceivedAdapter(CustomerDashboardActivity.this, bidsList);
-        bidsListRecyclerView.setAdapter(bidsListAdapter);
-        bidsAcceptedAdapter = new BidsAcceptedAdapter(CustomerDashboardActivity.this, acceptedList);
-        bidsAcceptedRecyclerView.setAdapter(bidsAcceptedAdapter);
+        Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("mobile", phone);
+        startActivity(intent);
+        finish();
     }
 
     public void getBidsAccepted() {
@@ -396,6 +397,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         Intent intent = new Intent(CustomerDashboardActivity.this, PostALoadActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("mobile", phone);
+        intent.putExtra("reActivate", false);
         intent.putExtra("isEdit", false);
         startActivity(intent);
     }
@@ -450,7 +452,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         bidsReceivedModel.setNotes_meterial_des(obj.getString("notes_meterial_des"));
                         bidsReceivedModel.setBid_ends_at(obj.getString("bid_ends_at"));
 
-                        if (obj.getString("bid_status").equals("loadPosted")) {
+                        if (!obj.getString("bid_status").equals("loadSubmitted") && !obj.getString("bid_status").equals("delete") && !obj.getString("bid_status").equals("loadExpired")) {
                             bidsList.add(bidsReceivedModel);
                         }
                     }
@@ -885,17 +887,18 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         Intent intent = new Intent(CustomerDashboardActivity.this, PostALoadActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("mobile", phone);
+        intent.putExtra("reActivate", false);
         intent.putExtra("isEdit", true);
         intent.putExtra("loadId", obj.getIdpost_load());
         startActivity(intent);
     }
 
 
-    public void getBidsResponsesList(BidsReceivedModel obj, RecyclerView bidsResponsesRecyclerView, TextView bidsReceived, ConstraintLayout showRecyclerView, ArrayList<BidsReceivedModel> loadList) {
+    public void getBidsResponsesList(BidsReceivedModel obj1, RecyclerView bidsResponsesRecyclerView, TextView bidsReceived, ConstraintLayout showRecyclerView, boolean loadExpired) {
         ArrayList<BidsResponsesModel> bidResponsesList = new ArrayList<>();
         bidResponsesList.clear();
 
-        String url1 = getString(R.string.baseURL) + "/spbid/getBidDtByPostId/" + obj.getIdpost_load();
+        String url1 = getString(R.string.baseURL) + "/spbid/getBidDtByPostId/" + obj1.getIdpost_load();
         Log.i("URL: ", url1);
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -922,12 +925,10 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         bidsResponsesModel.setIs_bid_accpted_by_sp(obj.getString("is_bid_accpted_by_sp"));
 
                         bidResponsesList.add(bidsResponsesModel);
-
                     }
 
-
                     for (int i = 0; i < bidResponsesList.size(); i++) {
-                        if (obj.getIdpost_load().equals(bidResponsesList.get(i).getIdpost_load())) {
+                        if (obj1.getIdpost_load().equals(bidResponsesList.get(i).getIdpost_load())) {
 
                             String bidsResponses = String.valueOf(bidResponsesList.size());
                             Log.i("bid size", String.valueOf(bidResponsesList.size()));
@@ -962,8 +963,13 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         showRecyclerView.setVisibility(View.GONE);
                         bidsResponsesRecyclerView.setVisibility(View.GONE);
                     } else {
-                        showRecyclerView.setVisibility(View.VISIBLE);
-                        bidsResponsesRecyclerView.setVisibility(View.VISIBLE);
+                        if (loadExpired) {
+                            showRecyclerView.setVisibility(View.GONE);
+                            bidsResponsesRecyclerView.setVisibility(View.GONE);
+                        } else {
+                            showRecyclerView.setVisibility(View.VISIBLE);
+                            bidsResponsesRecyclerView.setVisibility(View.VISIBLE);
+                        }
                     }
 
                 } catch (JSONException e) {
@@ -1481,7 +1487,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         String profileImgUrl;
                         if (imageType.equals("profile")) {
                             profileImgUrl = obj.getString("image_url");
-                            if (profileImgUrl.equals("null")){
+                            if (profileImgUrl.equals("null")) {
 
                             } else {
                                 WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
@@ -1509,7 +1515,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         mQueue.add(request1);
     }
 
-    private void getProfilePic(){
+    private void getProfilePic() {
 
         String url1 = getString(R.string.baseURL) + "/imgbucket/Images/" + userId;
         JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -1556,7 +1562,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         String profileImgUrl;
                         if (imageType.equals("profile")) {
                             profileImgUrl = obj.getString("image_url");
-                            if (profileImgUrl.equals("null")){
+                            if (profileImgUrl.equals("null")) {
 
                             } else {
                                 WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
@@ -1582,5 +1588,51 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             }
         });
         mQueue.add(request1);
+    }
+
+    public void reActivateLoad(BidsReceivedModel obj) {
+
+        //----------------------- Alert Dialog -------------------------------------------------
+        Dialog reActivateLoad = new Dialog(CustomerDashboardActivity.this);
+        reActivateLoad.setContentView(R.layout.dialog_alert);
+        reActivateLoad.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(reActivateLoad.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.gravity = Gravity.CENTER;
+
+        reActivateLoad.show();
+        reActivateLoad.getWindow().setAttributes(lp);
+        reActivateLoad.setCancelable(true);
+
+        TextView alertTitle = (TextView) reActivateLoad.findViewById(R.id.dialog_alert_title);
+        TextView alertMessage = (TextView) reActivateLoad.findViewById(R.id.dialog_alert_message);
+        TextView alertPositiveButton = (TextView) reActivateLoad.findViewById(R.id.dialog_alert_positive_button);
+        TextView alertNegativeButton = (TextView) reActivateLoad.findViewById(R.id.dialog_alert_negative_button);
+
+        alertTitle.setText("Re-activate Load");
+        alertMessage.setText("Do you want to re-activate load");
+        alertNegativeButton.setText("Re-activate Load");
+        alertPositiveButton.setVisibility(View.GONE);
+        alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+        alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                reActivateLoad.dismiss();
+                Intent intent = new Intent(CustomerDashboardActivity.this, PostALoadActivity.class);
+                intent.putExtra("userId", userId);
+                intent.putExtra("mobile", phone);
+                intent.putExtra("reActivate", true);
+                intent.putExtra("isEdit", true);
+                intent.putExtra("loadId", obj.getIdpost_load());
+                startActivity(intent);
+
+            }
+        });
+        //------------------------------------------------------------------------------------------
+
     }
 }

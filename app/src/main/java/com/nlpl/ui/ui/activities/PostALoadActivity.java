@@ -114,7 +114,7 @@ public class PostALoadActivity extends AppCompatActivity {
     ArrayList<String> arrayTruckBodyType, arrayVehicleType, updatedArrayTruckFt, arrayCapacityForCompare, arrayTruckFtForCompare, arrayToDisplayCapacity, arrayTruckFt, arrayCapacity;
 
     private RequestQueue mQueue;
-    Boolean isEdit;
+    Boolean isEdit, reActivate;
     String loadId;
 
     @Override
@@ -127,6 +127,7 @@ public class PostALoadActivity extends AppCompatActivity {
             phone = bundle.getString("mobile");
             userId = bundle.getString("userId");
             isEdit = bundle.getBoolean("isEdit");
+            reActivate = bundle.getBoolean("reActivate");
             loadId = bundle.getString("loadId");
         }
 
@@ -253,7 +254,7 @@ public class PostALoadActivity extends AppCompatActivity {
         todayDate = dateC + "/" + count + "/" + yearC;
         Log.i("Today's Date", todayDate);
 
-        if (isEdit) {
+        if (isEdit || reActivate) {
             Ok_PostLoad.setEnabled(true);
             Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
             getLoadDetails();
@@ -338,10 +339,17 @@ public class PostALoadActivity extends AppCompatActivity {
         Ok_PostLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isEdit) {
+                if (isEdit || reActivate) {
                     Ok_PostLoad.setEnabled(true);
                     Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
-                    updateLoadPost(loadId);
+                    if (isEdit) {
+                        updateLoadPost(loadId);
+                    }
+
+                    if (reActivate) {
+                        updateLoadStatusSubmitted(loadId);
+                        saveLoad(createLoadRequest());
+                    }
                     //----------------------- Alert Dialog -------------------------------------------------
                     Dialog alert = new Dialog(PostALoadActivity.this);
                     alert.setContentView(R.layout.dialog_alert);
@@ -1173,7 +1181,11 @@ public class PostALoadActivity extends AppCompatActivity {
         postLoadRequest.setUser_id(userId);
         postLoadRequest.setKm_approx(setApproxDistance.getText().toString());
         postLoadRequest.setNotes_meterial_des(note_to_post_load.getText().toString());
-        postLoadRequest.setBid_status("loadPosted");
+        if (reActivate){
+            postLoadRequest.setBid_status("loadReactivated");
+        } else {
+            postLoadRequest.setBid_status("loadPosted");
+        }
         return postLoadRequest;
     }
 
@@ -1700,6 +1712,28 @@ public class PostALoadActivity extends AppCompatActivity {
 
     }
 
+    //----------------------------------------------------------------------------------------------------------------
+    private void updateLoadStatusSubmitted(String loadId) {
+
+        UpdateLoadStatusSubmitted updateLoadStatusSubmitted = new UpdateLoadStatusSubmitted("delete");
+
+        Call<UpdateLoadStatusSubmitted> call = ApiClient.getPostLoadService().updateBidStatusSubmitted("" + loadId, updateLoadStatusSubmitted);
+
+        call.enqueue(new Callback<UpdateLoadStatusSubmitted>() {
+            @Override
+            public void onResponse(Call<UpdateLoadStatusSubmitted> call, retrofit2.Response<UpdateLoadStatusSubmitted> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UpdateLoadStatusSubmitted> call, Throwable t) {
+
+            }
+        });
+    }
+    //--------------------------------------------------------------------------------------------------
+
+
 
     private void getLoadDetails() {
         String url = getString(R.string.baseURL) + "/loadpost/getLoadDtByPostId/" + loadId;
@@ -1730,7 +1764,6 @@ public class PostALoadActivity extends AppCompatActivity {
                         String dropCountry = obj.getString("drop_country");
                         String approxKM = obj.getString("km_approx");
                         String notesFromLP = obj.getString("notes_meterial_des");
-
 
                         pick_up_date.setText(pickUpDate);
                         pick_up_time.setText(pickUpTime);
