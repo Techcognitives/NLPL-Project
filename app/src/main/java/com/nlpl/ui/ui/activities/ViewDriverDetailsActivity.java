@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -57,7 +58,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
     private DriversAdapter driverListAdapter;
     private RecyclerView driverListRecyclerView;
     private RequestQueue mQueue;
-
+    SwipeRefreshLayout swipeRefreshLayout;
     private ArrayList<TruckModel> truckList = new ArrayList<>();
     private TrucksListAdapter truckListAdapter;
     private RecyclerView truckListRecyclerView;
@@ -223,6 +224,21 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
         truckListRecyclerView.setAdapter(truckListAdapter);
         getTruckList();
         //------------------------------------------------------------------------------------------
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.view_driver_details_refresh_constrain);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(false);
+                RearrangeItems();
+            }
+        });
+    }
+
+    public void RearrangeItems() {
+        Intent intent = new Intent(ViewDriverDetailsActivity.this, ViewDriverDetailsActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("mobile", phone);
+        startActivity(intent);
     }
 
     public void getDriverDetailsList() {
