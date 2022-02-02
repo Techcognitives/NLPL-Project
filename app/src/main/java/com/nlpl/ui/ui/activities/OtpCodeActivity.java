@@ -167,7 +167,6 @@ public class OtpCodeActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         alert.dismiss();
                         if (isEditPhone) {
-                            updateUserPhoneNumber(userIdBundle);
                             OtpCodeActivity.this.finish();
                         } else {
                             checkPhoneInAPI(mobileNoFirebase);

@@ -21,7 +21,7 @@ import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BidSubmittedModel;
 import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
-import com.nlpl.model.UpdateLoadPost.UpdateLoadStatusSubmitted;
+import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadStatusSubmitted;
 import com.nlpl.ui.ui.activities.DashboardActivity;
 import com.nlpl.ui.ui.activities.PostALoadActivity;
 import com.nlpl.utils.ApiClient;

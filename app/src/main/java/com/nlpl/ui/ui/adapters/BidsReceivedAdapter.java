@@ -25,7 +25,7 @@ import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BidsReceivedModel;
 import com.nlpl.model.ModelForRecyclerView.BidsResponsesModel;
 import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
-import com.nlpl.model.UpdateLoadPost.UpdateLoadStatusSubmitted;
+import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadStatusSubmitted;
 import com.nlpl.ui.ui.activities.CustomerDashboardActivity;
 import com.nlpl.utils.ApiClient;
 
@@ -37,7 +37,6 @@ import java.lang.reflect.Member;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 

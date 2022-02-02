@@ -60,6 +60,7 @@ import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPickPinCode;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPickState;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPostPickUpDate;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPostPickUpTime;
+import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadStatusSubmitted;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadVehicleModel;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.EnglishNumberToWords;

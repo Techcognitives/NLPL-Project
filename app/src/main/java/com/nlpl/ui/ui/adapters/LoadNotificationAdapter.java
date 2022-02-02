@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
-import com.nlpl.model.UpdateLoadPost.UpdateLoadStatusSubmitted;
+import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadStatusSubmitted;
 import com.nlpl.ui.ui.activities.DashboardActivity;
 import com.nlpl.utils.ApiClient;
 
@@ -296,7 +296,6 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
 
         public LoadNotificationViewHolder(@NonNull View itemView) {
             super(itemView);
-
             timeLeft = itemView.findViewById(R.id.load_list_time_left);
             destinationStart = itemView.findViewById(R.id.load_list_pick_up);
             destinationEnd = itemView.findViewById(R.id.load_list_drop);
