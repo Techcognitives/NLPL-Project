@@ -203,7 +203,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
 
         previewInsurance = (ImageView) previewDialogInsurance.findViewById(R.id.dialog_preview_image_view);
 
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.view_driver_details_refresh_constrain);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.view_truck_details_refresh_constrain);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
