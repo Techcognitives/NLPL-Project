@@ -283,10 +283,11 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     }
 
     public void RearrangeItems() {
-        bidsListAdapter = new BidsReceivedAdapter(CustomerDashboardActivity.this, bidsList);
-        bidsListRecyclerView.setAdapter(bidsListAdapter);
-        bidsAcceptedAdapter = new BidsAcceptedAdapter(CustomerDashboardActivity.this, acceptedList);
-        bidsAcceptedRecyclerView.setAdapter(bidsAcceptedAdapter);
+        Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("mobile", phone);
+        startActivity(intent);
+        finish();
     }
 
     public void getBidsAccepted() {
@@ -455,7 +456,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         bidsReceivedModel.setNotes_meterial_des(obj.getString("notes_meterial_des"));
                         bidsReceivedModel.setBid_ends_at(obj.getString("bid_ends_at"));
 
-                        if (!obj.getString("bid_status").equals("loadSubmitted") && !obj.getString("bid_status").equals("delete")) {
+                        if (!obj.getString("bid_status").equals("loadSubmitted") && !obj.getString("bid_status").equals("delete") && !obj.getString("bid_status").equals("loadExpired")) {
                             bidsList.add(bidsReceivedModel);
                         }
                     }
@@ -928,7 +929,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         bidsResponsesModel.setIs_bid_accpted_by_sp(obj.getString("is_bid_accpted_by_sp"));
 
                         bidResponsesList.add(bidsResponsesModel);
-
                     }
 
                     for (int i = 0; i < bidResponsesList.size(); i++) {
@@ -967,7 +967,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         showRecyclerView.setVisibility(View.GONE);
                         bidsResponsesRecyclerView.setVisibility(View.GONE);
                     } else {
-                        if (loadExpired){
+                        if (loadExpired) {
                             showRecyclerView.setVisibility(View.GONE);
                             bidsResponsesRecyclerView.setVisibility(View.GONE);
                         } else {
@@ -1491,7 +1491,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         String profileImgUrl;
                         if (imageType.equals("profile")) {
                             profileImgUrl = obj.getString("image_url");
-                            if (profileImgUrl.equals("null")){
+                            if (profileImgUrl.equals("null")) {
 
                             } else {
                                 WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
@@ -1519,7 +1519,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         mQueue.add(request1);
     }
 
-    private void getProfilePic(){
+    private void getProfilePic() {
 
         String url1 = getString(R.string.baseURL) + "/imgbucket/Images/" + userId;
         JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -1566,7 +1566,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         String profileImgUrl;
                         if (imageType.equals("profile")) {
                             profileImgUrl = obj.getString("image_url");
-                            if (profileImgUrl.equals("null")){
+                            if (profileImgUrl.equals("null")) {
 
                             } else {
                                 WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();

@@ -131,7 +131,7 @@ public class OtpCodeActivity extends AppCompatActivity {
 //            }
 //        }).start();
 
-        initiateOtp();
+//        initiateOtp();
         setCountdown();
 
         otpButton.setOnClickListener(new View.OnClickListener() {
@@ -139,62 +139,62 @@ public class OtpCodeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 otp = otpCode.getText().toString();
 
-//                //----------------------- Alert Dialog -------------------------------------------------
-//                Dialog alert = new Dialog(OtpCodeActivity.this);
-//                alert.setContentView(R.layout.dialog_alert);
-//                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-//                lp.copyFrom(alert.getWindow().getAttributes());
-//                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-//                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-//                lp.gravity = Gravity.CENTER;
-//
-//                alert.show();
-//                alert.getWindow().setAttributes(lp);
-//                alert.setCancelable(false);
-//
-//                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-//                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-//                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-//                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-//
-//                alertTitle.setText("OTP Validation");
-//                alertMessage.setText("OTP validated successfully");
-//                alertPositiveButton.setVisibility(View.GONE);
-//                alertNegativeButton.setText("OK");
-//                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-//                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
-//
-//                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        alert.dismiss();
-//                        if (isEditPhone) {
-//                            updateUserPhoneNumber(userIdBundle);
-//                            OtpCodeActivity.this.finish();
-//                        } else {
-//                            checkPhoneInAPI(mobileNoFirebase);
-//                        }
-//                    }
-//                });
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(OtpCodeActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(false);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("OTP Validation");
+                alertMessage.setText("OTP validated successfully");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                        if (isEditPhone) {
+                            updateUserPhoneNumber(userIdBundle);
+                            OtpCodeActivity.this.finish();
+                        } else {
+                            checkPhoneInAPI(mobileNoFirebase);
+                        }
+                    }
+                });
                 //------------------------------------------------------------------------------------------
 
-                if (otpCode.getText().toString().isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Field is blank", Toast.LENGTH_LONG).show();
-                } else {
-//                    Log.i("OTP", otp);
-//                    Log.i("OTP ID", otpId);
-                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpId, otp);
-                    signInWithPhoneAuthCredential(credential);
-
-                }
+//                if (otpCode.getText().toString().isEmpty()) {
+//                    Toast.makeText(getApplicationContext(), "Field is blank", Toast.LENGTH_LONG).show();
+//                } else {
+////                    Log.i("OTP", otp);
+////                    Log.i("OTP ID", otpId);
+//                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpId, otp);
+//                    signInWithPhoneAuthCredential(credential);
+//
+//                }
             }
         });
 
         reSendOtp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                initiateOtp();
+//                initiateOtp();
                 setCountdown();
             }
         });
