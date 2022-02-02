@@ -450,4 +450,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void onClickAddProfilePic(View view) {
+
+    }
 }
