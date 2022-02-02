@@ -80,8 +80,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
     View panAndAadharView;
 
-    private UserService userService;
-
     String userRoleAPI,userId, mobile;
     Boolean isPanUploaded = false, isFrontUploaded = false, isProfileUploaded = false;
     String img_type;
@@ -215,12 +213,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             }
         });
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getString(R.string.baseURL))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        userService = retrofit.create(UserService.class);
         uploadF.setVisibility(View.VISIBLE);
         editFront.setVisibility(View.INVISIBLE);
 
@@ -718,7 +710,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
         UpdateUserIsPersonalDetailsAdded updateUserIsPersonalDetailsAdded = new UpdateUserIsPersonalDetailsAdded("1");
 
-        Call<UpdateUserIsPersonalDetailsAdded> call = userService.updateUserIsPersonalDetailsAdded("" + userId, updateUserIsPersonalDetailsAdded);
+        Call<UpdateUserIsPersonalDetailsAdded> call = ApiClient.getUserService().updateUserIsPersonalDetailsAdded("" + userId, updateUserIsPersonalDetailsAdded);
 
         call.enqueue(new Callback<UpdateUserIsPersonalDetailsAdded>() {
             @Override

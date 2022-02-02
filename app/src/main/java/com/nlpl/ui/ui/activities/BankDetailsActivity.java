@@ -109,9 +109,6 @@ public class BankDetailsActivity extends AppCompatActivity {
     String bankId, mobile, userRoleAPI, ccUploadedAPI;
     private RequestQueue mQueue;
 
-    private UserService userService;
-    private BankService bankService;
-
     Dialog previewDialogCancelledCheque;
 
     @Override
@@ -150,14 +147,6 @@ public class BankDetailsActivity extends AppCompatActivity {
         canceledCheckBlurImage = (ImageView) findViewById(R.id.bank_details_blur_image_canceled_check);
         accountDetailsBlurImage = (ImageView) findViewById(R.id.bank_details_blur_image_account_details);
         okButton.setEnabled(false);
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getString(R.string.baseURL))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        userService = retrofit.create(UserService.class);
-        bankService = retrofit.create(BankService.class);
 
         mQueue = Volley.newRequestQueue(BankDetailsActivity.this);
         getUserDetails();
@@ -397,7 +386,8 @@ public class BankDetailsActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Cancelled cheque uploaded successfully");
+            alertTitle.setText("Bank Details");
+            alertMessage.setText("Cancelled cheque uploaded successfully");
             alertPositiveButton.setVisibility(View.GONE);
             alertNegativeButton.setText("OK");
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -913,7 +903,7 @@ public class BankDetailsActivity extends AppCompatActivity {
 
         UpdateUserIsBankDetailsGiven updateUserIsDriverAdded = new UpdateUserIsBankDetailsGiven("1");
 
-        Call<UpdateUserIsBankDetailsGiven> call = userService.updateUserIsBankDetailsGiven("" + userId, updateUserIsDriverAdded);
+        Call<UpdateUserIsBankDetailsGiven> call = ApiClient.getUserService().updateUserIsBankDetailsGiven("" + userId, updateUserIsDriverAdded);
 
         call.enqueue(new Callback<UpdateUserIsBankDetailsGiven>() {
             @Override
@@ -936,7 +926,7 @@ public class BankDetailsActivity extends AppCompatActivity {
 
         UpdateBankName updateBankName = new UpdateBankName(bankName.getText().toString());
 
-        Call<UpdateBankName> call = bankService.updateBankName("" + bankId, updateBankName);
+        Call<UpdateBankName> call = ApiClient.getBankService().updateBankName("" + bankId, updateBankName);
 
         call.enqueue(new Callback<UpdateBankName>() {
             @Override
@@ -960,7 +950,7 @@ public class BankDetailsActivity extends AppCompatActivity {
 
         UpdateBankAccountNumber updateBankAccountNumber = new UpdateBankAccountNumber(accountNo.getText().toString());
 
-        Call<UpdateBankAccountNumber> call = bankService.updateBankAccountNumber("" + bankId, updateBankAccountNumber);
+        Call<UpdateBankAccountNumber> call = ApiClient.getBankService().updateBankAccountNumber("" + bankId, updateBankAccountNumber);
 
         call.enqueue(new Callback<UpdateBankAccountNumber>() {
             @Override
@@ -983,7 +973,7 @@ public class BankDetailsActivity extends AppCompatActivity {
 
         UpdateBankReEnterAccountNumber updateBankReEnterAccountNumber = new UpdateBankReEnterAccountNumber(reAccount.getText().toString());
 
-        Call<UpdateBankReEnterAccountNumber> call = bankService.updateBankReEnterAccountNumber("" + bankId, updateBankReEnterAccountNumber);
+        Call<UpdateBankReEnterAccountNumber> call = ApiClient.getBankService().updateBankReEnterAccountNumber("" + bankId, updateBankReEnterAccountNumber);
 
         call.enqueue(new Callback<UpdateBankReEnterAccountNumber>() {
             @Override
@@ -1006,7 +996,7 @@ public class BankDetailsActivity extends AppCompatActivity {
 
         UpdateBankIFSICode updateBankIFSICode = new UpdateBankIFSICode(ifscCode.getText().toString());
 
-        Call<UpdateBankIFSICode> call = bankService.updateBankIFSICode("" + bankId, updateBankIFSICode);
+        Call<UpdateBankIFSICode> call = ApiClient.getBankService().updateBankIFSICode("" + bankId, updateBankIFSICode);
 
         call.enqueue(new Callback<UpdateBankIFSICode>() {
             @Override

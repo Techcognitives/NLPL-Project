@@ -128,10 +128,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
     private RequestQueue mQueue;
 
-    private UserService userService;
-    private AddTruckService addTruckService;
-    private AddDriverService addDriverService;
-
     String driverUserId, driverUserIdGet;
 
     String pathForDL, pathForSelfie, img_type, userId, driverId, driverNameAPI, driverNumberAPI, driverEmailAPI, mobile;
@@ -200,15 +196,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
         driverName.setHint("Enter Driver Name");
         driverMobile.setHint("Enter 10 digit Driver Number");
         driverEmailId.setHint("Enter Driver Email Id");
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getString(R.string.baseURL))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        userService = retrofit.create(UserService.class);
-        addDriverService = retrofit.create(AddDriverService.class);
-        addTruckService = retrofit.create(AddTruckService.class);
 
         driverName.addTextChangedListener(driverNameWatcher);
         driverMobile.addTextChangedListener(driverMobileWatcher);
@@ -1144,7 +1131,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         UpdateTruckDriverId updateTruckDriverId = new UpdateTruckDriverId(truckDriverId);
 
-        Call<UpdateTruckDriverId> call = addTruckService.updateTruckDriverId("" + truckIdPass, updateTruckDriverId);
+        Call<UpdateTruckDriverId> call = ApiClient.addTruckService().updateTruckDriverId("" + truckIdPass, updateTruckDriverId);
 
         call.enqueue(new Callback<UpdateTruckDriverId>() {
             @Override
@@ -1306,7 +1293,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         UpdateUserIsDriverAdded updateUserIsDriverAdded = new UpdateUserIsDriverAdded("1");
 
-        Call<UpdateUserIsDriverAdded> call = userService.updateUserIsDriverAdded("" + userId, updateUserIsDriverAdded);
+        Call<UpdateUserIsDriverAdded> call = ApiClient.getUserService().updateUserIsDriverAdded("" + userId, updateUserIsDriverAdded);
 
         call.enqueue(new Callback<UpdateUserIsDriverAdded>() {
             @Override
@@ -1331,7 +1318,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         Log.i("driver Id at update", driverId);
         UpdateDriverName updateDriverName = new UpdateDriverName(driverName.getText().toString());
 
-        Call<UpdateDriverName> call = addDriverService.updateDriverName("" + driverId, updateDriverName);
+        Call<UpdateDriverName> call = ApiClient.addDriverService().updateDriverName("" + driverId, updateDriverName);
 
         call.enqueue(new Callback<UpdateDriverName>() {
 
@@ -1355,7 +1342,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         UpdateDriverTruckId updateDriverTruckId = new UpdateDriverTruckId(truckIdPass);
 
-        Call<UpdateDriverTruckId> call = addDriverService.updateDriverTruckId("" + driverId, updateDriverTruckId);
+        Call<UpdateDriverTruckId> call = ApiClient.addDriverService().updateDriverTruckId("" + driverId, updateDriverTruckId);
 
         call.enqueue(new Callback<UpdateDriverTruckId>() {
             @Override
@@ -1379,7 +1366,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         UpdateDriverNumber updateDriverNumber = new UpdateDriverNumber("91" + driverMobile.getText().toString());
 
-        Call<UpdateDriverNumber> call = addDriverService.updateDriverNumber("" + driverId, updateDriverNumber);
+        Call<UpdateDriverNumber> call = ApiClient.addDriverService().updateDriverNumber("" + driverId, updateDriverNumber);
 
         call.enqueue(new Callback<UpdateDriverNumber>() {
             @Override
@@ -1403,7 +1390,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         UpdateDriverEmailId updateDriverEmailId = new UpdateDriverEmailId(driverEmailId.getText().toString());
 
-        Call<UpdateDriverEmailId> call = addDriverService.updateDriverEmailId("" + driverId, updateDriverEmailId);
+        Call<UpdateDriverEmailId> call = ApiClient.addDriverService().updateDriverEmailId("" + driverId, updateDriverEmailId);
 
         call.enqueue(new Callback<UpdateDriverEmailId>() {
             @Override
@@ -1704,7 +1691,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         UpdateUserName updateUserName = new UpdateUserName(driverName.getText().toString());
 
-        Call<UpdateUserName> call = userService.updateUserName("" + driverUserIdGet, updateUserName);
+        Call<UpdateUserName> call = ApiClient.getUserService().updateUserName("" + driverUserIdGet, updateUserName);
 
         call.enqueue(new Callback<UpdateUserName>() {
             @Override
@@ -1727,7 +1714,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         UpdateUserPhoneNumber updateUserPhoneNumber = new UpdateUserPhoneNumber("91" + driverMobile.getText().toString());
 
-        Call<UpdateUserPhoneNumber> call = userService.updateUserPhoneNumber("" + driverUserIdGet, updateUserPhoneNumber);
+        Call<UpdateUserPhoneNumber> call = ApiClient.getUserService().updateUserPhoneNumber("" + driverUserIdGet, updateUserPhoneNumber);
 
         call.enqueue(new Callback<UpdateUserPhoneNumber>() {
             @Override
@@ -1750,7 +1737,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         UpdateUserEmailId updateUserEmailId = new UpdateUserEmailId(driverEmailId.getText().toString());
 
-        Call<UpdateUserEmailId> call = userService.updateUserEmailId("" + driverUserIdGet, updateUserEmailId);
+        Call<UpdateUserEmailId> call = ApiClient.getUserService().updateUserEmailId("" + driverUserIdGet, updateUserEmailId);
 
         call.enqueue(new Callback<UpdateUserEmailId>() {
             @Override
@@ -1773,7 +1760,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         UpdateUserAddress updateUserAddress = new UpdateUserAddress(address.getText().toString());
 
-        Call<UpdateUserAddress> call = userService.updateUserAddress("" + driverUserIdGet, updateUserAddress);
+        Call<UpdateUserAddress> call = ApiClient.getUserService().updateUserAddress("" + driverUserIdGet, updateUserAddress);
 
         call.enqueue(new Callback<UpdateUserAddress>() {
             @Override
@@ -1797,7 +1784,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         UpdateUserPreferredLocation updateUserPreferredLocation = new UpdateUserPreferredLocation(selectDistrictText.getText().toString());
 
-        Call<UpdateUserPreferredLocation> call = userService.updateUserPreferredLocation("" + driverUserIdGet, updateUserPreferredLocation);
+        Call<UpdateUserPreferredLocation> call = ApiClient.getUserService().updateUserPreferredLocation("" + driverUserIdGet, updateUserPreferredLocation);
 
         call.enqueue(new Callback<UpdateUserPreferredLocation>() {
             @Override
@@ -1821,7 +1808,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         UpdateUserStateCode updateUserStateCode = new UpdateUserStateCode(selectStateText.getText().toString());
 
-        Call<UpdateUserStateCode> call = userService.updateUserStateCode("" + driverUserIdGet, updateUserStateCode);
+        Call<UpdateUserStateCode> call = ApiClient.getUserService().updateUserStateCode("" + driverUserIdGet, updateUserStateCode);
 
         call.enqueue(new Callback<UpdateUserStateCode>() {
             @Override
@@ -1845,7 +1832,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         UpdateUserPinCode updateUserStateCode = new UpdateUserPinCode(pinCode.getText().toString());
 
-        Call<UpdateUserPinCode> call = userService.updateUserPinCode("" + driverUserIdGet, updateUserStateCode);
+        Call<UpdateUserPinCode> call = ApiClient.getUserService().updateUserPinCode("" + driverUserIdGet, updateUserStateCode);
 
         call.enqueue(new Callback<UpdateUserPinCode>() {
             @Override

@@ -34,7 +34,6 @@ import java.util.ArrayList;
 public class FindLoadsActivity extends AppCompatActivity {
 
     private RequestQueue mQueue;
-
     private ArrayList<FindLoadsModel> bidsList = new ArrayList<>();
     private FindLoadAdapter bidsListAdapter;
     private RecyclerView bidsListRecyclerView;

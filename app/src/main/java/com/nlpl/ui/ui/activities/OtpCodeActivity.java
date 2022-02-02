@@ -44,6 +44,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.nlpl.R;
 import com.nlpl.model.UpdateUserDetails.UpdateUserPhoneNumber;
 import com.nlpl.services.UserService;
+import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.OTPReceiver;
 
 import org.json.JSONArray;
@@ -67,7 +68,6 @@ public class OtpCodeActivity extends AppCompatActivity {
     String mobileNoFirebase, otp, userId, userIdAPI, name, nameAPI, phone, isRegistrationDone, isRegistrationDoneAPI, pinCode, pinCodeAPI, address, addressAPI, mobileNoAPI, cityAPI, city, roleAPI, role;
     FirebaseAuth mAuth;
     private RequestQueue mQueue;
-    private UserService userService;
     ArrayList<String> arrayUserId, arrayMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
     Boolean isEditPhone;
     String userIdBundle;
@@ -118,14 +118,6 @@ public class OtpCodeActivity extends AppCompatActivity {
         arrayRole = new ArrayList<>();
         arrayRegDone = new ArrayList<>();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getString(R.string.baseURL))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        userService = retrofit.create(UserService.class);
-
-
 //        final ProgressDialog dialog = ProgressDialog.show(this, "Fetching OTP", "Please wait....", true);
 //        new Thread(new Runnable() {
 //            @Override
@@ -166,8 +158,8 @@ public class OtpCodeActivity extends AppCompatActivity {
 //                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
 //                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 //
-//                alertTitle.setText("OTP validated successfully");
-//                alertMessage.setText("");
+//                alertTitle.setText("OTP Validation");
+//                alertMessage.setText("OTP validated successfully");
 //                alertPositiveButton.setVisibility(View.GONE);
 //                alertNegativeButton.setText("OK");
 //                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -284,8 +276,8 @@ public class OtpCodeActivity extends AppCompatActivity {
                     TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                    alertTitle.setText("OTP validated successfully");
-                    alertMessage.setText("");
+                    alertTitle.setText("OTP Validation");
+                    alertMessage.setText("OTP validated successfully");
                     alertPositiveButton.setVisibility(View.GONE);
                     alertNegativeButton.setText("OK");
                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -386,7 +378,7 @@ public class OtpCodeActivity extends AppCompatActivity {
 
         UpdateUserPhoneNumber updateUserPhoneNumber = new UpdateUserPhoneNumber(mobileNoFirebase);
 
-        Call<UpdateUserPhoneNumber> call = userService.updateUserPhoneNumber("" + getUserId, updateUserPhoneNumber);
+        Call<UpdateUserPhoneNumber> call = ApiClient.getUserService().updateUserPhoneNumber("" + getUserId, updateUserPhoneNumber);
 
         call.enqueue(new Callback<UpdateUserPhoneNumber>() {
             @Override

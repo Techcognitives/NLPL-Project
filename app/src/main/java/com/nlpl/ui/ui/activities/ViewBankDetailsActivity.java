@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -29,6 +30,8 @@ import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BankModel;
 import com.nlpl.ui.ui.adapters.BanksAdapter;
+import com.nlpl.ui.ui.adapters.BidsAcceptedAdapter;
+import com.nlpl.ui.ui.adapters.BidsReceivedAdapter;
 import com.nlpl.utils.DownloadImageTask;
 
 import org.json.JSONArray;
@@ -45,6 +48,7 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
     private BanksAdapter bankListAdapter;
     private RecyclerView bankListRecyclerView;
 
+    SwipeRefreshLayout swipeRefreshLayout;
     String phone, userId, roleAPI;
     Dialog previewDialogCancelledCheque;
     ImageView previewDialogCancelledChequeImageView;
@@ -121,6 +125,22 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
         previewDialogCancelledCheque.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         previewDialogCancelledChequeImageView = (ImageView) previewDialogCancelledCheque.findViewById(R.id.dialog_preview_image_view);
+
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(false);
+                RearrangeItems();
+            }
+        });
+    }
+
+    public void RearrangeItems() {
+        Intent intent = new Intent(ViewBankDetailsActivity.this, ViewBankDetailsActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("mobile", phone);
+        startActivity(intent);
     }
 
     public void getBankDetailsList() {

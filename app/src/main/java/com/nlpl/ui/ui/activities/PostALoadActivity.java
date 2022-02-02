@@ -1891,6 +1891,18 @@ public class PostALoadActivity extends AppCompatActivity {
             setApproxDistance.setText("KM auto calculated");
         }
 
+        if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
+                && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
+                && !select_truck_body_type.getText().toString().isEmpty() && pickUpAddress != null && pickUpCity != null
+                && pickUpPinCode != null && pickupState != null && dropAddress != null
+                && dropCiy != null && dropPinCode != null && dropState != null) {
+            Ok_PostLoad.setEnabled(true);
+            Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
+        } else {
+            Ok_PostLoad.setEnabled(false);
+            Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
+        }
+
     }
 
     public void onClickCancelAddressDetails(View view) {

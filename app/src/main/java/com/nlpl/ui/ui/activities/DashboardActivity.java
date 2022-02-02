@@ -96,8 +96,6 @@ public class DashboardActivity extends AppCompatActivity {
     FusedLocationProviderClient fusedLocationProviderClient;
 
     private RequestQueue mQueue;
-    private PostLoadService postLoadService;
-    private BidLoadService bidService;
     boolean isBackPressed = false;
 
     private ArrayList<LoadNotificationModel> loadList = new ArrayList<>();
@@ -193,13 +191,6 @@ public class DashboardActivity extends AppCompatActivity {
         arrayTruckId = new ArrayList<>();
         arrayDriverId = new ArrayList<>();
         arrayDriverName = new ArrayList<>();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getString(R.string.baseURL))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        bidService = retrofit.create(BidLoadService.class);
-        postLoadService = retrofit.create(PostLoadService.class);
 
         getUserId(phone);
 
@@ -757,8 +748,8 @@ public class DashboardActivity extends AppCompatActivity {
                     TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                    alertTitle.setText("Bid Posted Successfully");
-                    alertMessage.setText("");
+                    alertTitle.setText("Post Bid");
+                    alertMessage.setText("Bid Posted Successfully");
                     alertPositiveButton.setVisibility(View.GONE);
                     alertNegativeButton.setText("OK");
                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -1620,8 +1611,8 @@ public class DashboardActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Bid Revised and Responded Successfully");
-                alertMessage.setText("");
+                alertTitle.setText("Bid Revised and Responded");
+                alertMessage.setText("Bid Revised and Responded Successfully");
                 alertPositiveButton.setVisibility(View.GONE);
                 alertNegativeButton.setText("OK");
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -2072,7 +2063,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         UpdateBidStatusRespondedBySP updateBidStatusRespondedBySP = new UpdateBidStatusRespondedBySP("RespondedBySP");
 
-        Call<UpdateBidStatusRespondedBySP> call = bidService.updateBidStatusRespondedBySP("" + bidId, updateBidStatusRespondedBySP);
+        Call<UpdateBidStatusRespondedBySP> call = ApiClient.getBidLoadService().updateBidStatusRespondedBySP("" + bidId, updateBidStatusRespondedBySP);
 
         call.enqueue(new Callback<UpdateBidStatusRespondedBySP>() {
             @Override
@@ -2093,7 +2084,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         UpdateAssignedTruckIdToBid updateAssignedTruckIdToBid = new UpdateAssignedTruckIdToBid(assignedTruckId);
 
-        Call<UpdateAssignedTruckIdToBid> call = bidService.updateAssignedTruckId("" + bidId, updateAssignedTruckIdToBid);
+        Call<UpdateAssignedTruckIdToBid> call = ApiClient.getBidLoadService().updateAssignedTruckId("" + bidId, updateAssignedTruckIdToBid);
 
         call.enqueue(new Callback<UpdateAssignedTruckIdToBid>() {
             @Override
@@ -2114,7 +2105,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         UpdateAssignedDriverId updateAssignedDriverId = new UpdateAssignedDriverId(assignedDriverId);
 
-        Call<UpdateAssignedDriverId> call = bidService.updateAssignedDriverId("" + bidId, updateAssignedDriverId);
+        Call<UpdateAssignedDriverId> call = ApiClient.getBidLoadService().updateAssignedDriverId("" + bidId, updateAssignedDriverId);
 
         call.enqueue(new Callback<UpdateAssignedDriverId>() {
             @Override
@@ -2136,7 +2127,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         UpdateSPQuoteFinal updateSPQuoteFinal = new UpdateSPQuoteFinal(spQuote);
 
-        Call<UpdateSPQuoteFinal> call = bidService.updateSPQuoteFinal("" + bidId, updateSPQuoteFinal);
+        Call<UpdateSPQuoteFinal> call = ApiClient.getBidLoadService().updateSPQuoteFinal("" + bidId, updateSPQuoteFinal);
 
         call.enqueue(new Callback<UpdateSPQuoteFinal>() {
             @Override
@@ -2158,7 +2149,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         UpdateSpNoteForCustomer updateSpNoteForCustomer = new UpdateSpNoteForCustomer(spNote);
 
-        Call<UpdateSpNoteForCustomer> call = bidService.updateSPNoteForCustomer("" + bidId, updateSpNoteForCustomer);
+        Call<UpdateSpNoteForCustomer> call = ApiClient.getBidLoadService().updateSPNoteForCustomer("" + bidId, updateSpNoteForCustomer);
 
         call.enqueue(new Callback<UpdateSpNoteForCustomer>() {
             @Override

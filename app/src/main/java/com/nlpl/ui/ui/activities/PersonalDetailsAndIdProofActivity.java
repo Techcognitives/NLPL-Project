@@ -131,8 +131,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     private int GET_FROM_GALLERY2 = 125;
     int CAMERA_PIC_REQUEST3 = 54;
 
-    private UserService userService;
-
     private RequestQueue mQueue;
     String userId, mobileString, panImageURL, aadharImageURL, profileImgUrl;
 
@@ -227,13 +225,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
             }
         });
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getString(R.string.baseURL))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        userService = retrofit.create(UserService.class);
 
 //        name.requestFocus();
 
@@ -1345,7 +1336,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         UpdateUserName updateUserName = new UpdateUserName(name.getText().toString());
 
-        Call<UpdateUserName> call = userService.updateUserName("" + userId, updateUserName);
+        Call<UpdateUserName> call = ApiClient.getUserService().updateUserName("" + userId, updateUserName);
 
         call.enqueue(new Callback<UpdateUserName>() {
             @Override
@@ -1369,7 +1360,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         UpdateUserPhoneNumber updateUserPhoneNumber = new UpdateUserPhoneNumber("91" + mobileEdit.getText().toString());
 
-        Call<UpdateUserPhoneNumber> call = userService.updateUserPhoneNumber("" + userId, updateUserPhoneNumber);
+        Call<UpdateUserPhoneNumber> call = ApiClient.getUserService().updateUserPhoneNumber("" + userId, updateUserPhoneNumber);
 
         call.enqueue(new Callback<UpdateUserPhoneNumber>() {
             @Override
@@ -1393,7 +1384,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         UpdateUserType updateUserType = new UpdateUserType(role);
 
-        Call<UpdateUserType> call = userService.updateUserType("" + userId, updateUserType);
+        Call<UpdateUserType> call = ApiClient.getUserService().updateUserType("" + userId, updateUserType);
 
         call.enqueue(new Callback<UpdateUserType>() {
             @Override
@@ -1417,7 +1408,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         UpdateUserPreferredLanguage updateUserPreferredLanguage = new UpdateUserPreferredLanguage(mobileEdit.getText().toString());
 
-        Call<UpdateUserPreferredLanguage> call = userService.updateUserPreferredLanguage("" + userId, updateUserPreferredLanguage);
+        Call<UpdateUserPreferredLanguage> call = ApiClient.getUserService().updateUserPreferredLanguage("" + userId, updateUserPreferredLanguage);
 
         call.enqueue(new Callback<UpdateUserPreferredLanguage>() {
             @Override
@@ -1441,7 +1432,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         UpdateUserIsRegistrationDone updateUserIsRegistrationDone = new UpdateUserIsRegistrationDone(mobileEdit.getText().toString());
 
-        Call<UpdateUserIsRegistrationDone> call = userService.updateUserIsRegistrationDone("" + userId, updateUserIsRegistrationDone);
+        Call<UpdateUserIsRegistrationDone> call = ApiClient.getUserService().updateUserIsRegistrationDone("" + userId, updateUserIsRegistrationDone);
 
         call.enqueue(new Callback<UpdateUserIsRegistrationDone>() {
             @Override
@@ -1465,7 +1456,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         UpdateUserAddress updateUserAddress = new UpdateUserAddress(address.getText().toString());
 
-        Call<UpdateUserAddress> call = userService.updateUserAddress("" + userId, updateUserAddress);
+        Call<UpdateUserAddress> call = ApiClient.getUserService().updateUserAddress("" + userId, updateUserAddress);
 
         call.enqueue(new Callback<UpdateUserAddress>() {
             @Override
@@ -1489,7 +1480,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         UpdateUserPreferredLocation updateUserPreferredLocation = new UpdateUserPreferredLocation(selectDistrictText.getText().toString());
 
-        Call<UpdateUserPreferredLocation> call = userService.updateUserPreferredLocation("" + userId, updateUserPreferredLocation);
+        Call<UpdateUserPreferredLocation> call = ApiClient.getUserService().updateUserPreferredLocation("" + userId, updateUserPreferredLocation);
 
         call.enqueue(new Callback<UpdateUserPreferredLocation>() {
             @Override
@@ -1513,7 +1504,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         UpdateUserStateCode updateUserStateCode = new UpdateUserStateCode(selectStateText.getText().toString());
 
-        Call<UpdateUserStateCode> call = userService.updateUserStateCode("" + userId, updateUserStateCode);
+        Call<UpdateUserStateCode> call = ApiClient.getUserService().updateUserStateCode("" + userId, updateUserStateCode);
 
         call.enqueue(new Callback<UpdateUserStateCode>() {
             @Override
@@ -1537,7 +1528,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         UpdateUserPinCode updateUserStateCode = new UpdateUserPinCode(pinCode.getText().toString());
 
-        Call<UpdateUserPinCode> call = userService.updateUserPinCode("" + userId, updateUserStateCode);
+        Call<UpdateUserPinCode> call = ApiClient.getUserService().updateUserPinCode("" + userId, updateUserStateCode);
 
         call.enqueue(new Callback<UpdateUserPinCode>() {
             @Override
@@ -1561,7 +1552,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         UpdateUserIsTruckAdded updateUserIsTruckAdded = new UpdateUserIsTruckAdded(mobileEdit.getText().toString());
 
-        Call<UpdateUserIsTruckAdded> call = userService.updateUserIsTruckAdded("" + userId, updateUserIsTruckAdded);
+        Call<UpdateUserIsTruckAdded> call = ApiClient.getUserService().updateUserIsTruckAdded("" + userId, updateUserIsTruckAdded);
 
         call.enqueue(new Callback<UpdateUserIsTruckAdded>() {
             @Override
@@ -1585,7 +1576,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         UpdateUserIsDriverAdded updateUserIsDriverAdded = new UpdateUserIsDriverAdded(mobileEdit.getText().toString());
 
-        Call<UpdateUserIsDriverAdded> call = userService.updateUserIsDriverAdded("" + userId, updateUserIsDriverAdded);
+        Call<UpdateUserIsDriverAdded> call = ApiClient.getUserService().updateUserIsDriverAdded("" + userId, updateUserIsDriverAdded);
 
         call.enqueue(new Callback<UpdateUserIsDriverAdded>() {
             @Override
@@ -1609,7 +1600,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         UpdateUserIsBankDetailsGiven updateUserIsDriverAdded = new UpdateUserIsBankDetailsGiven(mobileEdit.getText().toString());
 
-        Call<UpdateUserIsBankDetailsGiven> call = userService.updateUserIsBankDetailsGiven("" + userId, updateUserIsDriverAdded);
+        Call<UpdateUserIsBankDetailsGiven> call = ApiClient.getUserService().updateUserIsBankDetailsGiven("" + userId, updateUserIsDriverAdded);
 
         call.enqueue(new Callback<UpdateUserIsBankDetailsGiven>() {
             @Override
@@ -1633,7 +1624,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         UpdateUserIsCompanyAdded updateUserIsCompanyAdded = new UpdateUserIsCompanyAdded(mobileEdit.getText().toString());
 
-        Call<UpdateUserIsCompanyAdded> call = userService.updateUserIsCompanyAdded("" + userId, updateUserIsCompanyAdded);
+        Call<UpdateUserIsCompanyAdded> call = ApiClient.getUserService().updateUserIsCompanyAdded("" + userId, updateUserIsCompanyAdded);
 
         call.enqueue(new Callback<UpdateUserIsCompanyAdded>() {
             @Override
@@ -1657,7 +1648,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         UpdateUserIsPersonalDetailsAdded updateUserIsPersonalDetailsAdded = new UpdateUserIsPersonalDetailsAdded(mobileEdit.getText().toString());
 
-        Call<UpdateUserIsPersonalDetailsAdded> call = userService.updateUserIsPersonalDetailsAdded("" + userId, updateUserIsPersonalDetailsAdded);
+        Call<UpdateUserIsPersonalDetailsAdded> call = ApiClient.getUserService().updateUserIsPersonalDetailsAdded("" + userId, updateUserIsPersonalDetailsAdded);
 
         call.enqueue(new Callback<UpdateUserIsPersonalDetailsAdded>() {
             @Override
@@ -1681,7 +1672,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
         UpdateUserEmailId updateUserEmailId = new UpdateUserEmailId(emailIdEdit.getText().toString());
 
-        Call<UpdateUserEmailId> call = userService.updateUserEmailId("" + userId, updateUserEmailId);
+        Call<UpdateUserEmailId> call = ApiClient.getUserService().updateUserEmailId("" + userId, updateUserEmailId);
 
         call.enqueue(new Callback<UpdateUserEmailId>() {
             @Override
