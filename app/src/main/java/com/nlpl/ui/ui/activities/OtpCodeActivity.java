@@ -44,6 +44,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.nlpl.R;
 import com.nlpl.model.UpdateUserDetails.UpdateUserPhoneNumber;
 import com.nlpl.services.UserService;
+import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.OTPReceiver;
 
 import org.json.JSONArray;
@@ -67,7 +68,6 @@ public class OtpCodeActivity extends AppCompatActivity {
     String mobileNoFirebase, otp, userId, userIdAPI, name, nameAPI, phone, isRegistrationDone, isRegistrationDoneAPI, pinCode, pinCodeAPI, address, addressAPI, mobileNoAPI, cityAPI, city, roleAPI, role;
     FirebaseAuth mAuth;
     private RequestQueue mQueue;
-    private UserService userService;
     ArrayList<String> arrayUserId, arrayMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
     Boolean isEditPhone;
     String userIdBundle;
@@ -118,14 +118,6 @@ public class OtpCodeActivity extends AppCompatActivity {
         arrayRole = new ArrayList<>();
         arrayRegDone = new ArrayList<>();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getString(R.string.baseURL))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        userService = retrofit.create(UserService.class);
-
-
 //        final ProgressDialog dialog = ProgressDialog.show(this, "Fetching OTP", "Please wait....", true);
 //        new Thread(new Runnable() {
 //            @Override
@@ -139,70 +131,70 @@ public class OtpCodeActivity extends AppCompatActivity {
 //            }
 //        }).start();
 
-//        initiateOtp();
+        initiateOtp();
         setCountdown();
 
         otpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                otp = "";
+                otp = otpCode.getText().toString();
 
-                //----------------------- Alert Dialog -------------------------------------------------
-                Dialog alert = new Dialog(OtpCodeActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
-                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                lp.copyFrom(alert.getWindow().getAttributes());
-                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.gravity = Gravity.CENTER;
-
-                alert.show();
-                alert.getWindow().setAttributes(lp);
-                alert.setCancelable(false);
-
-                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-                alertTitle.setText("OTP validated successfully");
-                alertMessage.setText("");
-                alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText("OK");
-                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
-
-                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        alert.dismiss();
-                        if (isEditPhone) {
-                            updateUserPhoneNumber(userIdBundle);
-                            OtpCodeActivity.this.finish();
-                        } else {
-                            checkPhoneInAPI(mobileNoFirebase);
-                        }
-                    }
-                });
+//                //----------------------- Alert Dialog -------------------------------------------------
+//                Dialog alert = new Dialog(OtpCodeActivity.this);
+//                alert.setContentView(R.layout.dialog_alert);
+//                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+//                lp.copyFrom(alert.getWindow().getAttributes());
+//                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+//                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+//                lp.gravity = Gravity.CENTER;
+//
+//                alert.show();
+//                alert.getWindow().setAttributes(lp);
+//                alert.setCancelable(false);
+//
+//                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+//                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+//                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+//                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+//
+//                alertTitle.setText("OTP Validation");
+//                alertMessage.setText("OTP validated successfully");
+//                alertPositiveButton.setVisibility(View.GONE);
+//                alertNegativeButton.setText("OK");
+//                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+//                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+//
+//                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        alert.dismiss();
+//                        if (isEditPhone) {
+//                            updateUserPhoneNumber(userIdBundle);
+//                            OtpCodeActivity.this.finish();
+//                        } else {
+//                            checkPhoneInAPI(mobileNoFirebase);
+//                        }
+//                    }
+//                });
                 //------------------------------------------------------------------------------------------
 
-//                if (otp1.getText().toString().isEmpty() || otp2.getText().toString().isEmpty() || otp3.getText().toString().isEmpty() || otp4.getText().toString().isEmpty() || otp5.getText().toString().isEmpty() || otp6.getText().toString().isEmpty()) {
-//                    Toast.makeText(getApplicationContext(), "Field is blank", Toast.LENGTH_LONG).show();
-//                } else {
+                if (otpCode.getText().toString().isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Field is blank", Toast.LENGTH_LONG).show();
+                } else {
 //                    Log.i("OTP", otp);
 //                    Log.i("OTP ID", otpId);
-//                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpId, otp);
-//                    signInWithPhoneAuthCredential(credential);
-//
-//                }
+                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpId, otp);
+                    signInWithPhoneAuthCredential(credential);
+
+                }
             }
         });
 
         reSendOtp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                initiateOtp();
+                initiateOtp();
                 setCountdown();
             }
         });
@@ -284,8 +276,8 @@ public class OtpCodeActivity extends AppCompatActivity {
                     TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                    alertTitle.setText("OTP validated successfully");
-                    alertMessage.setText("");
+                    alertTitle.setText("OTP Validation");
+                    alertMessage.setText("OTP validated successfully");
                     alertPositiveButton.setVisibility(View.GONE);
                     alertNegativeButton.setText("OK");
                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -386,7 +378,7 @@ public class OtpCodeActivity extends AppCompatActivity {
 
         UpdateUserPhoneNumber updateUserPhoneNumber = new UpdateUserPhoneNumber(mobileNoFirebase);
 
-        Call<UpdateUserPhoneNumber> call = userService.updateUserPhoneNumber("" + getUserId, updateUserPhoneNumber);
+        Call<UpdateUserPhoneNumber> call = ApiClient.getUserService().updateUserPhoneNumber("" + getUserId, updateUserPhoneNumber);
 
         call.enqueue(new Callback<UpdateUserPhoneNumber>() {
             @Override

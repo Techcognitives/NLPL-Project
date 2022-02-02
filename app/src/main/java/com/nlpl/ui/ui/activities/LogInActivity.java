@@ -139,7 +139,6 @@ public class LogInActivity extends AppCompatActivity {
                     lp.width = WindowManager.LayoutParams.MATCH_PARENT;
                     lp.height = WindowManager.LayoutParams.MATCH_PARENT;
                     lp.gravity = Gravity.CENTER;
-
                     alert.show();
                     alert.getWindow().setAttributes(lp);
                     alert.setCancelable(false);

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -60,6 +61,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
     private DriversListAdapter driverListAdapter;
     private RecyclerView driverListRecyclerView;
     private AddTruckService addTruckService;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     Dialog previewDialogRcBook, previewDialogInsurance;
     String phone, userId, truckIdPass;
@@ -201,6 +203,22 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
 
         previewInsurance = (ImageView) previewDialogInsurance.findViewById(R.id.dialog_preview_image_view);
 
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.view_truck_details_refresh_constrain);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(false);
+                RearrangeItems();
+            }
+        });
+
+    }
+
+    public void RearrangeItems() {
+        Intent intent = new Intent(ViewTruckDetailsActivity.this, ViewTruckDetailsActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("mobile", phone);
+        startActivity(intent);
     }
 
     public void getTruckList() {

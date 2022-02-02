@@ -259,7 +259,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/all_rounded_small"
-            android:src="@drawable/aadhar_card_front"
+            android:src="@drawable/blue_profile_small"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/ProfileText"

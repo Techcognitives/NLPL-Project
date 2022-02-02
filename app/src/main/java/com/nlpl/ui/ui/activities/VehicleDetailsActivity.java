@@ -102,9 +102,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     int CAMERA_PIC_REQUEST1 = 7;
     int CAMERA_PIC_REQUEST2 = 12;
 
-    private UserService userService;
-    private AddTruckService addTruckService;
-
     String userId, truckId, vehicleNumberAPI, vehicleTypeAPI, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI, truckModelAPI, truckFtAPI, truckCapacityAPI;
     Boolean isRcEdited = false, isInsuranceEdited = false, fromBidNow = true, isEdit, isRcUploaded = false, isInsurance = false, truckSelected = false, isModelSelected = false, isAssignTruck = false;
 
@@ -198,14 +195,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         openSelected.setChecked(false);
         closeSelected.setChecked(false);
         tarpaulinSelected.setChecked(false);
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getString(R.string.baseURL))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        userService = retrofit.create(UserService.class);
-        addTruckService = retrofit.create(AddTruckService.class);
 
         okVehicleDetails = findViewById(R.id.vehicle_details_ok_button);
 //        okVehicleDetails.setEnabled(false);
@@ -1323,7 +1312,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
         UpdateUserIsTruckAdded updateUserIsTruckAdded = new UpdateUserIsTruckAdded("1");
 
-        Call<UpdateUserIsTruckAdded> call = userService.updateUserIsTruckAdded("" + userId, updateUserIsTruckAdded);
+        Call<UpdateUserIsTruckAdded> call = ApiClient.getUserService().updateUserIsTruckAdded("" + userId, updateUserIsTruckAdded);
 
         call.enqueue(new Callback<UpdateUserIsTruckAdded>() {
             @Override
@@ -1347,7 +1336,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
         UpdateTruckVehicleNumber updateTruckVehicleNumber = new UpdateTruckVehicleNumber(vehicleNumberEdit.getText().toString());
 
-        Call<UpdateTruckVehicleNumber> call = addTruckService.updateTruckVehicleNumber("" + truckId, updateTruckVehicleNumber);
+        Call<UpdateTruckVehicleNumber> call = ApiClient.addTruckService().updateTruckVehicleNumber("" + truckId, updateTruckVehicleNumber);
 
         call.enqueue(new Callback<UpdateTruckVehicleNumber>() {
             @Override
@@ -1371,7 +1360,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
         UpdateTruckType updateTruckType = new UpdateTruckType(selectModel.getText().toString());
 
-        Call<UpdateTruckType> call = addTruckService.updateTruckType("" + truckId, updateTruckType);
+        Call<UpdateTruckType> call = ApiClient.addTruckService().updateTruckType("" + truckId, updateTruckType);
 
         call.enqueue(new Callback<UpdateTruckType>() {
             @Override
@@ -1395,7 +1384,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
         UpdateVehicleType updateVehicleType = new UpdateVehicleType(bodyTypeSelected);
 
-        Call<UpdateVehicleType> call = addTruckService.updateVehicleType("" + truckId, updateVehicleType);
+        Call<UpdateVehicleType> call = ApiClient.addTruckService().updateVehicleType("" + truckId, updateVehicleType);
 
         call.enqueue(new Callback<UpdateVehicleType>() {
             @Override
@@ -1419,7 +1408,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
         UpdateTruckFeet updateTruckFeet = new UpdateTruckFeet(selectFt.getText().toString());
 
-        Call<UpdateTruckFeet> call = addTruckService.updateTruckFeet("" + truckId, updateTruckFeet);
+        Call<UpdateTruckFeet> call = ApiClient.addTruckService().updateTruckFeet("" + truckId, updateTruckFeet);
 
         call.enqueue(new Callback<UpdateTruckFeet>() {
             @Override
@@ -1442,7 +1431,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
         UpdateTruckCarryingCapacity updateTruckCarryingCapacity = new UpdateTruckCarryingCapacity(selectCapacity.getText().toString());
 
-        Call<UpdateTruckCarryingCapacity> call = addTruckService.updateTruckCarryingCapacity("" + truckId, updateTruckCarryingCapacity);
+        Call<UpdateTruckCarryingCapacity> call = ApiClient.addTruckService().updateTruckCarryingCapacity("" + truckId, updateTruckCarryingCapacity);
 
         call.enqueue(new Callback<UpdateTruckCarryingCapacity>() {
             @Override

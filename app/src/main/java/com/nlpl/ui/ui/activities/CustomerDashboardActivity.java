@@ -50,6 +50,7 @@ import com.nlpl.services.PostLoadService;
 import com.nlpl.ui.ui.adapters.BidsAcceptedAdapter;
 import com.nlpl.ui.ui.adapters.BidsReceivedAdapter;
 import com.nlpl.ui.ui.adapters.BidsResponsesAdapter;
+import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.EnglishNumberToWords;
 
@@ -80,13 +81,12 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     private RecyclerView bidsAcceptedRecyclerView;
 
     private BidsResponsesAdapter bidsResponsesAdapter;
-    private BidLoadService bidService;
     boolean isBackPressed = false;
 
     Dialog menuDialog;
     TextView userNameTextViewMenu, mobileTextViewMenu, spNumber, driverNumber;
     ImageView personalDetailsLogoImageView, bankDetailsLogoImageView;
-    Dialog  previewDialogProfile;
+    Dialog previewDialogProfile;
     ImageView profilePic;
 
     String isPersonalDetailsDone, isBankDetailsDone;
@@ -104,7 +104,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     EditText notesCustomer;
     String userId, phone;
     String spQuoteByApi, bid_idByAPI, noteByApi;
-    private PostLoadService postLoadService;
 
     ArrayList<String> arrayAssignedDriverId, arrayUserId, arrayBidStatus, arrayNotesFromSP;
     String noteBySPToCustomer, assignedDriverId, assignedDriverIdAPI, assignedUserId, assignedUserIdAPI, bidStatusAPI;
@@ -209,15 +208,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         viewConsignmentCustomer = new Dialog(CustomerDashboardActivity.this);
         viewConsignmentCustomer.setContentView(R.layout.dialog_acept_bid_customer);
         viewConsignmentCustomer.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getString(R.string.baseURL))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        bidService = retrofit.create(BidLoadService.class);
-        postLoadService = retrofit.create(PostLoadService.class);
-
     }
 
     private void getUserId(String userMobileNumber) {
@@ -621,8 +611,8 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Response submitted Successfully");
-                alertMessage.setText("");
+                alertTitle.setText("Load Response");
+                alertMessage.setText("Response submitted Successfully");
                 alertPositiveButton.setVisibility(View.GONE);
                 alertNegativeButton.setText("OK");
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -649,7 +639,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
         UpdateBudgetCustomerForSP updateBudgetCustomerForSP = new UpdateBudgetCustomerForSP(cQuote);
 
-        Call<UpdateBudgetCustomerForSP> call = bidService.updateBudgetCustomerForSP("" + bidId, updateBudgetCustomerForSP);
+        Call<UpdateBudgetCustomerForSP> call = ApiClient.getBidLoadService().updateBudgetCustomerForSP("" + bidId, updateBudgetCustomerForSP);
 
         call.enqueue(new Callback<UpdateBudgetCustomerForSP>() {
             @Override
@@ -670,7 +660,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
         UpdateCustomerNoteForSP updateCustomerNoteForSP = new UpdateCustomerNoteForSP(cNote);
 
-        Call<UpdateCustomerNoteForSP> call = postLoadService.updateCustomerNoteForSP("" + bidId, updateCustomerNoteForSP);
+        Call<UpdateCustomerNoteForSP> call = ApiClient.getPostLoadService().updateCustomerNoteForSP("" + bidId, updateCustomerNoteForSP);
 
         call.enqueue(new Callback<UpdateCustomerNoteForSP>() {
             @Override
@@ -692,7 +682,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
         UpdateCustomerBudget updateCustomerBudget = new UpdateCustomerBudget(cQuote);
 
-        Call<UpdateCustomerBudget> call = postLoadService.updateCustomerBudget("" + bidId, updateCustomerBudget);
+        Call<UpdateCustomerBudget> call = ApiClient.getPostLoadService().updateCustomerBudget("" + bidId, updateCustomerBudget);
 
         call.enqueue(new Callback<UpdateCustomerBudget>() {
             @Override
@@ -713,7 +703,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
         UpdateBidStatusFinalAccepted updateBidStatusFinalAccepted = new UpdateBidStatusFinalAccepted("FinalAccepted");
 
-        Call<UpdateBidStatusFinalAccepted> call = bidService.updateFinalAccepted("" + bidId, updateBidStatusFinalAccepted);
+        Call<UpdateBidStatusFinalAccepted> call = ApiClient.getBidLoadService().updateFinalAccepted("" + bidId, updateBidStatusFinalAccepted);
 
         call.enqueue(new Callback<UpdateBidStatusFinalAccepted>() {
             @Override
@@ -735,7 +725,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
         UpdateBidStatusAccepted updateBidStatusAccepted = new UpdateBidStatusAccepted("Accepted");
 
-        Call<UpdateBidStatusAccepted> call = bidService.updateBidStatusAccepted("" + bidId, updateBidStatusAccepted);
+        Call<UpdateBidStatusAccepted> call = ApiClient.getBidLoadService().updateBidStatusAccepted("" + bidId, updateBidStatusAccepted);
 
         call.enqueue(new Callback<UpdateBidStatusAccepted>() {
             @Override
@@ -756,7 +746,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
         UpdateLoadStatusSubmitted updateLoadStatusSubmitted = new UpdateLoadStatusSubmitted("loadSubmitted");
 
-        Call<UpdateLoadStatusSubmitted> call = postLoadService.updateBidStatusSubmitted("" + loadId, updateLoadStatusSubmitted);
+        Call<UpdateLoadStatusSubmitted> call = ApiClient.getPostLoadService().updateBidStatusSubmitted("" + loadId, updateLoadStatusSubmitted);
 
         call.enqueue(new Callback<UpdateLoadStatusSubmitted>() {
             @Override
@@ -1102,8 +1092,8 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Final Offer accepted Successfully");
-                alertMessage.setText("");
+                alertTitle.setText("Final Offer");
+                alertMessage.setText("Final Offer accepted Successfully");
                 alertPositiveButton.setVisibility(View.GONE);
                 alertNegativeButton.setText("OK");
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -1348,8 +1338,8 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                            alertTitle.setText("Withdrawn Successfully");
-                            alertMessage.setText("");
+                            alertTitle.setText("Withdrawn LOad");
+                            alertMessage.setText("Load Withdrawn Successfully");
                             alertPositiveButton.setVisibility(View.GONE);
                             alertNegativeButton.setText("OK");
                             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
