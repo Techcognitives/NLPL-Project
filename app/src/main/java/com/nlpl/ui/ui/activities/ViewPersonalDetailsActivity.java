@@ -1,7 +1,5 @@
 package com.nlpl.ui.ui.activities;
 
-import static com.nlpl.R.drawable.blue_profile_small;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -82,7 +80,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
                     finish();
                     overridePendingTransition(0, 0);
                 } else {
-                    Intent intent = new Intent(ViewPersonalDetailsActivity.this, DashboardActivity.class);
+                    Intent intent = new Intent(ViewPersonalDetailsActivity.this, ServiceProviderDashboardActivity.class);
                     intent.putExtra("mobile2", phone);
                     startActivity(intent);
                     finish();
@@ -420,7 +418,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
         } else {
             switch (view.getId()) {
                 case R.id.bottom_nav_sp_dashboard:
-                    Intent intent = new Intent(ViewPersonalDetailsActivity.this, DashboardActivity.class);
+                    Intent intent = new Intent(ViewPersonalDetailsActivity.this, ServiceProviderDashboardActivity.class);
                     intent.putExtra("mobile2", phone);
                     startActivity(intent);
                     break;
@@ -444,7 +442,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
             finish();
             overridePendingTransition(0, 0);
         } else {
-            Intent i8 = new Intent(ViewPersonalDetailsActivity.this, DashboardActivity.class);
+            Intent i8 = new Intent(ViewPersonalDetailsActivity.this, ServiceProviderDashboardActivity.class);
             i8.putExtra("mobile2", phone);
             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i8);

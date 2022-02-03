@@ -1,11 +1,6 @@
 package com.nlpl.ui.ui.adapters;
 
 import android.annotation.SuppressLint;
-import android.icu.text.DecimalFormat;
-import android.icu.text.NumberFormat;
-import android.os.Build;
-import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,14 +17,12 @@ import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BidsAcceptedModel;
 import com.nlpl.ui.ui.activities.CustomerDashboardActivity;
-import com.nlpl.ui.ui.activities.DashboardActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapter.BidsAcceptedViewHolder> {
 

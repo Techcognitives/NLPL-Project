@@ -186,6 +186,7 @@
                 android:layout_marginTop="5dp"
                 android:gravity="center|start"
                 android:paddingTop="5dp"
+                android:onClick="CustomerLoadHistory"
                 android:paddingBottom="5dp"
                 android:text="Loads History"
                 android:textColor="@color/white"

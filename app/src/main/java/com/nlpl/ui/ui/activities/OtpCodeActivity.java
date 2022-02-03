@@ -43,8 +43,6 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.nlpl.R;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
-import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserPhoneNumber;
-import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.OTPReceiver;
 
 import org.json.JSONArray;
@@ -53,9 +51,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
-
-import retrofit2.Call;
-import retrofit2.Callback;
 
 public class OtpCodeActivity extends AppCompatActivity {
 
@@ -437,7 +432,7 @@ public class OtpCodeActivity extends AppCompatActivity {
                             finish();
                             overridePendingTransition(0, 0);
                         }else{
-                            Intent i8 = new Intent(OtpCodeActivity.this, DashboardActivity.class);
+                            Intent i8 = new Intent(OtpCodeActivity.this, ServiceProviderDashboardActivity.class);
                             i8.putExtra("mobile2", phone);
                             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i8);
@@ -533,7 +528,7 @@ public class OtpCodeActivity extends AppCompatActivity {
                             finish();
                             overridePendingTransition(0, 0);
                         }else{
-                            Intent i8 = new Intent(OtpCodeActivity.this, DashboardActivity.class);
+                            Intent i8 = new Intent(OtpCodeActivity.this, ServiceProviderDashboardActivity.class);
                             i8.putExtra("mobile2", phone);
                             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i8);

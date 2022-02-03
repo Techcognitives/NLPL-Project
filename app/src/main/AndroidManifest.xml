@@ -21,6 +21,10 @@
         android:theme="@style/Theme.NLPL"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.ui.activities.CustomerLoadsHistoryActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
+        <activity
             android:name=".ui.ui.activities.FindLoadsActivity"
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
@@ -81,7 +85,7 @@
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.ui.activities.DashboardActivity"
+            android:name=".ui.ui.activities.ServiceProviderDashboardActivity"
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity

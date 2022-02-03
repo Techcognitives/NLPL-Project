@@ -61,11 +61,6 @@ import com.nlpl.model.Responses.UploadDriverLicenseResponse;
 import com.nlpl.model.UpdateMethods.UpdateDriverDetails;
 import com.nlpl.model.UpdateMethods.UpdateTruckDetails;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
-import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverEmailId;
-import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverName;
-import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverNumber;
-import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverTruckId;
-import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckDriverId;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
@@ -1727,7 +1722,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        Intent i8 = new Intent(DriverDetailsActivity.this, DashboardActivity.class);
+        Intent i8 = new Intent(DriverDetailsActivity.this, ServiceProviderDashboardActivity.class);
         i8.putExtra("mobile2", mobile);
         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i8);

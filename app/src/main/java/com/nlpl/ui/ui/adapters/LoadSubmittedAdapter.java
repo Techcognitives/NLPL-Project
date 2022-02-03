@@ -20,10 +20,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BidSubmittedModel;
-import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadStatusSubmitted;
-import com.nlpl.ui.ui.activities.DashboardActivity;
-import com.nlpl.ui.ui.activities.PostALoadActivity;
+import com.nlpl.ui.ui.activities.ServiceProviderDashboardActivity;
 import com.nlpl.utils.ApiClient;
 
 import org.json.JSONArray;
@@ -39,13 +37,13 @@ import retrofit2.Callback;
 public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdapter.LoadSubmittedViewHolder> {
 
     private ArrayList<BidSubmittedModel> loadSubmittedList;
-    private DashboardActivity activity;
+    private ServiceProviderDashboardActivity activity;
     private RequestQueue mQueue;
     String bidEndsAt, currentTimeToCompare, bidEndsAtStringTime, finalBidEndsAt, finalDate;
     int timeLeftToExpire, timeInMillisec, minLeftToExpire, months;
     boolean loadExpired = false;
 
-    public LoadSubmittedAdapter(DashboardActivity activity, ArrayList<BidSubmittedModel> loadSubmittedList) {
+    public LoadSubmittedAdapter(ServiceProviderDashboardActivity activity, ArrayList<BidSubmittedModel> loadSubmittedList) {
         this.loadSubmittedList = loadSubmittedList;
         this.activity = activity;
     }

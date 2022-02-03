@@ -1516,7 +1516,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        Intent i8 = new Intent(VehicleDetailsActivity.this, DashboardActivity.class);
+        Intent i8 = new Intent(VehicleDetailsActivity.this, ServiceProviderDashboardActivity.class);
         i8.putExtra("mobile2", mobile);
         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i8);

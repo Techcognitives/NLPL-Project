@@ -1,8 +1,6 @@
 package com.nlpl.ui.ui.adapters;
 
 import android.annotation.SuppressLint;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +9,6 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
@@ -21,10 +17,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
-import com.nlpl.model.ModelForRecyclerView.BidsReceivedModel;
 import com.nlpl.model.ModelForRecyclerView.BidsResponsesModel;
 import com.nlpl.ui.ui.activities.CustomerDashboardActivity;
-import com.nlpl.ui.ui.activities.DashboardActivity;
 import com.nlpl.utils.DownloadImageTask;
 
 import org.json.JSONArray;

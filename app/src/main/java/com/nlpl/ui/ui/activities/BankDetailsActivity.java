@@ -49,7 +49,6 @@ import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankAccountNumb
 import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankIFSICode;
 import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankName;
 import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankReEnterAccountNumber;
-import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsBankDetailsGiven;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
@@ -991,7 +990,7 @@ public class BankDetailsActivity extends AppCompatActivity {
             overridePendingTransition(0, 0);
 
         } else {
-            Intent i8 = new Intent(BankDetailsActivity.this, DashboardActivity.class);
+            Intent i8 = new Intent(BankDetailsActivity.this, ServiceProviderDashboardActivity.class);
             i8.putExtra("mobile2", mobile);
             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i8);

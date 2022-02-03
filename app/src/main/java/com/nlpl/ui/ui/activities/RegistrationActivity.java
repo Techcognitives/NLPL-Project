@@ -6,7 +6,6 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -15,7 +14,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.media.Image;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
@@ -49,7 +47,6 @@ import com.nlpl.model.Requests.UserRequest;
 import com.nlpl.model.Responses.UserResponse;
 import com.nlpl.utils.ApiClient;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -532,7 +529,7 @@ public class RegistrationActivity extends AppCompatActivity {
                         finish();
                         overridePendingTransition(0, 0);
                     } else {
-                        Intent i8 = new Intent(RegistrationActivity.this, DashboardActivity.class);
+                        Intent i8 = new Intent(RegistrationActivity.this, ServiceProviderDashboardActivity.class);
                         i8.putExtra("mobile2", mobile);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);
