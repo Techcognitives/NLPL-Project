@@ -1,19 +1,28 @@
 package com.nlpl.ui.ui.activities;
 
+import static com.nlpl.R.drawable.blue_profile_small;
+import static com.nlpl.R.drawable.pan_card;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
@@ -23,6 +32,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -58,7 +68,11 @@ import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BidSubmittedModel;
 import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
 import com.nlpl.model.Requests.BidLoadRequest;
+import com.nlpl.model.Requests.ImageRequest;
 import com.nlpl.model.Responses.BidLadResponse;
+import com.nlpl.model.Responses.ImageResponse;
+import com.nlpl.model.Responses.UploadImageResponse;
+import com.nlpl.model.UpdateMethods.UpdateUserDetails;
 import com.nlpl.model.UpdateModel.Models.UpdateBids.UpdateAssignedDriverId;
 import com.nlpl.model.UpdateModel.Models.UpdateBids.UpdateAssignedTruckIdToBid;
 import com.nlpl.model.UpdateModel.Models.UpdateBids.UpdateBidStatusRespondedBySP;
@@ -69,17 +83,23 @@ import com.nlpl.ui.ui.adapters.LoadSubmittedAdapter;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.EnglishNumberToWords;
+import com.nlpl.utils.FileUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -90,6 +110,10 @@ public class DashboardActivity extends AppCompatActivity {
 
     private RequestQueue mQueue;
     boolean isBackPressed = false;
+    String img_type;
+
+    private int CAMERA_PIC_REQUEST2 = 4;
+    private int GET_FROM_GALLERY2 = 5;
 
     private ArrayList<LoadNotificationModel> loadList = new ArrayList<>();
     private ArrayList<LoadNotificationModel> loadListToCompare = new ArrayList<>();
@@ -103,7 +127,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     Dialog setBudget, selectTruckDialog, previewDialogBidNow, dialogAcceptRevisedBid, dialogViewConsignment;
 
-    String updateAssignedDriverId, updateAssignedTruckId, spQuoteOnClickBidNow, bidStatus, vehicle_no, truckId, isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
+    String updateAssignedDriverId, updateAssignedTruckId, spQuoteOnClickBidNow, bidStatus, vehicle_no, truckId, isProfileAdded, isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
 
     SwipeListener swipeListener;
     double latitude1, latitude2, longitude1, longitude2;
@@ -113,7 +137,7 @@ public class DashboardActivity extends AppCompatActivity {
     EditText notesSp;
     CheckBox declaration;
     RadioButton negotiable_yes, negotiable_no;
-    Boolean isTruckSelectedToBid = false, negotiable = null, isNegotiableSelected = false, fromAdapter = false;
+    Boolean profileAdded, isTruckSelectedToBid = false, negotiable = null, isNegotiableSelected = false, fromAdapter = false;
     ImageView actionBarBackButton, actionBarMenuButton, profilePic;
 
     Dialog menuDialog, previewDialogProfile;
@@ -219,7 +243,6 @@ public class DashboardActivity extends AppCompatActivity {
         driverDetailsLogoImageView = (ImageView) menuDialog.findViewById(R.id.menu_driver_details_logo_image_view);
         profilePic = (ImageView) menuDialog.findViewById(R.id.profile_picture_on_sp_menu);
 
-
 //        swipeListener = new SwipeListener(loadListRecyclerView);
 
         previewDialogBidNow = new Dialog(DashboardActivity.this);
@@ -274,7 +297,6 @@ public class DashboardActivity extends AppCompatActivity {
                     }
 
                     getUserDetails();
-                    getProfilePic();
                     //---------------------------- Get Load Details -------------------------------------------
                     getLoadNotificationList();
 
@@ -338,11 +360,20 @@ public class DashboardActivity extends AppCompatActivity {
                         isBankDetailsDone = obj.getString("isBankDetails_given");
                         isTruckDetailsDone = obj.getString("isTruck_added");
                         isDriverDetailsDone = obj.getString("isDriver_added");
+                        isProfileAdded = obj.getString("isProfile_pic_added");
+
+                        Log.i("isProfileAdded at SP", isProfileAdded);
 
                         //-------------------------------------Personal details ---- -------------------------------------
                         menuUserNameTextView.setText(name);
                         String s1 = mobile.substring(2, 12);
                         mobileText.setText("+91 " + s1);
+
+                        if (isProfileAdded.equals("1")) {
+                            getProfilePic();
+                        } else {
+                            profilePic.setImageDrawable(getResources().getDrawable(blue_profile_small));
+                        }
 
                         //--------------------------------------------------------------------------------------------------------
                         if (isPersonalDetailsDone.equals("1")) {
@@ -1174,11 +1205,11 @@ public class DashboardActivity extends AppCompatActivity {
                     if (loadSubmittedList.size() > 0) {
                         updatedLoadSubmittedList.addAll(loadSubmittedList);
                         loadSubmittedAdapter.updateData(updatedLoadSubmittedList);
-                        if (updatedLoadSubmittedList.size() > 0){
-                        noBidsSubmittedTextView.setVisibility(View.GONE);
-                        }else {
-                        noBidsSubmittedTextView.setVisibility(View.VISIBLE);
-                    }
+                        if (updatedLoadSubmittedList.size() > 0) {
+                            noBidsSubmittedTextView.setVisibility(View.GONE);
+                        } else {
+                            noBidsSubmittedTextView.setVisibility(View.VISIBLE);
+                        }
                         compareAndRemove(loadListToCompare);
                     }
 //
@@ -1927,22 +1958,21 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     public void ViewSPProfile(View view) {
-        String url1 = getString(R.string.baseURL) + "/imgbucket/Images/" + userId;
-        JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray imageList = response.getJSONArray("data");
-                    for (int i = 0; i < imageList.length(); i++) {
-                        JSONObject obj = imageList.getJSONObject(i);
-                        String imageType = obj.getString("image_type");
+        if (isProfileAdded.equals("1")) {
+            String url1 = getString(R.string.baseURL) + "/imgbucket/Images/" + userId;
+            JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        JSONArray imageList = response.getJSONArray("data");
+                        for (int i = 0; i < imageList.length(); i++) {
+                            JSONObject obj = imageList.getJSONObject(i);
+                            String imageType = obj.getString("image_type");
 
-                        String profileImgUrl;
-                        if (imageType.equals("profile")) {
-                            profileImgUrl = obj.getString("image_url");
-                            if (profileImgUrl.equals("null")){
-
-                            } else {
+                            String profileImgUrl;
+                            if (imageType.equals("profile")) {
+                                profileImgUrl = obj.getString("image_url");
+                                profileAdded = true;
                                 WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
                                 lp2.copyFrom(previewDialogProfile.getWindow().getAttributes());
                                 lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -1952,21 +1982,151 @@ public class DashboardActivity extends AppCompatActivity {
                                 previewDialogProfile.show();
                                 previewDialogProfile.getWindow().setAttributes(lp2);
                                 new DownloadImageTask((ImageView) previewDialogProfile.findViewById(R.id.dialog_preview_image_view)).execute(profileImgUrl);
+
                             }
                         }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
+            }, new com.android.volley.Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                }
+            });
+            mQueue.add(request1);
+        } else {
+            profileAdded = false;
+            uploadProfileDialogChoose();
+        }
+    }
+
+    private void uploadProfileDialogChoose() {
+        requestPermissionsForCamera();
+        requestPermissionsForGalleryWRITE();
+        requestPermissionsForGalleryREAD();
+        img_type = "profile";
+
+        Dialog chooseDialog;
+        chooseDialog = new Dialog(DashboardActivity.this);
+        chooseDialog.setContentView(R.layout.dialog_choose);
+        chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+        lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+        lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.gravity = Gravity.BOTTOM;
+
+        chooseDialog.show();
+        chooseDialog.getWindow().setAttributes(lp2);
+
+        ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
+        ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
+
+        camera.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+            public void onClick(View view) {
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST2);
+                chooseDialog.dismiss();
             }
         });
-        mQueue.add(request1);
+
+        gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY2);
+                chooseDialog.dismiss();
+            }
+        });
     }
+
+    @NonNull
+    private MultipartBody.Part prepareFilePart(String partName, Uri fileUri) {
+
+        Log.i("file uri: ", String.valueOf(fileUri));
+        // use the FileUtils to get the actual file by uri
+        File file = FileUtils.getFile(this, fileUri);
+
+        // create RequestBody instance from file
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image"), file);
+
+        // MultipartBody.Part is used to send also the actual file name
+        return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
+    }
+
+    private void uploadImage(String picPath) {
+
+        File file = new File(picPath);
+//        File file = new File(getExternalFilesDir("/").getAbsolutePath(), file);
+
+        MultipartBody.Part body = prepareFilePart("file", Uri.fromFile(file));
+
+        Call<UploadImageResponse> call = ApiClient.getImageUploadService().uploadImage(userId, img_type, body);
+        call.enqueue(new Callback<UploadImageResponse>() {
+            @Override
+            public void onResponse(Call<UploadImageResponse> call, retrofit2.Response<UploadImageResponse> response) {
+                Log.i("successful:", "success");
+            }
+
+            @Override
+            public void onFailure(Call<UploadImageResponse> call, Throwable t) {
+                t.printStackTrace();
+                Log.i("failed:", "failed");
+            }
+        });
+    }
+
+    public String getRealPathFromURI(Uri uri) {
+        String path = "";
+        if (getContentResolver() != null) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            if (cursor != null) {
+                cursor.moveToFirst();
+                int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                path = cursor.getString(idx);
+                cursor.close();
+            }
+        }
+        return path;
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    private void requestPermissionsForCamera() {
+        if (ContextCompat.checkSelfPermission(DashboardActivity.this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(DashboardActivity.this, new String[]{
+                    Manifest.permission.CAMERA
+            }, 100);
+        }
+    }
+
+    private void requestPermissionsForGalleryWRITE() {
+        if (ContextCompat.checkSelfPermission(DashboardActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(DashboardActivity.this, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+            }, 100);
+        }
+    }
+
+    private void requestPermissionsForGalleryREAD() {
+        if (ContextCompat.checkSelfPermission(DashboardActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(DashboardActivity.this, new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+            }, 100);
+        }
+    }
+
 
     public void openMaps(LoadNotificationModel obj) {
         String sDestination = obj.getPick_add() + obj.getPick_city();
@@ -2213,7 +2373,7 @@ public class DashboardActivity extends AppCompatActivity {
         new Handler().postDelayed(runnable, 3000);
     }
 
-    private void getProfilePic(){
+    private void getProfilePic() {
 
         String url1 = getString(R.string.baseURL) + "/imgbucket/Images/" + userId;
         JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -2224,8 +2384,8 @@ public class DashboardActivity extends AppCompatActivity {
                     for (int i = 0; i < imageList.length(); i++) {
                         JSONObject obj = imageList.getJSONObject(i);
                         String imageType = obj.getString("image_type");
-
                         String profileImgUrl;
+
                         if (imageType.equals("profile")) {
                             profileImgUrl = obj.getString("image_url");
                             new DownloadImageTask(profilePic).execute(profileImgUrl);
@@ -2242,8 +2402,169 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
         mQueue.add(request1);
-
     }
 
 
+    //-----------------------------------------------upload Image------------------------------------------------------------
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == GET_FROM_GALLERY2 && resultCode == Activity.RESULT_OK) {
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(DashboardActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(true);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText("Personal Details");
+            alertMessage.setText("Profile Uploaded Successfully");
+            alertPositiveButton.setVisibility(View.GONE);
+            alertNegativeButton.setText("OK");
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.dismiss();
+                }
+            });
+            //------------------------------------------------------------------------------------------
+
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+            saveImage(imageRequest());
+            uploadImage(picturePath);
+
+            profileAddedAlert();
+
+        } else if (requestCode == CAMERA_PIC_REQUEST2) {
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(DashboardActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(true);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText("Personal Details");
+            alertMessage.setText("Profile Uploaded Successfully");
+            alertPositiveButton.setVisibility(View.GONE);
+            alertNegativeButton.setText("OK");
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.dismiss();
+
+                }
+            });
+            //------------------------------------------------------------------------------------------
+
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            String path = getRealPathFromURI(getImageUri(this, image));
+            saveImage(imageRequest());
+            uploadImage(path);
+
+            profileAddedAlert();
+
+        }
+    }
+
+    //-------------------------------------------------------------------------------------------------------------------
+    public ImageRequest imageRequest() {
+        ImageRequest imageRequest = new ImageRequest();
+        imageRequest.setUser_id(userId);
+        imageRequest.setImage_type(img_type);
+        return imageRequest;
+    }
+
+    public void saveImage(ImageRequest imageRequest) {
+        Call<ImageResponse> imageResponseCall = ApiClient.getImageService().saveImage(imageRequest);
+        imageResponseCall.enqueue(new Callback<ImageResponse>() {
+            @Override
+            public void onResponse(Call<ImageResponse> call, retrofit2.Response<ImageResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ImageResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void profileAddedAlert() {
+        UpdateUserDetails.updateUserIsProfileAdded(userId, "1");
+
+        Dialog alert = new Dialog(DashboardActivity.this);
+        alert.setContentView(R.layout.dialog_alert);
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(alert.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        alert.show();
+        alert.getWindow().setAttributes(lp);
+        alert.setCancelable(false);
+
+        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+        alertTitle.setText("Profile Picture");
+        alertMessage.setText("Profile Picture added successfully");
+        alertPositiveButton.setVisibility(View.GONE);
+        alertNegativeButton.setText("OK");
+        alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+        alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+                Intent i8 = new Intent(DashboardActivity.this, DashboardActivity.class);
+                i8.putExtra("mobile2", phone);
+                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i8);
+                finish();
+                overridePendingTransition(0, 0);
+            }
+        });
+    }
 }

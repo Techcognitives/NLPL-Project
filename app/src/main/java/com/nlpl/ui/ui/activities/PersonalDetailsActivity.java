@@ -2,6 +2,7 @@ package com.nlpl.ui.ui.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -39,6 +40,7 @@ import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsPersonalD
 import com.nlpl.model.Requests.ImageRequest;
 import com.nlpl.model.Responses.ImageResponse;
 import com.nlpl.model.Responses.UploadImageResponse;
+import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsProfileAdded;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.FileUtils;
 
@@ -77,9 +79,11 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
 
     View panAndAadharView;
+    ConstraintLayout aadharConstrain, panConstrain, profileConstrain;
+    TextView uploadAadharTitle, uploadPanTitle, uploadProfileTitle;
 
-    String userRoleAPI,userId, mobile;
-    Boolean isPanUploaded = false, isFrontUploaded = false, isProfileUploaded = false;
+    String userRoleAPI, userId, mobile;
+    Boolean profilePic, isPanUploaded = false, isFrontUploaded = false, isProfileUploaded = false;
     String img_type;
 
     Dialog previewDialogPan, previewDialogAadhar, previewDialogProfile;
@@ -91,14 +95,22 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
+            profilePic = bundle.getBoolean("profile");
             userId = bundle.getString("userId");
             mobile = bundle.getString("mobile");
         }
         mQueue = Volley.newRequestQueue(PersonalDetailsActivity.this);
 
-        if (isPanUploaded && isFrontUploaded && isProfileUploaded) {
-            okPersonalDetails.setBackgroundResource((R.drawable.button_active));
+        if (profilePic) {
+            if (isProfileUploaded) {
+                okPersonalDetails.setBackgroundResource((R.drawable.button_active));
+            }
+        } else {
+            if (isPanUploaded && isFrontUploaded ) {
+                okPersonalDetails.setBackgroundResource((R.drawable.button_active));
+            }
         }
+
 
         action_bar = findViewById(R.id.personal_details_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
@@ -132,6 +144,29 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         uploadProfile = panAndAadharView.findViewById(R.id.uploadProfile);
         profileText = panAndAadharView.findViewById(R.id.ProfileText);
         imgProfile = panAndAadharView.findViewById(R.id.imageProfile);
+
+        aadharConstrain = panAndAadharView.findViewById(R.id.aadhar_constrain);
+        panConstrain = panAndAadharView.findViewById(R.id.pan_card_constrain);
+        profileConstrain = panAndAadharView.findViewById(R.id.upload_profile_constrain);
+        uploadPanTitle = panAndAadharView.findViewById(R.id.upload_pan_text);
+        uploadAadharTitle = panAndAadharView.findViewById(R.id.upload_aadhar_text);
+        uploadProfileTitle = panAndAadharView.findViewById(R.id.upload_profile_text);
+
+        if (profilePic) {
+            uploadProfileTitle.setVisibility(View.VISIBLE);
+            profileConstrain.setVisibility(View.VISIBLE);
+            uploadAadharTitle.setVisibility(View.GONE);
+            aadharConstrain.setVisibility(View.GONE);
+            uploadPanTitle.setVisibility(View.GONE);
+            panConstrain.setVisibility(View.GONE);
+        } else {
+            uploadProfileTitle.setVisibility(View.GONE);
+            profileConstrain.setVisibility(View.GONE);
+            uploadAadharTitle.setVisibility(View.VISIBLE);
+            aadharConstrain.setVisibility(View.VISIBLE);
+            uploadPanTitle.setVisibility(View.VISIBLE);
+            panConstrain.setVisibility(View.VISIBLE);
+        }
 
         previewDialogPan = new Dialog(PersonalDetailsActivity.this);
         previewDialogPan.setContentView(R.layout.dialog_preview_images);
@@ -304,8 +339,14 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             previewPan.setVisibility(View.VISIBLE);
             isPanUploaded = true;
 
-            if (isPanUploaded && isFrontUploaded && isProfileUploaded) {
-                okPersonalDetails.setBackgroundResource(R.drawable.button_active);
+            if (profilePic) {
+                if (isProfileUploaded) {
+                    okPersonalDetails.setBackgroundResource((R.drawable.button_active));
+                }
+            } else {
+                if (isPanUploaded && isFrontUploaded ) {
+                    okPersonalDetails.setBackgroundResource((R.drawable.button_active));
+                }
             }
 
             Uri selectedImage = data.getData();
@@ -363,8 +404,14 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             previewAadhar.setVisibility(View.VISIBLE);
             isFrontUploaded = true;
 
-            if (isPanUploaded && isFrontUploaded && isProfileUploaded) {
-                okPersonalDetails.setBackgroundResource(R.drawable.button_active);
+            if (profilePic) {
+                if (isProfileUploaded) {
+                    okPersonalDetails.setBackgroundResource((R.drawable.button_active));
+                }
+            } else {
+                if (isPanUploaded && isFrontUploaded ) {
+                    okPersonalDetails.setBackgroundResource((R.drawable.button_active));
+                }
             }
 
             Uri selectedImage = data.getData();
@@ -381,7 +428,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             editedAadhar.setImageURI(selectedImage);
             imgF.setImageURI(selectedImage);
 
-        } else  if (requestCode == CAMERA_PIC_REQUEST) {
+        } else if (requestCode == CAMERA_PIC_REQUEST) {
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(PersonalDetailsActivity.this);
             alert.setContentView(R.layout.dialog_alert);
@@ -423,17 +470,23 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             previewPan.setVisibility(View.VISIBLE);
             isPanUploaded = true;
 
-            if (isPanUploaded && isFrontUploaded && isProfileUploaded ) {
-                okPersonalDetails.setBackgroundResource(R.drawable.button_active);
+            if (profilePic) {
+                if (isProfileUploaded) {
+                    okPersonalDetails.setBackgroundResource((R.drawable.button_active));
+                }
+            } else {
+                if (isPanUploaded && isFrontUploaded ) {
+                    okPersonalDetails.setBackgroundResource((R.drawable.button_active));
+                }
             }
 
             Bitmap image = (Bitmap) data.getExtras().get("data");
-            String path = getRealPathFromURI(getImageUri(this,image));
+            String path = getRealPathFromURI(getImageUri(this, image));
             imgPAN.setImageBitmap(BitmapFactory.decodeFile(path));
             saveImage(imageRequest());
             uploadImage(path);
 
-        } else  if (requestCode == CAMERA_PIC_REQUEST1) {
+        } else if (requestCode == CAMERA_PIC_REQUEST1) {
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(PersonalDetailsActivity.this);
             alert.setContentView(R.layout.dialog_alert);
@@ -475,12 +528,18 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             previewAadhar.setVisibility(View.VISIBLE);
             isFrontUploaded = true;
 
-            if (isPanUploaded && isFrontUploaded && isProfileUploaded ) {
-                okPersonalDetails.setBackgroundResource(R.drawable.button_active);
+            if (profilePic) {
+                if (isProfileUploaded) {
+                    okPersonalDetails.setBackgroundResource((R.drawable.button_active));
+                }
+            } else {
+                if (isPanUploaded && isFrontUploaded ) {
+                    okPersonalDetails.setBackgroundResource((R.drawable.button_active));
+                }
             }
 
             Bitmap image = (Bitmap) data.getExtras().get("data");
-            String path = getRealPathFromURI(getImageUri(this,image));
+            String path = getRealPathFromURI(getImageUri(this, image));
             imgF.setImageBitmap(BitmapFactory.decodeFile(path));
             saveImage(imageRequest());
             uploadImage(path);
@@ -524,8 +583,14 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             previewProfile.setVisibility(View.VISIBLE);
             isProfileUploaded = true;
 
-            if (isPanUploaded && isFrontUploaded && isProfileUploaded) {
-                okPersonalDetails.setBackgroundResource(R.drawable.button_active);
+            if (profilePic) {
+                if (isProfileUploaded) {
+                    okPersonalDetails.setBackgroundResource((R.drawable.button_active));
+                }
+            } else {
+                if (isPanUploaded && isFrontUploaded ) {
+                    okPersonalDetails.setBackgroundResource((R.drawable.button_active));
+                }
             }
 
             Uri selectedImage = data.getData();
@@ -542,7 +607,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             editedPan.setImageURI(selectedImage);
             imgProfile.setImageURI(selectedImage);
 
-        } else  if (requestCode == CAMERA_PIC_REQUEST2) {
+        } else if (requestCode == CAMERA_PIC_REQUEST2) {
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(PersonalDetailsActivity.this);
             alert.setContentView(R.layout.dialog_alert);
@@ -584,12 +649,18 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             previewProfile.setVisibility(View.VISIBLE);
             isProfileUploaded = true;
 
-            if (isPanUploaded && isFrontUploaded && isProfileUploaded) {
-                okPersonalDetails.setBackgroundResource(R.drawable.button_active);
+            if (profilePic) {
+                if (isProfileUploaded) {
+                    okPersonalDetails.setBackgroundResource((R.drawable.button_active));
+                }
+            } else {
+                if (isPanUploaded && isFrontUploaded ) {
+                    okPersonalDetails.setBackgroundResource((R.drawable.button_active));
+                }
             }
 
             Bitmap image = (Bitmap) data.getExtras().get("data");
-            String path = getRealPathFromURI(getImageUri(this,image));
+            String path = getRealPathFromURI(getImageUri(this, image));
             imgProfile.setImageBitmap(BitmapFactory.decodeFile(path));
             saveImage(imageRequest());
             uploadImage(path);
@@ -599,46 +670,90 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     //-------------------------------------------------------------------------------------------------------------------
 
     public void onClickOKPersonal(View view) {
-        if (isPanUploaded && isFrontUploaded && isProfileUploaded) {
-            UpdateUserDetails.updateUserIsPersonalDetailsAdded(userId, "1");
-            //----------------------- Alert Dialog -------------------------------------------------
-            Dialog alert = new Dialog(PersonalDetailsActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
-            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(alert.getWindow().getAttributes());
-            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.gravity = Gravity.CENTER;
+        if (profilePic){
+            if (isProfileUploaded){
+                UpdateUserDetails.updateUserIsProfileAdded(userId,"1");
 
-            alert.show();
-            alert.getWindow().setAttributes(lp);
-            alert.setCancelable(false);
+                Dialog alert = new Dialog(PersonalDetailsActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
 
-            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(false);
 
-            alertTitle.setText("Personal Details");
-            alertMessage.setText("Personal Details added successfully");
-            alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
-            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    alert.dismiss();
-                    Intent intent = new Intent(PersonalDetailsActivity.this, ViewPersonalDetailsActivity.class);
-                    intent.putExtra("userId", userId);
-                    intent.putExtra("mobile", mobile);
-                    startActivity(intent);
-                    finish();
-                    overridePendingTransition(0, 0);
-                }
-            });
+                alertTitle.setText("Profile Picture");
+                alertMessage.setText("Profile Picture added successfully");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                        Intent intent = new Intent(PersonalDetailsActivity.this, ViewPersonalDetailsActivity.class);
+                        intent.putExtra("userId", userId);
+                        intent.putExtra("mobile", mobile);
+                        startActivity(intent);
+                        finish();
+                        overridePendingTransition(0, 0);
+                    }
+                });
+            }
+        } else {
+            if (isPanUploaded && isFrontUploaded) {
+                UpdateUserDetails.updateUserIsPersonalDetailsAdded(userId, "1");
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(PersonalDetailsActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(false);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Personal Details");
+                alertMessage.setText("Personal Details added successfully");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                        Intent intent = new Intent(PersonalDetailsActivity.this, ViewPersonalDetailsActivity.class);
+                        intent.putExtra("userId", userId);
+                        intent.putExtra("mobile", mobile);
+                        startActivity(intent);
+                        finish();
+                        overridePendingTransition(0, 0);
+                    }
+                });
+            }
         }
     }
 
@@ -776,7 +891,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         mQueue.add(request);
     }
 
-    private void uploadPanDialogChoose(){
+    private void uploadPanDialogChoose() {
         requestPermissionsForCamera();
         requestPermissionsForGalleryWRITE();
         requestPermissionsForGalleryREAD();
@@ -818,7 +933,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
     }
 
-    private void uploadAadharDialogChoose(){
+    private void uploadAadharDialogChoose() {
         requestPermissionsForCamera();
         requestPermissionsForGalleryWRITE();
         requestPermissionsForGalleryREAD();
@@ -859,7 +974,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         });
     }
 
-    private void uploadProfileDialogChoose(){
+    private void uploadProfileDialogChoose() {
         requestPermissionsForCamera();
         requestPermissionsForGalleryWRITE();
         requestPermissionsForGalleryREAD();

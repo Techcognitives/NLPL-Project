@@ -8,6 +8,7 @@ import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsBankDetai
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsCompanyAdded;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsDriverAdded;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsPersonalDetailsAdded;
+import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsProfileAdded;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsRegistrationDone;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsTruckAdded;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserName;
@@ -70,6 +71,9 @@ public interface UserService {
 
     @PUT("/user/{userId}")
     Call<UpdateUserIsPersonalDetailsAdded> updateUserIsPersonalDetailsAdded(@Path("userId") String userId, @Body UpdateUserIsPersonalDetailsAdded updateUserIsPersonalDetailsAdded);
+
+    @PUT("/user/{userId}")
+    Call<UpdateUserIsProfileAdded> updateUserIsProfileAdded(@Path("userId") String userId, @Body UpdateUserIsProfileAdded updateUserIsProfileAdded);
 
     @PUT("/user/{userId}")
     Call<UpdateUserEmailId> updateUserEmailId(@Path("userId") String userId, @Body UpdateUserEmailId updateUserEmailId);

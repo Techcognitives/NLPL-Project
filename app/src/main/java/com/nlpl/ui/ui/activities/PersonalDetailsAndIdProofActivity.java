@@ -2,6 +2,7 @@ package com.nlpl.ui.ui.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -105,6 +106,8 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     TextView panCardText, editPAN, editFront, frontText, backText, profileText, editProfile, getCurrentLocation;
     ImageView imgPAN, imgF, previewPan, previewAadhar , imgProfile, previewProfile;
 
+    ConstraintLayout aadharConstrain, panConstrain;
+    TextView uploadAadharTitle, uploadPanTitle;
     String nameAPI, mobileAPI, addressAPI, pinCodeAPI, roleAPI, cityAPI, stateAPI, emailAPI;
 
     private int GET_FROM_GALLERY = 0;
@@ -169,6 +172,17 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         previewPan = (ImageView) panAndAadharView.findViewById(R.id.pan_aadhar_preview_pan);
         previewAadhar = (ImageView) panAndAadharView.findViewById(R.id.pan_aadhar_preview_aadhar);
         getCurrentLocation = (TextView) personalAndAddressView.findViewById(R.id.personal_and_address_get_current_location);
+
+        aadharConstrain = panAndAadharView.findViewById(R.id.aadhar_constrain);
+        panConstrain = panAndAadharView.findViewById(R.id.pan_card_constrain);
+        uploadPanTitle = panAndAadharView.findViewById(R.id.upload_pan_text);
+        uploadAadharTitle = panAndAadharView.findViewById(R.id.upload_aadhar_text);
+
+        aadharConstrain.setVisibility(View.VISIBLE);
+        panConstrain.setVisibility(View.VISIBLE);
+        uploadAadharTitle.setVisibility(View.VISIBLE);
+        uploadPanTitle.setVisibility(View.VISIBLE);
+
         getCurrentLocation.setVisibility(View.VISIBLE);
 
         name.addTextChangedListener(proofAndPersonalWatcher);

@@ -682,6 +682,7 @@ public class RegistrationActivity extends AppCompatActivity {
         userRequest.setIsPersonal_dt_added(0);
         userRequest.setIsDriver_added(0);
         userRequest.setIsTruck_added(0);
+        userRequest.setIsProfile_pic_added(0);
         return userRequest;
     }
 

@@ -8,6 +8,7 @@ import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsBankDetai
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsCompanyAdded;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsDriverAdded;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsPersonalDetailsAdded;
+import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsProfileAdded;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsRegistrationDone;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsTruckAdded;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserName;
@@ -324,6 +325,23 @@ public class UpdateUserDetails {
             @Override
             public void onFailure(Call<UpdateUserIsPersonalDetailsAdded> call, Throwable t) {
                 Log.i("Not Successful", "User is Personal Details");
+
+            }
+        });
+    }
+
+    //-------------------------------- Update User is Profile Details -----------------------------
+    public static void updateUserIsProfileAdded(String userId, String isProfileAdded) {
+        UpdateUserIsProfileAdded updateUserIsProfileAdded = new UpdateUserIsProfileAdded(isProfileAdded);
+        Call<UpdateUserIsProfileAdded> call = ApiClient.getUserService().updateUserIsProfileAdded("" + userId, updateUserIsProfileAdded);
+        call.enqueue(new Callback<UpdateUserIsProfileAdded>() {
+            @Override
+            public void onResponse(Call<UpdateUserIsProfileAdded> call, Response<UpdateUserIsProfileAdded> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserIsProfileAdded> call, Throwable t) {
 
             }
         });

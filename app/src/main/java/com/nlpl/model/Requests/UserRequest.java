@@ -2,7 +2,7 @@ package com.nlpl.model.Requests;
 
 public class UserRequest {
     String name, phone_number, user_type, preferred_location, address, state_code, pin_code, preferred_language, email_id;
-    int isRegistration_done, isTruck_added, isDriver_added, isBankDetails_given, isCompany_added,isPersonal_dt_added;
+    int isProfile_pic_added, isRegistration_done, isTruck_added, isDriver_added, isBankDetails_given, isCompany_added,isPersonal_dt_added;
 
     public UserRequest() {
         this.name = name;
@@ -20,7 +20,16 @@ public class UserRequest {
         this.isTruck_added = isTruck_added;
         this.isDriver_added = isDriver_added;
         this.isCompany_added = isCompany_added;
+        this.isProfile_pic_added = isProfile_pic_added;
 
+    }
+
+    public int getIsProfile_pic_added() {
+        return isProfile_pic_added;
+    }
+
+    public void setIsProfile_pic_added(int isProfile_pic_added) {
+        this.isProfile_pic_added = isProfile_pic_added;
     }
 
     public int getIsTruck_added() {
