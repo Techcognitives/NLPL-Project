@@ -43,6 +43,7 @@ import com.nlpl.R;
 import com.nlpl.model.Requests.BankRequest;
 import com.nlpl.model.Responses.BankResponse;
 import com.nlpl.model.Responses.UploadChequeResponse;
+import com.nlpl.model.UpdateMethods.UpdateBankDetails;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
 import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankAccountNumber;
 import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankIFSICode;
@@ -413,10 +414,10 @@ public class BankDetailsActivity extends AppCompatActivity {
 
                 uploadCheque(bankId, PathForCC);
 
-                updateBankName();
-                updateBankAccountNumber();
-                updateBankReEnterAccountNumber();
-                updateBankIFSICode();
+                UpdateBankDetails.updateBankName(bankId, bankName.getText().toString());
+                UpdateBankDetails.updateBankAccountNumber(bankId, accountNo.getText().toString());
+                UpdateBankDetails.updateBankReEnterAccountNumber(bankId, reAccount.getText().toString());
+                UpdateBankDetails.updateBankIFSICode(bankId, ifscCode.getText().toString());
 
                 Intent i8 = new Intent(BankDetailsActivity.this, ViewBankDetailsActivity.class);
                 i8.putExtra("mobile", mobile);
@@ -881,99 +882,6 @@ public class BankDetailsActivity extends AppCompatActivity {
 
         mQueue.add(request);
 
-    }
-
-    private void updateBankName() {
-
-        UpdateBankName updateBankName = new UpdateBankName(bankName.getText().toString());
-
-        Call<UpdateBankName> call = ApiClient.getBankService().updateBankName("" + bankId, updateBankName);
-
-        call.enqueue(new Callback<UpdateBankName>() {
-            @Override
-            public void onResponse(Call<UpdateBankName> call, Response<UpdateBankName> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Bank Added");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateBankName> call, Throwable t) {
-                Log.i("Not Successful", "User is Bank Added");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-
-    private void updateBankAccountNumber() {
-
-        UpdateBankAccountNumber updateBankAccountNumber = new UpdateBankAccountNumber(accountNo.getText().toString());
-
-        Call<UpdateBankAccountNumber> call = ApiClient.getBankService().updateBankAccountNumber("" + bankId, updateBankAccountNumber);
-
-        call.enqueue(new Callback<UpdateBankAccountNumber>() {
-            @Override
-            public void onResponse(Call<UpdateBankAccountNumber> call, Response<UpdateBankAccountNumber> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Bank Added");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateBankAccountNumber> call, Throwable t) {
-                Log.i("Not Successful", "User is Bank Added");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    private void updateBankReEnterAccountNumber() {
-
-        UpdateBankReEnterAccountNumber updateBankReEnterAccountNumber = new UpdateBankReEnterAccountNumber(reAccount.getText().toString());
-
-        Call<UpdateBankReEnterAccountNumber> call = ApiClient.getBankService().updateBankReEnterAccountNumber("" + bankId, updateBankReEnterAccountNumber);
-
-        call.enqueue(new Callback<UpdateBankReEnterAccountNumber>() {
-            @Override
-            public void onResponse(Call<UpdateBankReEnterAccountNumber> call, Response<UpdateBankReEnterAccountNumber> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Bank Added");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateBankReEnterAccountNumber> call, Throwable t) {
-                Log.i("Not Successful", "User is Bank Added");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    private void updateBankIFSICode() {
-
-        UpdateBankIFSICode updateBankIFSICode = new UpdateBankIFSICode(ifscCode.getText().toString());
-
-        Call<UpdateBankIFSICode> call = ApiClient.getBankService().updateBankIFSICode("" + bankId, updateBankIFSICode);
-
-        call.enqueue(new Callback<UpdateBankIFSICode>() {
-            @Override
-            public void onResponse(Call<UpdateBankIFSICode> call, Response<UpdateBankIFSICode> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Bank Added");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateBankIFSICode> call, Throwable t) {
-                Log.i("Not Successful", "User is Bank Added");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
     }
 
     @NonNull

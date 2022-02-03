@@ -4,7 +4,6 @@ import com.nlpl.model.Requests.BankRequest;
 import com.nlpl.model.Responses.BankResponse;
 import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankAccountHolderName;
 import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankAccountNumber;
-import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankCancelledCheque;
 import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankIFSICode;
 import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankName;
 import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankReEnterAccountNumber;
@@ -33,7 +32,4 @@ public interface BankService {
 
     @PUT("/bank/updateBkByBkId/{bankId}")
     Call<UpdateBankName> updateBankName(@Path("bankId") String bankId, @Body UpdateBankName updateBankName);
-
-    @PUT("/bank/updateBkByBkId/{bankId}")
-    Call<UpdateBankCancelledCheque> updateBankCancelledCheque(@Path("bankId") String bankId, @Body UpdateBankCancelledCheque updateBankCancelledCheque);
 }

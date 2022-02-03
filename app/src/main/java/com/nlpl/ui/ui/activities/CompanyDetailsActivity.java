@@ -45,6 +45,7 @@ import com.google.android.gms.tasks.Task;
 import com.nlpl.R;
 import com.nlpl.model.Requests.CompanyRequest;
 import com.nlpl.model.Responses.CompanyResponse;
+import com.nlpl.model.UpdateMethods.UpdateCompanyDetails;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
 import com.nlpl.model.UpdateModel.Models.UpdateCompanyDetails.UpdateCompanyAddress;
 import com.nlpl.model.UpdateModel.Models.UpdateCompanyDetails.UpdateCompanyCity;
@@ -403,28 +404,28 @@ public class CompanyDetailsActivity extends AppCompatActivity {
         if (isEdit) {
 
             if (companyName.getText().toString() != null) {
-                updateCompanyName();
+                UpdateCompanyDetails.updateCompanyName(companyIdAPI, companyName.getText().toString());
             }
             if (gstNumber.getText().toString() != null) {
-                updateCompanyGstNumber();
+                UpdateCompanyDetails.updateCompanyGstNumber(companyIdAPI, gstNumber.getText().toString());
             }
             if (panNumber.getText().toString() != null) {
-                updateCompanyPanNumber();
+                UpdateCompanyDetails.updateCompanyPanNumber(companyIdAPI, panNumber.getText().toString());
             }
             if (selectStateText.getText().toString() != null) {
-                updateCompanyState();
+                UpdateCompanyDetails.updateCompanyState(companyIdAPI, selectStateText.getText().toString());
             }
             if (address.getText().toString() != null) {
-                updateCompanyAddress();
+                UpdateCompanyDetails.updateCompanyAddress(companyIdAPI, address.getText().toString());
             }
             if (selectDistrictText.getText().toString() != null) {
-                updateCompanyCity();
+                UpdateCompanyDetails.updateCompanyCity(companyIdAPI, selectDistrictText.getText().toString());
             }
             if (pinCode.getText().toString() != null) {
-                updateCompanyZip();
+                UpdateCompanyDetails.updateCompanyPinCode(companyIdAPI, pinCode.getText().toString());
             }
             if (companyType != null) {
-                updateCompanyType();
+                UpdateCompanyDetails.updateCompanyType(companyIdAPI, companyType);
             }
             Intent i8 = new Intent(CompanyDetailsActivity.this, ViewPersonalDetailsActivity.class);
             i8.putExtra("mobile", mobile);
@@ -651,211 +652,6 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 
             }
         });
-    }
-    //----------------------------------------------------------------------------------------------
-
-    //-------------------------------------- Update Type -----------------------------------------------
-    private void updateCompanyName() {
-//        Log.i("CompanyId", companyIdAPI);
-
-//------------------------------------- Update Type ------------------------------------------------
-        UpdateCompanyName updateCompanyName = new UpdateCompanyName(companyName.getText().toString());
-
-        Call<UpdateCompanyName> call = ApiClient.getCompanyService().updateCompanyName("" + companyIdAPI, updateCompanyName);
-
-        call.enqueue(new Callback<UpdateCompanyName>() {
-            @Override
-            public void onResponse(Call<UpdateCompanyName> call, retrofit2.Response<UpdateCompanyName> response) {
-                if (response.isSuccessful()) {
-                    UpdateCompanyName updateCompanyName1 = response.body();
-                    Log.i("Updated", String.valueOf(updateCompanyName1));
-                } else {
-                    Log.i("Not Successful", "Company Details Update");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateCompanyName> call, Throwable t) {
-                Log.i("Not Successful", "Company Details Update");
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    private void updateCompanyGstNumber() {
-
-//------------------------------------- Update Type ------------------------------------------------
-        UpdateCompanyGSTNumber updateCompanyGSTNumber = new UpdateCompanyGSTNumber(gstNumber.getText().toString());
-
-        Call<UpdateCompanyGSTNumber> call = ApiClient.getCompanyService().updateCompanyGSTNumber("" + companyIdAPI, updateCompanyGSTNumber);
-
-        call.enqueue(new Callback<UpdateCompanyGSTNumber>() {
-            @Override
-            public void onResponse(Call<UpdateCompanyGSTNumber> call, retrofit2.Response<UpdateCompanyGSTNumber> response) {
-                if (response.isSuccessful()) {
-                    UpdateCompanyGSTNumber updateCompanyGSTNumber1 = response.body();
-                    Log.i("Updated", String.valueOf(updateCompanyGSTNumber1));
-                } else {
-                    Log.i("Not Successful", "Company Details Update");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateCompanyGSTNumber> call, Throwable t) {
-                Log.i("Not Successful", "Company Details Update");
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    private void updateCompanyPanNumber() {
-
-//------------------------------------- Update Type ------------------------------------------------
-        UpdateCompanyPAN updateCompanyPAN = new UpdateCompanyPAN(panNumber.getText().toString());
-
-        Call<UpdateCompanyPAN> call = ApiClient.getCompanyService().updateCompanyPAN("" + companyIdAPI, updateCompanyPAN);
-
-        call.enqueue(new Callback<UpdateCompanyPAN>() {
-            @Override
-            public void onResponse(Call<UpdateCompanyPAN> call, retrofit2.Response<UpdateCompanyPAN> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Updated", String.valueOf(response.body()));
-                } else {
-                    Log.i("Not Successful", "Company Details Update");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateCompanyPAN> call, Throwable t) {
-                Log.i("Not Successful", "Company Details Update");
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    private void updateCompanyState() {
-
-//------------------------------------- Update Type ------------------------------------------------
-        UpdateCompanyState updateCompanyState = new UpdateCompanyState(selectStateText.getText().toString());
-
-        Call<UpdateCompanyState> call = ApiClient.getCompanyService().updateCompanyState("" + companyIdAPI, updateCompanyState);
-
-        call.enqueue(new Callback<UpdateCompanyState>() {
-            @Override
-            public void onResponse(Call<UpdateCompanyState> call, retrofit2.Response<UpdateCompanyState> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Updated", String.valueOf(response.body()));
-                } else {
-                    Log.i("Not Successful", "Company Details Update");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateCompanyState> call, Throwable t) {
-                Log.i("Not Successful", "Company Details Update");
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    private void updateCompanyCity() {
-
-//------------------------------------- Update Type ------------------------------------------------
-        UpdateCompanyCity updateCompanyCity = new UpdateCompanyCity(selectDistrictText.getText().toString());
-
-        Call<UpdateCompanyCity> call = ApiClient.getCompanyService().updateCompanyCity("" + companyIdAPI, updateCompanyCity);
-
-        call.enqueue(new Callback<UpdateCompanyCity>() {
-            @Override
-            public void onResponse(Call<UpdateCompanyCity> call, retrofit2.Response<UpdateCompanyCity> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Updated", String.valueOf(response.body()));
-                } else {
-                    Log.i("Not Successful", "Company Details Update");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateCompanyCity> call, Throwable t) {
-                Log.i("Not Successful", "Company Details Update");
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    private void updateCompanyZip() {
-
-//------------------------------------- Update Type ------------------------------------------------
-        UpdateCompanyZip updateCompanyZip = new UpdateCompanyZip(pinCode.getText().toString());
-
-        Call<UpdateCompanyZip> call = ApiClient.getCompanyService().updateCompanyZip("" + companyIdAPI, updateCompanyZip);
-
-        call.enqueue(new Callback<UpdateCompanyZip>() {
-            @Override
-            public void onResponse(Call<UpdateCompanyZip> call, retrofit2.Response<UpdateCompanyZip> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Updated", String.valueOf(response.body()));
-                } else {
-                    Log.i("Not Successful", "Company Details Update");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateCompanyZip> call, Throwable t) {
-                Log.i("Not Successful", "Company Details Update");
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    private void updateCompanyAddress() {
-
-//------------------------------------- Update Type ------------------------------------------------
-        UpdateCompanyAddress updateCompanyAddress = new UpdateCompanyAddress(address.getText().toString());
-
-        Call<UpdateCompanyAddress> call = ApiClient.getCompanyService().updateCompanyAddress("" + companyIdAPI, updateCompanyAddress);
-
-        call.enqueue(new Callback<UpdateCompanyAddress>() {
-            @Override
-            public void onResponse(Call<UpdateCompanyAddress> call, retrofit2.Response<UpdateCompanyAddress> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Updated", String.valueOf(response.body()));
-                } else {
-                    Log.i("Not Successful", "Company Details Update");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateCompanyAddress> call, Throwable t) {
-                Log.i("Not Successful", "Company Details Update");
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    private void updateCompanyType() {
-
-//------------------------------------- Update Type ------------------------------------------------
-        UpdateCompanyType updateCompanyType = new UpdateCompanyType(companyType);
-
-        Call<UpdateCompanyType> call = ApiClient.getCompanyService().updateCompanyType("" + companyIdAPI, updateCompanyType);
-
-        call.enqueue(new Callback<UpdateCompanyType>() {
-            @Override
-            public void onResponse(Call<UpdateCompanyType> call, retrofit2.Response<UpdateCompanyType> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Updated", String.valueOf(response.body()));
-                } else {
-                    Log.i("Not Successful", "Company Details Update");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateCompanyType> call, Throwable t) {
-                Log.i("Not Successful", "Company Details Update");
-            }
-        });
-//--------------------------------------------------------------------------------------------------
     }
 
     public void getCompanyDetails() {
