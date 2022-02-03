@@ -107,7 +107,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     Dialog menuDialog;
     TextView userNameTextViewMenu, mobileTextViewMenu, spNumber, driverNumber;
     ImageView personalDetailsLogoImageView, bankDetailsLogoImageView;
-    Dialog previewDialogProfile;
+    Dialog previewDialogProfile, previewDialogProfileOfSp;
     ImageView profilePic;
 
     String isPersonalDetailsDone, isBankDetailsDone, isProfileAdded;
@@ -168,8 +168,13 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         menuDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         previewDialogProfile = new Dialog(CustomerDashboardActivity.this);
-        previewDialogProfile.setContentView(R.layout.dialog_preview_images);
+        previewDialogProfile.setContentView(R.layout.dialog_preview_profile);
         previewDialogProfile.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.black)));
+
+        previewDialogProfileOfSp = new Dialog(CustomerDashboardActivity.this);
+        previewDialogProfileOfSp.setContentView(R.layout.dialog_preview_images);
+        previewDialogProfileOfSp.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.black)));
+
 
         userNameTextViewMenu = (TextView) menuDialog.findViewById(R.id.customer_menu_name_text);
         profilePic = (ImageView) menuDialog.findViewById(R.id.profile_picture_on_customer_menu);
@@ -1524,14 +1529,14 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
                             } else {
                                 WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-                                lp2.copyFrom(previewDialogProfile.getWindow().getAttributes());
+                                lp2.copyFrom(previewDialogProfileOfSp.getWindow().getAttributes());
                                 lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
                                 lp2.height = WindowManager.LayoutParams.MATCH_PARENT;
                                 lp2.gravity = Gravity.CENTER;
 
-                                previewDialogProfile.show();
-                                previewDialogProfile.getWindow().setAttributes(lp2);
-                                new DownloadImageTask((ImageView) previewDialogProfile.findViewById(R.id.dialog_preview_image_view)).execute(profileImgUrl);
+                                previewDialogProfileOfSp.show();
+                                previewDialogProfileOfSp.getWindow().setAttributes(lp2);
+                                new DownloadImageTask((ImageView) previewDialogProfileOfSp.findViewById(R.id.dialog_preview_image_view)).execute(profileImgUrl);
                             }
                         }
                     }
@@ -1606,7 +1611,16 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
                                     previewDialogProfile.show();
                                     previewDialogProfile.getWindow().setAttributes(lp2);
-                                    new DownloadImageTask((ImageView) previewDialogProfile.findViewById(R.id.dialog_preview_image_view)).execute(profileImgUrl);
+                                    new DownloadImageTask((ImageView) previewDialogProfile.findViewById(R.id.dialog_preview_image_view_profile)).execute(profileImgUrl);
+
+                                    TextView editProfilePic = previewDialogProfile.findViewById(R.id.editProfilePic);
+
+                                    editProfilePic.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            uploadProfileDialogChoose();
+                                        }
+                                    });
                                 }
                             }
                         }
