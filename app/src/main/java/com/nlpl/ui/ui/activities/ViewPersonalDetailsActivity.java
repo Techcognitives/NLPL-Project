@@ -1,5 +1,7 @@
 package com.nlpl.ui.ui.activities;
 
+import static com.nlpl.R.drawable.blue_profile_small;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -34,9 +36,9 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
     TextView userFirmGSTTextview, userFirmGSTTextviewTitle, userFirmPANTextview, userFirmPANTextviewTitle, userNameTextView, userPhoneNumberTextView, userEmailTextView, userAddressTextView, userFirmNameTextView, userFirmAddressTextView, userFirmNameTitleTextView, userFirmAddressTitleTextView, userFirmTitle, userFirmAddCompany, userEditFirmDetailsTextView;
     String userNameAPI, userMobileNumberAPI, userAddressAPI, userCityAPI, userPinCodeAPI, userRoleAPI, userEmailIdAPI, isPersonalDetailsDoneAPI, isFirmDetailsDoneAPI, isBankDetailsDoneAPI, isTruckDetailsDoneAPI, isDriverDetailsDoneAPI;
     String companyNameAPI, companyAddressAPI, companyCityAPI, companyZipAPI, companyPanAPI, companyGstAPI;
-    String phone, userId, isPersonalDetailsDone;
+    String phone, userId, isPersonalDetailsDone, isProfilePicAdded;
 
-    TextView uploadPanAAdharBtn,  uploadPanAAdharBtnTitle;
+    TextView uploadPanAAdharBtn,  uploadPanAAdharBtnTitle, uploadProfilebtn;
 
     Dialog previewDialogPan, previewDialogAadhar, previewDialogProfile;
 
@@ -103,6 +105,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
 
         uploadPanAAdharBtnTitle = (TextView) findViewById(R.id.view_personal_details_complete_personal_details_text);
         uploadPanAAdharBtn = (TextView) findViewById(R.id.view_personal_details_add_personal_details);
+        uploadProfilebtn = (TextView) findViewById(R.id.view_personal_details_add_profile);
         userFirmGSTTextview = (TextView) findViewById(R.id.view_personal_details_firm_gst_number_set);
         userFirmGSTTextviewTitle = (TextView) findViewById(R.id.view_personal_details_firm_gst_number);
         userFirmPANTextview = (TextView) findViewById(R.id.view_personal_details_firm_pan_number_set);
@@ -156,6 +159,8 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
                         userPinCodeAPI = obj.getString("pin_code");
                         userRoleAPI = obj.getString("user_type");
                         isPersonalDetailsDone = obj.getString("isPersonal_dt_added");
+                        isProfilePicAdded = obj.getString("isProfile_pic_added");
+
 
 //                        if (userRoleAPI.equals("Customer")) {
 //                            userFirmAddCompany.setVisibility(View.GONE);
@@ -171,16 +176,22 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
 //                            userFirmAddressTextView.setVisibility(View.GONE);
 //                        }
 
+                        if (isProfilePicAdded.equals("1")){
+                            uploadProfilebtn.setVisibility(View.GONE);
+                            previewProfileBtn.setVisibility(View.GONE);
+                        } else {
+                            uploadProfilebtn.setVisibility(View.VISIBLE);
+                            previewProfileBtn.setVisibility(View.GONE);
+                        }
+
                         if (isPersonalDetailsDone.equals("1")) {
                             previewAadharBtn.setVisibility(View.VISIBLE);
                             previewPANBtn.setVisibility(View.VISIBLE);
-                            previewProfileBtn.setVisibility(View.VISIBLE);
                             uploadPanAAdharBtn.setVisibility(View.GONE);
                             uploadPanAAdharBtnTitle.setVisibility(View.GONE);
                         } else {
                             previewAadharBtn.setVisibility(View.INVISIBLE);
                             previewPANBtn.setVisibility(View.INVISIBLE);
-                            previewProfileBtn.setVisibility(View.INVISIBLE);
                             uploadPanAAdharBtn.setVisibility(View.VISIBLE);
                             uploadPanAAdharBtnTitle.setVisibility(View.VISIBLE);
                         }
@@ -445,11 +456,16 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
     public void onClickAddPersonalDetails(View view) {
         Intent intent = new Intent(ViewPersonalDetailsActivity.this, PersonalDetailsActivity.class);
         intent.putExtra("userId", userId);
+        intent.putExtra("profile", false);
         intent.putExtra("mobile", phone);
         startActivity(intent);
     }
 
     public void onClickAddProfilePic(View view) {
-
+        Intent intent = new Intent(ViewPersonalDetailsActivity.this, PersonalDetailsActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("profile", true);
+        intent.putExtra("mobile", phone);
+        startActivity(intent);
     }
 }

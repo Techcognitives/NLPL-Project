@@ -8,17 +8,18 @@
     android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/driver_details_driver_license_constrain"
+        android:id="@+id/pan_card_constrain"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
+        android:visibility="gone"
         android:background="@drawable/shadow_file"
-        app:layout_constraintBottom_toTopOf="@+id/textView17"
+        app:layout_constraintBottom_toTopOf="@+id/upload_aadhar_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7">
+        app:layout_constraintTop_toBottomOf="@+id/upload_pan_text">
 
         <ImageView
             android:id="@+id/imagePan"
@@ -100,7 +101,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/upload_pan_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingStart="5dp"
@@ -109,31 +110,33 @@
         android:textStyle="bold"
         android:text="@string/uploadpan"
         android:textColor="#000000"
+        android:visibility="gone"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/driver_details_driver_license_constrain"
+        app:layout_constraintBottom_toTopOf="@+id/pan_card_constrain"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/upload_aadhar_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:paddingStart="5dp"
         android:paddingBottom="5dp"
         android:textStyle="bold"
+        android:visibility="gone"
         android:text="@string/uploadAadhar"
         android:textColor="#000000"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/driver_details_driver_license_constrain" />
+        app:layout_constraintTop_toBottomOf="@+id/pan_card_constrain" />
 
     <TextView
-        android:id="@+id/textView127"
+        android:id="@+id/upload_profile_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -142,23 +145,25 @@
         android:text="Upload Profile "
         android:textColor="#000000"
         android:textSize="16sp"
+        android:visibility="gone"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
+        app:layout_constraintTop_toBottomOf="@+id/aadhar_constrain" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout4"
+        android:id="@+id/aadhar_constrain"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="5dp"
+        android:visibility="gone"
         android:background="@drawable/shadow_file"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView17">
+        app:layout_constraintTop_toBottomOf="@+id/upload_aadhar_text">
 
         <ImageView
             android:id="@+id/imageF"
@@ -240,16 +245,17 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout64"
+        android:id="@+id/upload_profile_constrain"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
+        android:visibility="gone"
         android:background="@drawable/shadow_file"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView127">
+        app:layout_constraintTop_toBottomOf="@+id/upload_profile_text">
 
         <ImageView
             android:id="@+id/imageProfile"
