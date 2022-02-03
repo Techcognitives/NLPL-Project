@@ -174,15 +174,20 @@ public class OtpCodeActivity extends AppCompatActivity {
                 });
                 //------------------------------------------------------------------------------------------
 
-//                if (otpCode.getText().toString().isEmpty()) {
-//                    Toast.makeText(getApplicationContext(), "Field is blank", Toast.LENGTH_LONG).show();
-//                } else {
+//                try {
+//                    if (otpCode.getText().toString().isEmpty()) {
+//                        Toast.makeText(getApplicationContext(), "Field is blank", Toast.LENGTH_LONG).show();
+//                    } else {
 ////                    Log.i("OTP", otp);
 ////                    Log.i("OTP ID", otpId);
-//                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpId, otp);
-//                    signInWithPhoneAuthCredential(credential);
+//                        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpId, otp);
+//                        signInWithPhoneAuthCredential(credential);
 //
+//                    }
+//                }catch (Exception e){
+//                    e.printStackTrace();
 //                }
+
             }
         });
 
