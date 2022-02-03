@@ -1196,9 +1196,8 @@ public class DashboardActivity extends AppCompatActivity {
                         bidSubmittedModel.setBid_ends_at(obj.getString("bid_ends_at"));
                         bidSubmittedModel.setBidId(bidId);
 
-                        if (obj.getString("bid_status").equals("loadPosted") || obj.getString("bid_status").equals("loadReactivated")) {
-                            loadSubmittedList.add(bidSubmittedModel);
-                        }
+                        loadSubmittedList.add(bidSubmittedModel);
+
                     }
 
                     TextView noBidsSubmittedTextView = (TextView) findViewById(R.id.dashboard_no_bids_submitted_text);
