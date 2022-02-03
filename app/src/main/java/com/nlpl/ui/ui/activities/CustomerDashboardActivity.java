@@ -86,7 +86,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     ImageView profilePic;
 
     String isPersonalDetailsDone, isBankDetailsDone;
-
     View actionBar;
     TextView actionBarTitle;
     ImageView actionBarBackButton, actionBarMenuButton;

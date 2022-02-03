@@ -1830,8 +1830,8 @@ public class PostALoadActivity extends AppCompatActivity {
             addressDialogState.setText(pickupState);
             addressDialogCity.setText(pickUpCity);
         } else {
-            addressDialogAddress.setText("");
-            addressDialogPinCode.setText("");
+            addressDialogAddress.getText().clear();
+            addressDialogPinCode.getText().clear();
             addressDialogState.setText("");
             addressDialogCity.setText("");
         }
@@ -1853,8 +1853,8 @@ public class PostALoadActivity extends AppCompatActivity {
             addressDialogState.setText(dropState);
             addressDialogCity.setText(dropCiy);
         } else {
-            addressDialogAddress.setText("");
-            addressDialogPinCode.setText("");
+            addressDialogAddress.getText().clear();
+            addressDialogPinCode.getText().clear();
             addressDialogState.setText("");
             addressDialogCity.setText("");
         }

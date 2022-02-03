@@ -58,6 +58,8 @@ import com.nlpl.model.Responses.AddDriverResponse;
 import com.nlpl.model.Responses.UploadDriverSelfieResponse;
 import com.nlpl.model.Responses.UserResponse;
 import com.nlpl.model.Responses.UploadDriverLicenseResponse;
+import com.nlpl.model.UpdateMethods.UpdateDriverDetails;
+import com.nlpl.model.UpdateMethods.UpdateTruckDetails;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
 import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverEmailId;
 import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverName;
@@ -971,18 +973,18 @@ public class DriverDetailsActivity extends AppCompatActivity {
                     }
 
                     if (driverName.getText().toString() != null) {
-                        updateDriverName();
+                        UpdateDriverDetails.updateDriverName(driverId, driverName.getText().toString());
                         //update Driver as a user (Name)
                         UpdateUserDetails.updateUserName(driverUserIdGet, driverName.getText().toString());
                     }
                     if (driverEmailId.getText().toString() != null) {
-                        updateDriverEmailId();
+                        UpdateDriverDetails.updateDriverEmailId(driverId, driverEmailId.getText().toString());
                         //update Driver as a user (Email)
                         UpdateUserDetails.updateUserEmailId(driverUserIdGet, driverEmailId.getText().toString());
                     }
 
                     if (driverMobile.getText().toString() != null && !driverNumberAPI.equals("91" + driverMobile.getText().toString())) {
-                        updateDriverNumber();
+                        UpdateDriverDetails.updateDriverNumber(driverId, "91" + driverMobile.getText().toString());
                         //update Driver as a user (Phone)
                         UpdateUserDetails.updateUserPhoneNumber(driverUserIdGet, "91" + driverMobile.getText().toString());
                     }
@@ -1109,7 +1111,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
             public void onResponse(Call<AddDriverResponse> call, Response<AddDriverResponse> response) {
                 AddDriverResponse driverResponse = response.body();
                 driverIdPass = driverResponse.getData().getDriver_id();
-                updateTruckDriverId(driverIdPass);
+                UpdateTruckDetails.updateTruckDriverId(truckIdPass, driverIdPass);
 
                 uploadDriverLicense(driverIdPass, pathForDL);
                 uploadDriverSelfie(driverIdPass, pathForSelfie);
@@ -1122,30 +1124,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
             }
         });
     }
-
-    private void updateTruckDriverId(String truckDriverId) {
-
-        UpdateTruckDriverId updateTruckDriverId = new UpdateTruckDriverId(truckDriverId);
-
-        Call<UpdateTruckDriverId> call = ApiClient.addTruckService().updateTruckDriverId("" + truckIdPass, updateTruckDriverId);
-
-        call.enqueue(new Callback<UpdateTruckDriverId>() {
-            @Override
-            public void onResponse(Call<UpdateTruckDriverId> call, Response<UpdateTruckDriverId> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Truck Added");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateTruckDriverId> call, Throwable t) {
-                Log.i("Not Successful", "User is Truck Added");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-    //-----------------------------------------------------------------------------------------------------
 
     private TextWatcher driverNameWatcher = new TextWatcher() {
         @Override
@@ -1284,38 +1262,9 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
     }
 
-    //-------------------------------- Update User is Driver Added ---------------------------------
-    private void updateDriverName() {
-
-        Log.i("driver Id at update", driverId);
-        UpdateDriverName updateDriverName = new UpdateDriverName(driverName.getText().toString());
-
-        Call<UpdateDriverName> call = ApiClient.addDriverService().updateDriverName("" + driverId, updateDriverName);
-
-        call.enqueue(new Callback<UpdateDriverName>() {
-
-            @Override
-            public void onResponse(Call<UpdateDriverName> call, Response<UpdateDriverName> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Driver Added");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateDriverName> call, Throwable t) {
-                Log.i("Not Successful", "User is Driver Added");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
     private void updateDriverTruckId() {
-
         UpdateDriverTruckId updateDriverTruckId = new UpdateDriverTruckId(truckIdPass);
-
         Call<UpdateDriverTruckId> call = ApiClient.addDriverService().updateDriverTruckId("" + driverId, updateDriverTruckId);
-
         call.enqueue(new Callback<UpdateDriverTruckId>() {
             @Override
             public void onResponse(Call<UpdateDriverTruckId> call, Response<UpdateDriverTruckId> response) {
@@ -1330,55 +1279,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
             }
         });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    //-------------------------------- Update User is Driver Added ---------------------------------
-    private void updateDriverNumber() {
-
-        UpdateDriverNumber updateDriverNumber = new UpdateDriverNumber("91" + driverMobile.getText().toString());
-
-        Call<UpdateDriverNumber> call = ApiClient.addDriverService().updateDriverNumber("" + driverId, updateDriverNumber);
-
-        call.enqueue(new Callback<UpdateDriverNumber>() {
-            @Override
-            public void onResponse(Call<UpdateDriverNumber> call, Response<UpdateDriverNumber> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Driver Number");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateDriverNumber> call, Throwable t) {
-                Log.i("Not Successful", "User is Driver Added");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
-    }
-
-    //-------------------------------- Update User is Driver Added ---------------------------------
-    private void updateDriverEmailId() {
-
-        UpdateDriverEmailId updateDriverEmailId = new UpdateDriverEmailId(driverEmailId.getText().toString());
-
-        Call<UpdateDriverEmailId> call = ApiClient.addDriverService().updateDriverEmailId("" + driverId, updateDriverEmailId);
-
-        call.enqueue(new Callback<UpdateDriverEmailId>() {
-            @Override
-            public void onResponse(Call<UpdateDriverEmailId> call, Response<UpdateDriverEmailId> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Driver Email");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateDriverEmailId> call, Throwable t) {
-                Log.i("Not Successful", "User is Driver Added");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
     }
 
     @NonNull

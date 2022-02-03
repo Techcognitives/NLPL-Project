@@ -1174,11 +1174,11 @@ public class DashboardActivity extends AppCompatActivity {
                     if (loadSubmittedList.size() > 0) {
                         updatedLoadSubmittedList.addAll(loadSubmittedList);
                         loadSubmittedAdapter.updateData(updatedLoadSubmittedList);
-                        if (updatedLoadSubmittedList.size() > 0){
-                        noBidsSubmittedTextView.setVisibility(View.GONE);
-                        }else {
-                        noBidsSubmittedTextView.setVisibility(View.VISIBLE);
-                    }
+                        if (updatedLoadSubmittedList.size() > 0) {
+                            noBidsSubmittedTextView.setVisibility(View.GONE);
+                        } else {
+                            noBidsSubmittedTextView.setVisibility(View.VISIBLE);
+                        }
                         compareAndRemove(loadListToCompare);
                     }
 //
@@ -1940,7 +1940,7 @@ public class DashboardActivity extends AppCompatActivity {
                         String profileImgUrl;
                         if (imageType.equals("profile")) {
                             profileImgUrl = obj.getString("image_url");
-                            if (profileImgUrl.equals("null")){
+                            if (profileImgUrl.equals("null")) {
 
                             } else {
                                 WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
@@ -2167,9 +2167,10 @@ public class DashboardActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Location> task) {
                     Location location = task.getResult();
-                    if (location != null) {
-                        Geocoder geocoder = new Geocoder(DashboardActivity.this, Locale.getDefault());
-                        try {
+                    try {
+                        if (location != null) {
+                            Geocoder geocoder = new Geocoder(DashboardActivity.this, Locale.getDefault());
+
                             String latitudeCurrent, longitudeCurrent, countryCurrent, stateCurrent, cityCurrent, subCityCurrent, addressCurrent, pinCodeCurrent;
                             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                             latitudeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLatitude()));
@@ -2182,11 +2183,11 @@ public class DashboardActivity extends AppCompatActivity {
                             pinCodeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getPostalCode()));
 
                             currentLocationText.setText(addressCurrent);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
 
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
         } else {
@@ -2213,7 +2214,7 @@ public class DashboardActivity extends AppCompatActivity {
         new Handler().postDelayed(runnable, 3000);
     }
 
-    private void getProfilePic(){
+    private void getProfilePic() {
 
         String url1 = getString(R.string.baseURL) + "/imgbucket/Images/" + userId;
         JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {

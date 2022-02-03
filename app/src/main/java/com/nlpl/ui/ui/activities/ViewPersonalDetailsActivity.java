@@ -432,7 +432,6 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
             startActivity(i8);
             finish();
             overridePendingTransition(0, 0);
-
         } else {
             Intent i8 = new Intent(ViewPersonalDetailsActivity.this, DashboardActivity.class);
             i8.putExtra("mobile2", phone);
