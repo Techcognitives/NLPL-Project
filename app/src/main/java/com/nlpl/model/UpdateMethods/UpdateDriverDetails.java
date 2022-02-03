@@ -5,6 +5,7 @@ import android.util.Log;
 import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverEmailId;
 import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverName;
 import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverNumber;
+import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverTruckId;
 import com.nlpl.utils.ApiClient;
 
 import retrofit2.Call;
@@ -68,6 +69,26 @@ public class UpdateDriverDetails {
 
             @Override
             public void onFailure(Call<UpdateDriverEmailId> call, Throwable t) {
+                Log.i("Not Successful", "User is Driver Added");
+
+            }
+        });
+    }
+
+    //-------------------------------- Update Driver TruckId ---------------------------------------
+    public static void updateDriverTruckId(String driverId, String truckId) {
+        UpdateDriverTruckId updateDriverTruckId = new UpdateDriverTruckId(truckId);
+        Call<UpdateDriverTruckId> call = ApiClient.addDriverService().updateDriverTruckId("" + driverId, updateDriverTruckId);
+        call.enqueue(new Callback<UpdateDriverTruckId>() {
+            @Override
+            public void onResponse(Call<UpdateDriverTruckId> call, Response<UpdateDriverTruckId> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Driver Truck Id");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateDriverTruckId> call, Throwable t) {
                 Log.i("Not Successful", "User is Driver Added");
 
             }

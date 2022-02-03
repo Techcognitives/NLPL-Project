@@ -1290,25 +1290,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
         mQueue.add(request);
     }
 
-    private void updateDriverTruckId() {
-        UpdateDriverTruckId updateDriverTruckId = new UpdateDriverTruckId(truckIdPass);
-        Call<UpdateDriverTruckId> call = ApiClient.addDriverService().updateDriverTruckId("" + driverId, updateDriverTruckId);
-        call.enqueue(new Callback<UpdateDriverTruckId>() {
-            @Override
-            public void onResponse(Call<UpdateDriverTruckId> call, Response<UpdateDriverTruckId> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Driver Truck Id");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateDriverTruckId> call, Throwable t) {
-                Log.i("Not Successful", "User is Driver Added");
-
-            }
-        });
-    }
-
     @NonNull
     private MultipartBody.Part prepareFilePart(String partName, Uri fileUri) {
 
