@@ -188,11 +188,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         address.setFilters(new InputFilter[]{filter});
 
-        if (isEdit) {
-            checkPhoneInAPI(mobile);
-        }
-
-
         driverEmailId.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -318,7 +313,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
 //            okDriverDetails.setEnabled(true);
 //            okDriverDetails.setBackgroundResource(R.drawable.button_active);
 //        }
-
 
 
         if (userId != null) {
@@ -558,6 +552,41 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 }
             }
         });
+
+        if (isEdit) {
+            if (mobile.equals("91" + driverMobile.getText().toString())) {
+                selfCheckBox.setVisibility(View.GONE);
+                getCurrentLocation.setVisibility(View.INVISIBLE);
+                driverName.setCursorVisible(false);
+                driverName.setEnabled(false);
+                driverMobile.setCursorVisible(false);
+                driverMobile.setEnabled(false);
+                address.setCursorVisible(false);
+                address.setEnabled(false);
+                pinCode.setCursorVisible(false);
+                pinCode.setEnabled(false);
+                driverEmailId.setCursorVisible(false);
+                driverEmailId.setEnabled(false);
+                selectDistrictText.setEnabled(false);
+                selectStateText.setEnabled(false);
+            } else {
+                selfCheckBox.setVisibility(View.VISIBLE);
+                getCurrentLocation.setVisibility(View.INVISIBLE);
+                driverName.setCursorVisible(true);
+                driverName.setEnabled(true);
+                driverMobile.setCursorVisible(true);
+                driverMobile.setEnabled(true);
+                address.setCursorVisible(true);
+                address.setEnabled(true);
+                pinCode.setCursorVisible(true);
+                pinCode.setEnabled(true);
+                driverEmailId.setCursorVisible(true);
+                driverEmailId.setEnabled(true);
+                selectDistrictText.setEnabled(true);
+                selectStateText.setEnabled(true);
+            }
+        }
+
     }
 
     private TextWatcher pinCodeWatcher = new TextWatcher() {
@@ -1459,40 +1488,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
                             alreadyDriver = true;
                             Log.i("Already", "Driver");
-
-                            if (receivedMobile.equals("91" + driverMobile.getText().toString())) {
-                                if (isEdit) {
-                                    selfCheckBox.setVisibility(View.GONE);
-                                    getCurrentLocation.setVisibility(View.INVISIBLE);
-                                    driverName.setCursorVisible(false);
-                                    driverName.setEnabled(false);
-                                    driverMobile.setCursorVisible(false);
-                                    driverMobile.setEnabled(false);
-                                    address.setCursorVisible(false);
-                                    address.setEnabled(false);
-                                    pinCode.setCursorVisible(false);
-                                    pinCode.setEnabled(false);
-                                    driverEmailId.setCursorVisible(false);
-                                    driverEmailId.setEnabled(false);
-                                    selectDistrictText.setEnabled(false);
-                                    selectStateText.setEnabled(false);
-                                } else {
-                                    selfCheckBox.setVisibility(View.VISIBLE);
-                                    getCurrentLocation.setVisibility(View.INVISIBLE);
-                                    driverName.setCursorVisible(true);
-                                    driverName.setEnabled(true);
-                                    driverMobile.setCursorVisible(true);
-                                    driverMobile.setEnabled(true);
-                                    address.setCursorVisible(true);
-                                    address.setEnabled(true);
-                                    pinCode.setCursorVisible(true);
-                                    pinCode.setEnabled(true);
-                                    driverEmailId.setCursorVisible(true);
-                                    driverEmailId.setEnabled(true);
-                                    selectDistrictText.setEnabled(true);
-                                    selectStateText.setEnabled(true);
-                                }
-                            }
 
                             break;
                         } else {
