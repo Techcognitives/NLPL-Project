@@ -1259,7 +1259,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
         });
 
         mQueue.add(request);
-
     }
 
     private void updateDriverTruckId() {
