@@ -26,6 +26,7 @@ import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.DriverModel;
 import com.nlpl.model.ModelForRecyclerView.TruckModel;
+import com.nlpl.model.UpdateMethods.UpdateTruckDetails;
 import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckDriverId;
 import com.nlpl.services.AddTruckService;
 import com.nlpl.ui.ui.adapters.DriversListAdapter;
@@ -547,34 +548,11 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
     }
 
     public void onClickReAssignDriver(DriverModel obj) {
-        updateTruckDriverId(obj.getDriver_id());
+        UpdateTruckDetails.updateTruckDriverId(truckIdPass, obj.getDriver_id());
         Intent intent = new Intent(ViewTruckDetailsActivity.this, ViewTruckDetailsActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("mobile", phone);
         startActivity(intent);
         finish();
-    }
-
-    private void updateTruckDriverId(String truckDriverId) {
-
-        UpdateTruckDriverId updateTruckDriverId = new UpdateTruckDriverId(truckDriverId);
-
-        Call<UpdateTruckDriverId> call = addTruckService.updateTruckDriverId("" + truckIdPass, updateTruckDriverId);
-
-        call.enqueue(new Callback<UpdateTruckDriverId>() {
-            @Override
-            public void onResponse(Call<UpdateTruckDriverId> call, Response<UpdateTruckDriverId> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Truck Added");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateTruckDriverId> call, Throwable t) {
-                Log.i("Not Successful", "User is Truck Added");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
     }
 }
