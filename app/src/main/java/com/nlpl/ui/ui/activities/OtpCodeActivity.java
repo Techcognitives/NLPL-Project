@@ -101,7 +101,6 @@ public class OtpCodeActivity extends AppCompatActivity {
         otpCode.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-
         mAuth = FirebaseAuth.getInstance();
         new OTPReceiver().setEditText_otp(otpCode, otpButton);
 
