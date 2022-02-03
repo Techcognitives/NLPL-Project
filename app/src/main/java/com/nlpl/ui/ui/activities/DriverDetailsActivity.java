@@ -1307,7 +1307,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
     private void uploadDriverLicense(String driverId1, String picPath) {
 
         File file = new File(picPath);
-//        File file = new File(getExternalFilesDir("/").getAbsolutePath(), file);
 
         MultipartBody.Part body = prepareFilePart("dl", Uri.fromFile(file));
 
@@ -1328,7 +1327,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
     private void uploadDriverSelfie(String driverId1, String picPath) {
 
         File file = new File(picPath);
-//        File file = new File(getExternalFilesDir("/").getAbsolutePath(), file);
 
         MultipartBody.Part body = prepareFilePart("selfie", Uri.fromFile(file));
 

@@ -198,13 +198,13 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
                 }
                 // When the task is over it will print 00:00:00 there
                 public void onFinish() {
-//                    updateLoadStatusSubmitted(obj.getIdpost_load());
+                    updateLoadStatusSubmitted(obj.getIdpost_load());
                     loadExpired = true;
                     holder.timeLeft.setText("  Load Expired");
                 }
             }.start();
         } else {
-//            updateLoadStatusSubmitted(obj.getIdpost_load());
+            updateLoadStatusSubmitted(obj.getIdpost_load());
             loadExpired = true;
             holder.timeLeft.setText("  Load Expired");
         }
