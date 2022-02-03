@@ -6,7 +6,6 @@ import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverEmailId
 import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverName;
 import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverNumber;
 import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverTruckId;
-import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverUploadLicense;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -20,9 +19,6 @@ public interface AddDriverService {
 
     @PUT("/driver/udateDr/{driverId}")
     Call<UpdateDriverName> updateDriverName(@Path("driverId") String driverId, @Body UpdateDriverName updateDriverName);
-
-    @PUT("/driver/udateDr/{driverId}")
-    Call<UpdateDriverUploadLicense> updateDriverUploadLicense(@Path("driverId") String driverId, @Body UpdateDriverUploadLicense updateDriverUploadLicense);
 
     @PUT("/driver/udateDr/{driverId}")
     Call<UpdateDriverNumber> updateDriverNumber(@Path("driverId") String driverId, @Body UpdateDriverNumber updateDriverNumber);

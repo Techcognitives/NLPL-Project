@@ -26,6 +26,7 @@ import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.DriverModel;
 import com.nlpl.model.ModelForRecyclerView.TruckModel;
+import com.nlpl.model.UpdateMethods.UpdateDriverDetails;
 import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverTruckId;
 import com.nlpl.services.AddDriverService;
 import com.nlpl.ui.ui.adapters.DriversAdapter;
@@ -679,7 +680,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
 
     public void onClickAssignTruckFromList(TruckModel obj) {
         Log.i("TruckId", obj.getTruck_id());
-        updateDriverTruckId(obj.getTruck_id());
+        UpdateDriverDetails.updateDriverTruckId(driverId, obj.getTruck_id());
         previewDialogAssignedTruck.dismiss();
         previewDialogSpinner.dismiss();
         Intent intent = new Intent(ViewDriverDetailsActivity.this, ViewDriverDetailsActivity.class);
@@ -687,31 +688,6 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
         intent.putExtra("mobile", phone);
         startActivity(intent);
         finish();
-    }
-
-    private void updateDriverTruckId(String truckIdPass) {
-        Log.i("DriverID Truck", driverId);
-        Log.i("TruckId Truck", truckIdPass);
-
-        UpdateDriverTruckId updateDriverTruckId = new UpdateDriverTruckId(truckIdPass);
-
-        Call<UpdateDriverTruckId> call = addDriverService.updateDriverTruckId("" + driverId, updateDriverTruckId);
-
-        call.enqueue(new Callback<UpdateDriverTruckId>() {
-            @Override
-            public void onResponse(Call<UpdateDriverTruckId> call, Response<UpdateDriverTruckId> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Driver Truck Id");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateDriverTruckId> call, Throwable t) {
-                Log.i("Not Successful", "User is Driver Added");
-
-            }
-        });
-//--------------------------------------------------------------------------------------------------
     }
 
 }
