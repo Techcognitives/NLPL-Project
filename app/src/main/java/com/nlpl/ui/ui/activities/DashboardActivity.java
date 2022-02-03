@@ -228,7 +228,7 @@ public class DashboardActivity extends AppCompatActivity {
         menuDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         previewDialogProfile = new Dialog(DashboardActivity.this);
-        previewDialogProfile.setContentView(R.layout.dialog_preview_images);
+        previewDialogProfile.setContentView(R.layout.dialog_preview_profile);
         previewDialogProfile.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.black)));
 
         drawerLayout = (ConstraintLayout) menuDialog.findViewById(R.id.drawer_menu);
@@ -1981,8 +1981,16 @@ public class DashboardActivity extends AppCompatActivity {
 
                                 previewDialogProfile.show();
                                 previewDialogProfile.getWindow().setAttributes(lp2);
-                                new DownloadImageTask((ImageView) previewDialogProfile.findViewById(R.id.dialog_preview_image_view)).execute(profileImgUrl);
+                                new DownloadImageTask((ImageView) previewDialogProfile.findViewById(R.id.dialog_preview_image_view_profile)).execute(profileImgUrl);
 
+                                TextView editProfilePic = previewDialogProfile.findViewById(R.id.editProfilePic);
+
+                                editProfilePic.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        uploadProfileDialogChoose();
+                                    }
+                                });
                             }
                         }
                     } catch (JSONException e) {
