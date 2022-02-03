@@ -433,7 +433,7 @@ public class UpdatePostLoadDetails {
     }
 
     //-------------------------------- Update Load Status ------------------------------------------
-    public static void updateStatus(String loadId, String status){
+    public static void updateStatus(String loadId, String status) {
         UpdateLoadStatusSubmitted updateLoadStatusSubmitted = new UpdateLoadStatusSubmitted(status);
 
         Call<UpdateLoadStatusSubmitted> call = ApiClient.getPostLoadService().updateBidStatusSubmitted("" + loadId, updateLoadStatusSubmitted);
