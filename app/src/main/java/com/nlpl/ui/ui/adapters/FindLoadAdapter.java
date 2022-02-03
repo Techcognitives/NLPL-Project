@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.FindLoadsModel;
-import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
-import com.nlpl.ui.ui.activities.DashboardActivity;
 import com.nlpl.ui.ui.activities.FindLoadsActivity;
 
 import java.util.ArrayList;

@@ -490,7 +490,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         bidsReceivedModel.setNotes_meterial_des(obj.getString("notes_meterial_des"));
                         bidsReceivedModel.setBid_ends_at(obj.getString("bid_ends_at"));
 
-                        if (!obj.getString("bid_status").equals("loadSubmitted") && !obj.getString("bid_status").equals("delete") ) {
+                        if (!obj.getString("bid_status").equals("loadSubmitted") && !obj.getString("bid_status").equals("delete") && !obj.getString("bid_status").equals("loadExpired")) {
                             bidsList.add(bidsReceivedModel);
                         }
                     }
@@ -929,6 +929,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         intent.putExtra("isEdit", true);
         intent.putExtra("loadId", obj.getIdpost_load());
         startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 
 
@@ -1971,5 +1972,12 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         });
         //------------------------------------------------------------------------------------------
 
+    }
+
+    public void CustomerLoadHistory(View view) {
+        Intent intent = new Intent(CustomerDashboardActivity.this, CustomerLoadsHistoryActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("mobile", phone);
+        startActivity(intent);
     }
 }

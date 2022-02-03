@@ -27,7 +27,6 @@ import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.DriverModel;
 import com.nlpl.model.ModelForRecyclerView.TruckModel;
 import com.nlpl.model.UpdateMethods.UpdateDriverDetails;
-import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverTruckId;
 import com.nlpl.services.AddDriverService;
 import com.nlpl.ui.ui.adapters.DriversAdapter;
 import com.nlpl.ui.ui.adapters.TrucksListAdapter;
@@ -39,9 +38,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -112,7 +108,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ViewDriverDetailsActivity.this, DashboardActivity.class);
+                Intent intent = new Intent(ViewDriverDetailsActivity.this, ServiceProviderDashboardActivity.class);
                 intent.putExtra("mobile2", phone);
                 startActivity(intent);
                 finish();
@@ -461,7 +457,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
     public void onClickBottomNavigation(View view) {
         switch (view.getId()) {
             case R.id.bottom_nav_sp_dashboard:
-                Intent intent = new Intent(ViewDriverDetailsActivity.this, DashboardActivity.class);
+                Intent intent = new Intent(ViewDriverDetailsActivity.this, ServiceProviderDashboardActivity.class);
                 intent.putExtra("mobile2", phone);
                 startActivity(intent);
                 finish();
@@ -477,7 +473,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i8 = new Intent(ViewDriverDetailsActivity.this, DashboardActivity.class);
+        Intent i8 = new Intent(ViewDriverDetailsActivity.this, ServiceProviderDashboardActivity.class);
         i8.putExtra("mobile2", phone);
         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i8);

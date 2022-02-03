@@ -5,7 +5,6 @@ import android.icu.text.DecimalFormat;
 import android.icu.text.NumberFormat;
 import android.os.Build;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadStatusSubmitted;
-import com.nlpl.ui.ui.activities.DashboardActivity;
+import com.nlpl.ui.ui.activities.ServiceProviderDashboardActivity;
 import com.nlpl.utils.ApiClient;
 
 import java.util.ArrayList;
@@ -29,12 +28,12 @@ import retrofit2.Callback;
 public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificationAdapter.LoadNotificationViewHolder> {
 
     private ArrayList<LoadNotificationModel> loadList;
-    private DashboardActivity activity;
+    private ServiceProviderDashboardActivity activity;
     String bidEndsAt, currentTimeToCompare, bidEndsAtStringTime, finalBidEndsAt, finalDate;
     int timeLeftToExpire, timeInMillisec, minLeftToExpire, months;
     boolean loadExpired = false;
 
-    public LoadNotificationAdapter(DashboardActivity activity, ArrayList<LoadNotificationModel> loadList) {
+    public LoadNotificationAdapter(ServiceProviderDashboardActivity activity, ArrayList<LoadNotificationModel> loadList) {
         this.loadList = loadList;
         this.activity = activity;
     }

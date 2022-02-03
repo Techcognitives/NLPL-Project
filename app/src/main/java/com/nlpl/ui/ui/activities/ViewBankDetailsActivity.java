@@ -1,6 +1,5 @@
 package com.nlpl.ui.ui.activities;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -16,10 +14,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -30,14 +26,11 @@ import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BankModel;
 import com.nlpl.ui.ui.adapters.BanksAdapter;
-import com.nlpl.ui.ui.adapters.BidsAcceptedAdapter;
-import com.nlpl.ui.ui.adapters.BidsReceivedAdapter;
 import com.nlpl.utils.DownloadImageTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -92,7 +85,7 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
                     finish();
                     overridePendingTransition(0, 0);
                 } else {
-                    Intent intent = new Intent(ViewBankDetailsActivity.this, DashboardActivity.class);
+                    Intent intent = new Intent(ViewBankDetailsActivity.this, ServiceProviderDashboardActivity.class);
                     intent.putExtra("mobile2", phone);
                     startActivity(intent);
                     finish();
@@ -248,7 +241,7 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
         } else {
             switch (view.getId()) {
                 case R.id.bottom_nav_sp_dashboard:
-                    Intent intent = new Intent(ViewBankDetailsActivity.this, DashboardActivity.class);
+                    Intent intent = new Intent(ViewBankDetailsActivity.this, ServiceProviderDashboardActivity.class);
                     intent.putExtra("mobile2", phone);
                     startActivity(intent);
                     finish();
@@ -314,7 +307,7 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
             overridePendingTransition(0, 0);
 
         } else {
-            Intent i8 = new Intent(ViewBankDetailsActivity.this, DashboardActivity.class);
+            Intent i8 = new Intent(ViewBankDetailsActivity.this, ServiceProviderDashboardActivity.class);
             i8.putExtra("mobile2", phone);
             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i8);

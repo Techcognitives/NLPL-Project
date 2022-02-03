@@ -105,7 +105,7 @@ public class PostALoadActivity extends AppCompatActivity {
     int sMonth, eMonth, count, startCount;
     Date currentDate, date1, date2, date3, date4;
     ArrayList currentSepDate;
-    TextView setApproxDistance;
+    TextView setApproxDistance, deleteLoad;
     long startD, endD, todayD, diff, diff1;
     Dialog selectDistrictDialog, selectStateDialog, setBudget, selectFeetDialog, selectCapacityDialog, selectBodyTypeDialog, selectModelDialog;
     boolean isModelSelected;
@@ -161,7 +161,7 @@ public class PostALoadActivity extends AppCompatActivity {
         select_truck_body_type = (TextView) findViewById(R.id.post_a_load_body_type_text_view);
         note_to_post_load = (EditText) findViewById(R.id.post_a_load_notes_edit_text);
         setApproxDistance = (TextView) findViewById(R.id.post_a_load_auto_calculated_km_edit_text);
-
+        deleteLoad = findViewById(R.id.delete_load_in_post_a_load);
         //------------------------------------------------------------------------------------------
         pickUpAddressDialog = new Dialog(PostALoadActivity.this);
         pickUpAddressDialog.setContentView(R.layout.dialog_address);
@@ -256,10 +256,12 @@ public class PostALoadActivity extends AppCompatActivity {
         Log.i("Today's Date", todayDate);
 
         if (isEdit || reActivate) {
+            deleteLoad.setVisibility(View.VISIBLE);
             Ok_PostLoad.setEnabled(true);
             Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
             getLoadDetails();
         } else {
+            deleteLoad.setVisibility(View.GONE);
             if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
                     && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
                     && !select_truck_body_type.getText().toString().isEmpty() && pickUpAddress != null && pickUpCity != null
@@ -622,7 +624,7 @@ public class PostALoadActivity extends AppCompatActivity {
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(PostALoadActivity.this, R.style.DialogTheme,new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(PostALoadActivity.this, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
@@ -1182,7 +1184,7 @@ public class PostALoadActivity extends AppCompatActivity {
         postLoadRequest.setUser_id(userId);
         postLoadRequest.setKm_approx(setApproxDistance.getText().toString());
         postLoadRequest.setNotes_meterial_des(note_to_post_load.getText().toString());
-        if (reActivate){
+        if (reActivate) {
             postLoadRequest.setBid_status("loadReactivated");
         } else {
             postLoadRequest.setBid_status("loadPosted");
@@ -1735,7 +1737,6 @@ public class PostALoadActivity extends AppCompatActivity {
     //--------------------------------------------------------------------------------------------------
 
 
-
     private void getLoadDetails() {
         String url = getString(R.string.baseURL) + "/loadpost/getLoadDtByPostId/" + loadId;
         Log.i("get Bank Detail URL", url);
@@ -1923,6 +1924,57 @@ public class PostALoadActivity extends AppCompatActivity {
 
     public void onClickCancelAddressDetails(View view) {
         pickUpAddressDialog.dismiss();
+    }
+
+    public void deleteLoad(View view) {
+        //----------------------- Alert Dialog -------------------------------------------------
+        Dialog deleteLoad = new Dialog(PostALoadActivity.this);
+        deleteLoad.setContentView(R.layout.dialog_alert);
+        deleteLoad.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(deleteLoad.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.gravity = Gravity.CENTER;
+
+        deleteLoad.show();
+        deleteLoad.getWindow().setAttributes(lp);
+        deleteLoad.setCancelable(true);
+
+        TextView alertTitle = (TextView) deleteLoad.findViewById(R.id.dialog_alert_title);
+        TextView alertMessage = (TextView) deleteLoad.findViewById(R.id.dialog_alert_message);
+        TextView alertPositiveButton = (TextView) deleteLoad.findViewById(R.id.dialog_alert_positive_button);
+        TextView alertNegativeButton = (TextView) deleteLoad.findViewById(R.id.dialog_alert_negative_button);
+
+        alertTitle.setText("Delete Load");
+        alertMessage.setText("Do you really want to delete load");
+        alertPositiveButton.setText("Delete Load");
+        alertPositiveButton.setVisibility(View.VISIBLE);
+        alertNegativeButton.setText("Cancel");
+        alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+        alertPositiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateLoadStatusSubmitted(loadId);
+                deleteLoad.dismiss();
+                Intent i8 = new Intent(PostALoadActivity.this, CustomerDashboardActivity.class);
+                i8.putExtra("mobile", phone);
+                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i8);
+                finish();
+                overridePendingTransition(0, 0);
+            }
+        });
+
+        alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteLoad.dismiss();
+            }
+        });
+        //------------------------------------------------------------------------------------------
     }
 
     private class GeoHandlerLatitude extends Handler {

@@ -1,7 +1,6 @@
 package com.nlpl.ui.ui.activities;
 
 import static com.nlpl.R.drawable.blue_profile_small;
-import static com.nlpl.R.drawable.pan_card;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -22,7 +21,6 @@ import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
@@ -103,7 +101,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 
-public class DashboardActivity extends AppCompatActivity {
+public class ServiceProviderDashboardActivity extends AppCompatActivity {
 
     SwipeRefreshLayout swipeRefreshLayout;
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -159,14 +157,14 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
+        setContentView(R.layout.activity_service_provider_dashboard);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             phone = bundle.getString("mobile2");
             Log.i("Mobile No Registration", phone);
         }
-        mQueue = Volley.newRequestQueue(DashboardActivity.this);
+        mQueue = Volley.newRequestQueue(ServiceProviderDashboardActivity.this);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         currentLocationText = (TextView) findViewById(R.id.dashboard_current_location_text_view);
         getLocation();
@@ -223,11 +221,11 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
-        menuDialog = new Dialog(DashboardActivity.this);
+        menuDialog = new Dialog(ServiceProviderDashboardActivity.this);
         menuDialog.setContentView(R.layout.dialog_menu);
         menuDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        previewDialogProfile = new Dialog(DashboardActivity.this);
+        previewDialogProfile = new Dialog(ServiceProviderDashboardActivity.this);
         previewDialogProfile.setContentView(R.layout.dialog_preview_profile);
         previewDialogProfile.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.black)));
 
@@ -245,15 +243,15 @@ public class DashboardActivity extends AppCompatActivity {
 
 //        swipeListener = new SwipeListener(loadListRecyclerView);
 
-        previewDialogBidNow = new Dialog(DashboardActivity.this);
+        previewDialogBidNow = new Dialog(ServiceProviderDashboardActivity.this);
         previewDialogBidNow.setContentView(R.layout.dialog_bid_now);
         previewDialogBidNow.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        dialogAcceptRevisedBid = new Dialog(DashboardActivity.this);
+        dialogAcceptRevisedBid = new Dialog(ServiceProviderDashboardActivity.this);
         dialogAcceptRevisedBid.setContentView(R.layout.dialog_bid_now);
         dialogAcceptRevisedBid.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        dialogViewConsignment = new Dialog(DashboardActivity.this);
+        dialogViewConsignment = new Dialog(ServiceProviderDashboardActivity.this);
         dialogViewConsignment.setContentView(R.layout.dialog_bid_now);
         dialogViewConsignment.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -261,7 +259,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     public void RearrangeItems() {
         getLocation();
-        Intent i8 = new Intent(DashboardActivity.this, DashboardActivity.class);
+        Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
         i8.putExtra("mobile2", phone);
         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i8);
@@ -310,11 +308,11 @@ public class DashboardActivity extends AppCompatActivity {
                     loadSubmittedRecyclerView.setLayoutManager(linearLayoutManagerBank1);
                     loadSubmittedRecyclerView.setHasFixedSize(true);
 
-                    loadSubmittedAdapter = new LoadSubmittedAdapter(DashboardActivity.this, updatedLoadSubmittedList);
+                    loadSubmittedAdapter = new LoadSubmittedAdapter(ServiceProviderDashboardActivity.this, updatedLoadSubmittedList);
                     loadSubmittedRecyclerView.setAdapter(loadSubmittedAdapter);
                     loadSubmittedRecyclerView.scrollToPosition(loadSubmittedAdapter.getItemCount() - 1);
 
-                    loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadListToCompare);
+                    loadListAdapter = new LoadNotificationAdapter(ServiceProviderDashboardActivity.this, loadListToCompare);
 //                    loadListRecyclerView.setAdapter(loadListAdapter);
                     loadListRecyclerView.scrollToPosition(loadListAdapter.getItemCount() - 1);
 
@@ -418,7 +416,7 @@ public class DashboardActivity extends AppCompatActivity {
     public void onClickProfileAndRegister(View view) {
         switch (view.getId()) {
             case R.id.menu_personal_details_button:
-                Intent i1 = new Intent(DashboardActivity.this, ViewPersonalDetailsActivity.class);
+                Intent i1 = new Intent(ServiceProviderDashboardActivity.this, ViewPersonalDetailsActivity.class);
                 i1.putExtra("userId", userId);
                 i1.putExtra("mobile", phone);
                 startActivity(i1);
@@ -427,12 +425,12 @@ public class DashboardActivity extends AppCompatActivity {
 
             case R.id.menu_bank_details_button:
                 if (isBankDetailsDone.equals("1")) {
-                    Intent intent = new Intent(DashboardActivity.this, ViewBankDetailsActivity.class);
+                    Intent intent = new Intent(ServiceProviderDashboardActivity.this, ViewBankDetailsActivity.class);
                     intent.putExtra("userId", userId);
                     intent.putExtra("mobile", phone);
                     startActivity(intent);
                 } else {
-                    Intent intent = new Intent(DashboardActivity.this, BankDetailsActivity.class);
+                    Intent intent = new Intent(ServiceProviderDashboardActivity.this, BankDetailsActivity.class);
                     intent.putExtra("isEdit", false);
                     intent.putExtra("userId", userId);
                     intent.putExtra("mobile", phone);
@@ -442,12 +440,12 @@ public class DashboardActivity extends AppCompatActivity {
 
             case R.id.menu_truck_details:
                 if (isTruckDetailsDone.equals("1")) {
-                    Intent intent = new Intent(DashboardActivity.this, ViewTruckDetailsActivity.class);
+                    Intent intent = new Intent(ServiceProviderDashboardActivity.this, ViewTruckDetailsActivity.class);
                     intent.putExtra("userId", userId);
                     intent.putExtra("mobile", phone);
                     startActivity(intent);
                 } else {
-                    Intent intent2 = new Intent(DashboardActivity.this, VehicleDetailsActivity.class);
+                    Intent intent2 = new Intent(ServiceProviderDashboardActivity.this, VehicleDetailsActivity.class);
                     intent2.putExtra("userId", userId);
                     intent2.putExtra("isEdit", false);
                     intent2.putExtra("fromBidNow", false);
@@ -459,12 +457,12 @@ public class DashboardActivity extends AppCompatActivity {
 
             case R.id.menu_driver_details:
                 if (isDriverDetailsDone.equals("1")) {
-                    Intent intent = new Intent(DashboardActivity.this, ViewDriverDetailsActivity.class);
+                    Intent intent = new Intent(ServiceProviderDashboardActivity.this, ViewDriverDetailsActivity.class);
                     intent.putExtra("userId", userId);
                     intent.putExtra("mobile", phone);
                     startActivity(intent);
                 } else {
-                    Intent intent4 = new Intent(DashboardActivity.this, DriverDetailsActivity.class);
+                    Intent intent4 = new Intent(ServiceProviderDashboardActivity.this, DriverDetailsActivity.class);
                     intent4.putExtra("userId", userId);
                     intent4.putExtra("isEdit", false);
                     intent4.putExtra("fromBidNow", false);
@@ -489,10 +487,10 @@ public class DashboardActivity extends AppCompatActivity {
 
     public void onClickLogOut(View view) {
         FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(DashboardActivity.this, LogInActivity.class);
+        Intent intent = new Intent(ServiceProviderDashboardActivity.this, LogInActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-        DashboardActivity.this.finish();
+        ServiceProviderDashboardActivity.this.finish();
         overridePendingTransition(0, 0);
     }
 
@@ -524,7 +522,7 @@ public class DashboardActivity extends AppCompatActivity {
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
-                Intent intent = new Intent(DashboardActivity.this, FindLoadsActivity.class);
+                Intent intent = new Intent(ServiceProviderDashboardActivity.this, FindLoadsActivity.class);
                 intent.putExtra("userId", userId);
                 intent.putExtra("mobile", phone);
                 startActivity(intent);
@@ -546,7 +544,7 @@ public class DashboardActivity extends AppCompatActivity {
 
 //        Collections.reverse(loadListToCompare);
 
-        loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadListToCompare);
+        loadListAdapter = new LoadNotificationAdapter(ServiceProviderDashboardActivity.this, loadListToCompare);
         loadListRecyclerView.setAdapter(loadListAdapter);
 
         if (loadListToCompare.size() > 0) {
@@ -603,7 +601,7 @@ public class DashboardActivity extends AppCompatActivity {
                     Collections.reverse(loadList);
                     TextView noLoadAvailable = (TextView) findViewById(R.id.dashboard_load_here_text);
 
-                    loadListAdapter = new LoadNotificationAdapter(DashboardActivity.this, loadList);
+                    loadListAdapter = new LoadNotificationAdapter(ServiceProviderDashboardActivity.this, loadList);
                     loadListRecyclerView.setAdapter(loadListAdapter);
 
                     if (loadList.size() > 0) {
@@ -731,7 +729,7 @@ public class DashboardActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i8 = new Intent(DashboardActivity.this, DashboardActivity.class);
+                Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
                 i8.putExtra("mobile2", phone);
                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i8);
@@ -754,7 +752,7 @@ public class DashboardActivity extends AppCompatActivity {
 
                     Log.i("loadId bidded", obj.getIdpost_load());
                     //----------------------- Alert Dialog -------------------------------------------------
-                    Dialog alert = new Dialog(DashboardActivity.this);
+                    Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
                     alert.setContentView(R.layout.dialog_alert);
                     alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -783,7 +781,7 @@ public class DashboardActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             alert.dismiss();
-                            Intent i8 = new Intent(DashboardActivity.this, DashboardActivity.class);
+                            Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
                             i8.putExtra("mobile2", phone);
                             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i8);
@@ -867,7 +865,7 @@ public class DashboardActivity extends AppCompatActivity {
         addTruck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent3 = new Intent(DashboardActivity.this, VehicleDetailsActivity.class);
+                Intent intent3 = new Intent(ServiceProviderDashboardActivity.this, VehicleDetailsActivity.class);
                 intent3.putExtra("userId", userId);
                 intent3.putExtra("isEdit", false);
                 intent3.putExtra("fromBidNow", true);
@@ -880,7 +878,7 @@ public class DashboardActivity extends AppCompatActivity {
         addDriver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i8 = new Intent(DashboardActivity.this, DriverDetailsActivity.class);
+                Intent i8 = new Intent(ServiceProviderDashboardActivity.this, DriverDetailsActivity.class);
                 i8.putExtra("userId", userId);
                 i8.putExtra("isEdit", false);
                 i8.putExtra("fromBidNow", true);
@@ -912,7 +910,7 @@ public class DashboardActivity extends AppCompatActivity {
                     }
                     if (arrayDriverName.size() == 0) {
                         //----------------------- Alert Dialog -------------------------------------------------
-                        Dialog alert = new Dialog(DashboardActivity.this);
+                        Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
                         alert.setContentView(R.layout.dialog_alert);
                         alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -941,7 +939,7 @@ public class DashboardActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 alert.dismiss();
-                                Intent i8 = new Intent(DashboardActivity.this, DriverDetailsActivity.class);
+                                Intent i8 = new Intent(ServiceProviderDashboardActivity.this, DriverDetailsActivity.class);
                                 i8.putExtra("userId", userId);
                                 i8.putExtra("isEdit", false);
                                 i8.putExtra("fromBidNow", true);
@@ -970,7 +968,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     private void selectTruckToBid(ArrayList<String> arrayTruckId) {
 
-        selectTruckDialog = new Dialog(DashboardActivity.this);
+        selectTruckDialog = new Dialog(ServiceProviderDashboardActivity.this);
         selectTruckDialog.setContentView(R.layout.dialog_spinner);
         selectTruckDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         selectTruckDialog.show();
@@ -1008,7 +1006,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     private void selectDriverToBid(ArrayList<String> arrayDriverId) {
 
-        selectTruckDialog = new Dialog(DashboardActivity.this);
+        selectTruckDialog = new Dialog(ServiceProviderDashboardActivity.this);
         selectTruckDialog.setContentView(R.layout.dialog_spinner);
         selectTruckDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         selectTruckDialog.show();
@@ -1196,8 +1194,9 @@ public class DashboardActivity extends AppCompatActivity {
                         bidSubmittedModel.setBid_ends_at(obj.getString("bid_ends_at"));
                         bidSubmittedModel.setBidId(bidId);
 
-                        loadSubmittedList.add(bidSubmittedModel);
-
+                        if (!obj.getString("bid_status").equals("delete") && !obj.getString("bid_status").equals("loadExpired")) {
+                            loadSubmittedList.add(bidSubmittedModel);
+                        }
                     }
 
                     TextView noBidsSubmittedTextView = (TextView) findViewById(R.id.dashboard_no_bids_submitted_text);
@@ -1268,7 +1267,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     private void budgetSet(String previousBudget) {
 
-        setBudget = new Dialog(DashboardActivity.this);
+        setBudget = new Dialog(ServiceProviderDashboardActivity.this);
         setBudget.setContentView(R.layout.dialog_budget);
 
         WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
@@ -1411,7 +1410,7 @@ public class DashboardActivity extends AppCompatActivity {
                     }
                     if (arrayTruckId.size() == 0) {
                         //----------------------- Alert Dialog -------------------------------------------------
-                        Dialog alert = new Dialog(DashboardActivity.this);
+                        Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
                         alert.setContentView(R.layout.dialog_alert);
                         alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -1440,7 +1439,7 @@ public class DashboardActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 alert.dismiss();
-                                Intent intent3 = new Intent(DashboardActivity.this, VehicleDetailsActivity.class);
+                                Intent intent3 = new Intent(ServiceProviderDashboardActivity.this, VehicleDetailsActivity.class);
                                 intent3.putExtra("userId", userId);
                                 intent3.putExtra("isEdit", false);
                                 intent3.putExtra("fromBidNow", true);
@@ -1593,7 +1592,7 @@ public class DashboardActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i8 = new Intent(DashboardActivity.this, DashboardActivity.class);
+                Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
                 i8.putExtra("mobile2", phone);
                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i8);
@@ -1617,7 +1616,7 @@ public class DashboardActivity extends AppCompatActivity {
                 updateAssignedDriverId(obj.getBidId(), updateAssignedDriverId);
 
                 //----------------------- Alert Dialog -------------------------------------------------
-                Dialog alert = new Dialog(DashboardActivity.this);
+                Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
                 alert.setContentView(R.layout.dialog_alert);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -1646,7 +1645,7 @@ public class DashboardActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         alert.dismiss();
-                        Intent i8 = new Intent(DashboardActivity.this, DashboardActivity.class);
+                        Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
                         i8.putExtra("mobile2", phone);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);
@@ -1684,7 +1683,7 @@ public class DashboardActivity extends AppCompatActivity {
         addTruck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent3 = new Intent(DashboardActivity.this, VehicleDetailsActivity.class);
+                Intent intent3 = new Intent(ServiceProviderDashboardActivity.this, VehicleDetailsActivity.class);
                 intent3.putExtra("userId", userId);
                 intent3.putExtra("isEdit", false);
                 intent3.putExtra("fromBidNow", true);
@@ -1697,7 +1696,7 @@ public class DashboardActivity extends AppCompatActivity {
         addDriver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i8 = new Intent(DashboardActivity.this, DriverDetailsActivity.class);
+                Intent i8 = new Intent(ServiceProviderDashboardActivity.this, DriverDetailsActivity.class);
                 i8.putExtra("userId", userId);
                 i8.putExtra("isEdit", false);
                 i8.putExtra("fromBidNow", true);
@@ -1831,7 +1830,7 @@ public class DashboardActivity extends AppCompatActivity {
         cancel2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i8 = new Intent(DashboardActivity.this, DashboardActivity.class);
+                Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
                 i8.putExtra("mobile2", phone);
                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i8);
@@ -1866,7 +1865,7 @@ public class DashboardActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i8 = new Intent(DashboardActivity.this, DashboardActivity.class);
+                Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
                 i8.putExtra("mobile2", phone);
                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i8);
@@ -1885,7 +1884,7 @@ public class DashboardActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 //----------------------- Alert Dialog -------------------------------------------------
-                Dialog alert = new Dialog(DashboardActivity.this);
+                Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
                 alert.setContentView(R.layout.dialog_alert);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -1914,7 +1913,7 @@ public class DashboardActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         alert.dismiss();
-                        Intent i8 = new Intent(DashboardActivity.this, DashboardActivity.class);
+                        Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
                         i8.putExtra("mobile2", phone);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);
@@ -2016,7 +2015,7 @@ public class DashboardActivity extends AppCompatActivity {
         img_type = "profile";
 
         Dialog chooseDialog;
-        chooseDialog = new Dialog(DashboardActivity.this);
+        chooseDialog = new Dialog(ServiceProviderDashboardActivity.this);
         chooseDialog.setContentView(R.layout.dialog_choose);
         chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -2108,27 +2107,27 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private void requestPermissionsForCamera() {
-        if (ContextCompat.checkSelfPermission(DashboardActivity.this, Manifest.permission.CAMERA)
+        if (ContextCompat.checkSelfPermission(ServiceProviderDashboardActivity.this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(DashboardActivity.this, new String[]{
+            ActivityCompat.requestPermissions(ServiceProviderDashboardActivity.this, new String[]{
                     Manifest.permission.CAMERA
             }, 100);
         }
     }
 
     private void requestPermissionsForGalleryWRITE() {
-        if (ContextCompat.checkSelfPermission(DashboardActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (ContextCompat.checkSelfPermission(ServiceProviderDashboardActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(DashboardActivity.this, new String[]{
+            ActivityCompat.requestPermissions(ServiceProviderDashboardActivity.this, new String[]{
                     Manifest.permission.WRITE_EXTERNAL_STORAGE
             }, 100);
         }
     }
 
     private void requestPermissionsForGalleryREAD() {
-        if (ContextCompat.checkSelfPermission(DashboardActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+        if (ContextCompat.checkSelfPermission(ServiceProviderDashboardActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(DashboardActivity.this, new String[]{
+            ActivityCompat.requestPermissions(ServiceProviderDashboardActivity.this, new String[]{
                     Manifest.permission.READ_EXTERNAL_STORAGE
             }, 100);
         }
@@ -2329,13 +2328,13 @@ public class DashboardActivity extends AppCompatActivity {
 
 
     private void getLocation() {
-        if (ActivityCompat.checkSelfPermission(DashboardActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(ServiceProviderDashboardActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
                 @Override
                 public void onComplete(@NonNull Task<Location> task) {
                     Location location = task.getResult();
                     if (location != null) {
-                        Geocoder geocoder = new Geocoder(DashboardActivity.this, Locale.getDefault());
+                        Geocoder geocoder = new Geocoder(ServiceProviderDashboardActivity.this, Locale.getDefault());
                         try {
                             String latitudeCurrent, longitudeCurrent, countryCurrent, stateCurrent, cityCurrent, subCityCurrent, addressCurrent, pinCodeCurrent;
                             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
@@ -2356,7 +2355,7 @@ public class DashboardActivity extends AppCompatActivity {
                 }
             });
         } else {
-            ActivityCompat.requestPermissions(DashboardActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+            ActivityCompat.requestPermissions(ServiceProviderDashboardActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
     }
 
@@ -2418,7 +2417,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         if (requestCode == GET_FROM_GALLERY2 && resultCode == Activity.RESULT_OK) {
             //----------------------- Alert Dialog -------------------------------------------------
-            Dialog alert = new Dialog(DashboardActivity.this);
+            Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
             alert.setContentView(R.layout.dialog_alert);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -2465,7 +2464,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         } else if (requestCode == CAMERA_PIC_REQUEST2) {
             //----------------------- Alert Dialog -------------------------------------------------
-            Dialog alert = new Dialog(DashboardActivity.this);
+            Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
             alert.setContentView(R.layout.dialog_alert);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -2535,7 +2534,7 @@ public class DashboardActivity extends AppCompatActivity {
     private void profileAddedAlert() {
         UpdateUserDetails.updateUserIsProfileAdded(userId, "1");
 
-        Dialog alert = new Dialog(DashboardActivity.this);
+        Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
         alert.setContentView(R.layout.dialog_alert);
         alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -2564,7 +2563,7 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 alert.dismiss();
-                Intent i8 = new Intent(DashboardActivity.this, DashboardActivity.class);
+                Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
                 i8.putExtra("mobile2", phone);
                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i8);
