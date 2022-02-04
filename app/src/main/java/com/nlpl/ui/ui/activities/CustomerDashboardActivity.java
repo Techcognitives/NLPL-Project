@@ -1239,7 +1239,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
                             alert.show();
                             alert.getWindow().setAttributes(lp);
-                            alert.setCancelable(false);
+                            alert.setCancelable(true);
 
                             TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
                             TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
@@ -1302,7 +1302,14 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                             alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-
+                                    alert.dismiss();
+                                    viewConsignmentCustomer.dismiss();
+                                    Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
+                                    intent.putExtra("userId", userId);
+                                    intent.putExtra("mobile", phone);
+                                    startActivity(intent);
+                                    finish();
+                                    overridePendingTransition(0,0);
                                 }
                             });
                         }
@@ -1320,6 +1327,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                             intent.putExtra("mobile", phone);
                             startActivity(intent);
                             finish();
+                            overridePendingTransition(0,0);
                             viewConsignmentCustomer.dismiss();
                         }
                     });

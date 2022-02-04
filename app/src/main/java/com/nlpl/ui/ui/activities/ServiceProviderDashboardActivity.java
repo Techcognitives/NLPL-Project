@@ -133,7 +133,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     EditText notesSp;
     CheckBox declaration;
     RadioButton negotiable_yes, negotiable_no;
-    Boolean profileAdded, isTruckSelectedToBid = false, negotiable = null, isNegotiableSelected = false, fromAdapter = false;
+    Boolean leftSelected = true, profileAdded, isTruckSelectedToBid = false, negotiable = null, isNegotiableSelected = false, fromAdapter = false;
     ImageView actionBarBackButton, actionBarMenuButton, profilePic;
 
     Dialog menuDialog, previewDialogProfile;
@@ -499,6 +499,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     public void onClickLoadAndBids(View view) {
         switch (view.getId()) {
             case R.id.dashboard_load_notification_button:
+                leftSelected = true;
                 loadNotificationConstrain.setVisibility(View.VISIBLE);
                 bidsSubmittedConstrain.setVisibility(View.INVISIBLE);
                 loadNotificationTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
@@ -506,6 +507,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 break;
 
             case R.id.dashboard_bids_submitted_button:
+                leftSelected = false;
                 loadNotificationConstrain.setVisibility(View.INVISIBLE);
                 bidsSubmittedConstrain.setVisibility(View.VISIBLE);
                 loadNotificationTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
@@ -2215,15 +2217,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             return gestureDetector.onTouchEvent(motionEvent);
         }
     }
-
-    //----------------------------------------------------------------------------------------------------------------
-
-    //--------------------------------------------------------------------------------------------------
-
-    //----------------------------------------------------------------------------------------------------------------
-
-    //--------------------------------------------------------------------------------------------------
-
 
     private void getLocation() {
         if (ActivityCompat.checkSelfPermission(ServiceProviderDashboardActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
