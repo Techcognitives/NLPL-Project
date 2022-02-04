@@ -72,8 +72,6 @@ import com.nlpl.model.Responses.ImageResponse;
 import com.nlpl.model.Responses.UploadImageResponse;
 import com.nlpl.model.UpdateMethods.UpdateBidDetails;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
-import com.nlpl.model.UpdateModel.Models.UpdateBids.UpdateSPQuoteFinal;
-import com.nlpl.model.UpdateModel.Models.UpdateBids.UpdateSpNoteForCustomer;
 import com.nlpl.ui.ui.adapters.LoadNotificationAdapter;
 import com.nlpl.ui.ui.adapters.LoadSubmittedAdapter;
 import com.nlpl.utils.ApiClient;
@@ -133,7 +131,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     EditText notesSp;
     CheckBox declaration;
     RadioButton negotiable_yes, negotiable_no;
-    Boolean leftSelected = true, profileAdded, isTruckSelectedToBid = false, negotiable = null, isNegotiableSelected = false, fromAdapter = false;
+    Boolean isLoadNotificationSelected, loadNotificationSelected, profileAdded, isTruckSelectedToBid = false, negotiable = null, isNegotiableSelected = false, fromAdapter = false;
     ImageView actionBarBackButton, actionBarMenuButton, profilePic;
 
     Dialog menuDialog, previewDialogProfile;
@@ -162,6 +160,31 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             phone = bundle.getString("mobile2");
             Log.i("Mobile No Registration", phone);
         }
+        if (bundle != null) {
+            isLoadNotificationSelected = bundle.getBoolean("loadNotification");
+        } else {
+            isLoadNotificationSelected = true;
+        }
+
+        loadNotificationConstrain = (ConstraintLayout) findViewById(R.id.dashboard_load_notification_constrain);
+        bidsSubmittedConstrain = (ConstraintLayout) findViewById(R.id.dashboard_bids_submitted_constrain);
+        loadNotificationTextView = (TextView) findViewById(R.id.dashboard_load_notification_button);
+        bidsSubmittedTextView = (TextView) findViewById(R.id.dashboard_bids_submitted_button);
+
+        if (isLoadNotificationSelected){
+            loadNotificationSelected = true;
+            loadNotificationConstrain.setVisibility(View.VISIBLE);
+            bidsSubmittedConstrain.setVisibility(View.INVISIBLE);
+            loadNotificationTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
+            bidsSubmittedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+        } else {
+            loadNotificationSelected = false;
+            loadNotificationConstrain.setVisibility(View.INVISIBLE);
+            bidsSubmittedConstrain.setVisibility(View.VISIBLE);
+            bidsSubmittedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
+            loadNotificationTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+        }
+
         mQueue = Volley.newRequestQueue(ServiceProviderDashboardActivity.this);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         currentLocationText = (TextView) findViewById(R.id.dashboard_current_location_text_view);
@@ -185,11 +208,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         ImageView profileImageView = (ImageView) bottomNav.findViewById(R.id.bottom_nav_profile_image_view);
         profileText.setText("Find Loads");
         profileImageView.setImageDrawable(getDrawable(R.drawable.find_small));
-
-        loadNotificationConstrain = (ConstraintLayout) findViewById(R.id.dashboard_load_notification_constrain);
-        bidsSubmittedConstrain = (ConstraintLayout) findViewById(R.id.dashboard_bids_submitted_constrain);
-        loadNotificationTextView = (TextView) findViewById(R.id.dashboard_load_notification_button);
-        bidsSubmittedTextView = (TextView) findViewById(R.id.dashboard_bids_submitted_button);
 
         arrayUserId = new ArrayList<>();
         arrayMobileNo = new ArrayList<>();
@@ -259,6 +277,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         getLocation();
         Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
         i8.putExtra("mobile2", phone);
+        i8.putExtra("loadNotification", loadNotificationSelected);
         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i8);
         finish();
@@ -499,19 +518,21 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     public void onClickLoadAndBids(View view) {
         switch (view.getId()) {
             case R.id.dashboard_load_notification_button:
-                leftSelected = true;
+                loadNotificationSelected = true;
                 loadNotificationConstrain.setVisibility(View.VISIBLE);
                 bidsSubmittedConstrain.setVisibility(View.INVISIBLE);
                 loadNotificationTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
                 bidsSubmittedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+
                 break;
 
             case R.id.dashboard_bids_submitted_button:
-                leftSelected = false;
+                loadNotificationSelected = false;
                 loadNotificationConstrain.setVisibility(View.INVISIBLE);
                 bidsSubmittedConstrain.setVisibility(View.VISIBLE);
                 loadNotificationTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
                 bidsSubmittedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
+
                 break;
         }
     }
@@ -731,6 +752,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
                 i8.putExtra("mobile2", phone);
+                i8.putExtra("loadNotification", loadNotificationSelected);
                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i8);
                 finish();
@@ -783,6 +805,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                             alert.dismiss();
                             Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
                             i8.putExtra("mobile2", phone);
+                            i8.putExtra("loadNotification", loadNotificationSelected);
                             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i8);
                             finish();
@@ -1594,6 +1617,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
                 i8.putExtra("mobile2", phone);
+                i8.putExtra("loadNotification", loadNotificationSelected);
                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i8);
                 finish();
@@ -1647,6 +1671,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         alert.dismiss();
                         Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
                         i8.putExtra("mobile2", phone);
+                        i8.putExtra("loadNotification", loadNotificationSelected);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);
                         finish();
@@ -1832,6 +1857,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
                 i8.putExtra("mobile2", phone);
+                i8.putExtra("loadNotification", loadNotificationSelected);
                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i8);
                 finish();
@@ -1867,6 +1893,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
                 i8.putExtra("mobile2", phone);
+                i8.putExtra("loadNotification", loadNotificationSelected);
                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i8);
                 finish();
@@ -1915,6 +1942,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         alert.dismiss();
                         Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
                         i8.putExtra("mobile2", phone);
+                        i8.putExtra("loadNotification", loadNotificationSelected);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);
                         finish();
@@ -2456,6 +2484,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 alert.dismiss();
                 Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
                 i8.putExtra("mobile2", phone);
+                i8.putExtra("loadNotification", loadNotificationSelected);
                 i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i8);
                 finish();

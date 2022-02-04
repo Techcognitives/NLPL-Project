@@ -105,6 +105,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(ViewTruckDetailsActivity.this, ServiceProviderDashboardActivity.class);
                 intent.putExtra("mobile2", phone);
+                intent.putExtra("loadNotification", true);
                 startActivity(intent);
                 finish();
                 overridePendingTransition(0, 0);
@@ -322,6 +323,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
             case R.id.bottom_nav_sp_dashboard:
                 Intent intent = new Intent(ViewTruckDetailsActivity.this, ServiceProviderDashboardActivity.class);
                 intent.putExtra("mobile2", phone);
+                intent.putExtra("loadNotification", true);
                 startActivity(intent);
                 finish();
                 overridePendingTransition(0, 0);
@@ -339,6 +341,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
 
         Intent i8 = new Intent(ViewTruckDetailsActivity.this, ServiceProviderDashboardActivity.class);
         i8.putExtra("mobile2", phone);
+        i8.putExtra("loadNotification", true);
         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i8);
         finish();

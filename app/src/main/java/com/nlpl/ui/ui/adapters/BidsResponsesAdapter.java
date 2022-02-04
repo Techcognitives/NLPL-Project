@@ -151,10 +151,6 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
             });
         }
 
-        if (obj.getBid_status().equals("FinalAccepted")) {
-            holder.acceptViewBidButton.setText("Finally Accepted");
-        }
-
         String budget = obj.getSp_quote();
         holder.budget.setText(budget);
 

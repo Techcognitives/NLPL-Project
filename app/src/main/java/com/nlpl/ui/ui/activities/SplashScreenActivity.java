@@ -123,6 +123,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                                     if (role.equals("Customer")) {
                                         Intent i8 = new Intent(SplashScreenActivity.this, CustomerDashboardActivity.class);
                                         i8.putExtra("mobile", phone);
+                                        i8.putExtra("bidsReveived", true);
                                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(i8);
                                         overridePendingTransition(0, 0);
@@ -130,6 +131,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                                     }else{
                                         Intent i8 = new Intent(SplashScreenActivity.this, ServiceProviderDashboardActivity.class);
                                         i8.putExtra("mobile2", phone);
+                                        i8.putExtra("loadNotification", true);
                                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(i8);
                                         overridePendingTransition(0, 0);

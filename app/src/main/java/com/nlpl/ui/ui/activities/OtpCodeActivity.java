@@ -427,6 +427,7 @@ public class OtpCodeActivity extends AppCompatActivity {
                         if (role.equals("Customer")) {
                             Intent i8 = new Intent(OtpCodeActivity.this, CustomerDashboardActivity.class);
                             i8.putExtra("mobile", phone);
+                            i8.putExtra("bidsReveived", true);
                             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i8);
                             finish();
@@ -434,6 +435,7 @@ public class OtpCodeActivity extends AppCompatActivity {
                         }else{
                             Intent i8 = new Intent(OtpCodeActivity.this, ServiceProviderDashboardActivity.class);
                             i8.putExtra("mobile2", phone);
+                            i8.putExtra("loadNotification", true);
                             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i8);
                             finish();
@@ -523,6 +525,7 @@ public class OtpCodeActivity extends AppCompatActivity {
                         if (role.equals("Customer")) {
                             Intent i8 = new Intent(OtpCodeActivity.this, CustomerDashboardActivity.class);
                             i8.putExtra("mobile", phone);
+                            i8.putExtra("bidsReveived", true);
                             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i8);
                             finish();
@@ -530,6 +533,7 @@ public class OtpCodeActivity extends AppCompatActivity {
                         }else{
                             Intent i8 = new Intent(OtpCodeActivity.this, ServiceProviderDashboardActivity.class);
                             i8.putExtra("mobile2", phone);
+                            i8.putExtra("loadNotification", true);
                             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i8);
                             finish();

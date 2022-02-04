@@ -78,8 +78,8 @@ public class CustomerLoadsHistoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(CustomerLoadsHistoryActivity.this, CustomerDashboardActivity.class);
-                intent.putExtra("userId", userId);
                 intent.putExtra("mobile", phone);
+                intent.putExtra("bidsReveived", true);
                 startActivity(intent);
                 finish();
                 overridePendingTransition(0, 0);
@@ -192,6 +192,7 @@ public class CustomerLoadsHistoryActivity extends AppCompatActivity {
         super.onBackPressed();
         Intent i8 = new Intent(CustomerLoadsHistoryActivity.this, CustomerDashboardActivity.class);
         i8.putExtra("mobile", phone);
+        i8.putExtra("bidsReveived", true);
         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i8);
         finish();
