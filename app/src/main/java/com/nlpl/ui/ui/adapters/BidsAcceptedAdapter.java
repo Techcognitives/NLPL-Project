@@ -284,7 +284,7 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
         public BidsAcceptedViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            timeLeft = itemView.findViewById(R.id.bids_responses_time_left);
+            timeLeft = itemView.findViewById(R.id.load_list_time_left);
             destinationStart = itemView.findViewById(R.id.load_list_pick_up);
             destinationEnd = itemView.findViewById(R.id.load_list_drop);
             budget = itemView.findViewById(R.id.load_list_budget);
