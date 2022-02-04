@@ -624,10 +624,10 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                updateCustomerNoteForSP(obj.getIdpost_load(), notesCustomer.getText().toString());
+                UpdatePostLoadDetails.updateNotes(obj.getIdpost_load(), notesCustomer.getText().toString());
                 updateBidStatusAsAccepted(obj.getSp_bid_id());
                 updateCustomerBudgetForSP(obj.getSp_bid_id(), customerQuote.getText().toString());
-                UpdatePostLoadDetails.updateBudget(obj.getSp_bid_id(), customerQuote.getText().toString());
+                UpdatePostLoadDetails.updateBudget(obj.getIdpost_load(), customerQuote.getText().toString());
 
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(CustomerDashboardActivity.this);
@@ -693,26 +693,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     //--------------------------------------------------------------------------------------------------
 
     //----------------------------------------------------------------------------------------------------------------
-    private void updateCustomerNoteForSP(String bidId, String cNote) {
-
-        UpdateCustomerNoteForSP updateCustomerNoteForSP = new UpdateCustomerNoteForSP(cNote);
-
-        Call<UpdateCustomerNoteForSP> call = ApiClient.getPostLoadService().updateCustomerNoteForSP("" + bidId, updateCustomerNoteForSP);
-
-        call.enqueue(new Callback<UpdateCustomerNoteForSP>() {
-            @Override
-            public void onResponse(Call<UpdateCustomerNoteForSP> call, Response<UpdateCustomerNoteForSP> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<UpdateCustomerNoteForSP> call, Throwable t) {
-
-            }
-        });
-    }
-
-    //----------------------------------------------------------------------------------------------------------------
     private void updateBidStatusFinalAccepted(String bidId) {
 
         UpdateBidStatusFinalAccepted updateBidStatusFinalAccepted = new UpdateBidStatusFinalAccepted("FinalAccepted");
@@ -749,27 +729,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<UpdateBidStatusAccepted> call, Throwable t) {
-
-            }
-        });
-    }
-    //--------------------------------------------------------------------------------------------------
-
-    //----------------------------------------------------------------------------------------------------------------
-    private void updateLoadStatusSubmitted(String loadId) {
-
-        UpdateLoadStatusSubmitted updateLoadStatusSubmitted = new UpdateLoadStatusSubmitted("loadSubmitted");
-
-        Call<UpdateLoadStatusSubmitted> call = ApiClient.getPostLoadService().updateBidStatusSubmitted("" + loadId, updateLoadStatusSubmitted);
-
-        call.enqueue(new Callback<UpdateLoadStatusSubmitted>() {
-            @Override
-            public void onResponse(Call<UpdateLoadStatusSubmitted> call, retrofit2.Response<UpdateLoadStatusSubmitted> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<UpdateLoadStatusSubmitted> call, Throwable t) {
 
             }
         });
@@ -1081,11 +1040,11 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                updateCustomerNoteForSP(obj.getIdpost_load(), notesCustomer.getText().toString());
-                updateLoadStatusSubmitted(obj.getIdpost_load());
+                UpdatePostLoadDetails.updateNotes(obj.getIdpost_load(), notesCustomer.getText().toString());
+                UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadSubmitted");
                 updateBidStatusFinalAccepted(obj.getSp_bid_id());
                 updateCustomerBudgetForSP(obj.getSp_bid_id(), obj.getSp_quote());
-                UpdatePostLoadDetails.updateBudget(obj.getSp_bid_id(), obj.getSp_quote());
+                UpdatePostLoadDetails.updateBudget(obj.getIdpost_load(), obj.getSp_quote());
 
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(CustomerDashboardActivity.this);
