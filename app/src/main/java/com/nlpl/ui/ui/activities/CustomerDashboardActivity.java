@@ -841,7 +841,9 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         bidsResponsesModel.setBid_status(obj.getString("bid_status"));
                         bidsResponsesModel.setIs_bid_accpted_by_sp(obj.getString("is_bid_accpted_by_sp"));
 
-                        bidResponsesList.add(bidsResponsesModel);
+                        if (!obj.getString("bid_status").equals("withdrawnByLp")) {
+                            bidResponsesList.add(bidsResponsesModel);
+                        }
                     }
 
                     for (int i = 0; i < bidResponsesList.size(); i++) {
@@ -856,8 +858,8 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                                 bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
                                 bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
                                 bidsResponsesAdapter.updateData(bidResponsesList);
-
-                            } else if (bidResponsesList.get(i).getBid_status().equals("Accepted")) {
+                            }
+                            if (bidResponsesList.get(i).getBid_status().equals("Accepted")) {
                                 int itemPos = bidResponsesList.indexOf(bidResponsesList.get(i));
                                 bidResponsesList.add(0, bidResponsesList.get(i));
                                 bidResponsesList.remove(itemPos + 1);
@@ -865,12 +867,11 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                                 bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
                                 bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
                                 bidsResponsesAdapter.updateData(bidResponsesList);
-                            } else if (bidResponsesList.get(i).getBid_status().equals("RespondedBySP")) {
+                            }
+                            if (bidResponsesList.get(i).getBid_status().equals("RespondedBySP")) {
                                 bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
                                 bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
                                 bidsResponsesAdapter.updateData(bidResponsesList);
-                            } else if (bidResponsesList.get(i).getBid_status().equals("FinalAccepted")) {
-
                             }
 
                         }
@@ -1229,6 +1230,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                     customerQuote.setText(spQuoteByApi);
 
                     submitResponseBtn.setText("Withdraw");
+                    submitResponseBtn.setBackgroundResource((R.drawable.button_active));
                     submitResponseBtn.setBackgroundTintList(getResources().getColorStateList(R.color.grey));
                     submitResponseBtn.setEnabled(true);
 
@@ -1321,7 +1323,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                                     alert.dismiss();
                                     viewConsignmentCustomer.dismiss();
                                     UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadPosted");
-                                    UpdateBidDetails.updateBidStatus(fianlBidId, "withdrawn");
+                                    UpdateBidDetails.updateBidStatus(fianlBidId, "withdrawnByLp");
 
                                     //----------------------- Alert Dialog -------------------------------------------------
                                     Dialog alert = new Dialog(CustomerDashboardActivity.this);
@@ -1955,5 +1957,104 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         intent.putExtra("userId", userId);
         intent.putExtra("mobile", phone);
         startActivity(intent);
+    }
+
+    public void continueWithOtherSp(BidsAcceptedModel obj) {
+
+        //----------------------- Alert Dialog -------------------------------------------------
+        Dialog alert = new Dialog(CustomerDashboardActivity.this);
+        alert.setContentView(R.layout.dialog_alert);
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(alert.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        alert.show();
+        alert.getWindow().setAttributes(lp);
+        alert.setCancelable(false);
+
+        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+        alertTitle.setText("Continue with other Service Provider");
+        alertMessage.setText("Current Bidder have withdrawn Bid, do you still want to continue with other Service Provider?");
+        alertPositiveButton.setVisibility(View.VISIBLE);
+        alertPositiveButton.setText("Continue");
+        alertNegativeButton.setText("Cancel");
+        alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+        alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+                viewConsignmentCustomer.dismiss();
+                Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
+                intent.putExtra("userId", userId);
+                intent.putExtra("mobile", phone);
+                intent.putExtra("bidsReveived", bidsReceivedSelected);
+                startActivity(intent);
+                finish();
+                overridePendingTransition(0,0);
+            }
+        });
+        //------------------------------------------------------------------------------------------
+
+        alertPositiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+                viewConsignmentCustomer.dismiss();
+                UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadPosted");
+
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(CustomerDashboardActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(false);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Continue with other Service Provider");
+                alertMessage.setText("Load withdrawn from current Service Provider and visible for other Service Provider");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("Ok");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                        viewConsignmentCustomer.dismiss();
+                        Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
+                        intent.putExtra("userId", userId);
+                        intent.putExtra("mobile", phone);
+                        intent.putExtra("bidsReveived", bidsReceivedSelected);
+                        startActivity(intent);
+                        finish();
+                        overridePendingTransition(0,0);
+                    }
+                });
+                //------------------------------------------------------------------------------------------
+
+
+            }
+        });
     }
 }

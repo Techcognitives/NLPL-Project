@@ -171,7 +171,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         loadNotificationTextView = (TextView) findViewById(R.id.dashboard_load_notification_button);
         bidsSubmittedTextView = (TextView) findViewById(R.id.dashboard_bids_submitted_button);
 
-        if (isLoadNotificationSelected){
+        if (isLoadNotificationSelected) {
             loadNotificationSelected = true;
             loadNotificationConstrain.setVisibility(View.VISIBLE);
             bidsSubmittedConstrain.setVisibility(View.INVISIBLE);
@@ -1885,20 +1885,102 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         getCustomerNameAndNumber(obj.getUser_id());
 
         cancel.setText("Withdraw");
-        cancel.setEnabled(false);
-        cancel.setBackgroundTintList(getResources().getColorStateList(R.color.grey));
+        cancel.setEnabled(true);
+        cancel.setBackgroundTintList(getResources().getColorStateList(R.color.button_blue));
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
-                i8.putExtra("mobile2", phone);
-                i8.putExtra("loadNotification", loadNotificationSelected);
-                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i8);
-                finish();
-                overridePendingTransition(0, 0);
-                dialogViewConsignment.dismiss();
+
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(false);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Withdraw Bid");
+                alertMessage.setText("Do you really want to withdraw bid.");
+                alertPositiveButton.setVisibility(View.VISIBLE);
+                alertNegativeButton.setText("Cancel");
+                alertPositiveButton.setText("Withdraw");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                        Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
+                        i8.putExtra("mobile2", phone);
+                        i8.putExtra("loadNotification", loadNotificationSelected);
+                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i8);
+                        finish();
+                        overridePendingTransition(0, 0);
+                        dialogViewConsignment.dismiss();
+                    }
+                });
+
+                alertPositiveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        UpdateBidDetails.updateBidStatus(obj.getBidId(), "withdrawnBySp");
+                        //----------------------- Alert Dialog -------------------------------------------------
+                        Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
+                        alert.setContentView(R.layout.dialog_alert);
+                        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                        lp.copyFrom(alert.getWindow().getAttributes());
+                        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                        lp.gravity = Gravity.CENTER;
+
+                        alert.show();
+                        alert.getWindow().setAttributes(lp);
+                        alert.setCancelable(true);
+
+                        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                        alertTitle.setText("Withdrawn Bid");
+                        alertMessage.setText("Bid is withdrawn successfully. Customer will no longer see your Bid.");
+                        alertPositiveButton.setVisibility(View.GONE);
+                        alertNegativeButton.setText("Ok");
+                        alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                        alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
+                                i8.putExtra("mobile2", phone);
+                                i8.putExtra("loadNotification", loadNotificationSelected);
+                                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(i8);
+                                finish();
+                                overridePendingTransition(0, 0);
+                                dialogViewConsignment.dismiss();
+                            }
+                        });
+                    }
+                });
+                //------------------------------------------------------------------------------------------
+
             }
         });
 
