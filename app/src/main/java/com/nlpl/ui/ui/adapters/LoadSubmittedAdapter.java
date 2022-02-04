@@ -42,7 +42,6 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
     private RequestQueue mQueue;
     String bidEndsAt, currentTimeToCompare, bidEndsAtStringTime, finalBidEndsAt, finalDate;
     int timeLeftToExpire, timeInMillisec, minLeftToExpire, months;
-    boolean loadExpired = false;
 
     public LoadSubmittedAdapter(ServiceProviderDashboardActivity activity, ArrayList<BidSubmittedModel> loadSubmittedList) {
         this.loadSubmittedList = loadSubmittedList;
@@ -182,7 +181,6 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
         if (dateEndsAt.equals(finalDate)) {
             new CountDownTimer(timeInMillisec, 1000) {
                 public void onTick(long millisUntilFinished) {
-                    loadExpired = false;
                     // Used for formatting digit to be in 2 digits only
                     NumberFormat f = null;
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -195,16 +193,15 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
                         holder.timeLeft.setText("  " + f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
                     }
                 }
+
                 // When the task is over it will print 00:00:00 there
                 public void onFinish() {
                     UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadExpired");
-                    loadExpired = true;
                     holder.timeLeft.setText("  Load Expired");
                 }
             }.start();
         } else {
             UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadExpired");
-            loadExpired = true;
             holder.timeLeft.setText("  Load Expired");
         }
         //------------------------------------------------------------------------------------------
@@ -250,49 +247,44 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
                         JSONObject obj1 = truckLists.getJSONObject(i);
                         String bid_status = obj1.getString("bid_status");
 
-                        if (loadExpired){
-                            holder.bidNowButton.setText("Expired");
-                            holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.dark_grey));
-                        } else {
-
-                            if (bid_status.equals("submitted")) {
-                                holder.budget.setText("₹" + obj.getBudget());
-                                holder.bidNowButton.setText("Bid Submitted");
-                            }
-
-                            if (bid_status.equals("Accepted")) {
-                                holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
-                                holder.bidNowButton.setText("Accept Revised");
-                                holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.red));
-
-                                holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        activity.acceptRevisedBid(obj);
-                                    }
-                                });
-                            }
-
-                            if (bid_status.equals("RespondedBySP")) {
-                                holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
-                                holder.bidNowButton.setText("You Responded");
-                                holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.button_blue));
-                            }
-
-                            if (bid_status.equals("FinalAccepted")) {
-                                holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
-                                holder.bidNowButton.setText("View Consignment");
-                                holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.green));
-                                holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        activity.viewConsignment(obj);
-                                    }
-                                });
-                            }
+                        if (bid_status.equals("submitted")) {
+                            holder.budget.setText("₹" + obj.getBudget());
+                            holder.bidNowButton.setText("Bid Submitted");
                         }
+
+                        if (bid_status.equals("Accepted")) {
+                            holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
+                            holder.bidNowButton.setText("Accept Revised");
+                            holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.red));
+
+                            holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    activity.acceptRevisedBid(obj);
+                                }
+                            });
+                        }
+
+                        if (bid_status.equals("RespondedBySP")) {
+                            holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
+                            holder.bidNowButton.setText("You Responded");
+                            holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.button_blue));
+                        }
+
+                        if (bid_status.equals("FinalAccepted")) {
+                            holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
+                            holder.bidNowButton.setText("View Consignment");
+                            holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.green));
+                            holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    activity.viewConsignment(obj);
+                                }
+                            });
+                        }
+
                     }
-                    
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -806,7 +806,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     }
 
 
-    public void getBidsResponsesList(BidsReceivedModel obj1, RecyclerView bidsResponsesRecyclerView, TextView bidsReceived, ConstraintLayout showRecyclerView, boolean loadExpired) {
+    public void getBidsResponsesList(BidsReceivedModel obj1, RecyclerView bidsResponsesRecyclerView, TextView bidsReceived, ConstraintLayout showRecyclerView) {
         ArrayList<BidsResponsesModel> bidResponsesList = new ArrayList<>();
         bidResponsesList.clear();
 
@@ -875,7 +875,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         showRecyclerView.setVisibility(View.GONE);
                         bidsResponsesRecyclerView.setVisibility(View.GONE);
                     } else {
-                        if (loadExpired) {
+                        if (obj1.getBid_status().equals("loadExpired")) {
                             showRecyclerView.setVisibility(View.GONE);
                             bidsResponsesRecyclerView.setVisibility(View.GONE);
                         } else {
@@ -1221,7 +1221,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
                     submitResponseBtn.setText("Withdraw");
                     submitResponseBtn.setBackgroundTintList(getResources().getColorStateList(R.color.grey));
-                    submitResponseBtn.setEnabled(false);
+                    submitResponseBtn.setEnabled(true);
 
                     submitResponseBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -1246,26 +1246,65 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                            alertTitle.setText("Withdrawn LOad");
-                            alertMessage.setText("Load Withdrawn Successfully");
-                            alertPositiveButton.setVisibility(View.GONE);
-                            alertNegativeButton.setText("OK");
+                            alertTitle.setText("Withdrawn Load");
+                            alertMessage.setText("Do you want withdraw fully or continue with other Service Provider");
+                            alertPositiveButton.setVisibility(View.VISIBLE);
+                            alertPositiveButton.setText("Withdraw Fully");
+                            alertNegativeButton.setText("Withdraw Partially");
                             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                             alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                            alertPositiveButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    alert.dismiss();
+//                                    viewConsignmentCustomer.dismiss();
+                                    UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "delete");
+
+                                    //----------------------- Alert Dialog -------------------------------------------------
+                                    Dialog alert = new Dialog(CustomerDashboardActivity.this);
+                                    alert.setContentView(R.layout.dialog_alert);
+                                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                                    lp.copyFrom(alert.getWindow().getAttributes());
+                                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                                    lp.gravity = Gravity.CENTER;
+
+                                    alert.show();
+                                    alert.getWindow().setAttributes(lp);
+                                    alert.setCancelable(false);
+
+                                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                                    alertTitle.setText("Withdraw Load");
+                                    alertMessage.setText("Load withdrawn successfully and no longer visible for anyone");
+                                    alertPositiveButton.setVisibility(View.GONE);
+                                    alertNegativeButton.setText("Ok");
+                                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            alert.dismiss();
+                                            viewConsignmentCustomer.dismiss();
+                                        }
+                                    });
+                                    //------------------------------------------------------------------------------------------
+                                }
+                            });
+                            //------------------------------------------------------------------------------------------
 
                             alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    alert.dismiss();
-                                    Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
-                                    intent.putExtra("userId", userId);
-                                    intent.putExtra("mobile", phone);
-                                    startActivity(intent);
-                                    finish();
-                                    viewConsignmentCustomer.dismiss();
+
                                 }
                             });
-                            //------------------------------------------------------------------------------------------
                         }
                     });
 

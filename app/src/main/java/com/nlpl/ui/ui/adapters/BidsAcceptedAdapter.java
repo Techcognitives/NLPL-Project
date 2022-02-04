@@ -19,6 +19,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BidsAcceptedModel;
+import com.nlpl.model.UpdateMethods.UpdatePostLoadDetails;
 import com.nlpl.ui.ui.activities.CustomerDashboardActivity;
 
 import org.json.JSONArray;
@@ -36,7 +37,6 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
     private CustomerDashboardActivity activity;
     String bidEndsAt, currentTimeToCompare, bidEndsAtStringTime, finalBidEndsAt, finalDate;
     int timeLeftToExpire, timeInMillisec, minLeftToExpire, months;
-    boolean loadExpired = false;
     private RequestQueue mQueue;
 
     public BidsAcceptedAdapter(CustomerDashboardActivity activity, ArrayList<BidsAcceptedModel> acceptedList) {
@@ -179,7 +179,6 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
         if (dateEndsAt.equals(finalDate)) {
             new CountDownTimer(timeInMillisec, 1000) {
                 public void onTick(long millisUntilFinished) {
-                    loadExpired = false;
                     // Used for formatting digit to be in 2 digits only
                     NumberFormat f = null;
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -195,12 +194,12 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
 
                 // When the task is over it will print 00:00:00 there
                 public void onFinish() {
-                    loadExpired = true;
+                    UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadExpired");
                     holder.timeLeft.setText("  Load Expired");
                 }
             }.start();
         } else {
-            loadExpired = true;
+            UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadExpired");
             holder.timeLeft.setText("  Load Expired");
         }
         //------------------------------------------------------------------------------------------
@@ -260,19 +259,15 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
         mQueue.add(request1);
         //----------------------------------------------------------
 
-        if (loadExpired) {
-            holder.bidNowButton.setText("Reactivate Load");
-            holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.dark_grey));
-        } else {
-            holder.bidNowButton.setText("View Consignment");
-            holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.green));
-            holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    activity.onClickViewConsignment(obj);
-                }
-            });
-        }
+        holder.bidNowButton.setText("View Consignment");
+        holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.green));
+        holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.onClickViewConsignment(obj);
+            }
+        });
+
     }
 
     @Override

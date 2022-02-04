@@ -32,7 +32,6 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
     private ServiceProviderDashboardActivity activity;
     String bidEndsAt, currentTimeToCompare, bidEndsAtStringTime, finalBidEndsAt, finalDate;
     int timeLeftToExpire, timeInMillisec, minLeftToExpire, months;
-    boolean loadExpired = false;
 
     public LoadNotificationAdapter(ServiceProviderDashboardActivity activity, ArrayList<LoadNotificationModel> loadList) {
         this.loadList = loadList;
@@ -170,7 +169,6 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
         if (dateEndsAt.equals(finalDate)) {
             new CountDownTimer(timeInMillisec, 1000) {
                 public void onTick(long millisUntilFinished) {
-                    loadExpired = false;
                     // Used for formatting digit to be in 2 digits only
                     NumberFormat f = null;
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -187,12 +185,10 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
                 // When the task is over it will print 00:00:00 there
                 public void onFinish() {
                     UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadExpired");
-                    loadExpired = true;
                     holder.timeLeft.setText("  Load Expired");
                 }
             }.start();
         } else {
-            loadExpired = true;
             UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadExpired");
             holder.timeLeft.setText("  Load Expired");
         }
@@ -231,18 +227,14 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
         String pickUpLocation = obj.getPick_add();
         holder.pickUpLocation.setText(" " + pickUpLocation);
 
-        if (loadExpired){
-            holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.dark_grey));
-            holder.bidNowButton.setText("Expired");
-        } else {
-            holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.orange));
-            holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    activity.onClickBidNow(obj);
-                }
-            });
-        }
+        holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.orange));
+        holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.onClickBidNow(obj);
+            }
+        });
+
         holder.pickUpLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

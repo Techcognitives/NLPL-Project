@@ -38,6 +38,7 @@ import java.lang.reflect.Member;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -51,7 +52,6 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
     String bidEndsAt, currentTimeToCompare, bidEndsAtStringTime, finalBidEndsAt, finalDate;
     private RequestQueue mQueue;
     int timeLeftToExpire, timeInMillisec, minLeftToExpire, months;
-    boolean loadExpired = false;
 
     public BidsReceivedAdapter(CustomerDashboardActivity activity, ArrayList<BidsReceivedModel> loadList) {
         this.loadList = loadList;
@@ -122,11 +122,11 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
         if (sizeOfDay == 2 && sizeOfMonth == 2) {
             finalDate = year + "-" + months + "-" + day;
         } else if (sizeOfDay == 1 && sizeOfMonth == 2) {
-            finalDate = year + "-"  + months+ "-" +"0"+ day;
+            finalDate = year + "-" + months + "-" + "0" + day;
         } else if (sizeOfDay == 1 && sizeOfMonth == 1) {
-            finalDate = year + "-" + "0"+ months + "-" + "0" + day ;
+            finalDate = year + "-" + "0" + months + "-" + "0" + day;
         } else if (sizeOfDay == 2 && sizeOfMonth == 1) {
-            finalDate = year + "-" + "0"+ months + "-" + day;
+            finalDate = year + "-" + "0" + months + "-" + day;
         }
 
         String dateEndsAt = bidEndsAt.substring(0, 10);
@@ -194,7 +194,6 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
         if (dateEndsAt.equals(finalDate)) {
             new CountDownTimer(timeInMillisec, 1000) {
                 public void onTick(long millisUntilFinished) {
-                    loadExpired = false;
                     // Used for formatting digit to be in 2 digits only
                     NumberFormat f = null;
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -211,13 +210,11 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
                 // When the task is over it will print 00:00:00 there
                 public void onFinish() {
                     UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadExpired");
-                    loadExpired = true;
                     holder.timeLeft.setText("  Load Expired");
                 }
             }.start();
         } else {
             UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadExpired");
-            loadExpired = true;
             holder.timeLeft.setText("  Load Expired");
         }
         //------------------------------------------------------------------------------------------
@@ -258,28 +255,16 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
         holder.bidsResponsesRecyclerView.setLayoutManager(linearLayoutManagerBank);
         holder.bidsResponsesRecyclerView.setHasFixedSize(true);
 
-        activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView, holder.bidsReceived, holder.showRecyclerView,  loadExpired );
+        activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView, holder.bidsReceived, holder.showRecyclerView);
 
-        if (loadExpired){
-            holder.editLoadButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.dark_grey));
-            holder.editLoadButton.setText("Reactivate Load");
+        holder.editLoadButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.orange));
+        holder.editLoadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.onClickEditLoadPost(obj);
+            }
+        });
 
-            holder.editLoadButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    activity.reActivateLoad(obj);
-                }
-            });
-
-        } else {
-            holder.editLoadButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.orange));
-            holder.editLoadButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    activity.onClickEditLoadPost(obj);
-                }
-            });
-        }
     }
 
     @Override
