@@ -1572,7 +1572,7 @@ public class PostALoadActivity extends AppCompatActivity {
         alertPositiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateLoadStatusSubmitted(loadId);
+                UpdatePostLoadDetails.updateStatus(loadId, "delete");
                 deleteLoad.dismiss();
                 Intent i8 = new Intent(PostALoadActivity.this, CustomerDashboardActivity.class);
                 i8.putExtra("mobile", phone);

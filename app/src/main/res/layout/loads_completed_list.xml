@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@drawable/all_rounded_small"
+    android:backgroundTint="@color/white"
+    android:paddingStart="5dp"
+    android:paddingTop="5dp"
+    android:paddingEnd="5dp"
+    android:paddingBottom="5dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/loads_completed_sp_profilePhto"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:civ_border_width="0.5dp"
+        app:civ_border_color="#FF000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/loads_completed_sp_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/blue_profile_small"
+        />
+
+    <TextView
+        android:id="@+id/loads_completed_sp_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:singleLine="true"
+        android:text="Service Provider Name"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/loads_completed_pick_city"
+        app:layout_constraintStart_toEndOf="@+id/loads_completed_sp_profilePhto"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/loads_completed_pick_city"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Pick city to Drop city"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/loads_completed_sp_name"
+        app:layout_constraintStart_toStartOf="@+id/loads_completed_sp_name"
+        app:layout_constraintTop_toBottomOf="@+id/loads_completed_sp_name" />
+
+    <!--    <RatingBar-->
+<!--        android:id="@+id/loads_completed_star_rating"-->
+<!--        style="@style/Widget.AppCompat.RatingBar.Small"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:foregroundGravity="center"-->
+<!--        android:isIndicator="true"-->
+<!--        android:numStars="4"-->
+<!--        android:stepSize="0.1"-->
+<!--        android:theme="@style/RatingBar"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/loads_completed_sp_rating_number"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/loads_completed_sp_rating_number"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/loads_completed_sp_rating_number" />-->
+
+    <TextView
+        android:id="@+id/loads_completed_budget_sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:paddingStart="3dp"
+        android:paddingEnd="3dp"
+        android:text="@string/inrRs"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/load_completed_view_load_history"
+        app:layout_constraintTop_toTopOf="@+id/loads_completed_sp_name" />
+
+    <TextView
+        android:id="@+id/load_completed_view_load_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_active"
+        android:backgroundTint="#ff7600"
+        android:gravity="center"
+        android:paddingStart="10dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="5dp"
+        android:text="View Load\n History"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

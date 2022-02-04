@@ -322,6 +322,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         intent.putExtra("mobile", phone);
         startActivity(intent);
         finish();
+        overridePendingTransition(0,0);
     }
 
     public void getBidsAccepted() {
@@ -1971,7 +1972,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             }
         });
         //------------------------------------------------------------------------------------------
-
     }
 
     public void CustomerLoadHistory(View view) {
