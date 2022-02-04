@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/background"
     android:layout_height="match_parent"
     tools:context=".ui.ui.activities.FindLoadsActivity">
 
@@ -18,12 +19,13 @@
     <include
         android:id="@+id/find_loads_bottom_nav_bar"
         layout="@layout/bottom_nav_bar"
-        android:layout_width="fill_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout19" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/find_loads_constrain"
@@ -31,7 +33,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout19"
@@ -80,12 +81,12 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginEnd="5dp"
-            android:scaleX="-1"
             android:onClick="onClickShiftRecyclerviewToLeft"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:scaleX="-1"
+            app:layout_constraintBottom_toBottomOf="@+id/find_loads_recycler_view"
             app:layout_constraintEnd_toStartOf="@+id/find_loads_recycler_view"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dashboard_load_notification_button"
+            app:layout_constraintTop_toTopOf="@+id/find_loads_recycler_view"
             app:srcCompat="@drawable/ic_right"
             app:tint="@color/black" />
 
@@ -95,10 +96,10 @@
             android:layout_height="0dp"
             android:layout_marginStart="5dp"
             android:onClick="onClickShiftRecyclerviewToRight"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/find_loads_recycler_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/find_loads_recycler_view"
-            app:layout_constraintTop_toBottomOf="@+id/dashboard_load_notification_button"
+            app:layout_constraintTop_toTopOf="@+id/find_loads_recycler_view"
             app:srcCompat="@drawable/ic_right"
             app:tint="@color/black" />
 
@@ -113,6 +114,43 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/find_loads_constrain" >
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/find_loads_search_recycler_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:foregroundGravity="top"
+            android:scrollbarThumbHorizontal="@android:color/holo_blue_dark"
+            android:scrollbars="horizontal"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName"
+            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
+            app:stackFromEnd="true" />
+
+        <EditText
+            android:id="@+id/editTextTextPersonName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/edit_text_border_grey"
+            android:drawableStart="@drawable/find_small"
+            android:ems="10"
+            android:hint="Search"
+            android:inputType="textPersonName"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/find_loads_search_recycler_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
