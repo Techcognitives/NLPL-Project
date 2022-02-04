@@ -150,19 +150,17 @@ public class FindLoadsActivity extends AppCompatActivity {
                     }
 
                     for (int i = 0; i < bidsList.size(); i++) {
-                        if (bidsList.get(i).getBid_status().equals("loadPosted")) {
-                            if (bidsList.size() == 0) {
-                                bidsListRecyclerView.setVisibility(View.GONE);
-                            } else if (bidsList.size() == 1) {
-                                ArrayList<FindLoadsModel> newList = new ArrayList<>(bidsList.subList(bidsList.size() - 1, bidsList.size()));
-                                bidsListAdapter.updateData(newList);
-                            } else if (bidsList.size() == 2) {
-                                ArrayList<FindLoadsModel> newList = new ArrayList<>(bidsList.subList(bidsList.size() - 2, bidsList.size()));
-                                bidsListAdapter.updateData(newList);
-                            } else if (bidsList.size() >= 3) {
-                                ArrayList<FindLoadsModel> newList = new ArrayList<>(bidsList.subList(bidsList.size() - 3, bidsList.size()));
-                                bidsListAdapter.updateData(newList);
-                            }
+                        if (bidsList.size() == 0) {
+                            bidsListRecyclerView.setVisibility(View.GONE);
+                        } else if (bidsList.size() == 1) {
+                            ArrayList<FindLoadsModel> newList = new ArrayList<>(bidsList.subList(bidsList.size() - 1, bidsList.size()));
+                            bidsListAdapter.updateData(newList);
+                        } else if (bidsList.size() == 2) {
+                            ArrayList<FindLoadsModel> newList = new ArrayList<>(bidsList.subList(bidsList.size() - 2, bidsList.size()));
+                            bidsListAdapter.updateData(newList);
+                        } else if (bidsList.size() >= 3) {
+                            ArrayList<FindLoadsModel> newList = new ArrayList<>(bidsList.subList(bidsList.size() - 3, bidsList.size()));
+                            bidsListAdapter.updateData(newList);
                         }
                     }
 
