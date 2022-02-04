@@ -54,6 +54,7 @@ import com.nlpl.model.ModelForRecyclerView.BidsResponsesModel;
 import com.nlpl.model.Requests.ImageRequest;
 import com.nlpl.model.Responses.ImageResponse;
 import com.nlpl.model.Responses.UploadImageResponse;
+import com.nlpl.model.UpdateMethods.UpdatePostLoadDetails;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
 import com.nlpl.model.UpdateModel.Models.UpdateBids.UpdateBidStatusAccepted;
 import com.nlpl.model.UpdateModel.Models.UpdateBids.UpdateBidStatusFinalAccepted;
@@ -625,7 +626,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                 updateCustomerNoteForSP(obj.getIdpost_load(), notesCustomer.getText().toString());
                 updateBidStatusAsAccepted(obj.getSp_bid_id());
                 updateCustomerBudgetForSP(obj.getSp_bid_id(), customerQuote.getText().toString());
-                updateCustomerBudgetOnResponse(obj.getSp_bid_id(), customerQuote.getText().toString());
+                UpdatePostLoadDetails.updateBudget(obj.getSp_bid_id(), customerQuote.getText().toString());
 
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(CustomerDashboardActivity.this);
@@ -709,29 +710,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             }
         });
     }
-    //--------------------------------------------------------------------------------------------------
-
-
-    //----------------------------------------------------------------------------------------------------------------
-    private void updateCustomerBudgetOnResponse(String bidId, String cQuote) {
-
-        UpdateCustomerBudget updateCustomerBudget = new UpdateCustomerBudget(cQuote);
-
-        Call<UpdateCustomerBudget> call = ApiClient.getPostLoadService().updateCustomerBudget("" + bidId, updateCustomerBudget);
-
-        call.enqueue(new Callback<UpdateCustomerBudget>() {
-            @Override
-            public void onResponse(Call<UpdateCustomerBudget> call, Response<UpdateCustomerBudget> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<UpdateCustomerBudget> call, Throwable t) {
-
-            }
-        });
-    }
-    //--------------------------------------------------------------------------------------------------
 
     //----------------------------------------------------------------------------------------------------------------
     private void updateBidStatusFinalAccepted(String bidId) {
@@ -1106,7 +1084,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                 updateLoadStatusSubmitted(obj.getIdpost_load());
                 updateBidStatusFinalAccepted(obj.getSp_bid_id());
                 updateCustomerBudgetForSP(obj.getSp_bid_id(), obj.getSp_quote());
-                updateCustomerBudgetOnResponse(obj.getSp_bid_id(), obj.getSp_quote());
+                UpdatePostLoadDetails.updateBudget(obj.getSp_bid_id(), obj.getSp_quote());
 
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(CustomerDashboardActivity.this);
