@@ -54,14 +54,10 @@ import com.nlpl.model.ModelForRecyclerView.BidsResponsesModel;
 import com.nlpl.model.Requests.ImageRequest;
 import com.nlpl.model.Responses.ImageResponse;
 import com.nlpl.model.Responses.UploadImageResponse;
+import com.nlpl.model.UpdateMethods.UpdateBidDetails;
 import com.nlpl.model.UpdateMethods.UpdatePostLoadDetails;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
-import com.nlpl.model.UpdateModel.Models.UpdateBids.UpdateBidStatusAccepted;
-import com.nlpl.model.UpdateModel.Models.UpdateBids.UpdateBidStatusFinalAccepted;
 import com.nlpl.model.UpdateModel.Models.UpdateBids.UpdateBudgetCustomerForSP;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateCustomerNoteForSP;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateCustomerBudget;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadStatusSubmitted;
 import com.nlpl.ui.ui.adapters.BidsAcceptedAdapter;
 import com.nlpl.ui.ui.adapters.BidsReceivedAdapter;
 import com.nlpl.ui.ui.adapters.BidsResponsesAdapter;
@@ -625,8 +621,8 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 UpdatePostLoadDetails.updateNotes(obj.getIdpost_load(), notesCustomer.getText().toString());
-                updateBidStatusAsAccepted(obj.getSp_bid_id());
-                updateCustomerBudgetForSP(obj.getSp_bid_id(), customerQuote.getText().toString());
+                UpdateBidDetails.updateBidStatus(obj.getSp_bid_id(), "Accepted");
+                UpdateBidDetails.updateCustomerBudgetForSP(obj.getSp_bid_id(), customerQuote.getText().toString());
                 UpdatePostLoadDetails.updateBudget(obj.getIdpost_load(), customerQuote.getText().toString());
 
                 //----------------------- Alert Dialog -------------------------------------------------
@@ -672,68 +668,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     }
 
     //----------------------------------------------------------------------------------------------------------------
-    private void updateCustomerBudgetForSP(String bidId, String cQuote) {
 
-        UpdateBudgetCustomerForSP updateBudgetCustomerForSP = new UpdateBudgetCustomerForSP(cQuote);
-
-        Call<UpdateBudgetCustomerForSP> call = ApiClient.getBidLoadService().updateBudgetCustomerForSP("" + bidId, updateBudgetCustomerForSP);
-
-        call.enqueue(new Callback<UpdateBudgetCustomerForSP>() {
-            @Override
-            public void onResponse(Call<UpdateBudgetCustomerForSP> call, Response<UpdateBudgetCustomerForSP> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<UpdateBudgetCustomerForSP> call, Throwable t) {
-
-            }
-        });
-    }
-    //--------------------------------------------------------------------------------------------------
-
-    //----------------------------------------------------------------------------------------------------------------
-    private void updateBidStatusFinalAccepted(String bidId) {
-
-        UpdateBidStatusFinalAccepted updateBidStatusFinalAccepted = new UpdateBidStatusFinalAccepted("FinalAccepted");
-
-        Call<UpdateBidStatusFinalAccepted> call = ApiClient.getBidLoadService().updateFinalAccepted("" + bidId, updateBidStatusFinalAccepted);
-
-        call.enqueue(new Callback<UpdateBidStatusFinalAccepted>() {
-            @Override
-            public void onResponse(Call<UpdateBidStatusFinalAccepted> call, Response<UpdateBidStatusFinalAccepted> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<UpdateBidStatusFinalAccepted> call, Throwable t) {
-
-            }
-        });
-    }
-    //--------------------------------------------------------------------------------------------------
-
-
-    //----------------------------------------------------------------------------------------------------------------
-    private void updateBidStatusAsAccepted(String bidId) {
-
-        UpdateBidStatusAccepted updateBidStatusAccepted = new UpdateBidStatusAccepted("Accepted");
-
-        Call<UpdateBidStatusAccepted> call = ApiClient.getBidLoadService().updateBidStatusAccepted("" + bidId, updateBidStatusAccepted);
-
-        call.enqueue(new Callback<UpdateBidStatusAccepted>() {
-            @Override
-            public void onResponse(Call<UpdateBidStatusAccepted> call, Response<UpdateBidStatusAccepted> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<UpdateBidStatusAccepted> call, Throwable t) {
-
-            }
-        });
-    }
-    //--------------------------------------------------------------------------------------------------
 
     private void budgetSet(String previousBudget) {
 
@@ -1042,8 +977,8 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
                 UpdatePostLoadDetails.updateNotes(obj.getIdpost_load(), notesCustomer.getText().toString());
                 UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadSubmitted");
-                updateBidStatusFinalAccepted(obj.getSp_bid_id());
-                updateCustomerBudgetForSP(obj.getSp_bid_id(), obj.getSp_quote());
+                UpdateBidDetails.updateBidStatus(obj.getSp_bid_id(), "FinalAccepted");
+                UpdateBidDetails.updateCustomerBudgetForSP(obj.getSp_bid_id(), obj.getSp_quote());
                 UpdatePostLoadDetails.updateBudget(obj.getIdpost_load(), obj.getSp_quote());
 
                 //----------------------- Alert Dialog -------------------------------------------------

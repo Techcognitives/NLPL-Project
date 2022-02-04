@@ -70,10 +70,8 @@ import com.nlpl.model.Requests.ImageRequest;
 import com.nlpl.model.Responses.BidLadResponse;
 import com.nlpl.model.Responses.ImageResponse;
 import com.nlpl.model.Responses.UploadImageResponse;
+import com.nlpl.model.UpdateMethods.UpdateBidDetails;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
-import com.nlpl.model.UpdateModel.Models.UpdateBids.UpdateAssignedDriverId;
-import com.nlpl.model.UpdateModel.Models.UpdateBids.UpdateAssignedTruckIdToBid;
-import com.nlpl.model.UpdateModel.Models.UpdateBids.UpdateBidStatusRespondedBySP;
 import com.nlpl.model.UpdateModel.Models.UpdateBids.UpdateSPQuoteFinal;
 import com.nlpl.model.UpdateModel.Models.UpdateBids.UpdateSpNoteForCustomer;
 import com.nlpl.ui.ui.adapters.LoadNotificationAdapter;
@@ -1609,11 +1607,11 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                updateSPNoteForCustomer(obj.getBidId(), notesSp.getText().toString());
-                updateBidStatusRespondedBySP(obj.getBidId());
-                updateSPQuoteFinal(obj.getBidId(), spQuote.getText().toString());
-                updateAssignedTruckId(obj.getBidId(), updateAssignedTruckId);
-                updateAssignedDriverId(obj.getBidId(), updateAssignedDriverId);
+                UpdateBidDetails.updateSPNoteForCustomer(obj.getBidId(), notesSp.getText().toString());
+                UpdateBidDetails.updateBidStatus(obj.getBidId(), "RespondedBySP");
+                UpdateBidDetails.updateSPQuoteFinal(obj.getBidId(), spQuote.getText().toString());
+                UpdateBidDetails.updateAssignedTruckId(obj.getBidId(), updateAssignedTruckId);
+                UpdateBidDetails.updateAssignedDriverId(obj.getBidId(), updateAssignedDriverId);
 
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
@@ -2219,111 +2217,11 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     }
 
     //----------------------------------------------------------------------------------------------------------------
-    private void updateBidStatusRespondedBySP(String bidId) {
 
-        UpdateBidStatusRespondedBySP updateBidStatusRespondedBySP = new UpdateBidStatusRespondedBySP("RespondedBySP");
-
-        Call<UpdateBidStatusRespondedBySP> call = ApiClient.getBidLoadService().updateBidStatusRespondedBySP("" + bidId, updateBidStatusRespondedBySP);
-
-        call.enqueue(new Callback<UpdateBidStatusRespondedBySP>() {
-            @Override
-            public void onResponse(Call<UpdateBidStatusRespondedBySP> call, retrofit2.Response<UpdateBidStatusRespondedBySP> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<UpdateBidStatusRespondedBySP> call, Throwable t) {
-
-            }
-        });
-    }
     //--------------------------------------------------------------------------------------------------
 
     //----------------------------------------------------------------------------------------------------------------
-    private void updateAssignedTruckId(String bidId, String assignedTruckId) {
 
-        UpdateAssignedTruckIdToBid updateAssignedTruckIdToBid = new UpdateAssignedTruckIdToBid(assignedTruckId);
-
-        Call<UpdateAssignedTruckIdToBid> call = ApiClient.getBidLoadService().updateAssignedTruckId("" + bidId, updateAssignedTruckIdToBid);
-
-        call.enqueue(new Callback<UpdateAssignedTruckIdToBid>() {
-            @Override
-            public void onResponse(Call<UpdateAssignedTruckIdToBid> call, retrofit2.Response<UpdateAssignedTruckIdToBid> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<UpdateAssignedTruckIdToBid> call, Throwable t) {
-
-            }
-        });
-    }
-    //--------------------------------------------------------------------------------------------------
-
-    //----------------------------------------------------------------------------------------------------------------
-    private void updateAssignedDriverId(String bidId, String assignedDriverId) {
-
-        UpdateAssignedDriverId updateAssignedDriverId = new UpdateAssignedDriverId(assignedDriverId);
-
-        Call<UpdateAssignedDriverId> call = ApiClient.getBidLoadService().updateAssignedDriverId("" + bidId, updateAssignedDriverId);
-
-        call.enqueue(new Callback<UpdateAssignedDriverId>() {
-            @Override
-            public void onResponse(Call<UpdateAssignedDriverId> call, retrofit2.Response<UpdateAssignedDriverId> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<UpdateAssignedDriverId> call, Throwable t) {
-
-            }
-        });
-    }
-    //--------------------------------------------------------------------------------------------------
-
-
-    //----------------------------------------------------------------------------------------------------------------
-    private void updateSPQuoteFinal(String bidId, String spQuote) {
-
-        UpdateSPQuoteFinal updateSPQuoteFinal = new UpdateSPQuoteFinal(spQuote);
-
-        Call<UpdateSPQuoteFinal> call = ApiClient.getBidLoadService().updateSPQuoteFinal("" + bidId, updateSPQuoteFinal);
-
-        call.enqueue(new Callback<UpdateSPQuoteFinal>() {
-            @Override
-            public void onResponse(Call<UpdateSPQuoteFinal> call, retrofit2.Response<UpdateSPQuoteFinal> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<UpdateSPQuoteFinal> call, Throwable t) {
-
-            }
-        });
-
-    }
-    //--------------------------------------------------------------------------------------------------
-
-    //----------------------------------------------------------------------------------------------------------------
-    private void updateSPNoteForCustomer(String bidId, String spNote) {
-
-        UpdateSpNoteForCustomer updateSpNoteForCustomer = new UpdateSpNoteForCustomer(spNote);
-
-        Call<UpdateSpNoteForCustomer> call = ApiClient.getBidLoadService().updateSPNoteForCustomer("" + bidId, updateSpNoteForCustomer);
-
-        call.enqueue(new Callback<UpdateSpNoteForCustomer>() {
-            @Override
-            public void onResponse(Call<UpdateSpNoteForCustomer> call, retrofit2.Response<UpdateSpNoteForCustomer> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<UpdateSpNoteForCustomer> call, Throwable t) {
-
-            }
-        });
-
-    }
     //--------------------------------------------------------------------------------------------------
 
 
