@@ -96,7 +96,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     private RecyclerView bidsAcceptedRecyclerView;
 
     private BidsResponsesAdapter bidsResponsesAdapter;
-    boolean isBackPressed = false;
+    boolean isBackPressed = false, bidsReceivedSelected = true, isbidsReceivedSelected;
 
     private int CAMERA_PIC_REQUEST2 = 4;
     private int GET_FROM_GALLERY2 = 5;
@@ -124,8 +124,8 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     String userId, phone;
     String spQuoteByApi, bid_idByAPI, noteByApi;
 
-    ArrayList<String> arrayAssignedDriverId, arrayUserId, arrayBidStatus, arrayNotesFromSP;
-    String noteBySPToCustomer, assignedDriverId, assignedDriverIdAPI, assignedUserId, assignedUserIdAPI, bidStatusAPI;
+    ArrayList<String> arrayAssignedDriverId, arrayBidId, arrayUserId, arrayBidStatus, arrayNotesFromSP;
+    String fianlBidId, noteBySPToCustomer, assignedDriverId, assignedDriverIdAPI, assignedUserId, assignedUserIdAPI, bidStatusAPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,9 +135,30 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             phone = bundle.getString("mobile");
+        }
+        isbidsReceivedSelected = bundle.getBoolean("bidsReveived");
+        mQueue = Volley.newRequestQueue(CustomerDashboardActivity.this);
+
+        loadAcceptedConstrain = (ConstraintLayout) findViewById(R.id.customer_dashboard_loads_accepted_constrain);
+        bidsReceivedConstrain = (ConstraintLayout) findViewById(R.id.customer_dashboard_bids_received_constrain);
+        loadAcceptedTextView = (TextView) findViewById(R.id.customer_dashboard_loads_accepted_button);
+        bidsReceivedTextView = (TextView) findViewById(R.id.customer_dashboard_bids_received_button);
+
+        if (isbidsReceivedSelected){
+            bidsReceivedSelected = true;
+            loadAcceptedConstrain.setVisibility(View.INVISIBLE);
+            bidsReceivedConstrain.setVisibility(View.VISIBLE);
+            bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
+            loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+
+        } else {
+            bidsReceivedSelected = false;
+            loadAcceptedConstrain.setVisibility(View.VISIBLE);
+            bidsReceivedConstrain.setVisibility(View.INVISIBLE);
+            loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
+            bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
 
         }
-        mQueue = Volley.newRequestQueue(CustomerDashboardActivity.this);
 
         getUserId(phone);
 
@@ -184,14 +205,10 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
         customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
 
-        loadAcceptedConstrain = (ConstraintLayout) findViewById(R.id.customer_dashboard_loads_accepted_constrain);
-        bidsReceivedConstrain = (ConstraintLayout) findViewById(R.id.customer_dashboard_bids_received_constrain);
-        loadAcceptedTextView = (TextView) findViewById(R.id.customer_dashboard_loads_accepted_button);
-        bidsReceivedTextView = (TextView) findViewById(R.id.customer_dashboard_bids_received_button);
-
         acceptedList = new ArrayList<>();
         arrayAssignedDriverId = new ArrayList<>();
         arrayUserId = new ArrayList<>();
+        arrayBidId = new ArrayList<>();
         arrayBidStatus = new ArrayList<>();
         arrayNotesFromSP = new ArrayList<>();
 
@@ -317,6 +334,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("mobile", phone);
+        intent.putExtra("bidsReveived", bidsReceivedSelected);
         startActivity(intent);
         finish();
         overridePendingTransition(0,0);
@@ -396,35 +414,20 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     public void onClickBidsAndLoads(View view) {
         switch (view.getId()) {
             case R.id.customer_dashboard_bids_received_button:
+                bidsReceivedSelected = true;
                 loadAcceptedConstrain.setVisibility(View.INVISIBLE);
                 bidsReceivedConstrain.setVisibility(View.VISIBLE);
-//                if (acceptedList.size() > 0) {
                 bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
-//                } else {
-//                    bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
-//                }
-
-//                if (bidsList.size() > 0) {
-//                    loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
-//                } else {
                 loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
-//                }
+
                 break;
 
             case R.id.customer_dashboard_loads_accepted_button:
+                bidsReceivedSelected = false;
                 loadAcceptedConstrain.setVisibility(View.VISIBLE);
                 bidsReceivedConstrain.setVisibility(View.INVISIBLE);
-//                if (acceptedList.size() > 0) {
-//                    bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
-//                } else {
                 bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
-//                }
-
-//                if (bidsList.size() > 0) {
                 loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
-//                } else {
-//                    loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
-//                }
                 break;
         }
     }
@@ -610,6 +613,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                 Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
                 intent.putExtra("userId", userId);
                 intent.putExtra("mobile", phone);
+                intent.putExtra("bidsReveived", bidsReceivedSelected);
                 startActivity(intent);
                 finish();
                 previewDialogAcceptANdBid.dismiss();
@@ -658,6 +662,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
                         intent.putExtra("userId", userId);
                         intent.putExtra("mobile", phone);
+                        intent.putExtra("bidsReveived", bidsReceivedSelected);
                         startActivity(intent);
                         finish();
                     }
@@ -836,7 +841,9 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         bidsResponsesModel.setBid_status(obj.getString("bid_status"));
                         bidsResponsesModel.setIs_bid_accpted_by_sp(obj.getString("is_bid_accpted_by_sp"));
 
-                        bidResponsesList.add(bidsResponsesModel);
+                        if (!obj.getString("bid_status").equals("withdrawnByLp")) {
+                            bidResponsesList.add(bidsResponsesModel);
+                        }
                     }
 
                     for (int i = 0; i < bidResponsesList.size(); i++) {
@@ -851,8 +858,8 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                                 bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
                                 bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
                                 bidsResponsesAdapter.updateData(bidResponsesList);
-
-                            } else if (bidResponsesList.get(i).getBid_status().equals("Accepted")) {
+                            }
+                            if (bidResponsesList.get(i).getBid_status().equals("Accepted")) {
                                 int itemPos = bidResponsesList.indexOf(bidResponsesList.get(i));
                                 bidResponsesList.add(0, bidResponsesList.get(i));
                                 bidResponsesList.remove(itemPos + 1);
@@ -860,12 +867,11 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                                 bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
                                 bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
                                 bidsResponsesAdapter.updateData(bidResponsesList);
-                            } else if (bidResponsesList.get(i).getBid_status().equals("RespondedBySP")) {
+                            }
+                            if (bidResponsesList.get(i).getBid_status().equals("RespondedBySP")) {
                                 bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
                                 bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
                                 bidsResponsesAdapter.updateData(bidResponsesList);
-                            } else if (bidResponsesList.get(i).getBid_status().equals("FinalAccepted")) {
-
                             }
 
                         }
@@ -1014,6 +1020,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
                         intent.putExtra("userId", userId);
                         intent.putExtra("mobile", phone);
+                        intent.putExtra("bidsReveived", bidsReceivedSelected);
                         startActivity(intent);
                         finish();
                         acceptFinalBid.dismiss();
@@ -1032,6 +1039,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                 Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
                 intent.putExtra("userId", userId);
                 intent.putExtra("mobile", phone);
+                intent.putExtra("bidsReveived", bidsReceivedSelected);
                 startActivity(intent);
                 finish();
                 acceptFinalBid.dismiss();
@@ -1088,6 +1096,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         assignedUserIdAPI = obj.getString("user_id");
                         bidStatusAPI = obj.getString("bid_status");
 
+                        arrayBidId.add(bid_idByAPI);
                         arrayUserId.add(assignedUserIdAPI);
                         arrayAssignedDriverId.add(assignedDriverIdAPI);
                         arrayBidStatus.add(bidStatusAPI);
@@ -1096,6 +1105,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
                     for (int j = 0; j < arrayBidStatus.size(); j++) {
                         if (arrayBidStatus.get(j).equals("FinalAccepted")) {
+                            fianlBidId = arrayBidId.get(j);
                             assignedUserId = arrayUserId.get(j);
                             assignedDriverId = arrayAssignedDriverId.get(j);
                             noteBySPToCustomer = arrayNotesFromSP.get(j);
@@ -1220,6 +1230,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                     customerQuote.setText(spQuoteByApi);
 
                     submitResponseBtn.setText("Withdraw");
+                    submitResponseBtn.setBackgroundResource((R.drawable.button_active));
                     submitResponseBtn.setBackgroundTintList(getResources().getColorStateList(R.color.grey));
                     submitResponseBtn.setEnabled(true);
 
@@ -1239,7 +1250,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
                             alert.show();
                             alert.getWindow().setAttributes(lp);
-                            alert.setCancelable(false);
+                            alert.setCancelable(true);
 
                             TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
                             TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
@@ -1292,6 +1303,13 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                                         public void onClick(View view) {
                                             alert.dismiss();
                                             viewConsignmentCustomer.dismiss();
+                                            Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
+                                            intent.putExtra("userId", userId);
+                                            intent.putExtra("mobile", phone);
+                                            intent.putExtra("bidsReveived", bidsReceivedSelected);
+                                            startActivity(intent);
+                                            finish();
+                                            overridePendingTransition(0,0);
                                         }
                                     });
                                     //------------------------------------------------------------------------------------------
@@ -1302,6 +1320,52 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                             alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
+                                    alert.dismiss();
+                                    viewConsignmentCustomer.dismiss();
+                                    UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadPosted");
+                                    UpdateBidDetails.updateBidStatus(fianlBidId, "withdrawnByLp");
+
+                                    //----------------------- Alert Dialog -------------------------------------------------
+                                    Dialog alert = new Dialog(CustomerDashboardActivity.this);
+                                    alert.setContentView(R.layout.dialog_alert);
+                                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                                    lp.copyFrom(alert.getWindow().getAttributes());
+                                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                                    lp.gravity = Gravity.CENTER;
+
+                                    alert.show();
+                                    alert.getWindow().setAttributes(lp);
+                                    alert.setCancelable(false);
+
+                                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                                    alertTitle.setText("Withdraw from current Service Provider");
+                                    alertMessage.setText("Load withdrawn from current Service Provider and visible for other Service Provider");
+                                    alertPositiveButton.setVisibility(View.GONE);
+                                    alertNegativeButton.setText("Ok");
+                                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            alert.dismiss();
+                                            viewConsignmentCustomer.dismiss();
+                                            Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
+                                            intent.putExtra("userId", userId);
+                                            intent.putExtra("mobile", phone);
+                                            intent.putExtra("bidsReveived", bidsReceivedSelected);
+                                            startActivity(intent);
+                                            finish();
+                                            overridePendingTransition(0,0);
+                                        }
+                                    });
+                                    //------------------------------------------------------------------------------------------
 
                                 }
                             });
@@ -1318,8 +1382,10 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                             Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
                             intent.putExtra("userId", userId);
                             intent.putExtra("mobile", phone);
+                            intent.putExtra("bidsReveived", bidsReceivedSelected);
                             startActivity(intent);
                             finish();
+                            overridePendingTransition(0,0);
                             viewConsignmentCustomer.dismiss();
                         }
                     });
@@ -1786,6 +1852,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                 Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
                 intent.putExtra("userId", userId);
                 intent.putExtra("mobile", phone);
+                intent.putExtra("bidsReveived", bidsReceivedSelected);
                 startActivity(intent);
                 finish();
             }
@@ -1890,5 +1957,104 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         intent.putExtra("userId", userId);
         intent.putExtra("mobile", phone);
         startActivity(intent);
+    }
+
+    public void continueWithOtherSp(BidsAcceptedModel obj) {
+
+        //----------------------- Alert Dialog -------------------------------------------------
+        Dialog alert = new Dialog(CustomerDashboardActivity.this);
+        alert.setContentView(R.layout.dialog_alert);
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(alert.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        alert.show();
+        alert.getWindow().setAttributes(lp);
+        alert.setCancelable(false);
+
+        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+        alertTitle.setText("Continue with other Service Provider");
+        alertMessage.setText("Current Bidder have withdrawn Bid, do you still want to continue with other Service Provider?");
+        alertPositiveButton.setVisibility(View.VISIBLE);
+        alertPositiveButton.setText("Continue");
+        alertNegativeButton.setText("Cancel");
+        alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+        alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+                viewConsignmentCustomer.dismiss();
+                Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
+                intent.putExtra("userId", userId);
+                intent.putExtra("mobile", phone);
+                intent.putExtra("bidsReveived", bidsReceivedSelected);
+                startActivity(intent);
+                finish();
+                overridePendingTransition(0,0);
+            }
+        });
+        //------------------------------------------------------------------------------------------
+
+        alertPositiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+                viewConsignmentCustomer.dismiss();
+                UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadPosted");
+
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(CustomerDashboardActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(false);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Continue with other Service Provider");
+                alertMessage.setText("Load withdrawn from current Service Provider and visible for other Service Provider");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("Ok");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                        viewConsignmentCustomer.dismiss();
+                        Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
+                        intent.putExtra("userId", userId);
+                        intent.putExtra("mobile", phone);
+                        intent.putExtra("bidsReveived", bidsReceivedSelected);
+                        startActivity(intent);
+                        finish();
+                        overridePendingTransition(0,0);
+                    }
+                });
+                //------------------------------------------------------------------------------------------
+
+
+            }
+        });
     }
 }

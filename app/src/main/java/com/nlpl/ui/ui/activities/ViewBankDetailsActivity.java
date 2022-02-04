@@ -81,12 +81,14 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
                 if (roleAPI.equals("Customer")) {
                     Intent intent = new Intent(ViewBankDetailsActivity.this, CustomerDashboardActivity.class);
                     intent.putExtra("mobile", phone);
+                    intent.putExtra("bidsReveived", true);
                     startActivity(intent);
                     finish();
                     overridePendingTransition(0, 0);
                 } else {
                     Intent intent = new Intent(ViewBankDetailsActivity.this, ServiceProviderDashboardActivity.class);
                     intent.putExtra("mobile2", phone);
+                    intent.putExtra("loadNotification", true);
                     startActivity(intent);
                     finish();
                     overridePendingTransition(0, 0);
@@ -229,6 +231,7 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
                 case R.id.bottom_nav_sp_dashboard:
                     Intent intent = new Intent(ViewBankDetailsActivity.this, CustomerDashboardActivity.class);
                     intent.putExtra("mobile", phone);
+                    intent.putExtra("bidsReveived", true);
                     startActivity(intent);
                     finish();
                     overridePendingTransition(0, 0);
@@ -243,6 +246,7 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
                 case R.id.bottom_nav_sp_dashboard:
                     Intent intent = new Intent(ViewBankDetailsActivity.this, ServiceProviderDashboardActivity.class);
                     intent.putExtra("mobile2", phone);
+                    intent.putExtra("loadNotification", true);
                     startActivity(intent);
                     finish();
                     overridePendingTransition(0, 0);
@@ -301,6 +305,7 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
         if (roleAPI.equals("Customer")) {
             Intent i8 = new Intent(ViewBankDetailsActivity.this, CustomerDashboardActivity.class);
             i8.putExtra("mobile", phone);
+            i8.putExtra("bidsReveived", true);
             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i8);
             finish();
@@ -309,6 +314,7 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
         } else {
             Intent i8 = new Intent(ViewBankDetailsActivity.this, ServiceProviderDashboardActivity.class);
             i8.putExtra("mobile2", phone);
+            i8.putExtra("loadNotification", true);
             i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i8);
             finish();

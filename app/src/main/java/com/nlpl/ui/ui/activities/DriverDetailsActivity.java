@@ -1724,6 +1724,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         Intent i8 = new Intent(DriverDetailsActivity.this, ServiceProviderDashboardActivity.class);
         i8.putExtra("mobile2", mobile);
+        i8.putExtra("loadNotification", true);
         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i8);
         finish();

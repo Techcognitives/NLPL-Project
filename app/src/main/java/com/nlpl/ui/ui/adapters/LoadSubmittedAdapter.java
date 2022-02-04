@@ -283,6 +283,18 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
                             });
                         }
 
+                        if (bid_status.equals("withdrawnByLp")){
+                            holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
+                            holder.bidNowButton.setText("Customer Withdrawn");
+                            holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.dark_grey));
+                        }
+
+                        if (bid_status.equals("withdrawnBySp")){
+                            holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
+                            holder.bidNowButton.setText("You\n Withdrawn");
+                            holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.dark_grey));
+                        }
+
                     }
 
                 } catch (JSONException e) {

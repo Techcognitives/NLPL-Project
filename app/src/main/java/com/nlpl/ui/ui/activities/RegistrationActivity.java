@@ -524,6 +524,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     if (role.equals("Customer")) {
                         Intent i8 = new Intent(RegistrationActivity.this, CustomerDashboardActivity.class);
                         i8.putExtra("mobile", mobile);
+                        i8.putExtra("bidsReveived", true);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);
                         finish();
@@ -531,6 +532,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     } else {
                         Intent i8 = new Intent(RegistrationActivity.this, ServiceProviderDashboardActivity.class);
                         i8.putExtra("mobile2", mobile);
+                        i8.putExtra("loadNotification", true);
                         i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i8);
                         finish();
