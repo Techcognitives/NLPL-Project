@@ -262,59 +262,58 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
                     }
 
                     for (int j = 0; j < arrayBidStatus.size(); j++) {
-                        if (arrayBidStatus.get(j).equals("withdrawnBySp") || arrayBidStatus.get(j).equals("FinalAccepted") ) {
+                        if (arrayBidStatus.get(j).equals("withdrawnBySp") || arrayBidStatus.get(j).equals("FinalAccepted")) {
                             fianlBidId = arrayBidId.get(j);
-                        }
 
-                        //----------------------------------------------------------
-                        String url = activity.getString(R.string.baseURL) + "/spbid/bidDtByBidId/" + fianlBidId;
-                        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                try {
-                                    JSONArray truckLists = response.getJSONArray("data");
-                                    for (int i = 0; i < truckLists.length(); i++) {
-                                        JSONObject obj1 = truckLists.getJSONObject(i);
-                                        String bid_status = obj1.getString("bid_status");
+                            //----------------------------------------------------------
+                            String url = activity.getString(R.string.baseURL) + "/spbid/bidDtByBidId/" + fianlBidId;
+                            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    try {
+                                        JSONArray truckLists = response.getJSONArray("data");
+                                        for (int i = 0; i < truckLists.length(); i++) {
+                                            JSONObject obj1 = truckLists.getJSONObject(i);
+                                            String bid_status = obj1.getString("bid_status");
 
-                                        if (bid_status.equals("withdrawnBySp")) {
-                                            holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
-                                            holder.bidNowButton.setText("SP\n Withdrawn");
-                                            holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.dark_grey));
-                                            holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View view) {
-                                                    activity.continueWithOtherSp(obj);
-                                                }
-                                            });
-                                        } else {
-                                            holder.bidNowButton.setText("View Consignment");
-                                            holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.green));
-                                            holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View view) {
-                                                    activity.onClickViewConsignment(obj);
-                                                }
-                                            });
+                                            if (bid_status.equals("withdrawnBySp")) {
+                                                holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
+                                                holder.bidNowButton.setText("SP\n Withdrawn");
+                                                holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.dark_grey));
+                                                holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        activity.continueWithOtherSp(obj);
+                                                    }
+                                                });
+                                            } else {
+                                                holder.bidNowButton.setText("View Consignment");
+                                                holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.green));
+                                                holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        activity.onClickViewConsignment(obj);
+                                                    }
+                                                });
+                                            }
+
                                         }
 
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
                                     }
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
                                 }
-                            }
-                        }, new com.android.volley.Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                error.printStackTrace();
-                            }
-                        });
+                            }, new com.android.volley.Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    error.printStackTrace();
+                                }
+                            });
 
-                        mQueue.add(request);
-                        //----------------------------------------------------------
+                            mQueue.add(request);
+                            //----------------------------------------------------------
 
-
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
