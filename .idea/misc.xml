@@ -16,7 +16,6 @@
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/activity_bank_details.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/activity_company_details.xml" value="0.1716485507246377" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/activity_customer_dashboard.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/activity_customer_loads_history.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/activity_dashboard.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/activity_driver_details.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/activity_loads_history.xml" value="0.20416666666666666" />
@@ -52,7 +51,6 @@
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/dialog_spinner.xml" value="0.1716485507246377" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/dialog_spinner_bind.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/load_list.xml" value="0.33" />
-        <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/loads_completed_list.xml" value="0.25" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/my_driver_list.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/my_truck_list.xml" value="0.1716485507246377" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/pan_and_aadhar.xml" value="0.20416666666666666" />
@@ -127,6 +125,7 @@
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/activity_view_truck_details.xml" value="0.3484375" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/bank_list.xml" value="0.3625" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/bids_received_list.xml" value="0.291213768115942" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/bids_responses_list.xml" value="0.2753623188405797" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/bottom_nav_bar.xml" value="0.36186594202898553" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/custom_list_row.xml" value="0.3625" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/dialog_acept_bid_customer.xml" value="0.35833333333333334" />
@@ -144,6 +143,7 @@
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/dialog_preview_truck_details.xml" value="0.3625" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/dialog_sliders.xml" value="0.3625" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/dialog_spinner.xml" value="0.3625" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/find_load_list.xml" value="0.3625" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/load_list.xml" value="0.3625" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/my_driver_list.xml" value="0.3625" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/my_truck_list.xml" value="0.3625" />
