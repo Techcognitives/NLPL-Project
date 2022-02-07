@@ -228,6 +228,7 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
         holder.pickUpLocation.setText(" " + pickUpLocation);
 
         holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.orange));
+
         holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -239,13 +240,6 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
             @Override
             public void onClick(View view) {
                 activity.openMaps(obj);
-            }
-        });
-
-        holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activity.onClickBidNow(obj);
             }
         });
 
