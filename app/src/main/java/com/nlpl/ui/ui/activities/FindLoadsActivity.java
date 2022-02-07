@@ -36,12 +36,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
+import com.nlpl.model.ModelForRecyclerView.BidSubmittedModel;
 import com.nlpl.model.ModelForRecyclerView.FindLoadsModel;
-import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
+
 import com.nlpl.model.ModelForRecyclerView.SearchLoadModel;
 import com.nlpl.model.Requests.BidLoadRequest;
 import com.nlpl.model.Responses.BidLadResponse;
 import com.nlpl.ui.ui.adapters.FindLoadAdapter;
+
 import com.nlpl.ui.ui.adapters.SearchLoadAdapter;
 import com.nlpl.ui.ui.adapters.StateLoadAdapter;
 import com.nlpl.utils.ApiClient;
@@ -73,6 +75,9 @@ public class FindLoadsActivity extends AppCompatActivity {
     ArrayList<String> searchList;
     private SearchLoadAdapter searchLoadAdapter;
     private RecyclerView searchListRecyclerView;
+
+    private ArrayList<BidSubmittedModel> loadSubmittedList = new ArrayList<>();
+    private ArrayList<BidSubmittedModel> updatedLoadSubmittedList = new ArrayList<>();
 
     View actionBar;
     TextView actionBarTitle;
@@ -153,7 +158,7 @@ public class FindLoadsActivity extends AppCompatActivity {
         actionBarBackButton = (ImageView) actionBar.findViewById(R.id.action_bar_back_button);
         actionBarMenuButton = (ImageView) actionBar.findViewById(R.id.action_bar_menu);
 
-        actionBarTitle.setText("Load Notifications");
+        actionBarTitle.setText("Find Loads");
         actionBarMenuButton.setVisibility(View.GONE);
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -291,138 +296,14 @@ public class FindLoadsActivity extends AppCompatActivity {
                         findLoadsModel.setKm_approx(obj.getString("km_approx"));
                         findLoadsModel.setNotes_meterial_des(obj.getString("notes_meterial_des"));
                         findLoadsModel.setBid_ends_at(obj.getString("bid_ends_at"));
-
-//                        if (obj.getString("bid_status").equals("loadPosted") || obj.getString("bid_status").equals("loadReactivated")) {
+                        if (obj.getString("bid_status").equals("loadPosted") || obj.getString("bid_status").equals("loadReactivated")) {
                         bidsList.add(findLoadsModel);
-//                        }
-                    }
-
-                    for (int i = 0; i < bidsList.size(); i++) {
-                        if (bidsList.size() == 0) {
-                            bidsListRecyclerView.setVisibility(View.GONE);
-                        } else if (bidsList.size() == 1) {
-                            ArrayList<FindLoadsModel> newList = new ArrayList<>(bidsList.subList(bidsList.size() - 1, bidsList.size()));
-                            bidsListAdapter.updateData(newList);
-                        } else if (bidsList.size() == 2) {
-                            ArrayList<FindLoadsModel> newList = new ArrayList<>(bidsList.subList(bidsList.size() - 2, bidsList.size()));
-                            bidsListAdapter.updateData(newList);
-                        } else if (bidsList.size() >= 3) {
-                            ArrayList<FindLoadsModel> newList = new ArrayList<>(bidsList.subList(bidsList.size() - 3, bidsList.size()));
-                            bidsListAdapter.updateData(newList);
-                        }
-
-                        if (bidsList.get(i).getPick_state().equals("AN")) {
-                            anList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("AP")) {
-                            apList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("AR")) {
-                            arList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("AS")) {
-                            asList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("BR")) {
-                            brList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("CH/PB")) {
-                            chList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("CG")) {
-                            cgList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("DD")) {
-                            ddList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("DD2")) {
-                            dd2List.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("DL")) {
-                            dlList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("GA")) {
-                            gaList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("GJ")) {
-                            gjList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("HR")) {
-                            hrList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("HP")) {
-                            hpList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("JK")) {
-                            jkList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("JH")) {
-                            jhList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("KA")) {
-                            kaList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("KL")) {
-                            klList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("LA")) {
-                            laList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("LD")) {
-                            ldList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("MP")) {
-                            mpList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("MH")) {
-                            mhList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("MN")) {
-                            mnList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("ML")) {
-                            mlList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("MZ")) {
-                            mzList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("NL")) {
-                            nlList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("OD")) {
-                            odList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("PY")) {
-                            pyList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("PB")) {
-                            pbList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("RJ")) {
-                            rjList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("SK")) {
-                            skList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("TN")) {
-                            tnList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("TS")) {
-                            tsList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("TR")) {
-                            trList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("UK")) {
-                            ukList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("UP")) {
-                            upList.add(bidsList.get(i));
-                        }
-                        if (bidsList.get(i).getPick_state().equals("WB")) {
-                            wbList.add(bidsList.get(i));
                         }
                     }
+
+                    getBidListByUserId(bidsList);
+
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1526,4 +1407,249 @@ public class FindLoadsActivity extends AppCompatActivity {
             }
         });
     }
+
+    //--------------------------- Compare ----------------------------------------------------------
+    private void getBidListByUserId(ArrayList<FindLoadsModel> loadListToCompare) {
+
+        String url = getString(R.string.baseURL) + "/spbid/getBidDtByUserId/" + userId;
+        Log.i("url betBidByUserID", url);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+                        String postId = obj.getString("idpost_load");
+                        String bidId = obj.getString("sp_bid_id");
+                        getBidSubmittedList(postId, bidId, loadListToCompare);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+    }
+
+    public void getBidSubmittedList(String loadIdReceived, String bidId, ArrayList<FindLoadsModel> loadListToCompare) {
+        //---------------------------- Get Bank Details ------------------------------------------
+        String url1 = getString(R.string.baseURL) + "/loadpost/getLoadDtByPostId/" + loadIdReceived;
+        Log.i("URL: ", url1);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    loadSubmittedList = new ArrayList<>();
+                    loadSubmittedList.clear();
+
+                    JSONArray loadLists = response.getJSONArray("data");
+                    for (int i = 0; i < loadLists.length(); i++) {
+                        JSONObject obj = loadLists.getJSONObject(i);
+                        BidSubmittedModel bidSubmittedModel = new BidSubmittedModel();
+                        bidSubmittedModel.setIdpost_load(obj.getString("idpost_load"));
+                        bidSubmittedModel.setUser_id(obj.getString("user_id"));
+                        bidSubmittedModel.setPick_up_date(obj.getString("pick_up_date"));
+                        bidSubmittedModel.setPick_up_time(obj.getString("pick_up_time"));
+                        bidSubmittedModel.setBudget(obj.getString("budget"));
+                        bidSubmittedModel.setBid_status(obj.getString("bid_status"));
+                        bidSubmittedModel.setVehicle_model(obj.getString("vehicle_model"));
+                        bidSubmittedModel.setFeet(obj.getString("feet"));
+                        bidSubmittedModel.setCapacity(obj.getString("capacity"));
+                        bidSubmittedModel.setBody_type(obj.getString("body_type"));
+                        bidSubmittedModel.setPick_add(obj.getString("pick_add"));
+                        bidSubmittedModel.setPick_pin_code(obj.getString("pick_pin_code"));
+                        bidSubmittedModel.setPick_city(obj.getString("pick_city"));
+                        bidSubmittedModel.setPick_state(obj.getString("pick_state"));
+                        bidSubmittedModel.setPick_country(obj.getString("pick_country"));
+                        bidSubmittedModel.setDrop_add(obj.getString("drop_add"));
+                        bidSubmittedModel.setDrop_pin_code(obj.getString("drop_pin_code"));
+                        bidSubmittedModel.setDrop_city(obj.getString("drop_city"));
+                        bidSubmittedModel.setDrop_state(obj.getString("drop_state"));
+                        bidSubmittedModel.setDrop_country(obj.getString("drop_country"));
+                        bidSubmittedModel.setKm_approx(obj.getString("km_approx"));
+                        bidSubmittedModel.setNotes_meterial_des(obj.getString("notes_meterial_des"));
+                        bidSubmittedModel.setBid_ends_at(obj.getString("bid_ends_at"));
+                        bidSubmittedModel.setBidId(bidId);
+
+                        if (!obj.getString("bid_status").equals("delete") && !obj.getString("bid_status").equals("loadExpired")) {
+                            loadSubmittedList.add(bidSubmittedModel);
+                        }
+                    }
+
+                    if (loadSubmittedList.size() > 0) {
+                        updatedLoadSubmittedList.addAll(loadSubmittedList);
+                        compareAndRemove(loadListToCompare);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+    }
+
+    private void compareAndRemove(ArrayList<FindLoadsModel> loadListToCompare) {
+
+        Log.i("Load list", String.valueOf(loadListToCompare.size()));
+
+        for (int i = 0; i < loadListToCompare.size(); i++) {
+            for (int j = 0; j < updatedLoadSubmittedList.size(); j++) {
+                if (loadListToCompare.get(i).getIdpost_load().equals(updatedLoadSubmittedList.get(j).getIdpost_load())) {
+                    loadListToCompare.remove(i);
+                }
+            }
+        }
+
+//        Collections.reverse(loadListToCompare);
+
+
+
+        if (loadListToCompare.size() > 0) {
+            bidsListAdapter = new FindLoadAdapter(FindLoadsActivity.this, loadListToCompare);
+            bidsListRecyclerView.setAdapter(bidsListAdapter);
+
+            for (int i = 0; i < loadListToCompare.size(); i++) {
+                if (loadListToCompare.size() == 0) {
+                    bidsListRecyclerView.setVisibility(View.GONE);
+                } else if (loadListToCompare.size() == 1) {
+                    ArrayList<FindLoadsModel> newList = new ArrayList<>(loadListToCompare.subList(loadListToCompare.size() - 1, loadListToCompare.size()));
+                    bidsListAdapter.updateData(newList);
+                } else if (loadListToCompare.size() == 2) {
+                    ArrayList<FindLoadsModel> newList = new ArrayList<>(loadListToCompare.subList(loadListToCompare.size() - 2, loadListToCompare.size()));
+                    bidsListAdapter.updateData(newList);
+                } else if (loadListToCompare.size() >= 3) {
+                    ArrayList<FindLoadsModel> newList = new ArrayList<>(loadListToCompare.subList(loadListToCompare.size() - 3, loadListToCompare.size()));
+                    bidsListAdapter.updateData(newList);
+                }
+
+                if (loadListToCompare.get(i).getPick_state().equals("AN")) {
+                    anList.add(loadListToCompare.get(i));
+                }
+                if (loadListToCompare.get(i).getPick_state().equals("AP")) {
+                    apList.add(loadListToCompare.get(i));
+                }
+                if (loadListToCompare.get(i).getPick_state().equals("AR")) {
+                    arList.add(loadListToCompare.get(i));
+                }
+                if (loadListToCompare.get(i).getPick_state().equals("AS")) {
+                    asList.add(loadListToCompare.get(i));
+                }
+                if (loadListToCompare.get(i).getPick_state().equals("BR")) {
+                    brList.add(loadListToCompare.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("CH/PB")) {
+                    chList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("CG")) {
+                    cgList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("DD")) {
+                    ddList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("DD2")) {
+                    dd2List.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("DL")) {
+                    dlList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("GA")) {
+                    gaList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("GJ")) {
+                    gjList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("HR")) {
+                    hrList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("HP")) {
+                    hpList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("JK")) {
+                    jkList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("JH")) {
+                    jhList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("KA")) {
+                    kaList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("KL")) {
+                    klList.add(bidsList.get(i));
+                }
+                if (loadListToCompare.get(i).getPick_state().equals("LA")) {
+                    laList.add(loadListToCompare.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("LD")) {
+                    ldList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("MP")) {
+                    mpList.add(bidsList.get(i));
+                }
+
+                if (bidsList.get(i).getPick_state().equals("MH")) {
+                    mhList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("MN")) {
+                    mnList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("ML")) {
+                    mlList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("MZ")) {
+                    mzList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("NL")) {
+                    nlList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("OD")) {
+                    odList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("PY")) {
+                    pyList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("PB")) {
+                    pbList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("RJ")) {
+                    rjList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("SK")) {
+                    skList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("TN")) {
+                    tnList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("TS")) {
+                    tsList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("TR")) {
+                    trList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("UK")) {
+                    ukList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("UP")) {
+                    upList.add(bidsList.get(i));
+                }
+                if (bidsList.get(i).getPick_state().equals("WB")) {
+                    wbList.add(bidsList.get(i));
+                }
+            }
+        }
+    }
+    //----------------------------------------------------------------------------------------------
 }
