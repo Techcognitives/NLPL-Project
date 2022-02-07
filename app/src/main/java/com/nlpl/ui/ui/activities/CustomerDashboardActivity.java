@@ -1501,7 +1501,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         JSONObject obj = imageList.getJSONObject(i);
                         String imageType = obj.getString("image_type");
 
-                        String profileImgUrl;
+                        String profileImgUrl = "";
                         if (imageType.equals("profile")) {
                             profileImgUrl = obj.getString("image_url");
                             if (profileImgUrl.equals("null")) {
@@ -1544,7 +1544,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         JSONObject obj = imageList.getJSONObject(i);
                         String imageType = obj.getString("image_type");
 
-                        String profileImgUrl;
+                        String profileImgUrl = "";
                         if (imageType.equals("profile")) {
                             profileImgUrl = obj.getString("image_url");
                             new DownloadImageTask(profilePic).execute(profileImgUrl);
@@ -1576,7 +1576,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                             JSONObject obj = imageList.getJSONObject(i);
                             String imageType = obj.getString("image_type");
 
-                            String profileImgUrl;
+                            String profileImgUrl = "";
                             if (imageType.equals("profile")) {
                                 profileImgUrl = obj.getString("image_url");
                                 if (profileImgUrl.equals("null")) {

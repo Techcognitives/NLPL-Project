@@ -2077,7 +2077,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                             JSONObject obj = imageList.getJSONObject(i);
                             String imageType = obj.getString("image_type");
 
-                            String profileImgUrl;
+                            String profileImgUrl = "";
                             if (imageType.equals("profile")) {
                                 profileImgUrl = obj.getString("image_url");
                                 profileAdded = true;
@@ -2390,7 +2390,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                     for (int i = 0; i < imageList.length(); i++) {
                         JSONObject obj = imageList.getJSONObject(i);
                         String imageType = obj.getString("image_type");
-                        String profileImgUrl;
+                        String profileImgUrl = "";
 
                         if (imageType.equals("profile")) {
                             profileImgUrl = obj.getString("image_url");
