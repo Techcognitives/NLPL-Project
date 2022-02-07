@@ -68,6 +68,47 @@
             app:layout_constraintTop_toTopOf="@+id/customer_dashboard_load_completed_button" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/customer_dashboard_loads_completed_constrain"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/customer_dashboard_load_completed_button">
+
+            <TextView
+                android:id="@+id/customer_dashboard_no_load_completed_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="No Load Expired"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/customer_dashboard_loads_completed_recycler_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:foregroundGravity="top"
+                android:scrollbarThumbVertical="@android:color/holo_blue_dark"
+                android:scrollbars="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/customer_dashboard_loads_expired_constrain"
             android:layout_width="0dp"
             android:layout_height="0dp"
