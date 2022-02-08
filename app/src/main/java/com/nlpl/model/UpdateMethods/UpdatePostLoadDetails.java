@@ -2,6 +2,7 @@ package com.nlpl.model.UpdateMethods;
 
 import android.util.Log;
 
+import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateCount;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateCustomerBudget;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateCustomerNoteForSP;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadBodyType;
@@ -405,6 +406,24 @@ public class UpdatePostLoadDetails {
             @Override
             public void onFailure(Call<UpdateCustomerNoteForSP> call, Throwable t) {
                 Log.i("Not Successful", "Load Post Details Not Updated");
+
+            }
+        });
+    }
+
+    //-------------------------------- Update Notes ------------------------------------------------
+    public static void updateCount(String loadId, int count) {
+        UpdateCount updateCount = new UpdateCount(count);
+        Call<UpdateCount> call = ApiClient.getPostLoadService().updateCount("" + loadId, updateCount);
+
+        call.enqueue(new Callback<UpdateCount>() {
+            @Override
+            public void onResponse(Call<UpdateCount> call, Response<UpdateCount> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UpdateCount> call, Throwable t) {
 
             }
         });

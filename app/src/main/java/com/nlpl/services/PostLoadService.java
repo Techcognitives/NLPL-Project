@@ -2,6 +2,7 @@ package com.nlpl.services;
 
 import com.nlpl.model.Requests.PostLoadRequest;
 import com.nlpl.model.Responses.PostLoadResponse;
+import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateCount;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateCustomerNoteForSP;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateCustomerBudget;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadBodyType;
@@ -92,5 +93,8 @@ public interface PostLoadService {
 
     @PUT("/loadpost/updatePostByPID/{loadId}")
     Call<UpdateCustomerNoteForSP> updateCustomerNoteForSP(@Path("loadId") String bidId, @Body UpdateCustomerNoteForSP updateCustomerNoteForSP);
+
+    @PUT("/loadpost/updatePostByPID/{loadId}")
+    Call<UpdateCount> updateCount(@Path("loadId") String bidId, @Body UpdateCount updateCount);
 
 }
