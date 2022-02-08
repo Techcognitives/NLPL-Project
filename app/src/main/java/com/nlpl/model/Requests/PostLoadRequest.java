@@ -2,8 +2,9 @@ package com.nlpl.model.Requests;
 
 public class PostLoadRequest {
     String user_id, drop_city, notes_meterial_des, km_approx, drop_country, drop_state, drop_pin_code, pick_up_date,drop_add, pick_country, pick_state, pick_up_time,pick_city, budget, bid_status, vehicle_model, feet, capacity, body_type, pick_add, pick_pin_code;
-
+    int sp_count;
     public PostLoadRequest() {
+        this.sp_count = sp_count;
         this.user_id = user_id;
         this.pick_up_date = pick_up_date ;
         this.pick_up_time = pick_up_time ;
@@ -26,6 +27,14 @@ public class PostLoadRequest {
         this.km_approx = km_approx ;
         this.notes_meterial_des = notes_meterial_des ;
 
+    }
+
+    public int getSp_count() {
+        return sp_count;
+    }
+
+    public void setSp_count(int sp_count) {
+        this.sp_count = sp_count;
     }
 
     public String getUser_id() {

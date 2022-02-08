@@ -2,7 +2,7 @@ package com.nlpl.model.ModelForRecyclerView;
 
 public class BidsResponsesModel {
 
-    private String sp_bid_id, user_id, idpost_load, sp_quote, is_negatiable, assigned_truck_id, assigned_driver_id, vehicle_model, feet, capacity, body_type, notes, bid_status, is_bid_accpted_by_sp;
+    private String  sp_bid_id, user_id, idpost_load, sp_quote, is_negatiable, assigned_truck_id, assigned_driver_id, vehicle_model, feet, capacity, body_type, notes, bid_status, is_bid_accpted_by_sp;
 
     public String getSp_bid_id() {
         return sp_bid_id;

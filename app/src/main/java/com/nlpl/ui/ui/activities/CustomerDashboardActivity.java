@@ -108,6 +108,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     ImageView profilePic;
 
     String isPersonalDetailsDone, isBankDetailsDone, isProfileAdded;
+    int count = 0;
     String img_type;
 
     View actionBar;
@@ -492,7 +493,9 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         bidsReceivedModel.setBid_ends_at(obj.getString("bid_ends_at"));
 
                         if (!obj.getString("bid_status").equals("loadSubmitted") && !obj.getString("bid_status").equals("delete") && !obj.getString("bid_status").equals("loadExpired")) {
-                            bidsList.add(bidsReceivedModel);
+                            if (obj.getInt("sp_count")<=3) {
+                                bidsList.add(bidsReceivedModel);
+                            }
                         }
                     }
 
@@ -620,6 +623,8 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             }
         });
 
+        getLoadDetails(obj.getIdpost_load());
+
         submitResponseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -628,6 +633,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                 UpdateBidDetails.updateBidStatus(obj.getSp_bid_id(), "Accepted");
                 UpdateBidDetails.updateCustomerBudgetForSP(obj.getSp_bid_id(), customerQuote.getText().toString());
                 UpdatePostLoadDetails.updateBudget(obj.getIdpost_load(), customerQuote.getText().toString());
+                UpdatePostLoadDetails.updateCount(obj.getIdpost_load(), count+1);
 
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(CustomerDashboardActivity.this);
@@ -674,6 +680,45 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
     //----------------------------------------------------------------------------------------------------------------
 
+    private void getLoadDetails(String loadId){
+        String url1 = getString(R.string.baseURL) + "/loadpost/getLoadDtByPostId/" + loadId;
+        Log.i("URL: ", url1);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    bidsList = new ArrayList<>();
+                    JSONArray bidsLists = response.getJSONArray("data");
+                    for (int i = 0; i < bidsLists.length(); i++) {
+                        JSONObject obj = bidsLists.getJSONObject(i);
+                        count = obj.getInt("sp_count");
+                    }
+
+                    Collections.reverse(bidsList);
+                    TextView noLoadTextView = (TextView) findViewById(R.id.customer_dashboard_no_load_text);
+
+                    if (bidsList.size() > 0) {
+                        noLoadTextView.setVisibility(View.GONE);
+                        bidsListAdapter.updateData(bidsList);
+                    } else {
+                        noLoadTextView.setVisibility(View.VISIBLE);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+        //-------------------------------------------------------------------------------------------
+
+    }
 
     private void budgetSet(String previousBudget) {
 

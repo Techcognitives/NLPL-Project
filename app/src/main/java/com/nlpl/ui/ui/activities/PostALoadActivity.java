@@ -1201,6 +1201,7 @@ public class PostALoadActivity extends AppCompatActivity {
         postLoadRequest.setDrop_state(dropState);
         postLoadRequest.setDrop_country("India");
         postLoadRequest.setUser_id(userId);
+        postLoadRequest.setSp_count(0);
         postLoadRequest.setKm_approx(setApproxDistance.getText().toString());
         postLoadRequest.setNotes_meterial_des(note_to_post_load.getText().toString());
         if (reActivate) {
