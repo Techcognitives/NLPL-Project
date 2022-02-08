@@ -207,9 +207,9 @@ public class FindLoadsActivity extends AppCompatActivity {
             searchLoadModels.add(searchLoadModel);
         }
 
+//        searchLoadAdapter = new SearchLoadAdapter(FindLoadsActivity.this, searchLoadModels);
+//        searchListRecyclerView.setAdapter(searchLoadAdapter);
 
-        searchLoadAdapter = new SearchLoadAdapter(FindLoadsActivity.this, searchLoadModels);
-        searchListRecyclerView.setAdapter(searchLoadAdapter);
         getBidsReceived();
 
         searchLoad.addTextChangedListener(searchTextWatcher);
@@ -683,7 +683,6 @@ public class FindLoadsActivity extends AppCompatActivity {
     }
 
     public void onClickBidNow(FindLoadsModel obj) {
-
         previewDialogBidNow = new Dialog(FindLoadsActivity.this);
         previewDialogBidNow.setContentView(R.layout.dialog_bid_now);
         previewDialogBidNow.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
