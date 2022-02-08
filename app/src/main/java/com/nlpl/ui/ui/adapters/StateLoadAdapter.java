@@ -21,26 +21,26 @@ import com.nlpl.ui.ui.activities.FindLoadsActivity;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class FindLoadAdapter extends RecyclerView.Adapter<FindLoadAdapter.FindLoadsViewHolder> {
+public class StateLoadAdapter extends RecyclerView.Adapter<StateLoadAdapter.StateLoadsViewHolder> {
 
     private ArrayList<FindLoadsModel> loadList;
     private FindLoadsActivity activity;
     int timeLeftToExpire, timeInMillisec, minLeftToExpire, months;
     String bidEndsAt, currentTimeToCompare, bidEndsAtStringTime, finalBidEndsAt, finalDate;
 
-    public FindLoadAdapter(FindLoadsActivity activity, ArrayList<FindLoadsModel> loadList) {
+    public StateLoadAdapter(FindLoadsActivity activity, ArrayList<FindLoadsModel> loadList) {
         this.loadList = loadList;
         this.activity = activity;
     }
 
     @Override
-    public FindLoadsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public StateLoadsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.load_list, parent, false);
-        return new FindLoadsViewHolder(view);
+        return new StateLoadsViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(FindLoadsViewHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(StateLoadsViewHolder holder, @SuppressLint("RecyclerView") int position) {
         FindLoadsModel obj = loadList.get(position);
 
         if (obj.getBid_ends_at().equals("null")) {
@@ -240,10 +240,10 @@ public class FindLoadAdapter extends RecyclerView.Adapter<FindLoadAdapter.FindLo
         notifyDataSetChanged();
     }
 
-    public class FindLoadsViewHolder extends RecyclerView.ViewHolder {
+    public class StateLoadsViewHolder extends RecyclerView.ViewHolder {
         private TextView timeLeft, destinationStart, destinationEnd, budget, date, time, distance, model, feet, capacity, body, pickUpLocation, bidNowButton;
 
-        public FindLoadsViewHolder(@NonNull View itemView) {
+        public StateLoadsViewHolder(@NonNull View itemView) {
             super(itemView);
 
             timeLeft = itemView.findViewById(R.id.load_list_time_left);
@@ -259,7 +259,6 @@ public class FindLoadAdapter extends RecyclerView.Adapter<FindLoadAdapter.FindLo
             body = itemView.findViewById(R.id.load_list_body);
             pickUpLocation = itemView.findViewById(R.id.load_list_location);
             bidNowButton = itemView.findViewById(R.id.load_list_bid_now_button);
-
         }
 
     }

@@ -42,6 +42,13 @@ public class SearchLoadAdapter extends RecyclerView.Adapter<SearchLoadAdapter.Se
         holder.stateName.setText("  " + state);
 
         activity.setLoadCount(obj, holder.numberOfLoads);
+
+        holder.findConstrain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.onClickFindLoadListItem(obj, holder.numberOfLoads);
+            }
+        });
     }
 
     @Override
@@ -49,10 +56,10 @@ public class SearchLoadAdapter extends RecyclerView.Adapter<SearchLoadAdapter.Se
         return array_indian_states.size();
     }
 
-//    public void updateData(ArrayList<FindLoadsModel> loadList) {
-//        this.array_indian_states = loadList;
-//        notifyDataSetChanged();
-//    }
+    public void updateData(ArrayList<SearchLoadModel> searchList) {
+        array_indian_states = searchList;
+        notifyDataSetChanged();
+    }
 
     public class SearchLoadsViewHolder extends RecyclerView.ViewHolder {
         private TextView stateName, numberOfLoads;
