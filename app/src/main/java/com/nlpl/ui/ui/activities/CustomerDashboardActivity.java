@@ -14,6 +14,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -65,6 +66,8 @@ import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.EnglishNumberToWords;
 import com.nlpl.utils.FileUtils;
+import com.nlpl.utils.MakePayment;
+import com.razorpay.Checkout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -74,7 +77,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
-
+import com.razorpay.PaymentResultListener;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -82,7 +85,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CustomerDashboardActivity extends AppCompatActivity {
+public class CustomerDashboardActivity extends AppCompatActivity implements PaymentResultListener  {
 
     SwipeRefreshLayout swipeRefreshLayout;
     private RequestQueue mQueue;
@@ -132,6 +135,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_dashboard);
+        Checkout.preload(getApplicationContext());
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -1026,12 +1030,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                UpdatePostLoadDetails.updateNotes(obj.getIdpost_load(), notesCustomer.getText().toString());
-                UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadSubmitted");
-                UpdateBidDetails.updateBidStatus(obj.getSp_bid_id(), "FinalAccepted");
-                UpdateBidDetails.updateCustomerBudgetForSP(obj.getSp_bid_id(), obj.getSp_quote());
-                UpdatePostLoadDetails.updateBudget(obj.getIdpost_load(), obj.getSp_quote());
-
+                //----------------------------------------------------------------------------------
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(CustomerDashboardActivity.this);
                 alert.setContentView(R.layout.dialog_alert);
@@ -1051,12 +1050,17 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Final Offer");
-                alertMessage.setText("Final Offer accepted Successfully");
-                alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText("OK");
-                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                alertTitle.setText("Pay and Accept Final Offer");
+                alertMessage.setText("Payment Amount: "+obj.getSp_quote());
+                alertPositiveButton.setText("Pay & Accept Bid");
+                alertNegativeButton.setText("Cancel");
+
+                alertPositiveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        MakePayment.makePayment(CustomerDashboardActivity.this);
+                    }
+                });
 
                 alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -1072,6 +1076,15 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                     }
                 });
                 //------------------------------------------------------------------------------------------
+
+                //----------------------------------------------------------------------------------
+
+//                UpdatePostLoadDetails.updateNotes(obj.getIdpost_load(), notesCustomer.getText().toString());
+//                UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadSubmitted");
+//                UpdateBidDetails.updateBidStatus(obj.getSp_bid_id(), "FinalAccepted");
+//                UpdateBidDetails.updateCustomerBudgetForSP(obj.getSp_bid_id(), obj.getSp_quote());
+//                UpdatePostLoadDetails.updateBudget(obj.getIdpost_load(), obj.getSp_quote());
+
             }
         });
 
@@ -1090,6 +1103,19 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                 acceptFinalBid.dismiss();
             }
         });
+    }
+
+    @Override
+    public void onPaymentSuccess(String s) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Payment ID");
+        builder.setMessage(s);
+        builder.show();
+    }
+
+    @Override
+    public void onPaymentError(int i, String s) {
+        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
     }
 
     public void onClickViewConsignment(BidsAcceptedModel obj) {

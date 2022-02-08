@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -20,6 +21,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NLPL"
         android:usesCleartextTraffic="true">
+
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDAAes8x5HVKYB5YEIGBmdnCdyBrAHUijM"/>
+
         <activity
             android:name=".ui.ui.activities.CustomerLoadsHistoryActivity"
             android:exported="false"

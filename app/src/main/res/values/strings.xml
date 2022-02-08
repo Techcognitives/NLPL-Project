@@ -972,7 +972,7 @@
     <string name="pin_code">PIN Code</string>
     <string name="address">Address</string>
     <string name="are_u_sp">Truck Owner / Driver / Broker? </string>
-    <string name="truck_owner">Truck Owner / Driver / Broker</string>
+    <string name="truck_owner">Truck Owner</string>
     <string name="driver">Driver</string>
     <string name="broker">Broker</string>
     <string name="ok">OK</string>

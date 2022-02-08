@@ -207,9 +207,8 @@ public class FindLoadsActivity extends AppCompatActivity {
             searchLoadModels.add(searchLoadModel);
         }
 
-//        searchLoadAdapter = new SearchLoadAdapter(FindLoadsActivity.this, searchLoadModels);
-//        searchListRecyclerView.setAdapter(searchLoadAdapter);
-
+        searchLoadAdapter = new SearchLoadAdapter(FindLoadsActivity.this, searchLoadModels);
+        searchListRecyclerView.setAdapter(searchLoadAdapter);
         getBidsReceived();
 
         searchLoad.addTextChangedListener(searchTextWatcher);
@@ -1515,11 +1514,11 @@ public class FindLoadsActivity extends AppCompatActivity {
 
 //        Collections.reverse(loadListToCompare);
 
-
+        bidsListAdapter = new FindLoadAdapter(FindLoadsActivity.this, loadListToCompare);
+        bidsListRecyclerView.setAdapter(bidsListAdapter);
 
         if (loadListToCompare.size() > 0) {
-            bidsListAdapter = new FindLoadAdapter(FindLoadsActivity.this, loadListToCompare);
-            bidsListRecyclerView.setAdapter(bidsListAdapter);
+           bidsListAdapter.updateData(loadListToCompare);
 
             for (int i = 0; i < loadListToCompare.size(); i++) {
                 if (loadListToCompare.size() == 0) {
@@ -1550,29 +1549,29 @@ public class FindLoadsActivity extends AppCompatActivity {
                 if (loadListToCompare.get(i).getPick_state().equals("BR")) {
                     brList.add(loadListToCompare.get(i));
                 }
-                if (bidsList.get(i).getPick_state().equals("CH/PB")) {
-                    chList.add(bidsList.get(i));
+                if (loadListToCompare.get(i).getPick_state().equals("CH/PB")) {
+                    chList.add(loadListToCompare.get(i));
                 }
-                if (bidsList.get(i).getPick_state().equals("CG")) {
-                    cgList.add(bidsList.get(i));
+                if (loadListToCompare.get(i).getPick_state().equals("CG")) {
+                    cgList.add(loadListToCompare.get(i));
                 }
-                if (bidsList.get(i).getPick_state().equals("DD")) {
-                    ddList.add(bidsList.get(i));
+                if (loadListToCompare.get(i).getPick_state().equals("DD")) {
+                    ddList.add(loadListToCompare.get(i));
                 }
-                if (bidsList.get(i).getPick_state().equals("DD2")) {
-                    dd2List.add(bidsList.get(i));
+                if (loadListToCompare.get(i).getPick_state().equals("DD2")) {
+                    dd2List.add(loadListToCompare.get(i));
                 }
-                if (bidsList.get(i).getPick_state().equals("DL")) {
-                    dlList.add(bidsList.get(i));
+                if (loadListToCompare.get(i).getPick_state().equals("DL")) {
+                    dlList.add(loadListToCompare.get(i));
                 }
-                if (bidsList.get(i).getPick_state().equals("GA")) {
-                    gaList.add(bidsList.get(i));
+                if (loadListToCompare.get(i).getPick_state().equals("GA")) {
+                    gaList.add(loadListToCompare.get(i));
                 }
-                if (bidsList.get(i).getPick_state().equals("GJ")) {
-                    gjList.add(bidsList.get(i));
+                if (loadListToCompare.get(i).getPick_state().equals("GJ")) {
+                    gjList.add(loadListToCompare.get(i));
                 }
-                if (bidsList.get(i).getPick_state().equals("HR")) {
-                    hrList.add(bidsList.get(i));
+                if (loadListToCompare.get(i).getPick_state().equals("HR")) {
+                    hrList.add(loadListToCompare.get(i));
                 }
                 if (bidsList.get(i).getPick_state().equals("HP")) {
                     hpList.add(bidsList.get(i));
