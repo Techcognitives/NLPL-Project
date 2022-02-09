@@ -68,6 +68,8 @@ import com.nlpl.utils.EnglishNumberToWords;
 import com.nlpl.utils.GetCurrentLocation;
 import com.nlpl.utils.GetLocationDrop;
 import com.nlpl.utils.GetLocationPickUp;
+import com.nlpl.utils.SelectCity;
+import com.nlpl.utils.SelectState;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -998,185 +1000,38 @@ public class PostALoadActivity extends AppCompatActivity {
     }
 
     private void selectState() {
-        selectStateDialog = new Dialog(PostALoadActivity.this);
-        selectStateDialog.setContentView(R.layout.dialog_spinner);
-//                dialog.getWindow().setLayout(1000,3000);
-        selectStateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        selectStateDialog.show();
-        selectStateDialog.setCancelable(true);
-        ListView stateList = (ListView) selectStateDialog.findViewById(R.id.list_state);
+        SelectState.selectState(PostALoadActivity.this, addressDialogState, addressDialogCity);
 
-        selectStateArray = ArrayAdapter.createFromResource(PostALoadActivity.this, R.array.array_indian_states, R.layout.custom_list_row);
-        selectStateUnionCode = ArrayAdapter.createFromResource(PostALoadActivity.this, R.array.array_indian_states_union_territory_codes, R.layout.custom_list_row);
-
-        stateList.setAdapter(selectStateArray);
-
-        stateList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
-                if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
-                        && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                        && !select_truck_body_type.getText().toString().isEmpty() && pickUpAddress != null && pickUpCity != null
-                        && pickUpPinCode != null && pickupState != null && dropAddress != null
-                        && dropCiy != null && dropPinCode != null && dropState != null) {
-                    Ok_PostLoad.setEnabled(true);
-                    Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
-                } else {
-                    Ok_PostLoad.setEnabled(false);
-                    Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
-                }
-                addressDialogState.setText(selectStateUnionCode.getItem(i)); //Set Selected Credentials
-                selectStateDialog.dismiss();
-                addressDialogCity.performClick();
-            }
-        });
+        if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
+                && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
+                && !select_truck_body_type.getText().toString().isEmpty() && pickUpAddress != null && pickUpCity != null
+                && pickUpPinCode != null && pickupState != null && dropAddress != null
+                && dropCiy != null && dropPinCode != null && dropState != null) {
+            Ok_PostLoad.setEnabled(true);
+            Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
+        } else {
+            Ok_PostLoad.setEnabled(false);
+            Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
+        }
     }
 
     private void selectCity() {
         if (addressDialogState != null) {
             selectedState = addressDialogState.getText().toString();
-            selectDistrictDialog = new Dialog(PostALoadActivity.this);
-            selectDistrictDialog.setContentView(R.layout.dialog_spinner);
-//                dialog.getWindow().setLayout(1000,3000);
-            selectDistrictDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            selectDistrictDialog.show();
-            TextView title = selectDistrictDialog.findViewById(R.id.dialog_spinner_title);
-            title.setText("Select City");
-            ListView districtList = (ListView) selectDistrictDialog.findViewById(R.id.list_state);
 
-            if (selectedState.equals("AP")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_andhra_pradesh_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("AR")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_arunachal_pradesh_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("AS")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_assam_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("BR")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_bihar_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("CG")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_chhattisgarh_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("GA")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_goa_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("GJ")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_gujarat_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("HR")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_haryana_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("HP")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_himachal_pradesh_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("JH")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_jharkhand_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("KA")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_karnataka_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("KL")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_kerala_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("MP")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_madhya_pradesh_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("MH")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_maharashtra_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("MN")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_manipur_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("ML")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_meghalaya_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("MZ")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_mizoram_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("NL")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_nagaland_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("OD")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_odisha_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("PB")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_punjab_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("RJ")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_rajasthan_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("SK")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_sikkim_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("TN")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_tamil_nadu_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("TS")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_telangana_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("TR")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_tripura_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("UP")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_uttar_pradesh_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("UK")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_uttarakhand_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("WB")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_west_bengal_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("AN")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_andaman_nicobar_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("CH/PB")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_chandigarh_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("DD")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_dadra_nagar_haveli_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("DD2")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_daman_diu_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("DL")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_delhi_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("JK")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_jammu_kashmir_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("LD")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_lakshadweep_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("LA")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_ladakh_districts, R.layout.custom_list_row);
-            } else if (selectedState.equals("PY")) {
-                selectDistrictArray = ArrayAdapter.createFromResource(PostALoadActivity.this,
-                        R.array.array_puducherry_districts, R.layout.custom_list_row);
+            SelectCity.selectCity(PostALoadActivity.this, selectedState, addressDialogCity);
+
+            if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
+                    && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
+                    && !select_truck_body_type.getText().toString().isEmpty() && pickUpAddress != null && pickUpCity != null
+                    && pickUpPinCode != null && pickupState != null && dropAddress != null
+                    && dropCiy != null && dropPinCode != null && dropState != null) {
+                Ok_PostLoad.setEnabled(true);
+                Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
+            } else {
+                Ok_PostLoad.setEnabled(false);
+                Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
             }
-            districtList.setAdapter(selectDistrictArray);
-
-            districtList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
-                            && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                            && !select_truck_body_type.getText().toString().isEmpty() && pickUpAddress != null && pickUpCity != null
-                            && pickUpPinCode != null && pickupState != null && dropAddress != null
-                            && dropCiy != null && dropPinCode != null && dropState != null) {
-                        Ok_PostLoad.setEnabled(true);
-                        Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
-                    } else {
-                        Ok_PostLoad.setEnabled(false);
-                        Ok_PostLoad.setBackgroundResource((R.drawable.button_de_active));
-                    }
-                    addressDialogCity.setText(selectDistrictArray.getItem(i)); //Set Selected Credentials
-                    selectDistrictDialog.dismiss();
-                    selectedDistrict = selectDistrictArray.getItem(i).toString();
-                }
-            });
         }
     }
 
@@ -1683,7 +1538,7 @@ public class PostALoadActivity extends AppCompatActivity {
         //Distance in kilometer
         distanceApprox = distanceApprox * 1.609344;
         //set distance on Text View
-        setApproxDistance.setText(String.format(Locale.US, "%2f kilometers", distanceApprox));
+        setApproxDistance.setText(String.format(Locale.US, "%2f KMs", distanceApprox));
     }
 
     private double rad2deg(double distance) {

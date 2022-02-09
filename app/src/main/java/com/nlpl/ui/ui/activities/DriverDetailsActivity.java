@@ -64,6 +64,8 @@ import com.nlpl.model.UpdateMethods.UpdateUserDetails;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
+import com.nlpl.utils.SelectCity;
+import com.nlpl.utils.SelectState;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -378,173 +380,12 @@ public class DriverDetailsActivity extends AppCompatActivity {
             }
         });
 
+        selectStateText.setOnClickListener(view -> SelectState.selectState(DriverDetailsActivity.this, selectStateText, selectDistrictText));
 
-        selectStateText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectStateDialog = new Dialog(DriverDetailsActivity.this);
-                selectStateDialog.setContentView(R.layout.dialog_spinner);
-//                dialog.getWindow().setLayout(1000,3000);
-                selectStateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                selectStateDialog.show();
-                selectStateDialog.setCancelable(true);
-                ListView stateList = (ListView) selectStateDialog.findViewById(R.id.list_state);
-
-                selectStateArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this, R.array.array_indian_states, R.layout.custom_list_row);
-                selectStateUnionCode = ArrayAdapter.createFromResource(DriverDetailsActivity.this, R.array.array_indian_states_union_territory_codes, R.layout.custom_list_row);
-
-                stateList.setAdapter(selectStateArray);
-
-
-                stateList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
-                        selectStateText.setText(selectStateUnionCode.getItem(i)); //Set Selected Credentials
-                        selectStateDialog.dismiss();
-                        selectDistrictText.performClick();
-                    }
-                });
-            }
-        });
-
-        selectDistrictText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!selectStateText.getText().toString().isEmpty()) {
-
-                    selectedState = selectStateText.getText().toString();
-                    selectDistrictDialog = new Dialog(DriverDetailsActivity.this);
-                    selectDistrictDialog.setContentView(R.layout.dialog_spinner);
-//                dialog.getWindow().setLayout(1000,3000);
-                    selectDistrictDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    selectDistrictDialog.show();
-                    TextView title = selectDistrictDialog.findViewById(R.id.dialog_spinner_title);
-                    title.setText("Select City");
-                    ListView districtList = (ListView) selectDistrictDialog.findViewById(R.id.list_state);
-
-                    if (selectedState.equals("AP")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_andhra_pradesh_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("AR")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_arunachal_pradesh_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("AS")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_assam_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("BR")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_bihar_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("CG")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_chhattisgarh_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("GA")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_goa_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("GJ")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_gujarat_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("HR")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_haryana_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("HP")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_himachal_pradesh_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("JH")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_jharkhand_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("KA")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_karnataka_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("KL")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_kerala_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("MP")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_madhya_pradesh_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("MH")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_maharashtra_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("MN")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_manipur_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("ML")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_meghalaya_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("MZ")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_mizoram_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("NL")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_nagaland_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("OD")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_odisha_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("PB")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_punjab_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("RJ")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_rajasthan_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("SK")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_sikkim_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("TN")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_tamil_nadu_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("TS")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_telangana_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("TR")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_tripura_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("UP")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_uttar_pradesh_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("UK")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_uttarakhand_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("WB")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_west_bengal_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("AN")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_andaman_nicobar_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("CH/PB")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_chandigarh_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("DD")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_dadra_nagar_haveli_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("DD2")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_daman_diu_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("DL")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_delhi_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("JK")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_jammu_kashmir_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("LD")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_lakshadweep_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("LA")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_ladakh_districts, R.layout.custom_list_row);
-                    } else if (selectedState.equals("PY")) {
-                        selectDistrictArray = ArrayAdapter.createFromResource(DriverDetailsActivity.this,
-                                R.array.array_puducherry_districts, R.layout.custom_list_row);
-                    }
-                    districtList.setAdapter(selectDistrictArray);
-
-                    districtList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            selectDistrictText.setText(selectDistrictArray.getItem(i)); //Set Selected Credentials
-                            selectDistrictDialog.dismiss();
-                            selectedDistrict = selectDistrictArray.getItem(i).toString();
-                        }
-                    });
-                }
+        selectDistrictText.setOnClickListener(view -> {
+            if (!selectStateText.getText().toString().isEmpty()) {
+                selectedState = selectStateText.getText().toString();
+                SelectCity.selectCity(DriverDetailsActivity.this, selectedState, selectDistrictText);
             }
         });
 

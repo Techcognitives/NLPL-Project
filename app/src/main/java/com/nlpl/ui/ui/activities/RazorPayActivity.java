@@ -43,7 +43,7 @@ public class RazorPayActivity extends AppCompatActivity implements PaymentResult
     private void makePayment() {
 
         Checkout checkout = new Checkout();
-        checkout.setKeyID("rzp_test_xWrIEsyEwGvW61");
+        checkout.setKeyID("rzp_test_lGpYN1TVDxAQOn");
 
 //        checkout.setImage(R.drawable.logo);
         final Activity activity = this;
