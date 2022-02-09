@@ -869,6 +869,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     private void getUserDetails() {
 
         String url = getString(R.string.baseURL) + "/user/" + userId;
+
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

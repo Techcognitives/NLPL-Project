@@ -311,18 +311,17 @@
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textView14"
+            app:layout_constraintEnd_toStartOf="@+id/bids_received_list_sort_by_textview"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="RtlCompat" />
 
-        <TextView
-            android:id="@+id/textView14"
+        <Spinner
+            android:id="@+id/bids_received_list_sort_by_textview"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:drawableEnd="@drawable/ic_drop_down"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Sort by"
+            android:entries="@array/array_sort_by"
             android:textColor="@color/white"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

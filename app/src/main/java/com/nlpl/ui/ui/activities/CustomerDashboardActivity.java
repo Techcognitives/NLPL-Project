@@ -75,19 +75,23 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+
 import com.razorpay.PaymentResultListener;
+
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 
-public class CustomerDashboardActivity extends AppCompatActivity implements PaymentResultListener  {
+public class CustomerDashboardActivity extends AppCompatActivity implements PaymentResultListener {
 
     SwipeRefreshLayout swipeRefreshLayout;
     private RequestQueue mQueue;
 
     private ArrayList<BidsReceivedModel> bidsList = new ArrayList<>();
+    ArrayList<BidsResponsesModel> bidResponsesList = new ArrayList<>();
     private BidsReceivedAdapter bidsListAdapter;
     private RecyclerView bidsListRecyclerView;
 
@@ -146,7 +150,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         loadAcceptedTextView = (TextView) findViewById(R.id.customer_dashboard_loads_accepted_button);
         bidsReceivedTextView = (TextView) findViewById(R.id.customer_dashboard_bids_received_button);
 
-        if (isbidsReceivedSelected){
+        if (isbidsReceivedSelected) {
             bidsReceivedSelected = true;
             loadAcceptedConstrain.setVisibility(View.INVISIBLE);
             bidsReceivedConstrain.setVisibility(View.VISIBLE);
@@ -223,7 +227,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         bidsListRecyclerView.setLayoutManager(linearLayoutManagerBank);
         bidsListRecyclerView.setHasFixedSize(true);
 
-        bidsListAdapter = new BidsReceivedAdapter(CustomerDashboardActivity.this, bidsList);
+        bidsListAdapter = new BidsReceivedAdapter(CustomerDashboardActivity.this, bidsList, bidResponsesList);
         bidsListRecyclerView.setAdapter(bidsListAdapter);
         //------------------------------------------------------------------------------------------
 
@@ -342,7 +346,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         intent.putExtra("bidsReveived", bidsReceivedSelected);
         startActivity(intent);
         finish();
-        overridePendingTransition(0,0);
+        overridePendingTransition(0, 0);
     }
 
     public void getBidsAccepted() {
@@ -491,15 +495,14 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                         bidsReceivedModel.setDrop_pin_code(obj.getString("drop_pin_code"));
                         bidsReceivedModel.setDrop_city(obj.getString("drop_city"));
                         bidsReceivedModel.setDrop_state(obj.getString("drop_state"));
+                        bidsReceivedModel.setSp_count(obj.getInt("sp_count"));
                         bidsReceivedModel.setDrop_country(obj.getString("drop_country"));
                         bidsReceivedModel.setKm_approx(obj.getString("km_approx"));
                         bidsReceivedModel.setNotes_meterial_des(obj.getString("notes_meterial_des"));
                         bidsReceivedModel.setBid_ends_at(obj.getString("bid_ends_at"));
 
                         if (!obj.getString("bid_status").equals("loadSubmitted") && !obj.getString("bid_status").equals("delete") && !obj.getString("bid_status").equals("loadExpired")) {
-                            if (obj.getInt("sp_count")<=3) {
-                                bidsList.add(bidsReceivedModel);
-                            }
+                            bidsList.add(bidsReceivedModel);
                         }
                     }
 
@@ -508,7 +511,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
                     if (bidsList.size() > 0) {
                         noLoadTextView.setVisibility(View.GONE);
-                        bidsListAdapter.updateData(bidsList);
+                        bidsListAdapter.updateData(bidsList, bidResponsesList);
                     } else {
                         noLoadTextView.setVisibility(View.VISIBLE);
                     }
@@ -637,7 +640,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                 UpdateBidDetails.updateBidStatus(obj.getSp_bid_id(), "Accepted");
                 UpdateBidDetails.updateCustomerBudgetForSP(obj.getSp_bid_id(), customerQuote.getText().toString());
                 UpdatePostLoadDetails.updateBudget(obj.getIdpost_load(), customerQuote.getText().toString());
-                UpdatePostLoadDetails.updateCount(obj.getIdpost_load(), count+1);
+                UpdatePostLoadDetails.updateCount(obj.getIdpost_load(), count + 1);
 
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(CustomerDashboardActivity.this);
@@ -684,7 +687,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
     //----------------------------------------------------------------------------------------------------------------
 
-    private void getLoadDetails(String loadId){
+    private void getLoadDetails(String loadId) {
         String url1 = getString(R.string.baseURL) + "/loadpost/getLoadDtByPostId/" + loadId;
         Log.i("URL: ", url1);
 
@@ -704,7 +707,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
                     if (bidsList.size() > 0) {
                         noLoadTextView.setVisibility(View.GONE);
-                        bidsListAdapter.updateData(bidsList);
+                        bidsListAdapter.updateData(bidsList, bidResponsesList);
                     } else {
                         noLoadTextView.setVisibility(View.VISIBLE);
                     }
@@ -860,8 +863,8 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     }
 
 
-    public void getBidsResponsesList(BidsReceivedModel obj1, RecyclerView bidsResponsesRecyclerView, TextView bidsReceived, ConstraintLayout showRecyclerView) {
-        ArrayList<BidsResponsesModel> bidResponsesList = new ArrayList<>();
+    public void getBidsResponsesList(BidsReceivedModel obj1, RecyclerView bidsResponsesRecyclerView, TextView bidsReceived, ConstraintLayout showRecyclerView, String sortBy) {
+
         bidResponsesList.clear();
 
         String url1 = getString(R.string.baseURL) + "/spbid/getBidDtByPostId/" + obj1.getIdpost_load();
@@ -874,69 +877,107 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                     JSONArray bidResponsesLists = response.getJSONArray("data");
                     for (int i = 0; i < bidResponsesLists.length(); i++) {
                         JSONObject obj = bidResponsesLists.getJSONObject(i);
-                        BidsResponsesModel bidsResponsesModel = new BidsResponsesModel();
-                        bidsResponsesModel.setSp_bid_id(obj.getString("sp_bid_id"));
-                        bidsResponsesModel.setUser_id(obj.getString("user_id"));
-                        bidsResponsesModel.setIdpost_load(obj.getString("idpost_load"));
-                        bidsResponsesModel.setSp_quote(obj.getString("sp_quote"));
-                        bidsResponsesModel.setIs_negatiable(obj.getString("is_negatiable"));
-                        bidsResponsesModel.setAssigned_truck_id(obj.getString("assigned_truck_id"));
-                        bidsResponsesModel.setAssigned_driver_id(obj.getString("assigned_driver_id"));
-                        bidsResponsesModel.setVehicle_model(obj.getString("vehicle_model"));
-                        bidsResponsesModel.setFeet(obj.getString("feet"));
-                        bidsResponsesModel.setCapacity(obj.getString("capacity"));
-                        bidsResponsesModel.setBody_type(obj.getString("body_type"));
-                        bidsResponsesModel.setNotes(obj.getString("notes"));
-                        bidsResponsesModel.setBid_status(obj.getString("bid_status"));
-                        bidsResponsesModel.setIs_bid_accpted_by_sp(obj.getString("is_bid_accpted_by_sp"));
+                        BidsResponsesModel bidsResponsesModel2 = new BidsResponsesModel();
+                        bidsResponsesModel2.setSp_bid_id(obj.getString("sp_bid_id"));
+                        bidsResponsesModel2.setUser_id(obj.getString("user_id"));
+                        bidsResponsesModel2.setIdpost_load(obj.getString("idpost_load"));
+                        bidsResponsesModel2.setSp_quote(obj.getString("sp_quote"));
+                        bidsResponsesModel2.setIs_negatiable(obj.getString("is_negatiable"));
+                        bidsResponsesModel2.setAssigned_truck_id(obj.getString("assigned_truck_id"));
+                        bidsResponsesModel2.setAssigned_driver_id(obj.getString("assigned_driver_id"));
+                        bidsResponsesModel2.setVehicle_model(obj.getString("vehicle_model"));
+                        bidsResponsesModel2.setFeet(obj.getString("feet"));
+                        bidsResponsesModel2.setCapacity(obj.getString("capacity"));
+                        bidsResponsesModel2.setBody_type(obj.getString("body_type"));
+                        bidsResponsesModel2.setNotes(obj.getString("notes"));
+                        bidsResponsesModel2.setBid_status(obj.getString("bid_status"));
+                        bidsResponsesModel2.setIs_bid_accpted_by_sp(obj.getString("is_bid_accpted_by_sp"));
+
+                        Log.i("Sp quote", obj.getString("sp_quote") );
 
                         if (!obj.getString("bid_status").equals("withdrawnByLp")) {
-                            bidResponsesList.add(bidsResponsesModel);
+                            bidResponsesList.add(bidsResponsesModel2);
                         }
                     }
 
-                    for (int i = 0; i < bidResponsesList.size(); i++) {
-                        if (obj1.getIdpost_load().equals(bidResponsesList.get(i).getIdpost_load())) {
+                    if (!sortBy.equals("Initial Responses")) {
+                        Collections.reverse(bidResponsesList);
+                    }
 
-                            String bidsResponses = String.valueOf(bidResponsesList.size());
-                            Log.i("bid size", String.valueOf(bidResponsesList.size()));
-                            bidsReceived.setText(bidsResponses + " Responses Received");
-                            Log.i("Res", bidsReceived.getText().toString());
-
-                            if (bidResponsesList.get(i).getBid_status().equals("submitted")) {
-                                bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
-                                bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
-                                bidsResponsesAdapter.updateData(bidResponsesList);
-                            }
-                            if (bidResponsesList.get(i).getBid_status().equals("Accepted")) {
-                                int itemPos = bidResponsesList.indexOf(bidResponsesList.get(i));
-                                bidResponsesList.add(0, bidResponsesList.get(i));
-                                bidResponsesList.remove(itemPos + 1);
-
-                                bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
-                                bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
-                                bidsResponsesAdapter.updateData(bidResponsesList);
-                            }
-                            if (bidResponsesList.get(i).getBid_status().equals("RespondedBySP")) {
-                                bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
-                                bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
-                                bidsResponsesAdapter.updateData(bidResponsesList);
-                            }
-
+                    Collections.sort(bidResponsesList, new Comparator<BidsResponsesModel>() {
+                        @Override
+                        public int compare(BidsResponsesModel bidsResponsesModel, BidsResponsesModel t1) {
+                            return bidsResponsesModel.getBid_status().compareTo(t1.getBid_status());
                         }
+                    });
+
+                    for (int i = 0; i < bidResponsesList.size(); i++) {
+
+                        bidsReceived.setText(String.valueOf(bidResponsesList.size() + " Responses Received"));
+
+                        if (sortBy.equals("noSort")) {
+
+                            bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
+                            bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
+                            bidsResponsesAdapter.updateData(bidResponsesList);
+                        }
+
+                        if (sortBy.equals("Recent Responses")) {
+
+                            bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
+                            bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
+                            bidsResponsesAdapter.updateData(bidResponsesList);
+                        }
+                        if (sortBy.equals("Initial Responses")) {
+
+                            bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
+                            bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
+                            bidsResponsesAdapter.updateData(bidResponsesList);
+                        }
+                        if (sortBy.equals("Price High-low")) {
+
+                            Collections.sort(bidResponsesList, new Comparator<BidsResponsesModel>() {
+                                @Override
+                                public int compare(BidsResponsesModel bidsResponsesModel, BidsResponsesModel t1) {
+                                    String Quote1 = bidsResponsesModel.getSp_quote().replaceAll(",","");
+                                    String Quote2 = t1.getSp_quote().replaceAll(",","");
+                                    int q1 = Integer.valueOf(Quote1);
+                                    int q2 = Integer.valueOf(Quote2);
+                                    return  q2 - q1 ;
+                                }
+                            });
+
+                            bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
+                            bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
+                            bidsResponsesAdapter.updateData(bidResponsesList);
+                        }
+
+                        if (sortBy.equals("Price Low-high")){
+
+                            Collections.sort(bidResponsesList, new Comparator<BidsResponsesModel>() {
+                                @Override
+                                public int compare(BidsResponsesModel bidsResponsesModel, BidsResponsesModel t1) {
+                                    String Quote1 = bidsResponsesModel.getSp_quote().replaceAll(",","");
+                                    String Quote2 = t1.getSp_quote().replaceAll(",","");
+                                    int q1 = Integer.valueOf(Quote1);
+                                    int q2 = Integer.valueOf(Quote2);
+                                    return  q1 - q2 ;
+                                }
+                            });
+
+                            bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
+                            bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
+                            bidsResponsesAdapter.updateData(bidResponsesList);
+                        }
+
                     }
 
                     if (bidsReceived.getText().toString().equals("0 Responses Received")) {
                         showRecyclerView.setVisibility(View.GONE);
                         bidsResponsesRecyclerView.setVisibility(View.GONE);
                     } else {
-                        if (obj1.getBid_status().equals("loadExpired")) {
-                            showRecyclerView.setVisibility(View.GONE);
-                            bidsResponsesRecyclerView.setVisibility(View.GONE);
-                        } else {
-                            showRecyclerView.setVisibility(View.VISIBLE);
-                            bidsResponsesRecyclerView.setVisibility(View.VISIBLE);
-                        }
+                        showRecyclerView.setVisibility(View.VISIBLE);
+                        bidsResponsesRecyclerView.setVisibility(View.VISIBLE);
                     }
 
                 } catch (JSONException e) {
@@ -1051,7 +1092,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
                 alertTitle.setText("Pay and Accept Final Offer");
-                alertMessage.setText("Payment Amount: "+obj.getSp_quote());
+                alertMessage.setText("Payment Amount: " + obj.getSp_quote());
                 alertPositiveButton.setText("Pay & Accept Bid");
                 alertNegativeButton.setText("Cancel");
 
@@ -1489,7 +1530,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                                             intent.putExtra("bidsReveived", bidsReceivedSelected);
                                             startActivity(intent);
                                             finish();
-                                            overridePendingTransition(0,0);
+                                            overridePendingTransition(0, 0);
                                         }
                                     });
                                     //------------------------------------------------------------------------------------------
@@ -1542,7 +1583,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                                             intent.putExtra("bidsReveived", bidsReceivedSelected);
                                             startActivity(intent);
                                             finish();
-                                            overridePendingTransition(0,0);
+                                            overridePendingTransition(0, 0);
                                         }
                                     });
                                     //------------------------------------------------------------------------------------------
@@ -1565,7 +1606,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                             intent.putExtra("bidsReveived", bidsReceivedSelected);
                             startActivity(intent);
                             finish();
-                            overridePendingTransition(0,0);
+                            overridePendingTransition(0, 0);
                             viewConsignmentCustomer.dismiss();
                         }
                     });
@@ -2179,7 +2220,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                 intent.putExtra("bidsReveived", bidsReceivedSelected);
                 startActivity(intent);
                 finish();
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
             }
         });
         //------------------------------------------------------------------------------------------
@@ -2228,12 +2269,10 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                         intent.putExtra("bidsReveived", bidsReceivedSelected);
                         startActivity(intent);
                         finish();
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                     }
                 });
                 //------------------------------------------------------------------------------------------
-
-
             }
         });
     }

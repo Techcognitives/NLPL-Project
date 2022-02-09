@@ -120,6 +120,12 @@
             </intent-filter>
         </activity>
 
+        <service android:name=".utils.PushNotificationService" android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSANGING_EVENT"></action>
+            </intent-filter>
+        </service>
+
         <receiver
             android:name=".utils.OTPReceiver"
             android:exported="true">

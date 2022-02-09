@@ -123,7 +123,7 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
             holder.negotiable.setText("Non-Nego");
         }
 
-        if (obj.getBid_status().equals("submitted")) {
+        if (obj.getBid_status().equals("submittedNego")) {
             holder.acceptViewBidButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -138,7 +138,20 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
             holder.acceptViewBidButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.button_blue));
         }
 
-        if (obj.getBid_status().equals("RespondedBySP")) {
+        if (obj.getBid_status().equals("submittedNonNego")) {
+            holder.negotiable.setText("Non-Nego");
+            holder.acceptViewBidButton.setText("Accept\n Final Offer");
+            holder.acceptViewBidButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.redDark));
+
+            holder.acceptViewBidButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    activity.acceptFinalOffer(obj);
+                }
+            });
+        }
+
+        if (obj.getBid_status().equals("AaRespondedBySP")) {
             holder.negotiable.setText("Non-Nego");
             holder.acceptViewBidButton.setText("Accept\n Final Offer");
             holder.acceptViewBidButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.green));
