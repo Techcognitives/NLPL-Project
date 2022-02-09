@@ -904,12 +904,12 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                         Collections.reverse(bidResponsesList);
                     }
 
-                    Collections.sort(bidResponsesList, new Comparator<BidsResponsesModel>() {
-                        @Override
-                        public int compare(BidsResponsesModel bidsResponsesModel, BidsResponsesModel t1) {
-                            return bidsResponsesModel.getBid_status().compareTo(t1.getBid_status());
-                        }
-                    });
+//                    Collections.sort(bidResponsesList, new Comparator<BidsResponsesModel>() {
+//                        @Override
+//                        public int compare(BidsResponsesModel bidsResponsesModel, BidsResponsesModel t1) {
+//                            return bidsResponsesModel.getBid_status().compareTo(t1.getBid_status());
+//                        }
+//                    });
 
                     for (int i = 0; i < bidResponsesList.size(); i++) {
 

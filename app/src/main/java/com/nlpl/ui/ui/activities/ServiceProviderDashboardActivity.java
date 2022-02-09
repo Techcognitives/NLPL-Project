@@ -774,13 +774,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         saveBid(createBidRequest("submittedNego", ""));
                     }
 
-                    if (spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) || !negotiable) {
-                        isNegotiableSelected = true;
-                        saveBid(createBidRequest("submittedNonNego", spQuote.getText().toString()));
-                    } else {
-                        saveBid(createBidRequest("submittedNego", ""));
-                    }
-
                     Log.i("loadId bidded", obj.getIdpost_load());
                     //----------------------- Alert Dialog -------------------------------------------------
                     Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
