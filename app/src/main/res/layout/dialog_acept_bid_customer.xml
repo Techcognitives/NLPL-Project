@@ -10,8 +10,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout6"
-        android:layout_width="388dp"
-        android:layout_height="26dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/personal_details_buttons_de_active"
         android:backgroundTint="@color/medium_blue"
         android:paddingTop="5dp"

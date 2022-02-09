@@ -47,16 +47,16 @@ import retrofit2.Callback;
 public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapter.BidsReceivedViewHolder> {
 
     private ArrayList<BidsReceivedModel> loadList;
+    private ArrayList<BidsResponsesModel> bidsResponsesList;
     private CustomerDashboardActivity activity;
 
-    private ArrayList<BidsResponsesModel> bidResponsesList = new ArrayList<>();
-    BidsResponsesAdapter bidsResponsesAdapter;
-    String bidEndsAt, currentTimeToCompare, bidEndsAtStringTime, finalBidEndsAt, finalDate;
+    String sortBy = "noSort", bidEndsAt, currentTimeToCompare, bidEndsAtStringTime, finalBidEndsAt, finalDate;
     private RequestQueue mQueue;
     int timeLeftToExpire, timeInMillisec, minLeftToExpire, months;
 
-    public BidsReceivedAdapter(CustomerDashboardActivity activity, ArrayList<BidsReceivedModel> loadList) {
+    public BidsReceivedAdapter(CustomerDashboardActivity activity, ArrayList<BidsReceivedModel> loadList, ArrayList<BidsResponsesModel> bidsResponsesList) {
         this.loadList = loadList;
+        this.bidsResponsesList = bidsResponsesList;
         this.activity = activity;
         mQueue = Volley.newRequestQueue(activity);
     }
@@ -257,7 +257,7 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
         holder.bidsResponsesRecyclerView.setLayoutManager(linearLayoutManagerBank);
         holder.bidsResponsesRecyclerView.setHasFixedSize(true);
 
-        activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView, holder.bidsReceived, holder.showRecyclerView);
+        activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView, holder.bidsReceived, holder.showRecyclerView, sortBy );
 
         holder.editLoadButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.orange));
         holder.editLoadButton.setOnClickListener(new View.OnClickListener() {
@@ -282,13 +282,16 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
                     }
 
                     if (parent.getSelectedItem().equals("Price High-low")) {
-                        activity.sortByPriceHighToLow(obj);
+                        sortBy = "Price High-low";
+                        activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView, holder.bidsReceived, holder.showRecyclerView, sortBy);
                     }
                     if (parent.getSelectedItem().equals("Price Low-high")) {
-
+                        sortBy = "Price Low-high";
+                        activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView, holder.bidsReceived, holder.showRecyclerView, sortBy);
                     }
                     if (parent.getSelectedItem().equals("Recent Responses")) {
-
+                        sortBy = "Recent Responses";
+                        activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView, holder.bidsReceived, holder.showRecyclerView, sortBy);
                     }
 
                 }
@@ -306,8 +309,9 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
         return loadList.size();
     }
 
-    public void updateData(ArrayList<BidsReceivedModel> loadList) {
+    public void updateData(ArrayList<BidsReceivedModel> loadList, ArrayList<BidsResponsesModel> bidsResponsesList ) {
         this.loadList = loadList;
+        this.bidsResponsesList =bidsResponsesList;
         notifyDataSetChanged();
     }
 
