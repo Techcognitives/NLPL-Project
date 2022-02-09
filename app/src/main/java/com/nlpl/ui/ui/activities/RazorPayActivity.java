@@ -61,7 +61,7 @@ public class RazorPayActivity extends AppCompatActivity implements PaymentResult
             options.put("theme.color", "#3399cc");
             options.put("currency", "INR");
             options.put("amount", sAmount);
-            options.put("prefill.email", "gaurav.kumar@example.com");
+            options.put("prefill.email", "");
             options.put("prefill.contact","9272576767");
             checkout.open(activity, options);
         } catch(Exception e) {
