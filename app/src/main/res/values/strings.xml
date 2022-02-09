@@ -681,6 +681,13 @@
         <item>Thailand</item>
     </string-array>
 
+    <string-array name="array_sort_by">
+        <item>Sort By</item>
+        <item>Recent Responses</item>
+        <item>Price High-low</item>
+        <item>Price Low-high</item>
+    </string-array>
+
     <string-array name="array_tamil_nadu_districts">
         <item>Ariyalur</item>
         <item>Chengalpattu</item>

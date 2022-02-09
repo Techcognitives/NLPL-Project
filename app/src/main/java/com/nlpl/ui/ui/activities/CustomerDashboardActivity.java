@@ -74,6 +74,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -145,7 +146,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         loadAcceptedTextView = (TextView) findViewById(R.id.customer_dashboard_loads_accepted_button);
         bidsReceivedTextView = (TextView) findViewById(R.id.customer_dashboard_bids_received_button);
 
-        if (isbidsReceivedSelected){
+        if (isbidsReceivedSelected) {
             bidsReceivedSelected = true;
             loadAcceptedConstrain.setVisibility(View.INVISIBLE);
             bidsReceivedConstrain.setVisibility(View.VISIBLE);
@@ -338,7 +339,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         intent.putExtra("bidsReveived", bidsReceivedSelected);
         startActivity(intent);
         finish();
-        overridePendingTransition(0,0);
+        overridePendingTransition(0, 0);
     }
 
     public void getBidsAccepted() {
@@ -487,15 +488,14 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         bidsReceivedModel.setDrop_pin_code(obj.getString("drop_pin_code"));
                         bidsReceivedModel.setDrop_city(obj.getString("drop_city"));
                         bidsReceivedModel.setDrop_state(obj.getString("drop_state"));
+                        bidsReceivedModel.setSp_count(obj.getInt("sp_count"));
                         bidsReceivedModel.setDrop_country(obj.getString("drop_country"));
                         bidsReceivedModel.setKm_approx(obj.getString("km_approx"));
                         bidsReceivedModel.setNotes_meterial_des(obj.getString("notes_meterial_des"));
                         bidsReceivedModel.setBid_ends_at(obj.getString("bid_ends_at"));
 
                         if (!obj.getString("bid_status").equals("loadSubmitted") && !obj.getString("bid_status").equals("delete") && !obj.getString("bid_status").equals("loadExpired")) {
-                            if (obj.getInt("sp_count")<=3) {
-                                bidsList.add(bidsReceivedModel);
-                            }
+                            bidsList.add(bidsReceivedModel);
                         }
                     }
 
@@ -633,7 +633,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                 UpdateBidDetails.updateBidStatus(obj.getSp_bid_id(), "Accepted");
                 UpdateBidDetails.updateCustomerBudgetForSP(obj.getSp_bid_id(), customerQuote.getText().toString());
                 UpdatePostLoadDetails.updateBudget(obj.getIdpost_load(), customerQuote.getText().toString());
-                UpdatePostLoadDetails.updateCount(obj.getIdpost_load(), count+1);
+                UpdatePostLoadDetails.updateCount(obj.getIdpost_load(), count + 1);
 
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(CustomerDashboardActivity.this);
@@ -680,7 +680,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
     //----------------------------------------------------------------------------------------------------------------
 
-    private void getLoadDetails(String loadId){
+    private void getLoadDetails(String loadId) {
         String url1 = getString(R.string.baseURL) + "/loadpost/getLoadDtByPostId/" + loadId;
         Log.i("URL: ", url1);
 
@@ -887,7 +887,9 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         bidsResponsesModel.setIs_bid_accpted_by_sp(obj.getString("is_bid_accpted_by_sp"));
 
                         if (!obj.getString("bid_status").equals("withdrawnByLp")) {
-                            bidResponsesList.add(bidsResponsesModel);
+//                            if (obj1.getSp_count()<=3) {
+                                bidResponsesList.add(bidsResponsesModel);
+//                            }
                         }
                     }
 
@@ -1354,7 +1356,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                                             intent.putExtra("bidsReveived", bidsReceivedSelected);
                                             startActivity(intent);
                                             finish();
-                                            overridePendingTransition(0,0);
+                                            overridePendingTransition(0, 0);
                                         }
                                     });
                                     //------------------------------------------------------------------------------------------
@@ -1407,7 +1409,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                                             intent.putExtra("bidsReveived", bidsReceivedSelected);
                                             startActivity(intent);
                                             finish();
-                                            overridePendingTransition(0,0);
+                                            overridePendingTransition(0, 0);
                                         }
                                     });
                                     //------------------------------------------------------------------------------------------
@@ -1430,7 +1432,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                             intent.putExtra("bidsReveived", bidsReceivedSelected);
                             startActivity(intent);
                             finish();
-                            overridePendingTransition(0,0);
+                            overridePendingTransition(0, 0);
                             viewConsignmentCustomer.dismiss();
                         }
                     });
@@ -2044,7 +2046,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                 intent.putExtra("bidsReveived", bidsReceivedSelected);
                 startActivity(intent);
                 finish();
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
             }
         });
         //------------------------------------------------------------------------------------------
@@ -2093,13 +2095,68 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         intent.putExtra("bidsReveived", bidsReceivedSelected);
                         startActivity(intent);
                         finish();
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                     }
                 });
                 //------------------------------------------------------------------------------------------
-
-
             }
         });
+    }
+
+    public void sortByPriceHighToLow(BidsReceivedModel obj) {
+
+        ArrayList<BidsResponsesModel> highToLowLIst = new ArrayList<>();
+        ArrayList<String> arraySpQuote = new ArrayList<>();
+        highToLowLIst.clear();
+
+        String url1 = getString(R.string.baseURL) + "/spbid/getBidDtByPostId/" + obj.getIdpost_load();
+        Log.i("URL: ", url1);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray highToLow = response.getJSONArray("data");
+                    for (int i = 0; i < highToLow.length(); i++) {
+                        JSONObject obj = highToLow.getJSONObject(i);
+                        BidsResponsesModel bidsResponsesModel = new BidsResponsesModel();
+                        bidsResponsesModel.setSp_bid_id(obj.getString("sp_bid_id"));
+                        bidsResponsesModel.setUser_id(obj.getString("user_id"));
+                        bidsResponsesModel.setIdpost_load(obj.getString("idpost_load"));
+                        bidsResponsesModel.setSp_quote(obj.getString("sp_quote"));
+                        bidsResponsesModel.setIs_negatiable(obj.getString("is_negatiable"));
+                        bidsResponsesModel.setAssigned_truck_id(obj.getString("assigned_truck_id"));
+                        bidsResponsesModel.setAssigned_driver_id(obj.getString("assigned_driver_id"));
+                        bidsResponsesModel.setVehicle_model(obj.getString("vehicle_model"));
+                        bidsResponsesModel.setFeet(obj.getString("feet"));
+                        bidsResponsesModel.setCapacity(obj.getString("capacity"));
+                        bidsResponsesModel.setBody_type(obj.getString("body_type"));
+                        bidsResponsesModel.setNotes(obj.getString("notes"));
+                        bidsResponsesModel.setBid_status(obj.getString("bid_status"));
+                        bidsResponsesModel.setIs_bid_accpted_by_sp(obj.getString("is_bid_accpted_by_sp"));
+
+                        if (!obj.getString("bid_status").equals("withdrawnByLp")) {
+                            arraySpQuote.add(obj.getString("sp_quote"));
+                            highToLowLIst.add(bidsResponsesModel);
+                        }
+                    }
+
+                    for (int i=0; i<highToLowLIst.size();i++){
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+        //-------------------------------------------------------------------------------------------
+
     }
 }

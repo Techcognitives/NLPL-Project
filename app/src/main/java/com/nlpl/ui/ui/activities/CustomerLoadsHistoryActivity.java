@@ -184,7 +184,7 @@ public class CustomerLoadsHistoryActivity extends AppCompatActivity {
                         bidsReceivedModel.setCapacity(obj.getString("capacity"));
                         bidsReceivedModel.setBody_type(obj.getString("body_type"));
 
-                        if (obj.getString("bid_status").equals("loadExpired")) {
+                        if (obj.getString("bid_status").equals("loadSubmitted")) {
                             completedLoadList.add(bidsReceivedModel);
                         }
                     }

@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -265,6 +267,38 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
             }
         });
 
+        if (obj.getSp_count()>3){
+
+        } else {
+            holder.sortBy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    //Change the selected item's text color
+                    try {
+                        ((TextView) view).setTextColor(activity.getResources().getColor(R.color.white));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    if (parent.getSelectedItem().equals("Price High-low")) {
+                        activity.sortByPriceHighToLow(obj);
+                    }
+                    if (parent.getSelectedItem().equals("Price Low-high")) {
+
+                    }
+                    if (parent.getSelectedItem().equals("Recent Responses")) {
+
+                    }
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
+            });
+        }
+
     }
 
     @Override
@@ -280,11 +314,13 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
     public class BidsReceivedViewHolder extends RecyclerView.ViewHolder {
         private TextView timeLeft, destinationStart, destinationEnd, budget, date, time, distance, model, feet, capacity, body, editLoadButton, bidsReceived;
         RecyclerView bidsResponsesRecyclerView;
+        Spinner sortBy;
         ConstraintLayout showRecyclerView;
 
         public BidsReceivedViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            sortBy = itemView.findViewById(R.id.bids_received_list_sort_by_textview);
             timeLeft = itemView.findViewById(R.id.bids_responses_time_left);
             destinationStart = itemView.findViewById(R.id.bids_received_pick_up);
             destinationEnd = itemView.findViewById(R.id.bids_responses_drop);

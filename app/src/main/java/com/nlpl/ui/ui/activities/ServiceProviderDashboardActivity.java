@@ -1376,6 +1376,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         negotiable_yes.setEnabled(false);
                         isNegotiableSelected = true;
                     } else {
+                        negotiable_yes.setEnabled(true);
                         spQuote.setTextColor(getResources().getColor(R.color.redDark));
                     }
                     okBudget.setEnabled(true);
