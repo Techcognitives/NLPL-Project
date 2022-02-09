@@ -16,6 +16,7 @@ import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserPhoneNumber
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserPinCode;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserPreferredLanguage;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserPreferredLocation;
+import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserRating;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserStateCode;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserType;
 import com.nlpl.utils.ApiClient;
@@ -342,6 +343,26 @@ public class UpdateUserDetails {
 
             @Override
             public void onFailure(Call<UpdateUserIsProfileAdded> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //-------------------------------- Update User Rating --------------------------------------------
+    public static void updateUserRating(String spId, String rating) {
+        UpdateUserRating updateUserRating = new UpdateUserRating(rating);
+        Call<UpdateUserRating> call = ApiClient.getUserService().updateUserRating("" + spId, updateUserRating);
+        call.enqueue(new Callback<UpdateUserRating>() {
+            @Override
+            public void onResponse(Call<UpdateUserRating> call, Response<UpdateUserRating> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User Rating");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserRating> call, Throwable t) {
+                Log.i("Not Successful", "User Rating");
 
             }
         });
