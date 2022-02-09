@@ -296,12 +296,11 @@ public class FindLoadsActivity extends AppCompatActivity {
                         findLoadsModel.setNotes_meterial_des(obj.getString("notes_meterial_des"));
                         findLoadsModel.setBid_ends_at(obj.getString("bid_ends_at"));
                         if (obj.getString("bid_status").equals("loadPosted") || obj.getString("bid_status").equals("loadReactivated")) {
-                        bidsList.add(findLoadsModel);
+                            bidsList.add(findLoadsModel);
                         }
                     }
 
                     getBidListByUserId(bidsList);
-
 
 
                 } catch (JSONException e) {
@@ -1518,7 +1517,7 @@ public class FindLoadsActivity extends AppCompatActivity {
         bidsListRecyclerView.setAdapter(bidsListAdapter);
 
         if (loadListToCompare.size() > 0) {
-           bidsListAdapter.updateData(loadListToCompare);
+            bidsListAdapter.updateData(loadListToCompare);
 
             for (int i = 0; i < loadListToCompare.size(); i++) {
                 if (loadListToCompare.size() == 0) {
@@ -1533,119 +1532,162 @@ public class FindLoadsActivity extends AppCompatActivity {
                     ArrayList<FindLoadsModel> newList = new ArrayList<>(loadListToCompare.subList(loadListToCompare.size() - 3, loadListToCompare.size()));
                     bidsListAdapter.updateData(newList);
                 }
+            }
+            getStateBids(loadListToCompare);
+        }
 
-                if (loadListToCompare.get(i).getPick_state().equals("AN")) {
-                    anList.add(loadListToCompare.get(i));
-                }
-                if (loadListToCompare.get(i).getPick_state().equals("AP")) {
-                    apList.add(loadListToCompare.get(i));
-                }
-                if (loadListToCompare.get(i).getPick_state().equals("AR")) {
-                    arList.add(loadListToCompare.get(i));
-                }
-                if (loadListToCompare.get(i).getPick_state().equals("AS")) {
-                    asList.add(loadListToCompare.get(i));
-                }
-                if (loadListToCompare.get(i).getPick_state().equals("BR")) {
-                    brList.add(loadListToCompare.get(i));
-                }
-                if (loadListToCompare.get(i).getPick_state().equals("CH/PB")) {
-                    chList.add(loadListToCompare.get(i));
-                }
-                if (loadListToCompare.get(i).getPick_state().equals("CG")) {
-                    cgList.add(loadListToCompare.get(i));
-                }
-                if (loadListToCompare.get(i).getPick_state().equals("DD")) {
-                    ddList.add(loadListToCompare.get(i));
-                }
-                if (loadListToCompare.get(i).getPick_state().equals("DD2")) {
-                    dd2List.add(loadListToCompare.get(i));
-                }
-                if (loadListToCompare.get(i).getPick_state().equals("DL")) {
-                    dlList.add(loadListToCompare.get(i));
-                }
-                if (loadListToCompare.get(i).getPick_state().equals("GA")) {
-                    gaList.add(loadListToCompare.get(i));
-                }
-                if (loadListToCompare.get(i).getPick_state().equals("GJ")) {
-                    gjList.add(loadListToCompare.get(i));
-                }
-                if (loadListToCompare.get(i).getPick_state().equals("HR")) {
-                    hrList.add(loadListToCompare.get(i));
-                }
-                if (bidsList.get(i).getPick_state().equals("HP")) {
-                    hpList.add(bidsList.get(i));
-                }
-                if (bidsList.get(i).getPick_state().equals("JK")) {
-                    jkList.add(bidsList.get(i));
-                }
-                if (bidsList.get(i).getPick_state().equals("JH")) {
-                    jhList.add(bidsList.get(i));
-                }
-                if (bidsList.get(i).getPick_state().equals("KA")) {
-                    kaList.add(bidsList.get(i));
-                }
-                if (bidsList.get(i).getPick_state().equals("KL")) {
-                    klList.add(bidsList.get(i));
-                }
-                if (loadListToCompare.get(i).getPick_state().equals("LA")) {
-                    laList.add(loadListToCompare.get(i));
-                }
-                if (bidsList.get(i).getPick_state().equals("LD")) {
-                    ldList.add(bidsList.get(i));
-                }
-                if (bidsList.get(i).getPick_state().equals("MP")) {
-                    mpList.add(bidsList.get(i));
-                }
+    }
 
-                if (bidsList.get(i).getPick_state().equals("MH")) {
-                    mhList.add(bidsList.get(i));
-                }
-                if (bidsList.get(i).getPick_state().equals("MN")) {
-                    mnList.add(bidsList.get(i));
-                }
-                if (bidsList.get(i).getPick_state().equals("ML")) {
-                    mlList.add(bidsList.get(i));
-                }
-                if (bidsList.get(i).getPick_state().equals("MZ")) {
-                    mzList.add(bidsList.get(i));
-                }
-                if (bidsList.get(i).getPick_state().equals("NL")) {
-                    nlList.add(bidsList.get(i));
-                }
-                if (bidsList.get(i).getPick_state().equals("OD")) {
-                    odList.add(bidsList.get(i));
-                }
-                if (bidsList.get(i).getPick_state().equals("PY")) {
-                    pyList.add(bidsList.get(i));
-                }
-                if (bidsList.get(i).getPick_state().equals("PB")) {
-                    pbList.add(bidsList.get(i));
-                }
-                if (bidsList.get(i).getPick_state().equals("RJ")) {
-                    rjList.add(bidsList.get(i));
-                }
-                if (bidsList.get(i).getPick_state().equals("SK")) {
-                    skList.add(bidsList.get(i));
-                }
-                if (bidsList.get(i).getPick_state().equals("TN")) {
-                    tnList.add(bidsList.get(i));
-                }
-                if (bidsList.get(i).getPick_state().equals("TS")) {
-                    tsList.add(bidsList.get(i));
-                }
-                if (bidsList.get(i).getPick_state().equals("TR")) {
-                    trList.add(bidsList.get(i));
-                }
-                if (bidsList.get(i).getPick_state().equals("UK")) {
-                    ukList.add(bidsList.get(i));
-                }
-                if (bidsList.get(i).getPick_state().equals("UP")) {
-                    upList.add(bidsList.get(i));
-                }
-                if (bidsList.get(i).getPick_state().equals("WB")) {
-                    wbList.add(bidsList.get(i));
-                }
+    private void getStateBids(ArrayList<FindLoadsModel> loadListToCompare) {
+        anList.clear();
+        apList.clear();
+        arList.clear();
+        asList.clear();
+        brList.clear();
+        chList.clear();
+        cgList.clear();
+        ddList.clear();
+        dd2List.clear();
+        dlList.clear();
+        gaList.clear();
+        gjList.clear();
+        hrList.clear();
+        hpList.clear();
+        jkList.clear();
+        jhList.clear();
+        kaList.clear();
+        klList.clear();
+        laList.clear();
+        ldList.clear();
+        mpList.clear();
+        mhList.clear();
+        mnList.clear();
+        mlList.clear();
+        mzList.clear();
+        nlList.clear();
+        odList.clear();
+        pyList.clear();
+        pbList.clear();
+        rjList.clear();
+        skList.clear();
+        tnList.clear();
+        tsList.clear();
+        trList.clear();
+        ukList.clear();
+        upList.clear();
+        wbList.clear();
+
+        for (int i = 0; i < loadListToCompare.size(); i++) {
+            if (loadListToCompare.get(i).getPick_state().equals("AN")) {
+                anList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("AP")) {
+                apList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("AR")) {
+                arList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("AS")) {
+                asList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("BR")) {
+                brList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("CH/PB")) {
+                chList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("CG")) {
+                cgList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("DD")) {
+                ddList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("DD2")) {
+                dd2List.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("DL")) {
+                dlList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("GA")) {
+                gaList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("GJ")) {
+                gjList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("HR")) {
+                hrList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("HP")) {
+                hpList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("JK")) {
+                jkList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("JH")) {
+                jhList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("KA")) {
+                kaList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("KL")) {
+                klList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("LA")) {
+                laList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("LD")) {
+                ldList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("MP")) {
+                mpList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("MH")) {
+                mhList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("MN")) {
+                mnList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("ML")) {
+                mlList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("MZ")) {
+                mzList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("NL")) {
+                nlList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("OD")) {
+                odList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("PY")) {
+                pyList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("PB")) {
+                pbList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("RJ")) {
+                rjList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("SK")) {
+                skList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("TN")) {
+                tnList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("TS")) {
+                tsList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("TR")) {
+                trList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("UK")) {
+                ukList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("UP")) {
+                upList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("WB")) {
+                wbList.add(loadListToCompare.get(i));
             }
         }
     }
