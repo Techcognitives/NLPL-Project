@@ -767,9 +767,9 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
 
                     if (spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) || !negotiable) {
                         isNegotiableSelected = true;
-                        saveBid(createBidRequest("RespondedBySP", spQuote.getText().toString()));
+                        saveBid(createBidRequest("submittedNonNego", spQuote.getText().toString()));
                     } else {
-                        saveBid(createBidRequest("submitted", ""));
+                        saveBid(createBidRequest("submittedNego", ""));
                     }
 
                     Log.i("loadId bidded", obj.getIdpost_load());
@@ -1635,7 +1635,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 UpdateBidDetails.updateSPNoteForCustomer(obj.getBidId(), notesSp.getText().toString());
-                UpdateBidDetails.updateBidStatus(obj.getBidId(), "RespondedBySP");
+                UpdateBidDetails.updateBidStatus(obj.getBidId(), "AaRespondedBySP");
                 UpdateBidDetails.updateSPQuoteFinal(obj.getBidId(), spQuote.getText().toString());
                 UpdateBidDetails.updateAssignedTruckId(obj.getBidId(), updateAssignedTruckId);
                 UpdateBidDetails.updateAssignedDriverId(obj.getBidId(), updateAssignedDriverId);

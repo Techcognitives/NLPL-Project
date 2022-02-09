@@ -293,11 +293,16 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
                         sortBy = "Recent Responses";
                         activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView, holder.bidsReceived, holder.showRecyclerView, sortBy);
                     }
+                    if (parent.getSelectedItem().equals("Initial Responses")) {
+                        sortBy = "Initial Responses";
+                        activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView, holder.bidsReceived, holder.showRecyclerView, sortBy);
+                    }
 
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
+
                 }
             });
         }

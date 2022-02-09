@@ -247,7 +247,7 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
                         JSONObject obj1 = truckLists.getJSONObject(i);
                         String bid_status = obj1.getString("bid_status");
 
-                        if (bid_status.equals("submitted")) {
+                        if (bid_status.equals("submittedNego")) {
                             holder.budget.setText("₹" + obj.getBudget());
                             holder.bidNowButton.setText("Bid Submitted");
                         }
@@ -265,7 +265,12 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
                             });
                         }
 
-                        if (bid_status.equals("RespondedBySP")) {
+                        if (bid_status.equals("AaRespondedBySP")) {
+                            holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
+                            holder.bidNowButton.setText("You Responded");
+                            holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.button_blue));
+                        }
+                        if (bid_status.equals("submittedNonNego")) {
                             holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
                             holder.bidNowButton.setText("You Responded");
                             holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.button_blue));

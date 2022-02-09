@@ -900,11 +900,36 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                         }
                     }
 
+                    if (!sortBy.equals("Initial Responses")) {
+                        Collections.reverse(bidResponsesList);
+                    }
+
+                    Collections.sort(bidResponsesList, new Comparator<BidsResponsesModel>() {
+                        @Override
+                        public int compare(BidsResponsesModel bidsResponsesModel, BidsResponsesModel t1) {
+                            return bidsResponsesModel.getBid_status().compareTo(t1.getBid_status());
+                        }
+                    });
+
                     for (int i = 0; i < bidResponsesList.size(); i++) {
 
                         bidsReceived.setText(String.valueOf(bidResponsesList.size() + " Responses Received"));
 
                         if (sortBy.equals("noSort")) {
+
+                            bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
+                            bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
+                            bidsResponsesAdapter.updateData(bidResponsesList);
+                        }
+
+                        if (sortBy.equals("Recent Responses")) {
+
+                            bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
+                            bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
+                            bidsResponsesAdapter.updateData(bidResponsesList);
+                        }
+                        if (sortBy.equals("Initial Responses")) {
+
                             bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
                             bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
                             bidsResponsesAdapter.updateData(bidResponsesList);
