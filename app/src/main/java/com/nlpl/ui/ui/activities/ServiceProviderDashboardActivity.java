@@ -765,6 +765,15 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
 
+                    if (spQuote.getText().toString().equals(customerFirstBudget.getText().toString())) {
+                        isNegotiableSelected = true;
+                        saveBid(createBidRequest("AaRespondedBySp", spQuote.getText().toString()));
+                    } else if (!negotiable) {
+                        saveBid(createBidRequest("submittedNonNego", spQuote.getText().toString()));
+                    } else {
+                        saveBid(createBidRequest("submittedNego", ""));
+                    }
+
                     if (spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) || !negotiable) {
                         isNegotiableSelected = true;
                         saveBid(createBidRequest("submittedNonNego", spQuote.getText().toString()));
