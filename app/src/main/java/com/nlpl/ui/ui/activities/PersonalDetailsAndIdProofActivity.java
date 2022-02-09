@@ -1148,14 +1148,20 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                         } else if (roleAPI.equals("Owner")) {
                             customerButton.setChecked(false);
                             ownerButton.setChecked(true);
+                            driverButton.setChecked(false);
+                            brokerButton.setChecked(false);
 
                         } else if (roleAPI.equals("Driver")) {
                             customerButton.setChecked(false);
-                            ownerButton.setChecked(true);
+                            ownerButton.setChecked(false);
+                            driverButton.setChecked(true);
+                            brokerButton.setChecked(false);
 
                         } else if (roleAPI.equals("Broker")) {
                             customerButton.setChecked(false);
-                            ownerButton.setChecked(true);
+                            ownerButton.setChecked(false);
+                            driverButton.setChecked(false);
+                            brokerButton.setChecked(true);
                         } else {
 
                         }

@@ -58,7 +58,6 @@ import com.nlpl.model.Responses.UploadImageResponse;
 import com.nlpl.model.UpdateMethods.UpdateBidDetails;
 import com.nlpl.model.UpdateMethods.UpdatePostLoadDetails;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
-import com.nlpl.model.UpdateModel.Models.UpdateBids.UpdateBudgetCustomerForSP;
 import com.nlpl.ui.ui.adapters.BidsAcceptedAdapter;
 import com.nlpl.ui.ui.adapters.BidsReceivedAdapter;
 import com.nlpl.ui.ui.adapters.BidsResponsesAdapter;
@@ -66,7 +65,6 @@ import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.EnglishNumberToWords;
 import com.nlpl.utils.FileUtils;
-import com.nlpl.utils.MakePayment;
 import com.razorpay.Checkout;
 
 import org.json.JSONArray;
@@ -86,7 +84,6 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 
 public class CustomerDashboardActivity extends AppCompatActivity implements PaymentResultListener {
 
@@ -129,11 +126,11 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     TextView quoteBySp1, timeLeftTextview, timeLeft00, loadAcceptedTextView, bidsReceivedTextView, customerQuote, submitResponseBtn, cancleBtn;
     RadioButton negotiable_yes, negotiable_no;
     EditText notesCustomer;
-    String userId, phone;
+    String userId, phone, s1, customerEmail;
     String spQuoteByApi, bid_idByAPI, noteByApi;
 
     ArrayList<String> arrayAssignedDriverId, arrayBidId, arrayUserId, arrayBidStatus, arrayNotesFromSP;
-    String fianlBidId, noteBySPToCustomer, assignedDriverId, assignedDriverIdAPI, assignedUserId, assignedUserIdAPI, bidStatusAPI;
+    String fianlBidId, noteBySPToCustomer, assignedDriverId, assignedDriverIdAPI, assignedUserId, assignedUserIdAPI, bidStatusAPI, customerNameAPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -261,7 +258,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     }
 
     private void getUserId(String userMobileNumber) {
-        ArrayList<String> arrayUserId = new ArrayList<>(), arrayMobileNo = new ArrayList<>(), arrayCustomerName = new ArrayList<>(), isPersonalD = new ArrayList<>(), isProfileArray = new ArrayList<>(), isBankD = new ArrayList<>();
+        ArrayList<String> arrayUserId = new ArrayList<>(), arrayMobileNo = new ArrayList<>(), arrayCustomerName = new ArrayList<>(), arrayCustomerEmail = new ArrayList<>(), isPersonalD = new ArrayList<>(), isProfileArray = new ArrayList<>(), isBankD = new ArrayList<>();
         //------------------------------get user details by mobile Number---------------------------------
         //-----------------------------------Get User Details---------------------------------------
         String url = getString(R.string.baseURL) + "/user/get";
@@ -280,6 +277,8 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                         arrayMobileNo.add(mobileNoAPI);
                         String userName = data.getString("name");
                         arrayCustomerName.add(userName);
+                        String emailAPI = data.getString("email_id");
+                        arrayCustomerEmail.add(emailAPI);
 
                         String isPer = data.getString("isPersonal_dt_added");
                         isPersonalD.add(isPer);
@@ -291,11 +290,12 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                     for (int j = 0; j < arrayMobileNo.size(); j++) {
                         if (arrayMobileNo.get(j).equals(userMobileNumber)) {
                             userId = arrayUserId.get(j);
-                            String customerNameAPI = arrayCustomerName.get(j);
+                            customerNameAPI = arrayCustomerName.get(j);
                             userNameTextViewMenu.setText(customerNameAPI);
                             String customerNumberAPI = arrayMobileNo.get(j);
-                            String s1 = customerNumberAPI.substring(2, 12);
+                            s1 = customerNumberAPI.substring(2, 12);
                             mobileTextViewMenu.setText("+91 " + s1);
+                            customerEmail = arrayCustomerEmail.get(j);
 
                             isPersonalDetailsDone = isPersonalD.get(j);
                             isProfileAdded = isProfileArray.get(j);
@@ -1096,10 +1096,13 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                 alertPositiveButton.setText("Pay & Accept Bid");
                 alertNegativeButton.setText("Cancel");
 
+                String quote = obj.getSp_quote().replaceAll(",","");
+
                 alertPositiveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        MakePayment.makePayment(CustomerDashboardActivity.this);
+                        alert.dismiss();
+                        makePayment(customerNameAPI, quote, customerEmail, s1);
                     }
                 });
 
@@ -1146,17 +1149,125 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         });
     }
 
+    private void makePayment(String customerName, String amount, String customerEmail, String contactNumber) {
+        Checkout checkout = new Checkout();
+        checkout.setKeyID("rzp_test_lGpYN1TVDxAQOn");
+        Log.i("Customer Payment:", customerName + amount + customerEmail + contactNumber);
+
+
+//        checkout.setImage(R.drawable.logo);
+
+        int sAmount = Math.round(Float.parseFloat(amount) * 100);
+
+        try {
+            JSONObject options = new JSONObject();
+
+            options.put("name", "FindYourTruck");
+            options.put("description", "User Id: "+userId);
+            // options.put("order_id", "order_DBJOWzybf0sJbb");//from response of step 3.
+            options.put("theme.color", "#CC2027");
+            options.put("currency", "INR");
+            options.put("amount", sAmount);
+            options.put("prefill.email", customerEmail);
+            options.put("prefill.contact", contactNumber);
+            checkout.open(CustomerDashboardActivity.this, options);
+        } catch (Exception e) {
+            Log.e("TAG", "Error in starting Razorpay Checkout", e);
+        }
+    }
+
     @Override
     public void onPaymentSuccess(String s) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Payment ID");
-        builder.setMessage(s);
-        builder.show();
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle("Payment ID");
+//        builder.setMessage(s);
+//        builder.show();
+        //----------------------- Alert Dialog -------------------------------------------------
+        Dialog alert = new Dialog(CustomerDashboardActivity.this);
+        alert.setContentView(R.layout.dialog_alert);
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(alert.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        alert.show();
+        alert.getWindow().setAttributes(lp);
+        alert.setCancelable(false);
+
+        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+        alertTitle.setText("Payment Successful");
+        alertMessage.setText("Payment Id: " + s);
+        alertPositiveButton.setVisibility(View.GONE);
+        alertNegativeButton.setText("Ok");
+        alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+        alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+                Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
+                intent.putExtra("userId", userId);
+                intent.putExtra("mobile", phone);
+                intent.putExtra("bidsReveived", bidsReceivedSelected);
+                startActivity(intent);
+                finish();
+                overridePendingTransition(0,0);
+            }
+        });
+        //------------------------------------------------------------------------------------------
     }
 
     @Override
     public void onPaymentError(int i, String s) {
-        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+        Log.i("Error of Razorpay", s);
+
+        //----------------------- Alert Dialog -------------------------------------------------
+        Dialog alert = new Dialog(CustomerDashboardActivity.this);
+        alert.setContentView(R.layout.dialog_alert);
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(alert.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        alert.show();
+        alert.getWindow().setAttributes(lp);
+        alert.setCancelable(false);
+
+        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+        alertTitle.setText("Payment Failed");
+        alertMessage.setText("Your transaction has failed. Please try again");
+        alertPositiveButton.setVisibility(View.GONE);
+        alertNegativeButton.setText("Ok");
+        alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+        alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+                Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
+                intent.putExtra("userId", userId);
+                intent.putExtra("mobile", phone);
+                intent.putExtra("bidsReveived", bidsReceivedSelected);
+                startActivity(intent);
+                finish();
+                overridePendingTransition(0,0);
+            }
+        });
+        //------------------------------------------------------------------------------------------
     }
 
     public void onClickViewConsignment(BidsAcceptedModel obj) {
@@ -1306,8 +1417,6 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                         });
                         mQueue.add(request1);
                         //----------------------------------------------------------
-
-
                     }
 
                     quoteBySP.setText(spQuoteByApi);
