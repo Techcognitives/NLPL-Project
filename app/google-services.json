@@ -1,41 +1,42 @@
 {
   "project_info": {
-    "project_number": "692893220141",
-    "project_id": "nlpl-2cbce",
-    "storage_bucket": "nlpl-2cbce.appspot.com"
+    "project_number": "228909387365",
+    "firebase_url": "https://findyourtruck-393a4-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "findyourtruck-393a4",
+    "storage_bucket": "findyourtruck-393a4.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:692893220141:android:ed1f376417a4bddca1e7a4",
+        "mobilesdk_app_id": "1:228909387365:android:e77243de091d61e704c08c",
         "android_client_info": {
           "package_name": "com.nlpl"
         }
       },
       "oauth_client": [
         {
-          "client_id": "692893220141-jag7nubv8vghosef9ve9jaovadkv54n2.apps.googleusercontent.com",
+          "client_id": "228909387365-6rdu3m39cl2mk032dk7ovok409k9rd1h.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.nlpl",
-            "certificate_hash": "1be579d71bf6edd48cd6fb6f1bc99200e613e9d6"
+            "certificate_hash": "0650cf8ae9c1604ad35664a2d39174c6f145921e"
           }
         },
         {
-          "client_id": "692893220141-9p7v0b6o5hdcp6mel5lfod9gb3n2tgpq.apps.googleusercontent.com",
+          "client_id": "228909387365-gg3sca1t946qv46hbkpgo46aull67rte.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDZl69uLuxciKX0FkKN-EtrECukAavQ-rU"
+          "current_key": "AIzaSyDpj853rM5D2WCvOYuvWWDrMTICRCW8uyo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "692893220141-9p7v0b6o5hdcp6mel5lfod9gb3n2tgpq.apps.googleusercontent.com",
+              "client_id": "228909387365-gg3sca1t946qv46hbkpgo46aull67rte.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

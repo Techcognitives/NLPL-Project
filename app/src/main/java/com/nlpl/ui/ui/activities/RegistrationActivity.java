@@ -50,6 +50,7 @@ import com.nlpl.R;
 import com.nlpl.model.Requests.UserRequest;
 import com.nlpl.model.Responses.UserResponse;
 import com.nlpl.utils.ApiClient;
+import com.nlpl.utils.GetCurrentLocation;
 import com.nlpl.utils.SelectCity;
 import com.nlpl.utils.SelectState;
 
@@ -306,7 +307,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     public void onClickGetCurrentLocation(View view) {
-        getLocation();
+        GetCurrentLocation.getCurrentLocation(RegistrationActivity.this, address, pinCode, selectStateText, selectDistrictText);
     }
 
     public void onClickRegistration(View view) {
@@ -534,42 +535,4 @@ public class RegistrationActivity extends AppCompatActivity {
         });
     }
     //----------------------------------------------------------------------------------------------
-
-    private void getLocation() {
-//        if (ActivityCompat.checkSelfPermission(RegistrationActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-//            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
-//                @Override
-//                public void onComplete(@NonNull Task<Location> task) {
-//                    Location location = task.getResult();
-//                    if (location != null) {
-//                        Geocoder geocoder = new Geocoder(RegistrationActivity.this, Locale.getDefault());
-//                        try {
-//                            String latitudeCurrent, longitudeCurrent, countryCurrent, stateCurrent, cityCurrent, subCityCurrent, addressCurrent, pinCodeCurrent;
-//                            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-//                            latitudeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLatitude()));
-//                            longitudeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLongitude()));
-//                            countryCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getCountryName()));
-//                            stateCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getAdminArea()));
-//                            cityCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLocality()));
-//                            subCityCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getSubLocality()));
-//                            addressCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getAddressLine(0)));
-//                            pinCodeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getPostalCode()));
-//
-//                            address.setText(addressCurrent);
-//                            pinCode.setText(pinCodeCurrent);
-//                            selectStateText.setText(stateCurrent);
-//                            selectDistrictText.setText(cityCurrent);
-//
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//
-//                }
-//            });
-//        } else {
-//            ActivityCompat.requestPermissions(RegistrationActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
-//        }
-
-    }
 }
