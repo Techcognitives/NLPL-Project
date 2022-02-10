@@ -592,6 +592,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         negotiable_yes.setEnabled(false);
         negotiable_no.setChecked(true);
 
+
         if (!customerQuote.getText().toString().isEmpty()) {
             submitResponseBtn.setEnabled(true);
             submitResponseBtn.setBackgroundResource((R.drawable.button_active));
