@@ -677,8 +677,8 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                            alertTitle.setText("Three Bidders selected");
-                            alertMessage.setText("You have successfully selected three bidders. Please continue with any of selected bidders \nAll the Best.");
+                            alertTitle.setText("Successfully selected three Bidders");
+                            alertMessage.setText("Please Review & Accept any one offer.");
                             alertPositiveButton.setVisibility(View.GONE);
                             alertNegativeButton.setText("OK");
                             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
