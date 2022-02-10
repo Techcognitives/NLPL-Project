@@ -30,6 +30,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.nlpl.R;
+import com.nlpl.utils.JumpTo;
 
 import java.util.ArrayList;
 
@@ -120,12 +121,7 @@ public class LogInActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             alert.dismiss();
-                            Intent i5 = new Intent(LogInActivity.this, OtpCodeActivity.class);
-                            i5.putExtra("mobile", mobile);
-                            i5.putExtra("isEditPhone", false);
-                            startActivity(i5);
-                            finish();
-                            overridePendingTransition(0, 0);
+                            JumpTo.goToOTPActivity(LogInActivity.this, mobile, false);
                         }
                     });
                     //------------------------------------------------------------------------------------------

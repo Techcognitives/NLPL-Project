@@ -17,6 +17,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.nlpl.R;
+import com.nlpl.utils.JumpTo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -139,13 +140,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                                     }
 
                                 } else {
-//                                            Log.i("mobile no not equal", mobileNoAPI);
-                                    Intent i8 = new Intent(SplashScreenActivity.this, RegistrationActivity.class);
-                                    i8.putExtra("mobile1", mobileNoFirebase);
-                                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    startActivity(i8);
-                                    overridePendingTransition(0, 0);
-                                    finish();
+                                    JumpTo.goToRegistrationActivity(SplashScreenActivity.this, mobileNoFirebase);
                                 }
 //
                             } catch (JSONException e) {
@@ -162,9 +157,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                     //------------------------------------------------------------------------------------------------
 
                 } else {
-                    Intent intent = new Intent(SplashScreenActivity.this, LogInActivity.class);
-                    startActivity(intent);
-                    finish();
+                    JumpTo.goToLogInActivity(SplashScreenActivity.this);
                 }
             }
         }, SPLASH_SCREEN);
