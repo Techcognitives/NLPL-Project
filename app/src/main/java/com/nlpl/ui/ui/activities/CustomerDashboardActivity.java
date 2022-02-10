@@ -92,7 +92,6 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     private RequestQueue mQueue;
 
     private ArrayList<BidsReceivedModel> bidsList = new ArrayList<>();
-    ArrayList<BidsResponsesModel> bidResponsesList = new ArrayList<>();
     private BidsReceivedAdapter bidsListAdapter;
     private RecyclerView bidsListRecyclerView;
 
@@ -228,7 +227,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         bidsListRecyclerView.setLayoutManager(linearLayoutManagerBank);
         bidsListRecyclerView.setHasFixedSize(true);
 
-        bidsListAdapter = new BidsReceivedAdapter(CustomerDashboardActivity.this, bidsList, bidResponsesList);
+        bidsListAdapter = new BidsReceivedAdapter(CustomerDashboardActivity.this, bidsList);
         bidsListRecyclerView.setAdapter(bidsListAdapter);
         //------------------------------------------------------------------------------------------
 
@@ -501,7 +500,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
                     if (bidsList.size() > 0) {
                         noLoadTextView.setVisibility(View.GONE);
-                        bidsListAdapter.updateData(bidsList, bidResponsesList);
+                        bidsListAdapter.updateData(bidsList);
                     } else {
                         noLoadTextView.setVisibility(View.VISIBLE);
                     }
@@ -528,6 +527,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp.gravity = Gravity.CENTER;
         previewDialogAcceptANdBid.show();
+        previewDialogAcceptANdBid.setCancelable(false);
         previewDialogAcceptANdBid.getWindow().setAttributes(lp);
 
         //-------------------------------------------Display Load Information---------------------------------------------
@@ -592,6 +592,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         negotiable_yes.setEnabled(false);
         negotiable_no.setChecked(true);
 
+
         if (!customerQuote.getText().toString().isEmpty()) {
             submitResponseBtn.setEnabled(true);
             submitResponseBtn.setBackgroundResource((R.drawable.button_active));
@@ -622,9 +623,8 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
             public void onClick(View view) {
 
                 UpdatePostLoadDetails.updateNotes(obj.getIdpost_load(), notesCustomer.getText().toString());
-                UpdateBidDetails.updateBidStatus(obj.getSp_bid_id(), "Accepted");
+                UpdateBidDetails.updateBidStatus(obj.getSp_bid_id(), "RespondedByLp");
                 UpdateBidDetails.updateCustomerBudgetForSP(obj.getSp_bid_id(), customerQuote.getText().toString());
-                UpdatePostLoadDetails.updateBudget(obj.getIdpost_load(), customerQuote.getText().toString());
                 UpdatePostLoadDetails.updateCount(obj.getIdpost_load(), count + 1);
 
                 //----------------------- Alert Dialog -------------------------------------------------
@@ -656,8 +656,57 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                 alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        alert.dismiss();
-                        JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
+
+                        if (count==3) {
+                            //----------------------- Alert Dialog -------------------------------------------------
+                            Dialog alert = new Dialog(CustomerDashboardActivity.this);
+                            alert.setContentView(R.layout.dialog_alert);
+                            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                            lp.copyFrom(alert.getWindow().getAttributes());
+                            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                            lp.gravity = Gravity.CENTER;
+
+                            alert.show();
+                            alert.getWindow().setAttributes(lp);
+                            alert.setCancelable(false);
+
+                            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                            alertTitle.setText("Successfully selected three Bidders");
+                            alertMessage.setText("Please Review & Accept any one offer.");
+                            alertPositiveButton.setVisibility(View.GONE);
+                            alertNegativeButton.setText("OK");
+                            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    alert.dismiss();
+                                    Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
+                                    intent.putExtra("userId", userId);
+                                    intent.putExtra("mobile", phone);
+                                    intent.putExtra("bidsReveived", bidsReceivedSelected);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
+                            alert.dismiss();
+                            //------------------------------------------------------------------------------------------
+                        } else {
+                            alert.dismiss();
+                            Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
+                            intent.putExtra("userId", userId);
+                            intent.putExtra("mobile", phone);
+                            intent.putExtra("bidsReveived", bidsReceivedSelected);
+                            startActivity(intent);
+                            finish();
+                        }
                     }
                 });
                 //------------------------------------------------------------------------------------------
@@ -687,7 +736,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
                     if (bidsList.size() > 0) {
                         noLoadTextView.setVisibility(View.GONE);
-                        bidsListAdapter.updateData(bidsList, bidResponsesList);
+                        bidsListAdapter.updateData(bidsList);
                     } else {
                         noLoadTextView.setVisibility(View.VISIBLE);
                     }
@@ -837,8 +886,9 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
 
     public void getBidsResponsesList(BidsReceivedModel obj1, RecyclerView bidsResponsesRecyclerView, TextView bidsReceived, ConstraintLayout showRecyclerView, String sortBy) {
-
+        ArrayList<BidsResponsesModel> bidResponsesList = new ArrayList<>();
         bidResponsesList.clear();
+//        bidsList.clear();
 
         String url1 = getString(R.string.baseURL) + "/spbid/getBidDtByPostId/" + obj1.getIdpost_load();
         Log.i("URL: ", url1);
@@ -866,83 +916,92 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                         bidsResponsesModel2.setBid_status(obj.getString("bid_status"));
                         bidsResponsesModel2.setIs_bid_accpted_by_sp(obj.getString("is_bid_accpted_by_sp"));
 
-                        Log.i("Sp quote", obj.getString("sp_quote") );
+                        Log.i("Sp quote", obj.getString("sp_quote"));
 
-                        if (!obj.getString("bid_status").equals("withdrawnByLp")) {
-                            bidResponsesList.add(bidsResponsesModel2);
+                        if (obj1.getSp_count()==3){
+                            if (obj.getString("bid_status").equals("AcceptedBySp") || obj.getString("bid_status").equals("RespondedByLp") ) {
+                                bidResponsesList.add(bidsResponsesModel2);
+                            }
+                        } else {
+                            if (!obj.getString("bid_status").equals("withdrawnByLp")) {
+                                bidResponsesList.add(bidsResponsesModel2);
+                            }
                         }
                     }
 
-                    if (!sortBy.equals("Initial Responses")) {
-                        Collections.reverse(bidResponsesList);
-                    }
+                    if (obj1.getSp_count()==3){
 
-                    Collections.sort(bidResponsesList, new Comparator<BidsResponsesModel>() {
-                        @Override
-                        public int compare(BidsResponsesModel bidsResponsesModel, BidsResponsesModel t1) {
-                            return bidsResponsesModel.getBid_status().compareTo(t1.getBid_status());
-                        }
-                    });
+                    } else {
+                        for (int i = 0; i < bidResponsesList.size(); i++) {
+                            if (obj1.getIdpost_load().equals(bidResponsesList.get(i).getIdpost_load())) {
 
-                    for (int i = 0; i < bidResponsesList.size(); i++) {
+                                bidsReceived.setText(String.valueOf(bidResponsesList.size() + " Responses Received"));
 
-                        bidsReceived.setText(String.valueOf(bidResponsesList.size() + " Responses Received"));
-
-                        if (sortBy.equals("noSort")) {
-
-                            bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
-                            bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
-                            bidsResponsesAdapter.updateData(bidResponsesList);
-                        }
-
-                        if (sortBy.equals("Recent Responses")) {
-
-                            bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
-                            bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
-                            bidsResponsesAdapter.updateData(bidResponsesList);
-                        }
-                        if (sortBy.equals("Initial Responses")) {
-
-                            bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
-                            bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
-                            bidsResponsesAdapter.updateData(bidResponsesList);
-                        }
-                        if (sortBy.equals("Price High-low")) {
-
-                            Collections.sort(bidResponsesList, new Comparator<BidsResponsesModel>() {
-                                @Override
-                                public int compare(BidsResponsesModel bidsResponsesModel, BidsResponsesModel t1) {
-                                    String Quote1 = bidsResponsesModel.getSp_quote().replaceAll(",","");
-                                    String Quote2 = t1.getSp_quote().replaceAll(",","");
-                                    int q1 = Integer.valueOf(Quote1);
-                                    int q2 = Integer.valueOf(Quote2);
-                                    return  q2 - q1 ;
+                                if (!sortBy.equals("Initial Responses")) {
+                                    Collections.reverse(bidResponsesList);
                                 }
-                            });
 
-                            bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
-                            bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
-                            bidsResponsesAdapter.updateData(bidResponsesList);
-                        }
+                                if (sortBy.equals("Sort By")) {
+                                    Collections.sort(bidResponsesList, new Comparator<BidsResponsesModel>() {
+                                        @Override
+                                        public int compare(BidsResponsesModel bidsResponsesModel, BidsResponsesModel t1) {
+                                            return bidsResponsesModel.getBid_status().compareTo(t1.getBid_status());
+                                        }
+                                    });
 
-                        if (sortBy.equals("Price Low-high")){
-
-                            Collections.sort(bidResponsesList, new Comparator<BidsResponsesModel>() {
-                                @Override
-                                public int compare(BidsResponsesModel bidsResponsesModel, BidsResponsesModel t1) {
-                                    String Quote1 = bidsResponsesModel.getSp_quote().replaceAll(",","");
-                                    String Quote2 = t1.getSp_quote().replaceAll(",","");
-                                    int q1 = Integer.valueOf(Quote1);
-                                    int q2 = Integer.valueOf(Quote2);
-                                    return  q1 - q2 ;
+                                    bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
+                                    bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
+                                    bidsResponsesAdapter.updateData(bidResponsesList);
                                 }
-                            });
 
-                            bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
-                            bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
-                            bidsResponsesAdapter.updateData(bidResponsesList);
+                                if (sortBy.equals("Recent Responses")) {
+                                    bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
+                                    bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
+                                    bidsResponsesAdapter.updateData(bidResponsesList);
+                                }
+
+                                if (sortBy.equals("Initial Responses")) {
+                                    bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
+                                    bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
+                                    bidsResponsesAdapter.updateData(bidResponsesList);
+                                }
+
+                                if (sortBy.equals("Price High-low")) {
+                                    Collections.sort(bidResponsesList, new Comparator<BidsResponsesModel>() {
+                                        @Override
+                                        public int compare(BidsResponsesModel bidsResponsesModel, BidsResponsesModel t1) {
+                                            String Quote1 = bidsResponsesModel.getSp_quote().replaceAll(",", "");
+                                            String Quote2 = t1.getSp_quote().replaceAll(",", "");
+                                            int q1 = Integer.valueOf(Quote1);
+                                            int q2 = Integer.valueOf(Quote2);
+                                            return q2 - q1;
+                                        }
+                                    });
+
+                                    bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
+                                    bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
+                                    bidsResponsesAdapter.updateData(bidResponsesList);
+                                }
+
+                                if (sortBy.equals("Price Low-high")) {
+                                    Collections.sort(bidResponsesList, new Comparator<BidsResponsesModel>() {
+                                        @Override
+                                        public int compare(BidsResponsesModel bidsResponsesModel, BidsResponsesModel t1) {
+                                            String Quote1 = bidsResponsesModel.getSp_quote().replaceAll(",", "");
+                                            String Quote2 = t1.getSp_quote().replaceAll(",", "");
+                                            int q1 = Integer.valueOf(Quote1);
+                                            int q2 = Integer.valueOf(Quote2);
+                                            return q1 - q2;
+                                        }
+                                    });
+
+                                    bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
+                                    bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
+                                    bidsResponsesAdapter.updateData(bidResponsesList);
+                                }
+
+                            }
                         }
-
                     }
 
                     if (bidsReceived.getText().toString().equals("0 Responses Received")) {
@@ -975,6 +1034,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp.gravity = Gravity.CENTER;
         acceptFinalBid.show();
+        acceptFinalBid.setCancelable(false);
         acceptFinalBid.getWindow().setAttributes(lp);
 
         //-------------------------------------------Display Load Information---------------------------------------------
@@ -1044,6 +1104,12 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
             @Override
             public void onClick(View view) {
 
+//                UpdatePostLoadDetails.updateNotes(obj.getIdpost_load(), notesCustomer.getText().toString());
+//                UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadSubmitted");
+//                UpdateBidDetails.updateBidStatus(obj.getSp_bid_id(), "FinalAccepted");
+//                UpdateBidDetails.updateCustomerBudgetForSP(obj.getSp_bid_id(), obj.getSp_quote());
+//                UpdatePostLoadDetails.updateBudget(obj.getIdpost_load(), obj.getSp_quote());
+
                 //----------------------------------------------------------------------------------
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(CustomerDashboardActivity.this);
@@ -1069,7 +1135,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                 alertPositiveButton.setText("Pay & Accept Bid");
                 alertNegativeButton.setText("Cancel");
 
-                String quote = obj.getSp_quote().replaceAll(",","");
+                String quote = obj.getSp_quote().replaceAll(",", "");
 
                 alertPositiveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -1090,12 +1156,6 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                 //------------------------------------------------------------------------------------------
 
                 //----------------------------------------------------------------------------------
-
-//                UpdatePostLoadDetails.updateNotes(obj.getIdpost_load(), notesCustomer.getText().toString());
-//                UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadSubmitted");
-//                UpdateBidDetails.updateBidStatus(obj.getSp_bid_id(), "FinalAccepted");
-//                UpdateBidDetails.updateCustomerBudgetForSP(obj.getSp_bid_id(), obj.getSp_quote());
-//                UpdatePostLoadDetails.updateBudget(obj.getIdpost_load(), obj.getSp_quote());
 
             }
         });
@@ -1126,7 +1186,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
             JSONObject options = new JSONObject();
 
             options.put("name", "FindYourTruck");
-            options.put("description", "User Id: "+userId);
+            options.put("description", "User Id: " + userId);
             // options.put("order_id", "order_DBJOWzybf0sJbb");//from response of step 3.
             options.put("theme.color", "#CC2027");
             options.put("currency", "INR");

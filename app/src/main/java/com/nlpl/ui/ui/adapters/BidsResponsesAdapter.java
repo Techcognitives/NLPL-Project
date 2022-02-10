@@ -1,6 +1,7 @@
 package com.nlpl.ui.ui.adapters;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -134,14 +135,9 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
         }
 
         if (obj.getBid_status().equals("Accepted")) {
-            holder.acceptViewBidButton.setText("You\nResponded");
-            holder.acceptViewBidButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.button_blue));
-        }
-
-        if (obj.getBid_status().equals("submittedNonNego")) {
             holder.negotiable.setText("Non-Nego");
             holder.acceptViewBidButton.setText("Accept\n Final Offer");
-            holder.acceptViewBidButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.redDark));
+            holder.acceptViewBidButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.green));
 
             holder.acceptViewBidButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -151,10 +147,29 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
             });
         }
 
-        if (obj.getBid_status().equals("AaRespondedBySP")) {
+        if (obj.getBid_status().equals("AcceptedBySp")) {
             holder.negotiable.setText("Non-Nego");
             holder.acceptViewBidButton.setText("Accept\n Final Offer");
             holder.acceptViewBidButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.green));
+
+            holder.acceptViewBidButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    activity.acceptFinalOffer(obj);
+                }
+            });
+        }
+
+
+        if (obj.getBid_status().equals("RespondedByLp")) {
+            holder.acceptViewBidButton.setText("You\nResponded");
+            holder.acceptViewBidButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.button_blue));
+        }
+
+        if (obj.getBid_status().equals("submittedNonNego")) {
+            holder.negotiable.setText("Non-Nego");
+            holder.acceptViewBidButton.setText("Accept\n Final Offer");
+            holder.acceptViewBidButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.redDark));
 
             holder.acceptViewBidButton.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -683,11 +683,11 @@
 
     <string-array name="array_sort_by">
         <item>Sort By</item>
-        <item>Recent Responses</item>
-        <item>Initial Responses</item>
-        <item>Price Low-high</item>
-        <item>Price High-low</item>
-        <item>Drop State</item>
+        <item>By Price Low-high</item>
+        <item>By Latest Response</item>
+        <item>By Initial Response</item>
+        <item>By Price High-low</item>
+        <item>By Recent Activity</item>
     </string-array>
 
     <string-array name="array_tamil_nadu_districts">
