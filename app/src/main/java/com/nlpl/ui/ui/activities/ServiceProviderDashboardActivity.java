@@ -670,6 +670,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp.gravity = Gravity.CENTER;
         previewDialogBidNow.show();
+        previewDialogBidNow.setCancelable(false);
         previewDialogBidNow.getWindow().setAttributes(lp);
 
         //-------------------------------------------Display Load Information---------------------------------------------
@@ -766,7 +767,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
 
                     if (spQuote.getText().toString().equals(customerFirstBudget.getText().toString())) {
-                        saveBid(createBidRequest("AaRespondedBySp", spQuote.getText().toString()));
+                        saveBid(createBidRequest("Accepted", spQuote.getText().toString()));
                     } else if (!spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) && !negotiable) {
                         saveBid(createBidRequest("submittedNonNego", spQuote.getText().toString()));
                     } else if (!spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) && negotiable){
@@ -1375,6 +1376,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         negotiable_no.setChecked(true);
                         negotiable_yes.setChecked(false);
                         negotiable_yes.setEnabled(false);
+                        negotiable = false;
                         isNegotiableSelected = true;
                     } else {
                         negotiable_yes.setEnabled(true);
@@ -1636,7 +1638,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 UpdateBidDetails.updateSPNoteForCustomer(obj.getBidId(), notesSp.getText().toString());
-                UpdateBidDetails.updateBidStatus(obj.getBidId(), "AaRespondedBySP");
+                UpdateBidDetails.updateBidStatus(obj.getBidId(), "AcceptedBySp");
                 UpdateBidDetails.updateSPQuoteFinal(obj.getBidId(), spQuote.getText().toString());
                 UpdateBidDetails.updateAssignedTruckId(obj.getBidId(), updateAssignedTruckId);
                 UpdateBidDetails.updateAssignedDriverId(obj.getBidId(), updateAssignedDriverId);

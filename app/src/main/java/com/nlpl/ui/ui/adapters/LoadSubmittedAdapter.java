@@ -248,11 +248,25 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
                         String bid_status = obj1.getString("bid_status");
 
                         if (bid_status.equals("submittedNego")) {
-                            holder.budget.setText("₹" + obj.getBudget());
+                            holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
                             holder.bidNowButton.setText("Bid Submitted");
                         }
 
                         if (bid_status.equals("Accepted")) {
+                            holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
+                            holder.bidNowButton.setText("You Responded");
+                            holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.button_blue));
+
+                        }
+
+                        if (bid_status.equals("AcceptedBySp")) {
+                            holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
+                            holder.bidNowButton.setText("You Responded");
+                            holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.button_blue));
+
+                        }
+
+                        if (bid_status.equals("RespondedByLp")) {
                             holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
                             holder.bidNowButton.setText("Accept Revised");
                             holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.red));
@@ -263,12 +277,6 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
                                     activity.acceptRevisedBid(obj);
                                 }
                             });
-                        }
-
-                        if (bid_status.equals("AaRespondedBySP")) {
-                            holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
-                            holder.bidNowButton.setText("You Responded");
-                            holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.button_blue));
                         }
                         if (bid_status.equals("submittedNonNego")) {
                             holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
