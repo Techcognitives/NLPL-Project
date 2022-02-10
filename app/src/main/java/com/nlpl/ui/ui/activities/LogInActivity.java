@@ -32,10 +32,7 @@ import android.widget.TextView;
 import com.nlpl.R;
 import com.nlpl.utils.JumpTo;
 
-import java.util.ArrayList;
-
 public class LogInActivity extends AppCompatActivity {
-
 
     EditText mobileNo;
     TextView series;
@@ -121,7 +118,7 @@ public class LogInActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             alert.dismiss();
-                            JumpTo.goToOTPActivity(LogInActivity.this, mobile, false);
+                            JumpTo.goToOTPActivity(LogInActivity.this, mobile, false, null);
                         }
                     });
                     //------------------------------------------------------------------------------------------

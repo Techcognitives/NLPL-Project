@@ -7,7 +7,6 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -43,6 +42,7 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.nlpl.R;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
+import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.OTPReceiver;
 
 import org.json.JSONArray;
@@ -425,31 +425,14 @@ public class OtpCodeActivity extends AppCompatActivity {
                         Log.i("role splash", role);
 
                         if (role.equals("Customer")) {
-                            Intent i8 = new Intent(OtpCodeActivity.this, CustomerDashboardActivity.class);
-                            i8.putExtra("mobile", phone);
-                            i8.putExtra("bidsReveived", true);
-                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(i8);
-                            finish();
-                            overridePendingTransition(0, 0);
+                            JumpTo.goToCustomerDashboard(OtpCodeActivity.this, phone, true);
                         }else{
-                            Intent i8 = new Intent(OtpCodeActivity.this, ServiceProviderDashboardActivity.class);
-                            i8.putExtra("mobile2", phone);
-                            i8.putExtra("loadNotification", true);
-                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(i8);
-                            finish();
-                            overridePendingTransition(0, 0);
+                            JumpTo.goToServiceProviderDashboard(OtpCodeActivity.this, phone, true);
                         }
 
                     } else {
 //                      Log.i("mobile no not equal", mobileNoAPI);
-                        Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
-                        i8.putExtra("mobile1", receivedMobile);
-                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(i8);
-                        finish();
-                        overridePendingTransition(0, 0);
+                        JumpTo.goToRegistrationActivity(OtpCodeActivity.this, receivedMobile);
                     }
 //
                 } catch (JSONException e) {
@@ -523,30 +506,13 @@ public class OtpCodeActivity extends AppCompatActivity {
                         Log.i("role OTP", role);
 
                         if (role.equals("Customer")) {
-                            Intent i8 = new Intent(OtpCodeActivity.this, CustomerDashboardActivity.class);
-                            i8.putExtra("mobile", phone);
-                            i8.putExtra("bidsReveived", true);
-                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(i8);
-                            finish();
-                            overridePendingTransition(0, 0);
+                            JumpTo.goToCustomerDashboard(OtpCodeActivity.this, phone, true);
                         }else{
-                            Intent i8 = new Intent(OtpCodeActivity.this, ServiceProviderDashboardActivity.class);
-                            i8.putExtra("mobile2", phone);
-                            i8.putExtra("loadNotification", true);
-                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(i8);
-                            finish();
-                            overridePendingTransition(0, 0);
+                            JumpTo.goToServiceProviderDashboard(OtpCodeActivity.this, phone, true);
                         }
 
                     } else {
-                        Intent i8 = new Intent(OtpCodeActivity.this, RegistrationActivity.class);
-                        i8.putExtra("mobile1", getMobileReceived);
-                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(i8);
-                        finish();
-                        overridePendingTransition(0, 0);
+                        JumpTo.goToRegistrationActivity(OtpCodeActivity.this, getMobileReceived);
                     }
 //
                 } catch (JSONException e) {

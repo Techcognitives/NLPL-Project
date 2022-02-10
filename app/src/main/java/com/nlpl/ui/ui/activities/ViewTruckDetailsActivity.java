@@ -31,6 +31,7 @@ import com.nlpl.services.AddTruckService;
 import com.nlpl.ui.ui.adapters.DriversListAdapter;
 import com.nlpl.ui.ui.adapters.TrucksAdapter;
 import com.nlpl.utils.DownloadImageTask;
+import com.nlpl.utils.JumpTo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -103,12 +104,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ViewTruckDetailsActivity.this, ServiceProviderDashboardActivity.class);
-                intent.putExtra("mobile2", phone);
-                intent.putExtra("loadNotification", true);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(0, 0);
+                JumpTo.goToServiceProviderDashboard(ViewTruckDetailsActivity.this, phone, true);
             }
         });
         //---------------------------- Bottom Nav --------------------------------------------------
@@ -207,10 +203,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
     }
 
     public void RearrangeItems() {
-        Intent intent = new Intent(ViewTruckDetailsActivity.this, ViewTruckDetailsActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("mobile", phone);
-        startActivity(intent);
+        JumpTo.goToViewVehicleDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, true);
     }
 
     public void getTruckList() {
@@ -268,14 +261,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
     }
 
     public void getTruckDetails(TruckModel obj) {
-        Intent intent = new Intent(ViewTruckDetailsActivity.this, VehicleDetailsActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("isEdit", true);
-        intent.putExtra("fromBidNow", false);
-        intent.putExtra("truckId", obj.getTruck_id());
-        intent.putExtra("mobile", phone);
-
-        startActivity(intent);
+        JumpTo.goToVehicleDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, true, false, false, false,null, obj.getTruck_id());
     }
 
     public void getOnClickPreviewTruckRcBook(TruckModel obj) {
@@ -309,24 +295,13 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
     }
 
     public void onClickAddTruckDetails(View view) {
-        Intent intent3 = new Intent(ViewTruckDetailsActivity.this, VehicleDetailsActivity.class);
-        intent3.putExtra("userId", userId);
-        intent3.putExtra("fromBidNow", false);
-        intent3.putExtra("isEdit", false);
-        intent3.putExtra("mobile", phone);
-
-        startActivity(intent3);
+        JumpTo.goToVehicleDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, false, false, false, false, null, null);
     }
 
     public void onClickBottomNavigation(View view) {
         switch (view.getId()) {
             case R.id.bottom_nav_sp_dashboard:
-                Intent intent = new Intent(ViewTruckDetailsActivity.this, ServiceProviderDashboardActivity.class);
-                intent.putExtra("mobile2", phone);
-                intent.putExtra("loadNotification", true);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(0, 0);
+                JumpTo.goToServiceProviderDashboard(ViewTruckDetailsActivity.this, phone, true);
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
@@ -338,15 +313,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-        Intent i8 = new Intent(ViewTruckDetailsActivity.this, ServiceProviderDashboardActivity.class);
-        i8.putExtra("mobile2", phone);
-        i8.putExtra("loadNotification", true);
-        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i8);
-        finish();
-        overridePendingTransition(0, 0);
-
+        JumpTo.goToServiceProviderDashboard(ViewTruckDetailsActivity.this, phone, true);
     }
 
     public void getDriverDetailsOnTruckActivity(TruckModel obj) {
@@ -458,11 +425,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
 
     public void onClickCloseDialogDriverBankDetails(View view) {
         previewDialogDriverDetails.dismiss();
-        Intent intent = new Intent(ViewTruckDetailsActivity.this, ViewTruckDetailsActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("mobile", phone);
-        startActivity(intent);
-        finish();
+        JumpTo.goToViewVehicleDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, true);
     }
 
     public void onClickReAssignTruck(View view) {
@@ -479,17 +442,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
     public void onClickAddDriverDetailsAssigned(View view) {
         previewDialogSpinner.dismiss();
         previewDialogDriverDetails.dismiss();
-
-        Intent i8 = new Intent(ViewTruckDetailsActivity.this, DriverDetailsActivity.class);
-        i8.putExtra("userId", userId);
-        i8.putExtra("isEdit", false);
-        i8.putExtra("fromBidNow", false);
-        i8.putExtra("mobile", phone);
-        i8.putExtra("truckIdPass", truckIdPass);
-        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i8);
-        ViewTruckDetailsActivity.this.finish();
-        overridePendingTransition(0, 0);
+        JumpTo.goToDriverDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, false, false, true, truckIdPass, null);
     }
 
     public void getDriverDetailsList() {
@@ -539,19 +492,11 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
     public void onClickCancelSelectBind(View view) {
         previewDialogSpinner.dismiss();
         previewDialogDriverDetails.dismiss();
-        Intent intent = new Intent(ViewTruckDetailsActivity.this, ViewTruckDetailsActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("mobile", phone);
-        startActivity(intent);
-        finish();
+        JumpTo.goToViewVehicleDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, true);
     }
 
     public void onClickReAssignDriver(DriverModel obj) {
         UpdateTruckDetails.updateTruckDriverId(truckIdPass, obj.getDriver_id());
-        Intent intent = new Intent(ViewTruckDetailsActivity.this, ViewTruckDetailsActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("mobile", phone);
-        startActivity(intent);
-        finish();
+        JumpTo.goToViewVehicleDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, true);
     }
 }

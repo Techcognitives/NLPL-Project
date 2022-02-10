@@ -52,6 +52,7 @@ import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankReEnterAcco
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
+import com.nlpl.utils.JumpTo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -418,13 +419,7 @@ public class BankDetailsActivity extends AppCompatActivity {
                 UpdateBankDetails.updateBankReEnterAccountNumber(bankId, reAccount.getText().toString());
                 UpdateBankDetails.updateBankIFSICode(bankId, ifscCode.getText().toString());
 
-                Intent i8 = new Intent(BankDetailsActivity.this, ViewBankDetailsActivity.class);
-                i8.putExtra("mobile", mobile);
-                i8.putExtra("userId", userId);
-                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i8);
-                finish();
-                overridePendingTransition(0, 0);
+                JumpTo.goToViewBankDetailsActivity(BankDetailsActivity.this, userId, mobile, true);
 
             } else {
                 saveBank(createBankAcc());
@@ -460,13 +455,7 @@ public class BankDetailsActivity extends AppCompatActivity {
                         alert.dismiss();
                         //Update User Bank (IsBankAdded)
                         UpdateUserDetails.updateUserIsBankDetailsGiven(userId, "1");
-
-                        Intent intent = new Intent(BankDetailsActivity.this, ViewBankDetailsActivity.class);
-                        intent.putExtra("userId", userId);
-                        intent.putExtra("mobile", mobile);
-                        startActivity(intent);
-                        finish();
-                        overridePendingTransition(0, 0);
+                        JumpTo.goToViewBankDetailsActivity(BankDetailsActivity.this, userId, mobile, true);
                     }
                 });
             }
@@ -982,22 +971,10 @@ public class BankDetailsActivity extends AppCompatActivity {
         super.onBackPressed();
 
         if (userRoleAPI.equals("Customer")) {
-            Intent i8 = new Intent(BankDetailsActivity.this, CustomerDashboardActivity.class);
-            i8.putExtra("mobile", mobile);
-            i8.putExtra("bidsReveived", true);
-            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i8);
-            finish();
-            overridePendingTransition(0, 0);
+            JumpTo.goToCustomerDashboard(BankDetailsActivity.this, mobile, true);
 
         } else {
-            Intent i8 = new Intent(BankDetailsActivity.this, ServiceProviderDashboardActivity.class);
-            i8.putExtra("mobile2", mobile);
-            i8.putExtra("loadNotification", true);
-            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i8);
-            finish();
-            overridePendingTransition(0, 0);
+            JumpTo.goToServiceProviderDashboard(BankDetailsActivity.this, mobile, true);
         }
     }
 

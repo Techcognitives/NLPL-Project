@@ -68,6 +68,7 @@ import com.nlpl.utils.EnglishNumberToWords;
 import com.nlpl.utils.GetCurrentLocation;
 import com.nlpl.utils.GetLocationDrop;
 import com.nlpl.utils.GetLocationPickUp;
+import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.SelectCity;
 import com.nlpl.utils.SelectState;
 
@@ -404,12 +405,7 @@ public class PostALoadActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             alert.dismiss();
-                            Intent intent = new Intent(PostALoadActivity.this, CustomerDashboardActivity.class);
-                            intent.putExtra("mobile", phone);
-                            intent.putExtra("bidsReveived", true);
-                            startActivity(intent);
-                            finish();
-                            overridePendingTransition(0, 0);
+                            JumpTo.goToCustomerDashboard(PostALoadActivity.this, phone, true);
                         }
                     });
                     //------------------------------------------------------------------------------------------
@@ -456,12 +452,7 @@ public class PostALoadActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             alert.dismiss();
-                            Intent intent = new Intent(PostALoadActivity.this, CustomerDashboardActivity.class);
-                            intent.putExtra("bidsReveived", true);
-                            intent.putExtra("mobile", phone);
-                            startActivity(intent);
-                            finish();
-                            overridePendingTransition(0, 0);
+                            JumpTo.goToCustomerDashboard(PostALoadActivity.this, phone, true);
                         }
                     });
                     //------------------------------------------------------------------------------------------
@@ -1275,14 +1266,7 @@ public class PostALoadActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-        Intent i8 = new Intent(PostALoadActivity.this, CustomerDashboardActivity.class);
-        i8.putExtra("mobile", phone);
-        i8.putExtra("bidsReveived", true);
-        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i8);
-        finish();
-        overridePendingTransition(0, 0);
+        JumpTo.goToCustomerDashboard(PostALoadActivity.this, phone, true);
     }
 
     private void getPickUpLocation() {
@@ -1431,13 +1415,7 @@ public class PostALoadActivity extends AppCompatActivity {
             public void onClick(View view) {
                 UpdatePostLoadDetails.updateStatus(loadId, "delete");
                 deleteLoad.dismiss();
-                Intent i8 = new Intent(PostALoadActivity.this, CustomerDashboardActivity.class);
-                i8.putExtra("mobile", phone);
-                i8.putExtra("bidsReveived", true);
-                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i8);
-                finish();
-                overridePendingTransition(0, 0);
+                JumpTo.goToCustomerDashboard(PostALoadActivity.this, phone, true);
             }
         });
 

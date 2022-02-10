@@ -57,6 +57,7 @@ import com.nlpl.model.UpdateModel.Models.UpdateCompanyDetails.UpdateCompanyType;
 import com.nlpl.model.UpdateModel.Models.UpdateCompanyDetails.UpdateCompanyZip;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsCompanyAdded;
 import com.nlpl.utils.ApiClient;
+import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.SelectCity;
 import com.nlpl.utils.SelectState;
 
@@ -261,13 +262,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
             if (companyType != null) {
                 UpdateCompanyDetails.updateCompanyType(companyIdAPI, companyType);
             }
-            Intent i8 = new Intent(CompanyDetailsActivity.this, ViewPersonalDetailsActivity.class);
-            i8.putExtra("mobile", mobile);
-            i8.putExtra("userId", userId);
-            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i8);
-            finish();
-            overridePendingTransition(0, 0);
+            JumpTo.goToViewPersonalDetailsActivity(CompanyDetailsActivity.this, userId, mobile, true);
         } else {
             saveCompany(createCompany());
             //Update User Company (isCompanyAdded)
@@ -302,13 +297,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     alert.dismiss();
-                    Intent i8 = new Intent(CompanyDetailsActivity.this, ViewPersonalDetailsActivity.class);
-                    i8.putExtra("mobile", mobile);
-                    i8.putExtra("userId", userId);
-                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i8);
-                    finish();
-                    overridePendingTransition(0, 0);
+                    JumpTo.goToViewPersonalDetailsActivity(CompanyDetailsActivity.this, userId, mobile, true);
                 }
             });
             //------------------------------------------------------------------------------------------
@@ -613,10 +602,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i8 = new Intent(CompanyDetailsActivity.this, ViewPersonalDetailsActivity.class);
-        i8.putExtra("userId", userId);
-        i8.putExtra("mobile", mobile);
-        startActivity(i8);
+        JumpTo.goToViewPersonalDetailsActivity(CompanyDetailsActivity.this, userId, mobile, false);
     }
 
 }

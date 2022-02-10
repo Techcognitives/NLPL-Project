@@ -48,6 +48,7 @@ import com.nlpl.ui.ui.adapters.SearchLoadAdapter;
 import com.nlpl.ui.ui.adapters.StateLoadAdapter;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.EnglishNumberToWords;
+import com.nlpl.utils.JumpTo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -245,12 +246,7 @@ public class FindLoadsActivity extends AppCompatActivity {
     public void onClickBottomNavigation(View view) {
         switch (view.getId()) {
             case R.id.bottom_nav_sp_dashboard:
-                Intent intent = new Intent(FindLoadsActivity.this, ServiceProviderDashboardActivity.class);
-                intent.putExtra("mobile2", phone);
-                intent.putExtra("loadNotification", true);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(0, 0);
+                JumpTo.goToServiceProviderDashboard(FindLoadsActivity.this, phone, true);
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
@@ -331,18 +327,9 @@ public class FindLoadsActivity extends AppCompatActivity {
         String visibility = String.valueOf(stateConstrain.getVisibility());
         Log.i("visibility", visibility); //visible = 0
         if (visibility.equals("0")) {
-            Intent intent = new Intent(FindLoadsActivity.this, FindLoadsActivity.class);
-            intent.putExtra("userId", userId);
-            intent.putExtra("mobile", phone);
-            startActivity(intent);
+            JumpTo.goToFindLoadsActivity(FindLoadsActivity.this, userId, phone);
         } else {
-            Intent i8 = new Intent(FindLoadsActivity.this, ServiceProviderDashboardActivity.class);
-            i8.putExtra("mobile2", phone);
-            i8.putExtra("loadNotification", true);
-            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i8);
-            finish();
-            overridePendingTransition(0, 0);
+            JumpTo.goToServiceProviderDashboard(FindLoadsActivity.this, phone, true);
         }
     }
 
@@ -785,13 +772,7 @@ public class FindLoadsActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i8 = new Intent(FindLoadsActivity.this, ServiceProviderDashboardActivity.class);
-                i8.putExtra("mobile2", phone);
-                i8.putExtra("loadNotification", false);
-                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i8);
-                finish();
-                overridePendingTransition(0, 0);
+                JumpTo.goToServiceProviderDashboard(FindLoadsActivity.this, phone, false);
             }
         });
 
@@ -838,14 +819,7 @@ public class FindLoadsActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             alert.dismiss();
-                            Intent i8 = new Intent(FindLoadsActivity.this, ServiceProviderDashboardActivity.class);
-                            i8.putExtra("mobile2", phone);
-                            i8.putExtra("loadNotification", false);
-                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(i8);
-                            finish();
-                            overridePendingTransition(0, 0);
-
+                            JumpTo.goToServiceProviderDashboard(FindLoadsActivity.this, phone, false);
                             previewDialogBidNow.dismiss();
                         }
                     });
@@ -923,27 +897,14 @@ public class FindLoadsActivity extends AppCompatActivity {
         addTruck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent3 = new Intent(FindLoadsActivity.this, VehicleDetailsActivity.class);
-                intent3.putExtra("userId", userId);
-                intent3.putExtra("isEdit", false);
-                intent3.putExtra("fromBidNow", true);
-                intent3.putExtra("assignTruck", false);
-                intent3.putExtra("mobile", phone);
-                startActivity(intent3);
+                JumpTo.goToVehicleDetailsActivity(FindLoadsActivity.this, userId, phone, false, true, false, false, null, null);
             }
         });
 
         addDriver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i8 = new Intent(FindLoadsActivity.this, DriverDetailsActivity.class);
-                i8.putExtra("userId", userId);
-                i8.putExtra("isEdit", false);
-                i8.putExtra("fromBidNow", true);
-                i8.putExtra("mobile", phone);
-                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i8);
-                overridePendingTransition(0, 0);
+                JumpTo.goToDriverDetailsActivity(FindLoadsActivity.this, userId, phone,false, true, false, null, null);
             }
         });
 
@@ -1190,13 +1151,7 @@ public class FindLoadsActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 alert.dismiss();
-                                Intent intent3 = new Intent(FindLoadsActivity.this, VehicleDetailsActivity.class);
-                                intent3.putExtra("userId", userId);
-                                intent3.putExtra("isEdit", false);
-                                intent3.putExtra("fromBidNow", true);
-                                intent3.putExtra("assignTruck", false);
-                                intent3.putExtra("mobile", phone);
-                                startActivity(intent3);
+                                JumpTo.goToVehicleDetailsActivity(FindLoadsActivity.this, userId, phone, false, true, false, false, null, null);
                             }
                         });
                         //------------------------------------------------------------------------------------------
@@ -1346,14 +1301,7 @@ public class FindLoadsActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 alert.dismiss();
-                                Intent i8 = new Intent(FindLoadsActivity.this, DriverDetailsActivity.class);
-                                i8.putExtra("userId", userId);
-                                i8.putExtra("isEdit", false);
-                                i8.putExtra("fromBidNow", true);
-                                i8.putExtra("mobile", phone);
-                                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(i8);
-                                overridePendingTransition(0, 0);
+                                JumpTo.goToDriverDetailsActivity(FindLoadsActivity.this, userId, phone, false, true, false, null, null);
                             }
                         });
                         //------------------------------------------------------------------------------------------

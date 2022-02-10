@@ -31,6 +31,7 @@ import com.nlpl.services.AddDriverService;
 import com.nlpl.ui.ui.adapters.DriversAdapter;
 import com.nlpl.ui.ui.adapters.TrucksListAdapter;
 import com.nlpl.utils.DownloadImageTask;
+import com.nlpl.utils.JumpTo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -108,12 +109,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ViewDriverDetailsActivity.this, ServiceProviderDashboardActivity.class);
-                intent.putExtra("mobile2", phone);
-                intent.putExtra("loadNotification", true);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(0, 0);
+                JumpTo.goToServiceProviderDashboard(ViewDriverDetailsActivity.this, phone, true);
             }
         });
         //---------------------------- Bottom Nav --------------------------------------------------
@@ -225,10 +221,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
     }
 
     public void RearrangeItems() {
-        Intent intent = new Intent(ViewDriverDetailsActivity.this, ViewDriverDetailsActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("mobile", phone);
-        startActivity(intent);
+        JumpTo.goToViewDriverDetailsActivity(ViewDriverDetailsActivity.this, userId, phone, true);
     }
 
     public void getDriverDetailsList() {
@@ -406,31 +399,17 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
     }
 
     public void onClickAddDriverDetails(View view) {
-        Intent intent4 = new Intent(ViewDriverDetailsActivity.this, DriverDetailsActivity.class);
-        intent4.putExtra("userId", userId);
-        intent4.putExtra("isEdit", false);
-        intent4.putExtra("mobile", phone);
-        startActivity(intent4);
+        JumpTo.goToDriverDetailsActivity(ViewDriverDetailsActivity.this, userId, phone, false, false, false, null, null);
     }
 
     public void onClickAddDriverBankDetails(View view) {
-        Intent intent2 = new Intent(ViewDriverDetailsActivity.this, BankDetailsActivity.class);
-        intent2.putExtra("userId", driverUserIdGet);
-        intent2.putExtra("isEdit", false);
-        intent2.putExtra("mobile", phone);
-        startActivity(intent2);
-        finish();
-        overridePendingTransition(0, 0);
+        JumpTo.goToBankDetailsActivity(ViewDriverDetailsActivity.this, driverUserIdGet, phone, false, true, null);
     }
 
     public void onClickCloseDialogDriverBankDetails(View view) {
         previewDialogAssignedTruck.dismiss();
         previewDialogDriverDetails.dismiss();
-        Intent intent = new Intent(ViewDriverDetailsActivity.this, ViewDriverDetailsActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("mobile", phone);
-        startActivity(intent);
-        finish();
+        JumpTo.goToViewDriverDetailsActivity(ViewDriverDetailsActivity.this, userId, phone, true);
     }
 
     public void onClickPreviewDriverBankDetails(DriverModel obj) {
@@ -447,23 +426,13 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
     }
 
     public void getDriverDetails(DriverModel obj) {
-        Intent intent = new Intent(ViewDriverDetailsActivity.this, DriverDetailsActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("isEdit", true);
-        intent.putExtra("driverId", obj.getDriver_id());
-        intent.putExtra("mobile", phone);
-        startActivity(intent);
+        JumpTo.goToDriverDetailsActivity(ViewDriverDetailsActivity.this, userId, phone, true, false, false, null, obj.getDriver_id());
     }
 
     public void onClickBottomNavigation(View view) {
         switch (view.getId()) {
             case R.id.bottom_nav_sp_dashboard:
-                Intent intent = new Intent(ViewDriverDetailsActivity.this, ServiceProviderDashboardActivity.class);
-                intent.putExtra("mobile2", phone);
-                intent.putExtra("loadNotification", true);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(0, 0);
+                JumpTo.goToServiceProviderDashboard(ViewDriverDetailsActivity.this, phone, true);
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
@@ -475,14 +444,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i8 = new Intent(ViewDriverDetailsActivity.this, ServiceProviderDashboardActivity.class);
-        i8.putExtra("mobile2", phone);
-        i8.putExtra("loadNotification", true);
-        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i8);
-        finish();
-        overridePendingTransition(0, 0);
-
+        JumpTo.goToServiceProviderDashboard(ViewDriverDetailsActivity.this, phone, true);
     }
 
     public void onClickPreviewAssignedTruckDetails(DriverModel obj) {
@@ -604,24 +566,13 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
     public void onClickCancelSelectBind(View view) {
         previewDialogSpinner.dismiss();
         previewDialogAssignedTruck.dismiss();
-        Intent intent = new Intent(ViewDriverDetailsActivity.this, ViewDriverDetailsActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("mobile", phone);
-        startActivity(intent);
-        finish();
+        JumpTo.goToViewDriverDetailsActivity(ViewDriverDetailsActivity.this, userId, phone, true);
     }
 
     public void onClickAddDriverDetailsAssigned(View view) {
         previewDialogSpinner.dismiss();
         previewDialogAssignedTruck.dismiss();
-        Intent intent2 = new Intent(ViewDriverDetailsActivity.this, VehicleDetailsActivity.class);
-        intent2.putExtra("userId", userId);
-        intent2.putExtra("isEdit", false);
-        intent2.putExtra("fromBidNow", false);
-        intent2.putExtra("assignTruck", true);
-        intent2.putExtra("mobile", phone);
-        intent2.putExtra("driverId", driverId);
-        startActivity(intent2);
+        JumpTo.goToVehicleDetailsActivity(ViewDriverDetailsActivity.this, userId, phone, false, false, true, false, driverId, null);
     }
 
     public void getTruckList() {
@@ -682,11 +633,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
         UpdateDriverDetails.updateDriverTruckId(driverId, obj.getTruck_id());
         previewDialogAssignedTruck.dismiss();
         previewDialogSpinner.dismiss();
-        Intent intent = new Intent(ViewDriverDetailsActivity.this, ViewDriverDetailsActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("mobile", phone);
-        startActivity(intent);
-        finish();
+        JumpTo.goToViewDriverDetailsActivity(ViewDriverDetailsActivity.this, userId, phone, true);
     }
 
 }

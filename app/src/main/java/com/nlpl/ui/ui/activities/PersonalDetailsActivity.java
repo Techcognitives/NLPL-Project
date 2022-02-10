@@ -43,6 +43,7 @@ import com.nlpl.model.Responses.UploadImageResponse;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsProfileAdded;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.FileUtils;
+import com.nlpl.utils.JumpTo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -119,10 +120,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i8 = new Intent(PersonalDetailsActivity.this, ViewPersonalDetailsActivity.class);
-                i8.putExtra("userId", userId);
-                i8.putExtra("mobile", mobile);
-                startActivity(i8);
+                JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, false);
             }
         });
 //--------------------------------------------------------------------------------------------------
@@ -703,12 +701,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         alert.dismiss();
-                        Intent intent = new Intent(PersonalDetailsActivity.this, ViewPersonalDetailsActivity.class);
-                        intent.putExtra("userId", userId);
-                        intent.putExtra("mobile", mobile);
-                        startActivity(intent);
-                        finish();
-                        overridePendingTransition(0, 0);
+                        JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, false);
                     }
                 });
             }
@@ -745,12 +738,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         alert.dismiss();
-                        Intent intent = new Intent(PersonalDetailsActivity.this, ViewPersonalDetailsActivity.class);
-                        intent.putExtra("userId", userId);
-                        intent.putExtra("mobile", mobile);
-                        startActivity(intent);
-                        finish();
-                        overridePendingTransition(0, 0);
+                        JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, true);
                     }
                 });
             }
@@ -1019,9 +1007,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i8 = new Intent(PersonalDetailsActivity.this, ViewPersonalDetailsActivity.class);
-        i8.putExtra("userId", userId);
-        i8.putExtra("mobile", mobile);
-        startActivity(i8);
+        JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, false);
     }
 }

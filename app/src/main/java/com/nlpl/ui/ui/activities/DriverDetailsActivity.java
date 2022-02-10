@@ -64,6 +64,7 @@ import com.nlpl.model.UpdateMethods.UpdateUserDetails;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
+import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.SelectCity;
 import com.nlpl.utils.SelectState;
 
@@ -223,12 +224,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isDriverDetailsDoneAPI.equals("1")) {
-                    Intent intent = new Intent(DriverDetailsActivity.this, ViewTruckDetailsActivity.class);
-                    intent.putExtra("userId", userId);
-                    intent.putExtra("mobile", mobile);
-                    startActivity(intent);
-                    finish();
-                    overridePendingTransition(0, 0);
+                    JumpTo.goToViewVehicleDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
                 } else {
                     //----------------------- Alert Dialog -------------------------------------------------
                     Dialog alert = new Dialog(DriverDetailsActivity.this);
@@ -267,13 +263,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             alert.dismiss();
-                            Intent i8 = new Intent(DriverDetailsActivity.this, ViewTruckDetailsActivity.class);
-                            i8.putExtra("mobile", mobile);
-                            i8.putExtra("userId", userId);
-                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(i8);
-                            finish();
-                            overridePendingTransition(0, 0);
+                            JumpTo.goToViewVehicleDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
                         }
                     });
                     //------------------------------------------------------------------------------------------
@@ -873,15 +863,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                         //update Driver as a user (City)
                         UpdateUserDetails.updateUserCity(driverUserIdGet, selectDistrictText.getText().toString());
                     }
-
-                    Intent i8 = new Intent(DriverDetailsActivity.this, ViewDriverDetailsActivity.class);
-                    i8.putExtra("userId", userId);
-                    i8.putExtra("mobile", mobile);
-                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i8);
-                    finish();
-                    overridePendingTransition(0, 0);
-
+                    JumpTo.goToViewDriverDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
                 } else {
 
                     if (alreadyDriver) {
@@ -918,17 +900,11 @@ public class DriverDetailsActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             alert.dismiss();
-                            Intent intent2 = new Intent(DriverDetailsActivity.this, BankDetailsActivity.class);
                             if (alreadyDriver) {
-                                intent2.putExtra("userId", userId);
+                                JumpTo.goToBankDetailsActivity(DriverDetailsActivity.this, userId, mobile, false, true, null);
                             } else {
-                                intent2.putExtra("userId", driverUserId);
+                                JumpTo.goToBankDetailsActivity(DriverDetailsActivity.this, driverUserId, mobile, false, true, null);
                             }
-                            intent2.putExtra("isEdit", false);
-                            intent2.putExtra("mobile", mobile);
-                            startActivity(intent2);
-                            finish();
-                            overridePendingTransition(0, 0);
                         }
                     });
 
@@ -942,13 +918,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                             if (fromBidNow) {
                                 DriverDetailsActivity.this.finish();
                             } else {
-                                Intent i8 = new Intent(DriverDetailsActivity.this, ViewDriverDetailsActivity.class);
-                                i8.putExtra("mobile", mobile);
-                                i8.putExtra("userId", userId);
-                                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(i8);
-                                finish();
-                                overridePendingTransition(0, 0);
+                                JumpTo.goToViewDriverDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
                             }
                         }
                     });
@@ -1562,20 +1532,11 @@ public class DriverDetailsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-        Intent i8 = new Intent(DriverDetailsActivity.this, ServiceProviderDashboardActivity.class);
-        i8.putExtra("mobile2", mobile);
-        i8.putExtra("loadNotification", true);
-        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i8);
-        finish();
-        overridePendingTransition(0, 0);
-
+        JumpTo.goToServiceProviderDashboard(DriverDetailsActivity.this, mobile, true);
     }
 
 
     private void DialogChoose() {
-
         requestPermissionsForGalleryWRITE();
         requestPermissionsForGalleryREAD();
         requestPermissionsForCamera();
