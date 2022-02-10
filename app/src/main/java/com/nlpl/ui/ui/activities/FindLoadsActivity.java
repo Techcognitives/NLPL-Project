@@ -933,12 +933,10 @@ public class FindLoadsActivity extends AppCompatActivity {
         bidLadResponseCall.enqueue(new Callback<BidLadResponse>() {
             @Override
             public void onResponse(Call<BidLadResponse> call, retrofit2.Response<BidLadResponse> response) {
-
             }
 
             @Override
             public void onFailure(Call<BidLadResponse> call, Throwable t) {
-
             }
         });
     }
