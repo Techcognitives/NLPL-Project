@@ -23,6 +23,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.utils.DownloadImageTask;
+import com.nlpl.utils.JumpTo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -74,19 +75,9 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (userRoleAPI.equals("Customer")) {
-                    Intent intent = new Intent(ViewPersonalDetailsActivity.this, CustomerDashboardActivity.class);
-                    intent.putExtra("mobile", phone);
-                    intent.putExtra("bidsReveived", true);
-                    startActivity(intent);
-                    finish();
-                    overridePendingTransition(0, 0);
+                    JumpTo.goToCustomerDashboard(ViewPersonalDetailsActivity.this, phone, true);
                 } else {
-                    Intent intent = new Intent(ViewPersonalDetailsActivity.this, ServiceProviderDashboardActivity.class);
-                    intent.putExtra("mobile2", phone);
-                    intent.putExtra("loadNotification", true);
-                    startActivity(intent);
-                    finish();
-                    overridePendingTransition(0, 0);
+                    JumpTo.goToServiceProviderDashboard(ViewPersonalDetailsActivity.this, phone, true);
                 }
             }
         });
@@ -380,27 +371,16 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
     }
 
     public void onClickEditPersonalDetailsView(View view) {
-        Intent intent = new Intent(ViewPersonalDetailsActivity.this, PersonalDetailsAndIdProofActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("mobile", phone);
-        startActivity(intent);
+        JumpTo.goToPersonalDetailsIdProofActivity(ViewPersonalDetailsActivity.this, userId, phone, false);
     }
 
     public void onClickEditFirmDetailsView(View view) {
-        Intent intent = new Intent(ViewPersonalDetailsActivity.this, CompanyDetailsActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("mobile", phone);
-        intent.putExtra("isEdit", true);
-        startActivity(intent);
+        JumpTo.goToCompanyDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, true, false);
     }
 
     public void onClickAddCompanyDetails(View view) {
         if (companyNameAPI == null) {
-            Intent intent = new Intent(ViewPersonalDetailsActivity.this, CompanyDetailsActivity.class);
-            intent.putExtra("userId", userId);
-            intent.putExtra("mobile", phone);
-            intent.putExtra("isEdit", false);
-            startActivity(intent);
+            JumpTo.goToCompanyDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false, false);
         }
     }
 
@@ -408,10 +388,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
         if (userRoleAPI.equals("Customer")) {
             switch (view.getId()) {
                 case R.id.bottom_nav_sp_dashboard:
-                    Intent intent = new Intent(ViewPersonalDetailsActivity.this, CustomerDashboardActivity.class);
-                    intent.putExtra("mobile", phone);
-                    intent.putExtra("bidsReveived", true);
-                    startActivity(intent);
+                    JumpTo.goToCustomerDashboard(ViewPersonalDetailsActivity.this, phone, true);
                     break;
 
                 case R.id.bottom_nav_customer_dashboard:
@@ -421,10 +398,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
         } else {
             switch (view.getId()) {
                 case R.id.bottom_nav_sp_dashboard:
-                    Intent intent = new Intent(ViewPersonalDetailsActivity.this, ServiceProviderDashboardActivity.class);
-                    intent.putExtra("mobile2", phone);
-                    intent.putExtra("loadNotification", true);
-                    startActivity(intent);
+                    JumpTo.goToServiceProviderDashboard(ViewPersonalDetailsActivity.this, phone, true);
                     break;
 
                 case R.id.bottom_nav_customer_dashboard:
@@ -439,37 +413,17 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         if (userRoleAPI.equals("Customer")) {
-            Intent i8 = new Intent(ViewPersonalDetailsActivity.this, CustomerDashboardActivity.class);
-            i8.putExtra("mobile", phone);
-            i8.putExtra("bidsReveived", true);
-            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i8);
-            finish();
-            overridePendingTransition(0, 0);
+            JumpTo.goToCustomerDashboard(ViewPersonalDetailsActivity.this, phone, true);
         } else {
-            Intent i8 = new Intent(ViewPersonalDetailsActivity.this, ServiceProviderDashboardActivity.class);
-            i8.putExtra("mobile2", phone);
-            i8.putExtra("loadNotification", true);
-            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i8);
-            finish();
-            overridePendingTransition(0, 0);
+            JumpTo.goToServiceProviderDashboard(ViewPersonalDetailsActivity.this, phone, true);
         }
     }
 
     public void onClickAddPersonalDetails(View view) {
-        Intent intent = new Intent(ViewPersonalDetailsActivity.this, PersonalDetailsActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("profile", false);
-        intent.putExtra("mobile", phone);
-        startActivity(intent);
+        JumpTo.goToPersonalDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false, false);
     }
 
     public void onClickAddProfilePic(View view) {
-        Intent intent = new Intent(ViewPersonalDetailsActivity.this, PersonalDetailsActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("profile", true);
-        intent.putExtra("mobile", phone);
-        startActivity(intent);
+        JumpTo.goToPersonalDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, true, false);
     }
 }

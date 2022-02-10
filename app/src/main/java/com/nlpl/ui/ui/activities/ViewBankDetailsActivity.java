@@ -27,6 +27,7 @@ import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BankModel;
 import com.nlpl.ui.ui.adapters.BanksAdapter;
 import com.nlpl.utils.DownloadImageTask;
+import com.nlpl.utils.JumpTo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -79,19 +80,9 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (roleAPI.equals("Customer")) {
-                    Intent intent = new Intent(ViewBankDetailsActivity.this, CustomerDashboardActivity.class);
-                    intent.putExtra("mobile", phone);
-                    intent.putExtra("bidsReveived", true);
-                    startActivity(intent);
-                    finish();
-                    overridePendingTransition(0, 0);
+                    JumpTo.goToCustomerDashboard(ViewBankDetailsActivity.this, phone, true);
                 } else {
-                    Intent intent = new Intent(ViewBankDetailsActivity.this, ServiceProviderDashboardActivity.class);
-                    intent.putExtra("mobile2", phone);
-                    intent.putExtra("loadNotification", true);
-                    startActivity(intent);
-                    finish();
-                    overridePendingTransition(0, 0);
+                    JumpTo.goToServiceProviderDashboard(ViewBankDetailsActivity.this, phone, true);
                 }
 
             }
@@ -132,10 +123,7 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
     }
 
     public void RearrangeItems() {
-        Intent intent = new Intent(ViewBankDetailsActivity.this, ViewBankDetailsActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("mobile", phone);
-        startActivity(intent);
+        JumpTo.goToViewBankDetailsActivity(ViewBankDetailsActivity.this, userId, phone, true);
     }
 
     public void getBankDetailsList() {
@@ -190,14 +178,7 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
     }
 
     public void getBankDetails(BankModel obj) {
-        Intent intent = new Intent(ViewBankDetailsActivity.this, BankDetailsActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("isEdit", true);
-        intent.putExtra("bankDetailsID", obj.getBank_id());
-        Log.i("Bank Id in P and R", obj.getBank_id());
-        intent.putExtra("mobile", phone);
-        startActivity(intent);
-
+        JumpTo.goToBankDetailsActivity(ViewBankDetailsActivity.this, userId, phone, true, false, obj.getBank_id());
     }
 
     public void onClickPreviewBankDetails(BankModel obj) {
@@ -217,24 +198,14 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
     }
 
     public void onClickAddBankDetails(View view) {
-        Intent intent2 = new Intent(ViewBankDetailsActivity.this, BankDetailsActivity.class);
-        intent2.putExtra("userId", userId);
-        intent2.putExtra("isEdit", false);
-        intent2.putExtra("mobile", phone);
-
-        startActivity(intent2);
+        JumpTo.goToBankDetailsActivity(ViewBankDetailsActivity.this, userId, phone, false, false, null);
     }
 
     public void onClickBottomNavigation(View view) {
         if (roleAPI.equals("Customer")) {
             switch (view.getId()) {
                 case R.id.bottom_nav_sp_dashboard:
-                    Intent intent = new Intent(ViewBankDetailsActivity.this, CustomerDashboardActivity.class);
-                    intent.putExtra("mobile", phone);
-                    intent.putExtra("bidsReveived", true);
-                    startActivity(intent);
-                    finish();
-                    overridePendingTransition(0, 0);
+                    JumpTo.goToCustomerDashboard(ViewBankDetailsActivity.this, phone, true);
                     break;
 
                 case R.id.bottom_nav_customer_dashboard:
@@ -244,12 +215,7 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
         } else {
             switch (view.getId()) {
                 case R.id.bottom_nav_sp_dashboard:
-                    Intent intent = new Intent(ViewBankDetailsActivity.this, ServiceProviderDashboardActivity.class);
-                    intent.putExtra("mobile2", phone);
-                    intent.putExtra("loadNotification", true);
-                    startActivity(intent);
-                    finish();
-                    overridePendingTransition(0, 0);
+                    JumpTo.goToServiceProviderDashboard(ViewBankDetailsActivity.this, phone, true);
                     break;
 
                 case R.id.bottom_nav_customer_dashboard:
@@ -303,22 +269,9 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
         super.onBackPressed();
 
         if (roleAPI.equals("Customer")) {
-            Intent i8 = new Intent(ViewBankDetailsActivity.this, CustomerDashboardActivity.class);
-            i8.putExtra("mobile", phone);
-            i8.putExtra("bidsReveived", true);
-            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i8);
-            finish();
-            overridePendingTransition(0, 0);
-
+            JumpTo.goToCustomerDashboard(ViewBankDetailsActivity.this, phone, true);
         } else {
-            Intent i8 = new Intent(ViewBankDetailsActivity.this, ServiceProviderDashboardActivity.class);
-            i8.putExtra("mobile2", phone);
-            i8.putExtra("loadNotification", true);
-            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i8);
-            finish();
-            overridePendingTransition(0, 0);
+            JumpTo.goToServiceProviderDashboard(ViewBankDetailsActivity.this, phone, true);
         }
     }
 

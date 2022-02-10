@@ -31,7 +31,6 @@ public class SliderActivity extends AppCompatActivity {
         }
 
         ArrayList<Drawable> sliderDataArrayList = new ArrayList<>();
-
         // initializing the slider view.
         SliderView sliderView = findViewById(R.id.slider);
 

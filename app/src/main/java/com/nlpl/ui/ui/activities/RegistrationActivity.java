@@ -51,6 +51,7 @@ import com.nlpl.model.Requests.UserRequest;
 import com.nlpl.model.Responses.UserResponse;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.GetCurrentLocation;
+import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.SelectCity;
 import com.nlpl.utils.SelectState;
 
@@ -300,10 +301,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     public void onClickSkip(View view) {
-        Intent i8 = new Intent(RegistrationActivity.this, SliderActivity.class);
-        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i8);
-        overridePendingTransition(0, 0);
+        JumpTo.goToSliderActivity(RegistrationActivity.this);
     }
 
     public void onClickGetCurrentLocation(View view) {
@@ -355,21 +353,9 @@ public class RegistrationActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     alert.dismiss();
                     if (role.equals("Customer")) {
-                        Intent i8 = new Intent(RegistrationActivity.this, CustomerDashboardActivity.class);
-                        i8.putExtra("mobile", mobile);
-                        i8.putExtra("bidsReveived", true);
-                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(i8);
-                        finish();
-                        overridePendingTransition(0, 0);
+                        JumpTo.goToCustomerDashboard(RegistrationActivity.this, mobile, true);
                     } else {
-                        Intent i8 = new Intent(RegistrationActivity.this, ServiceProviderDashboardActivity.class);
-                        i8.putExtra("mobile2", mobile);
-                        i8.putExtra("loadNotification", true);
-                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(i8);
-                        finish();
-                        overridePendingTransition(0, 0);
+                        JumpTo.goToServiceProviderDashboard(RegistrationActivity.this, mobile, true);
                     }
                 }
             });

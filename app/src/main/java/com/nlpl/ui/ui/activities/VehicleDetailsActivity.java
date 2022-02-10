@@ -52,6 +52,7 @@ import com.nlpl.model.UpdateMethods.UpdateUserDetails;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
+import com.nlpl.utils.JumpTo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -813,14 +814,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 if (selectFt.getText().toString() != null) {
                     UpdateTruckDetails.updateTruckFeet(truckId, selectFt.getText().toString());
                 }
-
-                Intent i8 = new Intent(VehicleDetailsActivity.this, ViewTruckDetailsActivity.class);
-                i8.putExtra("mobile", mobile);
-                i8.putExtra("userId", userId);
-                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i8);
-                finish();
-                overridePendingTransition(0, 0);
+                JumpTo.goToViewVehicleDetailsActivity(VehicleDetailsActivity.this, userId, mobile, true);
 
             } else {
                 saveTruck(createTruck());
@@ -852,28 +846,10 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         if (fromBidNow) {
-                            Intent i8 = new Intent(VehicleDetailsActivity.this, DriverDetailsActivity.class);
-                            i8.putExtra("userId", userId);
-                            i8.putExtra("isEdit", false);
-                            i8.putExtra("fromBidNow", true);
-                            i8.putExtra("mobile", mobile);
-                            i8.putExtra("truckIdPass", truckIdPass);
-                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(i8);
-                            VehicleDetailsActivity.this.finish();
-                            overridePendingTransition(0, 0);
+                            JumpTo.goToDriverDetailsActivity(VehicleDetailsActivity.this, userId, mobile, false, true, true, truckIdPass, null);
                         }
                         alert.dismiss();
-                        Intent i8 = new Intent(VehicleDetailsActivity.this, DriverDetailsActivity.class);
-                        i8.putExtra("userId", userId);
-                        i8.putExtra("isEdit", false);
-                        i8.putExtra("fromBidNow", false);
-                        i8.putExtra("mobile", mobile);
-                        i8.putExtra("truckIdPass", truckIdPass);
-                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(i8);
-                        finish();
-                        overridePendingTransition(0, 0);
+                        JumpTo.goToDriverDetailsActivity(VehicleDetailsActivity.this, userId, mobile, false, false, true, truckIdPass, null);
                     }
                 });
 
@@ -889,13 +865,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                             if (fromBidNow) {
                                 VehicleDetailsActivity.this.finish();
                             } else {
-                                Intent i8 = new Intent(VehicleDetailsActivity.this, ViewTruckDetailsActivity.class);
-                                i8.putExtra("mobile", mobile);
-                                i8.putExtra("userId", userId);
-                                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(i8);
-                                finish();
-                                overridePendingTransition(0, 0);
+                                JumpTo.goToViewVehicleDetailsActivity(VehicleDetailsActivity.this, userId, mobile, true);
                             }
                         } else {
                             //----------------------- Alert Dialog -------------------------------------------------
@@ -924,28 +894,10 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(View view) {
                                     if (fromBidNow) {
-                                        Intent i8 = new Intent(VehicleDetailsActivity.this, DriverDetailsActivity.class);
-                                        i8.putExtra("userId", userId);
-                                        i8.putExtra("isEdit", false);
-                                        i8.putExtra("fromBidNow", true);
-                                        i8.putExtra("mobile", mobile);
-                                        i8.putExtra("truckIdPass", truckIdPass);
-                                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(i8);
-                                        VehicleDetailsActivity.this.finish();
-                                        overridePendingTransition(0, 0);
+                                        JumpTo.goToDriverDetailsActivity(VehicleDetailsActivity.this, userId, mobile, false, true, false, truckIdPass, null);
                                     }
                                     alert.dismiss();
-                                    Intent i8 = new Intent(VehicleDetailsActivity.this, DriverDetailsActivity.class);
-                                    i8.putExtra("userId", userId);
-                                    i8.putExtra("isEdit", false);
-                                    i8.putExtra("fromBidNow", false);
-                                    i8.putExtra("mobile", mobile);
-                                    i8.putExtra("truckIdPass", truckIdPass);
-                                    i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    startActivity(i8);
-                                    finish();
-                                    overridePendingTransition(0, 0);
+                                    JumpTo.goToDriverDetailsActivity(VehicleDetailsActivity.this, userId, mobile, false, false, true, truckIdPass, null);
                                 }
                             });
 
@@ -960,13 +912,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                                     if (fromBidNow) {
                                         VehicleDetailsActivity.this.finish();
                                     } else {
-                                        Intent i8 = new Intent(VehicleDetailsActivity.this, ViewTruckDetailsActivity.class);
-                                        i8.putExtra("mobile", mobile);
-                                        i8.putExtra("userId", userId);
-                                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(i8);
-                                        finish();
-                                        overridePendingTransition(0, 0);
+                                        JumpTo.goToViewVehicleDetailsActivity(VehicleDetailsActivity.this, userId, mobile, true);
                                     }
                                 }
                             });
@@ -1515,14 +1461,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-        Intent i8 = new Intent(VehicleDetailsActivity.this, ServiceProviderDashboardActivity.class);
-        i8.putExtra("mobile2", mobile);
-        i8.putExtra("loadNotification", true);
-        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i8);
-        finish();
-        overridePendingTransition(0, 0);
+        JumpTo.goToServiceProviderDashboard(VehicleDetailsActivity.this, mobile, true);
 
     }
 

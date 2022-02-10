@@ -32,6 +32,7 @@ import com.nlpl.model.ModelForRecyclerView.BidsResponsesModel;
 import com.nlpl.ui.ui.adapters.LoadsCompletedAdapter;
 import com.nlpl.ui.ui.adapters.LoadsExpiredAdapter;
 import com.nlpl.utils.DownloadImageTask;
+import com.nlpl.utils.JumpTo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -102,12 +103,7 @@ public class CustomerLoadsHistoryActivity extends AppCompatActivity {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CustomerLoadsHistoryActivity.this, CustomerDashboardActivity.class);
-                intent.putExtra("mobile", phone);
-                intent.putExtra("bidsReveived", true);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(0, 0);
+                JumpTo.goToCustomerDashboard(CustomerLoadsHistoryActivity.this, phone, true);
             }
         });
         //------------------------------------------------------------------------------------------
@@ -152,12 +148,7 @@ public class CustomerLoadsHistoryActivity extends AppCompatActivity {
     }
 
     private void RearrangeItems() {
-        Intent intent = new Intent(CustomerLoadsHistoryActivity.this, CustomerLoadsHistoryActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("mobile", phone);
-        startActivity(intent);
-        finish();
-        overridePendingTransition(0, 0);
+        JumpTo.goToCustomerLoadHistoryActivity(CustomerLoadsHistoryActivity.this, userId, phone, true);
     }
 
     public void getCompletedLoads() {
@@ -282,13 +273,7 @@ public class CustomerLoadsHistoryActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i8 = new Intent(CustomerLoadsHistoryActivity.this, CustomerDashboardActivity.class);
-        i8.putExtra("mobile", phone);
-        i8.putExtra("bidsReveived", true);
-        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i8);
-        finish();
-        overridePendingTransition(0, 0);
+        JumpTo.goToCustomerDashboard(CustomerLoadsHistoryActivity.this, phone, true);
     }
 
     public void onClickLoadsCompleted(View view) {
@@ -337,13 +322,7 @@ public class CustomerLoadsHistoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 reActivateLoad.dismiss();
-                Intent intent = new Intent(CustomerLoadsHistoryActivity.this, PostALoadActivity.class);
-                intent.putExtra("userId", userId);
-                intent.putExtra("mobile", phone);
-                intent.putExtra("reActivate", true);
-                intent.putExtra("isEdit", false);
-                intent.putExtra("loadId", obj.getIdpost_load());
-                startActivity(intent);
+                JumpTo.goToPostALoad(CustomerLoadsHistoryActivity.this, userId, phone, true,false, obj.getIdpost_load(), false);
             }
         });
 

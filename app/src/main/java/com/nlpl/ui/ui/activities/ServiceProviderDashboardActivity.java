@@ -78,6 +78,7 @@ import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.EnglishNumberToWords;
 import com.nlpl.utils.FileUtils;
+import com.nlpl.utils.JumpTo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -275,13 +276,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
 
     public void RearrangeItems() {
         getLocation();
-        Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
-        i8.putExtra("mobile2", phone);
-        i8.putExtra("loadNotification", loadNotificationSelected);
-        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i8);
-        finish();
-        overridePendingTransition(0, 0);
+        JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
     }
 
     private void getUserId(String userMobileNumber) {
@@ -433,58 +428,30 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     public void onClickProfileAndRegister(View view) {
         switch (view.getId()) {
             case R.id.menu_personal_details_button:
-                Intent i1 = new Intent(ServiceProviderDashboardActivity.this, ViewPersonalDetailsActivity.class);
-                i1.putExtra("userId", userId);
-                i1.putExtra("mobile", phone);
-                startActivity(i1);
-
+                JumpTo.goToViewPersonalDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, false);
                 break;
 
             case R.id.menu_bank_details_button:
                 if (isBankDetailsDone.equals("1")) {
-                    Intent intent = new Intent(ServiceProviderDashboardActivity.this, ViewBankDetailsActivity.class);
-                    intent.putExtra("userId", userId);
-                    intent.putExtra("mobile", phone);
-                    startActivity(intent);
+                    JumpTo.goToViewBankDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, false);
                 } else {
-                    Intent intent = new Intent(ServiceProviderDashboardActivity.this, BankDetailsActivity.class);
-                    intent.putExtra("isEdit", false);
-                    intent.putExtra("userId", userId);
-                    intent.putExtra("mobile", phone);
-                    startActivity(intent);
+                    JumpTo.goToBankDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, false, false, null);
                 }
                 break;
 
             case R.id.menu_truck_details:
                 if (isTruckDetailsDone.equals("1")) {
-                    Intent intent = new Intent(ServiceProviderDashboardActivity.this, ViewTruckDetailsActivity.class);
-                    intent.putExtra("userId", userId);
-                    intent.putExtra("mobile", phone);
-                    startActivity(intent);
+                    JumpTo.goToViewVehicleDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, false);
                 } else {
-                    Intent intent2 = new Intent(ServiceProviderDashboardActivity.this, VehicleDetailsActivity.class);
-                    intent2.putExtra("userId", userId);
-                    intent2.putExtra("isEdit", false);
-                    intent2.putExtra("fromBidNow", false);
-                    intent2.putExtra("assignTruck", false);
-                    intent2.putExtra("mobile", phone);
-                    startActivity(intent2);
+                    JumpTo.goToVehicleDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, false, false, false, false, null, null);
                 }
                 break;
 
             case R.id.menu_driver_details:
                 if (isDriverDetailsDone.equals("1")) {
-                    Intent intent = new Intent(ServiceProviderDashboardActivity.this, ViewDriverDetailsActivity.class);
-                    intent.putExtra("userId", userId);
-                    intent.putExtra("mobile", phone);
-                    startActivity(intent);
+                    JumpTo.goToViewDriverDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, false);
                 } else {
-                    Intent intent4 = new Intent(ServiceProviderDashboardActivity.this, DriverDetailsActivity.class);
-                    intent4.putExtra("userId", userId);
-                    intent4.putExtra("isEdit", false);
-                    intent4.putExtra("fromBidNow", false);
-                    intent4.putExtra("mobile", phone);
-                    startActivity(intent4);
+                    JumpTo.goToDriverDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, false, false, false, null, null);
                 }
 
                 break;
@@ -504,11 +471,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
 
     public void onClickLogOut(View view) {
         FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(ServiceProviderDashboardActivity.this, LogInActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        ServiceProviderDashboardActivity.this.finish();
-        overridePendingTransition(0, 0);
+        JumpTo.goToLogInActivity(ServiceProviderDashboardActivity.this);
     }
 
     public void onClickDismiss(View view) {
@@ -543,10 +506,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
-                Intent intent = new Intent(ServiceProviderDashboardActivity.this, FindLoadsActivity.class);
-                intent.putExtra("userId", userId);
-                intent.putExtra("mobile", phone);
-                startActivity(intent);
+                JumpTo.goToFindLoadsActivity(ServiceProviderDashboardActivity.this, userId, phone);
                 break;
         }
     }
@@ -747,18 +707,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             }
         });
 
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
-                i8.putExtra("mobile2", phone);
-                i8.putExtra("loadNotification", loadNotificationSelected);
-                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i8);
-                finish();
-                overridePendingTransition(0, 0);
-            }
-        });
+        cancel.setOnClickListener(view -> JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected));
 
         acceptAndBid.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -804,14 +753,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             alert.dismiss();
-                            Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
-                            i8.putExtra("mobile2", phone);
-                            i8.putExtra("loadNotification", loadNotificationSelected);
-                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(i8);
-                            finish();
-                            overridePendingTransition(0, 0);
-
+                            JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
                             previewDialogBidNow.dismiss();
                         }
                     });
@@ -889,27 +831,14 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         addTruck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent3 = new Intent(ServiceProviderDashboardActivity.this, VehicleDetailsActivity.class);
-                intent3.putExtra("userId", userId);
-                intent3.putExtra("isEdit", false);
-                intent3.putExtra("fromBidNow", true);
-                intent3.putExtra("assignTruck", false);
-                intent3.putExtra("mobile", phone);
-                startActivity(intent3);
+                JumpTo.goToVehicleDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, false, true, false,false, null, null);
             }
         });
 
         addDriver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i8 = new Intent(ServiceProviderDashboardActivity.this, DriverDetailsActivity.class);
-                i8.putExtra("userId", userId);
-                i8.putExtra("isEdit", false);
-                i8.putExtra("fromBidNow", true);
-                i8.putExtra("mobile", mobile);
-                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i8);
-                overridePendingTransition(0, 0);
+                JumpTo.goToDriverDetailsActivity(ServiceProviderDashboardActivity.this, userId, mobile, false, true, false, null, null);
             }
         });
 
@@ -963,14 +892,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 alert.dismiss();
-                                Intent i8 = new Intent(ServiceProviderDashboardActivity.this, DriverDetailsActivity.class);
-                                i8.putExtra("userId", userId);
-                                i8.putExtra("isEdit", false);
-                                i8.putExtra("fromBidNow", true);
-                                i8.putExtra("mobile", mobile);
-                                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(i8);
-                                overridePendingTransition(0, 0);
+                                JumpTo.goToDriverDetailsActivity(ServiceProviderDashboardActivity.this, userId, mobile, false, true, false, null, null);
                             }
                         });
                         //------------------------------------------------------------------------------------------
@@ -1464,13 +1386,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 alert.dismiss();
-                                Intent intent3 = new Intent(ServiceProviderDashboardActivity.this, VehicleDetailsActivity.class);
-                                intent3.putExtra("userId", userId);
-                                intent3.putExtra("isEdit", false);
-                                intent3.putExtra("fromBidNow", true);
-                                intent3.putExtra("assignTruck", false);
-                                intent3.putExtra("mobile", phone);
-                                startActivity(intent3);
+                                JumpTo.goToVehicleDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, false, true, false, false, null, null);
                             }
                         });
                         //------------------------------------------------------------------------------------------
@@ -1617,13 +1533,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
-                i8.putExtra("mobile2", phone);
-                i8.putExtra("loadNotification", loadNotificationSelected);
-                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i8);
-                finish();
-                overridePendingTransition(0, 0);
+                JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
                 previewDialogBidNow.dismiss();
             }
         });
@@ -1671,14 +1581,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         alert.dismiss();
-                        Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
-                        i8.putExtra("mobile2", phone);
-                        i8.putExtra("loadNotification", loadNotificationSelected);
-                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(i8);
-                        finish();
-                        overridePendingTransition(0, 0);
-
+                        JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
                         previewDialogBidNow.dismiss();
                     }
                 });
@@ -1710,27 +1613,14 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         addTruck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent3 = new Intent(ServiceProviderDashboardActivity.this, VehicleDetailsActivity.class);
-                intent3.putExtra("userId", userId);
-                intent3.putExtra("isEdit", false);
-                intent3.putExtra("fromBidNow", true);
-                intent3.putExtra("assignTruck", false);
-                intent3.putExtra("mobile", phone);
-                startActivity(intent3);
+                JumpTo.goToVehicleDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, false, true, false, false, null, null);
             }
         });
 
         addDriver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i8 = new Intent(ServiceProviderDashboardActivity.this, DriverDetailsActivity.class);
-                i8.putExtra("userId", userId);
-                i8.putExtra("isEdit", false);
-                i8.putExtra("fromBidNow", true);
-                i8.putExtra("mobile", mobile);
-                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i8);
-                overridePendingTransition(0, 0);
+                JumpTo.goToDriverDetailsActivity(ServiceProviderDashboardActivity.this, userId, mobile, false, true, false, null, null);
             }
         });
 
@@ -1857,13 +1747,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         cancel2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
-                i8.putExtra("mobile2", phone);
-                i8.putExtra("loadNotification", loadNotificationSelected);
-                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i8);
-                finish();
-                overridePendingTransition(0, 0);
+                JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
             }
         });
 
@@ -1925,13 +1809,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         alert.dismiss();
-                        Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
-                        i8.putExtra("mobile2", phone);
-                        i8.putExtra("loadNotification", loadNotificationSelected);
-                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(i8);
-                        finish();
-                        overridePendingTransition(0, 0);
+                        JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
                         dialogViewConsignment.dismiss();
                     }
                 });
@@ -1969,13 +1847,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
-                                i8.putExtra("mobile2", phone);
-                                i8.putExtra("loadNotification", loadNotificationSelected);
-                                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(i8);
-                                finish();
-                                overridePendingTransition(0, 0);
+                                JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
                                 dialogViewConsignment.dismiss();
                             }
                         });
@@ -2024,14 +1896,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         alert.dismiss();
-                        Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
-                        i8.putExtra("mobile2", phone);
-                        i8.putExtra("loadNotification", loadNotificationSelected);
-                        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(i8);
-                        finish();
-                        overridePendingTransition(0, 0);
-
+                        JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
                         dialogViewConsignment.dismiss();
                     }
                 });
@@ -2566,13 +2431,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 alert.dismiss();
-                Intent i8 = new Intent(ServiceProviderDashboardActivity.this, ServiceProviderDashboardActivity.class);
-                i8.putExtra("mobile2", phone);
-                i8.putExtra("loadNotification", loadNotificationSelected);
-                i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i8);
-                finish();
-                overridePendingTransition(0, 0);
+                JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
             }
         });
     }

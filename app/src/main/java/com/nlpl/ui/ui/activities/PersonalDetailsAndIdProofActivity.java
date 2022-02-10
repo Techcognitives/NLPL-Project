@@ -59,6 +59,7 @@ import com.nlpl.model.UpdateMethods.UpdateUserDetails;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
+import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.SelectCity;
 import com.nlpl.utils.SelectState;
 
@@ -143,10 +144,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, ViewPersonalDetailsActivity.class);
-                i8.putExtra("userId", userId);
-                i8.putExtra("mobile", mobileAPI);
-                startActivity(i8);
+                JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsAndIdProofActivity.this, userId, mobileAPI, false);
             }
         });
         //------------------------------------------------------------------------------------------
@@ -543,14 +541,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         }
 
         if (mobileString.equals("91" + mobileEdit.getText().toString()) || mobileEdit.getText().toString().isEmpty()) {
-            Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, ViewPersonalDetailsActivity.class);
-            i8.putExtra("mobile", mobileAPI);
-            i8.putExtra("userId", userId);
-            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i8);
-            finish();
-            overridePendingTransition(0, 0);
-
+            JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsAndIdProofActivity.this, userId, mobileAPI, true);
         } else {
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(PersonalDetailsAndIdProofActivity.this);
@@ -607,14 +598,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             alert.dismiss();
-                            Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, OtpCodeActivity.class);
-                            i8.putExtra("mobile", "+91" + mobileEdit.getText().toString());
-                            i8.putExtra("isEditPhone", true);
-                            i8.putExtra("userId", userId);
-                            i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(i8);
-                            finish();
-                            overridePendingTransition(0, 0);
+                            JumpTo.goToOTPActivity(PersonalDetailsAndIdProofActivity.this, "+91" + mobileEdit.getText().toString(), true, userId);
                         }
                     });
                 }
@@ -1414,10 +1398,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i8 = new Intent(PersonalDetailsAndIdProofActivity.this, ViewPersonalDetailsActivity.class);
-        i8.putExtra("userId", userId);
-        i8.putExtra("mobile", mobileAPI);
-        startActivity(i8);
+        JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsAndIdProofActivity.this, userId, mobileAPI, false);
     }
 
     private void uploadPanDialogChoose(){

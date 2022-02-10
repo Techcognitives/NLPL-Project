@@ -65,6 +65,7 @@ import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.EnglishNumberToWords;
 import com.nlpl.utils.FileUtils;
+import com.nlpl.utils.JumpTo;
 import com.razorpay.Checkout;
 
 import org.json.JSONArray;
@@ -142,7 +143,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         if (bundle != null) {
             phone = bundle.getString("mobile");
         }
-        isbidsReceivedSelected = bundle.getBoolean("bidsReveived");
+        isbidsReceivedSelected = bundle.getBoolean("bidsReceived");
         mQueue = Volley.newRequestQueue(CustomerDashboardActivity.this);
 
         loadAcceptedConstrain = (ConstraintLayout) findViewById(R.id.customer_dashboard_loads_accepted_constrain);
@@ -340,13 +341,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     }
 
     public void RearrangeItems() {
-        Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("mobile", phone);
-        intent.putExtra("bidsReveived", bidsReceivedSelected);
-        startActivity(intent);
-        finish();
-        overridePendingTransition(0, 0);
+        JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
     }
 
     public void getBidsAccepted() {
@@ -442,12 +437,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     }
 
     public void onClickPostALoad(View view) {
-        Intent intent = new Intent(CustomerDashboardActivity.this, PostALoadActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("mobile", phone);
-        intent.putExtra("reActivate", false);
-        intent.putExtra("isEdit", false);
-        startActivity(intent);
+        JumpTo.goToPostALoad(CustomerDashboardActivity.this, userId, phone, false, false,null, false);
     }
 
     public void onClickBottomNavigation(View view) {
@@ -620,12 +610,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         cancleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
-                intent.putExtra("userId", userId);
-                intent.putExtra("mobile", phone);
-                intent.putExtra("bidsReveived", bidsReceivedSelected);
-                startActivity(intent);
-                finish();
+                JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
                 previewDialogAcceptANdBid.dismiss();
             }
         });
@@ -672,12 +657,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                     @Override
                     public void onClick(View view) {
                         alert.dismiss();
-                        Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
-                        intent.putExtra("userId", userId);
-                        intent.putExtra("mobile", phone);
-                        intent.putExtra("bidsReveived", bidsReceivedSelected);
-                        startActivity(intent);
-                        finish();
+                        JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
                     }
                 });
                 //------------------------------------------------------------------------------------------
@@ -852,14 +832,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     }
 
     public void onClickEditLoadPost(BidsReceivedModel obj) {
-        Intent intent = new Intent(CustomerDashboardActivity.this, PostALoadActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("mobile", phone);
-        intent.putExtra("reActivate", false);
-        intent.putExtra("isEdit", true);
-        intent.putExtra("loadId", obj.getIdpost_load());
-        startActivity(intent);
-        overridePendingTransition(0, 0);
+        JumpTo.goToPostALoad(CustomerDashboardActivity.this, userId, phone, false, true, obj.getIdpost_load(), false);
     }
 
 
@@ -1110,12 +1083,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                     @Override
                     public void onClick(View view) {
                         alert.dismiss();
-                        Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
-                        intent.putExtra("userId", userId);
-                        intent.putExtra("mobile", phone);
-                        intent.putExtra("bidsReveived", bidsReceivedSelected);
-                        startActivity(intent);
-                        finish();
+                        JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
                         acceptFinalBid.dismiss();
                     }
                 });
@@ -1138,12 +1106,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         cancleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
-                intent.putExtra("userId", userId);
-                intent.putExtra("mobile", phone);
-                intent.putExtra("bidsReveived", bidsReceivedSelected);
-                startActivity(intent);
-                finish();
+                JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
                 acceptFinalBid.dismiss();
             }
         });
@@ -1212,13 +1175,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
             @Override
             public void onClick(View view) {
                 alert.dismiss();
-                Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
-                intent.putExtra("userId", userId);
-                intent.putExtra("mobile", phone);
-                intent.putExtra("bidsReveived", bidsReceivedSelected);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(0,0);
+                JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
             }
         });
         //------------------------------------------------------------------------------------------
@@ -1258,13 +1215,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
             @Override
             public void onClick(View view) {
                 alert.dismiss();
-                Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
-                intent.putExtra("userId", userId);
-                intent.putExtra("mobile", phone);
-                intent.putExtra("bidsReveived", bidsReceivedSelected);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(0,0);
+                JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
             }
         });
         //------------------------------------------------------------------------------------------
@@ -1524,13 +1475,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                                         public void onClick(View view) {
                                             alert.dismiss();
                                             viewConsignmentCustomer.dismiss();
-                                            Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
-                                            intent.putExtra("userId", userId);
-                                            intent.putExtra("mobile", phone);
-                                            intent.putExtra("bidsReveived", bidsReceivedSelected);
-                                            startActivity(intent);
-                                            finish();
-                                            overridePendingTransition(0, 0);
+                                            JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
                                         }
                                     });
                                     //------------------------------------------------------------------------------------------
@@ -1577,13 +1522,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                                         public void onClick(View view) {
                                             alert.dismiss();
                                             viewConsignmentCustomer.dismiss();
-                                            Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
-                                            intent.putExtra("userId", userId);
-                                            intent.putExtra("mobile", phone);
-                                            intent.putExtra("bidsReveived", bidsReceivedSelected);
-                                            startActivity(intent);
-                                            finish();
-                                            overridePendingTransition(0, 0);
+                                            JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
                                         }
                                     });
                                     //------------------------------------------------------------------------------------------
@@ -1600,13 +1539,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                     cancleBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
-                            intent.putExtra("userId", userId);
-                            intent.putExtra("mobile", phone);
-                            intent.putExtra("bidsReveived", bidsReceivedSelected);
-                            startActivity(intent);
-                            finish();
-                            overridePendingTransition(0, 0);
+                            JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
                             viewConsignmentCustomer.dismiss();
                         }
                     });
@@ -1643,33 +1576,20 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
     public void onClickLogOutCustomer(View view) {
         FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(CustomerDashboardActivity.this, LogInActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
+        JumpTo.goToLogInActivity(CustomerDashboardActivity.this);
     }
 
     public void onClickProfileAndRegisterCustomer(View view) {
         switch (view.getId()) {
             case R.id.customer_menu_personal_details_button:
-                Intent i8 = new Intent(CustomerDashboardActivity.this, ViewPersonalDetailsActivity.class);
-                i8.putExtra("userId", userId);
-                i8.putExtra("mobile", phone);
-                startActivity(i8);
+                JumpTo.goToViewPersonalDetailsActivity(CustomerDashboardActivity.this, userId, phone, false);
                 break;
 
             case R.id.customer_menu_bank_details_button:
                 if (isBankDetailsDone.equals("1")) {
-                    Intent intent = new Intent(CustomerDashboardActivity.this, ViewBankDetailsActivity.class);
-                    intent.putExtra("userId", userId);
-                    intent.putExtra("mobile", phone);
-                    startActivity(intent);
+                    JumpTo.goToViewBankDetailsActivity(CustomerDashboardActivity.this, userId, phone, false);
                 } else {
-                    Intent intent = new Intent(CustomerDashboardActivity.this, BankDetailsActivity.class);
-                    intent.putExtra("isEdit", false);
-                    intent.putExtra("userId", userId);
-                    intent.putExtra("mobile", phone);
-                    startActivity(intent);
+                    JumpTo.goToBankDetailsActivity(CustomerDashboardActivity.this, userId, phone, false, false, null);
                 }
                 break;
         }
@@ -2070,12 +1990,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         alertNegativeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
-                intent.putExtra("userId", userId);
-                intent.putExtra("mobile", phone);
-                intent.putExtra("bidsReveived", bidsReceivedSelected);
-                startActivity(intent);
-                finish();
+                JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
             }
         });
     }
@@ -2160,24 +2075,14 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
             @Override
             public void onClick(View view) {
                 reActivateLoad.dismiss();
-                Intent intent = new Intent(CustomerDashboardActivity.this, PostALoadActivity.class);
-                intent.putExtra("userId", userId);
-                intent.putExtra("mobile", phone);
-                intent.putExtra("reActivate", true);
-                intent.putExtra("isEdit", true);
-                intent.putExtra("loadId", obj.getIdpost_load());
-                startActivity(intent);
-
+                JumpTo.goToPostALoad(CustomerDashboardActivity.this, userId, phone, true, true, obj.getIdpost_load(), false);
             }
         });
         //------------------------------------------------------------------------------------------
     }
 
     public void CustomerLoadHistory(View view) {
-        Intent intent = new Intent(CustomerDashboardActivity.this, CustomerLoadsHistoryActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("mobile", phone);
-        startActivity(intent);
+        JumpTo.goToCustomerLoadHistoryActivity(CustomerDashboardActivity.this, userId, phone, false);
     }
 
     public void continueWithOtherSp(BidsAcceptedModel obj) {
@@ -2214,13 +2119,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
             public void onClick(View view) {
                 alert.dismiss();
                 viewConsignmentCustomer.dismiss();
-                Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
-                intent.putExtra("userId", userId);
-                intent.putExtra("mobile", phone);
-                intent.putExtra("bidsReveived", bidsReceivedSelected);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(0, 0);
+                JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
             }
         });
         //------------------------------------------------------------------------------------------
@@ -2263,13 +2162,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                     public void onClick(View view) {
                         alert.dismiss();
                         viewConsignmentCustomer.dismiss();
-                        Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
-                        intent.putExtra("userId", userId);
-                        intent.putExtra("mobile", phone);
-                        intent.putExtra("bidsReveived", bidsReceivedSelected);
-                        startActivity(intent);
-                        finish();
-                        overridePendingTransition(0, 0);
+                        JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
                     }
                 });
                 //------------------------------------------------------------------------------------------
