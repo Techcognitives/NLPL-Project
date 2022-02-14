@@ -11,10 +11,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -77,6 +80,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
 
     View bottomNav;
     ConstraintLayout spDashboard, customerDashboard;
+    EditText searchDriver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -211,6 +215,8 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
         getTruckList();
         //------------------------------------------------------------------------------------------
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.view_driver_details_refresh_constrain);
+        searchDriver = (EditText) findViewById(R.id.view_driver_details_search_truck_edit_text);
+        searchDriver.addTextChangedListener(searchDriverWatcher);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -634,6 +640,43 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
         previewDialogAssignedTruck.dismiss();
         previewDialogSpinner.dismiss();
         JumpTo.goToViewDriverDetailsActivity(ViewDriverDetailsActivity.this, userId, phone, true);
+    }
+
+    private TextWatcher searchDriverWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            if (editable.length()==0){
+                RearrangeItems();
+            }
+            filter(editable.toString());
+        }
+    };
+
+    private void filter(String text) {
+        ArrayList<DriverModel> searchVehicleList = new ArrayList<>();
+
+        for (DriverModel item : driverList) {
+            if (item.getDriver_name().toLowerCase().contains(text.toLowerCase())) {
+                searchVehicleList.add(item);
+            }
+            if (item.getDriver_number().toLowerCase().contains(text.toLowerCase())) {
+                searchVehicleList.add(item);
+            }
+            if (item.getDriver_emailId().toLowerCase().contains(text.toLowerCase())) {
+                searchVehicleList.add(item);
+            }
+        }
+        driverListAdapter.updateData(searchVehicleList);
     }
 
 }

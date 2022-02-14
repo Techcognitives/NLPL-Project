@@ -15,6 +15,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -62,6 +64,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BidSubmittedModel;
 import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
@@ -171,6 +174,8 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         bidsSubmittedConstrain = (ConstraintLayout) findViewById(R.id.dashboard_bids_submitted_constrain);
         loadNotificationTextView = (TextView) findViewById(R.id.dashboard_load_notification_button);
         bidsSubmittedTextView = (TextView) findViewById(R.id.dashboard_bids_submitted_button);
+
+        getNotification();
 
         if (isLoadNotificationSelected) {
             loadNotificationSelected = true;
@@ -2437,4 +2442,33 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void getNotification(){
+        FirebaseMessaging.getInstance().subscribeToTopic("load")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = "Done";
+                        if (!task.isSuccessful()) {
+                            msg = "Failed";
+                            Log.i("Message", msg);
+                        }else{
+                            Log.i("Message", "Success");
+                        }
+                    }
+                });
+
+        NotificationChannel channel = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            channel = new NotificationChannel("fytNotification", "fytNotification", NotificationManager.IMPORTANCE_DEFAULT);
+        }
+        NotificationManager manager = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            manager = getSystemService(NotificationManager.class);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            manager.createNotificationChannel(channel);
+        }
+    }
+
 }

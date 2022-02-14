@@ -15,13 +15,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <EditText
+            android:id="@+id/view_driver_details_search_truck_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/edit_text_border_grey"
+            android:drawableStart="@drawable/find_small"
+            android:ems="10"
+            android:hint="Search Driver by Name"
+            android:inputType="textPersonName"
+            android:paddingStart="5dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="5dp"
+            android:paddingBottom="5dp"
+            android:singleLine="true"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/view_driver_details_constrain"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_driver_details_action_bar" />
 
         <include
             android:id="@+id/view_driver_details_action_bar"
             layout="@layout/action_bar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/view_driver_details_constrain"
+            app:layout_constraintBottom_toTopOf="@+id/view_driver_details_search_truck_edit_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -48,7 +70,7 @@
             app:layout_constraintBottom_toTopOf="@+id/view_driver_details_bottom_nav_bar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view_driver_details_action_bar">
+            app:layout_constraintTop_toBottomOf="@+id/view_driver_details_search_truck_edit_text">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/driver_list_view"

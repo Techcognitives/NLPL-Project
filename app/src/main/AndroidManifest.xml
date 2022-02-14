@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -22,8 +22,9 @@
         android:theme="@style/Theme.NLPL"
         android:usesCleartextTraffic="true">
 
-        <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDAAes8x5HVKYB5YEIGBmdnCdyBrAHUijM"/>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDAAes8x5HVKYB5YEIGBmdnCdyBrAHUijM" />
 
         <activity
             android:name=".ui.ui.activities.CustomerLoadsHistoryActivity"
@@ -120,7 +121,9 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".utils.PushNotificationService" android:exported="false">
+        <service
+            android:name=".utils.PushNotificationService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSANGING_EVENT"></action>
             </intent-filter>

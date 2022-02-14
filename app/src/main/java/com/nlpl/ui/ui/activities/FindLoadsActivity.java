@@ -906,7 +906,7 @@ public class FindLoadsActivity extends AppCompatActivity {
         addDriver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JumpTo.goToDriverDetailsActivity(FindLoadsActivity.this, userId, phone,false, true, false, null, null);
+                JumpTo.goToDriverDetailsActivity(FindLoadsActivity.this, userId, phone, false, true, false, null, null);
             }
         });
 

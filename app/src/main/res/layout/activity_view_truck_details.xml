@@ -2,9 +2,10 @@
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/view_truck_details_refresh_constrain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/view_truck_details_refresh_constrain"
+    android:background="@color/background"
     tools:context=".ui.ui.activities.ViewTruckDetailsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,84 +16,108 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    <include
-        android:id="@+id/view_truck_details_action_bar"
-        layout="@layout/action_bar"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/addTrucksDone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <include
-        android:id="@+id/view_truck_details_bottom_nav_bar"
-        layout="@layout/bottom_nav_bar"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addTrucksDone" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/addTrucksDone"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="10dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/view_truck_details_bottom_nav_bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_truck_details_action_bar">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/trucks_list_view"
-            android:layout_width="0dp"
+        <include
+            android:id="@+id/view_truck_details_action_bar"
+            layout="@layout/action_bar"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:scrollbarThumbVertical="@android:color/holo_blue_dark"
-            android:scrollbars="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/view_truck_details_search_truck_edit_text"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <include
+            android:id="@+id/view_truck_details_bottom_nav_bar"
+            layout="@layout/bottom_nav_bar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addTrucksDone" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/view_truck_details_fab_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:onClick="onClickAddTruckDetails"
-        app:srcCompat="@android:drawable/ic_input_add"
-        app:tint="@color/white"
-        app:fabSize="mini"
-        android:backgroundTint="@color/button_blue"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.954"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.87" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/addTrucksDone"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="10dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/view_truck_details_bottom_nav_bar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_truck_details_search_truck_edit_text">
 
-    <TextView
-        android:id="@+id/textView62"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/button_active"
-        android:gravity="center"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="2dp"
-        android:text="@string/addTruck"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/view_truck_details_fab_button"
-        app:layout_constraintEnd_toStartOf="@+id/view_truck_details_fab_button"
-        app:layout_constraintTop_toTopOf="@+id/view_truck_details_fab_button" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/trucks_list_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:scrollbarThumbVertical="@android:color/holo_blue_dark"
+                android:scrollbars="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/view_truck_details_fab_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/button_blue"
+            android:clickable="true"
+            android:onClick="onClickAddTruckDetails"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.954"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.87"
+            app:srcCompat="@android:drawable/ic_input_add"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/textView62"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/button_active"
+            android:gravity="center"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="2dp"
+            android:text="@string/addTruck"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/view_truck_details_fab_button"
+            app:layout_constraintEnd_toStartOf="@+id/view_truck_details_fab_button"
+            app:layout_constraintTop_toTopOf="@+id/view_truck_details_fab_button" />
+
+        <EditText
+            android:id="@+id/view_truck_details_search_truck_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/edit_text_border_grey"
+            android:drawableStart="@drawable/find_small"
+            android:ems="10"
+            android:singleLine="true"
+            android:hint="Search by No. / Model / Ft. / Capacity / Type"
+            android:inputType="textPersonName"
+            android:paddingStart="5dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="5dp"
+            android:paddingBottom="5dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/addTrucksDone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_truck_details_action_bar" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

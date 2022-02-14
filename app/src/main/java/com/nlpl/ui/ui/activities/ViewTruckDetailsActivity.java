@@ -11,10 +11,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,6 +28,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.DriverModel;
+import com.nlpl.model.ModelForRecyclerView.SearchLoadModel;
 import com.nlpl.model.ModelForRecyclerView.TruckModel;
 import com.nlpl.model.UpdateMethods.UpdateTruckDetails;
 import com.nlpl.services.AddTruckService;
@@ -70,6 +74,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
 
     View bottomNav;
     ConstraintLayout spDashboard, customerDashboard;
+    EditText searchVehicle;
 
     Dialog previewDialogDriverDetails;
     TextView previewDriverDetailsTitle, previewDriverDetailsDriverName, previewDriverDetailsDriverNumber, textviewGone, textviewGone2, previewDriverDetailsDriverEmails, previewDriverDetailsDriverLicence, previewDriverDetailsDriverSelfie, previewDriverDetailsAssignDriverButton, previewDriverDetailsOKButton, previewDriverDetailsMessage;
@@ -192,6 +197,8 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
         previewInsurance = (ImageView) previewDialogInsurance.findViewById(R.id.dialog_preview_image_view);
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.view_truck_details_refresh_constrain);
+        searchVehicle = (EditText) findViewById(R.id.view_truck_details_search_truck_edit_text);
+        searchVehicle.addTextChangedListener(searchVehicleWatcher);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -498,5 +505,49 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
     public void onClickReAssignDriver(DriverModel obj) {
         UpdateTruckDetails.updateTruckDriverId(truckIdPass, obj.getDriver_id());
         JumpTo.goToViewVehicleDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, true);
+    }
+
+    private TextWatcher searchVehicleWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            if (editable.length()==0){
+                RearrangeItems();
+            }
+            filter(editable.toString());
+        }
+    };
+
+    private void filter(String text) {
+        ArrayList<TruckModel> searchVehicleList = new ArrayList<>();
+
+        for (TruckModel item : truckList) {
+            if (item.getVehicle_no().toLowerCase().contains(text.toLowerCase())) {
+                searchVehicleList.add(item);
+            }
+            if (item.getVehicle_type().toLowerCase().contains(text.toLowerCase())){
+                searchVehicleList.add(item);
+            }
+            if (item.getTruck_type().toLowerCase().contains(text.toLowerCase())){
+                searchVehicleList.add(item);
+            }
+            if (item.getTruck_ft().toLowerCase().contains(text.toLowerCase())){
+                searchVehicleList.add(item);
+            }
+            if (item.getTruck_carrying_capacity().toLowerCase().contains(text.toLowerCase())){
+                searchVehicleList.add(item);
+            }
+
+        }
+        truckListAdapter.updateData(searchVehicleList);
     }
 }
