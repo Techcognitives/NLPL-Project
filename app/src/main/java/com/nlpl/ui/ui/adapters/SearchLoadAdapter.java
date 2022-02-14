@@ -43,6 +43,10 @@ public class SearchLoadAdapter extends RecyclerView.Adapter<SearchLoadAdapter.Se
 
         activity.setLoadCount(obj, holder.numberOfLoads);
 
+//        if (holder.numberOfLoads.getText().equals("0 Loads")){
+//            array_indian_states.remove(position);
+//        }
+
         holder.findConstrain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

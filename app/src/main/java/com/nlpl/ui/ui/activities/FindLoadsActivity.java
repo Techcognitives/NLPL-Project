@@ -109,6 +109,7 @@ public class FindLoadsActivity extends AppCompatActivity {
             phone = bundle.getString("mobile");
             Log.i("Mobile No View Personal", phone);
             userId = bundle.getString("userId");
+            Log.i("userId find loads", userId);
         }
         //------------------------------------------------------------------------------------------
         anList = new ArrayList<>();
@@ -446,6 +447,7 @@ public class FindLoadsActivity extends AppCompatActivity {
             if (obj.getSearchList().equals(searchList.get(36))) {
                 numberOfLoads.setText(wbList.size() + " Loads");
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

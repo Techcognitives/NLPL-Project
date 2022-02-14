@@ -6,6 +6,16 @@
     android:background="@drawable/language_selector_top_corners"
     android:layout_height="wrap_content">
 
+    <View
+        android:id="@+id/constraintLayout6"
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+        android:background="@drawable/language_selector_top_corners"
+        android:backgroundTint="@color/button_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="0dp"

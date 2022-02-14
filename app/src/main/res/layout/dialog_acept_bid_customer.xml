@@ -325,7 +325,7 @@
                     android:layout_height="match_parent"
                     android:foregroundGravity="center"
                     android:isIndicator="true"
-                    android:numStars="4"
+                    android:numStars="5"
                     android:stepSize="0.1"
                     android:theme="@style/RatingBar"
                     app:layout_constraintBottom_toTopOf="@+id/dialog_accept_bid_company_name"
@@ -339,7 +339,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
-                    android:text="4.0"
+                    android:text="5.0"
                     android:textColor="@color/black"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@+id/textView40"
@@ -393,8 +393,8 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:background="@drawable/underline_blue"
-                    android:text="+91 9999999999"
                     android:onClick="onClickOpenDialer"
+                    android:text="+91 9999999999"
                     android:textColor="@color/button_blue"
                     android:textSize="12sp"
                     android:textStyle="bold"
@@ -547,7 +547,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/dialog_accept_bid_cancel_btn"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/dialog_accept_bid_notes_editText" />
+                    app:layout_constraintTop_toBottomOf="@+id/dialog_accept_bid_rate_driver" />
 
                 <EditText
                     android:id="@+id/dialog_accept_bid_notes_editText"
@@ -555,6 +555,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/edit_text_border"
                     android:ems="10"
                     android:hint="@string/NotesIfAny"
@@ -566,7 +567,7 @@
                     android:paddingBottom="7dp"
                     android:textSize="12sp"
                     android:textStyle="italic"
-                    app:layout_constraintBottom_toTopOf="@+id/dialog_accept_bid_submit_response_btn"
+                    app:layout_constraintBottom_toTopOf="@+id/dialog_accept_bid_rate_driver"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/notes_text_heading_view_consignment_customer" />
@@ -622,7 +623,7 @@
                     android:id="@+id/dialog_accept_bid_customer_final_quote_textview"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/edit_text_border"
                     android:ems="10"
@@ -665,6 +666,54 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/dialog_accept_bid_radio_btn_yes"
                     app:layout_constraintTop_toTopOf="@+id/dialog_accept_bid_radio_btn_yes" />
+
+                <TextView
+                    android:id="@+id/dialog_accept_bid_rate_sp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/button_active"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:gravity="center"
+                    android:text="Rate Service Provider"
+                    android:visibility="gone"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="7dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/dialog_accept_bid_rate_driver"
+                    app:layout_constraintEnd_toStartOf="@+id/dialog_accept_bid_rate_driver"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/dialog_accept_bid_rate_driver" />
+
+                <TextView
+                    android:id="@+id/dialog_accept_bid_rate_driver"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/button_active"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:text="Rate Driver"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="7dp"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/dialog_accept_bid_submit_response_btn"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/dialog_accept_bid_rate_sp"
+                    app:layout_constraintTop_toBottomOf="@+id/dialog_accept_bid_notes_editText" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

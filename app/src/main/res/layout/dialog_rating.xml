@@ -4,48 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:background="@drawable/all_rounded_small"
+    android:layout_gravity="bottom"
+    android:background="@drawable/language_selector_top_corners"
     android:layout_marginStart="10dp"
     android:layout_marginEnd="10dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <View
         android:id="@+id/constraintLayout6"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/personal_details_buttons_de_active"
+        android:layout_height="5dp"
+        android:background="@drawable/language_selector_top_corners"
         android:backgroundTint="@color/button_blue"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/dialog_rating_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingStart="20dp"
-            android:paddingEnd="5dp"
-            android:text="Rate Service Provider"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="18dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout8"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_border"
-        android:backgroundTint="@color/white"
+        android:background="@color/background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -57,6 +36,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/button_active"
@@ -65,14 +45,14 @@
             android:paddingTop="5dp"
             android:paddingEnd="20dp"
             android:paddingBottom="5dp"
-            android:text="No Thanks"
+            android:text="Skip"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/dialog_rating_submit_button"
-            app:layout_constraintTop_toBottomOf="@+id/dialog_rating_star_rating" />
+            app:layout_constraintTop_toBottomOf="@+id/dialog_rating_reason_six" />
 
         <TextView
             android:id="@+id/dialog_rating_submit_button"
@@ -81,7 +61,6 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="5dp"
             android:background="@drawable/button_active"
-            android:backgroundTint="@color/button_blue"
             android:paddingStart="20dp"
             android:paddingTop="5dp"
             android:paddingEnd="20dp"
@@ -102,41 +81,36 @@
             android:gravity="center"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:text="0.0 / 4.0"
+            android:text="0.0 / 5.0"
             android:background="@drawable/edit_text_border_grey"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/dialog_rating_star_rating"
-            app:layout_constraintEnd_toEndOf="@+id/dialog_rating_sp_name"
+            app:layout_constraintEnd_toEndOf="@+id/dialog_rating_user_name"
             app:layout_constraintStart_toEndOf="@+id/dialog_rating_star_rating"
             app:layout_constraintTop_toTopOf="@+id/dialog_rating_star_rating"
             app:layout_constraintVertical_bias="1.0" />
 
         <RatingBar
             android:id="@+id/dialog_rating_star_rating"
-            style="@style/Widget.AppCompat.RatingBar.Indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
             android:foregroundGravity="center"
-            android:isIndicator="true"
-            android:numStars="4"
-            android:rating="0.0"
-            android:stepSize="0.1"
+            android:numStars="5"
+            android:stepSize="0.5"
             android:theme="@style/RatingBar"
-            app:layout_constraintBottom_toTopOf="@+id/dialog_rating_no_thanks_button"
+            app:layout_constraintBottom_toTopOf="@+id/dialog_rating_issue_title"
             app:layout_constraintEnd_toStartOf="@+id/dialog_rating_in_int"
-            app:layout_constraintStart_toStartOf="@+id/dialog_rating_sp_name"
-            app:layout_constraintTop_toBottomOf="@+id/dialog_rating_sp_name" />
+            app:layout_constraintStart_toStartOf="@+id/dialog_rating_user_name"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_rating_user_name" />
 
         <TextView
-            android:id="@+id/dialog_rating_sp_name"
+            android:id="@+id/dialog_rating_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:text="Service Provider Name"
             android:textColor="@color/black"
@@ -145,7 +119,168 @@
             app:layout_constraintBottom_toTopOf="@+id/dialog_rating_star_rating"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/dialog_rating_profile_picture" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/dialog_rating_profile_picture"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            app:civ_border_width="0.5dp"
+            app:civ_border_color="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/dialog_rating_user_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/blue_profile" />
+
+        <TextView
+            android:id="@+id/dialog_rating_issue_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Select an Issue"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/dialog_rating_title_two"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_rating_star_rating" />
+
+        <TextView
+            android:id="@+id/dialog_rating_title_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Select one or more issues to submit your rating."
+            android:textColor="@color/redDark"
+            app:layout_constraintBottom_toTopOf="@+id/dialog_rating_reason_one"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_rating_issue_title" />
+
+        <TextView
+            android:id="@+id/dialog_rating_reason_one"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="2dp"
+            android:background="@drawable/edit_text_border_grey"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Hard to reach on phone"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/dialog_rating_reason_three"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_rating_reason_two"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_rating_title_two" />
+
+        <TextView
+            android:id="@+id/dialog_rating_reason_two"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/edit_text_border_grey"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Professionalism"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_rating_reason_one"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.112"
+            app:layout_constraintStart_toEndOf="@+id/dialog_rating_reason_one"
+            app:layout_constraintTop_toTopOf="@+id/dialog_rating_reason_one"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/dialog_rating_reason_three"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="2dp"
+            android:background="@drawable/edit_text_border_grey"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Vehicle Condition"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/dialog_rating_reason_five"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_rating_reason_four"
+            app:layout_constraintHorizontal_bias="0.815"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_rating_reason_one" />
+
+        <TextView
+            android:id="@+id/dialog_rating_reason_four"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/edit_text_border_grey"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Did not reach on time"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_rating_reason_three"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/dialog_rating_reason_three"
+            app:layout_constraintTop_toTopOf="@+id/dialog_rating_reason_three" />
+
+        <TextView
+            android:id="@+id/dialog_rating_reason_five"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="2dp"
+            android:background="@drawable/edit_text_border_grey"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Did not deliver on time"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/dialog_rating_no_thanks_button"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_rating_reason_six"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_rating_reason_three" />
+
+        <TextView
+            android:id="@+id/dialog_rating_reason_six"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:background="@drawable/edit_text_border_grey"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Goods Damaged"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_rating_reason_five"
+            app:layout_constraintEnd_toStartOf="@+id/dialog_rating_reason_seven"
+            app:layout_constraintStart_toEndOf="@+id/dialog_rating_reason_five"
+            app:layout_constraintTop_toTopOf="@+id/dialog_rating_reason_five"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/dialog_rating_reason_seven"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/edit_text_border_grey"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Other"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/dialog_rating_reason_six"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/dialog_rating_reason_six"
+            app:layout_constraintTop_toTopOf="@+id/dialog_rating_reason_six" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
