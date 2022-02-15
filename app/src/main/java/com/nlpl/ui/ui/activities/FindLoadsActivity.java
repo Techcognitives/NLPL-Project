@@ -201,7 +201,7 @@ public class FindLoadsActivity extends AppCompatActivity {
         searchListRecyclerView.setHasFixedSize(true);
 
         bidsListAdapter = new FindLoadAdapter(FindLoadsActivity.this, loadListToCompare);
-        bidsListRecyclerView.setAdapter(bidsListAdapter);
+//        bidsListRecyclerView.setAdapter(bidsListAdapter);
 
         searchList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.array_indian_states)));
         for (int i = 0; i < searchList.size(); i++) {
@@ -1433,6 +1433,9 @@ public class FindLoadsActivity extends AppCompatActivity {
                     if (loadSubmittedList.size() > 0) {
                         updatedLoadSubmittedList.addAll(loadSubmittedList);
                         compareAndRemove(loadListToCompare);
+                    } else {
+                        bidsListAdapter = new FindLoadAdapter(FindLoadsActivity.this, loadListToCompare);
+                        bidsListRecyclerView.setAdapter(bidsListAdapter);
                     }
 
                 } catch (JSONException e) {
