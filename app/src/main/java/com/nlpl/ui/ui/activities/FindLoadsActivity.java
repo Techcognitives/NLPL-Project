@@ -64,6 +64,8 @@ public class FindLoadsActivity extends AppCompatActivity {
 
     private RequestQueue mQueue;
     private ArrayList<FindLoadsModel> bidsList = new ArrayList<>();
+    private ArrayList<FindLoadsModel> loadListToCompare = new ArrayList<>();
+
     private ArrayList<FindLoadsModel> anList, apList, arList, asList, brList, chList, cgList, ddList,
             dd2List, dlList, gaList, gjList, hrList, hpList, jkList, jhList, kaList, klList, laList,
             ldList, mpList, mhList, mnList, mlList, mzList, nlList, odList, pyList, pbList, rjList,
@@ -198,9 +200,8 @@ public class FindLoadsActivity extends AppCompatActivity {
         searchListRecyclerView.setLayoutManager(linearLayoutManager);
         searchListRecyclerView.setHasFixedSize(true);
 
-        bidsListAdapter = new FindLoadAdapter(FindLoadsActivity.this, bidsList);
+        bidsListAdapter = new FindLoadAdapter(FindLoadsActivity.this, loadListToCompare);
         bidsListRecyclerView.setAdapter(bidsListAdapter);
-
 
         searchList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.array_indian_states)));
         for (int i = 0; i < searchList.size(); i++) {
