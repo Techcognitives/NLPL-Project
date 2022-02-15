@@ -64,6 +64,8 @@ public class FindLoadsActivity extends AppCompatActivity {
 
     private RequestQueue mQueue;
     private ArrayList<FindLoadsModel> bidsList = new ArrayList<>();
+    private ArrayList<FindLoadsModel> loadListToCompare = new ArrayList<>();
+
     private ArrayList<FindLoadsModel> anList, apList, arList, asList, brList, chList, cgList, ddList,
             dd2List, dlList, gaList, gjList, hrList, hpList, jkList, jhList, kaList, klList, laList,
             ldList, mpList, mhList, mnList, mlList, mzList, nlList, odList, pyList, pbList, rjList,
@@ -198,9 +200,8 @@ public class FindLoadsActivity extends AppCompatActivity {
         searchListRecyclerView.setLayoutManager(linearLayoutManager);
         searchListRecyclerView.setHasFixedSize(true);
 
-        bidsListAdapter = new FindLoadAdapter(FindLoadsActivity.this, bidsList);
-        bidsListRecyclerView.setAdapter(bidsListAdapter);
-
+        bidsListAdapter = new FindLoadAdapter(FindLoadsActivity.this, loadListToCompare);
+//        bidsListRecyclerView.setAdapter(bidsListAdapter);
 
         searchList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.array_indian_states)));
         for (int i = 0; i < searchList.size(); i++) {
@@ -783,11 +784,12 @@ public class FindLoadsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
 
-                    if (spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) || !negotiable) {
-                        isNegotiableSelected = true;
-                        saveBid(createBidRequest("RespondedBySP", spQuote.getText().toString()));
-                    } else {
-                        saveBid(createBidRequest("submitted", ""));
+                    if (spQuote.getText().toString().equals(customerFirstBudget.getText().toString())) {
+                        saveBid(createBidRequest("Accepted", spQuote.getText().toString()));
+                    } else if (!spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) && !negotiable) {
+                        saveBid(createBidRequest("submittedNonNego", spQuote.getText().toString()));
+                    } else if (!spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) && negotiable){
+                        saveBid(createBidRequest("submittedNego", spQuote.getText().toString()));
                     }
 
                     Log.i("loadId bidded", obj.getIdpost_load());
@@ -1432,6 +1434,9 @@ public class FindLoadsActivity extends AppCompatActivity {
                     if (loadSubmittedList.size() > 0) {
                         updatedLoadSubmittedList.addAll(loadSubmittedList);
                         compareAndRemove(loadListToCompare);
+                    } else {
+                        bidsListAdapter = new FindLoadAdapter(FindLoadsActivity.this, loadListToCompare);
+                        bidsListRecyclerView.setAdapter(bidsListAdapter);
                     }
 
                 } catch (JSONException e) {
