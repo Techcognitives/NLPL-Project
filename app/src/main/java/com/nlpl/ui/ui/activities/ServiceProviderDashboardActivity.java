@@ -1171,7 +1171,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
 //                            loadListAdapter.updateData(loadListToCompare);
 //                        }
 //                    }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
