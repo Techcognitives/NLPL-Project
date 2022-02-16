@@ -2322,7 +2322,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         mQueue.add(request1);
     }
 
-
     //-----------------------------------------------upload Image------------------------------------------------------------
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
