@@ -51,6 +51,7 @@ import com.nlpl.model.Requests.UserRequest;
 import com.nlpl.model.Responses.UserResponse;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.GetCurrentLocation;
+import com.nlpl.utils.InAppNotification;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.SelectCity;
 import com.nlpl.utils.SelectState;
@@ -480,10 +481,9 @@ public class RegistrationActivity extends AppCompatActivity {
         });
         mQueue.add(request);
     }
-
     //----------------------------------------------------------------------------------------------
 
-    //--------------------------------------create User in API -------------------------------------
+    //------------------------------------- Create User in API -------------------------------------
     public UserRequest createUser() {
         UserRequest userRequest = new UserRequest();
         userRequest.setName(name.getText().toString());
@@ -521,4 +521,10 @@ public class RegistrationActivity extends AppCompatActivity {
         });
     }
     //----------------------------------------------------------------------------------------------
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        InAppNotification.SendNotificationJumpToRegistrationActivity(RegistrationActivity.this, "Hello!!", "Please Complete your Registration", mobile);
+    }
 }

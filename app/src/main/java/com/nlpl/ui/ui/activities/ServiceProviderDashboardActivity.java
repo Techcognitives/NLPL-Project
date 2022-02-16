@@ -7,6 +7,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +19,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -2320,7 +2322,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         mQueue.add(request1);
     }
 
-
     //-----------------------------------------------upload Image------------------------------------------------------------
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -2504,6 +2505,26 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             manager.createNotificationChannel(channel);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (isPersonalDetailsDone.equals("1")) {
+
+        }
+
+        if (isBankDetailsDone.equals("1")) {
+
+        }
+
+        if (isTruckDetailsDone.equals("1")) {
+
+        }
+
+        if (isDriverDetailsDone.equals("1")) {
+
         }
     }
 
