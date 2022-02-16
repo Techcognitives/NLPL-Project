@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.NotificationChannel;
@@ -32,6 +33,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.Html;
@@ -42,6 +44,8 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -81,7 +85,9 @@ import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.EnglishNumberToWords;
 import com.nlpl.utils.FileUtils;
+import com.nlpl.utils.FooThread;
 import com.nlpl.utils.JumpTo;
+import com.nlpl.utils.ShowAlert;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -123,7 +129,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     private LoadSubmittedAdapter loadSubmittedAdapter;
     private RecyclerView loadListRecyclerView, loadSubmittedRecyclerView;
 
-    Dialog setBudget, selectTruckDialog, previewDialogBidNow, dialogAcceptRevisedBid, dialogViewConsignment;
+    Dialog loadingDialog, setBudget, selectTruckDialog, previewDialogBidNow, dialogAcceptRevisedBid, dialogViewConsignment;
 
     String updateAssignedDriverId, updateAssignedTruckId, spQuoteOnClickBidNow, bidStatus, vehicle_no, truckId, isProfileAdded, isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
 
@@ -250,6 +256,25 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         previewDialogProfile = new Dialog(ServiceProviderDashboardActivity.this);
         previewDialogProfile.setContentView(R.layout.dialog_preview_profile);
         previewDialogProfile.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.black)));
+
+        loadingDialog = new Dialog(ServiceProviderDashboardActivity.this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+        lp2.copyFrom(loadingDialog.getWindow().getAttributes());
+        lp2.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.gravity = Gravity.CENTER;
+
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        loadingDialog.getWindow().setAttributes(lp2);
+
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
 
         drawerLayout = (ConstraintLayout) menuDialog.findViewById(R.id.drawer_menu);
         menuUserNameTextView = (TextView) menuDialog.findViewById(R.id.menu_name_text);
@@ -724,7 +749,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         saveBid(createBidRequest("Accepted", spQuote.getText().toString()));
                     } else if (!spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) && !negotiable) {
                         saveBid(createBidRequest("submittedNonNego", spQuote.getText().toString()));
-                    } else if (!spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) && negotiable){
+                    } else if (!spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) && negotiable) {
                         saveBid(createBidRequest("submittedNego", spQuote.getText().toString()));
                     }
 
@@ -837,7 +862,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         addTruck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JumpTo.goToVehicleDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, false, true, false,false, null, null);
+                JumpTo.goToVehicleDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, false, true, false, false, null, null);
             }
         });
 
@@ -1160,6 +1185,8 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         } else {
                             noBidsSubmittedTextView.setVisibility(View.VISIBLE);
                         }
+                        FooThread fooThread = new FooThread(handler);
+                        fooThread.start();
                         compareAndRemove(loadListToCompare);
                     }
 //
@@ -1332,14 +1359,24 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         okBudget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
-                    acceptAndBid.setEnabled(true);
-                    acceptAndBid.setBackgroundResource((R.drawable.button_active));
+                String cb = customerFirstBudget.getText().toString().replaceAll(",", "");
+                int customer50Budget = Integer.valueOf(cb) / 2;
+                String sb = budget.getText().toString().replaceAll(",", "");
+                int spBudget = Integer.valueOf(sb);
+
+                if (spBudget < customer50Budget) {
+                    ShowAlert.showAlert(ServiceProviderDashboardActivity.this, "Enter proper Quote", "You cannot bid less than 50% of customer Budget", true, false, "Ok", "null");
                 } else {
-                    acceptAndBid.setEnabled(false);
-                    acceptAndBid.setBackgroundResource((R.drawable.button_de_active));
+                    if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
+                        acceptAndBid.setEnabled(true);
+                        acceptAndBid.setBackgroundResource((R.drawable.button_active));
+                    } else {
+                        acceptAndBid.setEnabled(false);
+                        acceptAndBid.setBackgroundResource((R.drawable.button_de_active));
+                    }
+                    setBudget.dismiss();
                 }
-                setBudget.dismiss();
+
             }
         });
     }
@@ -2442,7 +2479,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         });
     }
 
-    private void getNotification(){
+    private void getNotification() {
         FirebaseMessaging.getInstance().subscribeToTopic("load")
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -2451,7 +2488,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             msg = "Failed";
                             Log.i("Message", msg);
-                        }else{
+                        } else {
                             Log.i("Message", "Success");
                         }
                     }
@@ -2469,5 +2506,15 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             manager.createNotificationChannel(channel);
         }
     }
+
+    @SuppressLint("HandlerLeak")
+    final Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            int state = msg.getData().getInt("state");
+            if (state == 1){
+                loadingDialog.dismiss();
+            }
+        }
+    };
 
 }

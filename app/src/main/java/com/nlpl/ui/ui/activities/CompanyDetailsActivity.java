@@ -413,14 +413,14 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 
         Log.i("Entered PIN", enteredPin);
 
-        String url = "https://findyourtruck-393a4-default-rtdb.asia-southeast1.firebasedatabase.app/indianPinCodes.json?orderBy=%22pincode%22&equalTo=%22"+enteredPin+"%22";
+        String url = "http://13.234.163.179:3000/user/locationData/"+enteredPin;
         Log.i("url for truckByTruckId", url);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
 
-                    JSONObject obj = response.getJSONObject("81066");
+                    JSONObject obj = response.getJSONObject("data");
                     stateByPinCode = obj.getString("stateCode");
                     distByPinCode = obj.getString("district");
 
