@@ -277,8 +277,9 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
                                             String bid_status = obj1.getString("bid_status");
 
                                             if (bid_status.equals("withdrawnBySp")) {
+                                                holder.timeLeft.setText("SP Withdrawn");
                                                 holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
-                                                holder.bidNowButton.setText("SP\n Withdrawn");
+                                                holder.bidNowButton.setText("Re-activate Load");
                                                 holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.dark_grey));
                                                 holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
                                                     @Override

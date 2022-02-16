@@ -485,18 +485,19 @@ public class PostALoadActivity extends AppCompatActivity {
         String newPreviousBudget = previousBudget.replaceAll(",", "");
         budget.setText(newPreviousBudget);
 
-        if (!previousBudget.isEmpty()) {
+//        if (!previousBudget.isEmpty()) {
             okBudget.setEnabled(true);
             okBudget.setBackgroundResource((R.drawable.button_active));
-        } else {
-            okBudget.setEnabled(false);
-            okBudget.setBackgroundResource((R.drawable.button_de_active));
-        }
+//        } else {
+//
+//            okBudget.setEnabled(false);
+//            okBudget.setBackgroundResource((R.drawable.button_de_active));
+//        }
 
         budget.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                select_budget.setText("0");
             }
 
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -557,8 +558,9 @@ public class PostALoadActivity extends AppCompatActivity {
                     okBudget.setEnabled(true);
                     okBudget.setBackgroundResource((R.drawable.button_active));
                 } else {
-                    okBudget.setEnabled(false);
-                    okBudget.setBackgroundResource((R.drawable.button_de_active));
+                    select_budget.setText("0");
+                    okBudget.setEnabled(true);
+                    okBudget.setBackgroundResource((R.drawable.button_active));
                 }
 
                 TextView amountInWords = setBudget.findViewById(R.id.dialog_budget_amount_in_words);
@@ -579,6 +581,9 @@ public class PostALoadActivity extends AppCompatActivity {
         okBudget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (budget.getText().toString().isEmpty()) {
+                    select_budget.setText("0");
+                }
                 setBudget.dismiss();
             }
         });
