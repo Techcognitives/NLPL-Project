@@ -37,6 +37,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BidSubmittedModel;
+import com.nlpl.model.ModelForRecyclerView.BidsResponsesModel;
 import com.nlpl.model.ModelForRecyclerView.FindLoadsModel;
 
 import com.nlpl.model.ModelForRecyclerView.SearchLoadModel;
@@ -56,6 +57,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -75,7 +78,7 @@ public class FindLoadsActivity extends AppCompatActivity {
     ConstraintLayout stateConstrain;
 
     private ArrayList<SearchLoadModel> searchLoadModels = new ArrayList<>();
-    ArrayList<String> searchList;
+    ArrayList<SearchLoadModel> searchList;
     private SearchLoadAdapter searchLoadAdapter;
     private RecyclerView searchListRecyclerView;
 
@@ -203,10 +206,10 @@ public class FindLoadsActivity extends AppCompatActivity {
         bidsListAdapter = new FindLoadAdapter(FindLoadsActivity.this, loadListToCompare);
 //        bidsListRecyclerView.setAdapter(bidsListAdapter);
 
-        searchList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.array_indian_states)));
+        searchList = new ArrayList(Arrays.asList(getResources().getStringArray(R.array.array_indian_states)));
         for (int i = 0; i < searchList.size(); i++) {
             SearchLoadModel searchLoadModel = new SearchLoadModel();
-            searchLoadModel.setSearchList(searchList.get(i));
+            searchLoadModel.setSearchList(String.valueOf(searchList.get(i)));
             searchLoadModels.add(searchLoadModel);
         }
 
@@ -258,7 +261,6 @@ public class FindLoadsActivity extends AppCompatActivity {
     }
 
     public void getBidsReceived() {
-
         String url1 = getString(R.string.baseURL) + "/loadpost/getAllPosts";
         Log.i("URL: ", url1);
 
@@ -335,118 +337,155 @@ public class FindLoadsActivity extends AppCompatActivity {
         }
     }
 
-    public void setLoadCount(SearchLoadModel obj, TextView numberOfLoads) {
+    public void setLoadCount(SearchLoadModel obj, TextView numberOfLoads, ConstraintLayout findConstrain, ArrayList<SearchLoadModel> array_indian_states) {
         try {
             if (obj.getSearchList().equals(searchList.get(0))) {
                 numberOfLoads.setText(anList.size() + " Loads");
+                obj.setItemCount(anList.size());
             }
             if (obj.getSearchList().equals(searchList.get(1))) {
                 numberOfLoads.setText(apList.size() + " Loads");
+                obj.setItemCount(apList.size());
             }
             if (obj.getSearchList().equals(searchList.get(2))) {
                 numberOfLoads.setText(arList.size() + " Loads");
+                obj.setItemCount(arList.size());
             }
             if (obj.getSearchList().equals(searchList.get(3))) {
                 numberOfLoads.setText(asList.size() + " Loads");
+                obj.setItemCount(asList.size());
             }
             if (obj.getSearchList().equals(searchList.get(4))) {
                 numberOfLoads.setText(brList.size() + " Loads");
+                obj.setItemCount(brList.size());
             }
             if (obj.getSearchList().equals(searchList.get(5))) {
                 numberOfLoads.setText(chList.size() + " Loads");
+                obj.setItemCount(chList.size());
             }
             if (obj.getSearchList().equals(searchList.get(6))) {
                 numberOfLoads.setText(cgList.size() + " Loads");
+                obj.setItemCount(cgList.size());
             }
             if (obj.getSearchList().equals(searchList.get(7))) {
                 numberOfLoads.setText(ddList.size() + " Loads");
+                obj.setItemCount(ddList.size());
             }
             if (obj.getSearchList().equals(searchList.get(8))) {
                 numberOfLoads.setText(dd2List.size() + " Loads");
+                obj.setItemCount(dd2List.size());
             }
             if (obj.getSearchList().equals(searchList.get(9))) {
                 numberOfLoads.setText(dlList.size() + " Loads");
+                obj.setItemCount(dlList.size());
             }
             if (obj.getSearchList().equals(searchList.get(10))) {
                 numberOfLoads.setText(gaList.size() + " Loads");
+                obj.setItemCount(gaList.size());
             }
             if (obj.getSearchList().equals(searchList.get(11))) {
                 numberOfLoads.setText(gjList.size() + " Loads");
+                obj.setItemCount(gjList.size());
             }
             if (obj.getSearchList().equals(searchList.get(12))) {
                 numberOfLoads.setText(hrList.size() + " Loads");
+                obj.setItemCount(hrList.size());
             }
             if (obj.getSearchList().equals(searchList.get(13))) {
                 numberOfLoads.setText(hpList.size() + " Loads");
+                obj.setItemCount(hpList.size());
             }
             if (obj.getSearchList().equals(searchList.get(14))) {
                 numberOfLoads.setText(jkList.size() + " Loads");
+                obj.setItemCount(jkList.size());
             }
             if (obj.getSearchList().equals(searchList.get(15))) {
                 numberOfLoads.setText(jhList.size() + " Loads");
+                obj.setItemCount(jhList.size());
             }
             if (obj.getSearchList().equals(searchList.get(16))) {
                 numberOfLoads.setText(kaList.size() + " Loads");
+                obj.setItemCount(kaList.size());
             }
             if (obj.getSearchList().equals(searchList.get(17))) {
                 numberOfLoads.setText(klList.size() + " Loads");
+                obj.setItemCount(klList.size());
             }
             if (obj.getSearchList().equals(searchList.get(18))) {
                 numberOfLoads.setText(laList.size() + " Loads");
+                obj.setItemCount(laList.size());
             }
             if (obj.getSearchList().equals(searchList.get(19))) {
                 numberOfLoads.setText(ldList.size() + " Loads");
+                obj.setItemCount(ldList.size());
             }
             if (obj.getSearchList().equals(searchList.get(20))) {
                 numberOfLoads.setText(mpList.size() + " Loads");
+                obj.setItemCount(mpList.size());
             }
             if (obj.getSearchList().equals(searchList.get(21))) {
                 numberOfLoads.setText(mhList.size() + " Loads");
+                obj.setItemCount(mhList.size());
             }
             if (obj.getSearchList().equals(searchList.get(22))) {
                 numberOfLoads.setText(mnList.size() + " Loads");
+                obj.setItemCount(mnList.size());
             }
             if (obj.getSearchList().equals(searchList.get(23))) {
                 numberOfLoads.setText(mlList.size() + " Loads");
+                obj.setItemCount(mlList.size());
             }
             if (obj.getSearchList().equals(searchList.get(24))) {
                 numberOfLoads.setText(mzList.size() + " Loads");
+                obj.setItemCount(mzList.size());
             }
             if (obj.getSearchList().equals(searchList.get(25))) {
                 numberOfLoads.setText(nlList.size() + " Loads");
+                obj.setItemCount(nlList.size());
             }
             if (obj.getSearchList().equals(searchList.get(26))) {
                 numberOfLoads.setText(odList.size() + " Loads");
+                obj.setItemCount(odList.size());
             }
             if (obj.getSearchList().equals(searchList.get(27))) {
                 numberOfLoads.setText(pyList.size() + " Loads");
+                obj.setItemCount(pyList.size());
             }
             if (obj.getSearchList().equals(searchList.get(28))) {
                 numberOfLoads.setText(pbList.size() + " Loads");
+                obj.setItemCount(pbList.size());
             }
             if (obj.getSearchList().equals(searchList.get(29))) {
                 numberOfLoads.setText(rjList.size() + " Loads");
+                obj.setItemCount(rjList.size());
             }
             if (obj.getSearchList().equals(searchList.get(30))) {
                 numberOfLoads.setText(skList.size() + " Loads");
+                obj.setItemCount(skList.size());
             }
             if (obj.getSearchList().equals(searchList.get(31))) {
                 numberOfLoads.setText(tnList.size() + " Loads");
+                obj.setItemCount(tnList.size());
             }
             if (obj.getSearchList().equals(searchList.get(32))) {
                 numberOfLoads.setText(tsList.size() + " Loads");
+                obj.setItemCount(tsList.size());
             }
             if (obj.getSearchList().equals(searchList.get(33))) {
                 numberOfLoads.setText(trList.size() + " Loads");
+                obj.setItemCount(trList.size());
             }
             if (obj.getSearchList().equals(searchList.get(34))) {
                 numberOfLoads.setText(ukList.size() + " Loads");
+                obj.setItemCount(ukList.size());
             }
             if (obj.getSearchList().equals(searchList.get(35))) {
                 numberOfLoads.setText(upList.size() + " Loads");
+                obj.setItemCount(upList.size());
             }
             if (obj.getSearchList().equals(searchList.get(36))) {
                 numberOfLoads.setText(wbList.size() + " Loads");
+                obj.setItemCount(wbList.size());
             }
 
         } catch (Exception e) {
@@ -1435,8 +1474,10 @@ public class FindLoadsActivity extends AppCompatActivity {
                         updatedLoadSubmittedList.addAll(loadSubmittedList);
                         compareAndRemove(loadListToCompare);
                     } else {
-                        bidsListAdapter = new FindLoadAdapter(FindLoadsActivity.this, loadListToCompare);
-                        bidsListRecyclerView.setAdapter(bidsListAdapter);
+//                        bidsListAdapter = new FindLoadAdapter(FindLoadsActivity.this, loadListToCompare);
+//                        bidsListRecyclerView.setAdapter(bidsListAdapter);
+                        bidsListAdapter.updateData(loadListToCompare);
+                        getStateBids(loadListToCompare);
                     }
 
                 } catch (JSONException e) {

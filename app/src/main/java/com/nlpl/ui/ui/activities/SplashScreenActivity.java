@@ -127,7 +127,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                                     }
 
                                 } else {
-                                    JumpTo.goToRegistrationActivity(SplashScreenActivity.this, mobileNoFirebase);
+                                    JumpTo.goToRegistrationActivity(SplashScreenActivity.this, mobileNoFirebase, true);
                                 }
 //
                             } catch (JSONException e) {

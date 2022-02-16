@@ -43,12 +43,15 @@ public class JumpTo {
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void goToRegistrationActivity(Activity activity, String mobileNumber){
+    public static void goToRegistrationActivity(Activity activity, String mobileNumber, Boolean isFinish){
         Intent intent = new Intent(activity, RegistrationActivity.class);
         intent.putExtra("mobile1", mobileNumber);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivity(intent);
-        activity.finish();
+        if (isFinish){
+            activity.finish();
+        }
+
         activity.overridePendingTransition(0, 0);
     }
 
@@ -73,18 +76,17 @@ public class JumpTo {
     }
 
     public static void goToSliderActivity(Activity activity){
-        Intent i8 = new Intent(activity, SliderActivity.class);
-        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        activity.startActivity(i8);
-        activity.finish();
+        Intent intent = new Intent(activity, SliderActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        activity.startActivity(intent);
         activity.overridePendingTransition(0, 0);
     }
 
     public static void goToViewPersonalDetailsActivity(Activity activity, String userId, String mobileNumber, Boolean isFinish){
-        Intent i8 = new Intent(activity, ViewPersonalDetailsActivity.class);
-        i8.putExtra("userId", userId);
-        i8.putExtra("mobile", mobileNumber);
-        activity.startActivity(i8);
+        Intent intent = new Intent(activity, ViewPersonalDetailsActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("mobile", mobileNumber);
+        activity.startActivity(intent);
         if (isFinish){
             activity.finish();
         }
@@ -129,10 +131,10 @@ public class JumpTo {
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void goToCustomerLoadHistoryActivity(Activity activity, String userId, String phone, Boolean isFinish){
+    public static void goToCustomerLoadHistoryActivity(Activity activity, String userId, String mobileNumber, Boolean isFinish){
         Intent intent = new Intent(activity, CustomerLoadsHistoryActivity.class);
         intent.putExtra("userId", userId);
-        intent.putExtra("mobile", phone);
+        intent.putExtra("mobile", mobileNumber);
         activity.startActivity(intent);
         if (isFinish){
             activity.finish();
@@ -149,15 +151,15 @@ public class JumpTo {
     }
 
     public static void goToVehicleDetailsActivity(Activity activity, String userId, String mobileNumber, Boolean isEdit, Boolean isFromBidNow, Boolean isFromAssignTruck, Boolean isFinish, String driverId, String truckId){
-        Intent intent3 = new Intent(activity, VehicleDetailsActivity.class);
-        intent3.putExtra("userId", userId);
-        intent3.putExtra("mobile", mobileNumber);
-        intent3.putExtra("isEdit", isEdit);
-        intent3.putExtra("fromBidNow", isFromBidNow);
-        intent3.putExtra("assignTruck", isFromAssignTruck);
-        intent3.putExtra("driverId", driverId);
-        intent3.putExtra("truckId", truckId);
-        activity.startActivity(intent3);
+        Intent intent = new Intent(activity, VehicleDetailsActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("mobile", mobileNumber);
+        intent.putExtra("isEdit", isEdit);
+        intent.putExtra("fromBidNow", isFromBidNow);
+        intent.putExtra("assignTruck", isFromAssignTruck);
+        intent.putExtra("driverId", driverId);
+        intent.putExtra("truckId", truckId);
+        activity.startActivity(intent);
         if (isFinish){
             activity.finish();
         }
@@ -176,15 +178,15 @@ public class JumpTo {
     }
 
     public static void goToDriverDetailsActivity(Activity activity, String userId, String mobileNumber, Boolean isEdit, Boolean isFromBidNow, Boolean isFinish, String truckId, String driverId){
-        Intent i8 = new Intent(activity, DriverDetailsActivity.class);
-        i8.putExtra("userId", userId);
-        i8.putExtra("mobile", mobileNumber);
-        i8.putExtra("isEdit", isEdit);
-        i8.putExtra("fromBidNow", isFromBidNow);
-        i8.putExtra("truckIdPass", truckId);
-        i8.putExtra("driverId", driverId);
-        i8.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        activity.startActivity(i8);
+        Intent intent = new Intent(activity, DriverDetailsActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("mobile", mobileNumber);
+        intent.putExtra("isEdit", isEdit);
+        intent.putExtra("fromBidNow", isFromBidNow);
+        intent.putExtra("truckIdPass", truckId);
+        intent.putExtra("driverId", driverId);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        activity.startActivity(intent);
         if (isFinish){
             activity.finish();
         }

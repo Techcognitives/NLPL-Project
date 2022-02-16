@@ -7,6 +7,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -724,7 +726,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         saveBid(createBidRequest("Accepted", spQuote.getText().toString()));
                     } else if (!spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) && !negotiable) {
                         saveBid(createBidRequest("submittedNonNego", spQuote.getText().toString()));
-                    } else if (!spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) && negotiable){
+                    } else if (!spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) && negotiable) {
                         saveBid(createBidRequest("submittedNego", spQuote.getText().toString()));
                     }
 
@@ -837,7 +839,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         addTruck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JumpTo.goToVehicleDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, false, true, false,false, null, null);
+                JumpTo.goToVehicleDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, false, true, false, false, null, null);
             }
         });
 
@@ -2442,7 +2444,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         });
     }
 
-    private void getNotification(){
+    private void getNotification() {
         FirebaseMessaging.getInstance().subscribeToTopic("load")
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -2451,7 +2453,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             msg = "Failed";
                             Log.i("Message", msg);
-                        }else{
+                        } else {
                             Log.i("Message", "Success");
                         }
                     }
@@ -2470,4 +2472,23 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (isPersonalDetailsDone.equals("1")) {
+
+        }
+
+        if (isBankDetailsDone.equals("1")) {
+
+        }
+
+        if (isTruckDetailsDone.equals("1")) {
+
+        }
+
+        if (isDriverDetailsDone.equals("1")) {
+
+        }
+    }
 }

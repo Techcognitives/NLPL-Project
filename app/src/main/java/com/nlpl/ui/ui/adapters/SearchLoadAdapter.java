@@ -18,6 +18,8 @@ import com.nlpl.model.ModelForRecyclerView.SearchLoadModel;
 import com.nlpl.ui.ui.activities.FindLoadsActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class SearchLoadAdapter extends RecyclerView.Adapter<SearchLoadAdapter.SearchLoadsViewHolder> {
 
@@ -41,11 +43,16 @@ public class SearchLoadAdapter extends RecyclerView.Adapter<SearchLoadAdapter.Se
         String state = obj.getSearchList();
         holder.stateName.setText("  " + state);
 
-        activity.setLoadCount(obj, holder.numberOfLoads);
+        activity.setLoadCount(obj, holder.numberOfLoads, holder.findConstrain, array_indian_states);
 
-//        if (holder.numberOfLoads.getText().equals("0 Loads")){
-//            array_indian_states.remove(position);
-//        }
+        Collections.sort(array_indian_states, new Comparator<SearchLoadModel>() {
+            @Override
+            public int compare(SearchLoadModel searchLoadModel, SearchLoadModel t1) {
+                int i1 = searchLoadModel.getItemCount();
+                int i2 = t1.getItemCount();
+                return i2-i1;
+            }
+        });
 
         holder.findConstrain.setOnClickListener(new View.OnClickListener() {
             @Override
