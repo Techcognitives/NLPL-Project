@@ -26,13 +26,12 @@ import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -40,6 +39,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -64,7 +65,6 @@ import com.nlpl.model.Responses.UploadImageResponse;
 import com.nlpl.model.UpdateMethods.UpdateBidDetails;
 import com.nlpl.model.UpdateMethods.UpdatePostLoadDetails;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
-import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserRating;
 import com.nlpl.ui.ui.adapters.BidsAcceptedAdapter;
 import com.nlpl.ui.ui.adapters.BidsReceivedAdapter;
 import com.nlpl.ui.ui.adapters.BidsResponsesAdapter;
@@ -72,6 +72,7 @@ import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.EnglishNumberToWords;
 import com.nlpl.utils.FileUtils;
+import com.nlpl.utils.FooThread;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.ShowAlert;
 import com.razorpay.Checkout;
@@ -79,7 +80,6 @@ import com.razorpay.Checkout;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -109,12 +109,12 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     private RecyclerView bidsAcceptedRecyclerView;
 
     private BidsResponsesAdapter bidsResponsesAdapter;
-    boolean isBackPressed = false, bidsReceivedSelected = true, isbidsReceivedSelected;
+    boolean dismiss, isBackPressed = false, bidsReceivedSelected = true, isbidsReceivedSelected;
 
     private int CAMERA_PIC_REQUEST2 = 4;
     private int GET_FROM_GALLERY2 = 5;
 
-    Dialog menuDialog;
+    Dialog menuDialog, loadingDialog;
     TextView userNameTextViewMenu, mobileTextViewMenu, spNumber, driverNumber;
     ImageView personalDetailsLogoImageView, bankDetailsLogoImageView;
     Dialog previewDialogProfile, previewDialogProfileOfSp;
@@ -175,10 +175,28 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
             bidsReceivedConstrain.setVisibility(View.INVISIBLE);
             loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
             bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
-
         }
 
         getUserId(phone);
+
+        loadingDialog = new Dialog(CustomerDashboardActivity.this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+        lp2.copyFrom(loadingDialog.getWindow().getAttributes());
+        lp2.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.gravity = Gravity.CENTER;
+
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        loadingDialog.getWindow().setAttributes(lp2);
+
+        Animation rotate = AnimationUtils.loadAnimation(CustomerDashboardActivity.this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -402,6 +420,16 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 //                    for (int i=0; i< acceptedList.size(); i++){
 //                        if (acceptedList.get(i).getBid_status().equals("FinalAccepted")){
                     if (acceptedList.size() > 0) {
+                        final Handler handler = new Handler() {
+                            public void handleMessage(Message msg) {
+                                int state = msg.getData().getInt("state");
+                                if (state == 1){
+                                    loadingDialog.dismiss();
+                                }
+                            }
+                        };
+                        FooThread fooThread = new FooThread(handler);
+                        fooThread.start();
 //                        bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
                         noAcceptedLoads.setVisibility(View.GONE);
                         bidsAcceptedAdapter.updateData(acceptedList);
@@ -511,6 +539,16 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                     TextView noLoadTextView = (TextView) findViewById(R.id.customer_dashboard_no_load_text);
 
                     if (bidsList.size() > 0) {
+                        final Handler handler = new Handler() {
+                            public void handleMessage(Message msg) {
+                                int state = msg.getData().getInt("state");
+                                if (state == 1){
+                                    loadingDialog.dismiss();
+                                }
+                            }
+                        };
+                        FooThread fooThread = new FooThread(handler);
+                        fooThread.start();
                         noLoadTextView.setVisibility(View.GONE);
                         bidsListAdapter.updateData(bidsList);
                     } else {
@@ -2192,7 +2230,6 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                     for (int i = 0; i < imageList.length(); i++) {
                         JSONObject obj = imageList.getJSONObject(i);
                         String imageType = obj.getString("image_type");
-
                         String profileImgUrl = "";
                         if (imageType.equals("profile")) {
                             profileImgUrl = obj.getString("image_url");
