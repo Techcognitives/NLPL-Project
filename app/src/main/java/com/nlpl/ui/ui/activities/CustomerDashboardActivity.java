@@ -952,8 +952,6 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                         bidsResponsesModel2.setBid_status(obj.getString("bid_status"));
                         bidsResponsesModel2.setIs_bid_accpted_by_sp(obj.getString("is_bid_accpted_by_sp"));
 
-                        Log.i("Sp quote", obj.getString("sp_quote"));
-
                         if (obj1.getSp_count() == 3) {
                             if (obj.getString("bid_status").equals("AcceptedBySp") || obj.getString("bid_status").equals("RespondedByLp")) {
                                 bidResponsesList.add(bidsResponsesModel2);
