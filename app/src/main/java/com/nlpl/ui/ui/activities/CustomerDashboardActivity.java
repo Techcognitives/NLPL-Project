@@ -416,20 +416,13 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                         }
                     }
 
+                    FooThread fooThread = new FooThread(handler);
+                    fooThread.start();
+
                     TextView noAcceptedLoads = (TextView) findViewById(R.id.customer_dashboard_no_load_accepted_text);
 //                    for (int i=0; i< acceptedList.size(); i++){
 //                        if (acceptedList.get(i).getBid_status().equals("FinalAccepted")){
                     if (acceptedList.size() > 0) {
-                        final Handler handler = new Handler() {
-                            public void handleMessage(Message msg) {
-                                int state = msg.getData().getInt("state");
-                                if (state == 1){
-                                    loadingDialog.dismiss();
-                                }
-                            }
-                        };
-                        FooThread fooThread = new FooThread(handler);
-                        fooThread.start();
 //                        bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
                         noAcceptedLoads.setVisibility(View.GONE);
                         bidsAcceptedAdapter.updateData(acceptedList);
@@ -535,20 +528,13 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                         }
                     }
 
+                    FooThread fooThread = new FooThread(handler);
+                    fooThread.start();
+
                     Collections.reverse(bidsList);
                     TextView noLoadTextView = (TextView) findViewById(R.id.customer_dashboard_no_load_text);
 
                     if (bidsList.size() > 0) {
-                        final Handler handler = new Handler() {
-                            public void handleMessage(Message msg) {
-                                int state = msg.getData().getInt("state");
-                                if (state == 1){
-                                    loadingDialog.dismiss();
-                                }
-                            }
-                        };
-                        FooThread fooThread = new FooThread(handler);
-                        fooThread.start();
                         noLoadTextView.setVisibility(View.GONE);
                         bidsListAdapter.updateData(bidsList);
                     } else {
@@ -2713,4 +2699,13 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
             }
         });
     }
+
+    final Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            int state = msg.getData().getInt("state");
+            if (state == 1){
+                loadingDialog.dismiss();
+            }
+        }
+    };
 }
