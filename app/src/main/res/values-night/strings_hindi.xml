@@ -953,197 +953,197 @@
     //----------------------------------------------------------------------------------------------
 
     //---------------------------- LogIn Activity --------------------------------------------------
-    <string name="login">Login</string>
+    <string name="login">लॉग इन करें</string>
     <string name="mobile_prefix">+91 |</string>
-    <string name="edit_number_hint">Enter 10 digit mobile number</string>
-    <string name="get_otp">Get OTP</string>
-    <string name="tc_and_pp">By clicking on Get OTP you agree to our</string>
-    <string name="tc">Terms of Service</string>
-    <string name="and">and</string>
-    <string name="pp">Privacy Policy</string>
-    <string name="selectYourCountry">Select Your Country</string>
+    <string name="edit_number_hint">10 अंकों का मोबाइल नंबर दर्ज करें</string>
+    <string name="get_otp">ओटीपी प्राप्त करें</string>
+    <string name="tc_and_pp">Get OTP पर क्लिक करके आप हमारी सहमति देते हैं</string>
+    <string name="tc">सेवा की शर्तें</string>
+    <string name="and">तथा</string>
+    <string name="pp">गोपनीयता नीति</string>
+    <string name="selectYourCountry">अपने देश का चयन करें</string>
     //----------------------------------------------------------------------------------------------
 
     //---------------------------- OTP Code Activity -----------------------------------------------
-    <string name="otp_code">OTP Code</string>
-    <string name="enter_code">Please Enter OTP sent to\n</string>
-    <string name="verify_otp">Verify OTP</string>
-    <string name="copy_otp">Copy OTP</string>
-    <string name="resend_otp">Resend OTP</string>
+    <string name="otp_code">ओटीपी कोड</string>
+    <string name="enter_code">कृपया ओटीपी दर्ज करें\n</string>
+    <string name="verify_otp">ओटीपी सत्यापित करें</string>
+    <string name="copy_otp">कॉपी ओटीपी</string>
+    <string name="resend_otp">ओटीपी पुनः भेजें</string>
     //----------------------------------------------------------------------------------------------
 
     //---------------------------- Registration Screen Activity ------------------------------------
-    <string name="name">Name</string>
-    <string name="name_hint">Enter your name</string>
-    <string name="email_id">Enter your email id</string>
-    <string name="location">Location</string>
-    <string name="select_state">State</string>
-    <string name="select_city">City</string>
-    <string name="pin_code">PIN Code</string>
-    <string name="address">Address</string>
-    <string name="are_u_sp">Truck Owner / Driver / Broker? </string>
-    <string name="truck_owner">Truck Owner</string>
-    <string name="driver">Driver</string>
-    <string name="broker">Broker</string>
-    <string name="ok">OK</string>
-    <string name="customer">Load Poster?</string>
-    <string name="yes">YES</string>
+    <string name="name">नाम</string>
+    <string name="name_hint">अपना नाम दर्ज करें</string>
+    <string name="email_id">अपनी ईमेल आईडी दर्ज करें</string>
+    <string name="location">स्थान</string>
+    <string name="select_state">राज्य</string>
+    <string name="select_city">शहर</string>
+    <string name="pin_code">पिन कोड</string>
+    <string name="address">पता</string>
+    <string name="are_u_sp">ट्रक मालिक/चालक/दलाल? </string>
+    <string name="truck_owner">ट्रक मालिक</string>
+    <string name="driver">चालक</string>
+    <string name="broker">दलाल</string>
+    <string name="ok">ठीक</string>
+    <string name="customer">पोस्टर लोड करें?</string>
+    <string name="yes">हां</string>
     //----------------------------------------------------------------------------------------------
 
     //------------------------------------Profile and registration Activity ------------------------
-    <string name="hello">Hello,</string>
+    <string name="hello">नमस्ते,</string>
     <string name="mobNo">+91</string>
-    <string name="personalDetails"><p>   </p>Personal Details</string>
-    <string name="personal_and_company"><p>   </p>Personal &amp; Company</string>
-    <string name="BankDetails"><p>   </p>My Bank</string>
-    <string name="AddTrucks"><p>   </p>My Trucks</string>
-    <string name="AddDrivers"><p>   </p>My Drivers</string>
+    <string name="personalDetails"><p>   </p>व्यक्तिगत विवरण</string>
+    <string name="personal_and_company"><p>   </p>व्यक्तिगत और कंपनी</string>
+    <string name="BankDetails"><p>   </p>मेरा बैंक</string>
+    <string name="AddTrucks"><p>   </p>मेरे ट्रक</string>
+    <string name="AddDrivers"><p>   </p>मेरे ड्राइवर</string>
     //----------------------------------------------------------------------------------------------
 
     //---------------------------------------Personal Details Activity------------------------------
-    <string name="PANCard">PAN Card</string>
-    <string name="Upload">Upload</string>
-    <string name="UploadAny">Upload any of the following</string>
-    <string name="Aadhar">Aadhar Card</string>
-    <string name="uploadAadhar">Upload Aadhar Card</string>
-    <string name="uploadpan">Upload PAN Card</string>
-    <string name="VoterId">Voter ID</string>
-    <string name="AadharFront">Aadhar Front</string>
-    <string name="AadharBack">Aadhar Back</string>
+    <string name="PANCard">पैन कार्ड</string>
+    <string name="Upload">डालना</string>
+    <string name="UploadAny">निम्न में से कोई भी अपलोड करें</string>
+    <string name="Aadhar">आधार कार्ड</string>
+    <string name="uploadAadhar">आधार कार्ड अपलोड करें</string>
+    <string name="uploadpan">पैन कार्ड अपलोड करें</string>
+    <string name="VoterId">मतदाता पहचान पत्र</string>
+    <string name="AadharFront">आधार मोर्चा</string>
+    <string name="AadharBack">आधार बैक</string>
     <string name="edit"> </string>
-    <string name="acNo">A/C No: </string>
-    <string name="addBank">+ Add Bank</string>
-    <string name="addTruck">+ Add Truck</string>
-    <string name="addDriver">+ Add Driver</string>
+    <string name="acNo">खाता संख्या: </string>
+    <string name="addBank">+ बैंक जोड़ें</string>
+    <string name="addTruck">+ ट्रक जोड़ें</string>
+    <string name="addDriver">+ ड्राइवर जोड़ें</string>
     //----------------------------------------------------------------------------------------------
 
     //---------------------------------------Bank Details Activity----------------------------------
-    <string name="NameWithStar">Bank Name*</string>
-    <string name="Bank_name_hint">Enter Bank Name</string>
-    <string name="AccountNumber">Account Number*</string>
-    <string name="ReEnterAcc">Re-Enter Account Number*</string>
-    <string name="IFSC">IFSI Code*</string>
-    <string name="EnterAccNumber">Enter your account number</string>
-    <string name="ReEnterAccNumber">Re-Enter your account number</string>
-    <string name="EnterIFSC">Enter IFSC code</string>
+    <string name="NameWithStar">बैंक का नाम*</string>
+    <string name="Bank_name_hint">बैंक का नाम दर्ज करें</string>
+    <string name="AccountNumber">खाता संख्या*</string>
+    <string name="ReEnterAcc">खाता संख्या दोबारा प्रविष्ट करें*</string>
+    <string name="IFSC">आईएफएससी कोड*</string>
+    <string name="EnterAccNumber">अपना खाता नंबर दर्ज करें</string>
+    <string name="ReEnterAccNumber">अपना खाता नंबर दोबारा दर्ज करें</string>
+    <string name="EnterIFSC">IFSC कोड दर्ज करें</string>
     //----------------------------------------------------------------------------------------------
 
     //-------------------------------- Vehicle Details Activity ------------------------------------
-    <string name="vehicle_number">Vehicle Number</string>
-    <string name="vehicle_details">Vehicle Details</string>
-    <string name="body_type">Vehicle Body Type</string>
-    <string name="open">Open</string>
-    <string name="closed">Closed</string>
-    <string name="tarpaulin">Tarpaulin</string>
-    <string name="vehicle_number_edit">Enter Vehicle Number"</string>
-    <string name="rc_book">Upload RC Book</string>
-    <string name="rc_front">RC Book</string>
-    <string name="uploadInsurance">Upload Insurance</string>
-    <string name="insurance">Insurance</string>
-    <string name="selectModel">Select Model</string>
-    <string name="Ft">Ft.</string>
-    <string name="Capacity">Capacity</string>
+    <string name="vehicle_number">वाहन संख्या</string>
+    <string name="vehicle_details">वाहन की सूचना</string>
+    <string name="body_type">वाहन शरीर का प्रकार</string>
+    <string name="open">खुला हुआ</string>
+    <string name="closed">बंद किया हुआ</string>
+    <string name="tarpaulin">तिरपाल</string>
+    <string name="vehicle_number_edit">वाहन संख्या दर्ज करें"</string>
+    <string name="rc_book">आरसी बुक अपलोड करें</string>
+    <string name="rc_front">आरसी बुक</string>
+    <string name="uploadInsurance">बीमा अपलोड करें</string>
+    <string name="insurance">बीमा</string>
+    <string name="selectModel">मॉडल का चयन करें</string>
+    <string name="Ft">फुट.</string>
+    <string name="Capacity">क्षमता</string>
 
     //----------------------------------------------------------------------------------------------
 
     //---------------------------------------Driver Details Activity--------------------------------
-    <string name="DriverName">Driver Name, Number &amp; Email</string>
-    <string name="EnterDriverName">Enter Driver Name</string>
-    <string name="UploadDriverLicense">Upload Driver License</string>
-    <string name="UploadDriverSelfie">Photo - Selfie</string>
-    <string name="DriverLicense">Driver License</string>
-    <string name="TakePhoto">Take a Photo</string>
-    <string name="camera">Camera</string>
-    <string name="driver_mobile_number_hint">Enter Driver Mobile Number</string>
-    <string name="AddAnotherDriver">ADD ANOTHER DRIVER</string>
-    <string name="driver_mobile_number">Driver Mobile Number</string>
+    <string name="DriverName">ड्राइवर का नाम, नंबर और ईमेल</string>
+    <string name="EnterDriverName">ड्राइवर का नाम दर्ज करें</string>
+    <string name="UploadDriverLicense">ड्राइवर लाइसेंस अपलोड करें</string>
+    <string name="UploadDriverSelfie">फोटो - सेल्फी</string>
+    <string name="DriverLicense">चालक लाइसेंस</string>
+    <string name="TakePhoto">एक तस्वीर लें</string>
+    <string name="camera">कैमरा</string>
+    <string name="driver_mobile_number_hint">ड्राइवर का मोबाइल नंबर दर्ज करें</string>
+    <string name="AddAnotherDriver">एक और ड्राइवर जोड़ें</string>
+    <string name="driver_mobile_number">ड्राइवर का मोबाइल नंबर</string>
     //----------------------------------------------------------------------------------------------
 
     //-------------------------------------- Language Dialog----------------------------------------
-    <string name="select_language">Please select your language</string>
-    <string name="english">English</string>
+    <string name="select_language">कृपया अपनी भाषा चुनें</string>
+    <string name="english">अंग्रेज़ी</string>
     <string name="marathi">मराठी</string>
     <string name="hindi">हिंदी</string>
     //----------------------------------------------------------------------------------------------
 
     //-------------------------------------- Company Details ---------------------------------------
-    <string name="company_name">Company Name</string>
-    <string name="company_address">Company Address</string>
-    <string name="company_name_hint">Enter Company Name</string>
-    <string name="gst_number_hint">GST Number</string>
-    <string name="pan_number">PAN Number</string>
+    <string name="company_name">कंपनी का नाम</string>
+    <string name="company_address">कंपनी का पता</string>
+    <string name="company_name_hint">कंपनी का नाम दर्ज करें</string>
+    <string name="gst_number_hint">जीएसटी नंबर</string>
+    <string name="pan_number">पैन नंबर</string>
     //----------------------------------------------------------------------------------------------
 
     //--------------------------- Personal Details And Id Proof Activity ---------------------------
-    <string name="personal">Personal &amp; Address</string>
-    <string name="pan_and_aadhar">PAN &amp; Aadhar</string>
-    <string name="phone">Phone:</string>
-    <string name="firm">Firm Name:</string>
-    <string name="addressColon">Address:</string>
-    <string name="add_company">+ Add Company</string>
+    <string name="personal">व्यक्तिगत और पता</string>
+    <string name="pan_and_aadhar">पैन और आधार</string>
+    <string name="phone">फ़ोन:</string>
+    <string name="firm">फर्म का नाम:</string>
+    <string name="addressColon">पता:</string>
+    <string name="add_company">+ कंपनी जोड़ें</string>
     //----------------------------------------------------------------------------------------------
 
     //------------------------------------BASE URL--------------------------------------------------
     <string name="baseURL">http://13.234.163.179:3000</string>
-    <string name="internal_storage">internal storage</string>
+    <string name="internal_storage">आंतरिक स्टोरेज</string>
     //----------------------------------------------------------------------------------------------
 
     //-----------------------------------Post A Load------------------------------------------------
-    <string name="pick_up_date">Pick-up Date</string>
-    <string name="pick_up_time">Pick-up Time</string>
-    <string name="enterYourBudget">Enter Your Budget</string>
-    <string name="budget">Budget</string>
-    <string name="budgetRs">Budget ₹</string>
-    <string name="truckTypeAndCapacity">Truck Type &amp; Capacity</string>
-    <string name="SelectVehicleModel">Vehicle Model</string>
-    <string name="bodyType">Body Type</string>
-    <string name="pickUpLocationDetails">Pick-up Location Details</string>
-    <string name="dropLocationDetails">Drop Location Details</string>
-    <string name="km">Km (approx)</string>
-    <string name="noteAndMaterial">Notes &amp; Material Description*</string>
-    <string name="postALoad">POST A LOAD</string>
-    <string name="date">DD-Month-YY</string>
-    <string name="time">hh:mm AM/PM</string>
+    <string name="pick_up_date">तारीख ले लो</string>
+    <string name="pick_up_time">समय लेने</string>
+    <string name="enterYourBudget">अपना बजट दर्ज करें</string>
+    <string name="budget">बजट</string>
+    <string name="budgetRs">बजट ₹</string>
+    <string name="truckTypeAndCapacity">ट्रक का प्रकार और क्षमता</string>
+    <string name="SelectVehicleModel">वाहन मॉडल</string>
+    <string name="bodyType">शरीर के प्रकार</string>
+    <string name="pickUpLocationDetails">पिकअप स्थान विवरण</string>
+    <string name="dropLocationDetails">स्थान विवरण ड्रॉप करें</string>
+    <string name="km">Km(लगभग))</string>
+    <string name="noteAndMaterial">नोट्स और सामग्री विवरण*</string>
+    <string name="postALoad">एक लोड पोस्ट करें</string>
+    <string name="date">डीडी-महीना-YY</string>
+    <string name="time">एचएच: मिमी एएम / पीएम</string>
     <string name="inrRs">₹ XXXX</string>
-    <string name="KMAutoCal">KM auto calculated</string>
-    <string name="note_to_post_load">1. Electronic appliances, must handled with care.<br></br>2. Bubble wrap required.<br></br>3. Preferable pick-up time after 12:00pm<br></br>4. Please call and confirm before starting.</string>
+    <string name="KMAutoCal">KM स्वचालित गणना</string>
+    <string name="note_to_post_load">1. इलेक्ट्रॉनिक उपकरण, सावधानी से संभाले जाने चाहिए.<br></br>2. बबल रैप आवश्यक.<br></br>3. दोपहर 12:00 बजे के बाद पिक-अप का बेहतर समय<br></br>4. कृपया कॉल करें और शुरू करने से पहले पुष्टि करें.</string>
     //----------------------------------------------------------------------------------------------
 
     //--------------------------------------Bid_now dialog------------------------------------------
-    <string name="load_id">Load ID: city-city-000 </string>
-    <string name="timeLeft"> <p>   </p> Time left</string>
+    <string name="load_id">लोड आईडी: शहर-शहर-000 </string>
+    <string name="timeLeft"> <p>   </p> शेष समय</string>
     <string name="timeinmin">00:00</string>
-    <string name="pickUpDateWithColon">Pick-up Date:</string>
-    <string name="pickUpLocationWithColon"><p>  </p>Pick-up:</string>
-    <string name="addressForPickUpLocation">City, State, PIN Code, Address</string>
-    <string name="dropLocationWithColon"><p>  </p>Drop:</string>
-    <string name="no">No</string>
-    <string name="selectTruck">Select Truck</string>
-    <string name="selectDriver">Select Driver</string>
-    <string name="yes_small">Yes</string>
-    <string name="noteAndMaterialWithColon">Notes &amp; Material Description::</string>
-    <string name="timeOnly">Time:</string>
-    <string name="budgetWithColon">Budget:</string>
-    <string name="capacityWithColon">Capacity:</string>
-    <string name="distanceWithColon">Distance:</string>
-    <string name="xx_km">XXX km</string>
-    <string name="xx_capacity">XXX kgs</string>
-    <string name="xx_feet">XX ft</string>
-    <string name="timewithoutAMPM">hh:mm </string>
-    <string name="distance">Distance</string>
-    <string name="modelwithColon">Model:</string>
-    <string name="model">Model</string>
-    <string name="body">Body:</string>
-    <string name="selectAndAssignTruck">Assign a Truck &amp; Driver for this load</string>
-    <string name="yourQuote">Your Quote</string>
-    <string name="negotiable">Negotiable</string>
-    <string name="truck">Truck</string>
-    <string name="feet">Feet</string>
-    <string name="Notes">Notes</string>
-    <string name="NotesIfAny"><b>Notes: </b>Type your notes if any...</string>
-    <string name="acceptBid">Accept &amp; Bid</string>
-    <string name="cancel">Cancel</string>
-    <string name="declaration"><b>Declaration: </b><em>I hereby declare, driver will reach Pick-up location 15 minutes prior Pick-up Time.</em> </string>
+    <string name="pickUpDateWithColon">तारीख ले लो:</string>
+    <string name="pickUpLocationWithColon"><p>  </p>पिक अप:</string>
+    <string name="addressForPickUpLocation">शहर, राज्य, पिन कोड, पता</string>
+    <string name="dropLocationWithColon"><p>  </p>बूंद:</string>
+    <string name="no">नहीं</string>
+    <string name="selectTruck">ट्रक का चयन करें</string>
+    <string name="selectDriver">ड्राइवर का चयन करें</string>
+    <string name="yes_small">हां</string>
+    <string name="noteAndMaterialWithColon">नोट्स और सामग्री विवरण::</string>
+    <string name="timeOnly">समय:</string>
+    <string name="budgetWithColon">बजट:</string>
+    <string name="capacityWithColon">क्षमता:</string>
+    <string name="distanceWithColon">दूरी:</string>
+    <string name="xx_km">XXX किमी</string>
+    <string name="xx_capacity">XXX किग्रा</string>
+    <string name="xx_feet">एक्सएक्स फीट</string>
+    <string name="timewithoutAMPM">एचएच: मिमी </string>
+    <string name="distance">दूरी</string>
+    <string name="modelwithColon">नमूना:</string>
+    <string name="model">नमूना</string>
+    <string name="body">शरीर:</string>
+    <string name="selectAndAssignTruck">इस लोड के लिए ट्रक और ड्राइवर को असाइन करें</string>
+    <string name="yourQuote">आपका उद्धरण</string>
+    <string name="negotiable">बातचीत योग्य</string>
+    <string name="truck">ट्रक</string>
+    <string name="feet">पैर</string>
+    <string name="Notes">टिप्पणियाँ</string>
+    <string name="NotesIfAny"><b>टिप्पणियाँ: </b>अपने नोट्स टाइप करें यदि कोई हो...</string>
+    <string name="acceptBid">स्वीकार करें और बोली लगाएं</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="declaration"><b>घोषणा: </b><em>मैं एतद्द्वारा घोषणा करता हूं, ड्राइवर पिकअप स्थान पर पिक-अप समय से 15 मिनट पहले पहुंच जाएगा.</em> </string>
     //----------------------------------------------------------------------------------------------
 
 </resources>

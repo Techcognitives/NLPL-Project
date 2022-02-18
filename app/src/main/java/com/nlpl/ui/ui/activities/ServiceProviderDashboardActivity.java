@@ -1179,6 +1179,9 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         }
                     }
 
+                    FooThread fooThread = new FooThread(handler);
+                    fooThread.start();
+
                     TextView noBidsSubmittedTextView = (TextView) findViewById(R.id.dashboard_no_bids_submitted_text);
                     if (loadSubmittedList.size() > 0) {
                         updatedLoadSubmittedList.addAll(loadSubmittedList);
@@ -1188,8 +1191,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         } else {
                             noBidsSubmittedTextView.setVisibility(View.VISIBLE);
                         }
-                        FooThread fooThread = new FooThread(handler);
-                        fooThread.start();
                         compareAndRemove(loadListToCompare);
                     }
 //
