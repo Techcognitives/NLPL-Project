@@ -72,6 +72,7 @@ import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.EnglishNumberToWords;
 import com.nlpl.utils.FileUtils;
+import com.nlpl.utils.InAppNotification;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.ShowAlert;
 import com.razorpay.Checkout;
@@ -2675,5 +2676,17 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                 //------------------------------------------------------------------------------------------
             }
         });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (!isPersonalDetailsDone.equals("1")) {
+            InAppNotification.SendNotificationJumpToPersonalDetailsActivity(CustomerDashboardActivity.this, "Complete Your Profile", "Upload PAN and Aadhar in the Personal Details Section", userId, phone, false);
+        }
+
+        if (!isBankDetailsDone.equals("1")) {
+            InAppNotification.SendNotificationJumpToBankDetailsActivity(CustomerDashboardActivity.this, "Complete Your Profile", "Upload Bank details and complete your Profile", userId, phone, false, null);
+        }
     }
 }

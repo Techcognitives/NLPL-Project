@@ -43,6 +43,7 @@ import com.nlpl.model.Responses.UploadImageResponse;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsProfileAdded;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.FileUtils;
+import com.nlpl.utils.InAppNotification;
 import com.nlpl.utils.JumpTo;
 
 import org.json.JSONArray;
@@ -1008,5 +1009,11 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, false);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        InAppNotification.SendNotificationJumpToPersonalDetailsActivity(PersonalDetailsActivity.this, "Complete Your Profile", "Upload PAN and Aadhar in the Personal Details Section", userId, mobile, false);
     }
 }

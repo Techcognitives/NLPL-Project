@@ -88,6 +88,7 @@ import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.EnglishNumberToWords;
 import com.nlpl.utils.FileUtils;
 import com.nlpl.utils.FooThread;
+import com.nlpl.utils.InAppNotification;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.ShowAlert;
 
@@ -2511,20 +2512,20 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if (isPersonalDetailsDone.equals("1")) {
-
+        if (!isPersonalDetailsDone.equals("1")) {
+            InAppNotification.SendNotificationJumpToPersonalDetailsActivity(ServiceProviderDashboardActivity.this, "Complete Your Profile", "Upload PAN and Aadhar in the Personal Details Section", userId, phone, false);
         }
 
-        if (isBankDetailsDone.equals("1")) {
-
+        if (!isBankDetailsDone.equals("1")) {
+            InAppNotification.SendNotificationJumpToBankDetailsActivity(ServiceProviderDashboardActivity.this, "Complete Your Profile", "Upload Bank details and complete your Profile", userId, phone, false, null);
         }
 
-        if (isTruckDetailsDone.equals("1")) {
-
+        if (!isTruckDetailsDone.equals("1")) {
+            InAppNotification.SendNotificationJumpToVehicleDetailsActivity(ServiceProviderDashboardActivity.this, "Complete Your Profile", "Truck Details missing!\nAdd a Truck to your Profile.", userId, phone, false, false, false, null, null);
         }
 
-        if (isDriverDetailsDone.equals("1")) {
-
+        if (!isDriverDetailsDone.equals("1")) {
+            InAppNotification.SendNotificationJumpToDriverDetailsActivity(ServiceProviderDashboardActivity.this, "Complete Your Profile", "Driver Details missing!\nAdd a Driver to your Profile.", userId, phone, false, false, null, null);
         }
     }
 

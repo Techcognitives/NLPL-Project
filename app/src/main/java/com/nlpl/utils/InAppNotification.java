@@ -47,7 +47,8 @@ public class InAppNotification {
                 .setSmallIcon(R.drawable.ic_logo_not)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setContentIntent(resultIntent);
+                .setContentIntent(resultIntent)
+                .setAutoCancel(true);
         NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -78,7 +79,8 @@ public class InAppNotification {
                 .setSmallIcon(R.drawable.ic_logo_not)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setContentIntent(resultIntent);
+                .setContentIntent(resultIntent)
+                .setAutoCancel(true);
         NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -138,7 +140,8 @@ public class InAppNotification {
                 .setSmallIcon(R.drawable.ic_logo_not)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setContentIntent(resultIntent);
+                .setContentIntent(resultIntent)
+                .setAutoCancel(true);
         NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -168,7 +171,8 @@ public class InAppNotification {
                 .setSmallIcon(R.drawable.ic_logo_not)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setContentIntent(resultIntent);
+                .setContentIntent(resultIntent)
+                .setAutoCancel(true);
         NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -196,7 +200,8 @@ public class InAppNotification {
                 .setSmallIcon(R.drawable.ic_logo_not)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setContentIntent(resultIntent);
+                .setContentIntent(resultIntent)
+                .setAutoCancel(true);
         NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -211,7 +216,7 @@ public class InAppNotification {
     }
 
 
-    public static void SendNotificationJumpToViewPersonalDetailsActivity(Activity activity, String title, String message, String  userId, String mobileNumber) {
+    public static void SendNotificationJumpToViewPersonalDetailsActivity(Activity activity, String title, String message, String userId, String mobileNumber) {
         final String NOTIFICATION_CHANNEL_ID = "10001";
         final String default_notification_channel_id = "default";
 
@@ -227,7 +232,8 @@ public class InAppNotification {
                 .setSmallIcon(R.drawable.ic_logo_not)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setContentIntent(resultIntent);
+                .setContentIntent(resultIntent)
+                .setAutoCancel(true);
         NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -241,7 +247,7 @@ public class InAppNotification {
         mNotificationManager.notify((int) System.currentTimeMillis(), mBuilder.build());
     }
 
-    public static void SendNotificationJumpToViewBankDetailsActivity(Activity activity, String title, String message, String  userId, String mobileNumber) {
+    public static void SendNotificationJumpToViewBankDetailsActivity(Activity activity, String title, String message, String userId, String mobileNumber) {
         final String NOTIFICATION_CHANNEL_ID = "10001";
         final String default_notification_channel_id = "default";
 
@@ -257,7 +263,8 @@ public class InAppNotification {
                 .setSmallIcon(R.drawable.ic_logo_not)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setContentIntent(resultIntent);
+                .setContentIntent(resultIntent)
+                .setAutoCancel(true);
         NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -271,7 +278,7 @@ public class InAppNotification {
         mNotificationManager.notify((int) System.currentTimeMillis(), mBuilder.build());
     }
 
-    public static void SendNotificationJumpToBankDetailsActivity(Activity activity, String title, String message, String  userId, String mobileNumber, Boolean isEdit, String bankId) {
+    public static void SendNotificationJumpToBankDetailsActivity(Activity activity, String title, String message, String userId, String mobileNumber, Boolean isEdit, String bankId) {
         final String NOTIFICATION_CHANNEL_ID = "10001";
         final String default_notification_channel_id = "default";
 
@@ -289,7 +296,8 @@ public class InAppNotification {
                 .setSmallIcon(R.drawable.ic_logo_not)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setContentIntent(resultIntent);
+                .setContentIntent(resultIntent)
+                .setAutoCancel(true);
         NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -303,7 +311,7 @@ public class InAppNotification {
         mNotificationManager.notify((int) System.currentTimeMillis(), mBuilder.build());
     }
 
-    public static void SendNotificationJumpToPostALoadActivity(Activity activity, String title, String message, String  userId, String mobileNumber, Boolean reActivate, Boolean isEdit, String loadId) {
+    public static void SendNotificationJumpToPostALoadActivity(Activity activity, String title, String message, String userId, String mobileNumber, Boolean reActivate, Boolean isEdit, String loadId) {
         final String NOTIFICATION_CHANNEL_ID = "10001";
         final String default_notification_channel_id = "default";
 
@@ -322,7 +330,8 @@ public class InAppNotification {
                 .setSmallIcon(R.drawable.ic_logo_not)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setContentIntent(resultIntent);
+                .setContentIntent(resultIntent)
+                .setAutoCancel(true);
         NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -336,7 +345,7 @@ public class InAppNotification {
         mNotificationManager.notify((int) System.currentTimeMillis(), mBuilder.build());
     }
 
-    public static void SendNotificationJumpToCustomerLoadHistoryActivity(Activity activity, String title, String message, String  userId, String mobileNumber) {
+    public static void SendNotificationJumpToCustomerLoadHistoryActivity(Activity activity, String title, String message, String userId, String mobileNumber) {
         final String NOTIFICATION_CHANNEL_ID = "10001";
         final String default_notification_channel_id = "default";
 
@@ -352,7 +361,8 @@ public class InAppNotification {
                 .setSmallIcon(R.drawable.ic_logo_not)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setContentIntent(resultIntent);
+                .setContentIntent(resultIntent)
+                .setAutoCancel(true);
         NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -366,7 +376,7 @@ public class InAppNotification {
         mNotificationManager.notify((int) System.currentTimeMillis(), mBuilder.build());
     }
 
-    public static void SendNotificationJumpToFindLoadsActivity(Activity activity, String title, String message, String  userId, String mobileNumber) {
+    public static void SendNotificationJumpToFindLoadsActivity(Activity activity, String title, String message, String userId, String mobileNumber) {
         final String NOTIFICATION_CHANNEL_ID = "10001";
         final String default_notification_channel_id = "default";
 
@@ -382,7 +392,8 @@ public class InAppNotification {
                 .setSmallIcon(R.drawable.ic_logo_not)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setContentIntent(resultIntent);
+                .setContentIntent(resultIntent)
+                .setAutoCancel(true);
         NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -396,7 +407,7 @@ public class InAppNotification {
         mNotificationManager.notify((int) System.currentTimeMillis(), mBuilder.build());
     }
 
-    public static void SendNotificationJumpToVehicleDetailsActivity(Activity activity, String title, String message, String  userId, String mobileNumber, Boolean isEdit, Boolean isFromBidNow, Boolean isFromAssignTruck, String driverId, String truckId) {
+    public static void SendNotificationJumpToVehicleDetailsActivity(Activity activity, String title, String message, String userId, String mobileNumber, Boolean isEdit, Boolean isFromBidNow, Boolean isFromAssignTruck, String driverId, String truckId) {
         final String NOTIFICATION_CHANNEL_ID = "10001";
         final String default_notification_channel_id = "default";
 
@@ -417,7 +428,8 @@ public class InAppNotification {
                 .setSmallIcon(R.drawable.ic_logo_not)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setContentIntent(resultIntent);
+                .setContentIntent(resultIntent)
+                .setAutoCancel(true);
         NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -431,7 +443,7 @@ public class InAppNotification {
         mNotificationManager.notify((int) System.currentTimeMillis(), mBuilder.build());
     }
 
-    public static void SendNotificationJumpToViewVehicleDetailsActivity(Activity activity, String title, String message, String  userId, String mobileNumber) {
+    public static void SendNotificationJumpToViewVehicleDetailsActivity(Activity activity, String title, String message, String userId, String mobileNumber) {
         final String NOTIFICATION_CHANNEL_ID = "10001";
         final String default_notification_channel_id = "default";
 
@@ -447,7 +459,8 @@ public class InAppNotification {
                 .setSmallIcon(R.drawable.ic_logo_not)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setContentIntent(resultIntent);
+                .setContentIntent(resultIntent)
+                .setAutoCancel(true);
         NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -461,7 +474,7 @@ public class InAppNotification {
         mNotificationManager.notify((int) System.currentTimeMillis(), mBuilder.build());
     }
 
-    public static void SendNotificationJumpToDriverDetailsActivity(Activity activity, String title, String message, String  userId, String mobileNumber, Boolean isEdit, Boolean isFromBidNow, String truckId, String driverId) {
+    public static void SendNotificationJumpToDriverDetailsActivity(Activity activity, String title, String message, String userId, String mobileNumber, Boolean isEdit, Boolean isFromBidNow, String truckId, String driverId) {
         final String NOTIFICATION_CHANNEL_ID = "10001";
         final String default_notification_channel_id = "default";
 
@@ -481,7 +494,8 @@ public class InAppNotification {
                 .setSmallIcon(R.drawable.ic_logo_not)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setContentIntent(resultIntent);
+                .setContentIntent(resultIntent)
+                .setAutoCancel(true);
         NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -495,7 +509,7 @@ public class InAppNotification {
         mNotificationManager.notify((int) System.currentTimeMillis(), mBuilder.build());
     }
 
-    public static void SendNotificationJumpToViewDriverDetailsActivity(Activity activity, String title, String message, String  userId, String mobileNumber) {
+    public static void SendNotificationJumpToViewDriverDetailsActivity(Activity activity, String title, String message, String userId, String mobileNumber) {
         final String NOTIFICATION_CHANNEL_ID = "10001";
         final String default_notification_channel_id = "default";
 
@@ -511,7 +525,8 @@ public class InAppNotification {
                 .setSmallIcon(R.drawable.ic_logo_not)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setContentIntent(resultIntent);
+                .setContentIntent(resultIntent)
+                .setAutoCancel(true);
         NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -525,7 +540,7 @@ public class InAppNotification {
         mNotificationManager.notify((int) System.currentTimeMillis(), mBuilder.build());
     }
 
-    public static void SendNotificationJumpToPersonalDetailsActivity(Activity activity, String title, String message, String  userId, String mobileNumber, Boolean profile) {
+    public static void SendNotificationJumpToPersonalDetailsActivity(Activity activity, String title, String message, String userId, String mobileNumber, Boolean profile) {
         final String NOTIFICATION_CHANNEL_ID = "10001";
         final String default_notification_channel_id = "default";
 
@@ -542,7 +557,8 @@ public class InAppNotification {
                 .setSmallIcon(R.drawable.ic_logo_not)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setContentIntent(resultIntent);
+                .setContentIntent(resultIntent)
+                .setAutoCancel(true);
         NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -556,7 +572,7 @@ public class InAppNotification {
         mNotificationManager.notify((int) System.currentTimeMillis(), mBuilder.build());
     }
 
-    public static void SendNotificationJumpToPersonalDetailsIdProofActivity(Activity activity, String title, String message, String  userId, String mobileNumber) {
+    public static void SendNotificationJumpToPersonalDetailsIdProofActivity(Activity activity, String title, String message, String userId, String mobileNumber) {
         final String NOTIFICATION_CHANNEL_ID = "10001";
         final String default_notification_channel_id = "default";
 
@@ -572,7 +588,8 @@ public class InAppNotification {
                 .setSmallIcon(R.drawable.ic_logo_not)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setContentIntent(resultIntent);
+                .setContentIntent(resultIntent)
+                .setAutoCancel(true);
         NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -586,7 +603,7 @@ public class InAppNotification {
         mNotificationManager.notify((int) System.currentTimeMillis(), mBuilder.build());
     }
 
-    public static void SendNotificationJumpToCompanyDetailsActivity(Activity activity, String title, String message, String  userId, String mobileNumber, Boolean isEdit) {
+    public static void SendNotificationJumpToCompanyDetailsActivity(Activity activity, String title, String message, String userId, String mobileNumber, Boolean isEdit) {
         final String NOTIFICATION_CHANNEL_ID = "10001";
         final String default_notification_channel_id = "default";
 
@@ -603,7 +620,8 @@ public class InAppNotification {
                 .setSmallIcon(R.drawable.ic_logo_not)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setContentIntent(resultIntent);
+                .setContentIntent(resultIntent)
+                .setAutoCancel(true);
         NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
