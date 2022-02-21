@@ -1,6 +1,7 @@
 package com.nlpl.ui.ui.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
@@ -64,6 +65,7 @@ import com.nlpl.model.UpdateMethods.UpdateUserDetails;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
+import com.nlpl.utils.GetCurrentLocation;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.SelectCity;
 import com.nlpl.utils.SelectState;
@@ -99,6 +101,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
     int resultCode;
     String isDriverDetailsDoneAPI;
     CheckBox selfCheckBox;
+    GetCurrentLocation getCurrentLocation;
 
     Button uploadDL, okDriverDetails, uploadSelfie;
     TextView textDL, editDL, series, textDS, editDS;
@@ -119,7 +122,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
     View personalAndAddress;
 
     ArrayAdapter<CharSequence> selectStateArray, selectDistrictArray, selectStateUnionCode;
-    TextView selectStateText, selectDistrictText, getCurrentLocation;
+    TextView selectStateText, selectDistrictText, setCurrentLocation;
     Dialog selectStateDialog, selectDistrictDialog;
     String selectedDistrict, selectedState;
     EditText pinCode, address;
@@ -128,8 +131,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
     ArrayList<String> arrayUserId, arrayMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayState;
     Boolean alreadyDriver = true, isSelfieEdited = false;
     String truckIdPass, driverIdPass;
-
-    FusedLocationProviderClient fusedLocationProviderClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +147,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
             truckIdPass = bundle.getString("truckIdPass");
         }
         mQueue = Volley.newRequestQueue(DriverDetailsActivity.this);
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         personalAndAddress = (View) findViewById(R.id.driver_details_personal_and_address);
         action_bar = (View) findViewById(R.id.driver_details_action_bar);
@@ -162,8 +162,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
         okDriverDetails = findViewById(R.id.driver_details_ok_button);
         series = (TextView) personalAndAddress.findViewById(R.id.registration_prefix);
         driverEmailId = (EditText) personalAndAddress.findViewById(R.id.registration_email_id_edit);
-        getCurrentLocation = (TextView) personalAndAddress.findViewById(R.id.personal_and_address_get_current_location);
-        getCurrentLocation.setVisibility(View.VISIBLE);
+        setCurrentLocation = (TextView) personalAndAddress.findViewById(R.id.personal_and_address_get_current_location);
+        setCurrentLocation.setVisibility(View.VISIBLE);
 
         previewDLImageView = (ImageView) findViewById(R.id.driver_details_preview_driving_license);
         previewSelfieImageView = (ImageView) findViewById(R.id.driver_details_preview_selfie);
@@ -185,6 +185,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         address.addTextChangedListener(driverNameWatcher);
 
         address.setFilters(new InputFilter[]{filter});
+        getCurrentLocation = new GetCurrentLocation();
 
         driverEmailId.addTextChangedListener(new TextWatcher() {
             @Override
@@ -382,7 +383,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         if (isEdit) {
             if (mobile.equals("91" + driverMobile.getText().toString())) {
                 selfCheckBox.setVisibility(View.GONE);
-                getCurrentLocation.setVisibility(View.INVISIBLE);
+                setCurrentLocation.setVisibility(View.INVISIBLE);
                 driverName.setCursorVisible(false);
                 driverName.setEnabled(false);
                 driverMobile.setCursorVisible(false);
@@ -397,7 +398,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 selectStateText.setEnabled(false);
             } else {
                 selfCheckBox.setVisibility(View.VISIBLE);
-                getCurrentLocation.setVisibility(View.INVISIBLE);
+                setCurrentLocation.setVisibility(View.INVISIBLE);
                 driverName.setCursorVisible(true);
                 driverName.setEnabled(true);
                 driverMobile.setCursorVisible(true);
@@ -481,6 +482,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         this.requestCode = requestCode;
         this.data = data;
 
+        getCurrentLocation.setAddressAndPin(DriverDetailsActivity.this, data, address, pinCode);
         DLimagePicker();
         DLimagePickerWithoutAlert();
         selfieImagePicker();
@@ -1401,7 +1403,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         if (selfCheckBox.isChecked()) {
             getUserDetails();
 
-            getCurrentLocation.setVisibility(View.INVISIBLE);
+            setCurrentLocation.setVisibility(View.INVISIBLE);
             driverName.setCursorVisible(false);
             driverName.setEnabled(false);
             driverMobile.setCursorVisible(false);
@@ -1417,7 +1419,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         } else if (!selfCheckBox.isChecked()) {
 
-            getCurrentLocation.setVisibility(View.INVISIBLE);
+            setCurrentLocation.setVisibility(View.INVISIBLE);
             driverName.setCursorVisible(true);
             driverName.setEnabled(true);
             driverMobile.setCursorVisible(true);
@@ -1489,44 +1491,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
     }
 
     public void onClickGetCurrentLocation(View view) {
-        getLocation();
-    }
-
-    private void getLocation() {
-        if (ActivityCompat.checkSelfPermission(DriverDetailsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
-                @Override
-                public void onComplete(@NonNull Task<Location> task) {
-                    Location location = task.getResult();
-                    if (location != null) {
-                        Geocoder geocoder = new Geocoder(DriverDetailsActivity.this, Locale.getDefault());
-                        try {
-                            String latitudeCurrent, longitudeCurrent, countryCurrent, stateCurrent, cityCurrent, subCityCurrent, addressCurrent, pinCodeCurrent;
-                            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                            latitudeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLatitude()));
-                            longitudeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLongitude()));
-                            countryCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getCountryName()));
-                            stateCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getAdminArea()));
-                            cityCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLocality()));
-                            subCityCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getSubLocality()));
-                            addressCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getAddressLine(0)));
-                            pinCodeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getPostalCode()));
-
-                            address.setText(addressCurrent);
-                            pinCode.setText(pinCodeCurrent);
-                            selectStateText.setText(stateCurrent);
-                            selectDistrictText.setText(cityCurrent);
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                }
-            });
-        } else {
-            ActivityCompat.requestPermissions(DriverDetailsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
-        }
+        getCurrentLocation.getCurrentLocationMaps(DriverDetailsActivity.this, address, pinCode);
     }
 
     @Override

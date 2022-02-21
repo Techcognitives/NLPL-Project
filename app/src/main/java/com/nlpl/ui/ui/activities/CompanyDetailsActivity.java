@@ -1,6 +1,7 @@
 package com.nlpl.ui.ui.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -57,6 +58,7 @@ import com.nlpl.model.UpdateModel.Models.UpdateCompanyDetails.UpdateCompanyType;
 import com.nlpl.model.UpdateModel.Models.UpdateCompanyDetails.UpdateCompanyZip;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsCompanyAdded;
 import com.nlpl.utils.ApiClient;
+import com.nlpl.utils.GetCurrentLocation;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.SelectCity;
 import com.nlpl.utils.SelectState;
@@ -78,7 +80,6 @@ public class CompanyDetailsActivity extends AppCompatActivity {
     View action_bar;
     TextView actionBarTitle;
     ImageView actionBarBackButton;
-    FusedLocationProviderClient fusedLocationProviderClient;
 
     String stateByPinCode, distByPinCode, selectedState;
     EditText companyName, pinCode, address, gstNumber, panNumber;
@@ -88,6 +89,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 
     RadioButton proprietaryRadioButton, partnershipRadioButton, pvtLtdRadioButton;
     Boolean isEdit;
+    GetCurrentLocation getCurrentLocation;
 
     String companyNameAPI, companyAddressAPI, companyCityAPI, companyZipAPI, companyGSTNumberAPI, companyPanAPI, companyStateAPI, companyIdAPI, companyTypeAPI;
     private RequestQueue mQueue;
@@ -104,7 +106,6 @@ public class CompanyDetailsActivity extends AppCompatActivity {
             isEdit = bundle.getBoolean("isEdit");
         }
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         action_bar = findViewById(R.id.company_details_action_bar);
 
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
@@ -129,6 +130,8 @@ public class CompanyDetailsActivity extends AppCompatActivity {
         proprietaryRadioButton = (RadioButton) findViewById(R.id.company_details_proprietary_radio_button);
         partnershipRadioButton = (RadioButton) findViewById(R.id.company_details_partnership_radio_button);
         pvtLtdRadioButton = (RadioButton) findViewById(R.id.company_details_pvt_ltd_radio_button);
+
+        getCurrentLocation = new GetCurrentLocation();
 
         companyName.addTextChangedListener(companyWatcher);
         gstNumber.addTextChangedListener(companyWatcher);
@@ -559,44 +562,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
     }
 
     public void onClickGetCurrentCompanyLocation(View view) {
-        getLocation();
-    }
-
-    private void getLocation() {
-        if (ActivityCompat.checkSelfPermission(CompanyDetailsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
-                @Override
-                public void onComplete(@NonNull Task<Location> task) {
-                    Location location = task.getResult();
-                    if (location != null) {
-                        Geocoder geocoder = new Geocoder(CompanyDetailsActivity.this, Locale.getDefault());
-                        try {
-                            String latitudeCurrent, longitudeCurrent, countryCurrent, stateCurrent, cityCurrent, subCityCurrent, addressCurrent, pinCodeCurrent;
-                            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                            latitudeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLatitude()));
-                            longitudeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLongitude()));
-                            countryCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getCountryName()));
-                            stateCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getAdminArea()));
-                            cityCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLocality()));
-                            subCityCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getSubLocality()));
-                            addressCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getAddressLine(0)));
-                            pinCodeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getPostalCode()));
-
-                            address.setText(addressCurrent);
-                            pinCode.setText(pinCodeCurrent);
-                            selectStateText.setText(stateCurrent);
-                            selectDistrictText.setText(cityCurrent);
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                }
-            });
-        } else {
-            ActivityCompat.requestPermissions(CompanyDetailsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
-        }
+        getCurrentLocation.getCurrentLocationMaps(CompanyDetailsActivity.this, address, pinCode);
     }
 
     @Override
@@ -605,4 +571,9 @@ public class CompanyDetailsActivity extends AppCompatActivity {
         JumpTo.goToViewPersonalDetailsActivity(CompanyDetailsActivity.this, userId, mobile, false);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        getCurrentLocation.setAddressAndPin(CompanyDetailsActivity.this, data, address, pinCode);
+    }
 }

@@ -11,7 +11,9 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.nlpl.R;
-import com.nlpl.ui.ui.activities.CustomerDashboardActivity;
+
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ShowAlert {
 
@@ -54,7 +56,13 @@ public class ShowAlert {
         alertNegativeButton.setBackground(activity.getResources().getDrawable(R.drawable.button_active));
         alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(activity.getResources().getColor(R.color.button_blue)));
 
-        alertNegativeButton.setOnClickListener(view -> alert.dismiss());
-        alertPositiveButton.setOnClickListener(View -> alert.dismiss());
+        alertNegativeButton.setOnClickListener(view -> {
+            alert.dismiss();
+        });
+        alertPositiveButton.setOnClickListener(View -> {
+            alert.dismiss();
+        });
     }
+
+
 }
