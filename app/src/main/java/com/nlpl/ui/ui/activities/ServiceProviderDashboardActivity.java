@@ -272,7 +272,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
 
         ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
 
-        loadingDialog.show();
+//        loadingDialog.show();
         loadingDialog.setCancelable(false);
         loadingDialog.getWindow().setAttributes(lp2);
 
@@ -1179,11 +1179,12 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         }
                     }
 
-                    FooThread fooThread = new FooThread(handler);
-                    fooThread.start();
+
 
                     TextView noBidsSubmittedTextView = (TextView) findViewById(R.id.dashboard_no_bids_submitted_text);
                     if (loadSubmittedList.size() > 0) {
+                        FooThread fooThread = new FooThread(handler);
+                        fooThread.start();
                         updatedLoadSubmittedList.addAll(loadSubmittedList);
                         loadSubmittedAdapter.updateData(updatedLoadSubmittedList);
                         if (updatedLoadSubmittedList.size() > 0) {
@@ -1369,7 +1370,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 int spBudget = Integer.valueOf(sb);
 
                 if (spBudget < customer50Budget) {
-                    ShowAlert.showAlert(ServiceProviderDashboardActivity.this, "Enter proper Quote", "You cannot bid less than 50% of customer Budget", true, false, "Ok", "null");
+                    ShowAlert.showAlert(ServiceProviderDashboardActivity.this, "Enter Appropriate Quote", "You cannot bid less than 50% of customer Budget", true, false, "Ok", "null");
                 } else {
                     if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
                         acceptAndBid.setEnabled(true);

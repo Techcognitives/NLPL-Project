@@ -44,7 +44,7 @@ public class InAppNotification {
 
         PendingIntent resultIntent = PendingIntent.getActivity(activity, 0, notificationIntent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity, default_notification_channel_id)
-                .setSmallIcon(R.drawable.ic_logo_not)
+                .setSmallIcon(R.drawable.ic_truck_noti)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(resultIntent)
@@ -76,7 +76,7 @@ public class InAppNotification {
 
         PendingIntent resultIntent = PendingIntent.getActivity(activity, 0, intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity, default_notification_channel_id)
-                .setSmallIcon(R.drawable.ic_logo_not)
+                .setSmallIcon(R.drawable.ic_truck_noti)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(resultIntent)
@@ -106,7 +106,7 @@ public class InAppNotification {
 
         PendingIntent resultIntent = PendingIntent.getActivity(activity, 0, intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity, default_notification_channel_id)
-                .setSmallIcon(R.drawable.ic_logo_not)
+                .setSmallIcon(R.drawable.ic_truck_noti)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(resultIntent)
@@ -137,7 +137,7 @@ public class InAppNotification {
 
         PendingIntent resultIntent = PendingIntent.getActivity(activity, 0, intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity, default_notification_channel_id)
-                .setSmallIcon(R.drawable.ic_logo_not)
+                .setSmallIcon(R.drawable.ic_truck_noti)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(resultIntent)
@@ -168,7 +168,7 @@ public class InAppNotification {
 
         PendingIntent resultIntent = PendingIntent.getActivity(activity, 0, intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity, default_notification_channel_id)
-                .setSmallIcon(R.drawable.ic_logo_not)
+                .setSmallIcon(R.drawable.ic_truck_noti)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(resultIntent)
@@ -197,7 +197,7 @@ public class InAppNotification {
 
         PendingIntent resultIntent = PendingIntent.getActivity(activity, 0, intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity, default_notification_channel_id)
-                .setSmallIcon(R.drawable.ic_logo_not)
+                .setSmallIcon(R.drawable.ic_truck_noti)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(resultIntent)
@@ -229,7 +229,7 @@ public class InAppNotification {
 
         PendingIntent resultIntent = PendingIntent.getActivity(activity, 0, intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity, default_notification_channel_id)
-                .setSmallIcon(R.drawable.ic_logo_not)
+                .setSmallIcon(R.drawable.ic_truck_noti)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(resultIntent)
@@ -260,7 +260,7 @@ public class InAppNotification {
 
         PendingIntent resultIntent = PendingIntent.getActivity(activity, 0, intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity, default_notification_channel_id)
-                .setSmallIcon(R.drawable.ic_logo_not)
+                .setSmallIcon(R.drawable.ic_truck_noti)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(resultIntent)
@@ -293,7 +293,7 @@ public class InAppNotification {
 
         PendingIntent resultIntent = PendingIntent.getActivity(activity, 0, intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity, default_notification_channel_id)
-                .setSmallIcon(R.drawable.ic_logo_not)
+                .setSmallIcon(R.drawable.ic_truck_noti)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(resultIntent)
@@ -327,7 +327,7 @@ public class InAppNotification {
 
         PendingIntent resultIntent = PendingIntent.getActivity(activity, 0, intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity, default_notification_channel_id)
-                .setSmallIcon(R.drawable.ic_logo_not)
+                .setSmallIcon(R.drawable.ic_truck_noti)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(resultIntent)
@@ -358,7 +358,7 @@ public class InAppNotification {
 
         PendingIntent resultIntent = PendingIntent.getActivity(activity, 0, intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity, default_notification_channel_id)
-                .setSmallIcon(R.drawable.ic_logo_not)
+                .setSmallIcon(R.drawable.ic_truck_noti)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(resultIntent)
@@ -389,7 +389,7 @@ public class InAppNotification {
 
         PendingIntent resultIntent = PendingIntent.getActivity(activity, 0, intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity, default_notification_channel_id)
-                .setSmallIcon(R.drawable.ic_logo_not)
+                .setSmallIcon(R.drawable.ic_truck_noti)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(resultIntent)
@@ -425,7 +425,7 @@ public class InAppNotification {
 
         PendingIntent resultIntent = PendingIntent.getActivity(activity, 0, intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity, default_notification_channel_id)
-                .setSmallIcon(R.drawable.ic_logo_not)
+                .setSmallIcon(R.drawable.ic_truck_noti)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(resultIntent)
@@ -456,7 +456,7 @@ public class InAppNotification {
 
         PendingIntent resultIntent = PendingIntent.getActivity(activity, 0, intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity, default_notification_channel_id)
-                .setSmallIcon(R.drawable.ic_logo_not)
+                .setSmallIcon(R.drawable.ic_truck_noti)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(resultIntent)
@@ -491,7 +491,7 @@ public class InAppNotification {
 
         PendingIntent resultIntent = PendingIntent.getActivity(activity, 0, intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity, default_notification_channel_id)
-                .setSmallIcon(R.drawable.ic_logo_not)
+                .setSmallIcon(R.drawable.ic_truck_noti)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(resultIntent)
@@ -522,7 +522,7 @@ public class InAppNotification {
 
         PendingIntent resultIntent = PendingIntent.getActivity(activity, 0, intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity, default_notification_channel_id)
-                .setSmallIcon(R.drawable.ic_logo_not)
+                .setSmallIcon(R.drawable.ic_truck_noti)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(resultIntent)
@@ -554,7 +554,7 @@ public class InAppNotification {
 
         PendingIntent resultIntent = PendingIntent.getActivity(activity, 0, intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity, default_notification_channel_id)
-                .setSmallIcon(R.drawable.ic_logo_not)
+                .setSmallIcon(R.drawable.ic_truck_noti)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(resultIntent)
@@ -585,7 +585,7 @@ public class InAppNotification {
 
         PendingIntent resultIntent = PendingIntent.getActivity(activity, 0, intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity, default_notification_channel_id)
-                .setSmallIcon(R.drawable.ic_logo_not)
+                .setSmallIcon(R.drawable.ic_truck_noti)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(resultIntent)
@@ -617,7 +617,7 @@ public class InAppNotification {
 
         PendingIntent resultIntent = PendingIntent.getActivity(activity, 0, intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity, default_notification_channel_id)
-                .setSmallIcon(R.drawable.ic_logo_not)
+                .setSmallIcon(R.drawable.ic_truck_noti)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(resultIntent)
