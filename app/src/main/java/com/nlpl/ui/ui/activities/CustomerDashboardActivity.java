@@ -72,6 +72,7 @@ import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.EnglishNumberToWords;
 import com.nlpl.utils.FileUtils;
+import com.nlpl.utils.InAppNotification;
 import com.nlpl.utils.FooThread;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.ShowAlert;
@@ -1400,14 +1401,14 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                 infoThreePercentage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ShowAlert.showAlert(CustomerDashboardActivity.this, "NLPL will ensure", "1. Get vehicle on-time\n2. Top Rated Driver is assigned\n3. Safe Transportation\n4. Trip Progress Update\n5. Assign a Point of Contact on any query", true, false, "OK", "");
+                        ShowAlert.showAlert(CustomerDashboardActivity.this, "FindYourTruck will ensure", "1. Get vehicle on-time\n2. Top Rated Driver is assigned\n3. Safe Transportation\n4. Trip Progress Update\n5. Assign a Point of Contact on any query", true, false, "OK", "");
                     }
                 });
 
                 infoOnePercentage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ShowAlert.showAlert(CustomerDashboardActivity.this, "NLPL will not take any responsibility", "NLPL will not take any responsibility for the truck, driver, shipment safety or timely delivery", true, false, "OK", "");
+                        ShowAlert.showAlert(CustomerDashboardActivity.this, "FindYourTruck will not take any responsibility", "FindYourTruck will not take any responsibility for the truck, driver, shipment safety or timely delivery", true, false, "OK", "");
                     }
                 });
 
@@ -2701,6 +2702,18 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                 //------------------------------------------------------------------------------------------
             }
         });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (!isPersonalDetailsDone.equals("1")) {
+            InAppNotification.SendNotificationJumpToPersonalDetailsActivity(CustomerDashboardActivity.this, "Complete Your Profile", "Upload PAN and Aadhar in the Personal Details Section", userId, phone, false);
+        }
+
+        if (!isBankDetailsDone.equals("1")) {
+            InAppNotification.SendNotificationJumpToBankDetailsActivity(CustomerDashboardActivity.this, "Complete Your Profile", "Upload Bank details and complete your Profile", userId, phone, false, null);
+        }
     }
 
     final Handler handler = new Handler() {

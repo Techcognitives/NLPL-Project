@@ -59,6 +59,7 @@ import com.nlpl.model.UpdateMethods.UpdateUserDetails;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
+import com.nlpl.utils.GetCurrentLocation;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.SelectCity;
 import com.nlpl.utils.SelectState;
@@ -104,13 +105,14 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     Dialog previewDialogPan, previewDialogAadhar, previewDialogProfile;
     Boolean isPanAdded = false, isAadharAdded = false, noChange = true, isProfileAdded = false;
 
-    TextView panCardText, editPAN, editFront, frontText, backText, profileText, editProfile, getCurrentLocation;
+    TextView panCardText, editPAN, editFront, frontText, backText, profileText, editProfile, setCurrentLocation;
     ImageView imgPAN, imgF, previewPan, previewAadhar , imgProfile, previewProfile;
 
     ConstraintLayout aadharConstrain, panConstrain;
     TextView uploadAadharTitle, uploadPanTitle;
     String nameAPI, mobileAPI, addressAPI, pinCodeAPI, roleAPI, cityAPI, stateAPI, emailAPI;
 
+    GetCurrentLocation getCurrentLocation;
     private int GET_FROM_GALLERY = 0;
     private int GET_FROM_GALLERY1 = 1;
     int CAMERA_PIC_REQUEST1 = 5;
@@ -134,7 +136,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             Log.i("Mobile No", userId);
             mobileString = bundle.getString("mobile");
         }
-
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         action_bar = findViewById(R.id.personal_details_id_proof_action_bar);
@@ -169,7 +170,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         okButton = (Button) findViewById(R.id.personal_details_id_proof_ok_button);
         previewPan = (ImageView) panAndAadharView.findViewById(R.id.pan_aadhar_preview_pan);
         previewAadhar = (ImageView) panAndAadharView.findViewById(R.id.pan_aadhar_preview_aadhar);
-        getCurrentLocation = (TextView) personalAndAddressView.findViewById(R.id.personal_and_address_get_current_location);
+        setCurrentLocation = (TextView) personalAndAddressView.findViewById(R.id.personal_and_address_get_current_location);
 
         aadharConstrain = panAndAadharView.findViewById(R.id.aadhar_constrain);
         panConstrain = panAndAadharView.findViewById(R.id.pan_card_constrain);
@@ -181,7 +182,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         uploadAadharTitle.setVisibility(View.VISIBLE);
         uploadPanTitle.setVisibility(View.VISIBLE);
 
-        getCurrentLocation.setVisibility(View.VISIBLE);
+        setCurrentLocation.setVisibility(View.VISIBLE);
 
         name.addTextChangedListener(proofAndPersonalWatcher);
         selectStateText.addTextChangedListener(proofAndPersonalWatcher);
@@ -250,6 +251,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
 
         mQueue = Volley.newRequestQueue(PersonalDetailsAndIdProofActivity.this);
+        getCurrentLocation = new GetCurrentLocation();
 
 
         //------------------------------------------------------------------------------------------
@@ -737,6 +739,8 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        getCurrentLocation.setAddressAndPin(PersonalDetailsAndIdProofActivity.this, data, address, pinCode);
 
         //Detects request code for PAN
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
@@ -1355,44 +1359,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     }
 
     public void onClickGetCurrentLocation(View view) {
-        getLocation();
-    }
-
-    private void getLocation() {
-        if (ActivityCompat.checkSelfPermission(PersonalDetailsAndIdProofActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
-                @Override
-                public void onComplete(@NonNull Task<Location> task) {
-                    Location location = task.getResult();
-                    if (location != null) {
-                        Geocoder geocoder = new Geocoder(PersonalDetailsAndIdProofActivity.this, Locale.getDefault());
-                        try {
-                            String latitudeCurrent, longitudeCurrent, countryCurrent, stateCurrent, cityCurrent, subCityCurrent, addressCurrent, pinCodeCurrent;
-                            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                            latitudeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLatitude()));
-                            longitudeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLongitude()));
-                            countryCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getCountryName()));
-                            stateCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getAdminArea()));
-                            cityCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLocality()));
-                            subCityCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getSubLocality()));
-                            addressCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getAddressLine(0)));
-                            pinCodeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getPostalCode()));
-
-                            address.setText(addressCurrent);
-                            pinCode.setText(pinCodeCurrent);
-                            selectStateText.setText(stateCurrent);
-                            selectDistrictText.setText(cityCurrent);
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                }
-            });
-        } else {
-            ActivityCompat.requestPermissions(PersonalDetailsAndIdProofActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
-        }
+        getCurrentLocation.getCurrentLocationMaps(PersonalDetailsAndIdProofActivity.this, address, pinCode);
     }
 
     @Override

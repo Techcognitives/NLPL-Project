@@ -80,13 +80,12 @@ public class RegistrationActivity extends AppCompatActivity {
     Dialog language;
 
     EditText name, pinCode, address, mobileNoEdit, email_id;
-    TextView series, getCurrentLocation;
+    TextView series, setCurrentLocation;
     Button okButton;
     View personalAndAddress;
     private RequestQueue mQueue;
     int PLACE_PICKER_REQUEST = 1;
-
-    FusedLocationProviderClient fusedLocationProviderClient;
+    GetCurrentLocation getCurrentLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,10 +98,11 @@ public class RegistrationActivity extends AppCompatActivity {
             Log.i("Mobile No Registration", mobile);
         }
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         language = new Dialog(RegistrationActivity.this);
         language.setContentView(R.layout.dialog_language);
         language.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        getCurrentLocation = new GetCurrentLocation();
 
         WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
         lp2.copyFrom(language.getWindow().getAttributes());
@@ -163,8 +163,8 @@ public class RegistrationActivity extends AppCompatActivity {
         selectDistrictText = (TextView) personalAndAddress.findViewById(R.id.registration_select_city);
         okButton = (Button) findViewById(R.id.registration_ok);
         email_id = personalAndAddress.findViewById(R.id.registration_email_id_edit);
-        getCurrentLocation = (TextView) personalAndAddress.findViewById(R.id.personal_and_address_get_current_location);
-        getCurrentLocation.setVisibility(View.VISIBLE);
+        setCurrentLocation = (TextView) personalAndAddress.findViewById(R.id.personal_and_address_get_current_location);
+        setCurrentLocation.setVisibility(View.VISIBLE);
 
         name.addTextChangedListener(registrationWatcher);
         selectStateText.addTextChangedListener(registrationWatcher);
@@ -306,7 +306,8 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     public void onClickGetCurrentLocation(View view) {
-        GetCurrentLocation.getCurrentLocation(RegistrationActivity.this, address, pinCode, selectStateText, selectDistrictText);
+//        GetCurrentLocation.getCurrentLocation(RegistrationActivity.this, address, pinCode, selectStateText, selectDistrictText);
+        getCurrentLocation.getCurrentLocationMaps(RegistrationActivity.this, address, pinCode);
     }
 
     public void onClickRegistration(View view) {
@@ -451,7 +452,6 @@ public class RegistrationActivity extends AppCompatActivity {
     private void getStateAndDistrict(String enteredPin) {
 
         Log.i("Entered PIN", enteredPin);
-
         String url = "http://13.234.163.179:3000/user/locationData/"+enteredPin;
         Log.i("url for truckByTruckId", url);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -526,5 +526,11 @@ public class RegistrationActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         InAppNotification.SendNotificationJumpToRegistrationActivity(RegistrationActivity.this, "Hello!!", "Please Complete your Registration", mobile);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        getCurrentLocation.setAddressAndPin(RegistrationActivity.this, data, address, pinCode);
     }
 }

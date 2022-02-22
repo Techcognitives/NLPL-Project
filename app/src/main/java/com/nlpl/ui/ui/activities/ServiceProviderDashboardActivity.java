@@ -88,6 +88,7 @@ import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.EnglishNumberToWords;
 import com.nlpl.utils.FileUtils;
 import com.nlpl.utils.FooThread;
+import com.nlpl.utils.InAppNotification;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.ShowAlert;
 
@@ -271,7 +272,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
 
         ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
 
-        loadingDialog.show();
+//        loadingDialog.show();
         loadingDialog.setCancelable(false);
         loadingDialog.getWindow().setAttributes(lp2);
 
@@ -1178,11 +1179,12 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         }
                     }
 
-                    FooThread fooThread = new FooThread(handler);
-                    fooThread.start();
+
 
                     TextView noBidsSubmittedTextView = (TextView) findViewById(R.id.dashboard_no_bids_submitted_text);
                     if (loadSubmittedList.size() > 0) {
+                        FooThread fooThread = new FooThread(handler);
+                        fooThread.start();
                         updatedLoadSubmittedList.addAll(loadSubmittedList);
                         loadSubmittedAdapter.updateData(updatedLoadSubmittedList);
                         if (updatedLoadSubmittedList.size() > 0) {
@@ -1368,7 +1370,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 int spBudget = Integer.valueOf(sb);
 
                 if (spBudget < customer50Budget) {
-                    ShowAlert.showAlert(ServiceProviderDashboardActivity.this, "Enter proper Quote", "You cannot bid less than 50% of customer Budget", true, false, "Ok", "null");
+                    ShowAlert.showAlert(ServiceProviderDashboardActivity.this, "Enter Appropriate Quote", "You cannot bid less than 50% of customer Budget", true, false, "Ok", "null");
                 } else {
                     if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
                         acceptAndBid.setEnabled(true);
@@ -2512,20 +2514,20 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if (isPersonalDetailsDone.equals("1")) {
-
+        if (!isPersonalDetailsDone.equals("1")) {
+            InAppNotification.SendNotificationJumpToPersonalDetailsActivity(ServiceProviderDashboardActivity.this, "Complete Your Profile", "Upload PAN and Aadhar in the Personal Details Section", userId, phone, false);
         }
 
-        if (isBankDetailsDone.equals("1")) {
-
+        if (!isBankDetailsDone.equals("1")) {
+            InAppNotification.SendNotificationJumpToBankDetailsActivity(ServiceProviderDashboardActivity.this, "Complete Your Profile", "Upload Bank details and complete your Profile", userId, phone, false, null);
         }
 
-        if (isTruckDetailsDone.equals("1")) {
-
+        if (!isTruckDetailsDone.equals("1")) {
+            InAppNotification.SendNotificationJumpToVehicleDetailsActivity(ServiceProviderDashboardActivity.this, "Complete Your Profile", "Truck Details missing!\nAdd a Truck to your Profile.", userId, phone, false, false, false, null, null);
         }
 
-        if (isDriverDetailsDone.equals("1")) {
-
+        if (!isDriverDetailsDone.equals("1")) {
+            InAppNotification.SendNotificationJumpToDriverDetailsActivity(ServiceProviderDashboardActivity.this, "Complete Your Profile", "Driver Details missing!\nAdd a Driver to your Profile.", userId, phone, false, false, null, null);
         }
     }
 

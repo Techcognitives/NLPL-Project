@@ -1,6 +1,7 @@
 package com.nlpl.ui.ui.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -43,26 +44,7 @@ import com.nlpl.R;
 import com.nlpl.model.Requests.PostLoadRequest;
 import com.nlpl.model.Responses.PostLoadResponse;
 import com.nlpl.model.UpdateMethods.UpdatePostLoadDetails;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateCustomerBudget;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateCustomerNoteForSP;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadBodyType;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadCapacity;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadDropAdd;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadDropCity;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadDropCountry;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadDropPinCode;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadDropState;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadFeet;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadKmApprox;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPickAdd;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPickCity;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPickCountry;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPickPinCode;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPickState;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPostPickUpDate;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPostPickUpTime;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadStatusSubmitted;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadVehicleModel;
+
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.EnglishNumberToWords;
 import com.nlpl.utils.GetCurrentLocation;
@@ -121,6 +103,8 @@ public class PostALoadActivity extends AppCompatActivity {
     private RequestQueue mQueue;
     Boolean isEdit, reActivate;
     String loadId;
+
+    GetCurrentLocation getCurrentLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1280,7 +1264,7 @@ public class PostALoadActivity extends AppCompatActivity {
     }
 
     public void onClickGetCurrentLocationAddress(View view) {
-        GetCurrentLocation.getCurrentLocation(PostALoadActivity.this, addressDialogAddress, addressDialogPinCode, addressDialogState, addressDialogCity);
+        getCurrentLocation.getCurrentLocationMaps(PostALoadActivity.this, addressDialogAddress, addressDialogPinCode);
     }
 
     public void onClickSetPickUpLocation(View view) {
@@ -1532,5 +1516,9 @@ public class PostALoadActivity extends AppCompatActivity {
         return (lat1 * Math.PI / 180.0);
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        getCurrentLocation.setAddressAndPin(PostALoadActivity.this, data, addressDialogAddress, addressDialogPinCode);
+    }
 }
