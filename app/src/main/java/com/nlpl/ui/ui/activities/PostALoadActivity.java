@@ -1383,6 +1383,7 @@ public class PostALoadActivity extends AppCompatActivity {
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         lp.gravity = Gravity.CENTER;
 
+
         deleteLoad.show();
         deleteLoad.getWindow().setAttributes(lp);
         deleteLoad.setCancelable(true);
