@@ -85,7 +85,6 @@ public class BanksAdapter extends RecyclerView.Adapter<BanksAdapter.BankViewHold
 
         public BankViewHolder(@NonNull View itemView) {
             super(itemView);
-
             list_acc_no = itemView.findViewById(R.id.bank_list_account_number_text);
             list_edit = itemView.findViewById(R.id.bank_list_edit_bank_details_text);
             list_bank_name = itemView.findViewById(R.id.bank_list_bank_name);
