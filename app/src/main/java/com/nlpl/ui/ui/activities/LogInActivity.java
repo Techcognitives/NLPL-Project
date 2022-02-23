@@ -36,7 +36,7 @@ public class LogInActivity extends AppCompatActivity {
 
     EditText mobileNo;
     TextView series;
-    Spinner selectCountry;
+//    Spinner selectCountry;
     Button getStarted;
     String  mobile;
 
@@ -48,29 +48,29 @@ public class LogInActivity extends AppCompatActivity {
         mobileNo = (EditText) findViewById(R.id.log_in_mobile_no);
         getStarted = (Button) findViewById(R.id.log_in_get_otp_button);
         series = (TextView) findViewById(R.id.log_in_series);
-        selectCountry = findViewById(R.id.selectCountry);
-        registerForContextMenu(selectCountry);
+//        selectCountry = findViewById(R.id.selectCountry);
+//        registerForContextMenu(selectCountry);
 
-        selectCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
-                //Change the selected item's text color
-                try {
-                    ((TextView) view).setTextColor(getResources().getColor(R.color.white));
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent)
-            {
-            }
-        });
+//        selectCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+//        {
+//
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+//            {
+//                //Change the selected item's text color
+//                try {
+//                    ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent)
+//            {
+//            }
+//        });
 
 
         mobileNo.addTextChangedListener(mobileNumberTextWatcher);

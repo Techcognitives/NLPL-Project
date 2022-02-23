@@ -172,12 +172,7 @@ public class BankDetailsActivity extends AppCompatActivity {
             getBankDetails();
         }
 
-        uploadCC.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogChoose();
-            }
-        });
+        uploadCC.setOnClickListener(view -> DialogChoose());
 
         editCC.setOnClickListener(new View.OnClickListener() {
             @Override

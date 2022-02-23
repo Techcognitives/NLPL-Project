@@ -24,12 +24,12 @@
         android:id="@+id/log_in_mobile_no"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"
         android:background="@drawable/mobile_number_right"
         android:hint="@string/edit_number_hint"
         android:inputType="number"
         android:maxLength="10"
+        android:layout_marginTop="10dp"
         android:paddingStart="5dp"
         android:paddingTop="15dp"
         android:paddingEnd="15dp"
@@ -39,7 +39,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/log_in_series"
-        app:layout_constraintTop_toBottomOf="@+id/selectCountry"
+        app:layout_constraintTop_toBottomOf="@+id/log_in_text"
         tools:ignore="Autofill" />
 
     <TextView
@@ -151,33 +151,21 @@
         app:layout_constraintVertical_bias="0.011"
         app:srcCompat="@drawable/logo_circle" />
 
-    <Spinner
-        android:id="@+id/selectCountry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edit_text_border"
-        android:entries="@array/array_country_name"
-        android:paddingStart="10dp"
-        android:paddingTop="10dp"
-        android:paddingEnd="40dp"
-        android:paddingBottom="10dp"
-        android:text="India"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/log_in_text" />
-
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingEnd="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/selectCountry"
-        app:layout_constraintEnd_toEndOf="@+id/selectCountry"
-        app:layout_constraintTop_toTopOf="@+id/selectCountry"
-        app:srcCompat="@drawable/ic_down"
-        app:tint="@color/white" />
-
+<!--    <Spinner-->
+<!--        android:id="@+id/selectCountry"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="5dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:background="@drawable/edit_text_border"-->
+<!--        android:entries="@array/array_country_name"-->
+<!--        android:paddingStart="10dp"-->
+<!--        android:paddingTop="10dp"-->
+<!--        android:paddingEnd="40dp"-->
+<!--        android:paddingBottom="10dp"-->
+<!--        android:text="India"-->
+<!--        android:textColor="@color/white"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/log_in_text" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
