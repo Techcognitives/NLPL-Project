@@ -192,6 +192,7 @@ public class PostALoadActivity extends AppCompatActivity {
 
         mQueue = Volley.newRequestQueue(PostALoadActivity.this);
 
+        getCurrentLocation = new GetCurrentLocation();
         String[] allDate = currentDate.toString().split(" ", 6);
 
         for (String sepDate : allDate) {
