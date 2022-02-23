@@ -241,6 +241,9 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         bottomNav = (View) findViewById(R.id.customer_dashboard_bottom_nav_bar);
         spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
         customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
+        TextView profileText = (TextView) bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
+
+        profileText.setText("Find Trucks");
 
         acceptedList = new ArrayList<>();
         arrayAssignedDriverId = new ArrayList<>();
@@ -480,7 +483,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
-
+                JumpTo.goToFindTrucksActivity(CustomerDashboardActivity.this, userId, phone);
                 break;
         }
     }
@@ -953,7 +956,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                         bidsResponsesModel2.setBid_status(obj.getString("bid_status"));
                         bidsResponsesModel2.setIs_bid_accpted_by_sp(obj.getString("is_bid_accpted_by_sp"));
 
-                        if (obj1.getSp_count() == 3) {
+                        if (obj1.getSp_count() >= 3) {
                             if (obj.getString("bid_status").equals("AcceptedBySp") || obj.getString("bid_status").equals("RespondedByLp")) {
                                 bidResponsesList.add(bidsResponsesModel2);
                             }
@@ -964,8 +967,10 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                         }
                     }
 
-                    if (obj1.getSp_count() == 3) {
-
+                    if (obj1.getSp_count() >= 3) {
+                        bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
+                        bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
+                        bidsResponsesAdapter.updateData(bidResponsesList);
                     } else {
                         for (int i = 0; i < bidResponsesList.size(); i++) {
                             if (obj1.getIdpost_load().equals(bidResponsesList.get(i).getIdpost_load())) {

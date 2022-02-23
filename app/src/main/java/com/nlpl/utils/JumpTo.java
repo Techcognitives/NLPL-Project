@@ -150,6 +150,14 @@ public class JumpTo {
         activity.overridePendingTransition(0, 0);
     }
 
+    public static void goToFindTrucksActivity(Activity activity, String userId, String mobileNumber){
+        Intent intent = new Intent(activity, FindLoadsActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("mobile", mobileNumber);
+        activity.startActivity(intent);
+        activity.overridePendingTransition(0, 0);
+    }
+
     public static void goToVehicleDetailsActivity(Activity activity, String userId, String mobileNumber, Boolean isEdit, Boolean isFromBidNow, Boolean isFromAssignTruck, Boolean isFinish, String driverId, String truckId){
         Intent intent = new Intent(activity, VehicleDetailsActivity.class);
         intent.putExtra("userId", userId);

@@ -21,6 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NLPL"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".ui.ui.activities.FindTrucksActivity"
+            android:exported="true" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -125,7 +128,7 @@
             android:name=".utils.PushNotificationService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSANGING_EVENT"></action>
+                <action android:name="com.google.firebase.MESSANGING_EVENT" />
             </intent-filter>
         </service>
 
