@@ -74,12 +74,15 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BidSubmittedModel;
 import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
+import com.nlpl.model.Requests.AddTruckRequest;
 import com.nlpl.model.Requests.BidLoadRequest;
 import com.nlpl.model.Requests.ImageRequest;
+import com.nlpl.model.Responses.AddTruckResponse;
 import com.nlpl.model.Responses.BidLadResponse;
 import com.nlpl.model.Responses.ImageResponse;
 import com.nlpl.model.Responses.UploadImageResponse;
 import com.nlpl.model.UpdateMethods.UpdateBidDetails;
+import com.nlpl.model.UpdateMethods.UpdateTruckDetails;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
 import com.nlpl.ui.ui.adapters.LoadNotificationAdapter;
 import com.nlpl.ui.ui.adapters.LoadSubmittedAdapter;
@@ -132,22 +135,30 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     private LoadSubmittedAdapter loadSubmittedAdapter;
     private RecyclerView loadListRecyclerView, loadSubmittedRecyclerView;
 
+    RadioButton openSelected, closeSelected, tarpaulinSelected;
+    Boolean isModelSelected = false;
     Dialog loadingDialog, setBudget, selectTruckDialog, previewDialogBidNow, dialogAcceptRevisedBid, dialogViewConsignment;
 
-    String updateAssignedDriverId, updateAssignedTruckId, spQuoteOnClickBidNow, bidStatus, vehicle_no, truckId, isProfileAdded, isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
+    String updateAssignedDriverId, truckIdPass, updateAssignedTruckId, bodyTypeSelected, spQuoteOnClickBidNow, bidStatus, vehicle_no, truckId, isProfileAdded, isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
 
     SwipeListener swipeListener;
     double latitude1, latitude2, longitude1, longitude2;
+    ArrayList<String> arrayVehicleType, arrayToDisplayCapacity, updatedArrayTruckFt, arrayTruckFtForCompare, arrayCapacityForCompare, arrayTruckFt, arrayCapacity;
 
+    ImageView openType, closedType, tarpaulinType;
     View actionBar;
-    TextView customerNumber, customerNumberHeading, customerName, customerNameHeading, customerFirstBudget, customerSecondBudget, cancel2, cancel, acceptAndBid, spQuote, addDriver, selectDriver, addTruck, selectTruck, selectedTruckModel, selectedTruckFeet, selectedTruckCapacity, selectedTruckBodyType, actionBarTitle;
-    EditText notesSp;
+    TextView customerNumber, editInsurance, editRC, customerNumberHeading, customerName, customerNameHeading, customerFirstBudget, customerSecondBudget, cancel2, cancel, acceptAndBid, spQuote, addDriver, selectDriver, addTruck, selectTruck, selectedTruckModel, selectedTruckFeet, selectedTruckCapacity, selectedTruckBodyType, actionBarTitle;
+    EditText notesSp, addTruckVehicleNumber;
     CheckBox declaration;
     RadioButton negotiable_yes, negotiable_no;
-    Boolean isLoadNotificationSelected, loadNotificationSelected, profileAdded, isTruckSelectedToBid = false, negotiable = null, isNegotiableSelected = false, fromAdapter = false;
+    Boolean isLoadNotificationSelected, loadNotificationSelected, profileAdded, isTruckSelectedToBid = false, negotiable = null, isNegotiableSelected = false, fromAdapter = false, truckSelected = false;
     ImageView actionBarBackButton, actionBarMenuButton, profilePic;
 
-    Dialog menuDialog, previewDialogProfile;
+    Button uploadRC, uploadInsurance, okVehicleDetails;
+    TextView addTruckModel, addTruckFeet, addTruckCapacity;
+
+    Dialog menuDialog, previewDialogProfile, addTruckDialog;
+    WindowManager.LayoutParams lpForTruck;
     ConstraintLayout drawerLayout;
     TextView timeLeft00, timeLeftTextview, partitionTextview, menuUserNameTextView, mobileText, personalDetailsButton, bankDetailsTextView, addTrucksTextView;
     ImageView personalDetailsLogoImageView, bankDetailsLogoImageView, truckDetailsLogoImageView, driverDetailsLogoImageView;
@@ -158,7 +169,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     View bottomNav;
     ConstraintLayout spDashboard, customerDashboard;
 
-    String loadId, selectedDriverId, selectedDriverName, userId, userIdAPI, phone, mobileNoAPI;
+    String loadId, selectedDriverId, selectedDriverName, userId, userIdAPI, phone, mobileNoAPI, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI;
     ArrayList<String> arrayUserId, arrayTruckId, arrayDriverId, arrayDriverName, arrayTruckList, arrayMobileNo, arrayDriverMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
 
     String mobile, name, address, pinCode, city, role, emailIdAPI;
@@ -223,6 +234,69 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         ImageView profileImageView = (ImageView) bottomNav.findViewById(R.id.bottom_nav_profile_image_view);
         profileText.setText("Find Loads");
         profileImageView.setImageDrawable(getDrawable(R.drawable.find_small));
+
+        addTruckDialog = new Dialog(ServiceProviderDashboardActivity.this);
+        addTruckDialog.setContentView(R.layout.activity_vehicle_details);
+        lpForTruck = new WindowManager.LayoutParams();
+        lpForTruck.copyFrom(addTruckDialog.getWindow().getAttributes());
+        lpForTruck.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lpForTruck.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lpForTruck.gravity = Gravity.CENTER;
+
+        View truckActionBar = (View) addTruckDialog.findViewById(R.id.vehicle_details_action_bar);
+        ImageView backButton = (ImageView) truckActionBar.findViewById(R.id.action_bar_back_button);
+        backButton.setOnClickListener(view1 -> {
+            addTruckDialog.dismiss();
+        });
+
+        TextView truckAddTitle = (TextView) truckActionBar.findViewById(R.id.action_bar_title);
+        truckAddTitle.setText("Vehicle Details");
+        addTruckModel = addTruckDialog.findViewById(R.id.vehicle_details_select_model);
+        addTruckVehicleNumber = addTruckDialog.findViewById(R.id.vehicle_details_vehicle_number_edit2);
+        addTruckFeet = addTruckDialog.findViewById(R.id.vehicle_details_select_feet);
+        addTruckCapacity = addTruckDialog.findViewById(R.id.vehicle_details_select_capacity);
+        okVehicleDetails = addTruckDialog.findViewById(R.id.vehicle_details_ok_button);
+
+        openType = (ImageView) addTruckDialog.findViewById(R.id.vehicle_details_open_type);
+        closedType = (ImageView) addTruckDialog.findViewById(R.id.vehicle_details_closed_type);
+        tarpaulinType = (ImageView) addTruckDialog.findViewById(R.id.vehicle_details_tarpaulin_type);
+
+        openSelected = addTruckDialog.findViewById(R.id.open_radio_btn);
+        closeSelected = addTruckDialog.findViewById(R.id.closed_radio_btn);
+        tarpaulinSelected = addTruckDialog.findViewById(R.id.tarpaulin_radio_btn);
+
+        uploadRC = (Button) addTruckDialog.findViewById(R.id.vehicle_details_rc_upload);
+        uploadRC.setOnClickListener(view -> {
+
+        });
+
+        editRC = (TextView) addTruckDialog.findViewById(R.id.vehicle_details_edit_rc);
+        editRC.setOnClickListener(view -> {
+
+        });
+
+        uploadInsurance = (Button) addTruckDialog.findViewById(R.id.vehicle_details_insurance_upload_button);
+        uploadInsurance.setOnClickListener(view -> {
+
+        });
+
+        editInsurance = (TextView) addTruckDialog.findViewById(R.id.vehicle_details_edit_insurance);
+        editInsurance.setOnClickListener(view -> {
+
+        });
+
+        arrayVehicleType = new ArrayList<>();
+        arrayToDisplayCapacity = new ArrayList<>();
+        updatedArrayTruckFt = new ArrayList<>();
+        arrayTruckFtForCompare = new ArrayList<>();
+        arrayCapacityForCompare = new ArrayList<>();
+        arrayTruckFt = new ArrayList<>();
+        arrayCapacity = new ArrayList<>();
+        arrayVehicleType.add("Tata");
+        arrayVehicleType.add("Mahindra");
+        arrayVehicleType.add("Eicher");
+        arrayVehicleType.add("Other");
+        getVehicleTypeList();
 
         arrayUserId = new ArrayList<>();
         arrayMobileNo = new ArrayList<>();
@@ -865,7 +939,9 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         addTruck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JumpTo.goToVehicleDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, false, true, false, false, null, null);
+                addTruckDialog.show();
+                addTruckDialog.getWindow().setAttributes(lpForTruck);
+                addTruckDialog.setCancelable(true);
             }
         });
 
@@ -1178,7 +1254,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                             loadSubmittedList.add(bidSubmittedModel);
                         }
                     }
-
 
 
                     TextView noBidsSubmittedTextView = (TextView) findViewById(R.id.dashboard_no_bids_submitted_text);
@@ -1661,7 +1736,9 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         addTruck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JumpTo.goToVehicleDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, false, true, false, false, null, null);
+                addTruckDialog.show();
+                addTruckDialog.getWindow().setAttributes(lpForTruck);
+                addTruckDialog.setCancelable(true);
             }
         });
 
@@ -2535,10 +2612,397 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     final Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             int state = msg.getData().getInt("state");
-            if (state == 1){
+            if (state == 1) {
                 loadingDialog.dismiss();
             }
         }
     };
+
+    public void selectVehicleModelFeetCapacity(View view) {
+        switch (view.getId()) {
+            case R.id.vehicle_details_select_model:
+
+                Dialog selectModelDialog = new Dialog(ServiceProviderDashboardActivity.this);
+                selectModelDialog.setContentView(R.layout.dialog_spinner);
+                selectModelDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                selectModelDialog.show();
+                selectModelDialog.setCancelable(true);
+                TextView model_title = selectModelDialog.findViewById(R.id.dialog_spinner_title);
+                model_title.setText("Select Vehicle Model");
+
+                ListView modelList = (ListView) selectModelDialog.findViewById(R.id.list_state);
+                ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, R.layout.custom_list_row, arrayVehicleType);
+                modelList.setAdapter(adapter1);
+
+                modelList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        addTruckModel.setText(adapter1.getItem(i));
+                        isModelSelected = true;
+                        String vehicleNum = addTruckVehicleNumber.getText().toString().trim();
+//                        if (!vehicleNum.isEmpty() && isRcUploaded && isInsurance && truckSelected && isModelSelected) {
+//                            okVehicleDetails.setEnabled(true);
+//                            okVehicleDetails.setBackgroundResource((R.drawable.button_active));
+//                        } else {
+//                            okVehicleDetails.setEnabled(false);
+//                            okVehicleDetails.setBackground(getResources().getDrawable(R.drawable.button_de_active));
+//                        }
+//                        if (!isEdit) {
+//                            selectFeetDialog = new Dialog(VehicleDetailsActivity.this);
+//                            selectFeetDialog.setContentView(R.layout.dialog_spinner);
+//                            selectFeetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                            selectFeetDialog.show();
+//                            selectFeetDialog.setCancelable(true);
+//
+//                            TextView feetTitle = selectFeetDialog.findViewById(R.id.dialog_spinner_title);
+//                            feetTitle.setText("Select Vehicle Feet");
+//
+//                            ListView capacityList = (ListView) selectFeetDialog.findViewById(R.id.list_state);
+//                            ArrayAdapter<String> adapter3 = new ArrayAdapter<>(VehicleDetailsActivity.this, R.layout.custom_list_row, updatedArrayTruckFt);
+//                            capacityList.setAdapter(adapter3);
+//
+//                            capacityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                                @Override
+//                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//                                    selectFeetDialog.dismiss();
+//                                    selectFt.setText(adapter3.getItem(i));
+//                                    getVehicleCapacityByFeet(selectFt.getText().toString());
+//                                    selectModelDialog.dismiss();
+//                                }
+//                            });
+//                        } else {
+                        selectModelDialog.dismiss();
+//                        }
+                    }
+                });
+
+                break;
+
+            case R.id.vehicle_details_select_feet:
+
+                arrayToDisplayCapacity.clear();
+                Dialog selectFeetDialog = new Dialog(ServiceProviderDashboardActivity.this);
+                selectFeetDialog.setContentView(R.layout.dialog_spinner);
+                selectFeetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                selectFeetDialog.show();
+                selectFeetDialog.setCancelable(true);
+
+                TextView feetTitle = selectFeetDialog.findViewById(R.id.dialog_spinner_title);
+                feetTitle.setText("Select Vehicle Feet");
+
+                ListView feetList = (ListView) selectFeetDialog.findViewById(R.id.list_state);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.custom_list_row, updatedArrayTruckFt);
+                feetList.setAdapter(adapter);
+
+                feetList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        addTruckFeet.setText(adapter.getItem(i));
+                        getVehicleCapacityByFeet(addTruckFeet.getText().toString());
+                        selectFeetDialog.dismiss();
+
+                    }
+                });
+
+                break;
+
+            case R.id.vehicle_details_select_capacity:
+                if (addTruckFeet.getText().toString().equals("")) {
+
+                } else {
+                    Dialog selectCapacityDialog = new Dialog(ServiceProviderDashboardActivity.this);
+                    selectCapacityDialog.setContentView(R.layout.dialog_spinner);
+                    selectCapacityDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    selectCapacityDialog.show();
+                    selectCapacityDialog.setCancelable(true);
+
+                    TextView capacity_title = selectCapacityDialog.findViewById(R.id.dialog_spinner_title);
+                    capacity_title.setText("Select Vehicle Capacity");
+
+                    ListView capacityList = (ListView) selectCapacityDialog.findViewById(R.id.list_state);
+                    ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, R.layout.custom_list_row, arrayToDisplayCapacity);
+                    capacityList.setAdapter(adapter2);
+
+                    capacityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            addTruckCapacity.setText(adapter2.getItem(i));
+                            selectCapacityDialog.dismiss();
+                        }
+                    });
+                }
+                break;
+
+        }
+    }
+
+    private void getVehicleCapacityByFeet(String selectedFeet) {
+        arrayToDisplayCapacity.clear();
+        arrayTruckFtForCompare.clear();
+        String url = getString(R.string.baseURL) + "/trucktype/getAllTruckType";
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+                        vehicle_typeAPI = obj.getString("vehicle_model");
+                        truck_ftAPI = obj.getString("truck_ft");
+                        truck_carrying_capacityAPI = obj.getString("truck_carrying_capacity");
+
+                        arrayTruckFtForCompare.add(truck_ftAPI);
+                        arrayCapacityForCompare.add(truck_carrying_capacityAPI);
+
+                        Log.i("type:", vehicle_typeAPI);
+
+                    }
+
+                    for (int i = 0; i < arrayTruckFtForCompare.size(); i++) {
+                        if (selectedFeet.equals(arrayTruckFtForCompare.get(i))) {
+                            arrayToDisplayCapacity.add(arrayCapacityForCompare.get(i));
+                        }
+                    }
+                    addTruckCapacity.setText(arrayToDisplayCapacity.get(0));
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        mQueue.add(request);
+
+    }
+
+    private void getVehicleTypeList() {
+        String url = getString(R.string.baseURL) + "/trucktype/getAllTruckType";
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray truckLists = response.getJSONArray("data");
+                    for (int i = 0; i < truckLists.length(); i++) {
+                        JSONObject obj = truckLists.getJSONObject(i);
+                        vehicle_typeAPI = obj.getString("vehicle_model");
+                        truck_ftAPI = obj.getString("truck_ft");
+                        truck_carrying_capacityAPI = obj.getString("truck_carrying_capacity");
+
+                        arrayTruckFt.add(truck_ftAPI);
+                        arrayCapacity.add(truck_carrying_capacityAPI);
+
+                        Log.i("type:", vehicle_typeAPI);
+
+                    }
+                    int size3 = arrayTruckFt.size();
+
+                    if (size3 == 1) {
+                        updatedArrayTruckFt.add(arrayTruckFt.get(0));
+                    } else {
+                        for (int i = 0; i < size3 - 1; i++) {
+                            if (!arrayTruckFt.get(i).equals(arrayTruckFt.get(i + 1))) {
+                                updatedArrayTruckFt.add(arrayTruckFt.get(i));
+                            }
+                        }
+                        for (int k = 0; k < size3; k++) {
+                            if (k == size3 - 1) {
+                                updatedArrayTruckFt.add(arrayTruckFt.get(k));
+                            }
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        mQueue.add(request);
+    }
+
+    public void onClickVehicle(View view) {
+        truckSelected = true;
+        String vehicleNum = addTruckVehicleNumber.getText().toString();
+//        if (!vehicleNum.isEmpty() && isRcUploaded && isInsurance && truckSelected && isModelSelected) {
+//            okVehicleDetails.setEnabled(true);
+//            okVehicleDetails.setBackgroundResource(R.drawable.button_active);
+//        }
+        switch (view.getId()) {
+            case R.id.vehicle_details_open_type:
+                openType.setBackgroundResource(R.drawable.image_view_border_selected);
+                closedType.setBackgroundResource(R.drawable.image_view_border);
+                openSelected.setChecked(true);
+                closeSelected.setChecked(false);
+                tarpaulinSelected.setChecked(false);
+                tarpaulinType.setBackgroundResource(R.drawable.image_view_border);
+                bodyTypeSelected = "Open";
+                break;
+
+            case R.id.vehicle_details_closed_type:
+                openType.setBackgroundResource(R.drawable.image_view_border);
+                closedType.setBackgroundResource(R.drawable.image_view_border_selected);
+                openSelected.setChecked(false);
+                closeSelected.setChecked(true);
+                tarpaulinSelected.setChecked(false);
+                tarpaulinType.setBackgroundResource(R.drawable.image_view_border);
+                bodyTypeSelected = "Closed";
+                break;
+
+            case R.id.vehicle_details_tarpaulin_type:
+                openType.setBackgroundResource(R.drawable.image_view_border);
+                closedType.setBackgroundResource(R.drawable.image_view_border);
+                openSelected.setChecked(false);
+                closeSelected.setChecked(false);
+                tarpaulinSelected.setChecked(true);
+                tarpaulinType.setBackgroundResource(R.drawable.image_view_border_selected);
+                bodyTypeSelected = "Tarpaulin";
+                break;
+        }
+    }
+
+    public void onClickRadioButtons(View view) {
+        truckSelected = true;
+        String vehicleNum = addTruckVehicleNumber.getText().toString();
+//        if (!vehicleNum.isEmpty() && isRcUploaded && isInsurance && truckSelected && isModelSelected) {
+//            okVehicleDetails.setEnabled(true);
+//            okVehicleDetails.setBackgroundResource(R.drawable.button_active);
+//        }
+        switch (view.getId()) {
+            case R.id.open_radio_btn:
+                openType.setBackgroundResource(R.drawable.image_view_border_selected);
+                closedType.setBackgroundResource(R.drawable.image_view_border);
+                openSelected.setChecked(true);
+                closeSelected.setChecked(false);
+                tarpaulinSelected.setChecked(false);
+                tarpaulinType.setBackgroundResource(R.drawable.image_view_border);
+                bodyTypeSelected = "Open";
+                break;
+
+            case R.id.closed_radio_btn:
+                openType.setBackgroundResource(R.drawable.image_view_border);
+                closedType.setBackgroundResource(R.drawable.image_view_border_selected);
+                openSelected.setChecked(false);
+                closeSelected.setChecked(true);
+                tarpaulinSelected.setChecked(false);
+                tarpaulinType.setBackgroundResource(R.drawable.image_view_border);
+                bodyTypeSelected = "Closed";
+                break;
+
+            case R.id.tarpaulin_radio_btn:
+                openType.setBackgroundResource(R.drawable.image_view_border);
+                closedType.setBackgroundResource(R.drawable.image_view_border);
+                openSelected.setChecked(false);
+                closeSelected.setChecked(false);
+                tarpaulinSelected.setChecked(true);
+                tarpaulinType.setBackgroundResource(R.drawable.image_view_border_selected);
+                bodyTypeSelected = "Tarpaulin";
+                break;
+
+        }
+    }
+
+    //--------------------------------------create vehicle Details in API -------------------------------------
+    public AddTruckRequest createTruck() {
+        AddTruckRequest addTruckRequest = new AddTruckRequest();
+        addTruckRequest.setUser_id(userId);
+        addTruckRequest.setVehicle_no(addTruckVehicleNumber.getText().toString());
+        addTruckRequest.setVehicle_type(bodyTypeSelected);
+        addTruckRequest.setTruck_type(addTruckModel.getText().toString());
+        addTruckRequest.setTruck_ft(addTruckFeet.getText().toString() + " Ft");
+        addTruckRequest.setTruck_carrying_capacity(addTruckCapacity.getText().toString());
+        return addTruckRequest;
+    }
+
+    public void saveTruck(AddTruckRequest addTruckRequest) {
+        Call<AddTruckResponse> addTruckResponseCall = ApiClient.addTruckService().saveTruck(addTruckRequest);
+        addTruckResponseCall.enqueue(new Callback<AddTruckResponse>() {
+            @Override
+            public void onResponse(Call<AddTruckResponse> call, retrofit2.Response<AddTruckResponse> response) {
+                AddTruckResponse addTruckResponse = response.body();
+
+                String truckId = addTruckResponse.getData().getTruck_id();
+                truckIdPass = addTruckResponse.getData().getTruck_id();
+
+//                uploadTruckInsurance(truckId, pathForInsurance);
+//                uploadTruckRC(truckId, pathForRC);
+            }
+
+            @Override
+            public void onFailure(Call<AddTruckResponse> call, Throwable t) {
+            }
+        });
+    }
+    //-----------------------------------------------------------------------------------------------------
+
+    public void onClickVehicleDetailsOk(View view) {
+        String vehicleNum = addTruckVehicleNumber.getText().toString();
+//        if (!vehicleNum.isEmpty() && isRcUploaded && isInsurance && truckSelected && isModelSelected) {
+
+            saveTruck(createTruck());
+            //Update User Truck (IsTruckAdded)
+            UpdateUserDetails.updateUserIsTruckAdded(userId, "1");
+
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(false);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText("Truck Details");
+            alertMessage.setText("Vehicle Details added successfully");
+            alertPositiveButton.setText("+ Add Truck Driver");
+            alertPositiveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.dismiss();
+                    addDriver.performClick();
+                }
+            });
+
+            alertNegativeButton.setText("Skip");
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.dismiss();
+                }
+            });
+            //------------------------------------------------------------------------------------------
+
+//        } else {
+////            okVehicleDetails.setEnabled(false);
+////            okVehicleDetails.setBackground(getResources().getDrawable(R.drawable.button_de_active));
+//        }
+    }
+
 
 }
