@@ -1,8 +1,10 @@
 package com.nlpl.ui.ui.activities;
 
 import static com.nlpl.R.drawable.blue_profile_small;
+import static com.nlpl.R.drawable.driver;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -74,14 +76,19 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BidSubmittedModel;
 import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
+import com.nlpl.model.Requests.AddDriverRequest;
 import com.nlpl.model.Requests.AddTruckRequest;
 import com.nlpl.model.Requests.BidLoadRequest;
 import com.nlpl.model.Requests.ImageRequest;
+import com.nlpl.model.Requests.UserRequest;
+import com.nlpl.model.Responses.AddDriverResponse;
 import com.nlpl.model.Responses.AddTruckResponse;
 import com.nlpl.model.Responses.BidLadResponse;
 import com.nlpl.model.Responses.ImageResponse;
 import com.nlpl.model.Responses.UploadImageResponse;
+import com.nlpl.model.Responses.UserResponse;
 import com.nlpl.model.UpdateMethods.UpdateBidDetails;
+import com.nlpl.model.UpdateMethods.UpdateDriverDetails;
 import com.nlpl.model.UpdateMethods.UpdateTruckDetails;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
 import com.nlpl.ui.ui.adapters.LoadNotificationAdapter;
@@ -91,8 +98,11 @@ import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.EnglishNumberToWords;
 import com.nlpl.utils.FileUtils;
 import com.nlpl.utils.FooThread;
+import com.nlpl.utils.GetCurrentLocation;
 import com.nlpl.utils.InAppNotification;
 import com.nlpl.utils.JumpTo;
+import com.nlpl.utils.SelectCity;
+import com.nlpl.utils.SelectState;
 import com.nlpl.utils.ShowAlert;
 
 import org.json.JSONArray;
@@ -125,6 +135,12 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     private int CAMERA_PIC_REQUEST2 = 4;
     private int GET_FROM_GALLERY2 = 5;
 
+    CheckBox driverCheckBox;
+    GetCurrentLocation getCurrentLocation;
+
+    EditText driverName, driverNumber, driverEmail, driverAddress, driverPinCode;
+    TextView driverState, driverCity, driverSeries, setLocation, editDL, editDS;
+
     private ArrayList<LoadNotificationModel> loadList = new ArrayList<>();
     private ArrayList<LoadNotificationModel> loadListToCompare = new ArrayList<>();
 
@@ -139,10 +155,9 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     Boolean isModelSelected = false;
     Dialog loadingDialog, setBudget, selectTruckDialog, previewDialogBidNow, dialogAcceptRevisedBid, dialogViewConsignment;
 
-    String updateAssignedDriverId, truckIdPass, updateAssignedTruckId, bodyTypeSelected, spQuoteOnClickBidNow, bidStatus, vehicle_no, truckId, isProfileAdded, isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
+    String updateAssignedDriverId, selectedState, s1, truckIdPass, updateAssignedTruckId, bodyTypeSelected, spQuoteOnClickBidNow, bidStatus, vehicle_no, truckId, isProfileAdded, isPersonalDetailsDone, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone, isFirmDetailsDone;
 
     SwipeListener swipeListener;
-    double latitude1, latitude2, longitude1, longitude2;
     ArrayList<String> arrayVehicleType, arrayToDisplayCapacity, updatedArrayTruckFt, arrayTruckFtForCompare, arrayCapacityForCompare, arrayTruckFt, arrayCapacity;
 
     ImageView openType, closedType, tarpaulinType;
@@ -154,10 +169,10 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     Boolean isLoadNotificationSelected, loadNotificationSelected, profileAdded, isTruckSelectedToBid = false, negotiable = null, isNegotiableSelected = false, fromAdapter = false, truckSelected = false;
     ImageView actionBarBackButton, actionBarMenuButton, profilePic;
 
-    Button uploadRC, uploadInsurance, okVehicleDetails;
+    Button uploadRC, uploadInsurance, okVehicleDetails, uploadDL, uploadSelfie;
     TextView addTruckModel, addTruckFeet, addTruckCapacity;
 
-    Dialog menuDialog, previewDialogProfile, addTruckDialog;
+    Dialog menuDialog, previewDialogProfile, addTruckDialog, addDriverDialog;
     WindowManager.LayoutParams lpForTruck;
     ConstraintLayout drawerLayout;
     TextView timeLeft00, timeLeftTextview, partitionTextview, menuUserNameTextView, mobileText, personalDetailsButton, bankDetailsTextView, addTrucksTextView;
@@ -196,6 +211,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         bidsSubmittedTextView = (TextView) findViewById(R.id.dashboard_bids_submitted_button);
 
         getNotification();
+        getCurrentLocation = new GetCurrentLocation();
 
         if (isLoadNotificationSelected) {
             loadNotificationSelected = true;
@@ -235,6 +251,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         profileText.setText("Find Loads");
         profileImageView.setImageDrawable(getDrawable(R.drawable.find_small));
 
+        //------------------------------------ Add Truck Dialog ------------------------------------
         addTruckDialog = new Dialog(ServiceProviderDashboardActivity.this);
         addTruckDialog.setContentView(R.layout.activity_vehicle_details);
         lpForTruck = new WindowManager.LayoutParams();
@@ -285,6 +302,149 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
 
         });
 
+        //------------------------------------ Add Driver Dialog -----------------------------------
+        addDriverDialog = new Dialog(ServiceProviderDashboardActivity.this);
+        addDriverDialog.setContentView(R.layout.activity_driver_details);
+        lpForTruck = new WindowManager.LayoutParams();
+        lpForTruck.copyFrom(addDriverDialog.getWindow().getAttributes());
+        lpForTruck.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lpForTruck.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lpForTruck.gravity = Gravity.CENTER;
+
+        View driverActionBar = (View) addDriverDialog.findViewById(R.id.driver_details_action_bar);
+        ImageView backButtonDriverActionBar = (ImageView) driverActionBar.findViewById(R.id.action_bar_back_button);
+        backButtonDriverActionBar.setOnClickListener(view1 -> {
+            addDriverDialog.dismiss();
+        });
+        TextView driverAddTitle = (TextView) driverActionBar.findViewById(R.id.action_bar_title);
+        driverAddTitle.setText("Driver Details");
+
+        View infoPersonal = (View) addDriverDialog.findViewById(R.id.driver_details_personal_and_address);
+        ConstraintLayout userConstrain = (ConstraintLayout) infoPersonal.findViewById(R.id.personal_registration_sp_constrain);
+        userConstrain.setVisibility(View.GONE);
+
+        driverName = (EditText) infoPersonal.findViewById(R.id.registration_edit_name);
+        driverNumber = (EditText) infoPersonal.findViewById(R.id.registration_mobile_no_edit);
+        driverEmail = (EditText) infoPersonal.findViewById(R.id.registration_email_id_edit);
+        driverAddress = (EditText) infoPersonal.findViewById(R.id.registration_address_edit);
+        driverPinCode = (EditText) infoPersonal.findViewById(R.id.registration_pin_code_edit);
+        driverState = (TextView) infoPersonal.findViewById(R.id.registration_select_state);
+        driverCity = (TextView) infoPersonal.findViewById(R.id.registration_select_city);
+        driverSeries = (TextView) infoPersonal.findViewById(R.id.registration_prefix);
+        setLocation = (TextView) infoPersonal.findViewById(R.id.personal_and_address_get_current_location);
+        setLocation.setVisibility(View.VISIBLE);
+        driverCheckBox = (CheckBox) addDriverDialog.findViewById(R.id.driver_details_self_checkbox);
+
+        uploadDL = (Button) addDriverDialog.findViewById(R.id.driver_details_upload_driver_license);
+        uploadDL.setOnClickListener(view -> {
+
+        });
+
+        uploadSelfie = (Button) addDriverDialog.findViewById(R.id.upload_driver_selfie);
+        uploadSelfie.setOnClickListener(view -> {
+
+        });
+
+        editDL = (TextView) addDriverDialog.findViewById(R.id.driver_details_edit_driver_license);
+        editDL.setOnClickListener(view -> {
+
+        });
+
+        editDS = (TextView) addDriverDialog.findViewById(R.id.driver_details_edit_selfie_text);
+        editDS.setOnClickListener(view -> {
+
+        });
+
+        driverNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String mobileNoWatcher = driverNumber.getText().toString().trim();
+                String nameWatcher = driverName.getText().toString().trim();
+
+                String editMobile = "91" + "" + driverNumber.getText().toString();
+                if (editMobile.equals(phone)) {
+                    driverCheckBox.setChecked(true);
+                } else {
+                    driverCheckBox.setChecked(false);
+                }
+
+                if (mobileNoWatcher.length() == 10) {
+                    driverNumber.setBackground(getResources().getDrawable(R.drawable.mobile_number_right));
+                    driverSeries.setBackground(getResources().getDrawable(R.drawable.mobile_number_left));
+                } else {
+                    driverNumber.setBackground(getResources().getDrawable(R.drawable.mobile_number_right_red));
+                    driverSeries.setBackground(getResources().getDrawable(R.drawable.mobile_number_left_red));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
+        driverPinCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String pinCodeWatcher = driverPinCode.getText().toString().trim();
+
+                if (pinCodeWatcher.length() != 6) {
+                    driverState.setText("");
+                    driverCity.setText("");
+                    driverPinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+                } else {
+                    String enteredPinCode = driverPinCode.getText().toString();
+                    getStateAndDistrict(enteredPinCode);
+                    driverPinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
+        driverEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String email = driverEmail.getText().toString().trim();
+                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+                if (email.matches(emailPattern)) {
+                    driverEmail.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+                } else {
+                    driverEmail.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+                }
+            }
+        });
+
+
+        driverState.setOnClickListener(view -> {
+            SelectState.selectState(ServiceProviderDashboardActivity.this, driverState, driverCity);
+        });
+
+        driverCity.setOnClickListener(view -> {
+            if (!driverState.getText().toString().isEmpty()) {
+                selectedState = driverState.getText().toString();
+                SelectCity.selectCity(ServiceProviderDashboardActivity.this, selectedState, driverCity);
+            }
+        });
+
+        //------------------------------------------------------------------------------------------
         arrayVehicleType = new ArrayList<>();
         arrayToDisplayCapacity = new ArrayList<>();
         updatedArrayTruckFt = new ArrayList<>();
@@ -483,7 +643,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
 
                         //-------------------------------------Personal details ---- -------------------------------------
                         menuUserNameTextView.setText(name);
-                        String s1 = mobile.substring(2, 12);
+                        s1 = mobile.substring(2, 12);
                         mobileText.setText("+91 " + s1);
 
                         if (isProfileAdded.equals("1")) {
@@ -948,7 +1108,9 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         addDriver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JumpTo.goToDriverDetailsActivity(ServiceProviderDashboardActivity.this, userId, mobile, false, true, false, null, null);
+                addDriverDialog.show();
+                addDriverDialog.getWindow().setAttributes(lpForTruck);
+                addDriverDialog.setCancelable(true);
             }
         });
 
@@ -1745,7 +1907,9 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         addDriver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JumpTo.goToDriverDetailsActivity(ServiceProviderDashboardActivity.this, userId, mobile, false, true, false, null, null);
+                addDriverDialog.show();
+                addDriverDialog.getWindow().setAttributes(lpForTruck);
+                addDriverDialog.setCancelable(true);
             }
         });
 
@@ -2055,6 +2219,11 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         });
         mQueue.add(request);
         //----------------------------------------------------------
+    }
+
+    public void onClickGetCurrentLocation(View view) {
+//        GetCurrentLocation.getCurrentLocation(RegistrationActivity.this, address, pinCode, selectStateText, selectDistrictText);
+        getCurrentLocation.getCurrentLocationMaps(ServiceProviderDashboardActivity.this, driverAddress, driverPinCode);
     }
 
     public void ViewSPProfile(View view) {
@@ -2406,6 +2575,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        getCurrentLocation.setAddressAndPin(ServiceProviderDashboardActivity.this, data, driverAddress, driverPinCode);
 
         if (requestCode == GET_FROM_GALLERY2 && resultCode == Activity.RESULT_OK) {
             //----------------------- Alert Dialog -------------------------------------------------
@@ -2949,54 +3119,55 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     //-----------------------------------------------------------------------------------------------------
 
     public void onClickVehicleDetailsOk(View view) {
+        addTruckDialog.dismiss();
         String vehicleNum = addTruckVehicleNumber.getText().toString();
 //        if (!vehicleNum.isEmpty() && isRcUploaded && isInsurance && truckSelected && isModelSelected) {
 
-            saveTruck(createTruck());
-            //Update User Truck (IsTruckAdded)
-            UpdateUserDetails.updateUserIsTruckAdded(userId, "1");
+        saveTruck(createTruck());
+        //Update User Truck (IsTruckAdded)
+        UpdateUserDetails.updateUserIsTruckAdded(userId, "1");
 
-            //----------------------- Alert Dialog -------------------------------------------------
-            Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
-            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(alert.getWindow().getAttributes());
-            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.gravity = Gravity.CENTER;
+        //----------------------- Alert Dialog -------------------------------------------------
+        Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
+        alert.setContentView(R.layout.dialog_alert);
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(alert.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
 
-            alert.show();
-            alert.getWindow().setAttributes(lp);
-            alert.setCancelable(false);
+        alert.show();
+        alert.getWindow().setAttributes(lp);
+        alert.setCancelable(false);
 
-            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Truck Details");
-            alertMessage.setText("Vehicle Details added successfully");
-            alertPositiveButton.setText("+ Add Truck Driver");
-            alertPositiveButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    alert.dismiss();
-                    addDriver.performClick();
-                }
-            });
+        alertTitle.setText("Truck Details");
+        alertMessage.setText("Vehicle Details added successfully");
+        alertPositiveButton.setText("+ Add Truck Driver");
+        alertPositiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+                addDriver.performClick();
+            }
+        });
 
-            alertNegativeButton.setText("Skip");
-            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+        alertNegativeButton.setText("Skip");
+        alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
 
-            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    alert.dismiss();
-                }
-            });
-            //------------------------------------------------------------------------------------------
+        alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+            }
+        });
+        //------------------------------------------------------------------------------------------
 
 //        } else {
 ////            okVehicleDetails.setEnabled(false);
@@ -3004,5 +3175,240 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
 //        }
     }
 
+    private void getStateAndDistrict(String enteredPin) {
 
+        Log.i("Entered PIN", enteredPin);
+
+        String url = "http://13.234.163.179:3000/user/locationData/" + enteredPin;
+        Log.i("url for truckByTruckId", url);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONObject obj = response.getJSONObject("data");
+                    String stateByPinCode = obj.getString("stateCode");
+                    String distByPinCode = obj.getString("district");
+
+                    driverState.setText(stateByPinCode);
+                    driverCity.setText(distByPinCode);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+    }
+
+    public void onClickIsSelf(View view) {
+        if (driverCheckBox.isChecked()) {
+
+            setLocation.setVisibility(View.INVISIBLE);
+            driverName.setCursorVisible(false);
+            driverName.setText(name);
+            driverName.setEnabled(false);
+            driverNumber.setCursorVisible(false);
+            driverNumber.setText(s1);
+            driverNumber.setEnabled(false);
+            driverAddress.setCursorVisible(false);
+            driverAddress.setText(address);
+            driverAddress.setEnabled(false);
+            driverPinCode.setCursorVisible(false);
+            driverPinCode.setText(pinCode);
+            driverPinCode.setEnabled(false);
+            driverEmail.setCursorVisible(false);
+            if (emailIdAPI != null) {
+                driverEmail.setText(emailIdAPI);
+            }
+            driverEmail.setEnabled(false);
+            driverState.setEnabled(false);
+            driverCity.setEnabled(false);
+
+        } else if (!driverCheckBox.isChecked()) {
+
+            setLocation.setVisibility(View.VISIBLE);
+            driverName.setCursorVisible(true);
+            driverName.setEnabled(true);
+            driverNumber.setCursorVisible(true);
+            driverNumber.setEnabled(true);
+            driverAddress.setCursorVisible(true);
+            driverAddress.setEnabled(true);
+            driverPinCode.setCursorVisible(true);
+            driverPinCode.setEnabled(true);
+            driverEmail.setCursorVisible(true);
+            driverEmail.setEnabled(true);
+            driverState.setEnabled(true);
+            driverCity.setEnabled(true);
+
+            driverName.getText().clear();
+            driverNumber.getText().clear();
+            driverAddress.getText().clear();
+            driverPinCode.getText().clear();
+            driverEmail.getText().clear();
+            driverState.setText("");
+            driverCity.setText("");
+        }
+    }
+
+    public void onClickDriverDetailsOk(View view) {
+        String driverMobileText = driverNumber.getText().toString();
+        String driverNameText = driverName.getText().toString();
+
+//        if (!driverNameText.isEmpty() && !driverMobileText.isEmpty() && isDLUploaded && isSelfieUploded) {
+            if (driverMobileText.length() != 10) {
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(true);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Invalid Mobile Number");
+                alertMessage.setText("Please enter a 10 digit valid mobile number.");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                    }
+                });
+                //------------------------------------------------------------------------------------------
+            } else {
+                //update Driver as a user (IsDriverAdded)
+                UpdateUserDetails.updateUserIsDriverAdded(userId, "1");
+                saveDriver(createDriver());
+                saveUser(createUser());
+
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(false);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Driver Details");
+                alertMessage.setText("Driver Details added successfully");
+
+                alertPositiveButton.setVisibility(View.GONE);
+
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                    }
+                });
+                //------------------------------------------------------------------------------------------
+
+            }
+//        }
+    }
+
+    //------------------------------------- Create User in API -------------------------------------
+    public UserRequest createUser() {
+        UserRequest userRequest = new UserRequest();
+        userRequest.setName(driverName.getText().toString());
+        userRequest.setPhone_number("91" + "" + driverNumber);
+        userRequest.setAddress(driverAddress.getText().toString());
+        userRequest.setUser_type("Driver");
+        userRequest.setEmail_id(driverEmail.getText().toString());
+        userRequest.setIsRegistration_done(1);
+        userRequest.setPin_code(driverPinCode.getText().toString());
+        userRequest.setPreferred_location(driverState.getText().toString());
+        userRequest.setState_code(driverCity.getText().toString());
+        userRequest.setIsCompany_added(0);
+        userRequest.setIsBankDetails_given(0);
+        userRequest.setIsPersonal_dt_added(0);
+        userRequest.setIsDriver_added(0);
+        userRequest.setIsTruck_added(0);
+        userRequest.setIsProfile_pic_added(0);
+        return userRequest;
+    }
+
+    public void saveUser(UserRequest userRequest) {
+        Call<UserResponse> userResponseCall = ApiClient.getUserService().saveUser(userRequest);
+        userResponseCall.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, retrofit2.Response<UserResponse> response) {
+//                Log.i("Message UserCreated:", userResponse.getData().getPhone_number());
+                UserResponse userResponse = response.body();
+                Log.i("Msg Success", String.valueOf(userResponse));
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+
+            }
+        });
+    }
+    //----------------------------------------------------------------------------------------------
+
+    //--------------------------------------create Driver Details in API -------------------------------------
+    public AddDriverRequest createDriver() {
+        AddDriverRequest addDriverRequest = new AddDriverRequest();
+        addDriverRequest.setUser_id(userId);
+        addDriverRequest.setDriver_name(driverName.getText().toString());
+        addDriverRequest.setDriver_number("91" + driverNumber.getText().toString());
+        addDriverRequest.setDriver_emailId(driverEmail.getText().toString());
+        if (truckIdPass!=null) {
+            addDriverRequest.setTruck_id(truckIdPass);
+        }
+        return addDriverRequest;
+    }
+
+    public void saveDriver(AddDriverRequest addDriverRequest) {
+        Call<AddDriverResponse> addDriverResponseCall = ApiClient.addDriverService().saveDriver(addDriverRequest);
+        addDriverResponseCall.enqueue(new Callback<AddDriverResponse>() {
+            @Override
+            public void onResponse(Call<AddDriverResponse> call, retrofit2.Response<AddDriverResponse> response) {
+                AddDriverResponse driverResponse = response.body();
+                String driverIdPass = driverResponse.getData().getDriver_id();
+                UpdateTruckDetails.updateTruckDriverId(truckIdPass, driverIdPass);
+
+//                uploadDriverLicense(driverIdPass, pathForDL);
+//                uploadDriverSelfie(driverIdPass, pathForSelfie);
+
+            }
+
+            @Override
+            public void onFailure(Call<AddDriverResponse> call, Throwable t) {
+
+            }
+        });
+    }
 }
