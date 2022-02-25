@@ -335,12 +335,50 @@ public class DriverDetailsActivity extends AppCompatActivity {
         uploadSelfie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                requestPermissionsForCamera();
-                requestPermissionsForGalleryWRITE();
-                requestPermissionsForGalleryREAD();
+                try {
+                    requestPermissionsForCamera();
+                    requestPermissionsForGalleryWRITE();
+                    requestPermissionsForGalleryREAD();
 
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
+                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
+                }catch (Exception e){
+                    //----------------------- Alert Dialog -------------------------------------------------
+//                    Dialog alert = new Dialog(DriverDetailsActivity.this);
+//                    alert.setContentView(R.layout.dialog_alert);
+//                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+//                    lp.copyFrom(alert.getWindow().getAttributes());
+//                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+//                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+//                    lp.gravity = Gravity.CENTER;
+//
+//                    alert.show();
+//                    alert.getWindow().setAttributes(lp);
+//                    alert.setCancelable(true);
+//
+//                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+//                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+//                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+//                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+//
+//                    alertTitle.setText("Please Upload From Gallery");
+//                    alertMessage.setText("Choose from Gallery");
+//                    alertPositiveButton.setVisibility(View.GONE);
+//
+//                    alertNegativeButton.setText("OK");
+//                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+//                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+//
+//                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            alert.dismiss();
+//
+//                        }
+//                    });
+                    //------------------------------------------------------------------------------------------
+                }
             }
         });
 
