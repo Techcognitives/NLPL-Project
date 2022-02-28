@@ -83,8 +83,9 @@ public class JumpTo {
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void goToSliderActivity(Activity activity){
+    public static void goToSliderActivity(Activity activity, String mobileNumber){
         Intent intent = new Intent(activity, SliderActivity.class);
+        intent.putExtra("mobile", mobileNumber);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivity(intent);
         activity.overridePendingTransition(0, 0);

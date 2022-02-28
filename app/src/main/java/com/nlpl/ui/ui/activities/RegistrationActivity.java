@@ -302,7 +302,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     public void onClickSkip(View view) {
-        JumpTo.goToSliderActivity(RegistrationActivity.this);
+        JumpTo.goToSliderActivity(RegistrationActivity.this, mobile);
     }
 
     public void onClickGetCurrentLocation(View view) {

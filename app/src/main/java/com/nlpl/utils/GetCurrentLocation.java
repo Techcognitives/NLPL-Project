@@ -175,10 +175,15 @@ public class GetCurrentLocation {
 
                 try {
                     address.setText(addressFiledWithoutCity[0]);
+                    pin.setText(postalCode);
                 } catch (Exception e) {
                     address.setText(address1);
+                    pin.setText(postalCode);
                 }
-                                pin.setText(postalCode);
+
+                address.setText(address1);
+                pin.setText(postalCode);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -1,7 +1,6 @@
 package com.nlpl.ui.ui.activities;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
@@ -19,14 +18,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
-import android.text.Html;
+
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextWatcher;
@@ -34,13 +31,12 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
+
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -48,10 +44,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+
 import com.nlpl.R;
 import com.nlpl.model.Requests.AddDriverRequest;
 import com.nlpl.model.Requests.UserRequest;
@@ -76,10 +69,7 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -115,16 +105,14 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
     String driverUserId, driverUserIdGet;
 
-    String pathForDL, pathForSelfie, img_type, userId, driverId, driverNameAPI, driverNumberAPI, driverEmailAPI, mobile;
+    String pathForDL, pathForSelfie, userId, driverId, driverNameAPI, driverNumberAPI, driverEmailAPI, mobile;
     Boolean fromBidNow = false, isDLUploaded = false, isEdit, isSelfieUploded = false, idDLEdited = false;
     ImageView previewDrivingLicense, previewSelfie, previewDLImageView, previewSelfieImageView;
     Dialog previewDialogDL, previewDialogSelfie;
     View personalAndAddress;
 
-    ArrayAdapter<CharSequence> selectStateArray, selectDistrictArray, selectStateUnionCode;
     TextView selectStateText, selectDistrictText, setCurrentLocation;
-    Dialog selectStateDialog, selectDistrictDialog;
-    String selectedDistrict, selectedState;
+    String selectedState;
     EditText pinCode, address;
 
     String userIdAPI, nameAPI, stateAPI, pinCodeAPI, addressAPI, mobileNoAPI, cityAPI, roleAPI;
@@ -221,54 +209,51 @@ public class DriverDetailsActivity extends AppCompatActivity {
         actionBarTitle.setText("Driver Details");
         actionBarBackButton.setVisibility(View.GONE);
         actionBarSkipButton.setVisibility(View.VISIBLE);
-        actionBarSkipButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isDriverDetailsDoneAPI.equals("1")) {
-                    JumpTo.goToViewVehicleDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
-                } else {
-                    //----------------------- Alert Dialog -------------------------------------------------
-                    Dialog alert = new Dialog(DriverDetailsActivity.this);
-                    alert.setContentView(R.layout.dialog_alert);
-                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                    lp.copyFrom(alert.getWindow().getAttributes());
-                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-                    lp.gravity = Gravity.CENTER;
+        actionBarSkipButton.setOnClickListener(view -> {
+            if (isDriverDetailsDoneAPI.equals("1")) {
+                JumpTo.goToViewVehicleDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
+            } else {
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(DriverDetailsActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
 
-                    alert.show();
-                    alert.getWindow().setAttributes(lp);
-                    alert.setCancelable(true);
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(true);
 
-                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                    alertTitle.setText("Please add a Driver");
-                    alertMessage.setText("You cannot bid unless you have a Driver");
-                    alertPositiveButton.setText("+ Add Truck Driver");
-                    alertPositiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            alert.dismiss();
-                        }
-                    });
+                alertTitle.setText("Please add a Driver");
+                alertMessage.setText("You cannot bid unless you have a Driver");
+                alertPositiveButton.setText("+ Add Truck Driver");
+                alertPositiveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                    }
+                });
 
-                    alertNegativeButton.setText("OK");
-                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
 
-                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            alert.dismiss();
-                            JumpTo.goToViewVehicleDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
-                        }
-                    });
-                    //------------------------------------------------------------------------------------------
-                }
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                        JumpTo.goToViewVehicleDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
+                    }
+                });
+                //------------------------------------------------------------------------------------------
             }
         });
 
@@ -335,12 +320,50 @@ public class DriverDetailsActivity extends AppCompatActivity {
         uploadSelfie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                requestPermissionsForCamera();
-                requestPermissionsForGalleryWRITE();
-                requestPermissionsForGalleryREAD();
+                try {
+                    requestPermissionsForCamera();
+                    requestPermissionsForGalleryWRITE();
+                    requestPermissionsForGalleryREAD();
 
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
+                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
+                }catch (Exception e){
+                    //----------------------- Alert Dialog -------------------------------------------------
+//                    Dialog alert = new Dialog(DriverDetailsActivity.this);
+//                    alert.setContentView(R.layout.dialog_alert);
+//                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+//                    lp.copyFrom(alert.getWindow().getAttributes());
+//                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+//                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+//                    lp.gravity = Gravity.CENTER;
+//
+//                    alert.show();
+//                    alert.getWindow().setAttributes(lp);
+//                    alert.setCancelable(true);
+//
+//                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+//                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+//                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+//                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+//
+//                    alertTitle.setText("Please Upload From Gallery");
+//                    alertMessage.setText("Choose from Gallery");
+//                    alertPositiveButton.setVisibility(View.GONE);
+//
+//                    alertNegativeButton.setText("OK");
+//                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+//                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+//
+//                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            alert.dismiss();
+//
+//                        }
+//                    });
+                    //------------------------------------------------------------------------------------------
+                }
             }
         });
 
@@ -1419,7 +1442,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         } else if (!selfCheckBox.isChecked()) {
 
-            setCurrentLocation.setVisibility(View.INVISIBLE);
+            setCurrentLocation.setVisibility(View.VISIBLE);
             driverName.setCursorVisible(true);
             driverName.setEnabled(true);
             driverMobile.setCursorVisible(true);
@@ -1443,7 +1466,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void getUserDetails() {
+    public void getUserDetails() {
 
         String url = getString(R.string.baseURL) + "/user/" + userId;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
