@@ -126,7 +126,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         });
 //--------------------------------------------------------------------------------------------------
         panAndAadharView = (View) findViewById(R.id.personal_details_pan_and_aadhar);
-
         panCardText = panAndAadharView.findViewById(R.id.pancard1);
         frontText = panAndAadharView.findViewById(R.id.frontText);
         uploadPAN = panAndAadharView.findViewById(R.id.uploadPan);
@@ -170,7 +169,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         previewDialogPan = new Dialog(PersonalDetailsActivity.this);
         previewDialogPan.setContentView(R.layout.dialog_preview_images);
         previewDialogPan.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.black)));
-
 
         previewDialogAadhar = new Dialog(PersonalDetailsActivity.this);
         previewDialogAadhar.setContentView(R.layout.dialog_preview_images);

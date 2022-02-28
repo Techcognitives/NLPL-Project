@@ -479,7 +479,6 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     public void onClickBottomNavigation(View view) {
         switch (view.getId()) {
             case R.id.bottom_nav_sp_dashboard:
-
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
@@ -1595,7 +1594,6 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                     JSONArray bidResponsesLists = response.getJSONArray("data");
                     for (int i = 0; i < bidResponsesLists.length(); i++) {
                         JSONObject obj = bidResponsesLists.getJSONObject(i);
-                        spQuoteByApi = obj.getString("sp_quote");
                         noteByApi = obj.getString("notes");
                         bid_idByAPI = obj.getString("sp_bid_id");
                         assignedDriverIdAPI = obj.getString("assigned_driver_id");
@@ -1616,6 +1614,35 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                             assignedDriverId = arrayAssignedDriverId.get(j);
                             noteBySPToCustomer = arrayNotesFromSP.get(j);
                         }
+
+                        //--------------------------------------------------------------------------
+                        String url4 = getString(R.string.baseURL) + "/spbid/bidDtByBidId/" + acceptFinalBid;
+                        JsonObjectRequest request4 = new JsonObjectRequest(Request.Method.GET, url4, null, new com.android.volley.Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    JSONArray truckLists = response.getJSONArray("data");
+                                    for (int i = 0; i < truckLists.length(); i++) {
+                                        JSONObject obj = truckLists.getJSONObject(i);
+                                        spQuoteByApi = obj.getString("sp_quote");
+                                        quoteBySP.setText(spQuoteByApi);
+                                        modelBySP.setText(obj.getString("vehicle_model"));
+                                        feetBySP.setText(obj.getString("feet"));
+                                        capacityBySP.setText(obj.getString("capacity"));
+                                        bodyTypeBySP.setText(obj.getString("body_type"));
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new com.android.volley.Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                error.printStackTrace();
+                            }
+                        });
+                        mQueue.add(request4);
+                        //--------------------------------------------------------------------------
 
                         //----------------------------------------------------------
                         String url = getString(R.string.baseURL) + "/user/" + assignedUserId;
@@ -1701,12 +1728,6 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                         mQueue.add(request1);
                         //----------------------------------------------------------
                     }
-
-                    quoteBySP.setText(spQuoteByApi);
-                    modelBySP.setText(obj.getVehicle_model());
-                    feetBySP.setText(obj.getFeet());
-                    capacityBySP.setText(obj.getCapacity());
-                    bodyTypeBySP.setText(obj.getBody_type());
                     negotiableBySP.setText("No");
                     notesBySP.setText(noteBySPToCustomer);
                     //----------------------------------------------------------------------------------------------------------------
@@ -2724,4 +2745,8 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
             }
         }
     };
+
+    public void CustomerSettingsAndPreferences(View view) {
+        JumpTo.getToSettingAndPreferences(CustomerDashboardActivity.this, phone, userId);
+    }
 }

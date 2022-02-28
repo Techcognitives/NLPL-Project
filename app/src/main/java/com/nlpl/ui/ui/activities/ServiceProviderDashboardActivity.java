@@ -746,17 +746,56 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         acceptAndBid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
+                if (selectedTruckFeet.equals(obj.getFeet()) || selectedTruckCapacity.equals(obj.getCapacity())) {
 
-                    if (spQuote.getText().toString().equals(customerFirstBudget.getText().toString())) {
-                        saveBid(createBidRequest("Accepted", spQuote.getText().toString()));
-                    } else if (!spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) && !negotiable) {
-                        saveBid(createBidRequest("submittedNonNego", spQuote.getText().toString()));
-                    } else if (!spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) && negotiable) {
-                        saveBid(createBidRequest("submittedNego", spQuote.getText().toString()));
+                    if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
+
+                        if (spQuote.getText().toString().equals(customerFirstBudget.getText().toString())) {
+                            saveBid(createBidRequest("Accepted", spQuote.getText().toString()));
+                        } else if (!spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) && !negotiable) {
+                            saveBid(createBidRequest("submittedNonNego", spQuote.getText().toString()));
+                        } else if (!spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) && negotiable) {
+                            saveBid(createBidRequest("submittedNego", spQuote.getText().toString()));
+                        }
+
+                        Log.i("loadId bidded", obj.getIdpost_load());
+                        //----------------------- Alert Dialog -------------------------------------------------
+                        Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
+                        alert.setContentView(R.layout.dialog_alert);
+                        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                        lp.copyFrom(alert.getWindow().getAttributes());
+                        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                        lp.gravity = Gravity.CENTER;
+
+                        alert.show();
+                        alert.getWindow().setAttributes(lp);
+                        alert.setCancelable(false);
+
+                        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                        alertTitle.setText("Post Bid");
+                        alertMessage.setText("Bid Posted Successfully");
+                        alertPositiveButton.setVisibility(View.GONE);
+                        alertNegativeButton.setText("OK");
+                        alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                        alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                alert.dismiss();
+                                JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
+                                previewDialogBidNow.dismiss();
+                            }
+                        });
+                        //------------------------------------------------------------------------------------------
                     }
-
-                    Log.i("loadId bidded", obj.getIdpost_load());
+                } else {
                     //----------------------- Alert Dialog -------------------------------------------------
                     Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
                     alert.setContentView(R.layout.dialog_alert);
@@ -776,10 +815,11 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                     TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                    alertTitle.setText("Post Bid");
-                    alertMessage.setText("Bid Posted Successfully");
-                    alertPositiveButton.setVisibility(View.GONE);
-                    alertNegativeButton.setText("OK");
+                    alertTitle.setText("Truck requirement doesn't Match");
+                    alertMessage.setText("Ft. and capacity of your truck doesn't match Load Poster requirements.");
+                    alertPositiveButton.setVisibility(View.VISIBLE);
+                    alertPositiveButton.setText("Continue");
+                    alertNegativeButton.setText("Assign another Truck");
                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                     alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
 
@@ -787,11 +827,64 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             alert.dismiss();
-                            JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
+//                            JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
                             previewDialogBidNow.dismiss();
                         }
                     });
                     //------------------------------------------------------------------------------------------
+
+                    alertPositiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
+                                if (spQuote.getText().toString().equals(customerFirstBudget.getText().toString())) {
+                                    saveBid(createBidRequest("Accepted", spQuote.getText().toString()));
+                                } else if (!spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) && !negotiable) {
+                                    saveBid(createBidRequest("submittedNonNego", spQuote.getText().toString()));
+                                } else if (!spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) && negotiable) {
+                                    saveBid(createBidRequest("submittedNego", spQuote.getText().toString()));
+                                }
+
+                                Log.i("loadId bidded", obj.getIdpost_load());
+                                //----------------------- Alert Dialog -------------------------------------------------
+                                Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
+                                alert.setContentView(R.layout.dialog_alert);
+                                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                                lp.copyFrom(alert.getWindow().getAttributes());
+                                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                                lp.gravity = Gravity.CENTER;
+
+                                alert.show();
+                                alert.getWindow().setAttributes(lp);
+                                alert.setCancelable(false);
+
+                                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                                alertTitle.setText("Post Bid");
+                                alertMessage.setText("Bid Posted Successfully");
+                                alertPositiveButton.setVisibility(View.GONE);
+                                alertNegativeButton.setText("OK");
+                                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        alert.dismiss();
+                                        JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
+                                        previewDialogBidNow.dismiss();
+                                    }
+                                });
+                                //------------------------------------------------------------------------------------------
+                            }
+                        }
+                    });
                 }
             }
         });

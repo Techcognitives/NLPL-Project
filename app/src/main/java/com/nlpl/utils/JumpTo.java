@@ -2,14 +2,15 @@ package com.nlpl.utils;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.CpuUsageInfo;
 
 import com.nlpl.ui.ui.activities.BankDetailsActivity;
 import com.nlpl.ui.ui.activities.CompanyDetailsActivity;
 import com.nlpl.ui.ui.activities.CustomerDashboardActivity;
 import com.nlpl.ui.ui.activities.CustomerLoadsHistoryActivity;
+import com.nlpl.ui.ui.activities.CustomerSettingsAndPreferences;
 import com.nlpl.ui.ui.activities.DriverDetailsActivity;
 import com.nlpl.ui.ui.activities.FindLoadsActivity;
+import com.nlpl.ui.ui.activities.FindTrucksActivity;
 import com.nlpl.ui.ui.activities.LogInActivity;
 import com.nlpl.ui.ui.activities.OtpCodeActivity;
 import com.nlpl.ui.ui.activities.PersonalDetailsActivity;
@@ -18,7 +19,6 @@ import com.nlpl.ui.ui.activities.PostALoadActivity;
 import com.nlpl.ui.ui.activities.RegistrationActivity;
 import com.nlpl.ui.ui.activities.ServiceProviderDashboardActivity;
 import com.nlpl.ui.ui.activities.SliderActivity;
-import com.nlpl.ui.ui.activities.SplashScreenActivity;
 import com.nlpl.ui.ui.activities.VehicleDetailsActivity;
 import com.nlpl.ui.ui.activities.ViewBankDetailsActivity;
 import com.nlpl.ui.ui.activities.ViewDriverDetailsActivity;
@@ -40,6 +40,14 @@ public class JumpTo {
         intent.putExtra("userId", userId);
         activity.startActivity(intent);
         activity.finish();
+        activity.overridePendingTransition(0, 0);
+    }
+
+    public static void getToSettingAndPreferences(Activity activity, String mobileNumber, String userId){
+        Intent intent = new Intent(activity, CustomerSettingsAndPreferences.class);
+        intent.putExtra("mobile", mobileNumber);
+        intent.putExtra("userId", userId);
+        activity.startActivity(intent);
         activity.overridePendingTransition(0, 0);
     }
 
@@ -151,7 +159,7 @@ public class JumpTo {
     }
 
     public static void goToFindTrucksActivity(Activity activity, String userId, String mobileNumber){
-        Intent intent = new Intent(activity, FindLoadsActivity.class);
+        Intent intent = new Intent(activity, FindTrucksActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("mobile", mobileNumber);
         activity.startActivity(intent);

@@ -80,7 +80,6 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
         mQueue.add(request);
         //----------------------------------------------------------
 
-
         String url1 = activity.getString(R.string.baseURL) + "/imgbucket/Images/" + obj.getUser_id();
         JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
@@ -91,7 +90,7 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
                         JSONObject obj = imageList.getJSONObject(i);
                         String imageType = obj.getString("image_type");
 
-                        String profileImgUrl;
+                        String profileImgUrl = "";
                         if (imageType.equals("profile")) {
                             profileImgUrl = obj.getString("image_url");
                             new DownloadImageTask(holder.profilePictureSP).execute(profileImgUrl);
@@ -108,7 +107,6 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
             }
         });
         mQueue.add(request1);
-
 
         holder.profilePictureSP.setOnClickListener(new View.OnClickListener() {
             @Override
