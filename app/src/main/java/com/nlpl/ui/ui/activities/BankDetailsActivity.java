@@ -45,10 +45,7 @@ import com.nlpl.model.Responses.BankResponse;
 import com.nlpl.model.Responses.UploadChequeResponse;
 import com.nlpl.model.UpdateMethods.UpdateBankDetails;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
-import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankAccountNumber;
-import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankIFSICode;
-import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankName;
-import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankReEnterAccountNumber;
+
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;

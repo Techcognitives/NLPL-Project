@@ -573,6 +573,11 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         }
                     }
 
+                    if (userId == null) {
+                        bidsSubmittedTextView.setVisibility(View.GONE);
+                    } else {
+                        bidsSubmittedTextView.setVisibility(View.VISIBLE);
+                    }
                     getUserDetails();
                     //---------------------------- Get Load Details -------------------------------------------
                     getLoadNotificationList();
@@ -632,6 +637,8 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
 
                         emailIdAPI = obj.getString("email_id");
 
+                        String isRegistrationDone = obj.getString("isRegistration_done");
+                        Log.i("IsREg", isRegistrationDone);
                         isPersonalDetailsDone = obj.getString("isPersonal_dt_added");
                         isFirmDetailsDone = obj.getString("isCompany_added");
                         isBankDetailsDone = obj.getString("isBankDetails_given");
@@ -726,14 +733,53 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     }
 
     public void onCLickShowMenu(View view) {
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(menuDialog.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.gravity = Gravity.END;
-        menuDialog.show();
-        menuDialog.setCancelable(true);
-        menuDialog.getWindow().setAttributes(lp);
+        if (userId == null) {
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(false);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText("Please Register");
+            alertMessage.setText("You can not bid without Registration");
+            alertPositiveButton.setText("Register Now");
+            alertNegativeButton.setText("Cancel");
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.dismiss();
+                }
+            });
+
+            alertPositiveButton.setOnClickListener(view1 -> {
+                alert.dismiss();
+                JumpTo.goToRegistrationActivity(ServiceProviderDashboardActivity.this, phone, true);
+            });
+            //------------------------------------------------------------------------------------------
+        } else {
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(menuDialog.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.END;
+            menuDialog.show();
+            menuDialog.setCancelable(true);
+            menuDialog.getWindow().setAttributes(lp);
+        }
     }
 
     public void onClickLogOut(View view) {
@@ -773,7 +819,46 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
-                JumpTo.goToFindLoadsActivity(ServiceProviderDashboardActivity.this, userId, phone);
+                if (userId == null) {
+                    //----------------------- Alert Dialog -------------------------------------------------
+                    Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
+                    alert.setContentView(R.layout.dialog_alert);
+                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(alert.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.gravity = Gravity.CENTER;
+
+                    alert.show();
+                    alert.getWindow().setAttributes(lp);
+                    alert.setCancelable(false);
+
+                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                    alertTitle.setText("Please Register");
+                    alertMessage.setText("You can not bid without Registration");
+                    alertPositiveButton.setText("Register Now");
+                    alertNegativeButton.setText("Cancel");
+
+                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alert.dismiss();
+                        }
+                    });
+
+                    alertPositiveButton.setOnClickListener(view1 -> {
+                        alert.dismiss();
+                        JumpTo.goToRegistrationActivity(ServiceProviderDashboardActivity.this, phone, true);
+                    });
+                    //------------------------------------------------------------------------------------------
+                } else {
+                    JumpTo.goToFindLoadsActivity(ServiceProviderDashboardActivity.this, userId, phone);
+                }
                 break;
         }
     }
@@ -876,245 +961,281 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     }
 
     public void onClickBidNow(LoadNotificationModel obj) {
+        if (userId == null) {
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
 
-        loadId = obj.getIdpost_load();
-        bidStatus = obj.getBid_status();
-        String pick_up_date = obj.getPick_up_date();
-        String pick_up_time = obj.getPick_up_time();
-        String required_budget = obj.getBudget();
-        String distance = obj.getKm_approx();
-        String required_model = obj.getVehicle_model();
-        String required_feet = obj.getFeet();
-        String required_capacity = obj.getCapacity();
-        String required_truck_body = obj.getBody_type();
-        String pick_up_location = obj.getPick_add() + " " + obj.getPick_city() + " " + obj.getPick_state() + " " + obj.getPick_pin_code();
-        String drop_location = obj.getDrop_add() + " " + obj.getDrop_city() + " " + obj.getDrop_state() + " " + obj.getDrop_pin_code();
-        String received_notes_description = obj.getNotes_meterial_des();
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(false);
 
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(previewDialogBidNow.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.gravity = Gravity.CENTER;
-        previewDialogBidNow.show();
-        previewDialogBidNow.setCancelable(false);
-        previewDialogBidNow.getWindow().setAttributes(lp);
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-        //-------------------------------------------Display Load Information---------------------------------------------
-        TextView pickUpDate = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_pick_up_date_textview);
-        TextView pickUpTime = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_pick_up_time_textview);
-        customerFirstBudget = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_budget_textview);
-        TextView approxDistance = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_distance_textview);
-        TextView reqModel = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_req_model_textview);
-        TextView reqFeet = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_req_feet_textview);
-        TextView reqCapacity = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_req_capacity_textview);
-        TextView reqBodyType = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_req_bodyType_textview);
-        TextView pickUpLocation = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_pick_up_location_textview);
-        TextView dropLocation = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_drop_location_textview);
-        TextView receivedNotes = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_received_notes_textview);
-        TextView loadIdHeading = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_loadId_heading);
+            alertTitle.setText("Please Register");
+            alertMessage.setText("You can not bid without Registration");
+            alertPositiveButton.setText("Register Now");
+            alertNegativeButton.setText("Cancel");
 
-        pickUpDate.setText(pick_up_date);
-        pickUpTime.setText(pick_up_time);
-        customerFirstBudget.setText(required_budget);
-        approxDistance.setText(distance);
-        reqModel.setText(required_model);
-        reqFeet.setText(required_feet);
-        reqCapacity.setText(required_capacity);
-        reqBodyType.setText(required_truck_body);
-        pickUpLocation.setText(pick_up_location);
-        dropLocation.setText(drop_location);
-        receivedNotes.setText(received_notes_description);
-        loadIdHeading.setText("Load ID: " + obj.getPick_city() + "-" + obj.getDrop_city() + "-000");
-        //----------------------------------------------------------------------------------------------------------------
-
-        //-------------------------------------------------Accept Load and Bid now-----------------------------------------
-        spQuote = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_sp_quote_textview);
-        selectTruck = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_select_truck_textview);
-        selectDriver = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_select_driver_textview);
-        addTruck = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_add_truck_textview);
-        addDriver = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_add_driver_textview);
-        selectedTruckModel = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_model_textview);
-        selectedTruckFeet = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_feet_textview);
-        selectedTruckCapacity = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_capacity_textview);
-        selectedTruckBodyType = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_body_type_textview);
-        notesSp = (EditText) previewDialogBidNow.findViewById(R.id.dialog_bid_now_notes_editText);
-        declaration = (CheckBox) previewDialogBidNow.findViewById(R.id.dialog_bid_now_declaration);
-        acceptAndBid = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_accept_and_bid_btn);
-        cancel = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_cancel_btn);
-        negotiable_yes = previewDialogBidNow.findViewById(R.id.dialog_bid_now_radio_btn_yes);
-        negotiable_no = previewDialogBidNow.findViewById(R.id.dialog_bid_now_radio_btn_no);
-
-        acceptAndBid.setEnabled(false);
-        cancel.setEnabled(true);
-        cancel.setBackgroundResource((R.drawable.button_active));
-
-        negotiable_no.setChecked(false);
-        negotiable_yes.setChecked(false);
-        isNegotiableSelected = false;
-
-
-        if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
-            acceptAndBid.setEnabled(true);
-            acceptAndBid.setBackgroundResource((R.drawable.button_active));
-        } else {
-            acceptAndBid.setEnabled(false);
-            acceptAndBid.setBackgroundResource((R.drawable.button_de_active));
-        }
-
-        declaration.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
-                    acceptAndBid.setEnabled(true);
-                    acceptAndBid.setBackgroundResource((R.drawable.button_active));
-                } else {
-                    acceptAndBid.setEnabled(false);
-                    acceptAndBid.setBackgroundResource((R.drawable.button_de_active));
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.dismiss();
                 }
+            });
+
+            alertPositiveButton.setOnClickListener(view -> {
+                alert.dismiss();
+                JumpTo.goToRegistrationActivity(ServiceProviderDashboardActivity.this, phone, true);
+            });
+            //------------------------------------------------------------------------------------------
+        } else {
+            loadId = obj.getIdpost_load();
+            bidStatus = obj.getBid_status();
+            String pick_up_date = obj.getPick_up_date();
+            String pick_up_time = obj.getPick_up_time();
+            String required_budget = obj.getBudget();
+            String distance = obj.getKm_approx();
+            String required_model = obj.getVehicle_model();
+            String required_feet = obj.getFeet();
+            String required_capacity = obj.getCapacity();
+            String required_truck_body = obj.getBody_type();
+            String pick_up_location = obj.getPick_add() + " " + obj.getPick_city() + " " + obj.getPick_state() + " " + obj.getPick_pin_code();
+            String drop_location = obj.getDrop_add() + " " + obj.getDrop_city() + " " + obj.getDrop_state() + " " + obj.getDrop_pin_code();
+            String received_notes_description = obj.getNotes_meterial_des();
+
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(previewDialogBidNow.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+            previewDialogBidNow.show();
+            previewDialogBidNow.setCancelable(false);
+            previewDialogBidNow.getWindow().setAttributes(lp);
+
+            //-------------------------------------------Display Load Information---------------------------------------------
+            TextView pickUpDate = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_pick_up_date_textview);
+            TextView pickUpTime = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_pick_up_time_textview);
+            customerFirstBudget = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_budget_textview);
+            TextView approxDistance = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_distance_textview);
+            TextView reqModel = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_req_model_textview);
+            TextView reqFeet = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_req_feet_textview);
+            TextView reqCapacity = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_req_capacity_textview);
+            TextView reqBodyType = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_req_bodyType_textview);
+            TextView pickUpLocation = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_pick_up_location_textview);
+            TextView dropLocation = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_drop_location_textview);
+            TextView receivedNotes = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_received_notes_textview);
+            TextView loadIdHeading = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_loadId_heading);
+
+            pickUpDate.setText(pick_up_date);
+            pickUpTime.setText(pick_up_time);
+            customerFirstBudget.setText(required_budget);
+            approxDistance.setText(distance);
+            reqModel.setText(required_model);
+            reqFeet.setText(required_feet);
+            reqCapacity.setText(required_capacity);
+            reqBodyType.setText(required_truck_body);
+            pickUpLocation.setText(pick_up_location);
+            dropLocation.setText(drop_location);
+            receivedNotes.setText(received_notes_description);
+            loadIdHeading.setText("Load ID: " + obj.getPick_city() + "-" + obj.getDrop_city() + "-000");
+            //----------------------------------------------------------------------------------------------------------------
+
+            //-------------------------------------------------Accept Load and Bid now-----------------------------------------
+            spQuote = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_sp_quote_textview);
+            selectTruck = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_select_truck_textview);
+            selectDriver = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_select_driver_textview);
+            addTruck = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_add_truck_textview);
+            addDriver = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_add_driver_textview);
+            selectedTruckModel = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_model_textview);
+            selectedTruckFeet = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_feet_textview);
+            selectedTruckCapacity = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_capacity_textview);
+            selectedTruckBodyType = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_body_type_textview);
+            notesSp = (EditText) previewDialogBidNow.findViewById(R.id.dialog_bid_now_notes_editText);
+            declaration = (CheckBox) previewDialogBidNow.findViewById(R.id.dialog_bid_now_declaration);
+            acceptAndBid = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_accept_and_bid_btn);
+            cancel = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_cancel_btn);
+            negotiable_yes = previewDialogBidNow.findViewById(R.id.dialog_bid_now_radio_btn_yes);
+            negotiable_no = previewDialogBidNow.findViewById(R.id.dialog_bid_now_radio_btn_no);
+
+            acceptAndBid.setEnabled(false);
+            cancel.setEnabled(true);
+            cancel.setBackgroundResource((R.drawable.button_active));
+
+            negotiable_no.setChecked(false);
+            negotiable_yes.setChecked(false);
+            isNegotiableSelected = false;
+
+
+            if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
+                acceptAndBid.setEnabled(true);
+                acceptAndBid.setBackgroundResource((R.drawable.button_active));
+            } else {
+                acceptAndBid.setEnabled(false);
+                acceptAndBid.setBackgroundResource((R.drawable.button_de_active));
             }
-        });
 
-        cancel.setOnClickListener(view -> JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected));
+            declaration.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
+                        acceptAndBid.setEnabled(true);
+                        acceptAndBid.setBackgroundResource((R.drawable.button_active));
+                    } else {
+                        acceptAndBid.setEnabled(false);
+                        acceptAndBid.setBackgroundResource((R.drawable.button_de_active));
+                    }
+                }
+            });
 
-        acceptAndBid.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
+            cancel.setOnClickListener(view -> JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected));
 
-                    if (spQuote.getText().toString().equals(customerFirstBudget.getText().toString())) {
-                        saveBid(createBidRequest("Accepted", spQuote.getText().toString()));
-                    } else if (!spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) && !negotiable) {
-                        saveBid(createBidRequest("submittedNonNego", spQuote.getText().toString()));
-                    } else if (!spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) && negotiable) {
-                        saveBid(createBidRequest("submittedNego", spQuote.getText().toString()));
+            acceptAndBid.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
+
+                        if (spQuote.getText().toString().equals(customerFirstBudget.getText().toString())) {
+                            saveBid(createBidRequest("Accepted", spQuote.getText().toString()));
+                        } else if (!spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) && !negotiable) {
+                            saveBid(createBidRequest("submittedNonNego", spQuote.getText().toString()));
+                        } else if (!spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) && negotiable) {
+                            saveBid(createBidRequest("submittedNego", spQuote.getText().toString()));
+                        }
+
+                        Log.i("loadId bidded", obj.getIdpost_load());
+                        //----------------------- Alert Dialog -------------------------------------------------
+                        Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
+                        alert.setContentView(R.layout.dialog_alert);
+                        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                        lp.copyFrom(alert.getWindow().getAttributes());
+                        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                        lp.gravity = Gravity.CENTER;
+
+                        alert.show();
+                        alert.getWindow().setAttributes(lp);
+                        alert.setCancelable(false);
+
+                        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                        alertTitle.setText("Post Bid");
+                        alertMessage.setText("Bid Posted Successfully");
+                        alertPositiveButton.setVisibility(View.GONE);
+                        alertNegativeButton.setText("OK");
+                        alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                        alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                alert.dismiss();
+                                JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
+                                previewDialogBidNow.dismiss();
+                            }
+                        });
+                        //------------------------------------------------------------------------------------------
+                    }
+                }
+            });
+
+            negotiable_yes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    isNegotiableSelected = true;
+                    negotiable = true;
+
+                    if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
+                        acceptAndBid.setEnabled(true);
+                        acceptAndBid.setBackgroundResource((R.drawable.button_active));
+                    } else {
+                        acceptAndBid.setEnabled(false);
+                        acceptAndBid.setBackgroundResource((R.drawable.button_de_active));
                     }
 
-                    Log.i("loadId bidded", obj.getIdpost_load());
-                    //----------------------- Alert Dialog -------------------------------------------------
-                    Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
-                    alert.setContentView(R.layout.dialog_alert);
-                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                    lp.copyFrom(alert.getWindow().getAttributes());
-                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-                    lp.gravity = Gravity.CENTER;
-
-                    alert.show();
-                    alert.getWindow().setAttributes(lp);
-                    alert.setCancelable(false);
-
-                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-                    alertTitle.setText("Post Bid");
-                    alertMessage.setText("Bid Posted Successfully");
-                    alertPositiveButton.setVisibility(View.GONE);
-                    alertNegativeButton.setText("OK");
-                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
-
-                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            alert.dismiss();
-                            JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
-                            previewDialogBidNow.dismiss();
-                        }
-                    });
-                    //------------------------------------------------------------------------------------------
+                    negotiable_yes.setChecked(true);
+                    negotiable_no.setChecked(false);
                 }
-            }
-        });
+            });
 
-        negotiable_yes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                isNegotiableSelected = true;
-                negotiable = true;
+            negotiable_no.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    isNegotiableSelected = true;
+                    negotiable = false;
 
-                if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
-                    acceptAndBid.setEnabled(true);
-                    acceptAndBid.setBackgroundResource((R.drawable.button_active));
-                } else {
-                    acceptAndBid.setEnabled(false);
-                    acceptAndBid.setBackgroundResource((R.drawable.button_de_active));
+                    if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
+                        acceptAndBid.setEnabled(true);
+                        acceptAndBid.setBackgroundResource((R.drawable.button_active));
+                    } else {
+                        acceptAndBid.setEnabled(false);
+                        acceptAndBid.setBackgroundResource((R.drawable.button_de_active));
+                    }
+
+                    negotiable_yes.setChecked(false);
+                    negotiable_no.setChecked(true);
                 }
+            });
 
-                negotiable_yes.setChecked(true);
-                negotiable_no.setChecked(false);
-            }
-        });
+            spQuote.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    budgetSet(spQuote.getText().toString());
 
-        negotiable_no.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                isNegotiableSelected = true;
-                negotiable = false;
-
-                if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
-                    acceptAndBid.setEnabled(true);
-                    acceptAndBid.setBackgroundResource((R.drawable.button_active));
-                } else {
-                    acceptAndBid.setEnabled(false);
-                    acceptAndBid.setBackgroundResource((R.drawable.button_de_active));
                 }
+            });
 
-                negotiable_yes.setChecked(false);
-                negotiable_no.setChecked(true);
-            }
-        });
-
-        spQuote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                budgetSet(spQuote.getText().toString());
-
-            }
-        });
-
-        selectTruck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                arrayTruckId.clear();
-                getTrucksByUserId();
-                arrayTruckList.clear();
-            }
-        });
-
-        selectDriver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isTruckSelectedToBid) {
-                    arrayDriverId.clear();
-                    getDriversByUserId();
-                    arrayDriverName.clear();
+            selectTruck.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    arrayTruckId.clear();
+                    getTrucksByUserId();
+                    arrayTruckList.clear();
                 }
-            }
-        });
+            });
 
-        addTruck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addTruckDialog.show();
-                addTruckDialog.getWindow().setAttributes(lpForTruck);
-                addTruckDialog.setCancelable(true);
-            }
-        });
+            selectDriver.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (isTruckSelectedToBid) {
+                        arrayDriverId.clear();
+                        getDriversByUserId();
+                        arrayDriverName.clear();
+                    }
+                }
+            });
 
-        addDriver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addDriverDialog.show();
-                addDriverDialog.getWindow().setAttributes(lpForTruck);
-                addDriverDialog.setCancelable(true);
-            }
-        });
+            addTruck.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    addTruckDialog.show();
+                    addTruckDialog.getWindow().setAttributes(lpForTruck);
+                    addTruckDialog.setCancelable(true);
+                }
+            });
 
-
+            addDriver.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    addDriverDialog.show();
+                    addDriverDialog.getWindow().setAttributes(lpForTruck);
+                    addDriverDialog.setCancelable(true);
+                }
+            });
+        }
     }
 
     private void getDriversByUserId() {
@@ -1371,7 +1492,8 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         mQueue.add(request);
     }
 
-    public void getBidSubmittedList(String loadIdReceived, String bidId, ArrayList<LoadNotificationModel> loadListToCompare) {
+    public void getBidSubmittedList(String loadIdReceived, String
+            bidId, ArrayList<LoadNotificationModel> loadListToCompare) {
         //---------------------------- Get Bank Details ------------------------------------------
         String url1 = getString(R.string.baseURL) + "/loadpost/getLoadDtByPostId/" + loadIdReceived;
         Log.i("URL: ", url1);
@@ -2761,20 +2883,24 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if (!isPersonalDetailsDone.equals("1")) {
-            InAppNotification.SendNotificationJumpToPersonalDetailsActivity(ServiceProviderDashboardActivity.this, "Complete Your Profile", "Upload PAN and Aadhar in the Personal Details Section", userId, phone, false);
-        }
+        if (userId == null) {
 
-        if (!isBankDetailsDone.equals("1")) {
-            InAppNotification.SendNotificationJumpToBankDetailsActivity(ServiceProviderDashboardActivity.this, "Complete Your Profile", "Upload Bank details and complete your Profile", userId, phone, false, null);
-        }
+        } else {
+            if (!isPersonalDetailsDone.equals("1")) {
+                InAppNotification.SendNotificationJumpToPersonalDetailsActivity(ServiceProviderDashboardActivity.this, "Complete Your Profile", "Upload PAN and Aadhar in the Personal Details Section", userId, phone, false);
+            }
 
-        if (!isTruckDetailsDone.equals("1")) {
-            InAppNotification.SendNotificationJumpToVehicleDetailsActivity(ServiceProviderDashboardActivity.this, "Complete Your Profile", "Truck Details missing!\nAdd a Truck to your Profile.", userId, phone, false, false, false, null, null);
-        }
+            if (!isBankDetailsDone.equals("1")) {
+                InAppNotification.SendNotificationJumpToBankDetailsActivity(ServiceProviderDashboardActivity.this, "Complete Your Profile", "Upload Bank details and complete your Profile", userId, phone, false, null);
+            }
 
-        if (!isDriverDetailsDone.equals("1")) {
-            InAppNotification.SendNotificationJumpToDriverDetailsActivity(ServiceProviderDashboardActivity.this, "Complete Your Profile", "Driver Details missing!\nAdd a Driver to your Profile.", userId, phone, false, false, null, null);
+            if (!isTruckDetailsDone.equals("1")) {
+                InAppNotification.SendNotificationJumpToVehicleDetailsActivity(ServiceProviderDashboardActivity.this, "Complete Your Profile", "Truck Details missing!\nAdd a Truck to your Profile.", userId, phone, false, false, false, null, null);
+            }
+
+            if (!isDriverDetailsDone.equals("1")) {
+                InAppNotification.SendNotificationJumpToDriverDetailsActivity(ServiceProviderDashboardActivity.this, "Complete Your Profile", "Driver Details missing!\nAdd a Driver to your Profile.", userId, phone, false, false, null, null);
+            }
         }
     }
 
@@ -3260,82 +3386,82 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         String driverNameText = driverName.getText().toString();
 
 //        if (!driverNameText.isEmpty() && !driverMobileText.isEmpty() && isDLUploaded && isSelfieUploded) {
-            if (driverMobileText.length() != 10) {
-                //----------------------- Alert Dialog -------------------------------------------------
-                Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
-                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                lp.copyFrom(alert.getWindow().getAttributes());
-                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.gravity = Gravity.CENTER;
+        if (driverMobileText.length() != 10) {
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
 
-                alert.show();
-                alert.getWindow().setAttributes(lp);
-                alert.setCancelable(true);
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(true);
 
-                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Invalid Mobile Number");
-                alertMessage.setText("Please enter a 10 digit valid mobile number.");
-                alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText("OK");
-                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+            alertTitle.setText("Invalid Mobile Number");
+            alertMessage.setText("Please enter a 10 digit valid mobile number.");
+            alertPositiveButton.setVisibility(View.GONE);
+            alertNegativeButton.setText("OK");
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
 
-                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        alert.dismiss();
-                    }
-                });
-                //------------------------------------------------------------------------------------------
-            } else {
-                //update Driver as a user (IsDriverAdded)
-                UpdateUserDetails.updateUserIsDriverAdded(userId, "1");
-                saveDriver(createDriver());
-                saveUser(createUser());
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.dismiss();
+                }
+            });
+            //------------------------------------------------------------------------------------------
+        } else {
+            //update Driver as a user (IsDriverAdded)
+            UpdateUserDetails.updateUserIsDriverAdded(userId, "1");
+            saveDriver(createDriver());
+            saveUser(createUser());
 
-                //----------------------- Alert Dialog -------------------------------------------------
-                Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
-                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                lp.copyFrom(alert.getWindow().getAttributes());
-                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.gravity = Gravity.CENTER;
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
 
-                alert.show();
-                alert.getWindow().setAttributes(lp);
-                alert.setCancelable(false);
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(false);
 
-                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Driver Details");
-                alertMessage.setText("Driver Details added successfully");
+            alertTitle.setText("Driver Details");
+            alertMessage.setText("Driver Details added successfully");
 
-                alertPositiveButton.setVisibility(View.GONE);
+            alertPositiveButton.setVisibility(View.GONE);
 
-                alertNegativeButton.setText("OK");
-                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
-                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        alert.dismiss();
-                    }
-                });
-                //------------------------------------------------------------------------------------------
+            alertNegativeButton.setText("OK");
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.dismiss();
+                }
+            });
+            //------------------------------------------------------------------------------------------
 
-            }
+        }
 //        }
     }
 
@@ -3385,7 +3511,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         addDriverRequest.setDriver_name(driverName.getText().toString());
         addDriverRequest.setDriver_number("91" + driverNumber.getText().toString());
         addDriverRequest.setDriver_emailId(driverEmail.getText().toString());
-        if (truckIdPass!=null) {
+        if (truckIdPass != null) {
             addDriverRequest.setTruck_id(truckIdPass);
         }
         return addDriverRequest;

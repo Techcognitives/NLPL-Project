@@ -73,6 +73,7 @@
             android:text="Bids Submitted"
             android:textAlignment="center"
             android:textAllCaps="false"
+            android:visibility="gone"
             android:textColor="@color/background"
             android:textSize="16sp"
             android:textStyle="bold"
