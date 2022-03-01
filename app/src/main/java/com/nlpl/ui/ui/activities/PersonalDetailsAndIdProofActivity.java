@@ -133,7 +133,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             userId = bundle.getString("userId");
-            Log.i("Mobile No", userId);
             mobileString = bundle.getString("mobile");
         }
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);

@@ -23,8 +23,13 @@
         android:theme="@style/Theme.NLPL"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.ui.activities.CustomerSettingsAndPreferences"
+            android:exported="true"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
+        <activity
             android:name=".ui.ui.activities.FindTrucksActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
