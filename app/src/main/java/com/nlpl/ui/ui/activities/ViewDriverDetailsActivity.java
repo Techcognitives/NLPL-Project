@@ -259,7 +259,6 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
                     } else {
 
                     }
-
 //                    if (driverList.size() > 5) {
 //                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 //                        params.height = 235; //height recycleviewer
