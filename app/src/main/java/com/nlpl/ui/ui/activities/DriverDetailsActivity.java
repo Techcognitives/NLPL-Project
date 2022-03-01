@@ -266,18 +266,16 @@ public class DriverDetailsActivity extends AppCompatActivity {
         textDS = findViewById(R.id.driver_selfie_text);
         editDS = findViewById(R.id.driver_details_edit_selfie_text);
         selfCheckBox = (CheckBox) findViewById(R.id.driver_details_self_checkbox);
+        previewDrivingLicense = (ImageView) previewDialogDL.findViewById(R.id.dialog_preview_image_view);
+        previewSelfie = (ImageView) previewDialogSelfie.findViewById(R.id.dialog_preview_image_view);
 
         previewDialogDL = new Dialog(DriverDetailsActivity.this);
         previewDialogDL.setContentView(R.layout.dialog_preview_images);
         previewDialogDL.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        previewDrivingLicense = (ImageView) previewDialogDL.findViewById(R.id.dialog_preview_image_view);
-
         previewDialogSelfie = new Dialog(DriverDetailsActivity.this);
         previewDialogSelfie.setContentView(R.layout.dialog_preview_images);
         previewDialogSelfie.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        previewSelfie = (ImageView) previewDialogSelfie.findViewById(R.id.dialog_preview_image_view);
 
         String mobileNoWatcher = driverMobile.getText().toString().trim();
         String nameWatcher = driverName.getText().toString().trim();
@@ -320,50 +318,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         uploadSelfie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    requestPermissionsForCamera();
-                    requestPermissionsForGalleryWRITE();
-                    requestPermissionsForGalleryREAD();
-
-                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
-                }catch (Exception e){
-                    //----------------------- Alert Dialog -------------------------------------------------
-//                    Dialog alert = new Dialog(DriverDetailsActivity.this);
-//                    alert.setContentView(R.layout.dialog_alert);
-//                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-//                    lp.copyFrom(alert.getWindow().getAttributes());
-//                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-//                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-//                    lp.gravity = Gravity.CENTER;
-//
-//                    alert.show();
-//                    alert.getWindow().setAttributes(lp);
-//                    alert.setCancelable(true);
-//
-//                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-//                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-//                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-//                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-//
-//                    alertTitle.setText("Please Upload From Gallery");
-//                    alertMessage.setText("Choose from Gallery");
-//                    alertPositiveButton.setVisibility(View.GONE);
-//
-//                    alertNegativeButton.setText("OK");
-//                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-//                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
-//
-//                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            alert.dismiss();
-//
-//                        }
-//                    });
-                    //------------------------------------------------------------------------------------------
-                }
+                DialogChooseForDriverSelfie();
             }
         });
 
@@ -371,13 +326,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 isSelfieEdited = true;
-                requestPermissionsForCamera();
-                requestPermissionsForGalleryWRITE();
-                requestPermissionsForGalleryREAD();
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
+                DialogChooseForDriverSelfie();
             }
         });
+
 
         uploadDL.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -600,6 +552,37 @@ public class DriverDetailsActivity extends AppCompatActivity {
             pathForSelfie = path;
             return path;
 
+        } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
+
+            isSelfieUploded = true;
+
+            String mobileNoWatcher = driverMobile.getText().toString();
+            String nameWatcher = driverName.getText().toString();
+
+            if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && isDLUploaded && isSelfieUploded) {
+                okDriverDetails.setEnabled(true);
+                okDriverDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
+            textDS.setText("Selfie Uploaded");
+            textDS.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadSelfie.setVisibility(View.INVISIBLE);
+            editDS.setVisibility(View.VISIBLE);
+
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            driverSelfieImg.setImageURI(selectedImage);
+            previewSelfie.setImageURI(selectedImage);
+            pathForSelfie = picturePath;
+            return picturePath;
+
+
         }
         return "";
     }
@@ -793,6 +776,69 @@ public class DriverDetailsActivity extends AppCompatActivity {
             previewSelfie.setImageBitmap(BitmapFactory.decodeFile(path));
             pathForSelfie = path;
             return path;
+
+        } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
+//----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(DriverDetailsActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(true);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText("Driver Details");
+            alertMessage.setText("Driver Selfie uploaded successfully");
+            alertPositiveButton.setVisibility(View.GONE);
+            alertNegativeButton.setText("OK");
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.dismiss();
+                }
+            });
+            //------------------------------------------------------------------------------------------
+
+            isSelfieUploded = true;
+
+            String mobileNoWatcher = driverMobile.getText().toString();
+            String nameWatcher = driverName.getText().toString();
+
+            if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && isDLUploaded && isSelfieUploded) {
+                okDriverDetails.setEnabled(true);
+                okDriverDetails.setBackgroundResource(R.drawable.button_active);
+            }
+
+            textDS.setText("Selfie Uploaded");
+            textDS.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
+            uploadSelfie.setVisibility(View.INVISIBLE);
+            editDS.setVisibility(View.VISIBLE);
+
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            driverSelfieImg.setImageURI(selectedImage);
+            previewSelfie.setImageURI(selectedImage);
+            pathForSelfie = picturePath;
+            return picturePath;
 
         }
         return "";
@@ -1523,6 +1569,52 @@ public class DriverDetailsActivity extends AppCompatActivity {
         JumpTo.goToServiceProviderDashboard(DriverDetailsActivity.this, mobile, true);
     }
 
+    private void DialogChooseForDriverSelfie() {
+        try {
+            requestPermissionsForCamera();
+            requestPermissionsForGalleryWRITE();
+            requestPermissionsForGalleryREAD();
+
+            Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
+        } catch (Exception e) {
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(DriverDetailsActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(true);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText("Please Upload From Gallery");
+            alertMessage.setText("Choose from Gallery");
+            alertPositiveButton.setVisibility(View.GONE);
+
+            alertNegativeButton.setText("OK");
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY1);
+                    alert.dismiss();
+                }
+            });
+            //------------------------------------------------------------------------------------------
+        }
+    }
 
     private void DialogChoose() {
         requestPermissionsForGalleryWRITE();

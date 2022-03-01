@@ -141,10 +141,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         uploadRC = (Button) findViewById(R.id.vehicle_details_rc_upload);
         textRC = (TextView) findViewById(R.id.vehicle_details_rc_text);
         editRC = (TextView) findViewById(R.id.vehicle_details_edit_rc);
-
-        uploadInsurance = (Button) findViewById(R.id.vehicle_details_insurance_upload_button);
         textInsurance = (TextView) findViewById(R.id.vehicle_details_insurance_text);
         editInsurance = (TextView) findViewById(R.id.vehicle_details_edit_insurance);
+        uploadInsurance = (Button) findViewById(R.id.vehicle_details_insurance_upload_button);
         imgRC = findViewById(R.id.vehicle_details_rc_image);
         imgI = findViewById(R.id.vehicle_details_insurance_image);
 
@@ -152,14 +151,12 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         previewDialogRcBook.setContentView(R.layout.dialog_preview_images);
         previewDialogRcBook.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        previewRcBook = (ImageView) previewDialogRcBook.findViewById(R.id.dialog_preview_image_view);
-
         previewDialogInsurance = new Dialog(VehicleDetailsActivity.this);
         previewDialogInsurance.setContentView(R.layout.dialog_preview_images);
         previewDialogInsurance.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         previewInsurance = (ImageView) previewDialogInsurance.findViewById(R.id.dialog_preview_image_view);
-
+        previewRcBook = (ImageView) previewDialogRcBook.findViewById(R.id.dialog_preview_image_view);
         previewRcBookImageView = (ImageView) findViewById(R.id.vehicle_details_preview_rc_book_image_view);
         previewInsuranceImageView = (ImageView) findViewById(R.id.vehicle_details_preview_insurance_image_view);
 
