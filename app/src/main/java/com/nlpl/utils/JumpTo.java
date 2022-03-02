@@ -59,7 +59,6 @@ public class JumpTo {
         if (isFinish){
             activity.finish();
         }
-
         activity.overridePendingTransition(0, 0);
     }
 
