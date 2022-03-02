@@ -533,4 +533,8 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         getCurrentLocation.setAddressAndPin(RegistrationActivity.this, data, address, pinCode);
     }
+
+    public void onClickExploreNow(View view) {
+        JumpTo.goToServiceProviderDashboard(RegistrationActivity.this, mobile, true);
+    }
 }
