@@ -257,6 +257,14 @@ public class DriverDetailsActivity extends AppCompatActivity {
             }
         });
 
+        previewDialogDL = new Dialog(DriverDetailsActivity.this);
+        previewDialogDL.setContentView(R.layout.dialog_preview_images);
+        previewDialogDL.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        previewDialogSelfie = new Dialog(DriverDetailsActivity.this);
+        previewDialogSelfie.setContentView(R.layout.dialog_preview_images);
+        previewDialogSelfie.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         uploadDL = findViewById(R.id.driver_details_upload_driver_license);
         uploadSelfie = findViewById(R.id.upload_driver_selfie);
         editDL = findViewById(R.id.driver_details_edit_driver_license);
@@ -269,13 +277,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
         previewDrivingLicense = (ImageView) previewDialogDL.findViewById(R.id.dialog_preview_image_view);
         previewSelfie = (ImageView) previewDialogSelfie.findViewById(R.id.dialog_preview_image_view);
 
-        previewDialogDL = new Dialog(DriverDetailsActivity.this);
-        previewDialogDL.setContentView(R.layout.dialog_preview_images);
-        previewDialogDL.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        previewDialogSelfie = new Dialog(DriverDetailsActivity.this);
-        previewDialogSelfie.setContentView(R.layout.dialog_preview_images);
-        previewDialogSelfie.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         String mobileNoWatcher = driverMobile.getText().toString().trim();
         String nameWatcher = driverName.getText().toString().trim();
@@ -1016,12 +1017,14 @@ public class DriverDetailsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<AddDriverResponse> call, Response<AddDriverResponse> response) {
                 AddDriverResponse driverResponse = response.body();
-                driverIdPass = driverResponse.getData().getDriver_id();
-                UpdateTruckDetails.updateTruckDriverId(truckIdPass, driverIdPass);
-
-                uploadDriverLicense(driverIdPass, pathForDL);
-                uploadDriverSelfie(driverIdPass, pathForSelfie);
-
+                try {
+                    driverIdPass = driverResponse.getData().getDriver_id();
+                    UpdateTruckDetails.updateTruckDriverId(truckIdPass, driverIdPass);
+                    uploadDriverLicense(driverIdPass, pathForDL);
+                    uploadDriverSelfie(driverIdPass, pathForSelfie);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
 
             @Override

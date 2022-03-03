@@ -191,6 +191,7 @@ public class OtpCodeActivity extends AppCompatActivity {
             public void onClick(View view) {
 //                initiateOtp();
                 setCountdown();
+                reSendOtp.setVisibility(View.INVISIBLE);
             }
         });
     }

@@ -97,7 +97,7 @@ public class FindLoadsActivity extends AppCompatActivity {
 
     String loadId, bidStatus, vehicle_no, truckId, selectedDriverId, updateAssignedTruckId, updateAssignedDriverId, selectedDriverName;
     Dialog previewDialogBidNow, selectTruckDialog, setBudget;
-    TextView cancel, customerFirstBudget, acceptAndBid, spQuote, addDriver, selectDriver, addTruck, selectTruck, selectedTruckModel, selectedTruckFeet, selectedTruckCapacity, selectedTruckBodyType;
+    TextView cancel, customerFirstBudget, acceptAndBid, spQuote, selectDriver, selectTruck, selectedTruckModel, selectedTruckFeet, selectedTruckCapacity, selectedTruckBodyType;
     EditText notesSp;
     CheckBox declaration;
     RadioButton negotiable_yes, negotiable_no;
@@ -770,8 +770,6 @@ public class FindLoadsActivity extends AppCompatActivity {
         spQuote = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_sp_quote_textview);
         selectTruck = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_select_truck_textview);
         selectDriver = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_select_driver_textview);
-        addTruck = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_add_truck_textview);
-        addDriver = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_add_driver_textview);
         selectedTruckModel = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_model_textview);
         selectedTruckFeet = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_feet_textview);
         selectedTruckCapacity = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_capacity_textview);
@@ -938,21 +936,6 @@ public class FindLoadsActivity extends AppCompatActivity {
                 }
             }
         });
-
-        addTruck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                JumpTo.goToVehicleDetailsActivity(FindLoadsActivity.this, userId, phone, false, true, false, false, null, null);
-            }
-        });
-
-        addDriver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                JumpTo.goToDriverDetailsActivity(FindLoadsActivity.this, userId, phone, false, true, false, null, null);
-            }
-        });
-
     }
 
     public BidLoadRequest createBidRequest(String status, String spFinal) {

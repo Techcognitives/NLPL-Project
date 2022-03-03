@@ -25,7 +25,7 @@
             android:background="@drawable/edit_text_border_grey"
             android:drawableStart="@drawable/find_small"
             android:ems="10"
-            android:hint="Search Driver by Name"
+            android:hint="Search Driver by Number"
             android:inputType="textPersonName"
             android:paddingStart="5dp"
             android:paddingTop="5dp"

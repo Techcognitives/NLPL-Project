@@ -179,7 +179,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
 
     ImageView openType, closedType, tarpaulinType;
     View actionBar;
-    TextView customerNumber, customerNumberHeading, customerName, customerNameHeading, customerFirstBudget, customerSecondBudget, cancel2, cancel, acceptAndBid, spQuote, addDriver, selectDriver, addTruck, selectTruck, selectedTruckModel, selectedTruckFeet, selectedTruckCapacity, selectedTruckBodyType, actionBarTitle;
+    TextView customerNumber, customerNumberHeading, customerName, customerNameHeading, customerFirstBudget, customerSecondBudget, cancel2, cancel, acceptAndBid, spQuote, selectDriver, selectTruck, selectedTruckModel, selectedTruckFeet, selectedTruckCapacity, selectedTruckBodyType, actionBarTitle;
     EditText notesSp, addTruckVehicleNumber;
     CheckBox declaration;
     RadioButton negotiable_yes, negotiable_no;
@@ -832,7 +832,9 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             lp.width = WindowManager.LayoutParams.MATCH_PARENT;
             lp.height = WindowManager.LayoutParams.MATCH_PARENT;
             lp.gravity = Gravity.END;
-            menuDialog.show();
+            try {
+                menuDialog.show();
+            }catch (Exception e){}
             menuDialog.setCancelable(true);
             menuDialog.getWindow().setAttributes(lp);
         }
@@ -1110,8 +1112,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             spQuote = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_sp_quote_textview);
             selectTruck = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_select_truck_textview);
             selectDriver = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_select_driver_textview);
-            addTruck = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_add_truck_textview);
-            addDriver = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_add_driver_textview);
             selectedTruckModel = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_model_textview);
             selectedTruckFeet = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_feet_textview);
             selectedTruckCapacity = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_capacity_textview);
@@ -1228,10 +1228,10 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
                     alertTitle.setText("Truck requirement doesn't Match");
-                    alertMessage.setText("Ft. and capacity of your truck doesn't match Load Poster requirements.");
+                    alertMessage.setText("Ft. & Capacity of your truck doesn't match Load Poster requirements.");
                     alertPositiveButton.setVisibility(View.VISIBLE);
                     alertPositiveButton.setText("Continue");
-                    alertNegativeButton.setText("Assign another Truck");
+                    alertNegativeButton.setText("Assign Another");
                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                     alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
 
@@ -1364,24 +1364,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         getDriversByUserId();
                         arrayDriverName.clear();
                     }
-                }
-            });
-
-            addTruck.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    addTruckDialog.show();
-                    addTruckDialog.getWindow().setAttributes(lpForTruck);
-                    addTruckDialog.setCancelable(true);
-                }
-            });
-
-            addDriver.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    addDriverDialog.show();
-                    addDriverDialog.getWindow().setAttributes(lpForTruck);
-                    addDriverDialog.setCancelable(true);
                 }
             });
         }
@@ -2062,8 +2044,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         spQuote = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_sp_quote_textview);
         selectTruck = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_select_truck_textview);
         selectDriver = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_select_driver_textview);
-        addTruck = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_add_truck_textview);
-        addDriver = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_add_driver_textview);
         selectedTruckModel = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_truck_model_textview);
         selectedTruckFeet = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_truck_feet_textview);
         selectedTruckCapacity = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_truck_capacity_textview);
@@ -2165,25 +2145,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 }
             }
         });
-
-        addTruck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addTruckDialog.show();
-                addTruckDialog.getWindow().setAttributes(lpForTruck);
-                addTruckDialog.setCancelable(true);
-            }
-        });
-
-        addDriver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addDriverDialog.show();
-                addDriverDialog.getWindow().setAttributes(lpForTruck);
-                addDriverDialog.setCancelable(true);
-            }
-        });
-
     }
     //-----------------------------------------------------------------------------------------------------
 
@@ -2283,8 +2244,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         spQuote = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_sp_quote_textview);
         selectTruck = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_select_truck_textview);
         selectDriver = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_select_driver_textview);
-        addTruck = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_add_truck_textview);
-        addDriver = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_add_driver_textview);
         selectedTruckModel = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_truck_model_textview);
         selectedTruckFeet = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_truck_feet_textview);
         selectedTruckCapacity = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_truck_capacity_textview);
@@ -2312,8 +2271,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         });
 
         notesSp.setVisibility(View.GONE);
-        addTruck.setVisibility(View.INVISIBLE);
-        addDriver.setVisibility(View.INVISIBLE);
         timeLeft00.setVisibility(View.GONE);
         partitionTextview.setText("My Bid Response");
         timeLeftTextview.setText("CONSIGNMENT");
@@ -3350,7 +3307,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 alert.dismiss();
-                addDriver.performClick();
             }
         });
 

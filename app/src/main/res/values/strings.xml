@@ -1043,7 +1043,6 @@
     <string name="selectModel">Select Model</string>
     <string name="Ft">Ft.</string>
     <string name="Capacity">Capacity</string>
-
     //----------------------------------------------------------------------------------------------
 
     //---------------------------------------Driver Details Activity--------------------------------
@@ -1096,7 +1095,7 @@
     <string name="budgetRs">Budget ₹</string>
     <string name="truckTypeAndCapacity">Truck Type &amp; Capacity</string>
     <string name="SelectVehicleModel">Vehicle Model</string>
-    <string name="bodyType">Body Type</string>
+    <string name="bodyType">Body</string>
     <string name="pickUpLocationDetails">Pick-up Location Details</string>
     <string name="dropLocationDetails">Drop Location Details</string>
     <string name="km">Km (approx)</string>
@@ -1121,7 +1120,7 @@
     <string name="selectTruck">Select Truck</string>
     <string name="selectDriver">Select Driver</string>
     <string name="yes_small">Yes</string>
-    <string name="noteAndMaterialWithColon">Notes &amp; Material Description::</string>
+    <string name="noteAndMaterialWithColon">Notes &amp; Material Description:</string>
     <string name="timeOnly">Time:</string>
     <string name="budgetWithColon">Budget:</string>
     <string name="capacityWithColon">Capacity:</string>

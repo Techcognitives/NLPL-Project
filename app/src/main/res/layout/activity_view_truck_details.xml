@@ -108,7 +108,7 @@
             android:drawableStart="@drawable/find_small"
             android:ems="10"
             android:singleLine="true"
-            android:hint="Search by No. / Model / Ft. / Capacity / Type"
+            android:hint="Search by Truck Number"
             android:inputType="textPersonName"
             android:paddingStart="5dp"
             android:paddingTop="5dp"
