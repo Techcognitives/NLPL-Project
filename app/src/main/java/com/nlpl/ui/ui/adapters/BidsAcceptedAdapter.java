@@ -246,7 +246,7 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
         String pickUpLocation = obj.getPick_add();
         holder.pickUpLocation.setText(" " + pickUpLocation);
 
-        holder.budget.setText("₹" + obj.getBudget());
+//        holder.budget.setText("₹" + obj.getBudget());
 
 
 
@@ -281,7 +281,7 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
 
                                             if (bid_status.equals("withdrawnBySp")) {
                                                 holder.timeLeft.setText("SP Withdrawn");
-//                                                holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
+                                                holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
                                                 holder.bidNowButton.setText("Re-activate Load");
                                                 holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.dark_grey));
                                                 holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
@@ -332,30 +332,30 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
         mQueue.add(request);
         //-------------------------------------------------------------------------------------------
 
-        //----------------------------------------------------------
-        String url1 = activity.getString(R.string.baseURL) + "/loadpost/getLoadDtByPostId/" + obj.getIdpost_load();
-        JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray truckLists = response.getJSONArray("data");
-                    for (int i = 0; i < truckLists.length(); i++) {
-                        JSONObject obj = truckLists.getJSONObject(i);
-//                        holder.budget.setText("₹" + obj.getString("budget"));
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request1);
-        //----------------------------------------------------------
+//        //----------------------------------------------------------
+//        String url1 = activity.getString(R.string.baseURL) + "/loadpost/getLoadDtByPostId/" + obj.getIdpost_load();
+//        JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                try {
+//                    JSONArray truckLists = response.getJSONArray("data");
+//                    for (int i = 0; i < truckLists.length(); i++) {
+//                        JSONObject obj = truckLists.getJSONObject(i);
+////                        holder.budget.setText("₹" + obj.getString("budget"));
+//                    }
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, new com.android.volley.Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                error.printStackTrace();
+//            }
+//        });
+//        mQueue.add(request1);
+//        //----------------------------------------------------------
 
     }
 
