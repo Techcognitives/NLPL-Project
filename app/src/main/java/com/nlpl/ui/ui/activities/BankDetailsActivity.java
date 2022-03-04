@@ -117,7 +117,7 @@ public class BankDetailsActivity extends AppCompatActivity {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BankDetailsActivity.this.finish();
+                JumpTo.goToViewBankDetailsActivity(BankDetailsActivity.this, userId, mobile, true);
             }
         });
 
@@ -165,6 +165,7 @@ public class BankDetailsActivity extends AppCompatActivity {
         ifscCode.setEnabled(false);
 
         if (isEdit) {
+            actionBarTitle.setText("Edit Bank Details");
             canceledCheckRadioButton.setChecked(true);
             acDetailsRadioButton.setChecked(false);
             getBankDetails();
@@ -656,10 +657,12 @@ public class BankDetailsActivity extends AppCompatActivity {
                 reAccount.setEnabled(false);
                 ifscCode.setEnabled(false);
 
-                bankName.getText().clear();
-                accountNo.getText().clear();
-                reAccount.getText().clear();
-                ifscCode.getText().clear();
+                if (!isEdit) {
+                    bankName.getText().clear();
+                    accountNo.getText().clear();
+                    reAccount.getText().clear();
+                    ifscCode.getText().clear();
+                }
 
                 String bankName2 = bankName.getText().toString().trim();
                 String accNo = accountNo.getText().toString().trim();

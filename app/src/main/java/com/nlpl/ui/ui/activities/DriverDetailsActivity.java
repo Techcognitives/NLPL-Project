@@ -168,6 +168,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
         driverMobile.setHint("Enter 10 digit Driver Number");
         driverEmailId.setHint("Enter Driver Email Id");
 
+        if (isEdit){
+            actionBarTitle.setText("Edit Driver Details");
+        }
+
         driverName.addTextChangedListener(driverNameWatcher);
         driverMobile.addTextChangedListener(driverMobileWatcher);
         pinCode.addTextChangedListener(pinCodeWatcher);

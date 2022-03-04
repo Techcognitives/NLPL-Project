@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nlpl.R;
+import com.nlpl.utils.JumpTo;
 
 public class CustomerSettingsAndPreferences extends AppCompatActivity {
 
@@ -48,7 +49,7 @@ public class CustomerSettingsAndPreferences extends AppCompatActivity {
         actionBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CustomerSettingsAndPreferences.this.finish();
+                JumpTo.goToCustomerDashboard(CustomerSettingsAndPreferences.this, phone, true);
             }
         });
         //------------------------------------------------------------------------------------------

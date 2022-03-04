@@ -195,7 +195,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         vehicleNumberEdit.setFilters(new InputFilter[]{filter});
 
         if (isEdit) {
-
+            actionBarTitle.setText("Edit Vehicle Details");
             isRcUploaded = true;
             isInsurance = true;
             truckSelected = true;
@@ -839,7 +839,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
                 alertTitle.setText("Truck Details");
                 alertMessage.setText("Vehicle Details added successfully");
-                alertPositiveButton.setText("+ Add");
+                alertPositiveButton.setText("+ Add Driver");
                 alertPositiveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

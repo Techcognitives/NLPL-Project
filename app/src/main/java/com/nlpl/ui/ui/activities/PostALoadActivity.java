@@ -167,6 +167,10 @@ public class PostALoadActivity extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
 
         Ok_PostLoad = (Button) findViewById(R.id.post_a_load_ok_button);
+        if (isEdit){
+            actionBarTitle.setText("Edit a Load");
+            Ok_PostLoad.setText("Update a Load");
+        }
         currentSepDate = new ArrayList<>();
         arrayCapacity = new ArrayList<>();
         arrayVehicleType = new ArrayList<>();
@@ -343,7 +347,7 @@ public class PostALoadActivity extends AppCompatActivity {
                         UpdatePostLoadDetails.updatePickUpTime(loadId, pick_up_time.getText().toString());
                         UpdatePostLoadDetails.updateBudget(loadId, select_budget.getText().toString());
                         UpdatePostLoadDetails.updateVehicleModel(loadId, select_model.getText().toString());
-                        UpdatePostLoadDetails.updateVehicleFeet(loadId, select_feet.getText().toString() + " Ft");
+                        UpdatePostLoadDetails.updateVehicleFeet(loadId, select_feet.getText().toString());
                         UpdatePostLoadDetails.updateVehicleCapacity(loadId, select_capacity.getText().toString());
                         UpdatePostLoadDetails.updateVehicleBodyType(loadId, select_truck_body_type.getText().toString());
                         UpdatePostLoadDetails.updatePickUpCountry(loadId, "India");
@@ -1429,7 +1433,6 @@ public class PostALoadActivity extends AppCompatActivity {
 
     public void onClickCancelAddressDetails(View view) {
         pickUpAddressDialog.dismiss();
-        pickAddressText.performClick();
         addressDialogAddress.getText().clear();
         addressDialogPinCode.getText().clear();
         addressDialogState.setText("");
