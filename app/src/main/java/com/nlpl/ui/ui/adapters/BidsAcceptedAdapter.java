@@ -291,6 +291,7 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
                                                     }
                                                 });
                                             } else {
+                                                holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
                                                 holder.bidNowButton.setText("View Consignment");
                                                 holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.green));
                                                 holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
