@@ -857,7 +857,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
 
         alert.show();
         alert.getWindow().setAttributes(lp);
-        alert.setCancelable(false);
+        alert.setCancelable(true);
 
         TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
         TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
@@ -918,7 +918,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
-                ShowAlert.loadingDialog(ServiceProviderDashboardActivity.this);
                 if (userId == null) {
                     //----------------------- Alert Dialog -------------------------------------------------
                     Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
@@ -1120,7 +1119,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             lp.height = WindowManager.LayoutParams.MATCH_PARENT;
             lp.gravity = Gravity.CENTER;
             previewDialogBidNow.show();
-            previewDialogBidNow.setCancelable(false);
+            previewDialogBidNow.setCancelable(true);
             previewDialogBidNow.getWindow().setAttributes(lp);
 
             //-------------------------------------------Display Load Information---------------------------------------------
@@ -1246,7 +1245,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 alert.dismiss();
-                                RearrangeItems();
+                                JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, false);
                                 previewDialogBidNow.dismiss();
                             }
                         });
@@ -2047,7 +2046,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp.gravity = Gravity.CENTER;
         dialogAcceptRevisedBid.show();
-        dialogAcceptRevisedBid.setCancelable(false);
+        dialogAcceptRevisedBid.setCancelable(true);
         dialogAcceptRevisedBid.getWindow().setAttributes(lp);
 
         //-------------------------------------------Display Load Information---------------------------------------------
@@ -2247,7 +2246,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp.gravity = Gravity.CENTER;
         dialogViewConsignment.show();
-        dialogViewConsignment.setCancelable(false);
+        dialogViewConsignment.setCancelable(true);
         dialogViewConsignment.getWindow().setAttributes(lp);
 
         //-------------------------------------------Display Load Information---------------------------------------------
@@ -2372,7 +2371,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         alert.dismiss();
-                        dialogViewConsignment.dismiss();
                     }
                 });
 

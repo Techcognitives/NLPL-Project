@@ -570,7 +570,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp.gravity = Gravity.CENTER;
         previewDialogAcceptANdBid.show();
-        previewDialogAcceptANdBid.setCancelable(false);
+        previewDialogAcceptANdBid.setCancelable(true);
         previewDialogAcceptANdBid.getWindow().setAttributes(lp);
 
         //-------------------------------------------Display Load Information---------------------------------------------
@@ -731,24 +731,14 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                                 @Override
                                 public void onClick(View view) {
                                     alert.dismiss();
-                                    Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
-                                    intent.putExtra("userId", userId);
-                                    intent.putExtra("mobile", phone);
-                                    intent.putExtra("bidsReveived", bidsReceivedSelected);
-                                    startActivity(intent);
-                                    finish();
+                                    JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, true);
                                 }
                             });
                             alert.dismiss();
                             //------------------------------------------------------------------------------------------
                         } else {
                             alert.dismiss();
-                            Intent intent = new Intent(CustomerDashboardActivity.this, CustomerDashboardActivity.class);
-                            intent.putExtra("userId", userId);
-                            intent.putExtra("mobile", phone);
-                            intent.putExtra("bidsReveived", bidsReceivedSelected);
-                            startActivity(intent);
-                            finish();
+                            JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
                         }
                     }
                 });
@@ -811,7 +801,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         lp2.gravity = Gravity.CENTER;
 
         setBudget.show();
-        setBudget.setCancelable(true);
+        setBudget.setCancelable(false);
         setBudget.getWindow().setAttributes(lp2);
 
         EditText budget = setBudget.findViewById(R.id.dialog_budget_edit);
@@ -1078,7 +1068,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp.gravity = Gravity.CENTER;
         acceptFinalBid.show();
-        acceptFinalBid.setCancelable(false);
+        acceptFinalBid.setCancelable(true);
         acceptFinalBid.getWindow().setAttributes(lp);
 
         //-------------------------------------------Display Load Information---------------------------------------------
@@ -1445,7 +1435,6 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         checkout.setKeyID("rzp_test_lGpYN1TVDxAQOn");
         Log.i("Customer Payment:", customerName + amount + customerEmail + contactNumber);
 
-
 //        checkout.setImage(R.drawable.logo);
 
         int sAmount = Math.round(parseFloat(amount) * 100);
@@ -1505,7 +1494,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
             @Override
             public void onClick(View view) {
                 alert.dismiss();
-                RearrangeItems();
+                JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, false);
             }
         });
         //------------------------------------------------------------------------------------------
@@ -1514,7 +1503,6 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     @Override
     public void onPaymentError(int i, String s) {
         Log.i("Error of Razorpay", s);
-
         //----------------------- Alert Dialog -------------------------------------------------
         Dialog alert = new Dialog(CustomerDashboardActivity.this);
         alert.setContentView(R.layout.dialog_alert);
@@ -1559,7 +1547,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp.gravity = Gravity.CENTER;
         viewConsignmentCustomer.show();
-        viewConsignmentCustomer.setCancelable(false);
+        viewConsignmentCustomer.setCancelable(true);
         viewConsignmentCustomer.getWindow().setAttributes(lp);
 
         //-------------------------------------------Display Load Information---------------------------------------------
@@ -1941,7 +1929,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
         alert.show();
         alert.getWindow().setAttributes(lp);
-        alert.setCancelable(false);
+        alert.setCancelable(true);
 
         ImageView profile = (ImageView) alert.findViewById(R.id.dialog_rating_profile_picture);
         TextView name = (TextView) alert.findViewById(R.id.dialog_rating_user_name);
@@ -2150,7 +2138,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
         alert.show();
         alert.getWindow().setAttributes(lp);
-        alert.setCancelable(false);
+        alert.setCancelable(true);
 
         TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
         TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);

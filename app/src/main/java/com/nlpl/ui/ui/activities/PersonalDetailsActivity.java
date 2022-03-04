@@ -663,7 +663,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             imgProfile.setImageBitmap(BitmapFactory.decodeFile(path));
             saveImage(imageRequest());
             uploadImage(path);
-
         }
     }
     //-------------------------------------------------------------------------------------------------------------------
@@ -748,7 +747,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         }
     }
 
-
     //--------------------------------------create image in API -------------------------------------
     public ImageRequest imageRequest() {
         ImageRequest imageRequest = new ImageRequest();
@@ -761,9 +759,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         Call<ImageResponse> imageResponseCall = ApiClient.getImageService().saveImage(imageRequest);
         imageResponseCall.enqueue(new Callback<ImageResponse>() {
             @Override
-            public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
-
-            }
+            public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {}
 
             @Override
             public void onFailure(Call<ImageResponse> call, Throwable t) {
