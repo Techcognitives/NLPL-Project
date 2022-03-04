@@ -53,6 +53,7 @@ import com.nlpl.utils.GetLocationPickUp;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.SelectCity;
 import com.nlpl.utils.SelectState;
+import com.nlpl.utils.ShowAlert;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -84,7 +85,7 @@ public class PostALoadActivity extends AppCompatActivity {
 
     String isPickDrop = "0", pickUpAddress, pickUpPinCode, pickupState, pickUpCity, dropAddress, dropPinCode, dropState, dropCiy;
 
-    TextView pick_up_date, pick_up_time, select_budget, select_model, select_feet, select_capacity, select_truck_body_type, addressDialogState, addressDialogCity, addressDialogOkButton, addressDialogTitle;
+    TextView pick_up_date, dropAddressText, pickAddressText, pick_up_time, select_budget, select_model, select_feet, select_capacity, select_truck_body_type, addressDialogState, addressDialogCity, addressDialogOkButton, addressDialogTitle;
     EditText addressDialogAddress, addressDialogPinCode, note_to_post_load;
 
     String distByPinCode, stateByPinCode, phone, userId, selectedDistrict, selectedState, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI, customerBudget, sDate, eDate, monthS, monthE, startingDate, endingDate, todayDate;
@@ -150,6 +151,8 @@ public class PostALoadActivity extends AppCompatActivity {
         note_to_post_load = (EditText) findViewById(R.id.post_a_load_notes_edit_text);
         setApproxDistance = (TextView) findViewById(R.id.post_a_load_auto_calculated_km_edit_text);
         deleteLoad = findViewById(R.id.delete_load_in_post_a_load);
+        dropAddressText = findViewById(R.id.post_a_load_enter_drop_location);
+        pickAddressText = findViewById(R.id.post_a_load_enter_pick_location);
         //------------------------------------------------------------------------------------------
         pickUpAddressDialog = new Dialog(PostALoadActivity.this);
         pickUpAddressDialog.setContentView(R.layout.dialog_address);
@@ -331,6 +334,7 @@ public class PostALoadActivity extends AppCompatActivity {
         Ok_PostLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ShowAlert.loadingDialog(PostALoadActivity.this);
                 if (isEdit || reActivate) {
                     Ok_PostLoad.setEnabled(true);
                     Ok_PostLoad.setBackgroundResource((R.drawable.button_active));
@@ -471,8 +475,8 @@ public class PostALoadActivity extends AppCompatActivity {
         budget.setText(newPreviousBudget);
 
 //        if (!previousBudget.isEmpty()) {
-            okBudget.setEnabled(true);
-            okBudget.setBackgroundResource((R.drawable.button_active));
+        okBudget.setEnabled(true);
+        okBudget.setBackgroundResource((R.drawable.button_active));
 //        } else {
 //
 //            okBudget.setEnabled(false);
@@ -1136,9 +1140,13 @@ public class PostALoadActivity extends AppCompatActivity {
                 addressDialogState.setText("");
                 addressDialogCity.setText("");
                 addressDialogPinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+                addressDialogState.setEnabled(true);
+                addressDialogCity.setEnabled(true);
             } else {
                 getStateAndDistrictForPickUp(addressDialogPinCode.getText().toString());
                 addressDialogPinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+                addressDialogState.setEnabled(false);
+                addressDialogCity.setEnabled(false);
             }
 
             if (!addressDialogAddress.getText().toString().isEmpty() && !addressDialogPinCode.getText().toString().isEmpty() && !addressDialogCity.getText().toString().isEmpty() && !addressDialogState.getText().toString().isEmpty()) {
@@ -1256,12 +1264,13 @@ public class PostALoadActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        ShowAlert.loadingDialog(PostALoadActivity.this);
         JumpTo.goToCustomerDashboard(PostALoadActivity.this, phone, true);
     }
 
     private void getPickUpLocation() {
         GetLocationPickUp geoLocation = new GetLocationPickUp();
-        geoLocation.geLatLongPickUp(pickUpAddress, getApplicationContext(), new GeoHandlerLatitude());
+        geoLocation.geLatLongPickUp(pickUpPinCode, getApplicationContext(), new GeoHandlerLatitude());
     }
 
     public void onClickGetCurrentLocationAddress(View view) {
@@ -1292,39 +1301,77 @@ public class PostALoadActivity extends AppCompatActivity {
     }
 
     public void onClickDropLocation(View view) {
-        addressDialogTitle.setText("Drop Address");
-        isPickDrop = "2";
-        if (dropAddress != null && dropCiy != null && dropPinCode != null && dropState != null) {
-            addressDialogAddress.setText(dropAddress);
-            addressDialogPinCode.setText(dropPinCode);
-            addressDialogState.setText(dropState);
-            addressDialogCity.setText(dropCiy);
+        if (pickUpAddress == null) {
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(PostALoadActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(false);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText("Pick-up Location not selected");
+            alertMessage.setText("Please select Pick-up Location first");
+            alertPositiveButton.setVisibility(View.GONE);
+            alertNegativeButton.setText("OK");
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.dismiss();
+                    pickAddressText.performClick();
+                }
+            });
+            //------------------------------------------------------------------------------------------
         } else {
-            addressDialogAddress.getText().clear();
-            addressDialogPinCode.getText().clear();
-            addressDialogState.setText("");
-            addressDialogCity.setText("");
+            addressDialogTitle.setText("Drop Address");
+            isPickDrop = "2";
+            if (dropAddress != null && dropCiy != null && dropPinCode != null && dropState != null) {
+                addressDialogAddress.setText(dropAddress);
+                addressDialogPinCode.setText(dropPinCode);
+                addressDialogState.setText(dropState);
+                addressDialogCity.setText(dropCiy);
+            } else {
+                addressDialogAddress.getText().clear();
+                addressDialogPinCode.getText().clear();
+                addressDialogState.setText("");
+                addressDialogCity.setText("");
+            }
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(pickUpAddressDialog.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+            pickUpAddressDialog.show();
+            pickUpAddressDialog.getWindow().setAttributes(lp);
+
+            addressDialogAddress.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+            addressDialogPinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+
         }
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(pickUpAddressDialog.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.gravity = Gravity.CENTER;
-        pickUpAddressDialog.show();
-        pickUpAddressDialog.getWindow().setAttributes(lp);
     }
 
     public void onClickOkAddressDetails(View view) {
         if (isPickDrop.equals("1")) {
-
             pickUpAddress = addressDialogAddress.getText().toString();
             pickUpPinCode = addressDialogPinCode.getText().toString();
             pickupState = addressDialogState.getText().toString();
             pickUpCity = addressDialogCity.getText().toString();
-
             getPickUpLocation();
         } else if (isPickDrop.equals("2")) {
-
             dropAddress = addressDialogAddress.getText().toString();
             dropPinCode = addressDialogPinCode.getText().toString();
             dropState = addressDialogState.getText().toString();
@@ -1334,11 +1381,14 @@ public class PostALoadActivity extends AppCompatActivity {
         }
         pickUpAddressDialog.dismiss();
 
-        String latitude1Check = String.valueOf(latitude1);
-        String latitude2Check = String.valueOf(latitude2);
-        String longitude1Check = String.valueOf(longitude1);
-        String longitude2Check = String.valueOf(longitude2);
-        if (latitude1Check != null && latitude2Check != null && longitude1Check != null && longitude2Check != null) {
+        if (pickUpAddress != null) {
+            Log.i("pickup add", pickUpAddress);
+        }
+        if (dropAddress != null) {
+            Log.i("drop add", dropAddress);
+        }
+
+        if (pickUpAddress != null && dropAddress != null) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -1354,9 +1404,14 @@ public class PostALoadActivity extends AppCompatActivity {
             setApproxDistance.setText("KM auto calculated");
         }
 
-        if (!pick_up_date.getText().toString().isEmpty() && !pick_up_time.getText().toString().isEmpty() && !select_budget.getText().toString().isEmpty()
-                && !select_model.getText().toString().isEmpty() && !select_feet.getText().toString().isEmpty() && !select_capacity.getText().toString().isEmpty()
-                && !select_truck_body_type.getText().toString().isEmpty() && pickUpAddress != null && pickUpCity != null
+        if (!pick_up_date.getText().toString().isEmpty()
+                && !pick_up_time.getText().toString().isEmpty()
+                && !select_budget.getText().toString().isEmpty()
+                && !select_model.getText().toString().isEmpty()
+                && !select_feet.getText().toString().isEmpty()
+                && !select_capacity.getText().toString().isEmpty()
+                && !select_truck_body_type.getText().toString().isEmpty()
+                && pickUpAddress != null && pickUpCity != null
                 && pickUpPinCode != null && pickupState != null && dropAddress != null
                 && dropCiy != null && dropPinCode != null && dropState != null) {
             Ok_PostLoad.setEnabled(true);
@@ -1373,6 +1428,7 @@ public class PostALoadActivity extends AppCompatActivity {
     }
 
     public void deleteLoad(View view) {
+
         //----------------------- Alert Dialog -------------------------------------------------
         Dialog deleteLoad = new Dialog(PostALoadActivity.this);
         deleteLoad.setContentView(R.layout.dialog_alert);
@@ -1406,6 +1462,7 @@ public class PostALoadActivity extends AppCompatActivity {
             public void onClick(View view) {
                 UpdatePostLoadDetails.updateStatus(loadId, "delete");
                 deleteLoad.dismiss();
+                ShowAlert.loadingDialog(PostALoadActivity.this);
                 JumpTo.goToCustomerDashboard(PostALoadActivity.this, phone, true);
             }
         });
@@ -1455,7 +1512,7 @@ public class PostALoadActivity extends AppCompatActivity {
 
     private void getDropLocation() {
         GetLocationDrop geoLocation = new GetLocationDrop();
-        geoLocation.geLatLongDrop(dropAddress, getApplicationContext(), new GeoHandlerLongitude());
+        geoLocation.geLatLongDrop(dropPinCode, getApplicationContext(), new GeoHandlerLongitude());
     }
 
     private class GeoHandlerLongitude extends Handler {
@@ -1490,6 +1547,7 @@ public class PostALoadActivity extends AppCompatActivity {
             }
 
         }
+
     }
 
     private void distanceInKm(double lat1, double long1, double lat2, double long2) {
@@ -1507,7 +1565,16 @@ public class PostALoadActivity extends AppCompatActivity {
         //Distance in kilometer
         distanceApprox = distanceApprox * 1.609344;
         //set distance on Text View
-        setApproxDistance.setText(String.format(Locale.US, "%2f KMs", distanceApprox));
+
+        try {
+            setApproxDistance.setText(String.format(Locale.US, "%2f KM", distanceApprox));
+            String str = String.valueOf(distanceApprox);
+            String[] res = str.split("[.]", 0);
+            setApproxDistance.setText(res[0] + " KM");
+        } catch (Exception e) {
+
+        }
+
     }
 
     private double rad2deg(double distance) {

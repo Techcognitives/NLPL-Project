@@ -62,6 +62,7 @@ import com.nlpl.utils.GetCurrentLocation;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.SelectCity;
 import com.nlpl.utils.SelectState;
+import com.nlpl.utils.ShowAlert;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -239,8 +240,8 @@ public class CompanyDetailsActivity extends AppCompatActivity {
     };
 
     public void onClickCompanyDetailsOK(View view) {
+        ShowAlert.loadingDialog(CompanyDetailsActivity.this);
         if (isEdit) {
-
             if (companyName.getText().toString() != null) {
                 UpdateCompanyDetails.updateCompanyName(companyIdAPI, companyName.getText().toString());
             }
@@ -398,10 +399,14 @@ public class CompanyDetailsActivity extends AppCompatActivity {
                 selectStateText.setText("");
                 selectDistrictText.setText("");
                 pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+                selectStateText.setEnabled(true);
+                selectDistrictText.setEnabled(true);
             } else {
                 String enteredPinCode = pinCode.getText().toString();
                 getStateAndDistrict(enteredPinCode);
                 pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+                selectStateText.setEnabled(false);
+                selectDistrictText.setEnabled(false);
             }
         }
 

@@ -33,6 +33,7 @@ import com.nlpl.ui.ui.adapters.LoadsCompletedAdapter;
 import com.nlpl.ui.ui.adapters.LoadsExpiredAdapter;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.JumpTo;
+import com.nlpl.utils.ShowAlert;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -103,19 +104,20 @@ public class CustomerLoadsHistoryActivity extends AppCompatActivity {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ShowAlert.loadingDialog(CustomerLoadsHistoryActivity.this);
                 JumpTo.goToCustomerDashboard(CustomerLoadsHistoryActivity.this, phone, true);
             }
         });
         //------------------------------------------------------------------------------------------
 
-//        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout_load_history);
-//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                swipeRefreshLayout.setRefreshing(false);
-//                RearrangeItems();
-//            }
-//        });
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout_load_history);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(false);
+                RearrangeItems();
+            }
+        });
 
         loadsExpired = findViewById(R.id.customer_dashboard_loads_expired_button);
         loadsCompleted = findViewById(R.id.customer_dashboard_load_completed_button);
@@ -148,6 +150,7 @@ public class CustomerLoadsHistoryActivity extends AppCompatActivity {
     }
 
     private void RearrangeItems() {
+        ShowAlert.loadingDialog(CustomerLoadsHistoryActivity.this);
         JumpTo.goToCustomerLoadHistoryActivity(CustomerLoadsHistoryActivity.this, userId, phone, true);
     }
 
@@ -273,6 +276,7 @@ public class CustomerLoadsHistoryActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        ShowAlert.loadingDialog(CustomerLoadsHistoryActivity.this);
         JumpTo.goToCustomerDashboard(CustomerLoadsHistoryActivity.this, phone, true);
     }
 
@@ -322,6 +326,7 @@ public class CustomerLoadsHistoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 reActivateLoad.dismiss();
+                ShowAlert.loadingDialog(CustomerLoadsHistoryActivity.this);
                 JumpTo.goToPostALoad(CustomerLoadsHistoryActivity.this, userId, phone, true,false, obj.getIdpost_load(), false);
             }
         });

@@ -192,7 +192,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
         ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
 
-        loadingDialog.show();
+//        loadingDialog.show();
         loadingDialog.setCancelable(false);
         loadingDialog.getWindow().setAttributes(lp2);
 
@@ -374,6 +374,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     }
 
     public void RearrangeItems() {
+        ShowAlert.loadingDialog(CustomerDashboardActivity.this);
         JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
     }
 
@@ -473,15 +474,18 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     }
 
     public void onClickPostALoad(View view) {
+        ShowAlert.loadingDialog(CustomerDashboardActivity.this);
         JumpTo.goToPostALoad(CustomerDashboardActivity.this, userId, phone, false, false, null, false);
     }
 
     public void onClickBottomNavigation(View view) {
         switch (view.getId()) {
             case R.id.bottom_nav_sp_dashboard:
+                RearrangeItems();
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
+                ShowAlert.loadingDialog(CustomerDashboardActivity.this);
                 JumpTo.goToFindTrucksActivity(CustomerDashboardActivity.this, userId, phone);
                 break;
         }
@@ -650,7 +654,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         cancleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
+                RearrangeItems();
                 previewDialogAcceptANdBid.dismiss();
             }
         });
@@ -920,6 +924,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     }
 
     public void onClickEditLoadPost(BidsReceivedModel obj) {
+        ShowAlert.loadingDialog(CustomerDashboardActivity.this);
         JumpTo.goToPostALoad(CustomerDashboardActivity.this, userId, phone, false, true, obj.getIdpost_load(), false);
     }
 
@@ -1421,7 +1426,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         cancleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
+                RearrangeItems();
                 acceptFinalBid.dismiss();
             }
         });
@@ -1500,7 +1505,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
             @Override
             public void onClick(View view) {
                 alert.dismiss();
-                JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
+                RearrangeItems();
             }
         });
         //------------------------------------------------------------------------------------------
@@ -1540,7 +1545,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
             @Override
             public void onClick(View view) {
                 alert.dismiss();
-                JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
+                RearrangeItems();
             }
         });
         //------------------------------------------------------------------------------------------
@@ -1830,7 +1835,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                                         public void onClick(View view) {
                                             alert.dismiss();
                                             viewConsignmentCustomer.dismiss();
-                                            JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
+                                            RearrangeItems();
                                         }
                                     });
                                     //------------------------------------------------------------------------------------------
@@ -1877,7 +1882,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                                         public void onClick(View view) {
                                             alert.dismiss();
                                             viewConsignmentCustomer.dismiss();
-                                            JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
+                                            RearrangeItems();
                                         }
                                     });
                                     //------------------------------------------------------------------------------------------
@@ -1901,7 +1906,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                     cancleBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
+                            RearrangeItems();
                             viewConsignmentCustomer.dismiss();
                         }
                     });
@@ -2133,19 +2138,23 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
     public void onClickLogOutCustomer(View view) {
         FirebaseAuth.getInstance().signOut();
+        ShowAlert.loadingDialog(CustomerDashboardActivity.this);
         JumpTo.goToLogInActivity(CustomerDashboardActivity.this);
     }
 
     public void onClickProfileAndRegisterCustomer(View view) {
         switch (view.getId()) {
             case R.id.customer_menu_personal_details_button:
+                ShowAlert.loadingDialog(CustomerDashboardActivity.this);
                 JumpTo.goToViewPersonalDetailsActivity(CustomerDashboardActivity.this, userId, phone, false);
                 break;
 
             case R.id.customer_menu_bank_details_button:
                 if (isBankDetailsDone.equals("1")) {
+                    ShowAlert.loadingDialog(CustomerDashboardActivity.this);
                     JumpTo.goToViewBankDetailsActivity(CustomerDashboardActivity.this, userId, phone, false);
                 } else {
+                    ShowAlert.loadingDialog(CustomerDashboardActivity.this);
                     JumpTo.goToBankDetailsActivity(CustomerDashboardActivity.this, userId, phone, false, false, null);
                 }
                 break;
@@ -2545,7 +2554,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         alertNegativeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
+                RearrangeItems();
             }
         });
     }
@@ -2630,6 +2639,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
             @Override
             public void onClick(View view) {
                 reActivateLoad.dismiss();
+                ShowAlert.loadingDialog(CustomerDashboardActivity.this);
                 JumpTo.goToPostALoad(CustomerDashboardActivity.this, userId, phone, true, true, obj.getIdpost_load(), false);
             }
         });
@@ -2637,6 +2647,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     }
 
     public void CustomerLoadHistory(View view) {
+        ShowAlert.loadingDialog(CustomerDashboardActivity.this);
         JumpTo.goToCustomerLoadHistoryActivity(CustomerDashboardActivity.this, userId, phone, false);
     }
 
@@ -2674,7 +2685,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
             public void onClick(View view) {
                 alert.dismiss();
                 viewConsignmentCustomer.dismiss();
-                JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
+                RearrangeItems();
             }
         });
         //------------------------------------------------------------------------------------------
@@ -2717,7 +2728,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                     public void onClick(View view) {
                         alert.dismiss();
                         viewConsignmentCustomer.dismiss();
-                        JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
+                        RearrangeItems();
                     }
                 });
                 //------------------------------------------------------------------------------------------
@@ -2747,6 +2758,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     };
 
     public void CustomerSettingsAndPreferences(View view) {
+        ShowAlert.loadingDialog(CustomerDashboardActivity.this);
         JumpTo.getToSettingAndPreferences(CustomerDashboardActivity.this, phone, userId);
     }
 }

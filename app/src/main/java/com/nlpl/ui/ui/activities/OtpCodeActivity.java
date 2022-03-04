@@ -22,7 +22,10 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,9 +44,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.nlpl.R;
+import com.nlpl.model.ModelForRecyclerView.TruckModel;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.OTPReceiver;
+import com.nlpl.utils.ShowAlert;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -128,8 +133,9 @@ public class OtpCodeActivity extends AppCompatActivity {
         otpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                otp = otpCode.getText().toString();
+                ShowAlert.loadingDialog(OtpCodeActivity.this);
 
+                otp = otpCode.getText().toString();
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(OtpCodeActivity.this);
                 alert.setContentView(R.layout.dialog_alert);
@@ -324,7 +330,7 @@ public class OtpCodeActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             alert.dismiss();
-
+                            otpCode.getText().clear();
                         }
                     });
                     //------------------------------------------------------------------------------------------
@@ -365,10 +371,6 @@ public class OtpCodeActivity extends AppCompatActivity {
 
         }
     };
-
-    public void onClickBack(View view) {
-        OtpCodeActivity.this.finish();
-    }
 
 
     private void checkPhoneInAPI(String getMobile) {
@@ -427,7 +429,7 @@ public class OtpCodeActivity extends AppCompatActivity {
 
                         if (role.equals("Customer")) {
                             JumpTo.goToCustomerDashboard(OtpCodeActivity.this, phone, true);
-                        }else{
+                        } else {
                             JumpTo.goToServiceProviderDashboard(OtpCodeActivity.this, phone, true);
                         }
 
@@ -438,12 +440,13 @@ public class OtpCodeActivity extends AppCompatActivity {
 //
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    otpButton.performClick();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                otpButton.performClick();
             }
         });
         mQueue.add(request);
@@ -508,7 +511,7 @@ public class OtpCodeActivity extends AppCompatActivity {
 
                         if (role.equals("Customer")) {
                             JumpTo.goToCustomerDashboard(OtpCodeActivity.this, phone, true);
-                        }else{
+                        } else {
                             JumpTo.goToServiceProviderDashboard(OtpCodeActivity.this, phone, true);
                         }
 
@@ -518,18 +521,17 @@ public class OtpCodeActivity extends AppCompatActivity {
 //
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    otpButton.performClick();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                otpButton.performClick();
             }
         });
         mQueue.add(request);
-
         //------------------------------------------------------------------------------------------------
-
     }
 
 }

@@ -35,6 +35,7 @@ import com.nlpl.ui.ui.adapters.DriversAdapter;
 import com.nlpl.ui.ui.adapters.TrucksListAdapter;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.JumpTo;
+import com.nlpl.utils.ShowAlert;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -113,6 +114,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ShowAlert.loadingDialog(ViewDriverDetailsActivity.this);
                 JumpTo.goToServiceProviderDashboard(ViewDriverDetailsActivity.this, phone, true);
             }
         });
@@ -227,6 +229,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
     }
 
     public void RearrangeItems() {
+        ShowAlert.loadingDialog(ViewDriverDetailsActivity.this);
         JumpTo.goToViewDriverDetailsActivity(ViewDriverDetailsActivity.this, userId, phone, true);
     }
 
@@ -404,17 +407,19 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
     }
 
     public void onClickAddDriverDetails(View view) {
+        ShowAlert.loadingDialog(ViewDriverDetailsActivity.this);
         JumpTo.goToDriverDetailsActivity(ViewDriverDetailsActivity.this, userId, phone, false, false, false, null, null);
     }
 
     public void onClickAddDriverBankDetails(View view) {
+        ShowAlert.loadingDialog(ViewDriverDetailsActivity.this);
         JumpTo.goToBankDetailsActivity(ViewDriverDetailsActivity.this, driverUserIdGet, phone, false, true, null);
     }
 
     public void onClickCloseDialogDriverBankDetails(View view) {
         previewDialogAssignedTruck.dismiss();
         previewDialogDriverDetails.dismiss();
-        JumpTo.goToViewDriverDetailsActivity(ViewDriverDetailsActivity.this, userId, phone, true);
+        RearrangeItems();
     }
 
     public void onClickPreviewDriverBankDetails(DriverModel obj) {
@@ -431,12 +436,14 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
     }
 
     public void getDriverDetails(DriverModel obj) {
+        ShowAlert.loadingDialog(ViewDriverDetailsActivity.this);
         JumpTo.goToDriverDetailsActivity(ViewDriverDetailsActivity.this, userId, phone, true, false, false, null, obj.getDriver_id());
     }
 
     public void onClickBottomNavigation(View view) {
         switch (view.getId()) {
             case R.id.bottom_nav_sp_dashboard:
+                ShowAlert.loadingDialog(ViewDriverDetailsActivity.this);
                 JumpTo.goToServiceProviderDashboard(ViewDriverDetailsActivity.this, phone, true);
                 break;
 
@@ -449,6 +456,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        ShowAlert.loadingDialog(ViewDriverDetailsActivity.this);
         JumpTo.goToServiceProviderDashboard(ViewDriverDetailsActivity.this, phone, true);
     }
 
@@ -571,12 +579,13 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
     public void onClickCancelSelectBind(View view) {
         previewDialogSpinner.dismiss();
         previewDialogAssignedTruck.dismiss();
-        JumpTo.goToViewDriverDetailsActivity(ViewDriverDetailsActivity.this, userId, phone, true);
+        RearrangeItems();
     }
 
     public void onClickAddDriverDetailsAssigned(View view) {
         previewDialogSpinner.dismiss();
         previewDialogAssignedTruck.dismiss();
+        ShowAlert.loadingDialog(ViewDriverDetailsActivity.this);
         JumpTo.goToVehicleDetailsActivity(ViewDriverDetailsActivity.this, userId, phone, false, false, true, false, driverId, null);
     }
 
@@ -638,7 +647,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
         UpdateDriverDetails.updateDriverTruckId(driverId, obj.getTruck_id());
         previewDialogAssignedTruck.dismiss();
         previewDialogSpinner.dismiss();
-        JumpTo.goToViewDriverDetailsActivity(ViewDriverDetailsActivity.this, userId, phone, true);
+        RearrangeItems();
     }
 
     private TextWatcher searchDriverWatcher = new TextWatcher() {

@@ -55,6 +55,7 @@ import com.nlpl.utils.InAppNotification;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.SelectCity;
 import com.nlpl.utils.SelectState;
+import com.nlpl.utils.ShowAlert;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -302,6 +303,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     public void onClickSkip(View view) {
+        ShowAlert.loadingDialog(RegistrationActivity.this);
         JumpTo.goToSliderActivity(RegistrationActivity.this, mobile);
     }
 
@@ -354,6 +356,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     alert.dismiss();
+                    ShowAlert.loadingDialog(RegistrationActivity.this);
                     if (role.equals("Customer")) {
                         JumpTo.goToCustomerDashboard(RegistrationActivity.this, mobile, true);
                     } else {
@@ -419,10 +422,14 @@ public class RegistrationActivity extends AppCompatActivity {
                 selectStateText.setText("");
                 selectDistrictText.setText("");
                 pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+                selectStateText.setEnabled(true);
+                selectDistrictText.setEnabled(true);
             } else {
                 String enteredPinCode = pinCode.getText().toString().trim();
                 getStateAndDistrict(enteredPinCode);
                 pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+                selectStateText.setEnabled(false);
+                selectDistrictText.setEnabled(false);
             }
         }
 
@@ -535,6 +542,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     public void onClickExploreNow(View view) {
+        ShowAlert.loadingDialog(RegistrationActivity.this);
         JumpTo.goToServiceProviderDashboard(RegistrationActivity.this, mobile, true);
     }
 }

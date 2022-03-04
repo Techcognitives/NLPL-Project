@@ -45,6 +45,7 @@ import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.FileUtils;
 import com.nlpl.utils.InAppNotification;
 import com.nlpl.utils.JumpTo;
+import com.nlpl.utils.ShowAlert;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -121,6 +122,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ShowAlert.loadingDialog(PersonalDetailsActivity.this);
                 JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, false);
             }
         });
@@ -700,6 +702,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         alert.dismiss();
+                        ShowAlert.loadingDialog(PersonalDetailsActivity.this);
                         JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, false);
                     }
                 });
@@ -737,6 +740,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         alert.dismiss();
+                        ShowAlert.loadingDialog(PersonalDetailsActivity.this);
                         JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, true);
                     }
                 });
@@ -1006,6 +1010,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        ShowAlert.loadingDialog(PersonalDetailsActivity.this);
         JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, false);
     }
 

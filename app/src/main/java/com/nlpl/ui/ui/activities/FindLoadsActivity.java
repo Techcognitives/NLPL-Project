@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -50,6 +51,7 @@ import com.nlpl.ui.ui.adapters.StateLoadAdapter;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.EnglishNumberToWords;
 import com.nlpl.utils.JumpTo;
+import com.nlpl.utils.ShowAlert;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -103,6 +105,7 @@ public class FindLoadsActivity extends AppCompatActivity {
     RadioButton negotiable_yes, negotiable_no;
     Boolean isNegotiableSelected = false, isTruckSelectedToBid = false, negotiable = null;
     ArrayList<String> arrayTruckId, arrayTruckList, arrayDriverId, arrayDriverName;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,6 +208,15 @@ public class FindLoadsActivity extends AppCompatActivity {
         searchListRecyclerView.setLayoutManager(linearLayoutManager);
         searchListRecyclerView.setHasFixedSize(true);
 
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.find_loads_swipe);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(false);
+                RearrangeItems();
+            }
+        });
+
         bidsListAdapter = new FindLoadAdapter(FindLoadsActivity.this, loadListToCompare);
 //        bidsListRecyclerView.setAdapter(bidsListAdapter);
 
@@ -250,9 +262,15 @@ public class FindLoadsActivity extends AppCompatActivity {
         searchLoadAdapter.updateData(searchLoadList);
     }
 
+    public void RearrangeItems() {
+        ShowAlert.loadingDialog(FindLoadsActivity.this);
+        JumpTo.goToFindLoadsActivity(FindLoadsActivity.this, userId, phone);
+    }
+
     public void onClickBottomNavigation(View view) {
         switch (view.getId()) {
             case R.id.bottom_nav_sp_dashboard:
+                ShowAlert.loadingDialog(FindLoadsActivity.this);
                 JumpTo.goToServiceProviderDashboard(FindLoadsActivity.this, phone, true);
                 break;
 
@@ -330,6 +348,7 @@ public class FindLoadsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        ShowAlert.loadingDialog(FindLoadsActivity.this);
         String visibility = String.valueOf(stateConstrain.getVisibility());
         Log.i("visibility", visibility); //visible = 0
         if (visibility.equals("0")) {
@@ -814,6 +833,7 @@ public class FindLoadsActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ShowAlert.loadingDialog(FindLoadsActivity.this);
                 JumpTo.goToServiceProviderDashboard(FindLoadsActivity.this, phone, false);
             }
         });
@@ -862,6 +882,7 @@ public class FindLoadsActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             alert.dismiss();
+                            ShowAlert.loadingDialog(FindLoadsActivity.this);
                             JumpTo.goToServiceProviderDashboard(FindLoadsActivity.this, phone, false);
                             previewDialogBidNow.dismiss();
                         }
@@ -1177,6 +1198,7 @@ public class FindLoadsActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 alert.dismiss();
+                                ShowAlert.loadingDialog(FindLoadsActivity.this);
                                 JumpTo.goToVehicleDetailsActivity(FindLoadsActivity.this, userId, phone, false, true, false, false, null, null);
                             }
                         });
@@ -1327,6 +1349,7 @@ public class FindLoadsActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 alert.dismiss();
+                                ShowAlert.loadingDialog(FindLoadsActivity.this);
                                 JumpTo.goToDriverDetailsActivity(FindLoadsActivity.this, userId, phone, false, true, false, null, null);
                             }
                         });

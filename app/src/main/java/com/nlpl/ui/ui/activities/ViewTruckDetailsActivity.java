@@ -36,6 +36,7 @@ import com.nlpl.ui.ui.adapters.DriversListAdapter;
 import com.nlpl.ui.ui.adapters.TrucksAdapter;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.JumpTo;
+import com.nlpl.utils.ShowAlert;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -109,6 +110,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ShowAlert.loadingDialog(ViewTruckDetailsActivity.this);
                 JumpTo.goToServiceProviderDashboard(ViewTruckDetailsActivity.this, phone, true);
             }
         });
@@ -210,6 +212,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
     }
 
     public void RearrangeItems() {
+        ShowAlert.loadingDialog(ViewTruckDetailsActivity.this);
         JumpTo.goToViewVehicleDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, true);
     }
 
@@ -268,6 +271,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
     }
 
     public void getTruckDetails(TruckModel obj) {
+        ShowAlert.loadingDialog(ViewTruckDetailsActivity.this);
         JumpTo.goToVehicleDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, true, false, false, false,null, obj.getTruck_id());
     }
 
@@ -302,12 +306,14 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
     }
 
     public void onClickAddTruckDetails(View view) {
+        ShowAlert.loadingDialog(ViewTruckDetailsActivity.this);
         JumpTo.goToVehicleDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, false, false, false, false, null, null);
     }
 
     public void onClickBottomNavigation(View view) {
         switch (view.getId()) {
             case R.id.bottom_nav_sp_dashboard:
+                ShowAlert.loadingDialog(ViewTruckDetailsActivity.this);
                 JumpTo.goToServiceProviderDashboard(ViewTruckDetailsActivity.this, phone, true);
                 break;
 
@@ -320,6 +326,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        ShowAlert.loadingDialog(ViewTruckDetailsActivity.this);
         JumpTo.goToServiceProviderDashboard(ViewTruckDetailsActivity.this, phone, true);
     }
 
@@ -432,7 +439,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
 
     public void onClickCloseDialogDriverBankDetails(View view) {
         previewDialogDriverDetails.dismiss();
-        JumpTo.goToViewVehicleDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, true);
+        RearrangeItems();
     }
 
     public void onClickReAssignTruck(View view) {
@@ -449,6 +456,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
     public void onClickAddDriverDetailsAssigned(View view) {
         previewDialogSpinner.dismiss();
         previewDialogDriverDetails.dismiss();
+        ShowAlert.loadingDialog(ViewTruckDetailsActivity.this);
         JumpTo.goToDriverDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, false, false, true, truckIdPass, null);
     }
 
@@ -499,12 +507,12 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
     public void onClickCancelSelectBind(View view) {
         previewDialogSpinner.dismiss();
         previewDialogDriverDetails.dismiss();
-        JumpTo.goToViewVehicleDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, true);
+        RearrangeItems();
     }
 
     public void onClickReAssignDriver(DriverModel obj) {
         UpdateTruckDetails.updateTruckDriverId(truckIdPass, obj.getDriver_id());
-        JumpTo.goToViewVehicleDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, true);
+        RearrangeItems();
     }
 
     private TextWatcher searchVehicleWatcher = new TextWatcher() {

@@ -53,6 +53,7 @@ import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
 import com.nlpl.utils.JumpTo;
+import com.nlpl.utils.ShowAlert;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -842,6 +843,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 alertPositiveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        ShowAlert.loadingDialog(VehicleDetailsActivity.this);
                         if (fromBidNow) {
                             JumpTo.goToDriverDetailsActivity(VehicleDetailsActivity.this, userId, mobile, false, true, true, truckIdPass, null);
                         }
@@ -862,6 +864,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                             if (fromBidNow) {
                                 VehicleDetailsActivity.this.finish();
                             } else {
+                                ShowAlert.loadingDialog(VehicleDetailsActivity.this);
                                 JumpTo.goToViewVehicleDetailsActivity(VehicleDetailsActivity.this, userId, mobile, true);
                             }
                         } else {
@@ -886,10 +889,11 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
                             alertTitle.setText("Driver Details");
                             alertMessage.setText("You cannot bid unless you have a Driver");
-                            alertPositiveButton.setText("+ Add Truck Driver");
+                            alertPositiveButton.setText("+ Add");
                             alertPositiveButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
+                                    ShowAlert.loadingDialog(VehicleDetailsActivity.this);
                                     if (fromBidNow) {
                                         JumpTo.goToDriverDetailsActivity(VehicleDetailsActivity.this, userId, mobile, false, true, false, truckIdPass, null);
                                     }
@@ -906,6 +910,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(View view) {
                                     alert.dismiss();
+                                    ShowAlert.loadingDialog(VehicleDetailsActivity.this);
                                     if (fromBidNow) {
                                         VehicleDetailsActivity.this.finish();
                                     } else {
@@ -1458,6 +1463,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        ShowAlert.loadingDialog(VehicleDetailsActivity.this);
         JumpTo.goToServiceProviderDashboard(VehicleDetailsActivity.this, mobile, true);
 
     }

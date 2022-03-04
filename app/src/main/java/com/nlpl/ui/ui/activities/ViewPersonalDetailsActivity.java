@@ -24,6 +24,7 @@ import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.JumpTo;
+import com.nlpl.utils.ShowAlert;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -73,7 +74,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
                 if (userRoleAPI.equals("Customer")) {
                     JumpTo.goToCustomerDashboard(ViewPersonalDetailsActivity.this, phone, true);
                 } else {
@@ -371,15 +372,18 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
     }
 
     public void onClickEditPersonalDetailsView(View view) {
+        ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
         JumpTo.goToPersonalDetailsIdProofActivity(ViewPersonalDetailsActivity.this, userId, phone, false);
     }
 
     public void onClickEditFirmDetailsView(View view) {
+        ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
         JumpTo.goToCompanyDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, true, false);
     }
 
     public void onClickAddCompanyDetails(View view) {
         if (companyNameAPI == null) {
+            ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
             JumpTo.goToCompanyDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false, false);
         }
     }
@@ -388,6 +392,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
         if (userRoleAPI.equals("Customer")) {
             switch (view.getId()) {
                 case R.id.bottom_nav_sp_dashboard:
+                    ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
                     JumpTo.goToCustomerDashboard(ViewPersonalDetailsActivity.this, phone, true);
                     break;
 
@@ -398,6 +403,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
         } else {
             switch (view.getId()) {
                 case R.id.bottom_nav_sp_dashboard:
+                    ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
                     JumpTo.goToServiceProviderDashboard(ViewPersonalDetailsActivity.this, phone, true);
                     break;
 
@@ -412,6 +418,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
         if (userRoleAPI.equals("Customer")) {
             JumpTo.goToCustomerDashboard(ViewPersonalDetailsActivity.this, phone, true);
         } else {
@@ -420,10 +427,12 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
     }
 
     public void onClickAddPersonalDetails(View view) {
+        ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
         JumpTo.goToPersonalDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false, false);
     }
 
     public void onClickAddProfilePic(View view) {
+        ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
         JumpTo.goToPersonalDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, true, false);
     }
 }

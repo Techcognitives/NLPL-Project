@@ -12,6 +12,7 @@ import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.SliderData;
 import com.nlpl.ui.ui.adapters.SliderAdapter;
 import com.nlpl.utils.JumpTo;
+import com.nlpl.utils.ShowAlert;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
@@ -75,6 +76,7 @@ public class SliderActivity extends AppCompatActivity {
     }
 
     public void onClickSkipRegistration(View view) {
+        ShowAlert.loadingDialog(SliderActivity.this);
         JumpTo.goToServiceProviderDashboard(SliderActivity.this, mobile, true);
     }
 }

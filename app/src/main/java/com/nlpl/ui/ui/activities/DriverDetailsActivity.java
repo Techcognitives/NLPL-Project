@@ -62,6 +62,7 @@ import com.nlpl.utils.GetCurrentLocation;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.SelectCity;
 import com.nlpl.utils.SelectState;
+import com.nlpl.utils.ShowAlert;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -211,6 +212,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         actionBarSkipButton.setVisibility(View.VISIBLE);
         actionBarSkipButton.setOnClickListener(view -> {
             if (isDriverDetailsDoneAPI.equals("1")) {
+                ShowAlert.loadingDialog(DriverDetailsActivity.this);
                 JumpTo.goToViewVehicleDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
             } else {
                 //----------------------- Alert Dialog -------------------------------------------------
@@ -250,6 +252,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         alert.dismiss();
+                        ShowAlert.loadingDialog(DriverDetailsActivity.this);
                         JumpTo.goToViewVehicleDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
                     }
                 });
@@ -406,10 +409,14 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 selectStateText.setText("");
                 selectDistrictText.setText("");
                 pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+                selectStateText.setEnabled(true);
+                selectDistrictText.setEnabled(true);
             } else {
                 String enteredPinCode = pinCode.getText().toString();
                 getStateAndDistrict(enteredPinCode);
                 pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+                selectStateText.setEnabled(false);
+                selectDistrictText.setEnabled(false);
             }
         }
 
@@ -846,6 +853,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
     }
 
     public void onClickDriverDetailsOk(View view) {
+        ShowAlert.loadingDialog(DriverDetailsActivity.this);
         String driverMobileText = driverMobile.getText().toString();
         String driverNameText = driverName.getText().toString();
 
@@ -935,6 +943,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                         //update Driver as a user (City)
                         UpdateUserDetails.updateUserCity(driverUserIdGet, selectDistrictText.getText().toString());
                     }
+                    ShowAlert.loadingDialog(DriverDetailsActivity.this);
                     JumpTo.goToViewDriverDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
                 } else {
 
@@ -972,6 +981,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             alert.dismiss();
+                            ShowAlert.loadingDialog(DriverDetailsActivity.this);
                             if (alreadyDriver) {
                                 JumpTo.goToBankDetailsActivity(DriverDetailsActivity.this, userId, mobile, false, true, null);
                             } else {
@@ -987,6 +997,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             alert.dismiss();
+                            ShowAlert.loadingDialog(DriverDetailsActivity.this);
                             if (fromBidNow) {
                                 DriverDetailsActivity.this.finish();
                             } else {
@@ -1569,6 +1580,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        ShowAlert.loadingDialog(DriverDetailsActivity.this);
         JumpTo.goToServiceProviderDashboard(DriverDetailsActivity.this, mobile, true);
     }
 

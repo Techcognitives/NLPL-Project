@@ -39,6 +39,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.Html;
@@ -599,6 +600,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
 
     public void RearrangeItems() {
         getLocation();
+        ShowAlert.loadingDialog(ServiceProviderDashboardActivity.this);
         JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
     }
 
@@ -756,6 +758,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     }
 
     public void onClickProfileAndRegister(View view) {
+        ShowAlert.loadingDialog(ServiceProviderDashboardActivity.this);
         switch (view.getId()) {
             case R.id.menu_personal_details_button:
                 JumpTo.goToViewPersonalDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, false);
@@ -823,6 +826,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
 
             alertPositiveButton.setOnClickListener(view1 -> {
                 alert.dismiss();
+                ShowAlert.loadingDialog(ServiceProviderDashboardActivity.this);
                 JumpTo.goToRegistrationActivity(ServiceProviderDashboardActivity.this, phone, true);
             });
             //------------------------------------------------------------------------------------------
@@ -841,6 +845,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     }
 
     public void onClickLogOut(View view) {
+        ShowAlert.loadingDialog(ServiceProviderDashboardActivity.this);
         FirebaseAuth.getInstance().signOut();
         JumpTo.goToLogInActivity(ServiceProviderDashboardActivity.this);
     }
@@ -874,9 +879,11 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     public void onClickBottomNavigation(View view) {
         switch (view.getId()) {
             case R.id.bottom_nav_sp_dashboard:
+                RearrangeItems();
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
+                ShowAlert.loadingDialog(ServiceProviderDashboardActivity.this);
                 if (userId == null) {
                     //----------------------- Alert Dialog -------------------------------------------------
                     Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
@@ -1053,6 +1060,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
 
             alertPositiveButton.setOnClickListener(view -> {
                 alert.dismiss();
+                ShowAlert.loadingDialog(ServiceProviderDashboardActivity.this);
                 JumpTo.goToRegistrationActivity(ServiceProviderDashboardActivity.this, phone, true);
             });
             //------------------------------------------------------------------------------------------
@@ -1153,7 +1161,9 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 }
             });
 
-            cancel.setOnClickListener(view -> JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected));
+            cancel.setOnClickListener(view -> {
+                RearrangeItems();
+            });
 
         acceptAndBid.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1201,7 +1211,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 alert.dismiss();
-                                JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
+                                RearrangeItems();
                                 previewDialogBidNow.dismiss();
                             }
                         });
@@ -1239,8 +1249,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             alert.dismiss();
-//                            JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
-                            previewDialogBidNow.dismiss();
                         }
                     });
                     //------------------------------------------------------------------------------------------
@@ -1289,8 +1297,8 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                                     @Override
                                     public void onClick(View view) {
                                         alert.dismiss();
-                                        JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
                                         previewDialogBidNow.dismiss();
+                                        RearrangeItems();
                                     }
                                 });
                                 //------------------------------------------------------------------------------------------
@@ -1416,6 +1424,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 alert.dismiss();
+                                ShowAlert.loadingDialog(ServiceProviderDashboardActivity.this);
                                 JumpTo.goToDriverDetailsActivity(ServiceProviderDashboardActivity.this, userId, mobile, false, true, false, null, null);
                             }
                         });
@@ -1924,6 +1933,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 alert.dismiss();
+                                ShowAlert.loadingDialog(ServiceProviderDashboardActivity.this);
                                 JumpTo.goToVehicleDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, false, true, false, false, null, null);
                             }
                         });
@@ -2069,7 +2079,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
+                RearrangeItems();
                 previewDialogBidNow.dismiss();
             }
         });
@@ -2117,7 +2127,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         alert.dismiss();
-                        JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
+                        RearrangeItems();
                         previewDialogBidNow.dismiss();
                     }
                 });
@@ -2266,7 +2276,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         cancel2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
+                RearrangeItems();
             }
         });
 
@@ -2326,7 +2336,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         alert.dismiss();
-                        JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
+                        RearrangeItems();
                         dialogViewConsignment.dismiss();
                     }
                 });
@@ -2364,7 +2374,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
+                                RearrangeItems();
                                 dialogViewConsignment.dismiss();
                             }
                         });
@@ -2413,7 +2423,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         alert.dismiss();
-                        JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
+                        RearrangeItems();
                         dialogViewConsignment.dismiss();
                     }
                 });
@@ -2875,7 +2885,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 alert.dismiss();
-                JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
+                RearrangeItems();
             }
         });
     }
@@ -3406,90 +3416,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             driverState.setText("");
             driverCity.setText("");
         }
-    }
-
-    public void onClickDriverDetailsOk(View view) {
-        String driverMobileText = driverNumber.getText().toString();
-        String driverNameText = driverName.getText().toString();
-
-//        if (!driverNameText.isEmpty() && !driverMobileText.isEmpty() && isDLUploaded && isSelfieUploded) {
-        if (driverMobileText.length() != 10) {
-            //----------------------- Alert Dialog -------------------------------------------------
-            Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
-            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(alert.getWindow().getAttributes());
-            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.gravity = Gravity.CENTER;
-
-            alert.show();
-            alert.getWindow().setAttributes(lp);
-            alert.setCancelable(true);
-
-            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-            alertTitle.setText("Invalid Mobile Number");
-            alertMessage.setText("Please enter a 10 digit valid mobile number.");
-            alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
-            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
-
-            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    alert.dismiss();
-                }
-            });
-            //------------------------------------------------------------------------------------------
-        } else {
-            //update Driver as a user (IsDriverAdded)
-            UpdateUserDetails.updateUserIsDriverAdded(userId, "1");
-            saveDriver(createDriver());
-            saveUser(createUser());
-
-            //----------------------- Alert Dialog -------------------------------------------------
-            Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
-            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(alert.getWindow().getAttributes());
-            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.gravity = Gravity.CENTER;
-
-            alert.show();
-            alert.getWindow().setAttributes(lp);
-            alert.setCancelable(false);
-
-            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-            alertTitle.setText("Driver Details");
-            alertMessage.setText("Driver Details added successfully");
-
-            alertPositiveButton.setVisibility(View.GONE);
-
-            alertNegativeButton.setText("OK");
-            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
-            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    alert.dismiss();
-                }
-            });
-            //------------------------------------------------------------------------------------------
-
-        }
-//        }
     }
 
     //------------------------------------- Create User in API -------------------------------------

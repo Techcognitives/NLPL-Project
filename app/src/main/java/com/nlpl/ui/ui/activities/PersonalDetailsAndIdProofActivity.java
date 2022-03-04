@@ -63,6 +63,7 @@ import com.nlpl.utils.GetCurrentLocation;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.SelectCity;
 import com.nlpl.utils.SelectState;
+import com.nlpl.utils.ShowAlert;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -144,6 +145,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ShowAlert.loadingDialog(PersonalDetailsAndIdProofActivity.this);
                 JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsAndIdProofActivity.this, userId, mobileAPI, false);
             }
         });
@@ -512,7 +514,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     }
 
     public void onClickPersonalProof(View view) {
-
+        ShowAlert.loadingDialog(PersonalDetailsAndIdProofActivity.this);
         if (name.getText().toString() != null) {
             UpdateUserDetails.updateUserName(userId, name.getText().toString());
         }
@@ -691,11 +693,15 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 okButton.setEnabled(false);
                 okButton.setBackground(getDrawable(R.drawable.button_de_active));
                 pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
+                selectStateText.setEnabled(true);
+                selectDistrictText.setEnabled(true);
             } else {
                 getStateAndDistrict(pinCode.getText().toString());
                 okButton.setEnabled(true);
                 okButton.setBackground(getDrawable(R.drawable.button_active));
                 pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
+                selectStateText.setEnabled(false);
+                selectDistrictText.setEnabled(false);
             }
         }
 
@@ -1364,6 +1370,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        ShowAlert.loadingDialog(PersonalDetailsAndIdProofActivity.this);
         JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsAndIdProofActivity.this, userId, mobileAPI, false);
     }
 

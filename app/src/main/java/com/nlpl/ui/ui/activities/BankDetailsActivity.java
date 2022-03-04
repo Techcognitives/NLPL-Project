@@ -50,6 +50,7 @@ import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
 import com.nlpl.utils.JumpTo;
+import com.nlpl.utils.ShowAlert;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -400,7 +401,7 @@ public class BankDetailsActivity extends AppCompatActivity {
 
 
     public void onClickBankDetailsOk(View view) {
-
+        ShowAlert.loadingDialog(BankDetailsActivity.this);
         if (accountNo.getText().toString().equals(reAccount.getText().toString())) {
             if (isEdit) {
 
@@ -654,6 +655,11 @@ public class BankDetailsActivity extends AppCompatActivity {
                 accountNo.setEnabled(false);
                 reAccount.setEnabled(false);
                 ifscCode.setEnabled(false);
+
+                bankName.getText().clear();
+                accountNo.getText().clear();
+                reAccount.getText().clear();
+                ifscCode.getText().clear();
 
                 String bankName2 = bankName.getText().toString().trim();
                 String accNo = accountNo.getText().toString().trim();
