@@ -348,7 +348,6 @@ public class FindLoadsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        ShowAlert.loadingDialog(FindLoadsActivity.this);
         String visibility = String.valueOf(stateConstrain.getVisibility());
         Log.i("visibility", visibility); //visible = 0
         if (visibility.equals("0")) {

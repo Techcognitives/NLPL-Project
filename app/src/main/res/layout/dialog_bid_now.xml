@@ -518,7 +518,6 @@
                     android:id="@+id/dialog_bid_now_customer_mobile_no"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/underline_blue"
                     android:onClick="onClickOpenPhone"
                     android:text="+919999999999"
                     android:textColor="@color/button_blue"
@@ -547,6 +546,7 @@
                     android:id="@+id/dialog_bid_now_cancel_btn2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
                     android:background="@drawable/button_de_active"
                     android:paddingStart="20dp"
                     android:paddingTop="5dp"
@@ -603,7 +603,7 @@
                     android:id="@+id/dialog_bid_now_accept_and_bid_btn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
@@ -641,6 +641,7 @@
                     android:textStyle="italic"
                     app:layout_constraintBottom_toTopOf="@+id/dialog_bid_now_declaration"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/dialog_bid_now_truck_body_type_textview" />
 

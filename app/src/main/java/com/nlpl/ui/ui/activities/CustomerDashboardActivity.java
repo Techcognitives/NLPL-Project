@@ -2138,9 +2138,44 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     }
 
     public void onClickLogOutCustomer(View view) {
-        FirebaseAuth.getInstance().signOut();
-        ShowAlert.loadingDialog(CustomerDashboardActivity.this);
-        JumpTo.goToLogInActivity(CustomerDashboardActivity.this);
+        //----------------------- Alert Dialog -------------------------------------------------
+        Dialog alert = new Dialog(CustomerDashboardActivity.this);
+        alert.setContentView(R.layout.dialog_alert);
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(alert.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        alert.show();
+        alert.getWindow().setAttributes(lp);
+        alert.setCancelable(false);
+
+        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+        alertTitle.setText("Log Out");
+        alertMessage.setText("Are you sure you want to logout?");
+        alertPositiveButton.setText("Yes");
+        alertNegativeButton.setText("No");
+
+        alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+            }
+        });
+
+        alertPositiveButton.setOnClickListener(view1 -> {
+            alert.dismiss();
+            FirebaseAuth.getInstance().signOut();
+            JumpTo.goToLogInActivity(CustomerDashboardActivity.this);
+        });
+        //------------------------------------------------------------------------------------------
+
     }
 
     public void onClickProfileAndRegisterCustomer(View view) {

@@ -839,7 +839,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
                 alertTitle.setText("Truck Details");
                 alertMessage.setText("Vehicle Details added successfully");
-                alertPositiveButton.setText("+ Add Truck Driver");
+                alertPositiveButton.setText("+ Add");
                 alertPositiveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

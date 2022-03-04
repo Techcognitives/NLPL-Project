@@ -846,8 +846,44 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
 
     public void onClickLogOut(View view) {
         ShowAlert.loadingDialog(ServiceProviderDashboardActivity.this);
-        FirebaseAuth.getInstance().signOut();
-        JumpTo.goToLogInActivity(ServiceProviderDashboardActivity.this);
+        //----------------------- Alert Dialog -------------------------------------------------
+        Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
+        alert.setContentView(R.layout.dialog_alert);
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(alert.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        alert.show();
+        alert.getWindow().setAttributes(lp);
+        alert.setCancelable(false);
+
+        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+        alertTitle.setText("Log Out");
+        alertMessage.setText("Are you sure you want to logout?");
+        alertPositiveButton.setText("Yes");
+        alertNegativeButton.setText("No");
+
+        alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+            }
+        });
+
+        alertPositiveButton.setOnClickListener(view1 -> {
+            alert.dismiss();
+            FirebaseAuth.getInstance().signOut();
+            JumpTo.goToLogInActivity(ServiceProviderDashboardActivity.this);
+        });
+        //------------------------------------------------------------------------------------------
+
     }
 
     public void onClickDismiss(View view) {
@@ -2337,7 +2373,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         alert.dismiss();
-                        RearrangeItems();
                         dialogViewConsignment.dismiss();
                     }
                 });
@@ -3257,7 +3292,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         addTruckRequest.setVehicle_no(addTruckVehicleNumber.getText().toString());
         addTruckRequest.setVehicle_type(bodyTypeSelected);
         addTruckRequest.setTruck_type(addTruckModel.getText().toString());
-        addTruckRequest.setTruck_ft(addTruckFeet.getText().toString() + " Ft");
+        addTruckRequest.setTruck_ft(addTruckFeet.getText().toString());
         addTruckRequest.setTruck_carrying_capacity(addTruckCapacity.getText().toString());
         return addTruckRequest;
     }
