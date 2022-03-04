@@ -845,7 +845,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     }
 
     public void onClickLogOut(View view) {
-        ShowAlert.loadingDialog(ServiceProviderDashboardActivity.this);
         //----------------------- Alert Dialog -------------------------------------------------
         Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
         alert.setContentView(R.layout.dialog_alert);
