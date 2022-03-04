@@ -139,7 +139,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     RadioButton negotiable_yes, negotiable_no;
     EditText notesCustomer;
     String userId, phone, s1, customerEmail;
-    String spQuoteByApi, bid_idByAPI, noteByApi;
+    String spQuoteByApi, bid_idByAPI, noteByApi, vehicleModelByApi, vehicleFeetByApi, VehicleCapacityByApi, VehicleTypeByApi;
 
     ArrayList<String> arrayAssignedDriverId, arrayBidId, arrayUserId, arrayBidStatus, arrayNotesFromSP;
     String fianlBidId, noteBySPToCustomer, assignedDriverId, assignedDriverIdAPI, assignedUserId, assignedUserIdAPI, bidStatusAPI, customerNameAPI;
@@ -229,7 +229,6 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         previewDialogProfileOfSp = new Dialog(CustomerDashboardActivity.this);
         previewDialogProfileOfSp.setContentView(R.layout.dialog_preview_images);
         previewDialogProfileOfSp.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.black)));
-
 
         userNameTextViewMenu = (TextView) menuDialog.findViewById(R.id.customer_menu_name_text);
         profilePic = (ImageView) menuDialog.findViewById(R.id.profile_picture_on_customer_menu);
@@ -1609,7 +1608,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                         }
 
                         //--------------------------------------------------------------------------
-                        String url4 = getString(R.string.baseURL) + "/spbid/bidDtByBidId/" + acceptFinalBid;
+                        String url4 = getString(R.string.baseURL) + "/spbid/bidDtByBidId/" + fianlBidId;
                         JsonObjectRequest request4 = new JsonObjectRequest(Request.Method.GET, url4, null, new com.android.volley.Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
@@ -1618,6 +1617,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                                     for (int i = 0; i < truckLists.length(); i++) {
                                         JSONObject obj = truckLists.getJSONObject(i);
                                         spQuoteByApi = obj.getString("sp_quote");
+                                        customerQuote.setText(spQuoteByApi);
                                         quoteBySP.setText(spQuoteByApi);
                                         modelBySP.setText(obj.getString("vehicle_model"));
                                         feetBySP.setText(obj.getString("feet"));
@@ -1745,7 +1745,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                     negotiable_yes.setChecked(false);
                     negotiable_yes.setEnabled(false);
                     negotiable_no.setChecked(true);
-                    customerQuote.setText(spQuoteByApi);
+
 
                     submitResponseBtn.setText("Withdraw");
                     submitResponseBtn.setBackgroundResource((R.drawable.button_active));
