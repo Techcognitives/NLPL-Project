@@ -13,7 +13,7 @@
         android:paddingBottom="6dp"
         android:text="Sample"
         android:textColor="@color/button_blue"
-        android:textSize="20sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

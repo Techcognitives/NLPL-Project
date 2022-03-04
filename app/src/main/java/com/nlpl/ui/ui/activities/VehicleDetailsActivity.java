@@ -130,7 +130,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                VehicleDetailsActivity.this.finish();
+                JumpTo.goToViewVehicleDetailsActivity(VehicleDetailsActivity.this, userId, mobile, true);
             }
         });
 

@@ -175,7 +175,7 @@ public class FindLoadsActivity extends AppCompatActivity {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FindLoadsActivity.this.finish();
+                JumpTo.goToServiceProviderDashboard(FindLoadsActivity.this, phone, true);
             }
         });
         //---------------------------- Bottom Nav --------------------------------------------------

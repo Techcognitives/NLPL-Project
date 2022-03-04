@@ -135,7 +135,7 @@ public class PostALoadActivity extends AppCompatActivity {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PostALoadActivity.this.finish();
+                JumpTo.goToCustomerDashboard(PostALoadActivity.this, phone, true);
             }
         });
 //-------------------------------------- Today's Date ----------------------------------------------
@@ -1027,7 +1027,7 @@ public class PostALoadActivity extends AppCompatActivity {
         postLoadRequest.setPick_up_time(pick_up_time.getText().toString());
         postLoadRequest.setBudget(select_budget.getText().toString());
         postLoadRequest.setVehicle_model(select_model.getText().toString());
-        postLoadRequest.setFeet(select_feet.getText().toString() + " Ft");
+        postLoadRequest.setFeet(select_feet.getText().toString());
         postLoadRequest.setCapacity(select_capacity.getText().toString());
         postLoadRequest.setBody_type(select_truck_body_type.getText().toString());
         postLoadRequest.setPick_add(pickUpAddress);
@@ -1333,6 +1333,10 @@ public class PostALoadActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     alert.dismiss();
                     pickAddressText.performClick();
+                    addressDialogAddress.getText().clear();
+                    addressDialogPinCode.getText().clear();
+                    addressDialogState.setText("");
+                    addressDialogCity.setText("");
                 }
             });
             //------------------------------------------------------------------------------------------
@@ -1425,6 +1429,11 @@ public class PostALoadActivity extends AppCompatActivity {
 
     public void onClickCancelAddressDetails(View view) {
         pickUpAddressDialog.dismiss();
+        pickAddressText.performClick();
+        addressDialogAddress.getText().clear();
+        addressDialogPinCode.getText().clear();
+        addressDialogState.setText("");
+        addressDialogCity.setText("");
     }
 
     public void deleteLoad(View view) {

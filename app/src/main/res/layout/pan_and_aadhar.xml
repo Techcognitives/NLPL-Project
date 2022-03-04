@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:visibility="gone"
         android:background="@drawable/shadow_file"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/upload_aadhar_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -27,15 +27,13 @@
             android:layout_height="60dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
             android:background="@drawable/all_rounded_small"
             android:src="@drawable/pan_card"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/pan_aadhar_pan_number"
             app:layout_constraintEnd_toStartOf="@+id/pancard1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/pancard1"
@@ -98,6 +96,29 @@
             app:layout_constraintEnd_toStartOf="@+id/edit1"
             app:layout_constraintTop_toTopOf="@+id/edit1" />
 
+        <EditText
+            android:id="@+id/pan_aadhar_pan_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/edit_text_border"
+            android:ems="10"
+            android:hint="Enter PAN Number"
+            android:inputType="textPersonName"
+            android:maxLength="10"
+            android:paddingStart="5dp"
+            android:paddingTop="7dp"
+            android:paddingEnd="5dp"
+            android:paddingBottom="7dp"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imagePan" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
@@ -156,10 +177,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="0dp"
         android:layout_marginEnd="5dp"
-        android:visibility="gone"
         android:background="@drawable/shadow_file"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -171,15 +191,13 @@
             android:layout_height="60dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
             android:background="@drawable/all_rounded_small"
             android:src="@drawable/aadhar_card_front"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/pan_aadhar_aadhar_number"
             app:layout_constraintEnd_toStartOf="@+id/frontText"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/frontText"
@@ -241,6 +259,29 @@
             app:layout_constraintBottom_toBottomOf="@+id/editFront"
             app:layout_constraintEnd_toStartOf="@+id/editFront"
             app:layout_constraintTop_toTopOf="@+id/editFront" />
+
+        <EditText
+            android:id="@+id/pan_aadhar_aadhar_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/edit_text_border"
+            android:ems="10"
+            android:hint="Enter Aadhar Number"
+            android:inputType="textPersonName"
+            android:maxLength="12"
+            android:paddingStart="5dp"
+            android:paddingTop="7dp"
+            android:paddingEnd="5dp"
+            android:paddingBottom="7dp"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageF" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

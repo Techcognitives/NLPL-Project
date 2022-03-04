@@ -393,7 +393,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
-                    android:background="@drawable/underline_blue"
                     android:onClick="onClickOpenDialer"
                     android:text="+91 9999999999"
                     android:textColor="@color/button_blue"
@@ -685,7 +684,7 @@
                     android:text="Rate Service Provider"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="15sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/dialog_accept_bid_rate_driver"
@@ -695,7 +694,7 @@
 
                 <TextView
                     android:id="@+id/dialog_accept_bid_rate_driver"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"

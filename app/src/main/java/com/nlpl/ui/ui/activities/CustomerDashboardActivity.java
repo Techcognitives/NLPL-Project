@@ -485,8 +485,8 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
-                ShowAlert.loadingDialog(CustomerDashboardActivity.this);
-                JumpTo.goToFindTrucksActivity(CustomerDashboardActivity.this, userId, phone);
+//                ShowAlert.loadingDialog(CustomerDashboardActivity.this);
+//                JumpTo.goToFindTrucksActivity(CustomerDashboardActivity.this, userId, phone);
                 break;
         }
     }
@@ -1761,7 +1761,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
                     submitResponseBtn.setText("Withdraw");
                     submitResponseBtn.setBackgroundResource((R.drawable.button_active));
-                    submitResponseBtn.setBackgroundTintList(getResources().getColorStateList(R.color.grey));
+                    submitResponseBtn.setBackgroundTintList(getResources().getColorStateList(R.color.button_blue));
                     submitResponseBtn.setEnabled(true);
 
                     submitResponseBtn.setOnClickListener(new View.OnClickListener() {
@@ -1788,11 +1788,11 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
                             TextView alertCancelButton = (TextView) alert.findViewById(R.id.dialog_alert_cancel);
 
-                            alertTitle.setText("Withdrawn Load");
-                            alertMessage.setText("Do you want withdraw fully or continue with other Service Provider");
+                            alertTitle.setText("Withdraw Load");
+                            alertMessage.setText("Do you want to withdraw your load posting or withdraw from the current bidder.");
                             alertPositiveButton.setVisibility(View.VISIBLE);
-                            alertPositiveButton.setText("Withdraw Fully");
-                            alertNegativeButton.setText("Withdraw Partially");
+                            alertPositiveButton.setText("Withdraw Load");
+                            alertNegativeButton.setText("Withdraw Bidder");
                             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                             alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
                             alertCancelButton.setVisibility(View.VISIBLE);
@@ -1964,6 +1964,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         name.setText(nameForRating);
         skipButton.setOnClickListener(view -> alert.dismiss());
         submitButton.setOnClickListener(view -> {
+            alert.dismiss();
             if (ratingGiven == 5) {
                 alert.dismiss();
                 UpdateUserDetails.updateUserRating(userIdForRating, String.valueOf(ratingGiven));
@@ -2739,13 +2740,18 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     @Override
     protected void onStop() {
         super.onStop();
-        if (!isPersonalDetailsDone.equals("1")) {
-            InAppNotification.SendNotificationJumpToPersonalDetailsActivity(CustomerDashboardActivity.this, "Complete Your Profile", "Upload PAN and Aadhar in the Personal Details Section", userId, phone, false);
+        try {
+            if (!isPersonalDetailsDone.equals("1")) {
+                InAppNotification.SendNotificationJumpToPersonalDetailsActivity(CustomerDashboardActivity.this, "Complete Your Profile", "Upload PAN and Aadhar in the Personal Details Section", userId, phone, false);
+            }
+
+            if (!isBankDetailsDone.equals("1")) {
+                InAppNotification.SendNotificationJumpToBankDetailsActivity(CustomerDashboardActivity.this, "Complete Your Profile", "Upload Bank details and complete your Profile", userId, phone, false, null);
+            }
+        }catch (Exception e){
+
         }
 
-        if (!isBankDetailsDone.equals("1")) {
-            InAppNotification.SendNotificationJumpToBankDetailsActivity(CustomerDashboardActivity.this, "Complete Your Profile", "Upload Bank details and complete your Profile", userId, phone, false, null);
-        }
     }
 
     final Handler handler = new Handler() {

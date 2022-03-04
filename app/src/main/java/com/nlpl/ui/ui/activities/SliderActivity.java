@@ -72,7 +72,8 @@ public class SliderActivity extends AppCompatActivity {
     }
 
     public void onClickRegisterNow(View view) {
-        SliderActivity.this.finish();
+        ShowAlert.loadingDialog(SliderActivity.this);
+        JumpTo.goToRegistrationActivity(SliderActivity.this, mobile, false);
     }
 
     public void onClickSkipRegistration(View view) {

@@ -813,7 +813,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
             alertTitle.setText("Please Register");
-            alertMessage.setText("You can not bid without Registration");
+            alertMessage.setText("You cannot bid without Registration");
             alertPositiveButton.setText("Register Now");
             alertNegativeButton.setText("Cancel");
 
@@ -905,7 +905,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
                     alertTitle.setText("Please Register");
-                    alertMessage.setText("You can not bid without Registration");
+                    alertMessage.setText("You cannot bid without Registration");
                     alertPositiveButton.setText("Register Now");
                     alertNegativeButton.setText("Cancel");
 
@@ -1047,7 +1047,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
             alertTitle.setText("Please Register");
-            alertMessage.setText("You can not bid without Registration");
+            alertMessage.setText("You cannot bid without Registration");
             alertPositiveButton.setText("Register Now");
             alertNegativeButton.setText("Cancel");
 
@@ -1249,6 +1249,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             alert.dismiss();
+                            selectTruck.performClick();
                         }
                     });
                     //------------------------------------------------------------------------------------------
