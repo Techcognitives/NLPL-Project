@@ -191,6 +191,10 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         lp2.gravity = Gravity.CENTER;
 
         ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+        TextView noLoadTextView = (TextView) findViewById(R.id.customer_dashboard_no_load_text);
+        noLoadTextView.setVisibility(View.INVISIBLE);
+        TextView noAcceptedLoads = (TextView) findViewById(R.id.customer_dashboard_no_load_accepted_text);
+        noAcceptedLoads.setVisibility(View.INVISIBLE);
 
 //        loadingDialog.show();
         loadingDialog.setCancelable(false);
