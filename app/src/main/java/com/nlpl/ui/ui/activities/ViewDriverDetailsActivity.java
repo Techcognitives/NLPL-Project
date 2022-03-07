@@ -680,9 +680,6 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
             if (item.getDriver_number().toLowerCase().contains(text.toLowerCase())) {
                 searchVehicleList.add(item);
             }
-            if (item.getDriver_emailId().toLowerCase().contains(text.toLowerCase())) {
-                searchVehicleList.add(item);
-            }
         }
         driverListAdapter.updateData(searchVehicleList);
     }

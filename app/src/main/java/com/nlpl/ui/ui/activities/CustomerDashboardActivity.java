@@ -2442,47 +2442,83 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
             profileAddedAlert();
 
         } else if (requestCode == CAMERA_PIC_REQUEST2) {
-            //----------------------- Alert Dialog -------------------------------------------------
-            Dialog alert = new Dialog(CustomerDashboardActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
-            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(alert.getWindow().getAttributes());
-            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.gravity = Gravity.CENTER;
+            try {
+                Bitmap image = (Bitmap) data.getExtras().get("data");
+                String path = getRealPathFromURI(getImageUri(this, image));
+                saveImage(imageRequest());
+                uploadImage(path);
+                profileAddedAlert();
 
-            alert.show();
-            alert.getWindow().setAttributes(lp);
-            alert.setCancelable(true);
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(CustomerDashboardActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
 
-            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(true);
 
-            alertTitle.setText("Personal Details");
-            alertMessage.setText("Profile Uploaded Successfully");
-            alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
-            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    alert.dismiss();
+                alertTitle.setText("Personal Details");
+                alertMessage.setText("Profile Uploaded Successfully");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
 
-                }
-            });
-            //------------------------------------------------------------------------------------------
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
 
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-            String path = getRealPathFromURI(getImageUri(this, image));
-            saveImage(imageRequest());
-            uploadImage(path);
+                    }
+                });
+                //------------------------------------------------------------------------------------------
+            }catch (Exception e){
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(CustomerDashboardActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
 
-            profileAddedAlert();
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(true);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Personal Details");
+                alertMessage.setText("Profile not Uploaded, please try again");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                    }
+                });
+                //------------------------------------------------------------------------------------------
+            }
+
 
         }
     }
@@ -2708,8 +2744,8 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
             @Override
             public void onClick(View view) {
                 alert.dismiss();
-                viewConsignmentCustomer.dismiss();
-                RearrangeItems();
+//                viewConsignmentCustomer.dismiss();
+//                RearrangeItems();
             }
         });
         //------------------------------------------------------------------------------------------

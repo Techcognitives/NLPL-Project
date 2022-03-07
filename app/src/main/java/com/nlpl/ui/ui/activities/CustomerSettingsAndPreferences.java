@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.nlpl.R;
 import com.nlpl.utils.JumpTo;
+import com.nlpl.utils.ShowAlert;
 
 public class CustomerSettingsAndPreferences extends AppCompatActivity {
 
@@ -78,5 +79,11 @@ public class CustomerSettingsAndPreferences extends AppCompatActivity {
         lp.gravity = Gravity.CENTER;
         addressDialog.show();
         addressDialog.getWindow().setAttributes(lp);
+    }
+
+    @Override
+    public void onBackPressed() {
+        ShowAlert.loadingDialog(CustomerSettingsAndPreferences.this);
+        JumpTo.goToCustomerDashboard(CustomerSettingsAndPreferences.this, phone, true);
     }
 }

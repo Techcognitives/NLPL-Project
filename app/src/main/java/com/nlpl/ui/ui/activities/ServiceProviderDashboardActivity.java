@@ -3766,47 +3766,86 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             profileAddedAlert();
 
         } else if (requestCode == CAMERA_PIC_REQUEST_profile) {
-            //----------------------- Alert Dialog -------------------------------------------------
-            Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
-            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(alert.getWindow().getAttributes());
-            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.gravity = Gravity.CENTER;
 
-            alert.show();
-            alert.getWindow().setAttributes(lp);
-            alert.setCancelable(true);
+            try {
+                Bitmap image = (Bitmap) data.getExtras().get("data");
+                String path = getRealPathFromURI(getImageUri(this, image));
+                saveImage(imageRequest());
+                uploadImage(path);
 
-            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+                profileAddedAlert();
 
-            alertTitle.setText("Personal Details");
-            alertMessage.setText("Profile Uploaded Successfully");
-            alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
-            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
 
-            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    alert.dismiss();
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(true);
 
-                }
-            });
-            //------------------------------------------------------------------------------------------
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-            String path = getRealPathFromURI(getImageUri(this, image));
-            saveImage(imageRequest());
-            uploadImage(path);
+                alertTitle.setText("Personal Details");
+                alertMessage.setText("Profile Uploaded Successfully");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
 
-            profileAddedAlert();
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+
+                    }
+                });
+                //------------------------------------------------------------------------------------------
+
+            }catch (Exception e){
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(true);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Personal Details");
+                alertMessage.setText("Profile not Uploaded, please try again");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                    }
+                });
+                //------------------------------------------------------------------------------------------
+            }
+
         }
         return "";
     }

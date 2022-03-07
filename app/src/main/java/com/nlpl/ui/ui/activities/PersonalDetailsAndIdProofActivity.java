@@ -868,90 +868,93 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         } else if (requestCode == CAMERA_PIC_REQUEST1) {
             //----------------------- Alert Dialog -------------------------------------------------
             saveImage(imageRequest());
-            Dialog alert = new Dialog(PersonalDetailsAndIdProofActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
-            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(alert.getWindow().getAttributes());
-            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.gravity = Gravity.CENTER;
-
-            alert.show();
-            alert.getWindow().setAttributes(lp);
-            alert.setCancelable(true);
-
-            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-            alertTitle.setText("Personal Details");
-            alertMessage.setText("PAN Card Uploaded Successfully");
-            alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
-            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
-
-            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    alert.dismiss();
-                    noChange = false;
-                }
-            });
-            //------------------------------------------------------------------------------------------
-
             isPanAdded = true;
-
             panCardText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadPAN.setVisibility(View.INVISIBLE);
             editPAN.setVisibility(View.VISIBLE);
             previewPan.setVisibility(View.VISIBLE);
 
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-            String path = getRealPathFromURI(getImageUri(this, image));
-            ImageView editedPan = (ImageView) previewDialogPan.findViewById(R.id.dialog_preview_image_view);
-            editedPan.setImageBitmap(BitmapFactory.decodeFile(path));
-            imgPAN.setImageBitmap(BitmapFactory.decodeFile(path));
-            uploadImage(path);
+            try {
+                Bitmap image = (Bitmap) data.getExtras().get("data");
+                String path = getRealPathFromURI(getImageUri(this, image));
+                ImageView editedPan = (ImageView) previewDialogPan.findViewById(R.id.dialog_preview_image_view);
+                editedPan.setImageBitmap(BitmapFactory.decodeFile(path));
+                imgPAN.setImageBitmap(BitmapFactory.decodeFile(path));
+                uploadImage(path);
+
+                Dialog alert = new Dialog(PersonalDetailsAndIdProofActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(true);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Personal Details");
+                alertMessage.setText("PAN Card Uploaded Successfully");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                        noChange = false;
+                    }
+                });
+                //------------------------------------------------------------------------------------------
+            }catch (Exception e){
+                Dialog alert = new Dialog(PersonalDetailsAndIdProofActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(true);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Personal Details");
+                alertMessage.setText("PAN Card not Uploaded, please try again");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                        noChange = false;
+                    }
+                });
+                //------------------------------------------------------------------------------------------
+            }
+
 
         } else if (requestCode == CAMERA_PIC_REQUEST2) {
             //----------------------- Alert Dialog -------------------------------------------------
-            saveImage(imageRequest());
-            Dialog alert = new Dialog(PersonalDetailsAndIdProofActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
-            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(alert.getWindow().getAttributes());
-            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.gravity = Gravity.CENTER;
 
-            alert.show();
-            alert.getWindow().setAttributes(lp);
-            alert.setCancelable(true);
-
-            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-            alertTitle.setText("Personal Details");
-            alertMessage.setText("Aadhar Card Uploaded Successfully");
-            alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
-            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
-
-            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    alert.dismiss();
-                    noChange = false;
-                }
-            });
-            //------------------------------------------------------------------------------------------
             isAadharAdded = true;
 
             frontText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
@@ -959,12 +962,84 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             editFront.setVisibility(View.VISIBLE);
             previewAadhar.setVisibility(View.VISIBLE);
 
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-            ImageView editedAadhar = (ImageView) previewDialogAadhar.findViewById(R.id.dialog_preview_image_view);
-            editedAadhar.setImageBitmap(image);
-            String path = getRealPathFromURI(getImageUri(this, image));
-            imgF.setImageBitmap(BitmapFactory.decodeFile(path));
-            uploadImage(path);
+            try {
+                Bitmap image = (Bitmap) data.getExtras().get("data");
+                ImageView editedAadhar = (ImageView) previewDialogAadhar.findViewById(R.id.dialog_preview_image_view);
+                editedAadhar.setImageBitmap(image);
+                String path = getRealPathFromURI(getImageUri(this, image));
+                imgF.setImageBitmap(BitmapFactory.decodeFile(path));
+                uploadImage(path);
+
+                Dialog alert = new Dialog(PersonalDetailsAndIdProofActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(true);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Personal Details");
+                alertMessage.setText("Aadhar Card Uploaded Successfully");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                        noChange = false;
+                        saveImage(imageRequest());
+                    }
+                });
+                //------------------------------------------------------------------------------------------
+            }catch (Exception e){
+                Dialog alert = new Dialog(PersonalDetailsAndIdProofActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(true);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Personal Details");
+                alertMessage.setText("Aadhar Card not Uploaded, Please try again");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                        noChange = false;
+                    }
+                });
+                //------------------------------------------------------------------------------------------
+            }
+
         } else if (requestCode == GET_FROM_GALLERY2 && resultCode == Activity.RESULT_OK) {
             //----------------------- Alert Dialog -------------------------------------------------
             saveImage(imageRequest());

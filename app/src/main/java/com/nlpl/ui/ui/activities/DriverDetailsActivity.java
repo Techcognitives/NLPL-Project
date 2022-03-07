@@ -168,10 +168,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
         driverMobile.setHint("Enter 10 digit Driver Number");
         driverEmailId.setHint("Enter Driver Email Id");
 
-        if (isEdit){
-            actionBarTitle.setText("Edit Driver Details");
-        }
-
         driverName.addTextChangedListener(driverNameWatcher);
         driverMobile.addTextChangedListener(driverMobileWatcher);
         pinCode.addTextChangedListener(pinCodeWatcher);
@@ -214,10 +210,39 @@ public class DriverDetailsActivity extends AppCompatActivity {
         actionBarTitle.setText("Driver Details");
         actionBarBackButton.setVisibility(View.GONE);
         actionBarSkipButton.setVisibility(View.VISIBLE);
+
+        if (isEdit) {
+            actionBarTitle.setText("Edit Driver Details");
+            actionBarBackButton.setVisibility(View.VISIBLE);
+            actionBarSkipButton.setVisibility(View.INVISIBLE);
+            actionBarBackButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ShowAlert.loadingDialog(DriverDetailsActivity.this);
+                    JumpTo.goToViewDriverDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
+                }
+            });
+
+        }
+
+        if (truckIdPass==null) {
+            actionBarTitle.setText("Driver Details");
+            actionBarBackButton.setVisibility(View.VISIBLE);
+            actionBarSkipButton.setVisibility(View.INVISIBLE);
+            actionBarBackButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ShowAlert.loadingDialog(DriverDetailsActivity.this);
+                    JumpTo.goToViewDriverDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
+                }
+            });
+
+        }
+
         actionBarSkipButton.setOnClickListener(view -> {
             if (isDriverDetailsDoneAPI.equals("1")) {
                 ShowAlert.loadingDialog(DriverDetailsActivity.this);
-                JumpTo.goToViewVehicleDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
+                JumpTo.goToViewDriverDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
             } else {
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(DriverDetailsActivity.this);
@@ -528,12 +553,18 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 okDriverDetails.setBackgroundResource(R.drawable.button_active);
             }
 
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-            String path = getRealPathFromURI(getImageUri(this, image));
-            driverLicenseImage.setImageBitmap(BitmapFactory.decodeFile(path));
-            previewDrivingLicense.setImageBitmap(BitmapFactory.decodeFile(path));
-            pathForDL = path;
-            return path;
+            try {
+                Bitmap image = (Bitmap) data.getExtras().get("data");
+                String path = getRealPathFromURI(getImageUri(this, image));
+                driverLicenseImage.setImageBitmap(BitmapFactory.decodeFile(path));
+                previewDrivingLicense.setImageBitmap(BitmapFactory.decodeFile(path));
+                pathForDL = path;
+                isDLUploaded = true;
+                return path;
+            } catch (Exception e) {
+                isDLUploaded = false;
+            }
+
         }
         return "";
     }
@@ -557,12 +588,17 @@ public class DriverDetailsActivity extends AppCompatActivity {
             uploadSelfie.setVisibility(View.INVISIBLE);
             editDS.setVisibility(View.VISIBLE);
 
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-            String path = getRealPathFromURI(getImageUri(this, image));
-            driverSelfieImg.setImageBitmap(BitmapFactory.decodeFile(path));
-            previewSelfie.setImageBitmap(BitmapFactory.decodeFile(path));
-            pathForSelfie = path;
-            return path;
+            try {
+                Bitmap image = (Bitmap) data.getExtras().get("data");
+                String path = getRealPathFromURI(getImageUri(this, image));
+                driverSelfieImg.setImageBitmap(BitmapFactory.decodeFile(path));
+                previewSelfie.setImageBitmap(BitmapFactory.decodeFile(path));
+                pathForSelfie = path;
+                return path;
+            } catch (Exception e) {
+                isSelfieUploded = false;
+            }
+
 
         } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
 
@@ -641,7 +677,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
             uploadDL.setVisibility(View.INVISIBLE);
             editDL.setVisibility(View.VISIBLE);
             previewDLImageView.setVisibility(View.VISIBLE);
-            previewSelfieImageView.setVisibility(View.VISIBLE);
 
             isDLUploaded = true;
             String mobileNoWatcher = driverMobile.getText().toString();
@@ -666,40 +701,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
             return picturePath;
 
         } else if (requestCode == CAMERA_PIC_REQUEST1) {
-            //----------------------- Alert Dialog -------------------------------------------------
-            Dialog alert = new Dialog(DriverDetailsActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
-            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(alert.getWindow().getAttributes());
-            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.gravity = Gravity.CENTER;
-
-            alert.show();
-            alert.getWindow().setAttributes(lp);
-            alert.setCancelable(true);
-
-            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-            alertTitle.setText("Driver Details");
-            alertMessage.setText("Driving License uploaded successfully");
-            alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
-            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
-
-            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    alert.dismiss();
-
-                }
-            });
-            //------------------------------------------------------------------------------------------
 
             textDL.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadDL.setVisibility(View.INVISIBLE);
@@ -717,13 +718,93 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 okDriverDetails.setBackgroundResource(R.drawable.button_active);
             }
 
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-            String path = getRealPathFromURI(getImageUri(this, image));
-            driverLicenseImage.setImageBitmap(BitmapFactory.decodeFile(path));
-            previewDrivingLicense.setImageBitmap(BitmapFactory.decodeFile(path));
+            try {
+                Bitmap image = (Bitmap) data.getExtras().get("data");
+                String path = getRealPathFromURI(getImageUri(this, image));
+                driverLicenseImage.setImageBitmap(BitmapFactory.decodeFile(path));
+                previewDrivingLicense.setImageBitmap(BitmapFactory.decodeFile(path));
+                pathForDL = path;
 
-            pathForDL = path;
-            return path;
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(DriverDetailsActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(true);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Driver Details");
+                alertMessage.setText("Driving License uploaded successfully");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                    }
+                });
+                //------------------------------------------------------------------------------------------
+                return path;
+            } catch (Exception e) {
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(DriverDetailsActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(true);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Driver Details");
+                alertMessage.setText("Driving License not uploaded, please try again");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                        if (isEdit) {
+
+                        } else {
+                            textDL.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                            uploadDL.setVisibility(View.VISIBLE);
+                            editDL.setVisibility(View.INVISIBLE);
+                            previewDLImageView.setVisibility(View.INVISIBLE);
+                            previewSelfieImageView.setVisibility(View.INVISIBLE);
+                            isDLUploaded = false;
+                        }
+                    }
+                });
+                //------------------------------------------------------------------------------------------
+            }
+
         }
         return "";
     }
@@ -732,41 +813,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
     private String selfieImagePicker() {
 
         if (requestCode == CAMERA_PIC_REQUEST) {
-            //----------------------- Alert Dialog -------------------------------------------------
-            Dialog alert = new Dialog(DriverDetailsActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
-            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(alert.getWindow().getAttributes());
-            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.gravity = Gravity.CENTER;
-
-            alert.show();
-            alert.getWindow().setAttributes(lp);
-            alert.setCancelable(true);
-
-            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-            alertTitle.setText("Driver Details");
-            alertMessage.setText("Driver Selfie uploaded successfully");
-            alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
-            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
-
-            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    alert.dismiss();
-
-                }
-            });
-            //------------------------------------------------------------------------------------------
-
             isSelfieUploded = true;
 
             String mobileNoWatcher = driverMobile.getText().toString();
@@ -782,12 +828,94 @@ public class DriverDetailsActivity extends AppCompatActivity {
             uploadSelfie.setVisibility(View.INVISIBLE);
             editDS.setVisibility(View.VISIBLE);
 
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-            String path = getRealPathFromURI(getImageUri(this, image));
-            driverSelfieImg.setImageBitmap(BitmapFactory.decodeFile(path));
-            previewSelfie.setImageBitmap(BitmapFactory.decodeFile(path));
-            pathForSelfie = path;
-            return path;
+            try {
+                Bitmap image = (Bitmap) data.getExtras().get("data");
+                String path = getRealPathFromURI(getImageUri(this, image));
+                driverSelfieImg.setImageBitmap(BitmapFactory.decodeFile(path));
+                previewSelfie.setImageBitmap(BitmapFactory.decodeFile(path));
+                pathForSelfie = path;
+
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(DriverDetailsActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(true);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Driver Details");
+                alertMessage.setText("Driver Selfie uploaded successfully");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                    }
+                });
+                //------------------------------------------------------------------------------------------
+
+                return path;
+            } catch (Exception e) {
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(DriverDetailsActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(true);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Driver Details");
+                alertMessage.setText("Driver Selfie not uploaded, please try again");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                        if (isEdit) {
+
+                        } else {
+                            textDS.setText("Take a Photo");
+                            textDS.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                            uploadSelfie.setVisibility(View.VISIBLE);
+                            editDS.setVisibility(View.INVISIBLE);
+                            isSelfieUploded = false;
+                        }
+
+                    }
+                });
+                //------------------------------------------------------------------------------------------
+            }
+
 
         } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
 //----------------------- Alert Dialog -------------------------------------------------
@@ -1037,7 +1165,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                     UpdateTruckDetails.updateTruckDriverId(truckIdPass, driverIdPass);
                     uploadDriverLicense(driverIdPass, pathForDL);
                     uploadDriverSelfie(driverIdPass, pathForSelfie);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

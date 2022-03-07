@@ -470,18 +470,23 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             previewRcBook.setVisibility(View.VISIBLE);
             previewInsurance.setVisibility(View.VISIBLE);
 
-            isRcUploaded = true;
+
             String vehicleNum = vehicleNumberEdit.getText().toString();
             if (!vehicleNum.isEmpty() && isRcUploaded && isInsurance && truckSelected && isModelSelected) {
                 okVehicleDetails.setEnabled(true);
                 okVehicleDetails.setBackgroundResource(R.drawable.button_active);
             }
+            try {
+                Bitmap image = (Bitmap) data.getExtras().get("data");
+                String path = getRealPathFromURI(getImageUri(this, image));
+                imgRC.setImageBitmap(BitmapFactory.decodeFile(path));
+                pathForRC = path;
+                isRcUploaded = true;
+                return path;
+            }catch (Exception e){
+                isRcUploaded=false;
+            }
 
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-            String path = getRealPathFromURI(getImageUri(this, image));
-            imgRC.setImageBitmap(BitmapFactory.decodeFile(path));
-            pathForRC = path;
-            return path;
 
         }
         return "";
@@ -529,11 +534,15 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 okVehicleDetails.setBackgroundResource(R.drawable.button_active);
             }
 
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-            String path = getRealPathFromURI(getImageUri(this, image));
-            imgI.setImageBitmap(BitmapFactory.decodeFile(path));
-            pathForInsurance = path;
-            return path;
+            try {
+                Bitmap image = (Bitmap) data.getExtras().get("data");
+                String path = getRealPathFromURI(getImageUri(this, image));
+                imgI.setImageBitmap(BitmapFactory.decodeFile(path));
+                pathForInsurance = path;
+                return path;
+            }catch (Exception e){
+                isInsurance = false;
+            }
 
         }
         return "";
@@ -605,60 +614,107 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             return picturePath3;
 
         } else if (requestCode == CAMERA_PIC_REQUEST1) {
-            //----------------------- Alert Dialog -------------------------------------------------
-            Dialog alert = new Dialog(VehicleDetailsActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
-            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(alert.getWindow().getAttributes());
-            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.gravity = Gravity.CENTER;
-
-            alert.show();
-            alert.getWindow().setAttributes(lp);
-            alert.setCancelable(true);
-
-            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-            alertTitle.setText("Truck Details");
-            alertMessage.setText("RC Uploaded Successfully");
-            alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
-            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
-
-            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    alert.dismiss();
-
-                }
-            });
-            //------------------------------------------------------------------------------------------
-
             textRC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadRC.setVisibility(View.INVISIBLE);
             editRC.setVisibility(View.VISIBLE);
             previewRcBook.setVisibility(View.VISIBLE);
             previewInsurance.setVisibility(View.VISIBLE);
 
-            isRcUploaded = true;
+
             String vehicleNum = vehicleNumberEdit.getText().toString();
             if (!vehicleNum.isEmpty() && isRcUploaded && isInsurance && truckSelected && isModelSelected) {
                 okVehicleDetails.setEnabled(true);
                 okVehicleDetails.setBackgroundResource(R.drawable.button_active);
             }
 
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-            String path = getRealPathFromURI(getImageUri(this, image));
-            imgRC.setImageBitmap(BitmapFactory.decodeFile(path));
-            pathForRC = path;
-            return path;
+            try {
+                Bitmap image = (Bitmap) data.getExtras().get("data");
+                String path = getRealPathFromURI(getImageUri(this, image));
+                imgRC.setImageBitmap(BitmapFactory.decodeFile(path));
+                pathForRC = path;
+                isRcUploaded = true;
 
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(VehicleDetailsActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(true);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Truck Details");
+                alertMessage.setText("RC Uploaded Successfully");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+
+                    }
+                });
+                //------------------------------------------------------------------------------------------
+                return path;
+
+            }catch (Exception e){
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(VehicleDetailsActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(true);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Truck Details");
+                alertMessage.setText("RC not Uploaded, Please try again");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                        if (isEdit){
+
+                        }else {
+                            uploadRC.setVisibility(View.VISIBLE);
+                            editRC.setVisibility(View.INVISIBLE);
+                            previewRcBook.setVisibility(View.INVISIBLE);
+                            previewInsurance.setVisibility(View.INVISIBLE);
+                            textRC.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                            isRcEdited = false;
+                        }
+                    }
+                });
+                //------------------------------------------------------------------------------------------
+            }
         }
         return "";
     }
@@ -724,40 +780,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             return picturePath4;
 
         } else if (requestCode == CAMERA_PIC_REQUEST2) {
-            //----------------------- Alert Dialog -------------------------------------------------
-            Dialog alert = new Dialog(VehicleDetailsActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
-            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(alert.getWindow().getAttributes());
-            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.gravity = Gravity.CENTER;
-
-            alert.show();
-            alert.getWindow().setAttributes(lp);
-            alert.setCancelable(true);
-
-            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-            alertTitle.setText("Truck Details");
-            alertMessage.setText("Insurance Uploaded Successfully");
-            alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
-            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
-
-            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    alert.dismiss();
-
-                }
-            });
-            //------------------------------------------------------------------------------------------
 
             textInsurance.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadInsurance.setVisibility(View.INVISIBLE);
@@ -770,11 +792,90 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 okVehicleDetails.setBackgroundResource(R.drawable.button_active);
             }
 
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-            String path = getRealPathFromURI(getImageUri(this, image));
-            imgI.setImageBitmap(BitmapFactory.decodeFile(path));
-            pathForInsurance = path;
-            return path;
+            try {
+                Bitmap image = (Bitmap) data.getExtras().get("data");
+                String path = getRealPathFromURI(getImageUri(this, image));
+                imgI.setImageBitmap(BitmapFactory.decodeFile(path));
+                pathForInsurance = path;
+
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(VehicleDetailsActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(true);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Truck Details");
+                alertMessage.setText("Insurance Uploaded Successfully");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                    }
+                });
+                //------------------------------------------------------------------------------------------
+                return path;
+            }catch (Exception e){
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(VehicleDetailsActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(true);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Truck Details");
+                alertMessage.setText("Insurance not uploaded, please try again");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                        if (isEdit){
+
+                        }else {
+                            textInsurance.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                            uploadInsurance.setVisibility(View.VISIBLE);
+                            editInsurance.setVisibility(View.INVISIBLE);
+                            isInsurance = false;
+                        }
+                    }
+                });
+                //------------------------------------------------------------------------------------------
+            }
+
         }
         return "";
     }
@@ -792,7 +893,6 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 if (isInsuranceEdited) {
                     uploadTruckInsurance(truckId, pathForInsurance);
                 }
-
 
                 okVehicleDetails.setEnabled(true);
                 okVehicleDetails.setBackground(getResources().getDrawable(R.drawable.button_active));

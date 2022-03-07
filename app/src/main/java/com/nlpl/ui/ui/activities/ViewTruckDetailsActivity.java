@@ -542,19 +542,6 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
             if (item.getVehicle_no().toLowerCase().contains(text.toLowerCase())) {
                 searchVehicleList.add(item);
             }
-            if (item.getVehicle_type().toLowerCase().contains(text.toLowerCase())){
-                searchVehicleList.add(item);
-            }
-            if (item.getTruck_type().toLowerCase().contains(text.toLowerCase())){
-                searchVehicleList.add(item);
-            }
-            if (item.getTruck_ft().toLowerCase().contains(text.toLowerCase())){
-                searchVehicleList.add(item);
-            }
-            if (item.getTruck_carrying_capacity().toLowerCase().contains(text.toLowerCase())){
-                searchVehicleList.add(item);
-            }
-
         }
         truckListAdapter.updateData(searchVehicleList);
     }

@@ -271,14 +271,17 @@ public class BankDetailsActivity extends AppCompatActivity {
 
             isImgUploaded = true;
 
-            Bitmap image = (Bitmap) data.getExtras().get("data");
+            try {
+                Bitmap image = (Bitmap) data.getExtras().get("data");
+                String path = getRealPathFromURI(getImageUri(this, image));
+                cancelledCheckImage.setImageBitmap(BitmapFactory.decodeFile(path));
+                previewDialogCancelledChequeImageView.setImageBitmap(BitmapFactory.decodeFile(path));
+                PathForCC = path;
+                return path;
+            }catch (Exception e){
+                isImgUploaded = false;
+            }
 
-            String path = getRealPathFromURI(getImageUri(this, image));
-
-            cancelledCheckImage.setImageBitmap(BitmapFactory.decodeFile(path));
-            previewDialogCancelledChequeImageView.setImageBitmap(BitmapFactory.decodeFile(path));
-
-            PathForCC = path;
         }
         return "";
     }
@@ -345,42 +348,6 @@ public class BankDetailsActivity extends AppCompatActivity {
 
         } else if (requestCode == CAMERA_PIC_REQUEST1) {
 
-            //----------------------- Alert Dialog -------------------------------------------------
-            Dialog alert = new Dialog(BankDetailsActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
-            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(alert.getWindow().getAttributes());
-            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.gravity = Gravity.CENTER;
-
-            alert.show();
-            alert.getWindow().setAttributes(lp);
-            alert.setCancelable(true);
-
-            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-            alertTitle.setText("Bank Details");
-            alertMessage.setText("Cancelled cheque uploaded successfully");
-            alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
-            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
-
-            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    alert.dismiss();
-                    okButton.setEnabled(true);
-                    okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                }
-            });
-            //------------------------------------------------------------------------------------------
-
             textCC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadCC.setVisibility(View.INVISIBLE);
             editCC.setVisibility(View.VISIBLE);
@@ -388,13 +355,93 @@ public class BankDetailsActivity extends AppCompatActivity {
 
             isImgUploaded = true;
 
-            Bitmap image = (Bitmap) data.getExtras().get("data");
+            try {
+                Bitmap image = (Bitmap) data.getExtras().get("data");
+                String path = getRealPathFromURI(getImageUri(this, image));
+                cancelledCheckImage.setImageBitmap(BitmapFactory.decodeFile(path));
+                previewDialogCancelledChequeImageView.setImageBitmap(BitmapFactory.decodeFile(path));
+                PathForCC = path;
 
-            String path = getRealPathFromURI(getImageUri(this, image));
-            cancelledCheckImage.setImageBitmap(BitmapFactory.decodeFile(path));
-            previewDialogCancelledChequeImageView.setImageBitmap(BitmapFactory.decodeFile(path));
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(BankDetailsActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
 
-            PathForCC = path;
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(true);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Bank Details");
+                alertMessage.setText("Cancelled cheque uploaded successfully");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                        okButton.setEnabled(true);
+                        okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                    }
+                });
+                //------------------------------------------------------------------------------------------
+                return path;
+            }catch (Exception e){
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(BankDetailsActivity.this);
+                alert.setContentView(R.layout.dialog_alert);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(true);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Bank Details");
+                alertMessage.setText("Cancelled cheque not uploaded, please try again");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText("OK");
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                        if (isEdit){
+
+                        }else{
+                            textCC.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                            uploadCC.setVisibility(View.VISIBLE);
+                            editCC.setVisibility(View.INVISIBLE);
+                            previewCancelledCheque.setVisibility(View.INVISIBLE);
+                            isImgUploaded = false;
+                        }
+                    }
+                });
+                //------------------------------------------------------------------------------------------
+            }
 
         }
         return "";
@@ -405,9 +452,7 @@ public class BankDetailsActivity extends AppCompatActivity {
         ShowAlert.loadingDialog(BankDetailsActivity.this);
         if (accountNo.getText().toString().equals(reAccount.getText().toString())) {
             if (isEdit) {
-
                 uploadCheque(bankId, PathForCC);
-
                 UpdateBankDetails.updateBankName(bankId, bankName.getText().toString());
                 UpdateBankDetails.updateBankAccountNumber(bankId, accountNo.getText().toString());
                 UpdateBankDetails.updateBankReEnterAccountNumber(bankId, reAccount.getText().toString());
