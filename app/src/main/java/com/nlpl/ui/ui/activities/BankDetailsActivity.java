@@ -860,7 +860,7 @@ public class BankDetailsActivity extends AppCompatActivity {
                         ifscCode.setText(obj.getString("IFSI_CODE"));
                         ccUploadedAPI = obj.getString("cancelled_cheque");
 
-                        if (obj.getString("cancelled_cheque").equals("null")) {
+                        if (obj.getString("cancelled_cheque").equals("null")||obj.getString("cancelled_cheque") == null) {
                             uploadCC.setVisibility(View.VISIBLE);
                             editCC.setVisibility(View.INVISIBLE);
                             isImgUploaded = false;
