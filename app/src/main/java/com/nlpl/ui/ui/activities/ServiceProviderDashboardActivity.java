@@ -1333,7 +1333,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                                     public void onClick(View view) {
                                         alert.dismiss();
                                         previewDialogBidNow.dismiss();
-                                        RearrangeItems();
+                                        JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, false);
                                     }
                                 });
                                 //------------------------------------------------------------------------------------------

@@ -1464,8 +1464,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         ShowAlert.loadingDialog(VehicleDetailsActivity.this);
-        JumpTo.goToServiceProviderDashboard(VehicleDetailsActivity.this, mobile, true);
-
+        JumpTo.goToViewDriverDetailsActivity(VehicleDetailsActivity.this, userId, mobile, true);
     }
 
 }
