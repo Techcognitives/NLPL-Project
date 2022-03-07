@@ -190,7 +190,7 @@
                     android:layout_marginStart="2dp"
                     android:layout_marginEnd="5dp"
                     android:background="@drawable/edit_text_border"
-                    android:hint="@string/Ft"
+                    android:hint="Ft."
                     android:paddingStart="10dp"
                     android:paddingTop="5dp"
                     android:textColor="@color/black"

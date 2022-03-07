@@ -4,9 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -33,6 +39,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -69,6 +76,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RegistrationActivity extends AppCompatActivity {
+
+    final String NOTIFICATION_CHANNEL_ID = "100012";
+    final String default_notification_channel_id = "defaults";
 
     RadioButton ownerButton, driverButton, brokerButton, customerButton;
     View action_bar;
@@ -399,8 +409,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
-            for(int i = s.length()-1; i >= 0; i--){
-                if(s.charAt(i) == '\n'){
+            for (int i = s.length() - 1; i >= 0; i--) {
+                if (s.charAt(i) == '\n') {
                     s.delete(i, i + 1);
                     return;
                 }
@@ -459,7 +469,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private void getStateAndDistrict(String enteredPin) {
 
         Log.i("Entered PIN", enteredPin);
-        String url = "http://13.234.163.179:3000/user/locationData/"+enteredPin;
+        String url = "http://13.234.163.179:3000/user/locationData/" + enteredPin;
         Log.i("url for truckByTruckId", url);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
