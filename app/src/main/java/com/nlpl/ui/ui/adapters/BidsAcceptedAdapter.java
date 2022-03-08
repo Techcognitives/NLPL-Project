@@ -246,9 +246,7 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
         String pickUpLocation = obj.getPick_add();
         holder.pickUpLocation.setText(" " + pickUpLocation);
 
-//        holder.budget.setText("₹" + obj.getBudget());
-
-
+        holder.budget.setText("₹" + obj.getBudget());
 
         String url = activity.getString(R.string.baseURL) + "/spbid/getBidDtByPostId/" + obj.getIdpost_load();
         Log.i("URL: ", url);
@@ -281,7 +279,7 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
 
                                             if (bid_status.equals("withdrawnBySp")) {
                                                 holder.timeLeft.setText("SP Withdrawn");
-                                                holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
+//                                                holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
                                                 holder.bidNowButton.setText("Re-activate Load");
                                                 holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.dark_grey));
                                                 holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
@@ -291,7 +289,7 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
                                                     }
                                                 });
                                             } else {
-                                                holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
+//                                                holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
                                                 holder.bidNowButton.setText("View Consignment");
                                                 holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.green));
                                                 holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
