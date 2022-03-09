@@ -121,7 +121,7 @@
         android:layout_marginEnd="5dp"
         android:drawableStart="@drawable/google_location_small"
         android:onClick="onClickGetCurrentCompanyLocation"
-        android:text="SetLocation"
+        android:text="Set Address"
         android:textColor="@color/button_blue"
         android:textSize="14sp"
         android:visibility="visible"

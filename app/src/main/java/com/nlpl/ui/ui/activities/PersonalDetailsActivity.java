@@ -300,7 +300,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(PersonalDetailsActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
+            alert.setContentView(R.layout.dialog_alert_single_button);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(alert.getWindow().getAttributes());
@@ -364,7 +364,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
 //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(PersonalDetailsActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
+            alert.setContentView(R.layout.dialog_alert_single_button);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(alert.getWindow().getAttributes());
@@ -453,7 +453,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(PersonalDetailsActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -487,7 +487,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             }catch (Exception e){
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(PersonalDetailsActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -553,7 +553,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
 
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(PersonalDetailsActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -587,7 +587,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             }catch (Exception e){
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(PersonalDetailsActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -628,7 +628,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         } else if (requestCode == GET_FROM_GALLERY2 && resultCode == Activity.RESULT_OK) {
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(PersonalDetailsActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
+            alert.setContentView(R.layout.dialog_alert_single_button);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(alert.getWindow().getAttributes());
@@ -692,7 +692,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         } else if (requestCode == CAMERA_PIC_REQUEST2) {
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(PersonalDetailsActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
+            alert.setContentView(R.layout.dialog_alert_single_button);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(alert.getWindow().getAttributes());
@@ -756,7 +756,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 UpdateUserDetails.updateUserIsProfileAdded(userId,"1");
 
                 Dialog alert = new Dialog(PersonalDetailsActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -794,7 +794,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 UpdateUserDetails.updateUserIsPersonalDetailsAdded(userId, "1");
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(PersonalDetailsActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());

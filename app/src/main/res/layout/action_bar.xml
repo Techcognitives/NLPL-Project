@@ -5,34 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/action_bar_constrain"
-    android:background="@color/redDark">
+    android:background="#F7F7F7">
 
     <TextView
         android:id="@+id/action_bar_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="15dp"
-        android:text="Title"
         android:singleLine="true"
-        android:textColor="@color/background"
+        android:text="Title"
+        android:textColor="#1C1A1A"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:gravity="center|start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/action_bar_menu"
         app:layout_constraintStart_toEndOf="@+id/action_bar_back_button"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/action_bar_back_button"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:paddingStart="10dp"
+        android:foregroundGravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/action_bar_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_back_small"
-        app:tint="@color/background" />
+        app:tint="#1C1A1A" />
 
     <ImageView
         android:id="@+id/action_bar_menu"
@@ -47,7 +50,8 @@
         app:layout_constraintStart_toEndOf="@+id/action_bar_title"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.515"
-        app:srcCompat="@drawable/ic_baseline_menu_24" />
+        app:srcCompat="@drawable/ic_baseline_menu_24"
+        app:tint="#1C1A1A" />
 
     <TextView
         android:id="@+id/action_bar_skip"

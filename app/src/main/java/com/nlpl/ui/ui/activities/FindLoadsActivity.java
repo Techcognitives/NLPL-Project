@@ -518,7 +518,7 @@ public class FindLoadsActivity extends AppCompatActivity {
             stateConstrain.setVisibility(View.INVISIBLE);
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(FindLoadsActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
+            alert.setContentView(R.layout.dialog_alert_single_button);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(alert.getWindow().getAttributes());
@@ -853,7 +853,7 @@ public class FindLoadsActivity extends AppCompatActivity {
                     Log.i("loadId bidded", obj.getIdpost_load());
                     //----------------------- Alert Dialog -------------------------------------------------
                     Dialog alert = new Dialog(FindLoadsActivity.this);
-                    alert.setContentView(R.layout.dialog_alert);
+                    alert.setContentView(R.layout.dialog_alert_single_button);
                     alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                     lp.copyFrom(alert.getWindow().getAttributes());
@@ -1169,7 +1169,7 @@ public class FindLoadsActivity extends AppCompatActivity {
                     if (arrayTruckId.size() == 0) {
                         //----------------------- Alert Dialog -------------------------------------------------
                         Dialog alert = new Dialog(FindLoadsActivity.this);
-                        alert.setContentView(R.layout.dialog_alert);
+                        alert.setContentView(R.layout.dialog_alert_single_button);
                         alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                         lp.copyFrom(alert.getWindow().getAttributes());
@@ -1198,7 +1198,7 @@ public class FindLoadsActivity extends AppCompatActivity {
                             public void onClick(View view) {
                                 alert.dismiss();
                                 ShowAlert.loadingDialog(FindLoadsActivity.this);
-                                JumpTo.goToVehicleDetailsActivity(FindLoadsActivity.this, userId, phone, false, true, false, false, null, null);
+                                JumpTo.goToVehicleDetailsActivity(FindLoadsActivity.this, userId, phone, false, false, false, false, null, null);
                             }
                         });
                         //------------------------------------------------------------------------------------------
@@ -1320,7 +1320,7 @@ public class FindLoadsActivity extends AppCompatActivity {
                     if (arrayDriverName.size() == 0) {
                         //----------------------- Alert Dialog -------------------------------------------------
                         Dialog alert = new Dialog(FindLoadsActivity.this);
-                        alert.setContentView(R.layout.dialog_alert);
+                        alert.setContentView(R.layout.dialog_alert_single_button);
                         alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                         lp.copyFrom(alert.getWindow().getAttributes());

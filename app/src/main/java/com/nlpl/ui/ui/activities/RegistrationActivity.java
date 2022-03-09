@@ -314,7 +314,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     public void onClickSkip(View view) {
         ShowAlert.loadingDialog(RegistrationActivity.this);
-        JumpTo.goToSliderActivity(RegistrationActivity.this, mobile);
+        JumpTo.goToServiceProviderDashboard(RegistrationActivity.this, mobile, true);
     }
 
     public void onClickGetCurrentLocation(View view) {
@@ -339,7 +339,7 @@ public class RegistrationActivity extends AppCompatActivity {
             saveUser(createUser());
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(RegistrationActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
+            alert.setContentView(R.layout.dialog_alert_single_button);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(alert.getWindow().getAttributes());
@@ -553,6 +553,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
     public void onClickExploreNow(View view) {
         ShowAlert.loadingDialog(RegistrationActivity.this);
-        JumpTo.goToServiceProviderDashboard(RegistrationActivity.this, mobile, true);
+        JumpTo.goToSliderActivity(RegistrationActivity.this, mobile);
     }
 }

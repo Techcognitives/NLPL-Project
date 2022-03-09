@@ -1,6 +1,7 @@
 package com.nlpl.ui.ui.activities;
 
 import static com.nlpl.R.drawable.blue_profile_small;
+import static com.nlpl.R.drawable.driver;
 
 import static java.lang.Float.parseFloat;
 
@@ -122,7 +123,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     ImageView profilePic;
     Boolean checkedReasonOne = true, checkedReasonTwo = true, checkedReasonThree = true, checkedReasonFour = true, checkedReasonFive = true, checkedReasonSix = true, checkedReasonSeven = true;
 
-    String isPersonalDetailsDone, isBankDetailsDone, isProfileAdded, profileImgUrlForRating, reasonForLowRate="";
+    String isPersonalDetailsDone, isBankDetailsDone, isProfileAdded, profileImgUrlForRating, reasonForLowRate = "";
     float ratingGiven;
     int count = 0;
     String img_type, paymentMethod = "", paymentPercentage = "threePercent";
@@ -675,7 +676,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(CustomerDashboardActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -1471,7 +1472,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         updateAfterSuccess(loadIdForUpdate, spBidIdForUpdate, noteForUpdate, quoteForUpdate);
         //----------------------- Alert Dialog -------------------------------------------------
         Dialog alert = new Dialog(CustomerDashboardActivity.this);
-        alert.setContentView(R.layout.dialog_alert);
+        alert.setContentView(R.layout.dialog_alert_single_button);
         alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(alert.getWindow().getAttributes());
@@ -1510,7 +1511,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         Log.i("Error of Razorpay", s);
         //----------------------- Alert Dialog -------------------------------------------------
         Dialog alert = new Dialog(CustomerDashboardActivity.this);
-        alert.setContentView(R.layout.dialog_alert);
+        alert.setContentView(R.layout.dialog_alert_single_button);
         alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(alert.getWindow().getAttributes());
@@ -1564,18 +1565,25 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         TextView quoteBySP = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_bidder_quote_textview);
         TextView negotiableBySP = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_negotiable_textview);
         TextView notesBySP = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_received_notes_textview);
+        RatingBar spRatings = (RatingBar) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_customer_sp_rate);
+        TextView spRatingInInt = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_bid_now_pick_up_date_textview);
         spNumber = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_sp_number);
         TextView companyNameHeading = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_company_name_heading);
         TextView companyName = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_company_name);
         TextView driverNameHeading = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_driver_name_heading);
         TextView driverName = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_driver_name);
         driverNumber = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_driver_number);
+        TextView tripToFrom = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_bid_now_loadId_heading);
+        tripToFrom.setText("Load ID: " + obj.getPick_city() + "-" + obj.getDrop_city() + "-000");
 
         TextView rateSp = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_rate_sp);
-        TextView rateCustomer = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_rate_driver);
+        TextView rateDriver = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_rate_driver);
 
+        spRatings.setVisibility(View.VISIBLE);
+        spRatingInInt.setVisibility(View.VISIBLE);
+        nameSP.setVisibility(View.VISIBLE);
         rateSp.setVisibility(View.VISIBLE);
-        rateCustomer.setVisibility(View.INVISIBLE);
+        rateDriver.setVisibility(View.GONE);
 
         spNumber.setVisibility(View.VISIBLE);
         driverName.setVisibility(View.VISIBLE);
@@ -1653,7 +1661,8 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                                     for (int i = 0; i < truckLists.length(); i++) {
                                         JSONObject obj = truckLists.getJSONObject(i);
                                         nameSP.setText(obj.getString("name"));
-                                        spNumber.setText(obj.getString("phone_number"));
+                                        String spNumberAPI = obj.getString("phone_number").substring(2, 12);
+                                        spNumber.setText("+91 " + spNumberAPI);
 
                                         int isCompAded = obj.getInt("isCompany_added");
 
@@ -1712,7 +1721,8 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                                     for (int i = 0; i < truckLists.length(); i++) {
                                         JSONObject obj = truckLists.getJSONObject(i);
                                         driverName.setText(obj.getString("driver_name"));
-                                        driverNumber.setText(obj.getString("driver_number"));
+                                        String driverNumberAPI = obj.getString("driver_number").substring(2, 12);
+                                        driverNumber.setText("+91 " + driverNumberAPI);
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -1800,7 +1810,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
                                     //----------------------- Alert Dialog -------------------------------------------------
                                     Dialog alert = new Dialog(CustomerDashboardActivity.this);
-                                    alert.setContentView(R.layout.dialog_alert);
+                                    alert.setContentView(R.layout.dialog_alert_single_button);
                                     alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                                     WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                                     lp.copyFrom(alert.getWindow().getAttributes());
@@ -1847,7 +1857,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
                                     //----------------------- Alert Dialog -------------------------------------------------
                                     Dialog alert = new Dialog(CustomerDashboardActivity.this);
-                                    alert.setContentView(R.layout.dialog_alert);
+                                    alert.setContentView(R.layout.dialog_alert_single_button);
                                     alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                                     WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                                     lp.copyFrom(alert.getWindow().getAttributes());
@@ -1968,7 +1978,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                     alert.dismiss();
                     submitButton.setBackground(getDrawable(R.drawable.button_active));
                     UpdateUserDetails.updateUserRating(userIdForRating, String.valueOf(ratingGiven));
-                }else{
+                } else {
                     submitButton.setBackground(getDrawable(R.drawable.button_de_active));
                 }
             }
@@ -2403,7 +2413,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         if (requestCode == GET_FROM_GALLERY2 && resultCode == Activity.RESULT_OK) {
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(CustomerDashboardActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
+            alert.setContentView(R.layout.dialog_alert_single_button);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(alert.getWindow().getAttributes());
@@ -2457,7 +2467,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(CustomerDashboardActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -2489,10 +2499,10 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                     }
                 });
                 //------------------------------------------------------------------------------------------
-            }catch (Exception e){
+            } catch (Exception e) {
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(CustomerDashboardActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -2593,7 +2603,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         UpdateUserDetails.updateUserIsProfileAdded(userId, "1");
 
         Dialog alert = new Dialog(CustomerDashboardActivity.this);
-        alert.setContentView(R.layout.dialog_alert);
+        alert.setContentView(R.layout.dialog_alert_single_button);
         alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(alert.getWindow().getAttributes());
@@ -2765,7 +2775,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(CustomerDashboardActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -2813,7 +2823,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
             if (!isBankDetailsDone.equals("1")) {
                 InAppNotification.SendNotificationJumpToBankDetailsActivity(CustomerDashboardActivity.this, "Complete Your Profile", "Upload Bank details and complete your Profile", userId, phone, false, null);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
@@ -2822,7 +2832,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     final Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             int state = msg.getData().getInt("state");
-            if (state == 1){
+            if (state == 1) {
                 loadingDialog.dismiss();
             }
         }

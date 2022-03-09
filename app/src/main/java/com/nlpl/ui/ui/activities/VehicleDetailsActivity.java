@@ -179,6 +179,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         arrayVehicleType.add("Tata");
         arrayVehicleType.add("Mahindra");
         arrayVehicleType.add("Eicher");
+        arrayVehicleType.add("Ashok Leyland");
         arrayVehicleType.add("Other");
 
         openSelected.setChecked(false);
@@ -554,7 +555,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(VehicleDetailsActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
+            alert.setContentView(R.layout.dialog_alert_single_button);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(alert.getWindow().getAttributes());
@@ -636,7 +637,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(VehicleDetailsActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -673,7 +674,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             }catch (Exception e){
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(VehicleDetailsActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -724,7 +725,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(VehicleDetailsActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
+            alert.setContentView(R.layout.dialog_alert_single_button);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(alert.getWindow().getAttributes());
@@ -800,7 +801,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(VehicleDetailsActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -835,7 +836,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             }catch (Exception e){
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(VehicleDetailsActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());

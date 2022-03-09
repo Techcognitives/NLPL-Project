@@ -1098,7 +1098,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         Log.i("loadId bidded", obj.getIdpost_load());
                         //----------------------- Alert Dialog -------------------------------------------------
                         Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
-                        alert.setContentView(R.layout.dialog_alert);
+                        alert.setContentView(R.layout.dialog_alert_single_button);
                         alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                         lp.copyFrom(alert.getWindow().getAttributes());
@@ -1185,7 +1185,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                                 Log.i("loadId bidded", obj.getIdpost_load());
                                 //----------------------- Alert Dialog -------------------------------------------------
                                 Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
-                                alert.setContentView(R.layout.dialog_alert);
+                                alert.setContentView(R.layout.dialog_alert_single_button);
                                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -1815,7 +1815,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
 
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -2071,7 +2071,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         UpdateBidDetails.updateBidStatus(obj.getBidId(), "withdrawnBySp");
                         //----------------------- Alert Dialog -------------------------------------------------
                         Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
-                        alert.setContentView(R.layout.dialog_alert);
+                        alert.setContentView(R.layout.dialog_alert_single_button);
                         alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                         lp.copyFrom(alert.getWindow().getAttributes());
@@ -2119,7 +2119,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
 
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -2167,7 +2167,9 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                     for (int i = 0; i < truckLists.length(); i++) {
                         JSONObject obj1 = truckLists.getJSONObject(i);
                         customerName.setText(obj1.getString("name"));
-                        customerNumber.setText(obj1.getString("phone_number"));
+                        String mobileNumberCustomer = obj1.getString("phone_number");
+                        String s = mobileNumberCustomer.substring(2, 12);
+                        customerNumber.setText("+91 "+s);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -2614,7 +2616,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         UpdateUserDetails.updateUserIsProfileAdded(userId, "1");
 
         Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
-        alert.setContentView(R.layout.dialog_alert);
+        alert.setContentView(R.layout.dialog_alert_single_button);
         alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(alert.getWindow().getAttributes());
@@ -2713,7 +2715,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         if (requestCode == GET_FROM_GALLERY_profile && resultCode == Activity.RESULT_OK) {
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
+            alert.setContentView(R.layout.dialog_alert_single_button);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(alert.getWindow().getAttributes());
@@ -2769,7 +2771,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
 
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -2805,7 +2807,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             }catch (Exception e){
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());

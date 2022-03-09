@@ -370,7 +370,7 @@ public class PostALoadActivity extends AppCompatActivity {
                     }
                     //----------------------- Alert Dialog -------------------------------------------------
                     Dialog alert = new Dialog(PostALoadActivity.this);
-                    alert.setContentView(R.layout.dialog_alert);
+                    alert.setContentView(R.layout.dialog_alert_single_button);
                     alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                     lp.copyFrom(alert.getWindow().getAttributes());
@@ -417,7 +417,7 @@ public class PostALoadActivity extends AppCompatActivity {
                     saveLoad(createLoadRequest());
                     //----------------------- Alert Dialog -------------------------------------------------
                     Dialog alert = new Dialog(PostALoadActivity.this);
-                    alert.setContentView(R.layout.dialog_alert);
+                    alert.setContentView(R.layout.dialog_alert_single_button);
                     alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                     lp.copyFrom(alert.getWindow().getAttributes());
@@ -1309,7 +1309,7 @@ public class PostALoadActivity extends AppCompatActivity {
         if (pickUpAddress == null) {
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(PostALoadActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
+            alert.setContentView(R.layout.dialog_alert_single_button);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(alert.getWindow().getAttributes());

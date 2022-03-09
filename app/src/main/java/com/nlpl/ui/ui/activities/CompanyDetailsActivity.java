@@ -273,7 +273,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
             UpdateUserDetails.updateUserIsCompanyAdded(userId, "1");
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(CompanyDetailsActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
+            alert.setContentView(R.layout.dialog_alert_single_button);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(alert.getWindow().getAttributes());

@@ -298,7 +298,7 @@ public class CustomerLoadsHistoryActivity extends AppCompatActivity {
 
         //----------------------- Alert Dialog -------------------------------------------------
         Dialog reActivateLoad = new Dialog(CustomerLoadsHistoryActivity.this);
-        reActivateLoad.setContentView(R.layout.dialog_alert);
+        reActivateLoad.setContentView(R.layout.dialog_alert_single_button);
         reActivateLoad.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(reActivateLoad.getWindow().getAttributes());

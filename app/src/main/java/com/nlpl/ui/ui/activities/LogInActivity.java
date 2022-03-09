@@ -109,23 +109,24 @@ public class LogInActivity extends AppCompatActivity {
                     alertTitle.setText("OTP sent successfully");
                     String s = mobile.substring(3, 13);
                     alertMessage.setText("OTP sent to " + "+91 "+s);
-                    alertPositiveButton.setVisibility(View.GONE);
-                    alertNegativeButton.setText("OK");
-                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                    alertPositiveButton.setVisibility(View.VISIBLE);
+                    alertPositiveButton.setText("OK");
+                    alertNegativeButton.setText("Cancel");
 
-                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    alertPositiveButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             alert.dismiss();
                             JumpTo.goToOTPActivity(LogInActivity.this, mobile, false, null);
                         }
                     });
+
+                    alertNegativeButton.setOnClickListener(view1 -> alert.dismiss());
                     //------------------------------------------------------------------------------------------
                 } else {
                     //----------------------- Alert Dialog -----------------------------------------------------
                     Dialog alert = new Dialog(LogInActivity.this);
-                    alert.setContentView(R.layout.dialog_alert);
+                    alert.setContentView(R.layout.dialog_alert_single_button);
                     alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                     lp.copyFrom(alert.getWindow().getAttributes());

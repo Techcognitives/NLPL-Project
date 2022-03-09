@@ -573,7 +573,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     //----------------------- Alert Dialog -------------------------------------------------
                     Dialog alert = new Dialog(PersonalDetailsAndIdProofActivity.this);
-                    alert.setContentView(R.layout.dialog_alert);
+                    alert.setContentView(R.layout.dialog_alert_single_button);
                     alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                     lp.copyFrom(alert.getWindow().getAttributes());
@@ -752,7 +752,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             //----------------------- Alert Dialog -------------------------------------------------
             saveImage(imageRequest());
             Dialog alert = new Dialog(PersonalDetailsAndIdProofActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
+            alert.setContentView(R.layout.dialog_alert_single_button);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(alert.getWindow().getAttributes());
@@ -811,7 +811,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             //----------------------- Alert Dialog -------------------------------------------------
             saveImage(imageRequest());
             Dialog alert = new Dialog(PersonalDetailsAndIdProofActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
+            alert.setContentView(R.layout.dialog_alert_single_button);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(alert.getWindow().getAttributes());
@@ -883,7 +883,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 uploadImage(path);
 
                 Dialog alert = new Dialog(PersonalDetailsAndIdProofActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -917,7 +917,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 //------------------------------------------------------------------------------------------
             }catch (Exception e){
                 Dialog alert = new Dialog(PersonalDetailsAndIdProofActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -971,7 +971,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 uploadImage(path);
 
                 Dialog alert = new Dialog(PersonalDetailsAndIdProofActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -1006,7 +1006,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 //------------------------------------------------------------------------------------------
             }catch (Exception e){
                 Dialog alert = new Dialog(PersonalDetailsAndIdProofActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -1044,7 +1044,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             //----------------------- Alert Dialog -------------------------------------------------
             saveImage(imageRequest());
             Dialog alert = new Dialog(PersonalDetailsAndIdProofActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
+            alert.setContentView(R.layout.dialog_alert_single_button);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(alert.getWindow().getAttributes());
@@ -1101,7 +1101,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             //----------------------- Alert Dialog -------------------------------------------------
             saveImage(imageRequest());
             Dialog alert = new Dialog(PersonalDetailsAndIdProofActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
+            alert.setContentView(R.layout.dialog_alert_single_button);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(alert.getWindow().getAttributes());

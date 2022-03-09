@@ -290,7 +290,6 @@ public class BankDetailsActivity extends AppCompatActivity {
 
         //Detects request code for PAN
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
-
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(BankDetailsActivity.this);
             alert.setContentView(R.layout.dialog_alert_single_button);

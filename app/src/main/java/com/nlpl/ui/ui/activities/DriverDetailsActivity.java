@@ -265,7 +265,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
                 alertTitle.setText("Please add a Driver");
                 alertMessage.setText("You cannot bid unless you have a Driver");
-                alertPositiveButton.setText("+ Add Truck Driver");
+                alertPositiveButton.setText("+ Add");
                 alertPositiveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -642,7 +642,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(DriverDetailsActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
+            alert.setContentView(R.layout.dialog_alert_single_button);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(alert.getWindow().getAttributes());
@@ -727,7 +727,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(DriverDetailsActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -762,7 +762,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
             } catch (Exception e) {
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(DriverDetailsActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -837,7 +837,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(DriverDetailsActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -873,7 +873,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
             } catch (Exception e) {
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(DriverDetailsActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -920,7 +920,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
 //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(DriverDetailsActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
+            alert.setContentView(R.layout.dialog_alert_single_button);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(alert.getWindow().getAttributes());
@@ -993,7 +993,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
             if (driverMobileText.length() != 10) {
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(DriverDetailsActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -1108,7 +1108,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                     alertTitle.setText("Driver Details added successfully");
                     alertMessage.setText("Would you like to add Driver's Bank Details?");
 
-                    alertPositiveButton.setText("Add Driver Bank Details");
+                    alertPositiveButton.setText("+ Add");
                     alertPositiveButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -1122,7 +1122,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                         }
                     });
 
-                    alertNegativeButton.setText("May be Later");
+                    alertNegativeButton.setText("Later");
                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                     alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
                     alertNegativeButton.setOnClickListener(new View.OnClickListener() {
@@ -1727,7 +1727,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         } catch (Exception e) {
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(DriverDetailsActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
+            alert.setContentView(R.layout.dialog_alert_single_button);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(alert.getWindow().getAttributes());

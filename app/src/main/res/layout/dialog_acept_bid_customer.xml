@@ -320,17 +320,17 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView46" />
 
                 <RatingBar
-                    android:id="@+id/textView40"
+                    android:id="@+id/dialog_accept_bid_customer_sp_rate"
                     style="@style/Widget.AppCompat.RatingBar.Small"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:foregroundGravity="center"
                     android:isIndicator="true"
                     android:numStars="1"
                     android:stepSize="0.1"
-                    android:visibility="gone"
                     android:theme="@style/RatingBar"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toTopOf="@+id/dialog_accept_bid_company_name"
                     app:layout_constraintEnd_toStartOf="@+id/dialog_accept_bid_sp_number"
                     app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_pick_up_date_textview"
@@ -346,10 +346,10 @@
                     android:textColor="@color/black"
                     android:textSize="12sp"
                     android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView40"
-                    app:layout_constraintEnd_toStartOf="@+id/textView40"
+                    app:layout_constraintBottom_toBottomOf="@+id/dialog_accept_bid_customer_sp_rate"
+                    app:layout_constraintEnd_toStartOf="@+id/dialog_accept_bid_customer_sp_rate"
                     app:layout_constraintStart_toEndOf="@+id/dialog_accept_bit_service_provider_name"
-                    app:layout_constraintTop_toTopOf="@+id/textView40" />
+                    app:layout_constraintTop_toTopOf="@+id/dialog_accept_bid_customer_sp_rate" />
 
                 <TextView
                     android:id="@+id/dialog_accept_bid_model_textview"
@@ -402,10 +402,10 @@
                     android:textSize="12sp"
                     android:textStyle="bold"
                     android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView40"
+                    app:layout_constraintBottom_toBottomOf="@+id/dialog_accept_bid_customer_sp_rate"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView40"
-                    app:layout_constraintTop_toTopOf="@+id/textView40" />
+                    app:layout_constraintStart_toEndOf="@+id/dialog_accept_bid_customer_sp_rate"
+                    app:layout_constraintTop_toTopOf="@+id/dialog_accept_bid_customer_sp_rate" />
 
                 <TextView
                     android:id="@+id/dialog_accept_bid_company_name_heading"
@@ -440,7 +440,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/dialog_accept_bid_driver_name"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/dialog_accept_bid_company_name_heading"
-                    app:layout_constraintTop_toBottomOf="@+id/textView40" />
+                    app:layout_constraintTop_toBottomOf="@+id/dialog_accept_bid_customer_sp_rate" />
 
                 <TextView
                     android:id="@+id/dialog_accept_bid_driver_name_heading"
@@ -482,9 +482,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
-                    android:background="@drawable/underline_blue"
-                    android:text="+91 9999999999"
                     android:onClick="onClickOpenDialer"
+                    android:text="+91 9999999999"
                     android:textColor="@color/button_blue"
                     android:textSize="12sp"
                     android:textStyle="bold"
@@ -550,7 +549,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/dialog_accept_bid_cancel_btn"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/dialog_accept_bid_rate_driver" />
+                    app:layout_constraintTop_toBottomOf="@+id/dialog_accept_bid_rate_sp" />
 
                 <EditText
                     android:id="@+id/dialog_accept_bid_notes_editText"
@@ -570,7 +569,7 @@
                     android:paddingBottom="7dp"
                     android:textSize="12sp"
                     android:textStyle="italic"
-                    app:layout_constraintBottom_toTopOf="@+id/dialog_accept_bid_rate_driver"
+                    app:layout_constraintBottom_toTopOf="@+id/dialog_accept_bid_rate_sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/notes_text_heading_view_consignment_customer" />
@@ -677,7 +676,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginEnd="5dp"
+                    android:layout_marginEnd="10dp"
                     android:background="@drawable/button_active"
                     android:gravity="center"
                     android:paddingStart="5dp"

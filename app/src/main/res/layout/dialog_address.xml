@@ -50,7 +50,7 @@
             android:layout_marginEnd="5dp"
             android:drawableStart="@drawable/google_location_small"
             android:onClick="onClickGetCurrentLocationAddress"
-            android:text="Set Location"
+            android:text="Set Address"
             android:textColor="@color/button_blue"
             android:textSize="14sp"
             android:visibility="visible"

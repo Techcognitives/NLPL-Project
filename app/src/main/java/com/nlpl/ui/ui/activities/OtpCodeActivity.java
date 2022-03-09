@@ -138,7 +138,7 @@ public class OtpCodeActivity extends AppCompatActivity {
                 otp = otpCode.getText().toString();
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(OtpCodeActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -261,7 +261,7 @@ public class OtpCodeActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     //----------------------- Alert Dialog -------------------------------------------------
                     Dialog alert = new Dialog(OtpCodeActivity.this);
-                    alert.setContentView(R.layout.dialog_alert);
+                    alert.setContentView(R.layout.dialog_alert_single_button);
                     alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                     lp.copyFrom(alert.getWindow().getAttributes());
@@ -302,7 +302,7 @@ public class OtpCodeActivity extends AppCompatActivity {
                 } else {
                     //----------------------- Alert Dialog -------------------------------------------------
                     Dialog alert = new Dialog(OtpCodeActivity.this);
-                    alert.setContentView(R.layout.dialog_alert);
+                    alert.setContentView(R.layout.dialog_alert_single_button);
                     alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                     lp.copyFrom(alert.getWindow().getAttributes());
