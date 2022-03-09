@@ -809,6 +809,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
         EditText budget = setBudget.findViewById(R.id.dialog_budget_edit);
         Button okBudget = setBudget.findViewById(R.id.dialog_budget_ok_btn);
+        Button cancelButton = setBudget.findViewById(R.id.dialog_budget_cancel_button);
         budget.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
@@ -823,6 +824,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
             okBudget.setBackgroundResource((R.drawable.button_de_active));
         }
 
+        cancelButton.setOnClickListener(view -> setBudget.dismiss());
         budget.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

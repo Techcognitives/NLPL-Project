@@ -1799,11 +1799,14 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
 
         EditText budget = setBudget.findViewById(R.id.dialog_budget_edit);
         Button okBudget = setBudget.findViewById(R.id.dialog_budget_ok_btn);
+        Button cancelButton = setBudget.findViewById(R.id.dialog_budget_cancel_button);
         budget.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         String newPreviousBudget = previousBudget.replaceAll(",", "");
         budget.setText(newPreviousBudget);
+
+        cancelButton.setOnClickListener(view -> setBudget.dismiss());
 
         if (!previousBudget.isEmpty()) {
             okBudget.setEnabled(true);

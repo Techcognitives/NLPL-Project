@@ -471,6 +471,7 @@ public class PostALoadActivity extends AppCompatActivity {
         EditText budget = setBudget.findViewById(R.id.dialog_budget_edit);
         Button okBudget = setBudget.findViewById(R.id.dialog_budget_ok_btn);
         TextView amountInWords = setBudget.findViewById(R.id.dialog_budget_amount_in_words);
+        Button cancelButton = setBudget.findViewById(R.id.dialog_budget_cancel_button);
 
         budget.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
