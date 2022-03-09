@@ -1393,20 +1393,20 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             selectTruck.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    arrayTruckId.clear();
-                    getTrucksByUserId();
-                    arrayTruckList.clear();
+//                    arrayTruckId.clear();
+//                    getTrucksByUserId();
+//                    arrayTruckList.clear();
                 }
             });
 
             selectDriver.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (isTruckSelectedToBid) {
-                        arrayDriverId.clear();
-                        getDriversByUserId();
-                        arrayDriverName.clear();
-                    }
+//                    if (isTruckSelectedToBid) {
+//                        arrayDriverId.clear();
+//                        getDriversByUserId();
+//                        arrayDriverName.clear();
+//                    }
                 }
             });
         }
@@ -2174,20 +2174,20 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         selectTruck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                arrayTruckId.clear();
-                getTrucksByUserId();
-                arrayTruckList.clear();
+//                arrayTruckId.clear();
+//                getTrucksByUserId();
+//                arrayTruckList.clear();
             }
         });
 
         selectDriver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isTruckSelectedToBid) {
-                    arrayDriverId.clear();
-                    getDriversByUserId();
-                    arrayDriverName.clear();
-                }
+//                if (isTruckSelectedToBid) {
+//                    arrayDriverId.clear();
+//                    getDriversByUserId();
+//                    arrayDriverName.clear();
+//                }
             }
         });
     }
