@@ -57,7 +57,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
     private ArrayList<DriverModel> driverList = new ArrayList<>();
     private DriversListAdapter driverListAdapter;
     private RecyclerView driverListRecyclerView;
-    private AddTruckService addTruckService;
+
     SwipeRefreshLayout swipeRefreshLayout;
 
     Dialog previewDialogRcBook, previewDialogInsurance;
@@ -93,12 +93,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
         }
 
         mQueue = Volley.newRequestQueue(ViewTruckDetailsActivity.this);
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getString(R.string.baseURL))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-        addTruckService = retrofit.create(AddTruckService.class);
         //-------------------------------- Action Bar ----------------------------------------------
         actionBar = findViewById(R.id.view_truck_details_action_bar);
         actionBarTitle = (TextView) actionBar.findViewById(R.id.action_bar_title);

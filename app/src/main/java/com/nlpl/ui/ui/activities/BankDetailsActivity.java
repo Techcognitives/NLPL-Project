@@ -293,7 +293,7 @@ public class BankDetailsActivity extends AppCompatActivity {
 
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(BankDetailsActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
+            alert.setContentView(R.layout.dialog_alert_single_button);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(alert.getWindow().getAttributes());
@@ -364,7 +364,7 @@ public class BankDetailsActivity extends AppCompatActivity {
 
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(BankDetailsActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -401,7 +401,7 @@ public class BankDetailsActivity extends AppCompatActivity {
             }catch (Exception e){
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(BankDetailsActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -464,7 +464,7 @@ public class BankDetailsActivity extends AppCompatActivity {
                 saveBank(createBankAcc());
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(BankDetailsActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
+                alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -504,7 +504,7 @@ public class BankDetailsActivity extends AppCompatActivity {
             reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(BankDetailsActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
+            alert.setContentView(R.layout.dialog_alert_single_button);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(alert.getWindow().getAttributes());
@@ -653,7 +653,7 @@ public class BankDetailsActivity extends AppCompatActivity {
             reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(BankDetailsActivity.this);
-            alert.setContentView(R.layout.dialog_alert);
+            alert.setContentView(R.layout.dialog_alert_single_button);
             alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(alert.getWindow().getAttributes());
