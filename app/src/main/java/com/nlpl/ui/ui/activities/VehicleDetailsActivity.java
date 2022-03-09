@@ -962,7 +962,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                         alert.dismiss();
                         if (isDriverDetailsDoneAPI.equals("1")) {
                             if (fromBidNow) {
-                                VehicleDetailsActivity.this.finish();
+                                JumpTo.goToViewVehicleDetailsActivity(VehicleDetailsActivity.this, userId, mobile, true);
                             } else {
                                 ShowAlert.loadingDialog(VehicleDetailsActivity.this);
                                 JumpTo.goToViewVehicleDetailsActivity(VehicleDetailsActivity.this, userId, mobile, true);
@@ -1012,7 +1012,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                                     alert.dismiss();
                                     ShowAlert.loadingDialog(VehicleDetailsActivity.this);
                                     if (fromBidNow) {
-                                        VehicleDetailsActivity.this.finish();
+                                        JumpTo.goToViewVehicleDetailsActivity(VehicleDetailsActivity.this, userId, mobile, true);
                                     } else {
                                         JumpTo.goToViewVehicleDetailsActivity(VehicleDetailsActivity.this, userId, mobile, true);
                                     }
