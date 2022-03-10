@@ -2,6 +2,7 @@ package com.nlpl.ui.ui.activities;
 
 import static com.nlpl.R.drawable.blue_profile_small;
 import static com.nlpl.R.drawable.driver;
+import static com.nlpl.R.drawable.find;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -168,7 +169,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     private DriversListAdapterBid driverListAdapter;
     private RecyclerView driverListRecyclerView;
 
-    View actionBar;
+    View actionBar, loadNotificationUnderline, bidSubmittedUnderline;
     TextView customerNumber, customerNumberHeading, customerName, customerNameHeading, customerFirstBudget, customerSecondBudget, cancel2, cancel, acceptAndBid, spQuote, selectDriver, selectTruck, selectedTruckModel, selectedTruckFeet, selectedTruckCapacity, selectedTruckBodyType, actionBarTitle;
     EditText notesSp;
     CheckBox declaration;
@@ -212,6 +213,8 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         bidsSubmittedConstrain = (ConstraintLayout) findViewById(R.id.dashboard_bids_submitted_constrain);
         loadNotificationTextView = (TextView) findViewById(R.id.dashboard_load_notification_button);
         bidsSubmittedTextView = (TextView) findViewById(R.id.dashboard_bids_submitted_button);
+        loadNotificationUnderline = (View) findViewById(R.id.dashboard_load_notification_view);
+        bidSubmittedUnderline = (View) findViewById(R.id.dashboard_bids_submitted_view);
 
         getNotification();
         getCurrentLocation = new GetCurrentLocation();
@@ -220,12 +223,16 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             loadNotificationSelected = true;
             loadNotificationConstrain.setVisibility(View.VISIBLE);
             bidsSubmittedConstrain.setVisibility(View.INVISIBLE);
+            loadNotificationUnderline.setVisibility(View.VISIBLE);
+            bidSubmittedUnderline.setVisibility(View.INVISIBLE);
             loadNotificationTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
             bidsSubmittedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
         } else {
             loadNotificationSelected = false;
             loadNotificationConstrain.setVisibility(View.INVISIBLE);
             bidsSubmittedConstrain.setVisibility(View.VISIBLE);
+            loadNotificationUnderline.setVisibility(View.INVISIBLE);
+            bidSubmittedUnderline.setVisibility(View.VISIBLE);
             bidsSubmittedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
             loadNotificationTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
         }
@@ -251,7 +258,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         TextView profileText = (TextView) bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
         ImageView profileImageView = (ImageView) bottomNav.findViewById(R.id.bottom_nav_profile_image_view);
         profileText.setText("Find Loads");
-        profileImageView.setImageDrawable(getDrawable(R.drawable.find_small));
+        profileImageView.setImageDrawable(getDrawable(R.drawable.bottom_nav_search_small));
 
         arrayUserId = new ArrayList<>();
         arrayMobileNo = new ArrayList<>();
@@ -777,6 +784,8 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 loadNotificationSelected = true;
                 loadNotificationConstrain.setVisibility(View.VISIBLE);
                 bidsSubmittedConstrain.setVisibility(View.INVISIBLE);
+                loadNotificationUnderline.setVisibility(View.VISIBLE);
+                bidSubmittedUnderline.setVisibility(View.INVISIBLE);
                 loadNotificationTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
                 bidsSubmittedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
                 break;
@@ -785,6 +794,8 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 loadNotificationSelected = false;
                 loadNotificationConstrain.setVisibility(View.INVISIBLE);
                 bidsSubmittedConstrain.setVisibility(View.VISIBLE);
+                loadNotificationUnderline.setVisibility(View.INVISIBLE);
+                bidSubmittedUnderline.setVisibility(View.VISIBLE);
                 loadNotificationTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
                 bidsSubmittedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
 

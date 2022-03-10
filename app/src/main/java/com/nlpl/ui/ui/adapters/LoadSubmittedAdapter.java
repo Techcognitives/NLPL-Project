@@ -213,13 +213,13 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
         holder.destinationEnd.setText("  " + dropCity);
 
         String date = obj.getPick_up_date();
-        holder.date.setText("Date: " + date);
+        holder.date.setText("Pick-up Date: " + date);
 
         String time = obj.getPick_up_time();
-        holder.time.setText("Time: " + time);
+        holder.time.setText("" + time);
 
         String approxKms = obj.getKm_approx();
-        holder.distance.setText("Distance: " + approxKms);
+        holder.distance.setText("" + approxKms);
 
         String model = obj.getVehicle_model();
         holder.model.setText("Model: " + model);
