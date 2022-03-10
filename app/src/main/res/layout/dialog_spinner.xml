@@ -18,7 +18,7 @@
         android:paddingBottom="5dp"
         android:text="Select State"
         android:background="@drawable/personal_details_buttons_de_active"
-        android:backgroundTint="@color/redDark"
+        android:backgroundTint="@color/light_black"
         android:textAlignment="center"
         android:textStyle="bold"
         android:textColor="@color/white"

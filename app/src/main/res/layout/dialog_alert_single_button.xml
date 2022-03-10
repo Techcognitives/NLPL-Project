@@ -14,7 +14,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/personal_details_buttons_de_active"
-        android:backgroundTint="@color/button_blue"
+        android:backgroundTint="@color/light_black"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout8"

@@ -84,7 +84,7 @@
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
         android:text="@string/phone"
-        android:textColor="@color/button_blue"
+        android:textColor="@color/light_black"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/my_driver_list_driver_email_id"
