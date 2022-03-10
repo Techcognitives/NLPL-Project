@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/action_bar_constrain"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottom_nav_sp_dashboard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/all_rounded_small"
-        android:backgroundTint="@color/light_white"
+        android:background="@drawable/personal_details_buttons_active"
+        android:backgroundTint="@color/dark_white"
         android:onClick="onClickBottomNavigation"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/bottom_nav_customer_dashboard"
@@ -24,7 +24,8 @@
             android:layout_width="0dp"
             android:layout_height="2dp"
             android:background="@drawable/personal_details_buttons_active"
-            android:backgroundTint="@color/light_black"
+            android:backgroundTint="@color/underline"
+            android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@+id/ejdcnjeknsd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
-        android:background="@drawable/all_rounded_small"
+        android:background="@drawable/personal_details_buttons_active"
         android:backgroundTint="@color/light_white"
         android:onClick="onClickBottomNavigation"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -78,7 +79,7 @@
             android:layout_width="0dp"
             android:layout_height="2dp"
             android:background="@drawable/personal_details_buttons_active"
-            android:backgroundTint="@color/light_black"
+            android:backgroundTint="@color/underline"
             android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@+id/bottom_nav_profile_image_view"
             app:layout_constraintEnd_toEndOf="parent"
@@ -95,7 +96,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bottom_nav_bar_find_underline"
-            app:srcCompat="@drawable/black_truck_small" />
+            app:srcCompat="@drawable/bottom_nav_search_small" />
 
         <TextView
             android:id="@+id/bottom_nav_profile_text_view"
@@ -116,7 +117,7 @@
         android:id="@+id/constraintLayout17"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/all_rounded_small"
+        android:background="@drawable/personal_details_buttons_active"
         android:backgroundTint="@color/light_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -128,7 +129,7 @@
             android:layout_width="0dp"
             android:layout_height="2dp"
             android:background="@drawable/personal_details_buttons_active"
-            android:backgroundTint="@color/light_black"
+            android:backgroundTint="@color/underline"
             android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@+id/imageView22"
             app:layout_constraintEnd_toEndOf="parent"

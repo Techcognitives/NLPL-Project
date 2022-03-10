@@ -4,7 +4,7 @@
     <item
         android:drawable="@drawable/track_black"
         android:width="35dp"
-        android:height="25dp"
+        android:height="20dp"
         />
 
 </layer-list >

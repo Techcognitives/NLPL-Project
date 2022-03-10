@@ -2,9 +2,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:drawable="@drawable/start_destination"
-        android:width="14dp"
-        android:height="14dp"
+        android:drawable="@drawable/bottom_nav_search"
+        android:width="20dp"
+        android:height="20dp"
         />
 
 </layer-list >

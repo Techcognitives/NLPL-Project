@@ -683,7 +683,7 @@
     </string-array>
 
     <string-array name="array_sort_by">
-        <item>Sort By</item>
+        <item>Sort Bid Responses</item>
         <item>By Price Low-high</item>
         <item>By Latest Response</item>
         <item>By Initial Response</item>

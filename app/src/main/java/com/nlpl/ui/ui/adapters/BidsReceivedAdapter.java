@@ -1,6 +1,7 @@
 package com.nlpl.ui.ui.adapters;
 
 import android.annotation.SuppressLint;
+import android.graphics.Typeface;
 import android.icu.text.DecimalFormat;
 import android.icu.text.NumberFormat;
 import android.os.Build;
@@ -229,7 +230,7 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
         holder.budget.setText("₹ " + budget);
 
         String date = obj.getPick_up_date();
-        holder.date.setText(date);
+        holder.date.setText("Pick-up Date: "+date);
 
         String time = obj.getPick_up_time();
         holder.time.setText(time);
@@ -241,7 +242,7 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
         holder.model.setText("Model: " + model);
 
         String feet = obj.getFeet();
-        holder.feet.setText("Feet: " + feet);
+        holder.feet.setText("Ft: " + feet);
 
         String capacity = obj.getCapacity();
         holder.capacity.setText("Capacity: " + capacity);
@@ -322,6 +323,8 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
                 //Change the selected item's text color
                 try {
                     ((TextView) view).setTextColor(activity.getResources().getColor(R.color.light_black));
+                    ((TextView) parent.getChildAt(0)).setTextSize(14);
+                    ((TextView) parent.getChildAt(0)).setTypeface(Typeface.DEFAULT_BOLD);
                 }catch (Exception e){
                     e.printStackTrace();
                 }

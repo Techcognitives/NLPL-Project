@@ -3,296 +3,188 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/load_shadow"
+    android:layout_height="match_parent"
     android:layout_margin="5dp"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp"
+    android:background="@drawable/all_rounded_small"
+    android:backgroundTint="@color/dark_white"
     android:paddingStart="5dp"
-    android:layout_height="wrap_content">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_active"
-        android:backgroundTint="#f7c395"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/load_list_pick_up_date"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/load_list_pick_up"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:drawableStart="@drawable/ic_start"
-            android:singleLine="true"
-            android:text="Pune"
-            android:textColor="@color/button_blue"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/load_list_drop"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/load_list_budget"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingBottom="2dp"
-            android:text="INR X,XXX"
-            android:textAlignment="center"
-            android:textColor="@color/button_blue"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout10"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/load_list_drop" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout10"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:background="@drawable/edit_text_border_white"
-            android:padding="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/load_list_budget">
-
-            <TextView
-                android:id="@+id/load_list_time_left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="2dp"
-                android:drawableLeft="@drawable/clock_small"
-                android:paddingStart="3dp"
-                android:paddingEnd="3dp"
-                android:text="  00:00:00"
-                android:textAlignment="center"
-                android:textColor="#ff0000"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/load_list_bid_now_button"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/load_list_bid_now_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_active"
-                android:backgroundTint="#ff7600"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="Bid Now"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/load_list_time_left" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/load_list_drop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="2dp"
-            android:drawableStart="@drawable/ic_end"
-            android:drawableTint="@color/light_black"
-            android:singleLine="true"
-            android:text="Mumbai"
-            android:textColor="@color/button_blue"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/load_list_budget"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/load_list_pick_up" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp">
 
     <TextView
         android:id="@+id/load_list_pick_up_date"
-        android:layout_width="0dp"
+        android:layout_width="188dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
         android:paddingEnd="5dp"
-        android:text="Date: DD-MMM-YY"
-        android:textStyle="bold"
-        android:textColor="@color/black"
+        android:text="DD-MMM-YY"
+        android:textColor="@color/light_black"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/load_list_pick_up_time"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="93dp" />
 
     <TextView
         android:id="@+id/load_list_pick_up_time"
-        android:layout_width="0dp"
+        android:layout_width="188dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:text="Pick-up Time: HH:MMpm"
-        android:textStyle="bold"
-        android:textColor="@color/black"
+        android:text="HH:MMpm"
+        android:textColor="@color/light_black"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/load_list_kms_approx"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
-        app:layout_constraintTop_toBottomOf="@+id/load_list_pick_up_date" />
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="107dp"
+        tools:layout_editor_absoluteY="132dp" />
 
     <TextView
         android:id="@+id/load_list_kms_approx"
-        android:layout_width="0dp"
+        android:layout_width="188dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="2dp"
-        android:text="Distance: 000Km"
-        android:textColor="@color/black"
+        android:text="000Km"
+        android:textColor="@color/light_black"
         android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
-        app:layout_constraintTop_toBottomOf="@+id/load_list_pick_up_time" />
+        tools:layout_editor_absoluteX="209dp"
+        tools:layout_editor_absoluteY="182dp" />
 
     <TextView
         android:id="@+id/load_list_model"
-        android:layout_width="0dp"
+        android:layout_width="188dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
         android:text="Model: Example"
-        android:textColor="@color/black"
+        android:textColor="@color/light_black"
         android:textSize="14sp"
         android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/load_list_feet"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="244dp" />
 
     <TextView
         android:id="@+id/load_list_feet"
-        android:layout_width="0dp"
+        android:layout_width="188dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
         android:text="Feet: 0 ft."
-        android:textColor="@color/black"
+        android:textColor="@color/light_black"
         android:textSize="14sp"
         android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/load_list_capacity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
-        app:layout_constraintTop_toBottomOf="@+id/load_list_model" />
+        tools:layout_editor_absoluteX="215dp"
+        tools:layout_editor_absoluteY="240dp" />
 
     <TextView
         android:id="@+id/load_list_capacity"
-        android:layout_width="0dp"
+        android:layout_width="188dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
         android:text="Capacity: 0,000 kgs"
-        android:textColor="@color/black"
+        android:textColor="@color/light_black"
         android:textSize="14sp"
         android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/load_list_body"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
-        app:layout_constraintTop_toBottomOf="@+id/load_list_feet" />
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="287dp" />
 
     <TextView
         android:id="@+id/load_list_body"
-        android:layout_width="0dp"
+        android:layout_width="188dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="2dp"
         android:text="Body: Open"
-        android:textColor="@color/black"
+        android:textColor="@color/light_black"
         android:textSize="14sp"
         android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/view3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
-        app:layout_constraintTop_toBottomOf="@+id/load_list_capacity" />
+        tools:layout_editor_absoluteX="209dp"
+        tools:layout_editor_absoluteY="292dp" />
 
     <TextView
         android:id="@+id/load_list_location"
-        android:layout_width="0dp"
+        android:layout_width="198dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:background="@drawable/underline_blue"
         android:drawableStart="@drawable/google_address_small"
-        android:text="   Viman Nagar"
         android:singleLine="true"
-        android:textStyle="bold"
+        android:text="   Viman Nagar"
         android:textColor="@color/button_blue"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/load_list_pick_up_distance_from_user"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
-        app:layout_constraintTop_toBottomOf="@+id/view3" />
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="72dp"
+        tools:layout_editor_absoluteY="574dp" />
 
     <TextView
-        android:id="@+id/load_list_pick_up_distance_from_user"
-        android:layout_width="0dp"
+        android:id="@+id/load_list_pick_up"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="Pick-up 00Km away"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
-        app:layout_constraintTop_toBottomOf="@+id/load_list_location" />
+        android:drawableStart="@drawable/ic_start"
+        android:drawableTint="@color/light_black"
+        android:padding="5dp"
 
-    <View
-        android:id="@+id/view"
-        android:layout_width="0dp"
-        android:layout_height="0.8dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:background="@color/teal_200"
-        app:layout_constraintBottom_toTopOf="@+id/load_list_model"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
-        app:layout_constraintTop_toBottomOf="@+id/load_list_kms_approx" />
+        android:singleLine="true"
+        android:text="Pune"
+        android:textColor="@color/light_black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="45dp"
+        tools:layout_editor_absoluteY="26dp" />
 
-    <View
-        android:id="@+id/view3"
-        android:layout_width="0dp"
-        android:layout_height="0.8dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:background="@color/teal_200"
-        app:layout_constraintBottom_toTopOf="@+id/load_list_location"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
-        app:layout_constraintTop_toBottomOf="@+id/load_list_body" />
+    <TextView
+        android:id="@+id/load_list_drop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_end"
+        android:drawableTint="@color/light_black"
+        android:singleLine="true"
+        android:text="Mumbai"
+        android:textColor="@color/light_black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="259dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <TextView
+        android:id="@+id/load_list_budget"
+        android:layout_width="189dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="2dp"
+        android:text="INR X,XXX"
+        android:textAlignment="center"
+        android:textColor="@color/light_black"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="21dp"
+        tools:layout_editor_absoluteY="601dp" />
+
+    <TextView
+        android:id="@+id/load_list_time_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/clock_small"
+        android:drawableTint="@color/redDark"
+        android:paddingStart="3dp"
+        android:paddingEnd="3dp"
+        android:text="  00:00:00"
+        android:textAlignment="center"
+        android:textColor="@color/redDark"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="244dp"
+        tools:layout_editor_absoluteY="606dp" />
+
+    <TextView
+        android:id="@+id/load_list_bid_now_button"
+        android:layout_width="179dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_active"
+        android:backgroundTint="@color/light_black"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="Bid Now"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="86dp"
+        tools:layout_editor_absoluteY="649dp" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_arrow_towards"
+        android:tint="@color/light_black"
+        tools:layout_editor_absoluteX="175dp"
+        tools:layout_editor_absoluteY="31dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

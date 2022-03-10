@@ -178,7 +178,7 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
         }
 
         String budget = obj.getSp_quote();
-        holder.budget.setText(budget);
+        holder.budget.setText("₹ " + budget);
 
     }
 

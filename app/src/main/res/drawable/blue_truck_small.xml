@@ -3,7 +3,7 @@
 
     <item
         android:drawable="@drawable/truck_blue"
-        android:width="35dp"
+        android:width="40dp"
         android:height="25dp"
         />
 
