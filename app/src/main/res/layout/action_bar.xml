@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/action_bar_constrain"
-    android:background="#F7F7F7">
+    android:background="@color/light_white">
 
     <TextView
         android:id="@+id/action_bar_title"
@@ -14,7 +13,7 @@
         android:padding="15dp"
         android:singleLine="true"
         android:text="Title"
-        android:textColor="#1C1A1A"
+        android:textColor="@color/light_black"
         android:textSize="20sp"
         android:textStyle="bold"
         android:gravity="center|start"
@@ -35,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_back_small"
-        app:tint="#1C1A1A" />
+        app:tint="@color/light_black" />
 
     <ImageView
         android:id="@+id/action_bar_menu"
@@ -51,7 +50,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.515"
         app:srcCompat="@drawable/ic_baseline_menu_24"
-        app:tint="#1C1A1A" />
+        app:tint="@color/light_black" />
 
     <TextView
         android:id="@+id/action_bar_skip"
@@ -60,7 +59,7 @@
         android:layout_marginEnd="10dp"
         android:text="Skip"
         android:onClick="onClickSkip"
-        android:textColor="@color/white"
+        android:textColor="@color/light_black"
         android:textSize="16sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"

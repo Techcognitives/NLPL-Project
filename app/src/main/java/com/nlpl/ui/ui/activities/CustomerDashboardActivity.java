@@ -708,7 +708,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                 alertPositiveButton.setVisibility(View.GONE);
                 alertNegativeButton.setText("OK");
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                 alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -739,7 +739,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                             alertPositiveButton.setVisibility(View.GONE);
                             alertNegativeButton.setText("OK");
                             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                             alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -1506,7 +1506,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         alertPositiveButton.setVisibility(View.GONE);
         alertNegativeButton.setText("Ok");
         alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
         alertNegativeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1545,7 +1545,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         alertPositiveButton.setVisibility(View.GONE);
         alertNegativeButton.setText("Ok");
         alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
         alertNegativeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1777,7 +1777,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
                     submitResponseBtn.setText("Withdraw");
                     submitResponseBtn.setBackgroundResource((R.drawable.button_active));
-                    submitResponseBtn.setBackgroundTintList(getResources().getColorStateList(R.color.button_blue));
+                    submitResponseBtn.setBackgroundTintList(getResources().getColorStateList(R.color.light_black));
                     submitResponseBtn.setEnabled(true);
 
                     submitResponseBtn.setOnClickListener(new View.OnClickListener() {
@@ -1810,7 +1810,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                             alertPositiveButton.setText("Withdraw Load");
                             alertNegativeButton.setText("Withdraw Bidder");
                             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
                             alertCancelButton.setVisibility(View.VISIBLE);
 
                             alertPositiveButton.setOnClickListener(new View.OnClickListener() {
@@ -1844,7 +1844,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                                     alertPositiveButton.setVisibility(View.GONE);
                                     alertNegativeButton.setText("Ok");
                                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                                     alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                                         @Override
@@ -1891,7 +1891,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                                     alertPositiveButton.setVisibility(View.GONE);
                                     alertNegativeButton.setText("Ok");
                                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                                     alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                                         @Override
@@ -2447,7 +2447,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
             alertPositiveButton.setVisibility(View.GONE);
             alertNegativeButton.setText("OK");
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
             alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -2501,7 +2501,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                 alertPositiveButton.setVisibility(View.GONE);
                 alertNegativeButton.setText("OK");
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                 alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -2536,7 +2536,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                 alertPositiveButton.setVisibility(View.GONE);
                 alertNegativeButton.setText("OK");
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                 alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -2637,7 +2637,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         alertPositiveButton.setVisibility(View.GONE);
         alertNegativeButton.setText("OK");
         alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
         alertNegativeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -2721,7 +2721,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         alertNegativeButton.setText("Re-activate Load");
         alertPositiveButton.setVisibility(View.GONE);
         alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
         alertNegativeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -2766,7 +2766,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         alertPositiveButton.setText("Continue");
         alertNegativeButton.setText("Cancel");
         alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
         alertNegativeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -2809,7 +2809,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                 alertPositiveButton.setVisibility(View.GONE);
                 alertNegativeButton.setText("Ok");
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                 alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                     @Override

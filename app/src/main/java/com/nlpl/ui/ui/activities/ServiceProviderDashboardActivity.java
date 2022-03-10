@@ -1131,7 +1131,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         alertPositiveButton.setVisibility(View.GONE);
                         alertNegativeButton.setText("OK");
                         alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                         alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -1169,7 +1169,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                     alertPositiveButton.setText("Continue");
                     alertNegativeButton.setText("Assign Another");
                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                     alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -1218,7 +1218,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                                 alertPositiveButton.setVisibility(View.GONE);
                                 alertNegativeButton.setText("OK");
                                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                                 alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -1848,7 +1848,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 alertPositiveButton.setVisibility(View.GONE);
                 alertNegativeButton.setText("OK");
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                 alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -2008,7 +2008,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
 
         cancel2.setVisibility(View.VISIBLE);
         cancel2.setEnabled(true);
-        cancel2.setBackgroundTintList(getResources().getColorStateList(R.color.button_blue));
+        cancel2.setBackgroundTintList(getResources().getColorStateList(R.color.light_black));
 
         cancel2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -2036,7 +2036,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
 
         cancel.setText("Withdraw");
         cancel.setEnabled(true);
-        cancel.setBackgroundTintList(getResources().getColorStateList(R.color.button_blue));
+        cancel.setBackgroundTintList(getResources().getColorStateList(R.color.light_black));
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -2067,7 +2067,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 alertNegativeButton.setText("Cancel");
                 alertPositiveButton.setText("Withdraw");
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                 alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -2104,7 +2104,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         alertPositiveButton.setVisibility(View.GONE);
                         alertNegativeButton.setText("Ok");
                         alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                         alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -2152,7 +2152,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 alertPositiveButton.setVisibility(View.GONE);
                 alertNegativeButton.setText("OK");
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                 alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -2649,7 +2649,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         alertPositiveButton.setVisibility(View.GONE);
         alertNegativeButton.setText("OK");
         alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
         alertNegativeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -2748,7 +2748,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             alertPositiveButton.setVisibility(View.GONE);
             alertNegativeButton.setText("OK");
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
             alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -2804,7 +2804,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 alertPositiveButton.setVisibility(View.GONE);
                 alertNegativeButton.setText("OK");
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                 alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -2840,7 +2840,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 alertPositiveButton.setVisibility(View.GONE);
                 alertNegativeButton.setText("OK");
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                 alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                     @Override

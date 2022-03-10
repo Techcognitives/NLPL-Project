@@ -320,7 +320,7 @@ public class CustomerLoadsHistoryActivity extends AppCompatActivity {
         alertNegativeButton.setText("Re-activate Load");
         alertPositiveButton.setVisibility(View.GONE);
         alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
         alertNegativeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -570,7 +570,7 @@ public class CustomerLoadsHistoryActivity extends AppCompatActivity {
 
         submitResponseBtn.setText("Close");
         submitResponseBtn.setBackgroundResource((R.drawable.button_active));
-        submitResponseBtn.setBackgroundTintList(getResources().getColorStateList(R.color.button_blue));
+        submitResponseBtn.setBackgroundTintList(getResources().getColorStateList(R.color.light_black));
         submitResponseBtn.setEnabled(true);
 
         cancelBtn.setVisibility(View.GONE);

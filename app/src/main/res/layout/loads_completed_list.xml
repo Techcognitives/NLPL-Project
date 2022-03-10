@@ -79,6 +79,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/load_completed_view_load_history"
+        app:layout_constraintStart_toEndOf="@+id/loads_completed_sp_name"
         app:layout_constraintTop_toTopOf="@+id/loads_completed_sp_name" />
 
     <TextView
@@ -86,7 +87,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_active"
-        android:backgroundTint="#ff7600"
+        android:backgroundTint="@color/light_black"
         android:gravity="center"
         android:paddingStart="10dp"
         android:paddingTop="5dp"

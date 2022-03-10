@@ -7,5 +7,5 @@
     android:text="Sample"
     android:paddingTop="6dp"
     android:paddingBottom="6dp"
-    android:textColor="@color/button_blue"
+    android:textColor="@color/light_black"
     android:gravity="center" />

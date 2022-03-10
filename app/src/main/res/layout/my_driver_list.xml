@@ -13,6 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/personal_details_buttons_active"
+        android:backgroundTint="@color/light_black"
         app:layout_constraintBottom_toTopOf="@+id/my_driver_list_driver_phone_number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

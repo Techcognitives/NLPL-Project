@@ -7,7 +7,6 @@
     android:id="@+id/action_bar_constrain"
     android:background="@color/white">
 
-
     <TextView
         android:id="@+id/registration_name"
         android:layout_width="0dp"

@@ -68,7 +68,6 @@ public class CustomerSettingsAndPreferences extends AppCompatActivity {
         addressDialogGetCurrentLocation = (TextView) addressDialog.findViewById(R.id.dialog_address_current_location);
 
         addressDialogGetCurrentLocation.setVisibility(View.GONE);
-
     }
 
     public void getPreferredLocation(View view) {

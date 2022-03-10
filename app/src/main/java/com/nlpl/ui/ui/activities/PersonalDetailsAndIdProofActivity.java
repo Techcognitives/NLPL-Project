@@ -595,7 +595,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                     alertPositiveButton.setVisibility(View.GONE);
                     alertNegativeButton.setText("OK");
                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                     alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -609,7 +609,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
             alertNegativeButton.setText("NO");
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
             alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -774,7 +774,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             alertPositiveButton.setVisibility(View.GONE);
             alertNegativeButton.setText("OK");
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
             alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -833,7 +833,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             alertPositiveButton.setVisibility(View.GONE);
             alertNegativeButton.setText("OK");
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
             alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -905,7 +905,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 alertPositiveButton.setVisibility(View.GONE);
                 alertNegativeButton.setText("OK");
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                 alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -939,7 +939,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 alertPositiveButton.setVisibility(View.GONE);
                 alertNegativeButton.setText("OK");
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                 alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -993,7 +993,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 alertPositiveButton.setVisibility(View.GONE);
                 alertNegativeButton.setText("OK");
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                 alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -1028,7 +1028,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 alertPositiveButton.setVisibility(View.GONE);
                 alertNegativeButton.setText("OK");
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                 alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -1066,7 +1066,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             alertPositiveButton.setVisibility(View.GONE);
             alertNegativeButton.setText("OK");
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
             alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -1123,7 +1123,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             alertPositiveButton.setVisibility(View.GONE);
             alertNegativeButton.setText("OK");
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
             alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
