@@ -151,6 +151,10 @@
         <entry key="..\:/Users/abhij/Downloads/Telegram Desktop/NLPL-Project/app/src/main/res/layout/activity_profile_and_registration.xml" value="0.27309782608695654" />
         <entry key="..\:/Users/abhij/Downloads/Telegram Desktop/NLPL-Project/app/src/main/res/layout/activity_registration.xml" value="0.29483695652173914" />
         <entry key="..\:/Users/abhij/Downloads/Telegram Desktop/NLPL-Project/app/src/main/res/layout/dialog_language.xml" value="0.29483695652173914" />
+        <entry key="app/src/main/res/drawable/edit_text_border.xml" value="0.2735" />
+        <entry key="app/src/main/res/drawable/edit_text_border_grey.xml" value="0.2735" />
+        <entry key="app/src/main/res/drawable/mobile_number_left.xml" value="0.238" />
+        <entry key="app/src/main/res/drawable/mobile_number_right.xml" value="0.238" />
         <entry key="app/src/main/res/layout/action_bar.xml" value="0.4244791666666667" />
         <entry key="app/src/main/res/layout/activity_bank_details.xml" value="0.4244791666666667" />
         <entry key="app/src/main/res/layout/activity_company_details.xml" value="0.4244791666666667" />
