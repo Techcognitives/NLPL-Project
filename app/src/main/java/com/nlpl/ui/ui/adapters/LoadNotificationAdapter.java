@@ -204,7 +204,7 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
         holder.budget.setText("₹" + budget);
 
         String date = obj.getPick_up_date();
-        holder.date.setText("Date: " + date);
+        holder.date.setText("Pick-up Date: " + date);
 
         String time = obj.getPick_up_time();
         holder.time.setText("Time: " + time);
@@ -216,7 +216,7 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
         holder.model.setText("Model: " + model);
 
         String feet = obj.getFeet();
-        holder.feet.setText("Feet: " + feet);
+        holder.feet.setText("Ft: " + feet);
 
         String capacity = obj.getCapacity();
         holder.capacity.setText("Capacity: " + capacity);
