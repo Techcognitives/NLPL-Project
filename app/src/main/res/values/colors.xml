@@ -26,4 +26,6 @@
     <color name="nav_unselected_blue">#FF0000</color>
     <color name="nav_selected_blue">#218DEA</color>
     <color name="golden">#FFD700</color>
+    <color name="radioBlue">#72B9CC</color>
+
 </resources>

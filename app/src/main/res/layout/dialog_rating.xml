@@ -14,7 +14,7 @@
         android:layout_width="0dp"
         android:layout_height="5dp"
         android:background="@drawable/language_selector_top_corners"
-        android:backgroundTint="@color/button_blue"
+        android:backgroundTint="@color/light_black"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
