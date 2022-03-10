@@ -129,7 +129,7 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
                     activity.onClickViewAndAcceptBid(obj);
                 }
             });
-            holder.acceptViewBidButton.setDrawingCacheBackgroundColor(R.color.orange);
+            holder.acceptViewBidButton.setDrawingCacheBackgroundColor(R.color.light_black);
         }
 
         if (obj.getBid_status().equals("Accepted")) {

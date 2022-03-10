@@ -227,7 +227,7 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
         String pickUpLocation = obj.getPick_add();
         holder.pickUpLocation.setText(" " + pickUpLocation);
 
-        holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.orange));
+        holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.light_black));
 
         holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
             @Override

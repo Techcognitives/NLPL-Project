@@ -229,13 +229,13 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
         holder.budget.setText("₹ " + budget);
 
         String date = obj.getPick_up_date();
-        holder.date.setText("Date: " + date);
+        holder.date.setText(date);
 
         String time = obj.getPick_up_time();
-        holder.time.setText("Time: " + time);
+        holder.time.setText(time);
 
         String approxKms = obj.getKm_approx();
-        holder.distance.setText("Distance: " + approxKms);
+        holder.distance.setText(approxKms);
 
         String model = obj.getVehicle_model();
         holder.model.setText("Model: " + model);
@@ -255,7 +255,7 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
         holder.bidsResponsesRecyclerView.setLayoutManager(linearLayoutManagerBank);
         holder.bidsResponsesRecyclerView.setHasFixedSize(true);
 
-        holder.editLoadButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.orange));
+        holder.editLoadButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.light_black));
         holder.editLoadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -263,7 +263,7 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
             }
         });
 
-        activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView, holder.bidsReceived, holder.showRecyclerView, sortBy);
+        activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView, holder.showRecyclerView, sortBy, holder.showRecyclerViewBids);
 
 
 
@@ -283,23 +283,23 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
                     }
                     if (parent.getSelectedItem().equals("By Recent Activity")){
                         sortBy = "Sort By";
-                        activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView, holder.bidsReceived, holder.showRecyclerView, sortBy);
+                        activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView, holder.showRecyclerView, sortBy, holder.showRecyclerViewBids);
                     }
                     if (parent.getSelectedItem().equals("By Price High-low")) {
                         sortBy = "Price High-low";
-                        activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView, holder.bidsReceived, holder.showRecyclerView, sortBy);
+                        activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView, holder.showRecyclerView, sortBy, holder.showRecyclerViewBids);
                     }
                     if (parent.getSelectedItem().equals("By Price Low-high")) {
                         sortBy = "Price Low-high";
-                        activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView, holder.bidsReceived, holder.showRecyclerView, sortBy);
+                        activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView, holder.showRecyclerView, sortBy, holder.showRecyclerViewBids);
                     }
                     if (parent.getSelectedItem().equals("By Latest Response")) {
                         sortBy = "Recent Responses";
-                        activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView, holder.bidsReceived, holder.showRecyclerView, sortBy);
+                        activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView, holder.showRecyclerView, sortBy, holder.showRecyclerViewBids);
                     }
                     if (parent.getSelectedItem().equals("By Initial Response")) {
                         sortBy = "Initial Responses";
-                        activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView, holder.bidsReceived, holder.showRecyclerView, sortBy);
+                        activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView, holder.showRecyclerView, sortBy, holder.showRecyclerViewBids);
                     }
 
                 }
@@ -309,6 +309,30 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
                 }
             });
         }
+
+        //------------------------------------------------------------------------------------------
+        activity.registerForContextMenu(holder.sortBy);
+
+        holder.sortBy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                //Change the selected item's text color
+                try {
+                    ((TextView) view).setTextColor(activity.getResources().getColor(R.color.light_black));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+            }
+        });
 
     }
 
@@ -323,10 +347,10 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
     }
 
     public class BidsReceivedViewHolder extends RecyclerView.ViewHolder {
-        private TextView timeLeft, destinationStart, destinationEnd, budget, date, time, distance, model, feet, capacity, body, editLoadButton, bidsReceived;
+        private TextView timeLeft, destinationStart, destinationEnd, budget, date, time, distance, model, feet, capacity, body, editLoadButton;
         RecyclerView bidsResponsesRecyclerView;
         Spinner sortBy;
-        ConstraintLayout showRecyclerView;
+        ConstraintLayout showRecyclerView, showRecyclerViewBids;
 
         public BidsReceivedViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -344,9 +368,9 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
             capacity = itemView.findViewById(R.id.bids_responses_capacity);
             body = itemView.findViewById(R.id.bids_responses_body);
             editLoadButton = itemView.findViewById(R.id.bids_responses_edit_load_button);
-            bidsReceived = itemView.findViewById(R.id.bids_responses_no_of_responses);
             bidsResponsesRecyclerView = itemView.findViewById(R.id.bids_received_recycler_view);
             showRecyclerView = itemView.findViewById(R.id.bids_received_show_recycler_view_constrain);
+            showRecyclerViewBids = itemView.findViewById(R.id.bids_received_constrain);
 
         }
 

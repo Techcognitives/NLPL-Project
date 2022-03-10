@@ -2,9 +2,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:drawable="@drawable/track_image"
-        android:width="40dp"
-        android:height="40dp"
+        android:drawable="@drawable/track_black"
+        android:width="35dp"
+        android:height="25dp"
         />
 
 </layer-list >

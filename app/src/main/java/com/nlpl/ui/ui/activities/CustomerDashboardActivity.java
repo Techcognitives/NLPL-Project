@@ -2,6 +2,7 @@ package com.nlpl.ui.ui.activities;
 
 import static com.nlpl.R.drawable.blue_profile_small;
 import static com.nlpl.R.drawable.driver;
+import static com.nlpl.R.drawable.find;
 
 import static java.lang.Float.parseFloat;
 
@@ -126,9 +127,9 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     String isPersonalDetailsDone, isBankDetailsDone, isProfileAdded, profileImgUrlForRating, reasonForLowRate = "";
     float ratingGiven;
     int count = 0;
-    String img_type, paymentMethod = "", paymentPercentage = "threePercent";
+    String img_type, numberOfBids, paymentMethod = "", paymentPercentage = "threePercent";
 
-    View actionBar;
+    View actionBar, bidsReceivedUnderline, bidsAcceptedUnderline;
     TextView actionBarTitle;
     ImageView actionBarBackButton, actionBarMenuButton;
     Dialog previewDialogAcceptANdBid, setBudget, acceptFinalBid, viewConsignmentCustomer;
@@ -163,6 +164,8 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         bidsReceivedConstrain = (ConstraintLayout) findViewById(R.id.customer_dashboard_bids_received_constrain);
         loadAcceptedTextView = (TextView) findViewById(R.id.customer_dashboard_loads_accepted_button);
         bidsReceivedTextView = (TextView) findViewById(R.id.customer_dashboard_bids_received_button);
+        bidsReceivedUnderline = (View) findViewById(R.id.customer_dashboard_bids_received_view);
+        bidsAcceptedUnderline = (View) findViewById(R.id.customer_dashboard_bids_Accepted_view);
 
         if (isbidsReceivedSelected) {
             bidsReceivedSelected = true;
@@ -464,7 +467,8 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                 bidsReceivedConstrain.setVisibility(View.VISIBLE);
                 bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
                 loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
-
+                bidsReceivedUnderline.setVisibility(View.VISIBLE);
+                bidsAcceptedUnderline.setVisibility(View.INVISIBLE);
                 break;
 
             case R.id.customer_dashboard_loads_accepted_button:
@@ -473,6 +477,8 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                 bidsReceivedConstrain.setVisibility(View.INVISIBLE);
                 bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
                 loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
+                bidsReceivedUnderline.setVisibility(View.INVISIBLE);
+                bidsAcceptedUnderline.setVisibility(View.VISIBLE);
                 break;
         }
     }
@@ -925,7 +931,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     }
 
 
-    public void getBidsResponsesList(BidsReceivedModel obj1, RecyclerView bidsResponsesRecyclerView, TextView bidsReceived, ConstraintLayout showRecyclerView, String sortBy) {
+    public void getBidsResponsesList(BidsReceivedModel obj1, RecyclerView bidsResponsesRecyclerView, ConstraintLayout showRecyclerView, String sortBy, ConstraintLayout showRecyclerViewBids) {
         ArrayList<BidsResponsesModel> bidResponsesList = new ArrayList<>();
         bidResponsesList.clear();
 //        bidsList.clear();
@@ -975,7 +981,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                         for (int i = 0; i < bidResponsesList.size(); i++) {
                             if (obj1.getIdpost_load().equals(bidResponsesList.get(i).getIdpost_load())) {
 
-                                bidsReceived.setText(String.valueOf(bidResponsesList.size() + " Responses Received"));
+                                numberOfBids = String.valueOf(bidResponsesList.size() + " Responses Received");
 
                                 if (!sortBy.equals("Initial Responses")) {
                                     Collections.reverse(bidResponsesList);
@@ -1044,12 +1050,14 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                         }
                     }
 
-                    if (bidsReceived.getText().toString().equals("0 Responses Received")) {
+                    if (bidResponsesList.size()==0) {
                         showRecyclerView.setVisibility(View.GONE);
                         bidsResponsesRecyclerView.setVisibility(View.GONE);
+                        showRecyclerViewBids.setVisibility(View.GONE);
                     } else {
                         showRecyclerView.setVisibility(View.VISIBLE);
                         bidsResponsesRecyclerView.setVisibility(View.VISIBLE);
+                        showRecyclerViewBids.setVisibility(View.VISIBLE);
                     }
 
                 } catch (JSONException e) {

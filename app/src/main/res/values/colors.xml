@@ -17,7 +17,9 @@
     <color name="light_blue">#C7E2FA</color>
     <color name="medium_blue">#8FC6F4</color>
     <color name="red">#F32013</color>
-    <color name="orange">#1C1A1A</color>
+    <color name="light_black">#1C1A1A</color>
+    <color name="light_white">#F7F7F7</color>
+    <color name="dark_white">#D0EDF6</color>
     <color name="green">#228B22</color>
     <color name="dark_blue">#6221EE</color>
     <color name="nav_unselected_blue">#FF0000</color>
