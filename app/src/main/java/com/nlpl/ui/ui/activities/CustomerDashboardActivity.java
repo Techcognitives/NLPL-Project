@@ -171,6 +171,8 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
             bidsReceivedSelected = true;
             loadAcceptedConstrain.setVisibility(View.INVISIBLE);
             bidsReceivedConstrain.setVisibility(View.VISIBLE);
+            bidsReceivedUnderline.setVisibility(View.VISIBLE);
+            bidsAcceptedUnderline.setVisibility(View.INVISIBLE);
             bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
             loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
 
@@ -178,6 +180,8 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
             bidsReceivedSelected = false;
             loadAcceptedConstrain.setVisibility(View.VISIBLE);
             bidsReceivedConstrain.setVisibility(View.INVISIBLE);
+            bidsReceivedUnderline.setVisibility(View.INVISIBLE);
+            bidsAcceptedUnderline.setVisibility(View.VISIBLE);
             loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
             bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
         }
