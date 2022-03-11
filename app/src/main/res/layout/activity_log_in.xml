@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_black"
+    android:background="@color/black"
     tools:context=".ui.ui.activities.LogInActivity">
 
     <TextView
@@ -72,7 +72,7 @@
         android:paddingBottom="10dp"
         android:text="@string/get_otp"
         android:textAllCaps="false"
-        android:textColor="@color/light_black"
+        android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
