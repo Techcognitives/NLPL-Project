@@ -42,7 +42,6 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
         mQueue = Volley.newRequestQueue(activity);
     }
 
-
     @Override
     public BidsResponsesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bids_responses_list, parent, false);
@@ -161,7 +160,7 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
 
         if (obj.getBid_status().equals("RespondedByLp")) {
             holder.acceptViewBidButton.setText("You\nResponded");
-            holder.acceptViewBidButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.button_blue));
+            holder.acceptViewBidButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.dark_grey));
         }
 
         if (obj.getBid_status().equals("submittedNonNego")) {

@@ -3,6 +3,7 @@ package com.nlpl.ui.ui.activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
@@ -57,6 +58,7 @@ import com.nlpl.R;
 import com.nlpl.model.Requests.UserRequest;
 import com.nlpl.model.Responses.UserResponse;
 import com.nlpl.utils.ApiClient;
+import com.nlpl.utils.CreateUser;
 import com.nlpl.utils.GetCurrentLocation;
 import com.nlpl.utils.InAppNotification;
 import com.nlpl.utils.JumpTo;
@@ -90,13 +92,14 @@ public class RegistrationActivity extends AppCompatActivity {
 
     Dialog language;
 
-    EditText name, pinCode, address, mobileNoEdit, email_id;
+    EditText name, pinCode, address, mobileNoEdit, email_id, alternateMobile;
     TextView series, setCurrentLocation;
     Button okButton;
     View personalAndAddress;
     private RequestQueue mQueue;
     int PLACE_PICKER_REQUEST = 1;
     GetCurrentLocation getCurrentLocation;
+    ConstraintLayout roleConstrain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,9 +112,19 @@ public class RegistrationActivity extends AppCompatActivity {
             Log.i("Mobile No Registration", mobile);
         }
 
+        Dialog roleDialog = new Dialog(this);
+        roleDialog.setContentView(R.layout.dialog_role);
+        roleDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(roleDialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        //------------------------------------------------------------------------------------------
         language = new Dialog(RegistrationActivity.this);
         language.setContentView(R.layout.dialog_language);
-        language.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        language.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.dark_grey)));
 
         getCurrentLocation = new GetCurrentLocation();
 
@@ -135,6 +148,9 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 language.dismiss();
+                roleDialog.show();
+                roleDialog.getWindow().setAttributes(lp);
+                roleDialog.setCancelable(false);
             }
         });
 
@@ -142,6 +158,9 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 language.dismiss();
+                roleDialog.show();
+                roleDialog.getWindow().setAttributes(lp);
+                roleDialog.setCancelable(false);
             }
         });
 
@@ -149,6 +168,9 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 language.dismiss();
+                roleDialog.show();
+                roleDialog.getWindow().setAttributes(lp);
+                roleDialog.setCancelable(false);
             }
         });
 
@@ -169,6 +191,7 @@ public class RegistrationActivity extends AppCompatActivity {
         pinCode = (EditText) personalAndAddress.findViewById(R.id.registration_pin_code_edit);
         address = (EditText) personalAndAddress.findViewById(R.id.registration_address_edit);
         mobileNoEdit = (EditText) personalAndAddress.findViewById(R.id.registration_mobile_no_edit);
+        alternateMobile = (EditText) personalAndAddress.findViewById(R.id.registration_mobile_no_edit_alternate);
         series = (TextView) personalAndAddress.findViewById(R.id.registration_prefix);
         selectStateText = (TextView) personalAndAddress.findViewById(R.id.registration_select_state);
         selectDistrictText = (TextView) personalAndAddress.findViewById(R.id.registration_select_city);
@@ -176,6 +199,8 @@ public class RegistrationActivity extends AppCompatActivity {
         email_id = personalAndAddress.findViewById(R.id.registration_email_id_edit);
         setCurrentLocation = (TextView) personalAndAddress.findViewById(R.id.personal_and_address_get_current_location);
         setCurrentLocation.setVisibility(View.VISIBLE);
+        roleConstrain = personalAndAddress.findViewById(R.id.personal_registration_sp_constrain);
+        roleConstrain.setVisibility(View.GONE);
 
         name.addTextChangedListener(registrationWatcher);
         selectStateText.addTextChangedListener(registrationWatcher);
@@ -210,8 +235,11 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
 
-        mobileNoEdit.setVisibility(View.GONE);
-        series.setVisibility(View.GONE);
+        mobileNoEdit.setVisibility(View.VISIBLE);
+        String s1 = mobile.substring(2, 12);
+        mobileNoEdit.setText(s1);
+        mobileNoEdit.setEnabled(false);
+        series.setVisibility(View.VISIBLE);
 
         name.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
@@ -225,10 +253,18 @@ public class RegistrationActivity extends AppCompatActivity {
 //            okButton.setBackground(getDrawable(R.drawable.button_de_active));
 //        }
 
-        ownerButton = (RadioButton) personalAndAddress.findViewById(R.id.registration_truck_owner);
-        driverButton = (RadioButton) personalAndAddress.findViewById(R.id.registration_driver);
-        brokerButton = (RadioButton) personalAndAddress.findViewById(R.id.registration_broker);
-        customerButton = (RadioButton) personalAndAddress.findViewById(R.id.registration_customer);
+        ownerButton = (RadioButton) roleDialog.findViewById(R.id.role_dialog_truck_owner);
+        driverButton = (RadioButton) roleDialog.findViewById(R.id.role_dialog_driver);
+        brokerButton = (RadioButton) roleDialog.findViewById(R.id.role_dialog_broker);
+        customerButton = (RadioButton) roleDialog.findViewById(R.id.role_dialog_customer);
+        TextView okRole = (TextView) roleDialog.findViewById(R.id.role_dialog_ok_button);
+        okRole.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                roleDialog.dismiss();
+                Log.i("Role Selected", role);
+            }
+        });
 
         name.setOnClickListener(view -> name.setCursorVisible(true));
 
@@ -275,7 +311,7 @@ public class RegistrationActivity extends AppCompatActivity {
         //--------------------------------------------------------------------------------------
 
         switch (view.getId()) {
-            case R.id.registration_truck_owner:
+            case R.id.role_dialog_truck_owner:
                 ownerButton.setChecked(true);
                 driverButton.setChecked(false);
                 brokerButton.setChecked(false);
@@ -284,7 +320,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 break;
 
-            case R.id.registration_driver:
+            case R.id.role_dialog_driver:
                 ownerButton.setChecked(false);
                 driverButton.setChecked(true);
                 brokerButton.setChecked(false);
@@ -293,7 +329,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 break;
 
-            case R.id.registration_broker:
+            case R.id.role_dialog_broker:
                 ownerButton.setChecked(false);
                 driverButton.setChecked(false);
                 brokerButton.setChecked(true);
@@ -302,7 +338,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 break;
 
-            case R.id.registration_customer:
+            case R.id.role_dialog_customer:
                 ownerButton.setChecked(false);
                 driverButton.setChecked(false);
                 brokerButton.setChecked(false);
@@ -336,7 +372,7 @@ public class RegistrationActivity extends AppCompatActivity {
         if (!nameWatcher.isEmpty() && !pinCodeWatcher.isEmpty() && !addressWatcher.isEmpty() && !stateWatcher.isEmpty() && pinCodeWatcher.length() == 6 && !cityWatcher.isEmpty() && (owner || driver || broker || customer)) {
             okButton.setEnabled(true);
             okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            saveUser(createUser());
+            CreateUser.saveUser(CreateUser.createUser(name.getText().toString(), mobile, "91"+alternateMobile.getText().toString(), address.getText().toString(), role, email_id.getText().toString(), pinCode.getText().toString(), selectDistrictText.getText().toString(), selectStateText.getText().toString()));
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(RegistrationActivity.this);
             alert.setContentView(R.layout.dialog_alert_single_button);
@@ -356,7 +392,7 @@ public class RegistrationActivity extends AppCompatActivity {
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
             alertTitle.setText("Registration Successful");
-            alertMessage.setText("Welcome to " + getString(R.string.app_name) + "\n\nPlease update your profile and explore the platform benefits.");
+            alertMessage.setText("Welcome to " + getString(R.string.app_name) + "\n\nPlease update your profile and explore platform benefits.");
             alertPositiveButton.setVisibility(View.GONE);
             alertNegativeButton.setText("OK");
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -498,46 +534,6 @@ public class RegistrationActivity extends AppCompatActivity {
         });
         mQueue.add(request);
     }
-    //----------------------------------------------------------------------------------------------
-
-    //------------------------------------- Create User in API -------------------------------------
-    public UserRequest createUser() {
-        UserRequest userRequest = new UserRequest();
-        userRequest.setName(name.getText().toString());
-        userRequest.setPhone_number(mobile);
-        userRequest.setAddress(address.getText().toString());
-        userRequest.setUser_type(role);
-        userRequest.setEmail_id(email_id.getText().toString());
-        userRequest.setIsRegistration_done(1);
-        userRequest.setPin_code(pinCode.getText().toString());
-        userRequest.setPreferred_location(selectDistrictText.getText().toString());
-        userRequest.setState_code(selectStateText.getText().toString());
-        userRequest.setIsCompany_added(0);
-        userRequest.setIsBankDetails_given(0);
-        userRequest.setIsPersonal_dt_added(0);
-        userRequest.setIsDriver_added(0);
-        userRequest.setIsTruck_added(0);
-        userRequest.setIsProfile_pic_added(0);
-        return userRequest;
-    }
-
-    public void saveUser(UserRequest userRequest) {
-        Call<UserResponse> userResponseCall = ApiClient.getUserService().saveUser(userRequest);
-        userResponseCall.enqueue(new Callback<UserResponse>() {
-            @Override
-            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-//                Log.i("Message UserCreated:", userResponse.getData().getPhone_number());
-                UserResponse userResponse = response.body();
-                Log.i("Msg Success", String.valueOf(userResponse));
-            }
-
-            @Override
-            public void onFailure(Call<UserResponse> call, Throwable t) {
-
-            }
-        });
-    }
-    //----------------------------------------------------------------------------------------------
 
     @Override
     protected void onStop() {

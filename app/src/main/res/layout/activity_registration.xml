@@ -22,6 +22,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registration_action_bar" />
 
@@ -56,6 +57,7 @@
         android:background="@drawable/button_active"
         android:onClick="onClickExploreNow"
         android:text="Explore Now"
+        android:visibility="invisible"
         android:textAllCaps="false"
         android:textColor="@color/background"
         android:textSize="18sp"

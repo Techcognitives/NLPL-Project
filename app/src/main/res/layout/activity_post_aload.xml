@@ -32,12 +32,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:text="Delete Load"
-            android:onClick="deleteLoad"
-            android:visibility="gone"
-            android:gravity="center"
             android:drawableStart="@drawable/delete_icon"
+            android:gravity="center"
+            android:onClick="deleteLoad"
+            android:text="Delete Load"
             android:textColor="@color/redDark"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -124,9 +124,9 @@
                     android:hint="@string/time"
                     android:paddingStart="10dp"
                     android:paddingTop="5dp"
-                    android:textColor="@color/black"
                     android:paddingEnd="10dp"
                     android:paddingBottom="5dp"
+                    android:textColor="@color/black"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toStartOf="@+id/post_a_load_budget_text_view"
                     app:layout_constraintStart_toEndOf="@+id/post_a_load_date_text_view"
@@ -175,9 +175,9 @@
                     android:hint="@string/SelectVehicleModel"
                     android:paddingStart="10dp"
                     android:paddingTop="5dp"
-                    android:textColor="@color/black"
                     android:paddingEnd="25dp"
                     android:paddingBottom="5dp"
+                    android:textColor="@color/black"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toStartOf="@+id/post_a_load_feet_text_view"
                     app:layout_constraintStart_toStartOf="parent"
@@ -193,9 +193,9 @@
                     android:hint="Ft."
                     android:paddingStart="10dp"
                     android:paddingTop="5dp"
-                    android:textColor="@color/black"
                     android:paddingEnd="25dp"
                     android:paddingBottom="5dp"
+                    android:textColor="@color/black"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="@+id/post_a_load_vehicle_model"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -210,10 +210,10 @@
                     android:background="@drawable/edit_text_border"
                     android:hint="@string/Capacity"
                     android:paddingStart="10dp"
-                    android:textColor="@color/black"
                     android:paddingTop="5dp"
                     android:paddingEnd="25dp"
                     android:paddingBottom="5dp"
+                    android:textColor="@color/black"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="@+id/post_a_load_vehicle_model"
                     app:layout_constraintStart_toStartOf="@+id/post_a_load_vehicle_model"
@@ -224,12 +224,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edit_text_border"
+                    android:hint="@string/bodyType"
                     android:paddingStart="10dp"
                     android:paddingTop="5dp"
                     android:paddingEnd="25dp"
-                    android:textColor="@color/black"
                     android:paddingBottom="5dp"
-                    android:hint="@string/bodyType"
+                    android:textColor="@color/black"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="@+id/post_a_load_capacity_text_view"
                     app:layout_constraintEnd_toEndOf="@+id/post_a_load_feet_text_view"
@@ -241,12 +241,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:drawableEnd="@drawable/ic_edit_small"
-                    android:drawableTint="@color/button_blue"
-                    android:onClick="onClickSetPickUpLocation"
                     android:paddingStart="5dp"
                     android:text="@string/pickUpLocationDetails"
-                    android:textColor="@color/button_blue"
+                    android:textColor="@color/light_black"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@+id/imageView10"
@@ -257,26 +254,122 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:drawableEnd="@drawable/ic_edit_small"
-                    android:drawableTint="@color/button_blue"
-                    android:onClick="onClickDropLocation"
                     android:paddingStart="5dp"
                     android:text="@string/dropLocationDetails"
-                    android:textColor="@color/button_blue"
+                    android:textColor="@color/light_black"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@+id/imageView11"
-                    app:layout_constraintTop_toBottomOf="@+id/post_a_load_enter_pick_location" />
+                    app:layout_constraintTop_toBottomOf="@+id/post_a_load_select_city_pick_up" />
+
+                <TextView
+                    android:id="@+id/post_a_load_get_current_location_drop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:drawableStart="@drawable/google_location_small"
+                    android:onClick="onClickGetCurrentLocationDrop"
+                    android:text="Search"
+                    android:textColor="@color/button_blue"
+                    android:textSize="14sp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="@+id/post_a_load_address_edit_drop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/post_a_load_address_edit_drop"
+                    app:layout_constraintTop_toTopOf="@+id/post_a_load_address_edit_drop" />
+
+                <EditText
+                    android:id="@+id/post_a_load_address_edit_drop"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/edit_text_border"
+                    android:ems="10"
+                    android:hint="@string/address"
+                    android:inputType="textMultiLine"
+                    android:maxLines="2"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@+id/post_a_load_get_current_location_drop"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/post_a_load_enter_drop_location" />
+
+                <EditText
+                    android:id="@+id/post_a_load_pin_code_edit_drop"
+                    android:layout_width="87dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/edit_text_border"
+                    android:ems="10"
+                    android:hint="@string/pin_code"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint"
+                    android:maxLength="6"
+                    android:padding="10dp"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/post_a_load_select_city_drop"
+                    app:layout_constraintEnd_toStartOf="@+id/post_a_load_select_state_drop"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/post_a_load_select_city_drop"
+                    app:layout_constraintVertical_bias="1.0" />
+
+                <TextView
+                    android:id="@+id/post_a_load_select_city_drop"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/edit_text_border"
+                    android:drawableEnd="@drawable/ic_down"
+                    android:drawableTint="@color/black"
+                    android:onClick="onClickDropCity"
+                    android:ellipsize="end"
+                    android:hint="@string/select_city"
+                    android:maxLines="1"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/post_a_load_select_state_drop"
+                    app:layout_constraintTop_toBottomOf="@+id/post_a_load_address_edit_drop" />
+
+                <TextView
+                    android:id="@+id/post_a_load_select_state_drop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="2dp"
+                    android:background="@drawable/edit_text_border"
+                    android:drawableEnd="@drawable/ic_down"
+                    android:drawableTint="@color/black"
+                    android:onClick="onClickDropState"
+                    android:hint="@string/select_state"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint"
+                    android:padding="8dp"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/post_a_load_select_city_drop"
+                    app:layout_constraintEnd_toStartOf="@+id/post_a_load_select_city_drop"
+                    app:layout_constraintStart_toEndOf="@+id/post_a_load_pin_code_edit_drop"
+                    app:layout_constraintTop_toTopOf="@+id/post_a_load_select_city_drop" />
+
 
                 <TextView
                     android:id="@+id/textView28"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginStart="10dp"
                     android:text="@string/km"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="@+id/post_a_load_auto_calculated_km_edit_text"
                     app:layout_constraintEnd_toStartOf="@+id/post_a_load_auto_calculated_km_edit_text"
                     app:layout_constraintStart_toStartOf="parent"
@@ -289,16 +382,16 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="5dp"
-                    android:hint="@string/KMAutoCal"
+                    android:gravity="center|start"
                     android:paddingStart="10dp"
                     android:paddingTop="5dp"
                     android:paddingEnd="5dp"
                     android:paddingBottom="5dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/dark_grey"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView28"
-                    app:layout_constraintTop_toBottomOf="@+id/post_a_load_enter_drop_location" />
+                    app:layout_constraintTop_toBottomOf="@+id/post_a_load_select_city_drop" />
 
                 <TextView
                     android:id="@+id/textView30"
@@ -324,15 +417,13 @@
                     android:background="@drawable/edit_text_border"
                     android:ems="10"
                     android:hint="@string/NotesIfAny"
-                    android:textColor="@color/black"
                     android:inputType="textMultiLine"
                     android:paddingStart="10dp"
                     android:paddingTop="5dp"
                     android:paddingEnd="5dp"
                     android:paddingBottom="5dp"
+                    android:textColor="@color/black"
                     android:textSize="14sp"
-
-                    android:textStyle="italic"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView30" />
@@ -380,8 +471,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="5dp"
-                    android:background="@drawable/button_de_active"
-                    android:enabled="false"
+                    android:background="@drawable/button_active"
                     android:text="@string/postALoad"
                     android:textAllCaps="false"
                     android:textColor="@color/background"
@@ -414,18 +504,129 @@
                     app:layout_constraintTop_toTopOf="@+id/post_a_load_enter_drop_location"
                     app:srcCompat="@drawable/ic_end"
                     app:tint="@color/light_black" />
+
+                <ImageView
+                    android:id="@+id/imageView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:onClick="onClickShowList"
+                    android:paddingEnd="5dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/post_a_load_notes_edit_text"
+                    app:layout_constraintEnd_toEndOf="@+id/post_a_load_notes_edit_text"
+                    app:layout_constraintTop_toTopOf="@+id/post_a_load_notes_edit_text"
+                    app:srcCompat="@drawable/ic_down" />
+
+                <TextView
+                    android:id="@+id/post_a_load_get_current_location_pick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:drawableStart="@drawable/google_location_small"
+                    android:onClick="onClickGetCurrentLocationPickUp"
+                    android:text="Search"
+                    android:textColor="@color/button_blue"
+                    android:textSize="14sp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="@+id/post_a_load_address_edit_pick_up"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/post_a_load_address_edit_pick_up"
+                    app:layout_constraintTop_toTopOf="@+id/post_a_load_address_edit_pick_up" />
+
+                <EditText
+                    android:id="@+id/post_a_load_address_edit_pick_up"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/edit_text_border"
+                    android:ems="10"
+                    android:hint="@string/address"
+                    android:inputType="textMultiLine"
+                    android:maxLines="2"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@+id/post_a_load_get_current_location_pick"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/post_a_load_enter_pick_location" />
+
+                <EditText
+                    android:id="@+id/post_a_load_pin_code_edit_pick_up"
+                    android:layout_width="87dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/edit_text_border"
+                    android:ems="10"
+                    android:hint="@string/pin_code"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/post_a_load_select_city_pick_up"
+                    app:layout_constraintEnd_toStartOf="@+id/post_a_load_select_state_pick_up"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/post_a_load_select_city_pick_up"
+                    app:layout_constraintVertical_bias="1.0" />
+
+                <TextView
+                    android:id="@+id/post_a_load_select_state_pick_up"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="2dp"
+                    android:background="@drawable/edit_text_border"
+                    android:drawableEnd="@drawable/ic_down"
+                    android:drawableTint="@color/black"
+                    android:onClick="onClickPickUpState"
+                    android:hint="@string/select_state"
+                    android:padding="8dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/post_a_load_select_city_pick_up"
+                    app:layout_constraintEnd_toStartOf="@+id/post_a_load_select_city_pick_up"
+                    app:layout_constraintStart_toEndOf="@+id/post_a_load_pin_code_edit_pick_up"
+                    app:layout_constraintTop_toTopOf="@+id/post_a_load_select_city_pick_up" />
+
+                <TextView
+                    android:id="@+id/post_a_load_select_city_pick_up"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/edit_text_border"
+                    android:drawableEnd="@drawable/ic_down"
+                    android:drawableTint="@color/black"
+                    android:onClick="onClickPickUpCity"
+                    android:ellipsize="end"
+                    android:hint="@string/select_city"
+                    android:maxLines="1"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/post_a_load_select_state_pick_up"
+                    app:layout_constraintTop_toBottomOf="@+id/post_a_load_address_edit_pick_up" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--    <include-->
-<!--        android:id="@+id/post_a_load_bottom_nav_bar0"-->
-<!--        layout="@layout/bottom_nav_bar"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:visibility="visible"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent" />-->
+    <!--    <include-->
+    <!--        android:id="@+id/post_a_load_bottom_nav_bar0"-->
+    <!--        layout="@layout/bottom_nav_bar"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:visibility="visible"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

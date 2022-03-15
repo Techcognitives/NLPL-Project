@@ -201,7 +201,7 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
         holder.destinationEnd.setText("  " + dropCity);
 
         String budget = obj.getBudget();
-        holder.budget.setText("₹" + budget);
+        holder.budget.setText("₹ " + budget);
 
         String date = obj.getPick_up_date();
         holder.date.setText("Pick-up Date: " + date);

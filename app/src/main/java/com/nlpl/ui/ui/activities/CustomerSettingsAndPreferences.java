@@ -21,10 +21,8 @@ public class CustomerSettingsAndPreferences extends AppCompatActivity {
 
     String phone, userId;
     View actionBar;
-    TextView actionBarTitle, addressDialogState, addressDialogCity, addressDialogOkButton, addressDialogTitle, addressDialogGetCurrentLocation;
+    TextView actionBarTitle;
     ImageView actionBarBackButton, actionBarMenuButton;
-    Dialog addressDialog;
-    EditText addressDialogAddress, addressDialogPinCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,31 +52,8 @@ public class CustomerSettingsAndPreferences extends AppCompatActivity {
             }
         });
         //------------------------------------------------------------------------------------------
-
-        addressDialog = new Dialog(CustomerSettingsAndPreferences.this);
-        addressDialog.setContentView(R.layout.dialog_address);
-        addressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        addressDialogState = (TextView) addressDialog.findViewById(R.id.dialog_address_state_text_view);
-        addressDialogCity = (TextView) addressDialog.findViewById(R.id.dialog_address_city_text_view);
-        addressDialogAddress = (EditText) addressDialog.findViewById(R.id.dialog_address_address_edit_text);
-        addressDialogPinCode = (EditText) addressDialog.findViewById(R.id.dialog_address_pin_code_edit_text);
-        addressDialogOkButton = (TextView) addressDialog.findViewById(R.id.dialog_address_ok_button);
-        addressDialogTitle = (TextView) addressDialog.findViewById(R.id.dialog_address_title);
-        addressDialogGetCurrentLocation = (TextView) addressDialog.findViewById(R.id.dialog_address_current_location);
-
-        addressDialogGetCurrentLocation.setVisibility(View.GONE);
     }
 
-    public void getPreferredLocation(View view) {
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(addressDialog.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.gravity = Gravity.CENTER;
-        addressDialog.show();
-        addressDialog.getWindow().setAttributes(lp);
-    }
 
     @Override
     public void onBackPressed() {

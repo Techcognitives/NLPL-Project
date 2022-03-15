@@ -948,6 +948,26 @@
         <item>Yanam</item>
     </string-array>
 
+    //--------------------------------- List for Load Suggestions ----------------------------------
+    <string-array name="array_load_notes_suggestions">
+        <item>FMCG Products</item>
+        <item>Electronic Goods</item>
+        <item>Box Cartons</item>
+        <item>Electronic Appliances</item>
+        <item>Medical / Pharmaceuticals Equipments</item>
+        <item>Palettes</item>
+        <item>Wooden Box / Palettes</item>
+        <item>Consumable Products</item>
+        <item>Tyres</item>
+        <item>Packaged Foods</item>
+        <item>Steel Pipes</item>
+        <item>Paints</item>
+        <item>Water Tank</item>
+        <item>Solar Panels</item>
+        <item>House Materials</item>
+        <item>Furniture</item>
+    </string-array>
+
     //---------------------------- Splash Screen Activity ------------------------------------------
 
     //----------------------------------------------------------------------------------------------
@@ -956,6 +976,7 @@
     <string name="login">Login</string>
     <string name="mobile_prefix">+91 |</string>
     <string name="edit_number_hint">Enter 10 digit mobile number</string>
+    <string name="edit_number_hint_optional">Alternate Number (Optional)</string>
     <string name="get_otp">Get OTP</string>
     <string name="tc_and_pp">By clicking on Get OTP you agree to our</string>
     <string name="tc">Terms of Service</string>
@@ -973,20 +994,20 @@
     //----------------------------------------------------------------------------------------------
 
     //---------------------------- Registration Screen Activity ------------------------------------
-    <string name="name">Name</string>
+    <string name="name">Name*</string>
     <string name="name_hint">Enter your Name</string>
-    <string name="email_id">Enter your Email ID</string>
-    <string name="location">Address</string>
+    <string name="email_id">Enter your Email ID (Optional)</string>
+    <string name="location">Address*</string>
     <string name="select_state">State</string>
     <string name="select_city">City</string>
     <string name="pin_code">PIN Code</string>
-    <string name="address">Address</string>
+    <string name="address">Search or Type Address</string>
     <string name="are_u_sp">Truck Owner / Driver / Broker? </string>
-    <string name="truck_owner">Truck Owner</string>
-    <string name="driver">Driver</string>
-    <string name="broker">Broker</string>
+    <string name="truck_owner">I"'"m a Truck Owner</string>
+    <string name="driver">I"'"m a Driver</string>
+    <string name="broker">I"'"m a Broker</string>
     <string name="ok">OK</string>
-    <string name="customer">Load Poster?</string>
+    <string name="customer">I"'"m a Load Poster</string>
     <string name="yes">YES</string>
     //----------------------------------------------------------------------------------------------
 
@@ -998,6 +1019,7 @@
     <string name="BankDetails"><p>   </p>My Bank</string>
     <string name="AddTrucks"><p>   </p>My Trucks</string>
     <string name="AddDrivers"><p>   </p>My Drivers</string>
+    <string name="kyc_verification"><p>   </p>KYC - PAN &amp; Aadhar</string>
     //----------------------------------------------------------------------------------------------
 
     //---------------------------------------Personal Details Activity------------------------------
@@ -1005,8 +1027,8 @@
     <string name="Upload">Upload</string>
     <string name="UploadAny">Upload any of the following</string>
     <string name="Aadhar">Aadhar Card</string>
-    <string name="uploadAadhar">Upload Aadhar Card</string>
-    <string name="uploadpan">Upload PAN Card</string>
+    <string name="uploadAadhar">Upload Aadhar Card*</string>
+    <string name="uploadpan">Upload PAN Card*</string>
     <string name="VoterId">Voter ID</string>
     <string name="AadharFront">Aadhar Front</string>
     <string name="AadharBack">Aadhar Back</string>
@@ -1030,15 +1052,15 @@
 
     //-------------------------------- Vehicle Details Activity ------------------------------------
     <string name="vehicle_number">Vehicle Number</string>
-    <string name="vehicle_details">Vehicle Details</string>
+    <string name="vehicle_details">Vehicle Details*</string>
     <string name="body_type">Vehicle Body Type</string>
     <string name="open">Open</string>
     <string name="closed">Closed</string>
     <string name="tarpaulin">Tarpaulin</string>
     <string name="vehicle_number_edit">Enter Vehicle Number"</string>
-    <string name="rc_book">Upload RC Book</string>
+    <string name="rc_book">Upload RC Book*</string>
     <string name="rc_front">RC Book</string>
-    <string name="uploadInsurance">Upload Insurance</string>
+    <string name="uploadInsurance">Upload Insurance*</string>
     <string name="insurance">Insurance</string>
     <string name="selectModel">Select Model</string>
     <string name="Ft">Ft.:</string>
@@ -1050,8 +1072,8 @@
     <string name="EnterDriverName">Enter Driver Name</string>
     <string name="UploadDriverLicense">Upload Driver License</string>
     <string name="UploadDriverSelfie">Photo - Selfie</string>
-    <string name="DriverLicense">Driver License</string>
-    <string name="TakePhoto">Take a Photo</string>
+    <string name="DriverLicense">Driver License*</string>
+    <string name="TakePhoto">Take a Photo*</string>
     <string name="camera">Camera</string>
     <string name="driver_mobile_number_hint">Enter Driver Mobile Number</string>
     <string name="AddAnotherDriver">ADD ANOTHER DRIVER</string>
@@ -1066,11 +1088,11 @@
     //----------------------------------------------------------------------------------------------
 
     //-------------------------------------- Company Details ---------------------------------------
-    <string name="company_name">Company Name</string>
-    <string name="company_address">Company Address</string>
+    <string name="company_name">Company Name*</string>
+    <string name="company_address">Company Address*</string>
     <string name="company_name_hint">Enter Company Name</string>
-    <string name="gst_number_hint">GST Number</string>
-    <string name="pan_number">PAN Number</string>
+    <string name="gst_number_hint">GST Number*</string>
+    <string name="pan_number">PAN Number*</string>
     //----------------------------------------------------------------------------------------------
 
     //--------------------------- Personal Details And Id Proof Activity ---------------------------
@@ -1088,18 +1110,18 @@
     //----------------------------------------------------------------------------------------------
 
     //-----------------------------------Post A Load------------------------------------------------
-    <string name="pick_up_date">Pick-up Date</string>
-    <string name="pick_up_time">Pick-up Time</string>
+    <string name="pick_up_date">Pick-up Date*</string>
+    <string name="pick_up_time">Pick-up Time*</string>
     <string name="enterYourBudget">Enter Your Budget</string>
     <string name="budget">Budget</string>
-    <string name="budgetRs">Budget ₹</string>
-    <string name="truckTypeAndCapacity">Truck Type &amp; Capacity</string>
+    <string name="budgetRs">Budget ₹ (Optional)</string>
+    <string name="truckTypeAndCapacity">Truck Type &amp; Capacity*</string>
     <string name="SelectVehicleModel">Vehicle Model</string>
     <string name="bodyType">Body</string>
-    <string name="pickUpLocationDetails">Pick-up Location Details</string>
-    <string name="dropLocationDetails">Drop Location Details</string>
-    <string name="km">Km (approx)</string>
-    <string name="noteAndMaterial">Notes &amp; Material Description*</string>
+    <string name="pickUpLocationDetails">Pick-up Address*</string>
+    <string name="dropLocationDetails">Drop Address*</string>
+    <string name="km">KM (approx)</string>
+    <string name="noteAndMaterial">Notes &amp; Material Description (Optional)</string>
     <string name="postALoad">POST A LOAD</string>
     <string name="date">DD-Month-YY</string>
     <string name="time">hh:mm AM/PM</string>
@@ -1139,7 +1161,7 @@
     <string name="truck">Truck</string>
     <string name="feet">Feet</string>
     <string name="Notes">Notes</string>
-    <string name="NotesIfAny"><b>Notes: </b>Type your notes if any...</string>
+    <string name="NotesIfAny">Type or select</string>
     <string name="acceptBid">Accept &amp; Bid</string>
     <string name="cancel">Cancel</string>
     <string name="declaration"><b>Declaration: </b><em>I hereby declare, driver will reach Pick-up location 15 minutes prior Pick-up Time.</em> </string>

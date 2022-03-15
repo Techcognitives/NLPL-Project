@@ -115,7 +115,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CompanyDetailsActivity.this.finish();
+                JumpTo.goToViewPersonalDetailsActivity(CompanyDetailsActivity.this, userId, mobile, true);
             }
         });
 //--------------------------------------------------------------------------------------------------

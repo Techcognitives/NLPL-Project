@@ -80,7 +80,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     private int CAMERA_PIC_REQUEST2 = 4;
     private int GET_FROM_GALLERY2 = 5;
 
-
     View panAndAadharView;
     ConstraintLayout aadharConstrain, panConstrain, profileConstrain;
     TextView uploadAadharTitle, uploadPanTitle, uploadProfileTitle;
@@ -117,7 +116,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         action_bar = findViewById(R.id.personal_details_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
-        actionBarTitle.setText("Personal Details");
+        actionBarTitle.setText("KYC - PAN & Aadhar");
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

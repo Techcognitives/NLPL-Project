@@ -1,12 +1,12 @@
 package com.nlpl.model.Requests;
 
 public class UserRequest {
-    String name, phone_number, user_type, preferred_location, address, state_code, pin_code, preferred_language, email_id;
-    int isProfile_pic_added, isRegistration_done, isTruck_added, isDriver_added, isBankDetails_given, isCompany_added,isPersonal_dt_added;
+    String name, phone_number, user_type, preferred_location, address, state_code, pin_code, preferred_language, email_id, alternate_ph_no;
+    int isProfile_pic_added, isRegistration_done, isTruck_added, isDriver_added, isBankDetails_given, isCompany_added, isPersonal_dt_added;
 
     public UserRequest() {
         this.name = name;
-        this.phone_number = phone_number ;
+        this.phone_number = phone_number;
         this.user_type = user_type;
         this.preferred_location = preferred_location;
         this.address = address;
@@ -21,6 +21,7 @@ public class UserRequest {
         this.isDriver_added = isDriver_added;
         this.isCompany_added = isCompany_added;
         this.isProfile_pic_added = isProfile_pic_added;
+        this.alternate_ph_no = alternate_ph_no;
 
     }
 
@@ -150,5 +151,13 @@ public class UserRequest {
 
     public void setPin_code(String pin_code) {
         this.pin_code = pin_code;
+    }
+
+    public String getAlternate_ph_no() {
+        return alternate_ph_no;
+    }
+
+    public void setAlternate_ph_no(String alternate_ph_no) {
+        this.alternate_ph_no = alternate_ph_no;
     }
 }

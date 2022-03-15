@@ -56,6 +56,7 @@ import com.nlpl.model.UpdateMethods.UpdateDriverDetails;
 import com.nlpl.model.UpdateMethods.UpdateTruckDetails;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
 import com.nlpl.utils.ApiClient;
+import com.nlpl.utils.CreateUser;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
 import com.nlpl.utils.GetCurrentLocation;
@@ -85,7 +86,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
     TextView actionBarTitle, actionBarSkipButton;
     ImageView actionBarMenuButton;
 
-    EditText driverName, driverMobile, driverEmailId;
+    EditText driverName, driverMobile, driverAlternateMobile, driverEmailId;
     ImageView actionBarBackButton;
     Intent data;
     int requestCode;
@@ -147,6 +148,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         actionBarMenuButton.setVisibility(View.GONE);
 
         driverMobile = (EditText) personalAndAddress.findViewById(R.id.registration_mobile_no_edit);
+        driverAlternateMobile = (EditText) personalAndAddress.findViewById(R.id.registration_mobile_no_edit_alternate);
         driverName = personalAndAddress.findViewById(R.id.registration_edit_name);
         okDriverDetails = findViewById(R.id.driver_details_ok_button);
         series = (TextView) personalAndAddress.findViewById(R.id.registration_prefix);
@@ -225,7 +227,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         }
 
-        if (truckIdPass==null) {
+        if (truckIdPass == null) {
             actionBarTitle.setText("Driver Details");
             actionBarBackButton.setVisibility(View.VISIBLE);
             actionBarSkipButton.setVisibility(View.INVISIBLE);
@@ -1083,7 +1085,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                         saveDriver(createDriver());
                     } else {
                         saveDriver(createDriver());
-                        saveDriverUser(createDriverUser());
+                        CreateUser.saveUser(CreateUser.createUser(driverName.getText().toString(), "91" + driverMobile.getText().toString(), "91" + driverAlternateMobile.getText().toString(), address.getText().toString(), "Driver", driverEmailId.getText().toString(), pinCode.getText().toString(), selectDistrictText.getText().toString(), selectStateText.getText().toString()));
                     }
 
                     //----------------------- Alert Dialog -------------------------------------------------
@@ -1264,7 +1266,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
     };
 
     private void getDriverDetails() {
-
         String url = getString(R.string.baseURL) + "/driver/driverId/" + driverId;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
@@ -1408,39 +1409,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         previewDialogSelfie.show();
         previewDialogSelfie.getWindow().setAttributes(lp);
-    }
-
-    //--------------------------------------create User in API -------------------------------------
-    public UserRequest createDriverUser() {
-        UserRequest userRequest = new UserRequest();
-        userRequest.setName(driverName.getText().toString());
-        userRequest.setPhone_number("91" + driverMobile.getText().toString());
-        userRequest.setAddress(address.getText().toString());
-        userRequest.setUser_type("Driver");
-        userRequest.setEmail_id(driverEmailId.getText().toString());
-        userRequest.setIsRegistration_done(1);
-        userRequest.setPin_code(pinCode.getText().toString());
-        userRequest.setPreferred_location(selectDistrictText.getText().toString());
-        userRequest.setState_code(selectStateText.getText().toString());
-        return userRequest;
-    }
-
-    public void saveDriverUser(UserRequest userRequest) {
-        Call<UserResponse> userResponseCall = ApiClient.getUserService().saveUser(userRequest);
-        userResponseCall.enqueue(new Callback<UserResponse>() {
-            @Override
-            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-//                Log.i("Message UserCreated:", userResponse.getData().getPhone_number());
-                UserResponse userResponse = response.body();
-                Log.i("Msg Success", String.valueOf(userResponse.getData().getUser_id()));
-                driverUserId = String.valueOf(userResponse.getData().getUser_id());
-            }
-
-            @Override
-            public void onFailure(Call<UserResponse> call, Throwable t) {
-
-            }
-        });
     }
 
     //----------------------------------------------------------------------------------------------

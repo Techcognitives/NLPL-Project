@@ -43,7 +43,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
     Dialog previewDialogPan, previewDialogAadhar, previewDialogProfile;
 
     View actionBar;
-    TextView actionBarTitle, previewAadharBtn, previewPANBtn, previewProfileBtn;
+    TextView actionBarTitle, actionBarSkip, previewAadharBtn, previewPANBtn, previewProfileBtn;
     ImageView actionBarBackButton, actionBarMenuButton;
 
     View bottomNav;
@@ -68,6 +68,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
         actionBarTitle = (TextView) actionBar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) actionBar.findViewById(R.id.action_bar_back_button);
         actionBarMenuButton = (ImageView) actionBar.findViewById(R.id.action_bar_menu);
+        actionBarSkip = (TextView) actionBar.findViewById(R.id.action_bar_skip);
 
         actionBarTitle.setText("Personal Details");
         actionBarMenuButton.setVisibility(View.GONE);
@@ -81,6 +82,13 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
                     JumpTo.goToServiceProviderDashboard(ViewPersonalDetailsActivity.this, phone, true);
                 }
             }
+        });
+
+        actionBarSkip.setVisibility(View.VISIBLE);
+        actionBarSkip.setText("Edit");
+        actionBarSkip.setOnClickListener(view -> {
+            ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
+            JumpTo.goToPersonalDetailsIdProofActivity(ViewPersonalDetailsActivity.this, userId, phone, false);
         });
         //---------------------------- Bottom Nav --------------------------------------------------
         bottomNav = (View) findViewById(R.id.view_personal_details_bottom_nav_bar);
@@ -369,11 +377,6 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
 
         previewDialogProfile.show();
         previewDialogProfile.getWindow().setAttributes(lp2);
-    }
-
-    public void onClickEditPersonalDetailsView(View view) {
-        ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
-        JumpTo.goToPersonalDetailsIdProofActivity(ViewPersonalDetailsActivity.this, userId, phone, false);
     }
 
     public void onClickEditFirmDetailsView(View view) {

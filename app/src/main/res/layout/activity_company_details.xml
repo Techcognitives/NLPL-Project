@@ -74,7 +74,7 @@
         android:textStyle="bold"
         android:paddingStart="5dp"
         android:paddingEnd="0dp"
-        android:text="Company Type"
+        android:text="Company Type*"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"

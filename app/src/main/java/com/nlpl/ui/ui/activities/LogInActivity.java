@@ -88,41 +88,7 @@ public class LogInActivity extends AppCompatActivity {
             public void onClick(View view) {
                 mobile = "+91" + mobileNo.getText().toString();
                 if (mobileNo.getText().length()==10) {
-                    //----------------------- Alert Dialog -----------------------------------------------------
-                    Dialog alert = new Dialog(LogInActivity.this);
-                    alert.setContentView(R.layout.dialog_alert);
-                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                    lp.copyFrom(alert.getWindow().getAttributes());
-                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-                    lp.gravity = Gravity.CENTER;
-                    alert.show();
-                    alert.getWindow().setAttributes(lp);
-                    alert.setCancelable(false);
-
-                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-                    alertTitle.setText("OTP sent successfully");
-                    String s = mobile.substring(3, 13);
-                    alertMessage.setText("OTP sent to " + "+91 "+s);
-                    alertPositiveButton.setVisibility(View.VISIBLE);
-                    alertPositiveButton.setText("OK");
-                    alertNegativeButton.setText("Cancel");
-
-                    alertPositiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            alert.dismiss();
-                            JumpTo.goToOTPActivity(LogInActivity.this, mobile, false, null);
-                        }
-                    });
-
-                    alertNegativeButton.setOnClickListener(view1 -> alert.dismiss());
-                    //------------------------------------------------------------------------------------------
+                    JumpTo.goToOTPActivity(LogInActivity.this, mobile, false, null);
                 } else {
                     //----------------------- Alert Dialog -----------------------------------------------------
                     Dialog alert = new Dialog(LogInActivity.this);

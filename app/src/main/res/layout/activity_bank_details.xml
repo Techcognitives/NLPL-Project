@@ -277,7 +277,7 @@
                    android:layout_width="0dp"
                    android:layout_height="wrap_content"
                    android:padding="10dp"
-                   android:text="Cancelled Cheque"
+                   android:text="Cancelled Cheque*"
                    android:textColor="@color/light_black"
                    android:textSize="14sp"
                    app:layout_constraintBottom_toBottomOf="@+id/bank_details_canceled_check_image"
