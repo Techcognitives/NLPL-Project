@@ -95,7 +95,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     int CAMERA_PIC_REQUEST1 = 7;
     int CAMERA_PIC_REQUEST2 = 12;
 
-    String userId, truckId, vehicleNumberAPI, vehicleTypeAPI, truckModelAPI, truckFtAPI, truckCapacityAPI;
+    String userId, truckId, vehicleNumberAPI, truckModelAPI, truckCapacityAPI;
     Boolean isRcEdited = false, isInsuranceEdited = false, fromBidNow = true, isEdit, isRcUploaded = false, isInsurance = false, isAssignTruck = false;
 
     private RequestQueue mQueue;
@@ -871,7 +871,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         addTruckRequest.setUser_id(userId);
         addTruckRequest.setVehicle_no(vehicleNumberEdit.getText().toString());
         addTruckRequest.setTruck_type(selectModel.getText().toString());
-//        addTruckRequest.setTruck_carrying_capacity(selectCapacity.getText().toString());
+        addTruckRequest.setTruck_carrying_capacity(selectLoadType.getText().toString());
         if (isAssignTruck) {
             addTruckRequest.setDriver_id(driverIdBundle);
         }
@@ -994,14 +994,12 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                     for (int i = 0; i < truckLists.length(); i++) {
                         JSONObject obj = truckLists.getJSONObject(i);
                         vehicleNumberAPI = obj.getString("vehicle_no");
-                        vehicleTypeAPI = obj.getString("vehicle_type");
                         truckModelAPI = obj.getString("truck_type");
-                        truckFtAPI = obj.getString("truck_ft");
                         truckCapacityAPI = obj.getString("truck_carrying_capacity");
 
                         vehicleNumberEdit.setText(vehicleNumberAPI);
                         selectModel.setText(truckModelAPI);
-                        selectLoadType.setText(truckFtAPI);
+                        selectLoadType.setText(truckCapacityAPI);
 
                         String drivingLicenseURL = obj.getString("rc_book");
                         String insuranceURL = obj.getString("vehicle_insurance");
