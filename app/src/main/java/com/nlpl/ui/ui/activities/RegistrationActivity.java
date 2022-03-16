@@ -115,7 +115,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         Dialog roleDialog = new Dialog(this);
         roleDialog.setContentView(R.layout.dialog_role);
-        roleDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        roleDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(roleDialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -125,7 +125,7 @@ public class RegistrationActivity extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
         language = new Dialog(RegistrationActivity.this);
         language.setContentView(R.layout.dialog_language);
-        language.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.dark_grey)));
+        language.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
 
         getCurrentLocation = new GetCurrentLocation();
 
@@ -183,11 +183,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         actionBarSkip.setVisibility(View.VISIBLE);
         actionBarMenuButton.setVisibility(View.GONE);
-        if (role.equals("Customer")){
-            actionBarTitle.setText("Registration as " + "Load Poster");
-        }else{
-            actionBarTitle.setText("Registration as " + role);
-        }
+
         actionBarBackButton.setVisibility(View.GONE);
 
         //------------------------------------------------------------------------------------------
@@ -262,6 +258,13 @@ public class RegistrationActivity extends AppCompatActivity {
             public void onClick(View view) {
                 roleDialog.dismiss();
                 Log.i("Role Selected", role);
+                if (role!=null) {
+                    if (role.equals("Customer")) {
+                        actionBarTitle.setText("Registration as " + "Load Poster");
+                    } else {
+                        actionBarTitle.setText("Registration as " + role);
+                    }
+                }
             }
         });
 
