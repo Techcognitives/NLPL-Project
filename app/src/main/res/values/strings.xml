@@ -1132,6 +1132,7 @@
     <string name="EnterAccNumber">Enter your account number</string>
     <string name="ReEnterAccNumber">Re-Enter your account number</string>
     <string name="EnterIFSC">Enter IFSC code</string>
+    <string name="bank_details">Bank Details</string>
     //----------------------------------------------------------------------------------------------
 
     //-------------------------------- Vehicle Details Activity ------------------------------------

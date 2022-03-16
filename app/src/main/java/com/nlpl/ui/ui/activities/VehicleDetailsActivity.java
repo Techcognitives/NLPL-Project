@@ -95,7 +95,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     int CAMERA_PIC_REQUEST1 = 7;
     int CAMERA_PIC_REQUEST2 = 12;
 
-    String userId, truckId, vehicleNumberAPI, vehicleTypeAPI, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI, truckModelAPI, truckFtAPI, truckCapacityAPI;
+    String userId, truckId, vehicleNumberAPI, vehicleTypeAPI, truckModelAPI, truckFtAPI, truckCapacityAPI;
     Boolean isRcEdited = false, isInsuranceEdited = false, fromBidNow = true, isEdit, isRcUploaded = false, isInsurance = false, isAssignTruck = false;
 
     private RequestQueue mQueue;
