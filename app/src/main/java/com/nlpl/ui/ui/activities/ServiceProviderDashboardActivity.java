@@ -181,7 +181,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     Dialog menuDialog, previewDialogProfile;
     ConstraintLayout drawerLayout;
     TextView timeLeft00, timeLeftTextview, partitionTextview, menuUserNameTextView, mobileText, personalDetailsButton, bankDetailsTextView, addTrucksTextView;
-    ImageView personalDetailsLogoImageView, bankDetailsLogoImageView, truckDetailsLogoImageView, driverDetailsLogoImageView, arrowImage;
+    ImageView personalDetailsLogoImageView, bankDetailsLogoImageView, truckDetailsLogoImageView, driverDetailsLogoImageView, arrowImage, actionBarWhatsApp;
 
     ConstraintLayout loadNotificationConstrain, bidsSubmittedConstrain;
     TextView loadNotificationTextView, bidsSubmittedTextView, currentLocationText;
@@ -246,6 +246,8 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         actionBarTitle = (TextView) actionBar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) actionBar.findViewById(R.id.action_bar_back_button);
         actionBarMenuButton = (ImageView) actionBar.findViewById(R.id.action_bar_menu);
+        actionBarWhatsApp = (ImageView) actionBar.findViewById(R.id.action_bar_whats_app);
+        actionBarWhatsApp.setVisibility(View.VISIBLE);
 
         actionBarTitle.setText("Dashboard");
         actionBarMenuButton.setVisibility(View.VISIBLE);
@@ -1537,7 +1539,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         try {
                             int spBudgetsInt = Integer.parseInt(spQuote.getText().toString().replaceAll(",", ""));
                             int lpBudgetInt = Integer.parseInt(customerFirstBudget.getText().toString().replaceAll(",", ""));
-                            if (spBudgetsInt>lpBudgetInt){
+                            if (spBudgetsInt > lpBudgetInt) {
                                 arrowImage.setOnClickListener(view -> {
                                     //----------------------- Alert Dialog -------------------------------------------------
                                     Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
@@ -1575,7 +1577,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                                 });
                                 arrowImage.setVisibility(View.VISIBLE);
                                 arrowImage.setImageDrawable(getDrawable(R.drawable.ic_up_arrow));
-                            }else{
+                            } else {
                                 arrowImage.setVisibility(View.VISIBLE);
                                 arrowImage.setOnClickListener(view -> {
                                     //----------------------- Alert Dialog -------------------------------------------------
@@ -1614,7 +1616,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                                 });
                                 arrowImage.setImageDrawable(getDrawable(R.drawable.ic_down_arrow));
                             }
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                         negotiable_yes.setEnabled(true);
@@ -2821,5 +2823,56 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
 
         }
         return "";
+    }
+
+    public void onClickWhatsApp(View view) {
+        Dialog chooseDialog = new Dialog(ServiceProviderDashboardActivity.this);
+        chooseDialog.setContentView(R.layout.dialog_choose);
+        chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+        lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+        lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.gravity = Gravity.BOTTOM;
+
+        chooseDialog.show();
+        chooseDialog.getWindow().setAttributes(lp2);
+
+        TextView cameraText = chooseDialog.findViewById(R.id.dialog_camera_text);
+        cameraText.setText("Whats App");
+        TextView galleryText = chooseDialog.findViewById(R.id.dialog_photo_library_text);
+        galleryText.setText("Call");
+
+        ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
+        camera.setImageDrawable(getResources().getDrawable(R.drawable.whats_app_small));
+        ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
+        gallery.setImageDrawable(getResources().getDrawable(R.drawable.ic_phone));
+        gallery.setColorFilter(ContextCompat.getColor(this, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
+
+        camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseDialog.dismiss();
+                String mobileNumber = "8806930081";
+                String message = "";
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse("http://api.whatsapp.com/send?phone="+"+91"+mobileNumber + "&text="+message));
+                    startActivity(intent);
+                }catch (Exception e){
+                    Toast.makeText(ServiceProviderDashboardActivity.this, "Whats app not installed on your device", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseDialog.dismiss();
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + "+918806930081"));
+                startActivity(intent);
+            }
+        });
     }
 }
