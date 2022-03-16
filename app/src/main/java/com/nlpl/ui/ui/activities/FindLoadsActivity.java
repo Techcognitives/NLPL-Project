@@ -170,7 +170,7 @@ public class FindLoadsActivity extends AppCompatActivity {
         actionBarBackButton = (ImageView) actionBar.findViewById(R.id.action_bar_back_button);
         actionBarMenuButton = (ImageView) actionBar.findViewById(R.id.action_bar_menu);
 
-        actionBarTitle.setText("Find Loads");
+        actionBarTitle.setText(getString(R.string.Find_Loads));
         actionBarMenuButton.setVisibility(View.GONE);
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,7 +186,7 @@ public class FindLoadsActivity extends AppCompatActivity {
         customerDashboard.setBackgroundColor(getResources().getColor(R.color.nav_selected_blue));
         TextView profileText = (TextView) bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
         ImageView profileImageView = (ImageView) bottomNav.findViewById(R.id.bottom_nav_profile_image_view);
-        profileText.setText("Find Loads");
+        profileText.setText(getString(R.string.Find_Loads));
         profileImageView.setImageDrawable(getDrawable(R.drawable.find_small));
 
         //---------------------------- Get Bank Details --------------------------------------------
@@ -533,10 +533,10 @@ public class FindLoadsActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Load Notifications");
-            alertMessage.setText("No loads available for the state\n" + obj.getSearchList());
+            alertTitle.setText(getString(R.string.Load_Notifications));
+            alertMessage.setText(getString(R.string.No_loads_available_for_the_state) + obj.getSearchList());
             alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
+            alertNegativeButton.setText(getString(R.string.ok));
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
             alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -556,7 +556,7 @@ public class FindLoadsActivity extends AppCompatActivity {
             ImageView actionBarBackButtonState = (ImageView) actionBarState.findViewById(R.id.action_bar_back_button);
             ImageView actionBarMenuButtonState = (ImageView) actionBarState.findViewById(R.id.action_bar_menu);
 
-            actionBarTitleState.setText("Loads for " + obj.getSearchList());
+            actionBarTitleState.setText(getString(R.string.Loads_for) + obj.getSearchList());
             actionBarMenuButtonState.setVisibility(View.GONE);
             actionBarBackButtonState.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -773,7 +773,7 @@ public class FindLoadsActivity extends AppCompatActivity {
         pickUpLocation.setText(pick_up_location);
         dropLocation.setText(drop_location);
         receivedNotes.setText(received_notes_description);
-        loadIdHeading.setText("Load ID: " + obj.getPick_city() + "-" + obj.getDrop_city() + "-000");
+        loadIdHeading.setText(getString(R.string.Load_ID) + obj.getPick_city() + "-" + obj.getDrop_city() + "-000");
         //----------------------------------------------------------------------------------------------------------------
 
         //-------------------------------------------------Accept Load and Bid now-----------------------------------------
@@ -860,10 +860,10 @@ public class FindLoadsActivity extends AppCompatActivity {
                     TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                    alertTitle.setText("Post Bid");
-                    alertMessage.setText("Bid Posted Successfully");
+                    alertTitle.setText(getString(R.string.Post_Bid));
+                    alertMessage.setText(getString(R.string.Bid_Posted_Successfully));
                     alertPositiveButton.setVisibility(View.GONE);
-                    alertNegativeButton.setText("OK");
+                    alertNegativeButton.setText(getString(R.string.ok));
                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                     alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -1111,7 +1111,7 @@ public class FindLoadsActivity extends AppCompatActivity {
         selectTruckDialog.show();
         selectTruckDialog.setCancelable(true);
         TextView model_title = selectTruckDialog.findViewById(R.id.dialog_spinner_title);
-        model_title.setText("Select Truck to Bid");
+        model_title.setText(getString(R.string.Select_Truck_to_Bid));
 
         ListView modelList = (ListView) selectTruckDialog.findViewById(R.id.list_state);
         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, R.layout.custom_list_row, arrayTruckList);
@@ -1174,10 +1174,10 @@ public class FindLoadsActivity extends AppCompatActivity {
                         TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                         TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                        alertTitle.setText("Add a Truck");
-                        alertMessage.setText("Please add a Truck to submit your response");
+                        alertTitle.setText(getString(R.string.Add_a_Truck));
+                        alertMessage.setText(getString(R.string.Please_add_a_Truck_to_submit_your_response));
                         alertPositiveButton.setVisibility(View.GONE);
-                        alertNegativeButton.setText("OK");
+                        alertNegativeButton.setText(getString(R.string.ok));
                         alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                         alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -1321,10 +1321,10 @@ public class FindLoadsActivity extends AppCompatActivity {
                         TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                         TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                        alertTitle.setText("Add a Driver");
-                        alertMessage.setText("Please add a Driver to submit your response");
+                        alertTitle.setText(getString(R.string.Add_a_Driver));
+                        alertMessage.setText(getString(R.string.Please_add_a_Driver_to_submit_your_response));
                         alertPositiveButton.setVisibility(View.GONE);
-                        alertNegativeButton.setText("OK");
+                        alertNegativeButton.setText(getString(R.string.ok));
                         alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                         alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -1361,7 +1361,7 @@ public class FindLoadsActivity extends AppCompatActivity {
         selectTruckDialog.show();
         selectTruckDialog.setCancelable(true);
         TextView model_title = selectTruckDialog.findViewById(R.id.dialog_spinner_title);
-        model_title.setText("Select Driver to Bid");
+        model_title.setText(getString(R.string.Select_Driver_to_Bid));
 
         ListView modelList = (ListView) selectTruckDialog.findViewById(R.id.list_state);
         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, R.layout.custom_list_row, arrayDriverName);
