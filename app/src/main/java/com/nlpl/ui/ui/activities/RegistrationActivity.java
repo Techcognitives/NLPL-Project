@@ -60,6 +60,7 @@ import com.nlpl.model.Responses.UserResponse;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.CreateUser;
 import com.nlpl.utils.GetCurrentLocation;
+import com.nlpl.utils.GetStateCityUsingPINCode;
 import com.nlpl.utils.InAppNotification;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.SelectCity;
@@ -182,7 +183,11 @@ public class RegistrationActivity extends AppCompatActivity {
 
         actionBarSkip.setVisibility(View.VISIBLE);
         actionBarMenuButton.setVisibility(View.GONE);
-        actionBarTitle.setText("Registration");
+        if (role.equals("Customer")){
+            actionBarTitle.setText("Registration as " + "Load Poster");
+        }else{
+            actionBarTitle.setText("Registration as " + role);
+        }
         actionBarBackButton.setVisibility(View.GONE);
 
         //------------------------------------------------------------------------------------------
@@ -247,12 +252,6 @@ public class RegistrationActivity extends AppCompatActivity {
         name.setFilters(new InputFilter[]{filter});
         address.setFilters(new InputFilter[]{filter});
 
-//        if (!name.getText().toString().isEmpty() && !selectStateText.getText().toString().isEmpty() && !selectDistrictText.getText().toString().isEmpty() && role != null){
-//            okButton.setBackground(getDrawable(R.drawable.button_active));
-//        }else if (name.getText().toString().isEmpty() || selectStateText.getText().toString().isEmpty() || selectDistrictText.getText().toString().isEmpty() || role == null) {
-//            okButton.setBackground(getDrawable(R.drawable.button_de_active));
-//        }
-
         ownerButton = (RadioButton) roleDialog.findViewById(R.id.role_dialog_truck_owner);
         driverButton = (RadioButton) roleDialog.findViewById(R.id.role_dialog_driver);
         brokerButton = (RadioButton) roleDialog.findViewById(R.id.role_dialog_broker);
@@ -294,21 +293,6 @@ public class RegistrationActivity extends AppCompatActivity {
         name.setCursorVisible(false);
         pinCode.setCursorVisible(false);
         address.setCursorVisible(false);
-
-        String nameWatcher = name.getText().toString().trim();
-        String stateWatcher = selectStateText.getText().toString().trim();
-        String cityWatcher = selectDistrictText.getText().toString().trim();
-        String pinCodeWatcher = pinCode.getText().toString().trim();
-        String addressWatcher = address.getText().toString().trim();
-
-        //--------------------------------------------------------------------------------------
-        if (!nameWatcher.isEmpty() && !pinCodeWatcher.isEmpty() && !addressWatcher.isEmpty() && pinCodeWatcher.length() == 6 && !stateWatcher.isEmpty() && !cityWatcher.isEmpty()) {
-            okButton.setEnabled(true);
-            okButton.setBackgroundResource((R.drawable.button_active));
-        } else {
-            okButton.setBackground(getResources().getDrawable(R.drawable.button_de_active));
-        }
-        //--------------------------------------------------------------------------------------
 
         switch (view.getId()) {
             case R.id.role_dialog_truck_owner:
@@ -359,20 +343,18 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     public void onClickRegistration(View view) {
-        String nameWatcher = name.getText().toString().trim();
-        String stateWatcher = selectStateText.getText().toString().trim();
-        String cityWatcher = selectDistrictText.getText().toString().trim();
-        String pinCodeWatcher = pinCode.getText().toString().trim();
-        String addressWatcher = address.getText().toString().trim();
-        boolean owner = ownerButton.isChecked();
-        boolean driver = driverButton.isChecked();
-        boolean broker = brokerButton.isChecked();
-        boolean customer = customerButton.isChecked();
-
-        if (!nameWatcher.isEmpty() && !pinCodeWatcher.isEmpty() && !addressWatcher.isEmpty() && !stateWatcher.isEmpty() && pinCodeWatcher.length() == 6 && !cityWatcher.isEmpty() && (owner || driver || broker || customer)) {
-            okButton.setEnabled(true);
-            okButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            CreateUser.saveUser(CreateUser.createUser(name.getText().toString(), mobile, "91"+alternateMobile.getText().toString(), address.getText().toString(), role, email_id.getText().toString(), pinCode.getText().toString(), selectDistrictText.getText().toString(), selectStateText.getText().toString()));
+        if (name.getText().toString().isEmpty()){
+            Toast.makeText(this, "Please Enter Your Name", Toast.LENGTH_SHORT).show();
+        }else if (address.getText().toString().isEmpty()){
+            Toast.makeText(this, "Please Enter Address", Toast.LENGTH_SHORT).show();
+        }else if (pinCode.getText().toString().isEmpty()){
+            Toast.makeText(this, "Please Enter PIN Code", Toast.LENGTH_SHORT).show();
+        }else if (selectStateText.getText().toString().isEmpty()){
+            Toast.makeText(this, "Please Select State", Toast.LENGTH_SHORT).show();
+        }else if (selectDistrictText.getText().toString().isEmpty()){
+            Toast.makeText(this, "Please Select City", Toast.LENGTH_SHORT).show();
+        }else{
+            CreateUser.saveUser(CreateUser.createUser(name.getText().toString(), mobile, "91" + alternateMobile.getText().toString(), address.getText().toString(), role, email_id.getText().toString(), pinCode.getText().toString(), selectDistrictText.getText().toString(), selectStateText.getText().toString()));
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(RegistrationActivity.this);
             alert.setContentView(R.layout.dialog_alert_single_button);
@@ -411,9 +393,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 }
             });
             //------------------------------------------------------------------------------------------
-
         }
-//            RegistrationActivity.this.finish();
     }
 
     private TextWatcher registrationWatcher = new TextWatcher() {
@@ -424,23 +404,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            String nameWatcher = name.getText().toString().trim();
-            String stateWatcher = selectStateText.getText().toString().trim();
-            String cityWatcher = selectDistrictText.getText().toString().trim();
-            String pinCodeWatcher = pinCode.getText().toString().trim();
-            String addressWatcher = address.getText().toString().trim();
-            boolean owner = ownerButton.isChecked();
-            boolean driver = driverButton.isChecked();
-            boolean broker = brokerButton.isChecked();
-            boolean customer = customerButton.isChecked();
 
-            if (!nameWatcher.isEmpty() && !pinCodeWatcher.isEmpty() && !addressWatcher.isEmpty() && !stateWatcher.isEmpty() && pinCodeWatcher.length() == 6 && !cityWatcher.isEmpty() && (owner || driver || broker || customer)) {
-                okButton.setEnabled(true);
-                okButton.setBackgroundResource((R.drawable.button_active));
-            } else {
-                okButton.setEnabled(false);
-                okButton.setBackground(getResources().getDrawable(R.drawable.button_de_active));
-            }
         }
 
         @Override
@@ -472,7 +436,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 selectDistrictText.setEnabled(true);
             } else {
                 String enteredPinCode = pinCode.getText().toString().trim();
-                getStateAndDistrict(enteredPinCode);
+                GetStateCityUsingPINCode.getStateAndDistrictForPickUp(RegistrationActivity.this, enteredPinCode, selectStateText, selectDistrictText);
                 pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
                 selectStateText.setEnabled(false);
                 selectDistrictText.setEnabled(false);
@@ -499,41 +463,6 @@ public class RegistrationActivity extends AppCompatActivity {
             return null;
         }
     };
-
-    //--------------------------------------Get State and city by PinCode---------------------------
-
-    private void getStateAndDistrict(String enteredPin) {
-
-        Log.i("Entered PIN", enteredPin);
-        String url = "http://13.234.163.179:3000/user/locationData/" + enteredPin;
-        Log.i("url for truckByTruckId", url);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-
-                    JSONObject obj = response.getJSONObject("data");
-                    stateByPinCode = obj.getString("stateCode");
-                    distByPinCode = obj.getString("district");
-
-                    Log.i("state By PIN Code", stateByPinCode);
-                    Log.i("Dist By PIN Code", distByPinCode);
-
-                    selectStateText.setText(stateByPinCode);
-                    selectDistrictText.setText(distByPinCode);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request);
-    }
 
     @Override
     protected void onStop() {

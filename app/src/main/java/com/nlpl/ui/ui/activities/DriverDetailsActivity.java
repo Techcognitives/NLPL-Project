@@ -60,6 +60,7 @@ import com.nlpl.utils.CreateUser;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
 import com.nlpl.utils.GetCurrentLocation;
+import com.nlpl.utils.GetStateCityUsingPINCode;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.SelectCity;
 import com.nlpl.utils.SelectState;
@@ -311,16 +312,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
         previewDrivingLicense = (ImageView) previewDialogDL.findViewById(R.id.dialog_preview_image_view);
         previewSelfie = (ImageView) previewDialogSelfie.findViewById(R.id.dialog_preview_image_view);
 
-
-        String mobileNoWatcher = driverMobile.getText().toString().trim();
-        String nameWatcher = driverName.getText().toString().trim();
-
-//        if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && isDLUploaded && isSelfieUploded) {
-//            okDriverDetails.setEnabled(true);
-//            okDriverDetails.setBackgroundResource(R.drawable.button_active);
-//        }
-
-
         if (userId != null) {
             getUserDetails();
         }
@@ -365,7 +356,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
             }
         });
 
-
         uploadDL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -398,6 +388,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 driverName.setEnabled(false);
                 driverMobile.setCursorVisible(false);
                 driverMobile.setEnabled(false);
+                driverAlternateMobile.setCursorVisible(false);
+                driverAlternateMobile.setEnabled(false);
                 address.setCursorVisible(false);
                 address.setEnabled(false);
                 pinCode.setCursorVisible(false);
@@ -413,6 +405,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 driverName.setEnabled(true);
                 driverMobile.setCursorVisible(true);
                 driverMobile.setEnabled(true);
+                driverAlternateMobile.setCursorVisible(true);
+                driverAlternateMobile.setEnabled(true);
                 address.setCursorVisible(true);
                 address.setEnabled(true);
                 pinCode.setCursorVisible(true);
@@ -423,7 +417,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 selectStateText.setEnabled(true);
             }
         }
-
     }
 
     private TextWatcher pinCodeWatcher = new TextWatcher() {
@@ -444,7 +437,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 selectDistrictText.setEnabled(true);
             } else {
                 String enteredPinCode = pinCode.getText().toString();
-                getStateAndDistrict(enteredPinCode);
+                GetStateCityUsingPINCode.getStateAndDistrictForPickUp(DriverDetailsActivity.this, enteredPinCode, selectStateText, selectDistrictText);
                 pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
                 selectStateText.setEnabled(false);
                 selectDistrictText.setEnabled(false);
@@ -456,37 +449,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         }
     };
-
-    private void getStateAndDistrict(String enteredPin) {
-
-        Log.i("Entered PIN", enteredPin);
-
-        String url = "http://13.234.163.179:3000/user/locationData/" + enteredPin;
-        Log.i("url for truckByTruckId", url);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONObject obj = response.getJSONObject("data");
-                    String stateByPinCode = obj.getString("stateCode");
-                    String distByPinCode = obj.getString("district");
-
-                    selectStateText.setText(stateByPinCode);
-                    selectDistrictText.setText(distByPinCode);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request);
-    }
-
 
     //-----------------------------------------------upload Image------------------------------------------------------------
     @Override
@@ -1153,6 +1115,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         addDriverRequest.setDriver_number("91" + driverMobile.getText().toString());
         addDriverRequest.setDriver_emailId(driverEmailId.getText().toString());
         addDriverRequest.setTruck_id(truckIdPass);
+        addDriverRequest.setAlternate_ph_no("91"+driverAlternateMobile.getText().toString());
         return addDriverRequest;
     }
 
@@ -1173,17 +1136,13 @@ public class DriverDetailsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<AddDriverResponse> call, Throwable t) {
-
-            }
+            public void onFailure(Call<AddDriverResponse> call, Throwable t) {}
         });
     }
 
     private TextWatcher driverNameWatcher = new TextWatcher() {
         @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -1213,9 +1172,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
     private TextWatcher driverMobileWatcher = new TextWatcher() {
         @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -1244,9 +1201,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         }
 
         @Override
-        public void afterTextChanged(Editable editable) {
-
-        }
+        public void afterTextChanged(Editable editable) {}
     };
 
 
@@ -1256,8 +1211,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         @Override
         public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-
-
             if (source != null && blockCharacterSet.contains(("" + source))) {
                 return "";
             }
@@ -1591,6 +1544,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
             driverName.setEnabled(false);
             driverMobile.setCursorVisible(false);
             driverMobile.setEnabled(false);
+            driverAlternateMobile.setCursorVisible(false);
+            driverAlternateMobile.setEnabled(false);
             address.setCursorVisible(false);
             address.setEnabled(false);
             pinCode.setCursorVisible(false);
@@ -1607,6 +1562,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
             driverName.setEnabled(true);
             driverMobile.setCursorVisible(true);
             driverMobile.setEnabled(true);
+            driverAlternateMobile.setCursorVisible(true);
+            driverAlternateMobile.setEnabled(true);
             address.setCursorVisible(true);
             address.setEnabled(true);
             pinCode.setCursorVisible(true);
@@ -1644,6 +1601,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                         String userCityAPI = obj.getString("preferred_location");
                         String userPinCodeAPI = obj.getString("pin_code");
                         String userRole = obj.getString("user_type");
+                        String alternateMob = obj.getString("alternate_ph_no");
                         isDriverDetailsDoneAPI = obj.getString("isDriver_added");
 
                         if (selfCheckBox.isChecked()) {
@@ -1655,6 +1613,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
                             selectDistrictText.setText(userCityAPI);
                             pinCode.setText(userPinCodeAPI);
                             driverEmailId.setText(emailIdAPI);
+                            String s2 = alternateMob.substring(2, 12);
+                            driverAlternateMobile.setText(s2);
                         }
 
                     }

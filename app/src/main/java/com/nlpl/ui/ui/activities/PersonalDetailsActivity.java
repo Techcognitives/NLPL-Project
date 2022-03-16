@@ -28,28 +28,21 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+
 import com.nlpl.R;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
-import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsPersonalDetailsAdded;
+
 import com.nlpl.model.Requests.ImageRequest;
 import com.nlpl.model.Responses.ImageResponse;
 import com.nlpl.model.Responses.UploadImageResponse;
-import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsProfileAdded;
+
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.FileUtils;
 import com.nlpl.utils.InAppNotification;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.ShowAlert;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -64,7 +57,6 @@ import okhttp3.RequestBody;
 
 public class PersonalDetailsActivity extends AppCompatActivity {
 
-    private RequestQueue mQueue;
     View action_bar;
     TextView actionBarTitle;
     ImageView actionBarBackButton;
@@ -84,7 +76,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     ConstraintLayout aadharConstrain, panConstrain, profileConstrain;
     TextView uploadAadharTitle, uploadPanTitle, uploadProfileTitle;
 
-    String userRoleAPI, userId, mobile;
+    String userId, mobile;
     Boolean profilePic, isPanUploaded = false, isFrontUploaded = false, isProfileUploaded = false;
     String img_type;
 
@@ -101,22 +93,10 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             userId = bundle.getString("userId");
             mobile = bundle.getString("mobile");
         }
-        mQueue = Volley.newRequestQueue(PersonalDetailsActivity.this);
-
-        if (profilePic) {
-            if (isProfileUploaded) {
-                okPersonalDetails.setBackgroundResource((R.drawable.button_active));
-            }
-        } else {
-            if (isPanUploaded && isFrontUploaded ) {
-                okPersonalDetails.setBackgroundResource((R.drawable.button_active));
-            }
-        }
 
         action_bar = findViewById(R.id.personal_details_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
-        actionBarTitle.setText("KYC - PAN & Aadhar");
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,6 +104,12 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, false);
             }
         });
+
+        if (profilePic) {
+            actionBarTitle.setText("Personal Details");
+        } else {
+            actionBarTitle.setText("KYC - PAN & Aadhar");
+        }
 //--------------------------------------------------------------------------------------------------
         panAndAadharView = (View) findViewById(R.id.personal_details_pan_and_aadhar);
         panCardText = panAndAadharView.findViewById(R.id.pancard1);
@@ -178,29 +164,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         previewDialogProfile.setContentView(R.layout.dialog_preview_images);
         previewDialogProfile.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.black)));
 
-//        previewDialogAadhar.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-//        //----------------------- Alert Dialog -----------------------------------------------------
-//        Dialog alert = new Dialog(PersonalDetailsActivity.this);
-//        alert.setContentView(R.layout.dialog_alert);
-//        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-//        lp.copyFrom(alert.getWindow().getAttributes());
-//        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-//        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-//        lp.gravity = Gravity.CENTER;
-//
-//        alert.show();
-//        alert.getWindow().setAttributes(lp);
-//        alert.setCancelable(true);
-//
-//        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-//        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-//        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-//        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-//        //------------------------------------------------------------------------------------------
-
-        getUserDetails();
         previewPan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -336,16 +299,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             previewPan.setVisibility(View.VISIBLE);
             isPanUploaded = true;
 
-            if (profilePic) {
-                if (isProfileUploaded) {
-                    okPersonalDetails.setBackgroundResource((R.drawable.button_active));
-                }
-            } else {
-                if (isPanUploaded && isFrontUploaded ) {
-                    okPersonalDetails.setBackgroundResource((R.drawable.button_active));
-                }
-            }
-
             Uri selectedImage = data.getData();
             String[] filePathColumn = {MediaStore.Images.Media.DATA};
             Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
@@ -401,16 +354,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             previewAadhar.setVisibility(View.VISIBLE);
             isFrontUploaded = true;
 
-            if (profilePic) {
-                if (isProfileUploaded) {
-                    okPersonalDetails.setBackgroundResource((R.drawable.button_active));
-                }
-            } else {
-                if (isPanUploaded && isFrontUploaded ) {
-                    okPersonalDetails.setBackgroundResource((R.drawable.button_active));
-                }
-            }
-
             Uri selectedImage = data.getData();
             String[] filePathColumn = {MediaStore.Images.Media.DATA};
             Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
@@ -432,16 +375,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             editPAN.setVisibility(View.VISIBLE);
             previewPan.setVisibility(View.VISIBLE);
             isPanUploaded = true;
-
-            if (profilePic) {
-                if (isProfileUploaded) {
-                    okPersonalDetails.setBackgroundResource((R.drawable.button_active));
-                }
-            } else {
-                if (isPanUploaded && isFrontUploaded ) {
-                    okPersonalDetails.setBackgroundResource((R.drawable.button_active));
-                }
-            }
 
             try {
                 Bitmap image = (Bitmap) data.getExtras().get("data");
@@ -532,16 +465,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             editFront.setVisibility(View.VISIBLE);
             previewAadhar.setVisibility(View.VISIBLE);
             isFrontUploaded = true;
-
-            if (profilePic) {
-                if (isProfileUploaded) {
-                    okPersonalDetails.setBackgroundResource((R.drawable.button_active));
-                }
-            } else {
-                if (isPanUploaded && isFrontUploaded ) {
-                    okPersonalDetails.setBackgroundResource((R.drawable.button_active));
-                }
-            }
 
             try {
                 Bitmap image = (Bitmap) data.getExtras().get("data");
@@ -664,16 +587,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             previewProfile.setVisibility(View.VISIBLE);
             isProfileUploaded = true;
 
-            if (profilePic) {
-                if (isProfileUploaded) {
-                    okPersonalDetails.setBackgroundResource((R.drawable.button_active));
-                }
-            } else {
-                if (isPanUploaded && isFrontUploaded ) {
-                    okPersonalDetails.setBackgroundResource((R.drawable.button_active));
-                }
-            }
-
             Uri selectedImage = data.getData();
             String[] filePathColumn = {MediaStore.Images.Media.DATA};
             Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
@@ -730,16 +643,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             previewProfile.setVisibility(View.VISIBLE);
             isProfileUploaded = true;
 
-            if (profilePic) {
-                if (isProfileUploaded) {
-                    okPersonalDetails.setBackgroundResource((R.drawable.button_active));
-                }
-            } else {
-                if (isPanUploaded && isFrontUploaded ) {
-                    okPersonalDetails.setBackgroundResource((R.drawable.button_active));
-                }
-            }
-
             Bitmap image = (Bitmap) data.getExtras().get("data");
             String path = getRealPathFromURI(getImageUri(this, image));
             imgProfile.setImageBitmap(BitmapFactory.decodeFile(path));
@@ -787,6 +690,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                         JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, false);
                     }
                 });
+            }else{
+                Toast.makeText(this, "Please Upload Profile Picture", Toast.LENGTH_SHORT).show();
             }
         } else {
             if (isPanUploaded && isFrontUploaded) {
@@ -825,6 +730,14 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                         JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, true);
                     }
                 });
+            }else {
+                if (!isPanUploaded){
+                    Toast.makeText(this, "Please Upload PAN Card", Toast.LENGTH_SHORT).show();
+                }else if (!isFrontUploaded){
+                    Toast.makeText(this, "Please Upload Aadhar Card", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(this, "Please Upload PAN & Aadhar Card", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }
@@ -933,32 +846,6 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                     Manifest.permission.READ_EXTERNAL_STORAGE
             }, 100);
         }
-    }
-
-    private void getUserDetails() {
-
-        String url = getString(R.string.baseURL) + "/user/" + userId;
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray truckLists = response.getJSONArray("data");
-                    for (int i = 0; i < truckLists.length(); i++) {
-                        JSONObject obj = truckLists.getJSONObject(i);
-                        userRoleAPI = obj.getString("user_type");
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request);
     }
 
     private void uploadPanDialogChoose() {

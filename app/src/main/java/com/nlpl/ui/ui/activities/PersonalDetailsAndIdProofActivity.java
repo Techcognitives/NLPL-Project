@@ -514,7 +514,6 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     }
 
     public void onClickPersonalProof(View view) {
-        ShowAlert.loadingDialog(PersonalDetailsAndIdProofActivity.this);
         if (name.getText().toString() != null) {
             UpdateUserDetails.updateUserName(userId, name.getText().toString());
         }
@@ -544,6 +543,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         }
 
         if (mobileString.equals("91" + mobileEdit.getText().toString()) || mobileEdit.getText().toString().isEmpty()) {
+            ShowAlert.loadingDialog(PersonalDetailsAndIdProofActivity.this);
             JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsAndIdProofActivity.this, userId, mobileAPI, true);
         } else {
             //----------------------- Alert Dialog -------------------------------------------------

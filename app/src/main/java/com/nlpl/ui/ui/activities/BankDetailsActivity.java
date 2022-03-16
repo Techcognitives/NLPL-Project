@@ -429,7 +429,7 @@ public class BankDetailsActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         alert.dismiss();
                         if (isEdit){
-
+                            uploadCC.setVisibility(View.VISIBLE);
                         }else{
                             textCC.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                             uploadCC.setVisibility(View.VISIBLE);

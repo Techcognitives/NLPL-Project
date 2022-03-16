@@ -1,14 +1,15 @@
 package com.nlpl.model.Requests;
 
 public class AddDriverRequest {
-    String user_id, driver_name, driver_number, driver_emailId, truck_id;
+    String user_id, driver_name, driver_number, alternate_ph_no, driver_emailId, truck_id;
 
     public AddDriverRequest() {
         this.user_id = user_id;
-        this.driver_name = driver_name ;
+        this.driver_name = driver_name;
         this.driver_number = driver_number;
         this.driver_emailId = driver_emailId;
         this.truck_id = truck_id;
+        this.alternate_ph_no = alternate_ph_no;
     }
 
     public String getDriver_emailId() {
@@ -49,5 +50,13 @@ public class AddDriverRequest {
 
     public void setTruck_id(String truck_id) {
         this.truck_id = truck_id;
+    }
+
+    public String getAlternate_ph_no() {
+        return alternate_ph_no;
+    }
+
+    public void setAlternate_ph_no(String alternate_ph_no) {
+        this.alternate_ph_no = alternate_ph_no;
     }
 }

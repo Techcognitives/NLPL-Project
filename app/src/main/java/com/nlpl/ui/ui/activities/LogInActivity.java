@@ -154,13 +154,9 @@ public class LogInActivity extends AppCompatActivity {
             if (mobileNoWatcher.length() == 10){
                 mobileNo.setBackground(getResources().getDrawable(R.drawable.mobile_number_right));
                 series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left));
-                getStarted.setEnabled(true);
-                getStarted.setBackground(getResources().getDrawable(R.drawable.button_active));
             }else{
                 mobileNo.setBackground(getResources().getDrawable(R.drawable.mobile_number_right_red));
                 series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left_red));
-                getStarted.setEnabled(true);
-                getStarted.setBackground(getResources().getDrawable(R.drawable.button_de_active));
             }
         }
         @Override

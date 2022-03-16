@@ -329,6 +329,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/firm_title"
+                    android:backgroundTint="@color/light_black"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="Firm Details"

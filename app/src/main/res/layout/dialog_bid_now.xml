@@ -822,7 +822,7 @@
                     android:textColor="@color/redDark"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toTopOf="@+id/textView65"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/dialog_bid_now_arrow_budget"
                     app:layout_constraintStart_toEndOf="@+id/textView63"
                     app:layout_constraintTop_toBottomOf="@+id/bid_now_middle_textview_partition" />
 
@@ -949,6 +949,19 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/dialog_bid_now_notes_editText" />
+
+                <ImageView
+                    android:id="@+id/dialog_bid_now_arrow_budget"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/dialog_bid_now_sp_quote_textview"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/dialog_bid_now_sp_quote_textview"
+                    app:layout_constraintTop_toTopOf="@+id/dialog_bid_now_sp_quote_textview"
+                    app:srcCompat="@drawable/ic_up_arrow" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

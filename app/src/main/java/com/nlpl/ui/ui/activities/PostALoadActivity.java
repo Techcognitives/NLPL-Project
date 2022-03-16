@@ -186,6 +186,7 @@ public class PostALoadActivity extends AppCompatActivity {
             actionBarTitle.setText("Edit a Load");
             Ok_PostLoad.setText("Update a Load");
         }
+
         currentSepDate = new ArrayList<>();
         arrayCapacity = new ArrayList<>();
         arrayVehicleType = new ArrayList<>();
@@ -1239,7 +1240,7 @@ public class PostALoadActivity extends AppCompatActivity {
         selectNoteDialog.show();
         selectNoteDialog.setCancelable(true);
         TextView model_title = selectNoteDialog.findViewById(R.id.dialog_spinner_title);
-        model_title.setText("Select Note");
+        model_title.setText("Select Material Type");
 
         ListView modelList = (ListView) selectNoteDialog.findViewById(R.id.list_state);
         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, R.layout.custom_list_row, Arrays.asList(getResources().getStringArray(R.array.array_load_notes_suggestions)));

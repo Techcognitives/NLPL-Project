@@ -1586,7 +1586,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         TextView driverName = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_driver_name);
         driverNumber = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_driver_number);
         TextView tripToFrom = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_bid_now_loadId_heading);
-        tripToFrom.setText("Load ID: " + obj.getPick_city() + "-" + obj.getDrop_city() + "-000");
+        tripToFrom.setText("Load Details: " + obj.getPick_city() + "-" + obj.getDrop_city() + "-000");
 
         TextView rateSp = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_rate_sp);
         TextView rateDriver = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_rate_driver);

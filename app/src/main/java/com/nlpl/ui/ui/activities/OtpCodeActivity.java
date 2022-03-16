@@ -96,8 +96,6 @@ public class OtpCodeActivity extends AppCompatActivity {
 
         otpCode = (PinView) findViewById(R.id.pin_view);
 
-        otpCode.addTextChangedListener(otpWatcher);
-
         otpCode.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
@@ -134,31 +132,66 @@ public class OtpCodeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 //                ShowAlert.loadingDialog(OtpCodeActivity.this);
-
                 otp = otpCode.getText().toString();
-                //------------------------ Without OTP ---------------------------------------------
-                if (isEditPhone) {
-                    OtpCodeActivity.this.finish();
-                } else {
-                    checkPhoneInAPI(mobileNoFirebase);
-                }
-                //----------------------------------------------------------------------------------
-
-                //----------------------- With OTP -------------------------------------------------
-                try {
-                    if (otpCode.getText().toString().isEmpty()) {
-                        Toast.makeText(getApplicationContext(), "Field is blank", Toast.LENGTH_LONG).show();
+                if (otp.length()==6){
+                    //------------------------ Without OTP ---------------------------------------------
+                    if (isEditPhone) {
+                        OtpCodeActivity.this.finish();
                     } else {
-//                    Log.i("OTP", otp);
-//                    Log.i("OTP ID", otpId);
-                        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpId, otp);
-                        signInWithPhoneAuthCredential(credential);
+                        checkPhoneInAPI(mobileNoFirebase);
                     }
-                }catch (Exception e){
-                    e.printStackTrace();
+                    //----------------------------------------------------------------------------------
 
+                    //----------------------- With OTP -------------------------------------------------
+//                try {
+//                    if (otpCode.getText().toString().isEmpty()) {
+//                        Toast.makeText(getApplicationContext(), "Field is blank", Toast.LENGTH_LONG).show();
+//                    } else {
+////                    Log.i("OTP", otp);
+////                    Log.i("OTP ID", otpId);
+//                        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpId, otp);
+//                        signInWithPhoneAuthCredential(credential);
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//
+//                }
+                    //----------------------------------------------------------------------------------
+                }else{
+                    //----------------------- Alert Dialog -------------------------------------------------
+                    Dialog alert = new Dialog(OtpCodeActivity.this);
+                    alert.setContentView(R.layout.dialog_alert_single_button);
+                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(alert.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.gravity = Gravity.CENTER;
+
+                    alert.show();
+                    alert.getWindow().setAttributes(lp);
+                    alert.setCancelable(true);
+
+                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                    alertTitle.setText("Invalid OTP");
+                    alertMessage.setText("Please enter a 6 digit OTP sent to your mobile number.");
+                    alertPositiveButton.setVisibility(View.GONE);
+                    alertNegativeButton.setText("OK");
+                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+
+                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alert.dismiss();
+                            otpCode.getText().clear();
+                        }
+                    });
                 }
-                //----------------------------------------------------------------------------------
             }
         });
 
@@ -284,30 +317,6 @@ public class OtpCodeActivity extends AppCompatActivity {
             }, 100);
         }
     }
-
-    private TextWatcher otpWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            String otpEdit1 = otpCode.getText().toString().trim();
-
-            if (otpEdit1.length() == 6) {
-                otpButton.setEnabled(true);
-                otpButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            } else {
-                otpButton.setBackground(getResources().getDrawable(R.drawable.button_de_active));
-                otpButton.setEnabled(false);
-            }
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-
-        }
-    };
 
 
     private void checkPhoneInAPI(String getMobile) {

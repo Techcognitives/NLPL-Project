@@ -1,17 +1,14 @@
 package com.nlpl.model.Requests;
 
 public class AddTruckRequest {
-    String user_id, vehicle_no, truck_type, vehicle_type, truck_ft, truck_carrying_capacity, driver_id;
+    String user_id, vehicle_no, truck_type, truck_carrying_capacity, driver_id;
 
     public AddTruckRequest() {
         this.user_id = user_id;
         this.vehicle_no = vehicle_no;
         this.truck_type = truck_type;
-        this.vehicle_type = vehicle_type;
-        this.truck_ft = truck_ft;
         this.truck_carrying_capacity = truck_carrying_capacity;
         this.driver_id = driver_id;
-
     }
 
     public String getTruck_type() {
@@ -20,22 +17,6 @@ public class AddTruckRequest {
 
     public void setTruck_type(String truck_type) {
         this.truck_type = truck_type;
-    }
-
-    public String getVehicle_type() {
-        return vehicle_type;
-    }
-
-    public void setVehicle_type(String vehicle_type) {
-        this.vehicle_type = vehicle_type;
-    }
-
-    public String getTruck_ft() {
-        return truck_ft;
-    }
-
-    public void setTruck_ft(String truck_ft) {
-        this.truck_ft = truck_ft;
     }
 
     public String getTruck_carrying_capacity() {

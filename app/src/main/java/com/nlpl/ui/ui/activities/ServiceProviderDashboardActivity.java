@@ -63,6 +63,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -180,7 +181,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     Dialog menuDialog, previewDialogProfile;
     ConstraintLayout drawerLayout;
     TextView timeLeft00, timeLeftTextview, partitionTextview, menuUserNameTextView, mobileText, personalDetailsButton, bankDetailsTextView, addTrucksTextView;
-    ImageView personalDetailsLogoImageView, bankDetailsLogoImageView, truckDetailsLogoImageView, driverDetailsLogoImageView;
+    ImageView personalDetailsLogoImageView, bankDetailsLogoImageView, truckDetailsLogoImageView, driverDetailsLogoImageView, arrowImage;
 
     ConstraintLayout loadNotificationConstrain, bidsSubmittedConstrain;
     TextView loadNotificationTextView, bidsSubmittedTextView, currentLocationText;
@@ -727,7 +728,8 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             lp.gravity = Gravity.END;
             try {
                 menuDialog.show();
-            }catch (Exception e){}
+            } catch (Exception e) {
+            }
             menuDialog.setCancelable(true);
             menuDialog.getWindow().setAttributes(lp);
         }
@@ -1027,6 +1029,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             TextView dropLocation = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_drop_location_textview);
             TextView receivedNotes = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_received_notes_textview);
             TextView loadIdHeading = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_loadId_heading);
+            arrowImage = (ImageView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_arrow_budget);
 
             pickUpDate.setText(pick_up_date);
             pickUpTime.setText(pick_up_time);
@@ -1039,7 +1042,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             pickUpLocation.setText(pick_up_location);
             dropLocation.setText(drop_location);
             receivedNotes.setText(received_notes_description);
-            loadIdHeading.setText("Load ID: " + obj.getPick_city() + "-" + obj.getDrop_city() + "-000");
+            loadIdHeading.setText("Load Details: " + obj.getPick_city() + "-" + obj.getDrop_city() + "-000");
             //----------------------------------------------------------------------------------------------------------------
 
             //-------------------------------------------------Accept Load and Bid now-----------------------------------------
@@ -1064,7 +1067,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             negotiable_no.setChecked(false);
             negotiable_yes.setChecked(false);
             isNegotiableSelected = false;
-
 
             if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
                 acceptAndBid.setEnabled(true);
@@ -1091,10 +1093,9 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 RearrangeItems();
             });
 
-        acceptAndBid.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (selectedTruckFeet.equals(obj.getFeet()) || selectedTruckCapacity.equals(obj.getCapacity())) {
+            acceptAndBid.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
                     if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
 
@@ -1143,98 +1144,9 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         });
                         //------------------------------------------------------------------------------------------
                     }
-                } else {
-                    //----------------------- Alert Dialog -------------------------------------------------
-                    Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
-                    alert.setContentView(R.layout.dialog_alert);
-                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                    lp.copyFrom(alert.getWindow().getAttributes());
-                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-                    lp.gravity = Gravity.CENTER;
 
-                    alert.show();
-                    alert.getWindow().setAttributes(lp);
-                    alert.setCancelable(false);
-
-                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-                    alertTitle.setText("Truck requirement doesn't Match");
-                    alertMessage.setText("Ft. & Capacity of your truck doesn't match Load Poster requirements.");
-                    alertPositiveButton.setVisibility(View.VISIBLE);
-                    alertPositiveButton.setText("Continue");
-                    alertNegativeButton.setText("Assign Another");
-                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
-
-                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            alert.dismiss();
-                            selectTruck.performClick();
-                        }
-                    });
-                    //------------------------------------------------------------------------------------------
-
-                    alertPositiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-
-                            if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
-                                if (spQuote.getText().toString().equals(customerFirstBudget.getText().toString())) {
-                                    saveBid(createBidRequest("Accepted", spQuote.getText().toString()));
-                                } else if (!spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) && !negotiable) {
-                                    saveBid(createBidRequest("submittedNonNego", spQuote.getText().toString()));
-                                } else if (!spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) && negotiable) {
-                                    saveBid(createBidRequest("submittedNego", spQuote.getText().toString()));
-                                }
-
-                                Log.i("loadId bidded", obj.getIdpost_load());
-                                //----------------------- Alert Dialog -------------------------------------------------
-                                Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
-                                alert.setContentView(R.layout.dialog_alert_single_button);
-                                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                                lp.copyFrom(alert.getWindow().getAttributes());
-                                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-                                lp.gravity = Gravity.CENTER;
-
-                                alert.show();
-                                alert.getWindow().setAttributes(lp);
-                                alert.setCancelable(false);
-
-                                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-                                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-                                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-                                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-                                alertTitle.setText("Post Bid");
-                                alertMessage.setText("Bid Posted Successfully");
-                                alertPositiveButton.setVisibility(View.GONE);
-                                alertNegativeButton.setText("OK");
-                                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
-
-                                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        alert.dismiss();
-                                        previewDialogBidNow.dismiss();
-                                        JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, false);
-                                    }
-                                });
-                                //------------------------------------------------------------------------------------------
-                            }
-                        }
-                    });
                 }
-            }
-        });
+            });
 
             negotiable_yes.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -1378,7 +1290,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         selectDriver.setText("");
                         Log.i("driverId null", "There is no driver Id for this truck");
                     } else {
-                        if (acceptRevised){
+                        if (acceptRevised) {
                             getDriverDetailsByDriverId(selectedDriverId);
                         }
 
@@ -1626,6 +1538,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                     }
 
                     if (spQuote.getText().toString().equals(customerFirstBudget.getText().toString())) {
+                        arrowImage.setVisibility(View.GONE);
                         spQuote.setTextColor(getResources().getColor(R.color.green));
                         negotiable_no.setChecked(true);
                         negotiable_yes.setChecked(false);
@@ -1633,6 +1546,89 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         negotiable = false;
                         isNegotiableSelected = true;
                     } else {
+                        try {
+                            int spBudgetsInt = Integer.parseInt(spQuote.getText().toString().replaceAll(",", ""));
+                            int lpBudgetInt = Integer.parseInt(customerFirstBudget.getText().toString().replaceAll(",", ""));
+                            if (spBudgetsInt>lpBudgetInt){
+                                arrowImage.setOnClickListener(view -> {
+                                    //----------------------- Alert Dialog -------------------------------------------------
+                                    Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
+                                    alert.setContentView(R.layout.dialog_alert_single_button);
+                                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                                    lp.copyFrom(alert.getWindow().getAttributes());
+                                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                                    lp.gravity = Gravity.CENTER;
+
+                                    alert.show();
+                                    alert.getWindow().setAttributes(lp);
+                                    alert.setCancelable(false);
+
+                                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                                    alertTitle.setText("Your Bidget is High");
+                                    alertMessage.setText("Your Budget is Higher than the Load Poster");
+                                    alertPositiveButton.setVisibility(View.GONE);
+                                    alertNegativeButton.setText("OK");
+                                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+
+                                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            alert.dismiss();
+                                        }
+                                    });
+                                    //------------------------------------------------------------------------------------------
+                                });
+                                arrowImage.setVisibility(View.VISIBLE);
+                                arrowImage.setImageDrawable(getDrawable(R.drawable.ic_up_arrow));
+                            }else{
+                                arrowImage.setVisibility(View.VISIBLE);
+                                arrowImage.setOnClickListener(view -> {
+                                    //----------------------- Alert Dialog -------------------------------------------------
+                                    Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
+                                    alert.setContentView(R.layout.dialog_alert_single_button);
+                                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                                    lp.copyFrom(alert.getWindow().getAttributes());
+                                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                                    lp.gravity = Gravity.CENTER;
+
+                                    alert.show();
+                                    alert.getWindow().setAttributes(lp);
+                                    alert.setCancelable(false);
+
+                                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                                    alertTitle.setText("Your Bidget is Low");
+                                    alertMessage.setText("Your Budget is Lower than the Load Poster");
+                                    alertPositiveButton.setVisibility(View.GONE);
+                                    alertNegativeButton.setText("OK");
+                                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+
+                                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            alert.dismiss();
+                                        }
+                                    });
+                                    //------------------------------------------------------------------------------------------
+                                });
+                                arrowImage.setImageDrawable(getDrawable(R.drawable.ic_down_arrow));
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                         negotiable_yes.setEnabled(true);
                         spQuote.setTextColor(getResources().getColor(R.color.redDark));
                     }
@@ -1774,7 +1770,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         pickUpLocation.setText(pick_up_location);
         dropLocation.setText(drop_location);
         receivedNotes.setText(received_notes_description);
-        loadIdHeading.setText("Load ID: " + obj.getPick_city() + "-" + obj.getDrop_city() + "-000");
+        loadIdHeading.setText("Load Details: " + obj.getPick_city() + "-" + obj.getDrop_city() + "-000");
         //----------------------------------------------------------------------------------------------------------------
 
         //------------------------------------Accept Load and Bid now-----------------------------------------
@@ -1797,7 +1793,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         negotiable_no.setChecked(true);
         declaration.setVisibility(View.INVISIBLE);
 
-        getBidDetailsByBidId(obj.getBidId(),false);
+        getBidDetailsByBidId(obj.getBidId(), false);
         spQuote.setTextColor(getResources().getColor(R.color.green));
 
         cancel.setEnabled(true);
@@ -1984,7 +1980,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         pickUpLocation.setText(pick_up_location);
         dropLocation.setText(drop_location);
         receivedNotes.setText(received_notes_description);
-        loadIdHeading.setText("Load ID: " + obj.getPick_city() + "-" + obj.getDrop_city() + "-000");
+        loadIdHeading.setText("Load Details: " + obj.getPick_city() + "-" + obj.getDrop_city() + "-000");
         //----------------------------------------------------------------------------------------------------------------
 
         //------------------------------------Accept Load and Bid now-----------------------------------------
@@ -2180,7 +2176,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         customerName.setText(obj1.getString("name"));
                         String mobileNumberCustomer = obj1.getString("phone_number");
                         String s = mobileNumberCustomer.substring(2, 12);
-                        customerNumber.setText("+91 "+s);
+                        customerNumber.setText("+91 " + s);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -2406,9 +2402,9 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
 
     public void onClickAssignTruckFromList(TruckModel obj) {
         dialogSelectTruck.dismiss();
-        truckId=obj.getTruck_id();
-        selectedDriverId=obj.getDriver_id();
-        isTruckSelectedToBid=true;
+        truckId = obj.getTruck_id();
+        selectedDriverId = obj.getDriver_id();
+        isTruckSelectedToBid = true;
         selectTruck.setText(obj.getVehicle_no());
         getDriverDetailsAssigned(obj.getDriver_id());
         selectedTruckModel.setText(obj.getTruck_type());
@@ -2417,7 +2413,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         selectedTruckCapacity.setText(obj.getTruck_carrying_capacity());
     }
 
-    public void getDriverDetailsAssigned(String driverId){
+    public void getDriverDetailsAssigned(String driverId) {
         //---------------------------- Get Driver Details -------------------------------------------
         String url1 = getString(R.string.baseURL) + "/driver/driverId/" + driverId;
         Log.i("URL: ", url1);
@@ -2452,7 +2448,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
 
     public void onClickReAssignDriver(DriverModel obj) {
         dialogSelectDriver.dismiss();
-        selectedDriverId=obj.getDriver_id();
+        selectedDriverId = obj.getDriver_id();
         selectDriver.setText(obj.getDriver_name());
     }
 
@@ -2722,7 +2718,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         }
     };
 
-    private String profileImagePicker(int requestCode, int resultCode, Intent data){
+    private String profileImagePicker(int requestCode, int resultCode, Intent data) {
         if (requestCode == GET_FROM_GALLERY_profile && resultCode == Activity.RESULT_OK) {
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
@@ -2815,7 +2811,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 });
                 //------------------------------------------------------------------------------------------
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
                 alert.setContentView(R.layout.dialog_alert_single_button);
