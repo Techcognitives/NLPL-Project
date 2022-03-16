@@ -930,8 +930,43 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     }
 
     public void onClickEditLoadPost(BidsReceivedModel obj) {
-        ShowAlert.loadingDialog(CustomerDashboardActivity.this);
-        JumpTo.goToPostALoad(CustomerDashboardActivity.this, userId, phone, false, true, obj.getIdpost_load(), false);
+        //----------------------- Alert Dialog -------------------------------------------------
+        Dialog alert = new Dialog(CustomerDashboardActivity.this);
+        alert.setContentView(R.layout.dialog_alert);
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(alert.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        alert.show();
+        alert.getWindow().setAttributes(lp);
+        alert.setCancelable(false);
+
+        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+        alertTitle.setText("Edit Load");
+        alertMessage.setText("Would you like to edit your Load?");
+        alertPositiveButton.setText("Edit");
+        alertNegativeButton.setText("Cancel");
+
+        alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+            }
+        });
+
+        alertPositiveButton.setOnClickListener(view1 -> {
+            alert.dismiss();
+            ShowAlert.loadingDialog(CustomerDashboardActivity.this);
+            JumpTo.goToPostALoad(CustomerDashboardActivity.this, userId, phone, false, true, obj.getIdpost_load(), false);
+        });
+        //------------------------------------------------------------------------------------------
     }
 
 
@@ -1054,7 +1089,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                         }
                     }
 
-                    if (bidResponsesList.size()==0) {
+                    if (bidResponsesList.size() == 0) {
                         showRecyclerView.setVisibility(View.GONE);
                         bidsResponsesRecyclerView.setVisibility(View.GONE);
                         showRecyclerViewBids.setVisibility(View.GONE);

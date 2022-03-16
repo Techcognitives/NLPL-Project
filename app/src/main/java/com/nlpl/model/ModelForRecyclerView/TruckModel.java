@@ -4,8 +4,6 @@ public class TruckModel {
     private String user_id;
     private String vehicle_no;
     private String truck_type;
-    private String vehicle_type;
-    private String truck_ft;
     private String truck_carrying_capacity;
     private String rc_book;
     private String vehicle_insurance;
@@ -42,22 +40,6 @@ public class TruckModel {
 
     public void setTruck_type(String truck_type) {
         this.truck_type = truck_type;
-    }
-
-    public String getVehicle_type() {
-        return vehicle_type;
-    }
-
-    public void setVehicle_type(String vehicle_type) {
-        this.vehicle_type = vehicle_type;
-    }
-
-    public String getTruck_ft() {
-        return truck_ft;
-    }
-
-    public void setTruck_ft(String truck_ft) {
-        this.truck_ft = truck_ft;
     }
 
     public String getTruck_carrying_capacity() {

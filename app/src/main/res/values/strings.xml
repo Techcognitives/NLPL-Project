@@ -1238,7 +1238,7 @@
     <string name="enterYourBudget">Enter Your Budget</string>
     <string name="budget">Budget</string>
     <string name="budgetRs">Budget ₹</string>
-    <string name="truckTypeAndCapacity">Truck Type &amp; Capacity*</string>
+    <string name="truckTypeAndCapacity">Truck Body &amp; Load Type*</string>
     <string name="SelectVehicleModel">Vehicle Model</string>
     <string name="bodyType">Body</string>
     <string name="pickUpLocationDetails">Pick-up Address*</string>
@@ -1281,7 +1281,7 @@
     <string name="model">Model</string>
     <string name="body">Body:</string>
     <string name="selectAndAssignTruck">Assign a Truck &amp; Driver for this load</string>
-    <string name="yourQuote">Your Quote</string>
+    <string name="yourQuote">My Quote</string>
     <string name="negotiable">Negotiable</string>
     <string name="truck">Truck</string>
     <string name="feet">Feet</string>

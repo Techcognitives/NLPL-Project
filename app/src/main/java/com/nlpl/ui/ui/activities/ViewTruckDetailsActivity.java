@@ -78,7 +78,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
     EditText searchVehicle;
 
     Dialog previewDialogDriverDetails;
-    TextView previewDriverDetailsTitle, previewDriverDetailsDriverName, previewDriverDetailsDriverNumber, textviewGone, textviewGone2, previewDriverDetailsDriverEmails, previewDriverDetailsDriverLicence, previewDriverDetailsDriverSelfie, previewDriverDetailsAssignDriverButton, previewDriverDetailsOKButton, previewDriverDetailsMessage;
+    TextView previewDriverDetailsTitle, previewDriverDetailsDriverName, previewDriverDetailsDriverNumber, previewDriverDetailsDriverEmails, previewDriverDetailsDriverLicence, previewDriverDetailsDriverSelfie, previewDriverDetailsAssignDriverButton, previewDriverDetailsOKButton, previewDriverDetailsMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,8 +150,6 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
         previewDriverDetailsTitle = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_title);
         previewDriverDetailsDriverName = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_vehicle_number);
         previewDriverDetailsDriverNumber = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_vehicle_model);
-        textviewGone = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_title_feet);
-        textviewGone2 = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_type);
         previewDriverDetailsDriverEmails = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_capacity);
         previewDriverDetailsDriverLicence = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_rc_book_preview);
         previewDriverDetailsDriverSelfie = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_insurance_preview);
@@ -228,8 +226,6 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
                         model.setUser_id(obj.getString("user_id"));
                         model.setVehicle_no(obj.getString("vehicle_no"));
                         model.setTruck_type(obj.getString("truck_type"));
-                        model.setVehicle_type(obj.getString("vehicle_type"));
-                        model.setTruck_ft(obj.getString("truck_ft"));
                         model.setTruck_carrying_capacity(obj.getString("truck_carrying_capacity"));
                         model.setRc_book(obj.getString("rc_book"));
                         model.setVehicle_insurance(obj.getString("vehicle_insurance"));
@@ -338,8 +334,6 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
         previewDialogDriverDetails.setCancelable(true);
 
         previewDriverDetailsTitle.setText("Driver Details");
-        textviewGone.setVisibility(View.GONE);
-        textviewGone2.setVisibility(View.GONE);
         previewDriverDetailsDriverLicence.setText("Driver Licence");
         previewDriverDetailsDriverSelfie.setText("Driver Selfie");
         previewDriverDetailsMessage.setText("Please add a Driver");

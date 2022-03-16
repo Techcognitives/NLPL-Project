@@ -12,7 +12,6 @@ import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadDropCity;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadDropCountry;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadDropPinCode;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadDropState;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadFeet;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadKmApprox;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPickAdd;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPickCity;
@@ -22,7 +21,6 @@ import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPickState;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPostPickUpDate;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPostPickUpTime;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadStatusSubmitted;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadVehicleModel;
 import com.nlpl.utils.ApiClient;
 
 import retrofit2.Call;
@@ -85,46 +83,6 @@ public class UpdatePostLoadDetails {
 
             @Override
             public void onFailure(Call<UpdateCustomerBudget> call, Throwable t) {
-                Log.i("Not Successful", "Load Post Details Not Updated");
-
-            }
-        });
-    }
-
-    //-------------------------------- Update Load Vehicle Model -----------------------------------
-    public static void updateVehicleModel(String loadId, String vehicleModel) {
-        UpdateLoadVehicleModel updateLoadVehicleModel = new UpdateLoadVehicleModel(vehicleModel);
-        Call<UpdateLoadVehicleModel> call = ApiClient.getPostLoadService().updateLoadVehicleModel("" + loadId, updateLoadVehicleModel);
-        call.enqueue(new Callback<UpdateLoadVehicleModel>() {
-            @Override
-            public void onResponse(Call<UpdateLoadVehicleModel> call, Response<UpdateLoadVehicleModel> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "Load Post Details Updated");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateLoadVehicleModel> call, Throwable t) {
-                Log.i("Not Successful", "Load Post Details Not Updated");
-
-            }
-        });
-    }
-
-    //-------------------------------- Update Load Vehicle Feet ------------------------------------
-    public static void updateVehicleFeet(String loadId, String vehicleFeet) {
-        UpdateLoadFeet updateLoadFeet = new UpdateLoadFeet(vehicleFeet);
-        Call<UpdateLoadFeet> call = ApiClient.getPostLoadService().updateLoadFeet("" + loadId, updateLoadFeet);
-        call.enqueue(new Callback<UpdateLoadFeet>() {
-            @Override
-            public void onResponse(Call<UpdateLoadFeet> call, Response<UpdateLoadFeet> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "Load Post Details Updated");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateLoadFeet> call, Throwable t) {
                 Log.i("Not Successful", "Load Post Details Not Updated");
 
             }

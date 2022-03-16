@@ -238,17 +238,11 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
         String approxKms = obj.getKm_approx();
         holder.distance.setText(approxKms);
 
-        String model = obj.getVehicle_model();
-        holder.model.setText("Model: " + model);
-
-        String feet = obj.getFeet();
-        holder.feet.setText("Ft: " + feet);
-
         String capacity = obj.getCapacity();
-        holder.capacity.setText("Capacity: " + capacity);
+        holder.capacity.setText("load Type: " + capacity);
 
         String bodyType = obj.getBody_type();
-        holder.body.setText("Body: " + bodyType);
+        holder.body.setText("Body Type: " + bodyType);
 
         LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(activity);
         linearLayoutManagerBank.setReverseLayout(false);
@@ -350,10 +344,10 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
     }
 
     public class BidsReceivedViewHolder extends RecyclerView.ViewHolder {
-        private TextView timeLeft, destinationStart, destinationEnd, budget, date, time, distance, model, feet, capacity, body, editLoadButton;
+        private TextView timeLeft, destinationStart, destinationEnd, budget, date, time, distance, capacity, body;
         RecyclerView bidsResponsesRecyclerView;
         Spinner sortBy;
-        ConstraintLayout showRecyclerView, showRecyclerViewBids;
+        ConstraintLayout showRecyclerView, showRecyclerViewBids, editLoadButton;
 
         public BidsReceivedViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -366,11 +360,9 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
             date = itemView.findViewById(R.id.bids_responses_pick_up_date);
             time = itemView.findViewById(R.id.bids_responses_pick_up_time);
             distance = itemView.findViewById(R.id.bids_responses_kms_approx);
-            model = itemView.findViewById(R.id.bids_responses_model);
-            feet = itemView.findViewById(R.id.bids_responses_feet);
             capacity = itemView.findViewById(R.id.bids_responses_capacity);
             body = itemView.findViewById(R.id.bids_responses_body);
-            editLoadButton = itemView.findViewById(R.id.bids_responses_edit_load_button);
+            editLoadButton = itemView.findViewById(R.id.bids_received_constrain_edit);
             bidsResponsesRecyclerView = itemView.findViewById(R.id.bids_received_recycler_view);
             showRecyclerView = itemView.findViewById(R.id.bids_received_show_recycler_view_constrain);
             showRecyclerViewBids = itemView.findViewById(R.id.bids_received_constrain);

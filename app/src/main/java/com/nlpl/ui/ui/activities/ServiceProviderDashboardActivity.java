@@ -171,7 +171,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
     private RecyclerView driverListRecyclerView;
 
     View actionBar, loadNotificationUnderline, bidSubmittedUnderline;
-    TextView customerNumber, customerNumberHeading, customerName, customerNameHeading, customerFirstBudget, customerSecondBudget, cancel2, cancel, acceptAndBid, spQuote, selectDriver, selectTruck, selectedTruckModel, selectedTruckFeet, selectedTruckCapacity, selectedTruckBodyType, actionBarTitle;
+    TextView customerNumber, customerNumberHeading, customerName, customerNameHeading, customerFirstBudget, customerSecondBudget, cancel2, cancel, acceptAndBid, spQuote, selectDriver, selectTruck, selectedTruckModel, selectedTruckCapacity, actionBarTitle;
     EditText notesSp;
     CheckBox declaration;
     RadioButton negotiable_yes, negotiable_no;
@@ -404,8 +404,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         model.setUser_id(obj.getString("user_id"));
                         model.setVehicle_no(obj.getString("vehicle_no"));
                         model.setTruck_type(obj.getString("truck_type"));
-                        model.setVehicle_type(obj.getString("vehicle_type"));
-                        model.setTruck_ft(obj.getString("truck_ft"));
                         model.setTruck_carrying_capacity(obj.getString("truck_carrying_capacity"));
                         model.setRc_book(obj.getString("rc_book"));
                         model.setVehicle_insurance(obj.getString("vehicle_insurance"));
@@ -1021,8 +1019,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             TextView pickUpTime = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_pick_up_time_textview);
             customerFirstBudget = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_budget_textview);
             TextView approxDistance = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_distance_textview);
-            TextView reqModel = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_req_model_textview);
-            TextView reqFeet = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_req_feet_textview);
             TextView reqCapacity = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_req_capacity_textview);
             TextView reqBodyType = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_req_bodyType_textview);
             TextView pickUpLocation = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_pick_up_location_textview);
@@ -1035,8 +1031,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             pickUpTime.setText(pick_up_time);
             customerFirstBudget.setText(required_budget);
             approxDistance.setText(distance);
-            reqModel.setText(required_model);
-            reqFeet.setText(required_feet);
             reqCapacity.setText(required_capacity);
             reqBodyType.setText(required_truck_body);
             pickUpLocation.setText(pick_up_location);
@@ -1050,9 +1044,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             selectTruck = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_select_truck_textview);
             selectDriver = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_select_driver_textview);
             selectedTruckModel = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_model_textview);
-            selectedTruckFeet = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_feet_textview);
             selectedTruckCapacity = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_capacity_textview);
-            selectedTruckBodyType = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_body_type_textview);
             notesSp = (EditText) previewDialogBidNow.findViewById(R.id.dialog_bid_now_notes_editText);
             declaration = (CheckBox) previewDialogBidNow.findViewById(R.id.dialog_bid_now_declaration);
             acceptAndBid = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_accept_and_bid_btn);
@@ -1273,16 +1265,12 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                     for (int i = 0; i < truckLists.length(); i++) {
                         JSONObject obj = truckLists.getJSONObject(i);
                         String truckModel = obj.getString("truck_type");
-                        String truckFeet = obj.getString("truck_ft");
                         String truckCapacity = obj.getString("truck_carrying_capacity");
-                        String bodyType = obj.getString("vehicle_type");
                         String vehicleNo = obj.getString("vehicle_no");
                         selectedDriverId = obj.getString("driver_id");
 
                         selectTruck.setText(vehicleNo);
                         selectedTruckModel.setText(truckModel);
-                        selectedTruckFeet.setText(truckFeet);
-                        selectedTruckBodyType.setText(bodyType);
                         selectedTruckCapacity.setText(truckCapacity);
                     }
 
@@ -1686,9 +1674,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         bidLoadRequest.setAssigned_driver_id(selectedDriverId);
         bidLoadRequest.setIdpost_load(loadId);
         bidLoadRequest.setBid_status(status);
-        bidLoadRequest.setBody_type(selectedTruckBodyType.getText().toString());
-        bidLoadRequest.setVehicle_model(selectedTruckModel.getText().toString());
-        bidLoadRequest.setFeet(selectedTruckFeet.getText().toString());
+        bidLoadRequest.setBody_type(selectedTruckModel.getText().toString());
         bidLoadRequest.setCapacity(selectedTruckCapacity.getText().toString());
         bidLoadRequest.setNotes(notesSp.getText().toString());
         bidLoadRequest.setIs_negatiable(negotiable);
@@ -1742,8 +1728,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         TextView pickUpTime = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_pick_up_time_textview);
         customerSecondBudget = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_budget_textview);
         TextView approxDistance = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_distance_textview);
-        TextView reqModel = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_req_model_textview);
-        TextView reqFeet = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_req_feet_textview);
         TextView reqCapacity = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_req_capacity_textview);
         TextView reqBodyType = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_req_bodyType_textview);
         TextView pickUpLocation = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_pick_up_location_textview);
@@ -1763,8 +1747,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         pickUpDate.setText(pick_up_date);
         pickUpTime.setText(pick_up_time);
         approxDistance.setText(distance);
-        reqModel.setText(required_model);
-        reqFeet.setText(required_feet);
         reqCapacity.setText(required_capacity);
         reqBodyType.setText(required_truck_body);
         pickUpLocation.setText(pick_up_location);
@@ -1778,9 +1760,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         selectTruck = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_select_truck_textview);
         selectDriver = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_select_driver_textview);
         selectedTruckModel = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_truck_model_textview);
-        selectedTruckFeet = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_truck_feet_textview);
         selectedTruckCapacity = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_truck_capacity_textview);
-        selectedTruckBodyType = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_truck_body_type_textview);
         notesSp = (EditText) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_notes_editText);
         declaration = (CheckBox) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_declaration);
         acceptAndBid = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_accept_and_bid_btn);
@@ -1952,8 +1932,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         TextView pickUpTime = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_pick_up_time_textview);
         customerSecondBudget = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_budget_textview);
         TextView approxDistance = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_distance_textview);
-        TextView reqModel = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_req_model_textview);
-        TextView reqFeet = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_req_feet_textview);
         TextView reqCapacity = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_req_capacity_textview);
         TextView reqBodyType = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_req_bodyType_textview);
         TextView pickUpLocation = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_pick_up_location_textview);
@@ -1973,8 +1951,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         pickUpDate.setText(pick_up_date);
         pickUpTime.setText(pick_up_time);
         approxDistance.setText(distance);
-        reqModel.setText(required_model);
-        reqFeet.setText(required_feet);
         reqCapacity.setText(required_capacity);
         reqBodyType.setText(required_truck_body);
         pickUpLocation.setText(pick_up_location);
@@ -1988,9 +1964,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         selectTruck = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_select_truck_textview);
         selectDriver = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_select_driver_textview);
         selectedTruckModel = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_truck_model_textview);
-        selectedTruckFeet = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_truck_feet_textview);
         selectedTruckCapacity = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_truck_capacity_textview);
-        selectedTruckBodyType = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_truck_body_type_textview);
         notesSp = (EditText) dialogViewConsignment.findViewById(R.id.dialog_bid_now_notes_editText);
         declaration = (CheckBox) dialogViewConsignment.findViewById(R.id.dialog_bid_now_declaration);
         acceptAndBid = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_accept_and_bid_btn);
@@ -2408,8 +2382,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         selectTruck.setText(obj.getVehicle_no());
         getDriverDetailsAssigned(obj.getDriver_id());
         selectedTruckModel.setText(obj.getTruck_type());
-        selectedTruckBodyType.setText(obj.getVehicle_type());
-        selectedTruckFeet.setText(obj.getTruck_ft());
         selectedTruckCapacity.setText(obj.getTruck_carrying_capacity());
     }
 

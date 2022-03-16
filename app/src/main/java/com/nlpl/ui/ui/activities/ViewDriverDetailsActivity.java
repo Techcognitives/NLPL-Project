@@ -62,7 +62,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
     ArrayList<String> arrayUserDriverId, arrayDriverMobileNo;
     Dialog previewDialogDriverDetails, previewDialogAssignedTruck;
     TextView previewDriverDetailsDriverBankName, previewDriverDetailsLabelAddDriverBank, previewDriverDetailsAddDriverBank, previewDriverDetailsDriverBankAccountNumber, previewDriverDetailsDriverBankIFSICode, previewDriverDetailsDriverBankDetailsTitle;
-    String userIdTruckDetails, truckIdTruckDetails, vehicleNumberTruckDetails, modelTruckDetails, typeTruckDetails, feetTruckDetails, capacityTruckDetails, rcBookTruckDetails, insuranceTruckDetails, driverIdTruckDetails;
+    String userIdTruckDetails, truckIdTruckDetails, vehicleNumberTruckDetails, modelTruckDetails, capacityTruckDetails, rcBookTruckDetails, insuranceTruckDetails, driverIdTruckDetails;
 
     String mobileNoDriverAPI, userDriverIdAPI, driverUserIdGet;
 
@@ -70,7 +70,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
     ImageView previewRcBook, previewInsurance;
 
     Dialog previewDialogDL, previewDialogSelfie;
-    TextView previewAssignedTruckTitle, previewAssignedTruckNumber, previewAssignedTruckModel, previewAssignedTruckFeet, previewAssignedTruckCapacity, previewAssignedTruckType, previewAssignedTruckRcBook, previewAssignedTruckInsurance, previewAssignedTruckReAssign, previewAssignedTruckOkButton, previewAssignedTruckMessage;
+    TextView previewAssignedTruckTitle, previewAssignedTruckNumber, previewAssignedTruckModel, previewAssignedTruckCapacity, previewAssignedTruckRcBook, previewAssignedTruckInsurance, previewAssignedTruckReAssign, previewAssignedTruckOkButton, previewAssignedTruckMessage;
     ImageView previewDriverLicense, previewDriverSelfie;
 
     String phone, userId, driverId;
@@ -147,9 +147,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
         previewAssignedTruckTitle = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_details_title);
         previewAssignedTruckNumber = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_vehicle_number);
         previewAssignedTruckModel = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_vehicle_model);
-        previewAssignedTruckFeet = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_title_feet);
         previewAssignedTruckCapacity = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_capacity);
-        previewAssignedTruckType = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_type);
         previewAssignedTruckRcBook = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_rc_book_preview);
         previewAssignedTruckInsurance = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_insurance_preview);
         previewAssignedTruckReAssign = previewDialogAssignedTruck.findViewById(R.id.dialog_driver_truck_details_reassign_button);
@@ -490,8 +488,6 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
                         truckIdTruckDetails = obj.getString("truck_id");
                         vehicleNumberTruckDetails = obj.getString("vehicle_no");
                         modelTruckDetails = obj.getString("truck_type");
-                        typeTruckDetails = obj.getString("vehicle_type");
-                        feetTruckDetails = obj.getString("truck_ft");
                         capacityTruckDetails = obj.getString("truck_carrying_capacity");
                         rcBookTruckDetails = obj.getString("rc_book");
                         insuranceTruckDetails = obj.getString("vehicle_insurance");
@@ -500,16 +496,12 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
 
                     previewAssignedTruckNumber.setText(vehicleNumberTruckDetails);
                     previewAssignedTruckModel.setText("Model: " + modelTruckDetails);
-                    previewAssignedTruckFeet.setText("Feet: " + feetTruckDetails);
                     previewAssignedTruckCapacity.setText("Capacity: " + capacityTruckDetails);
-                    previewAssignedTruckType.setText("Type: " + typeTruckDetails);
 
                     if (vehicleNumberTruckDetails == null) {
                         previewAssignedTruckNumber.setVisibility(View.INVISIBLE);
                         previewAssignedTruckModel.setVisibility(View.INVISIBLE);
-                        previewAssignedTruckFeet.setVisibility(View.INVISIBLE);
                         previewAssignedTruckCapacity.setVisibility(View.INVISIBLE);
-                        previewAssignedTruckType.setVisibility(View.INVISIBLE);
                         previewAssignedTruckRcBook.setVisibility(View.INVISIBLE);
                         previewAssignedTruckInsurance.setVisibility(View.INVISIBLE);
                         previewAssignedTruckMessage.setVisibility(View.VISIBLE);
@@ -517,9 +509,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
                     } else {
                         previewAssignedTruckNumber.setVisibility(View.VISIBLE);
                         previewAssignedTruckModel.setVisibility(View.VISIBLE);
-                        previewAssignedTruckFeet.setVisibility(View.VISIBLE);
                         previewAssignedTruckCapacity.setVisibility(View.VISIBLE);
-                        previewAssignedTruckType.setVisibility(View.VISIBLE);
                         previewAssignedTruckRcBook.setVisibility(View.VISIBLE);
                         previewAssignedTruckInsurance.setVisibility(View.VISIBLE);
                         previewAssignedTruckMessage.setVisibility(View.INVISIBLE);
@@ -606,8 +596,6 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
                         model.setUser_id(obj.getString("user_id"));
                         model.setVehicle_no(obj.getString("vehicle_no"));
                         model.setTruck_type(obj.getString("truck_type"));
-                        model.setVehicle_type(obj.getString("vehicle_type"));
-                        model.setTruck_ft(obj.getString("truck_ft"));
                         model.setTruck_carrying_capacity(obj.getString("truck_carrying_capacity"));
                         model.setRc_book(obj.getString("rc_book"));
                         model.setVehicle_insurance(obj.getString("vehicle_insurance"));
