@@ -12,7 +12,6 @@ import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadDropCity;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadDropCountry;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadDropPinCode;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadDropState;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadFeet;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadKmApprox;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPickAdd;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPickCity;
@@ -22,7 +21,6 @@ import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPickState;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPostPickUpDate;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPostPickUpTime;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadStatusSubmitted;
-import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadVehicleModel;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -45,12 +43,6 @@ public interface PostLoadService {
 
     @PUT("/loadpost/updatePostByPID/{loadId}")
     Call<UpdateCustomerBudget> updateCustomerBudget(@Path("loadId") String loadId, @Body UpdateCustomerBudget updateCustomerBudget);
-
-    @PUT("/loadpost/updatePostByPID/{loadId}")
-    Call<UpdateLoadVehicleModel> updateLoadVehicleModel(@Path("loadId") String loadId, @Body UpdateLoadVehicleModel updateLoadVehicleModel);
-
-    @PUT("/loadpost/updatePostByPID/{loadId}")
-    Call<UpdateLoadFeet> updateLoadFeet(@Path("loadId") String loadId, @Body UpdateLoadFeet updateLoadFeet);
 
     @PUT("/loadpost/updatePostByPID/{loadId}")
     Call<UpdateLoadCapacity> updateLoadCapacity(@Path("loadId") String loadId, @Body UpdateLoadCapacity updateLoadCapacity);

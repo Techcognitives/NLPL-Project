@@ -55,6 +55,7 @@ import com.nlpl.utils.GetStateCityUsingPINCode;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.SelectCity;
 import com.nlpl.utils.SelectState;
+import com.nlpl.utils.SelectVehicleType;
 import com.nlpl.utils.ShowAlert;
 
 import org.json.JSONArray;
@@ -85,7 +86,7 @@ public class PostALoadActivity extends AppCompatActivity {
     double latitude1, latitude2, longitude1, longitude2;
     String isPickDrop = "0", pickUpAddress, pickUpPinCode, pickupState, pickUpCity, dropAddress, dropPinCode, dropState, dropCiy;
 
-    TextView pick_up_date, dropAddressText, pickAddressText, pick_up_time, select_budget, select_model, select_feet, select_capacity, select_truck_body_type;
+    TextView pick_up_date, dropAddressText, pickAddressText, pick_up_time, select_budget, selectModel, select_capacity;
     EditText note_to_post_load, pickUpAddressEdit, pickupPinCodeEdit, dropAddressEdit, dropPinCodeEdit;
 
     String phone, userId, selectedState, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI, customerBudget, sDate, eDate, monthS, monthE, startingDate, endingDate, todayDate;
@@ -94,7 +95,7 @@ public class PostALoadActivity extends AppCompatActivity {
     ArrayList currentSepDate;
     TextView setApproxDistance, deleteLoad, pickUpStateText, pickUpCityText, dropStateText, dropCityText;
     long startD, endD, todayD, diff, diff1;
-    Dialog setBudget, selectFeetDialog, selectCapacityDialog, selectBodyTypeDialog, selectModelDialog;
+    Dialog setBudget;
 
     Button Ok_PostLoad;
 
@@ -143,10 +144,8 @@ public class PostALoadActivity extends AppCompatActivity {
         pick_up_date = (TextView) findViewById(R.id.post_a_load_date_text_view);
         pick_up_time = (TextView) findViewById(R.id.post_a_load_time_text_view);
         select_budget = (TextView) findViewById(R.id.post_a_load_budget_text_view);
-        select_model = (TextView) findViewById(R.id.post_a_load_vehicle_model);
-        select_feet = (TextView) findViewById(R.id.post_a_load_feet_text_view);
+        selectModel = (TextView) findViewById(R.id.post_a_load_vehicle_model);
         select_capacity = (TextView) findViewById(R.id.post_a_load_capacity_text_view);
-        select_truck_body_type = (TextView) findViewById(R.id.post_a_load_body_type_text_view);
         note_to_post_load = (EditText) findViewById(R.id.post_a_load_notes_edit_text);
         setApproxDistance = (TextView) findViewById(R.id.post_a_load_auto_calculated_km_edit_text);
         deleteLoad = findViewById(R.id.delete_load_in_post_a_load);
@@ -292,34 +291,6 @@ public class PostALoadActivity extends AppCompatActivity {
             }
         });
 
-        select_model.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectModel();
-            }
-        });
-
-        select_feet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectFeet();
-            }
-        });
-
-        select_capacity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectCapacity();
-            }
-        });
-
-        select_truck_body_type.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectTruckBodyType();
-            }
-        });
-
         Ok_PostLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -335,10 +306,8 @@ public class PostALoadActivity extends AppCompatActivity {
                         UpdatePostLoadDetails.updatePickUpDate(loadId, pick_up_date.getText().toString());
                         UpdatePostLoadDetails.updatePickUpTime(loadId, pick_up_time.getText().toString());
                         UpdatePostLoadDetails.updateBudget(loadId, select_budget.getText().toString());
-                        UpdatePostLoadDetails.updateVehicleModel(loadId, select_model.getText().toString());
-                        UpdatePostLoadDetails.updateVehicleFeet(loadId, select_feet.getText().toString());
                         UpdatePostLoadDetails.updateVehicleCapacity(loadId, select_capacity.getText().toString());
-                        UpdatePostLoadDetails.updateVehicleBodyType(loadId, select_truck_body_type.getText().toString());
+                        UpdatePostLoadDetails.updateVehicleBodyType(loadId, selectModel.getText().toString());
                         UpdatePostLoadDetails.updatePickUpCountry(loadId, "India");
                         UpdatePostLoadDetails.updatePickUpAddress(loadId, pickUpAddressEdit.getText().toString());
                         UpdatePostLoadDetails.updatePickUpPinCode(loadId, pickupPinCodeEdit.getText().toString());
@@ -661,62 +630,6 @@ public class PostALoadActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    private void selectModel() {
-//        if (!isEdit) {
-        selectModelDialog = new Dialog(PostALoadActivity.this);
-        selectModelDialog.setContentView(R.layout.dialog_spinner);
-        selectModelDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        selectModelDialog.show();
-        selectModelDialog.setCancelable(true);
-        TextView model_title = selectModelDialog.findViewById(R.id.dialog_spinner_title);
-        model_title.setText("Select Vehicle Model");
-
-        ListView modelList = (ListView) selectModelDialog.findViewById(R.id.list_state);
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, R.layout.custom_list_row, arrayVehicleType);
-        modelList.setAdapter(adapter1);
-
-        modelList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                select_model.setText(adapter1.getItem(i));
-                selectModelDialog.dismiss();
-                selectFeet();
-            }
-        });
-//        } else {
-//
-//        }
-    }
-
-    private void selectFeet() {
-
-//        if (!isEdit) {
-        selectFeetDialog = new Dialog(PostALoadActivity.this);
-        selectFeetDialog.setContentView(R.layout.dialog_spinner);
-        selectFeetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        selectFeetDialog.show();
-        selectFeetDialog.setCancelable(true);
-
-        TextView feetTitle = selectFeetDialog.findViewById(R.id.dialog_spinner_title);
-        feetTitle.setText("Select Vehicle Feet");
-
-        ListView feetList = (ListView) selectFeetDialog.findViewById(R.id.list_state);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.custom_list_row, updatedArrayTruckFt);
-        feetList.setAdapter(adapter);
-
-        feetList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                select_feet.setText(adapter.getItem(i));
-                selectFeetDialog.dismiss();
-                getVehicleCapacityByFeet(select_feet.getText().toString());
-            }
-        });
-//        }else {
-//
-//        }
-    }
-
     private String blockCharacterSet = ".,[]`~#^|$%&*!+@₹_-()':;?/={}";
 
     private InputFilter filter = new InputFilter() {
@@ -731,112 +644,6 @@ public class PostALoadActivity extends AppCompatActivity {
             return null;
         }
     };
-
-    private void selectCapacity() {
-//        if (!isEdit) {
-        if (arrayToDisplayCapacity.size() == 1) {
-
-        } else {
-            selectCapacityDialog = new Dialog(PostALoadActivity.this);
-            selectCapacityDialog.setContentView(R.layout.dialog_spinner);
-            selectCapacityDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            selectCapacityDialog.show();
-            selectCapacityDialog.setCancelable(true);
-
-            TextView capacity_title = selectCapacityDialog.findViewById(R.id.dialog_spinner_title);
-            capacity_title.setText("Select Vehicle Capacity");
-
-            ListView capacityList = (ListView) selectCapacityDialog.findViewById(R.id.list_state);
-            ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, R.layout.custom_list_row, arrayToDisplayCapacity);
-            capacityList.setAdapter(adapter2);
-
-            capacityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    select_capacity.setText(adapter2.getItem(i));
-                    selectCapacityDialog.dismiss();
-                }
-            });
-        }
-//        } else {
-//
-//        }
-    }
-
-    private void selectTruckBodyType() {
-//        if (!isEdit) {
-        selectBodyTypeDialog = new Dialog(PostALoadActivity.this);
-        selectBodyTypeDialog.setContentView(R.layout.dialog_spinner);
-        selectBodyTypeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        selectBodyTypeDialog.show();
-        selectBodyTypeDialog.setCancelable(true);
-
-        TextView capacity_title = selectBodyTypeDialog.findViewById(R.id.dialog_spinner_title);
-        capacity_title.setText("Select Vehicle Body Type");
-
-        ListView capacityList = (ListView) selectBodyTypeDialog.findViewById(R.id.list_state);
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, R.layout.custom_list_row, arrayTruckBodyType);
-        capacityList.setAdapter(adapter2);
-
-        capacityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                select_truck_body_type.setText(adapter2.getItem(i));
-                selectBodyTypeDialog.dismiss();
-            }
-        });
-//        } else {
-//
-//        }
-    }
-
-    private void getVehicleCapacityByFeet(String selectedFeet) {
-        arrayToDisplayCapacity.clear();
-        arrayTruckFtForCompare.clear();
-        String url = getString(R.string.baseURL) + "/trucktype/getAllTruckType";
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray truckLists = response.getJSONArray("data");
-                    for (int i = 0; i < truckLists.length(); i++) {
-                        JSONObject obj = truckLists.getJSONObject(i);
-                        vehicle_typeAPI = obj.getString("vehicle_model");
-                        truck_ftAPI = obj.getString("truck_ft");
-                        truck_carrying_capacityAPI = obj.getString("truck_carrying_capacity");
-
-                        arrayTruckFtForCompare.add(truck_ftAPI);
-                        arrayCapacityForCompare.add(truck_carrying_capacityAPI);
-
-                        Log.i("type:", vehicle_typeAPI);
-
-                    }
-
-                    for (int i = 0; i < arrayTruckFtForCompare.size(); i++) {
-                        if (selectedFeet.equals(arrayTruckFtForCompare.get(i))) {
-                            arrayToDisplayCapacity.add(arrayCapacityForCompare.get(i));
-                        }
-                    }
-                    select_capacity.setText(arrayToDisplayCapacity.get(0));
-
-                    Log.i("array to dcapacity", String.valueOf(arrayToDisplayCapacity));
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-
-        mQueue.add(request);
-
-    }
 
     private void getVehicleTypeList() {
         String url = getString(R.string.baseURL) + "/trucktype/getAllTruckType";
@@ -892,10 +699,8 @@ public class PostALoadActivity extends AppCompatActivity {
         postLoadRequest.setPick_up_date(pick_up_date.getText().toString());
         postLoadRequest.setPick_up_time(pick_up_time.getText().toString());
         postLoadRequest.setBudget(select_budget.getText().toString());
-        postLoadRequest.setVehicle_model(select_model.getText().toString());
-        postLoadRequest.setFeet(select_feet.getText().toString());
         postLoadRequest.setCapacity(select_capacity.getText().toString());
-        postLoadRequest.setBody_type(select_truck_body_type.getText().toString());
+        postLoadRequest.setBody_type(selectModel.getText().toString());
         postLoadRequest.setPick_add(pickUpAddressEdit.getText().toString());
         postLoadRequest.setPick_city(pickUpCityText.getText().toString());
         postLoadRequest.setPick_pin_code(pickupPinCodeEdit.getText().toString());
@@ -946,8 +751,6 @@ public class PostALoadActivity extends AppCompatActivity {
                         String pickUpDate = obj.getString("pick_up_date");
                         String pickUpTime = obj.getString("pick_up_time");
                         String budget = obj.getString("budget");
-                        String vehicleModel = obj.getString("vehicle_model");
-                        String vehicleFeet = obj.getString("feet");
                         String vehicleCapacity = obj.getString("capacity");
                         String vehicleBodyType = obj.getString("body_type");
                         String pickUpAddress1 = obj.getString("pick_add");
@@ -966,10 +769,8 @@ public class PostALoadActivity extends AppCompatActivity {
                         pick_up_date.setText(pickUpDate);
                         pick_up_time.setText(pickUpTime);
                         select_budget.setText(budget);
-                        select_model.setText(vehicleModel);
-                        select_feet.setText(vehicleFeet);
+                        selectModel.setText(vehicleBodyType);
                         select_capacity.setText(vehicleCapacity);
-                        select_truck_body_type.setText(vehicleBodyType);
                         pickupState = pickUpStates;
                         pickUpStateText.setText(pickUpStates);
                         pickUpCity = pickUpCities;
@@ -1110,6 +911,18 @@ public class PostALoadActivity extends AppCompatActivity {
     public void onClickDropCity(View view) {
         if (!dropStateText.getText().toString().isEmpty()) {
             SelectCity.selectCity(PostALoadActivity.this, dropStateText.getText().toString(), dropCityText);
+        }
+    }
+
+    public void onClickLoadTypeAndBodyType(View view) {
+        switch (view.getId()) {
+            case R.id.post_a_load_vehicle_model:
+                SelectVehicleType.selectBodyType(PostALoadActivity.this, selectModel, select_capacity);
+                break;
+
+            case R.id.post_a_load_capacity_text_view:
+                SelectVehicleType.selectLoadType(PostALoadActivity.this, selectModel.getText().toString(), select_capacity);
+                break;
         }
     }
 

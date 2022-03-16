@@ -99,7 +99,7 @@ public class FindLoadsActivity extends AppCompatActivity {
 
     String loadId, bidStatus, vehicle_no, truckId, selectedDriverId, updateAssignedTruckId, updateAssignedDriverId, selectedDriverName;
     Dialog previewDialogBidNow, selectTruckDialog, setBudget;
-    TextView cancel, customerFirstBudget, acceptAndBid, spQuote, selectDriver, selectTruck, selectedTruckModel, selectedTruckFeet, selectedTruckCapacity, selectedTruckBodyType;
+    TextView cancel, customerFirstBudget, acceptAndBid, spQuote, selectDriver, selectTruck, selectedTruckModel, selectedTruckCapacity;
     EditText notesSp;
     CheckBox declaration;
     RadioButton negotiable_yes, negotiable_no;
@@ -298,8 +298,6 @@ public class FindLoadsActivity extends AppCompatActivity {
                         findLoadsModel.setPick_up_time(obj.getString("pick_up_time"));
                         findLoadsModel.setBudget(obj.getString("budget"));
                         findLoadsModel.setBid_status(obj.getString("bid_status"));
-                        findLoadsModel.setVehicle_model(obj.getString("vehicle_model"));
-                        findLoadsModel.setFeet(obj.getString("feet"));
                         findLoadsModel.setCapacity(obj.getString("capacity"));
                         findLoadsModel.setBody_type(obj.getString("body_type"));
                         findLoadsModel.setPick_add(obj.getString("pick_add"));
@@ -740,8 +738,6 @@ public class FindLoadsActivity extends AppCompatActivity {
         String pick_up_time = obj.getPick_up_time();
         String required_budget = obj.getBudget();
         String distance = obj.getKm_approx();
-        String required_model = obj.getVehicle_model();
-        String required_feet = obj.getFeet();
         String required_capacity = obj.getCapacity();
         String required_truck_body = obj.getBody_type();
         String pick_up_location = obj.getPick_add() + " " + obj.getPick_city() + " " + obj.getPick_state() + " " + obj.getPick_pin_code();
@@ -761,8 +757,6 @@ public class FindLoadsActivity extends AppCompatActivity {
         TextView pickUpTime = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_pick_up_time_textview);
         customerFirstBudget = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_budget_textview);
         TextView approxDistance = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_distance_textview);
-        TextView reqModel = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_req_model_textview);
-        TextView reqFeet = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_req_feet_textview);
         TextView reqCapacity = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_req_capacity_textview);
         TextView reqBodyType = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_req_bodyType_textview);
         TextView pickUpLocation = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_pick_up_location_textview);
@@ -774,8 +768,6 @@ public class FindLoadsActivity extends AppCompatActivity {
         pickUpTime.setText(pick_up_time);
         customerFirstBudget.setText(required_budget);
         approxDistance.setText(distance);
-        reqModel.setText(required_model);
-        reqFeet.setText(required_feet);
         reqCapacity.setText(required_capacity);
         reqBodyType.setText(required_truck_body);
         pickUpLocation.setText(pick_up_location);
@@ -789,9 +781,7 @@ public class FindLoadsActivity extends AppCompatActivity {
         selectTruck = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_select_truck_textview);
         selectDriver = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_select_driver_textview);
         selectedTruckModel = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_model_textview);
-        selectedTruckFeet = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_feet_textview);
         selectedTruckCapacity = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_capacity_textview);
-        selectedTruckBodyType = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_truck_body_type_textview);
         notesSp = (EditText) previewDialogBidNow.findViewById(R.id.dialog_bid_now_notes_editText);
         declaration = (CheckBox) previewDialogBidNow.findViewById(R.id.dialog_bid_now_declaration);
         acceptAndBid = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_accept_and_bid_btn);
@@ -965,9 +955,7 @@ public class FindLoadsActivity extends AppCompatActivity {
         bidLoadRequest.setAssigned_driver_id(selectedDriverId);
         bidLoadRequest.setIdpost_load(loadId);
         bidLoadRequest.setBid_status(status);
-        bidLoadRequest.setBody_type(selectedTruckBodyType.getText().toString());
-        bidLoadRequest.setVehicle_model(selectedTruckModel.getText().toString());
-        bidLoadRequest.setFeet(selectedTruckFeet.getText().toString());
+        bidLoadRequest.setBody_type(selectedTruckModel.getText().toString());
         bidLoadRequest.setCapacity(selectedTruckCapacity.getText().toString());
         bidLoadRequest.setNotes(notesSp.getText().toString());
         bidLoadRequest.setIs_negatiable(negotiable);
@@ -1236,16 +1224,12 @@ public class FindLoadsActivity extends AppCompatActivity {
                     for (int i = 0; i < truckLists.length(); i++) {
                         JSONObject obj = truckLists.getJSONObject(i);
                         String truckModel = obj.getString("truck_type");
-                        String truckFeet = obj.getString("truck_ft");
                         String truckCapacity = obj.getString("truck_carrying_capacity");
-                        String bodyType = obj.getString("vehicle_type");
                         String vehicleNo = obj.getString("vehicle_no");
                         selectedDriverId = obj.getString("driver_id");
 
                         selectTruck.setText(vehicleNo);
                         selectedTruckModel.setText(truckModel);
-                        selectedTruckFeet.setText(truckFeet);
-                        selectedTruckBodyType.setText(bodyType);
                         selectedTruckCapacity.setText(truckCapacity);
                     }
 

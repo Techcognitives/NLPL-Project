@@ -11,14 +11,15 @@
 
     <TextView
         android:id="@+id/load_list_pick_up_date"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
         android:paddingEnd="5dp"
         android:text="DD-MMM-YY"
         android:textColor="@color/light_black"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/load_list_model"
+        app:layout_constraintBottom_toTopOf="@+id/load_list_kms_approx"
         app:layout_constraintEnd_toStartOf="@+id/load_list_pick_up_time"
         app:layout_constraintStart_toStartOf="@+id/load_list_pick_up"
         app:layout_constraintTop_toBottomOf="@+id/load_list_pick_up" />
@@ -27,55 +28,29 @@
         android:id="@+id/load_list_pick_up_time"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:gravity="center"
+        android:gravity="center|end"
         android:text="HH:MMpm"
         android:textColor="@color/light_black"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/load_list_pick_up_date"
-        app:layout_constraintEnd_toStartOf="@+id/load_list_kms_approx"
+        app:layout_constraintEnd_toEndOf="@+id/load_list_drop"
         app:layout_constraintStart_toEndOf="@+id/load_list_pick_up_date"
         app:layout_constraintTop_toTopOf="@+id/load_list_pick_up_date"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/load_list_kms_approx"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="000Km"
-        android:textColor="@color/light_black"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/load_list_pick_up_time"
-        app:layout_constraintEnd_toEndOf="@+id/load_list_drop"
-        app:layout_constraintStart_toEndOf="@+id/load_list_pick_up_time"
-        app:layout_constraintTop_toTopOf="@+id/load_list_pick_up_time" />
-
-    <TextView
-        android:id="@+id/load_list_model"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="Model: Example"
-        android:textColor="@color/light_black"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/load_list_feet"
-        app:layout_constraintEnd_toStartOf="@+id/load_list_budget"
-        app:layout_constraintStart_toStartOf="@+id/load_list_pick_up_date"
-        app:layout_constraintTop_toBottomOf="@+id/load_list_pick_up_date" />
-
-    <TextView
-        android:id="@+id/load_list_feet"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:text="Ft: 0 ft."
+        android:gravity="start"
+        android:text="000Km"
         android:textColor="@color/light_black"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/load_list_capacity"
-        app:layout_constraintEnd_toEndOf="@+id/load_list_model"
-        app:layout_constraintStart_toStartOf="@+id/load_list_model"
-        app:layout_constraintTop_toBottomOf="@+id/load_list_model" />
+        app:layout_constraintEnd_toStartOf="@+id/load_list_budget"
+        app:layout_constraintStart_toStartOf="@+id/load_list_pick_up_date"
+        app:layout_constraintTop_toBottomOf="@+id/load_list_pick_up_date" />
 
     <TextView
         android:id="@+id/load_list_capacity"
@@ -86,9 +61,9 @@
         android:textColor="@color/light_black"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/load_list_body"
-        app:layout_constraintEnd_toEndOf="@+id/load_list_feet"
-        app:layout_constraintStart_toStartOf="@+id/load_list_model"
-        app:layout_constraintTop_toBottomOf="@+id/load_list_feet" />
+        app:layout_constraintEnd_toEndOf="@+id/load_list_kms_approx"
+        app:layout_constraintStart_toStartOf="@+id/load_list_kms_approx"
+        app:layout_constraintTop_toBottomOf="@+id/load_list_kms_approx" />
 
     <TextView
         android:id="@+id/load_list_body"
@@ -116,7 +91,7 @@
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/load_list_bid_now_button"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/load_list_time_left"
         app:layout_constraintStart_toStartOf="@+id/load_list_capacity"
         app:layout_constraintTop_toBottomOf="@+id/load_list_body" />
 
@@ -160,34 +135,34 @@
     <TextView
         android:id="@+id/load_list_budget"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="2dp"
+        android:gravity="center|end"
         android:paddingBottom="2dp"
         android:text="INR X,XXX"
         android:textColor="@color/light_black"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:gravity="center|start"
         app:layout_constraintBottom_toTopOf="@+id/load_list_time_left"
-        app:layout_constraintEnd_toEndOf="@+id/load_list_kms_approx"
-        app:layout_constraintStart_toEndOf="@+id/load_list_model"
-        app:layout_constraintTop_toBottomOf="@+id/load_list_pick_up_date" />
+        app:layout_constraintEnd_toEndOf="@+id/load_list_drop"
+        app:layout_constraintStart_toEndOf="@+id/load_list_kms_approx"
+        app:layout_constraintTop_toTopOf="@+id/load_list_kms_approx" />
 
     <TextView
         android:id="@+id/load_list_time_left"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:drawableLeft="@drawable/clock_small"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:drawableEnd="@drawable/clock_small"
         android:drawableTint="@color/redDark"
-        android:gravity="center|start"
+        android:gravity="center|end"
         android:paddingStart="3dp"
         android:paddingEnd="3dp"
         android:text="  00:00:00"
         android:textColor="@color/redDark"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/load_list_location"
+        app:layout_constraintBottom_toBottomOf="@+id/load_list_body"
         app:layout_constraintEnd_toEndOf="@+id/load_list_budget"
         app:layout_constraintStart_toStartOf="@+id/load_list_budget"
         app:layout_constraintTop_toBottomOf="@+id/load_list_budget" />

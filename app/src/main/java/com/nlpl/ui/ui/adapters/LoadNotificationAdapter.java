@@ -212,17 +212,11 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
         String approxKms = obj.getKm_approx();
         holder.distance.setText("" + approxKms);
 
-        String model = obj.getVehicle_model();
-        holder.model.setText("Model: " + model);
-
-        String feet = obj.getFeet();
-        holder.feet.setText("Ft: " + feet);
-
         String capacity = obj.getCapacity();
-        holder.capacity.setText("Capacity: " + capacity);
+        holder.capacity.setText("Load Type: " + capacity);
 
         String bodyType = obj.getBody_type();
-        holder.body.setText("Body: " + bodyType);
+        holder.body.setText("Body Type: " + bodyType);
 
         String pickUpLocation = obj.getPick_add();
         holder.pickUpLocation.setText(" " + pickUpLocation);
@@ -256,7 +250,7 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
     }
 
     public class LoadNotificationViewHolder extends RecyclerView.ViewHolder {
-        private TextView timeLeft, destinationStart, destinationEnd, budget, date, time, distance, model, feet, capacity, body, pickUpLocation, bidNowButton;
+        private TextView timeLeft, destinationStart, destinationEnd, budget, date, time, distance, capacity, body, pickUpLocation, bidNowButton;
 
         public LoadNotificationViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -267,8 +261,6 @@ public class LoadNotificationAdapter extends RecyclerView.Adapter<LoadNotificati
             date = itemView.findViewById(R.id.load_list_pick_up_date);
             time = itemView.findViewById(R.id.load_list_pick_up_time);
             distance = itemView.findViewById(R.id.load_list_kms_approx);
-            model = itemView.findViewById(R.id.load_list_model);
-            feet = itemView.findViewById(R.id.load_list_feet);
             capacity = itemView.findViewById(R.id.load_list_capacity);
             body = itemView.findViewById(R.id.load_list_body);
             pickUpLocation = itemView.findViewById(R.id.load_list_location);

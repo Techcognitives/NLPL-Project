@@ -170,37 +170,19 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginEnd="2dp"
-                    android:background="@drawable/edit_text_border"
-                    android:hint="@string/SelectVehicleModel"
-                    android:paddingStart="10dp"
-                    android:paddingTop="5dp"
-                    android:paddingEnd="25dp"
-                    android:paddingBottom="5dp"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toStartOf="@+id/post_a_load_feet_text_view"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView16" />
-
-                <TextView
-                    android:id="@+id/post_a_load_feet_text_view"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
                     android:layout_marginEnd="5dp"
                     android:background="@drawable/edit_text_border"
-                    android:hint="Ft."
+                    android:hint="Body Type"
+                    android:onClick="onClickLoadTypeAndBodyType"
                     android:paddingStart="10dp"
                     android:paddingTop="5dp"
                     android:paddingEnd="25dp"
                     android:paddingBottom="5dp"
                     android:textColor="@color/black"
                     android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/post_a_load_vehicle_model"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/post_a_load_vehicle_model"
-                    app:layout_constraintTop_toTopOf="@+id/post_a_load_vehicle_model" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
                 <TextView
                     android:id="@+id/post_a_load_capacity_text_view"
@@ -208,7 +190,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/edit_text_border"
-                    android:hint="@string/Capacity"
+                    android:hint="Load Type"
+                    android:onClick="onClickLoadTypeAndBodyType"
                     android:paddingStart="10dp"
                     android:paddingTop="5dp"
                     android:paddingEnd="25dp"
@@ -218,23 +201,6 @@
                     app:layout_constraintEnd_toEndOf="@+id/post_a_load_vehicle_model"
                     app:layout_constraintStart_toStartOf="@+id/post_a_load_vehicle_model"
                     app:layout_constraintTop_toBottomOf="@+id/post_a_load_vehicle_model" />
-
-                <TextView
-                    android:id="@+id/post_a_load_body_type_text_view"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text_border"
-                    android:hint="@string/bodyType"
-                    android:paddingStart="10dp"
-                    android:paddingTop="5dp"
-                    android:paddingEnd="25dp"
-                    android:paddingBottom="5dp"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/post_a_load_capacity_text_view"
-                    app:layout_constraintEnd_toEndOf="@+id/post_a_load_feet_text_view"
-                    app:layout_constraintStart_toStartOf="@+id/post_a_load_feet_text_view"
-                    app:layout_constraintTop_toTopOf="@+id/post_a_load_capacity_text_view" />
 
                 <TextView
                     android:id="@+id/post_a_load_enter_pick_location"
@@ -438,15 +404,6 @@
                     app:layout_constraintTop_toTopOf="@+id/post_a_load_vehicle_model" />
 
                 <ImageView
-                    android:id="@+id/imageView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_down"
-                    app:layout_constraintBottom_toBottomOf="@+id/post_a_load_feet_text_view"
-                    app:layout_constraintEnd_toEndOf="@+id/post_a_load_feet_text_view"
-                    app:layout_constraintTop_toTopOf="@+id/post_a_load_feet_text_view" />
-
-                <ImageView
                     android:id="@+id/imageView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -454,15 +411,6 @@
                     app:layout_constraintBottom_toBottomOf="@+id/post_a_load_capacity_text_view"
                     app:layout_constraintEnd_toEndOf="@+id/post_a_load_capacity_text_view"
                     app:layout_constraintTop_toTopOf="@+id/post_a_load_capacity_text_view" />
-
-                <ImageView
-                    android:id="@+id/imageView6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_down"
-                    app:layout_constraintBottom_toBottomOf="@+id/post_a_load_body_type_text_view"
-                    app:layout_constraintEnd_toEndOf="@+id/post_a_load_body_type_text_view"
-                    app:layout_constraintTop_toTopOf="@+id/post_a_load_body_type_text_view" />
 
                 <Button
                     android:id="@+id/post_a_load_ok_button"
