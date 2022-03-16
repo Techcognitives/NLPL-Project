@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    //---------------------------- LogIn Activity --------------------------------------------------
+    <string name="login">Login</string>
+    <string name="mobile_prefix">+91 |</string>
+    <string name="edit_number_hint">Enter 10 digit mobile number</string>
+    <string name="edit_number_hint_optional">Alternate Number (Optional)</string>
+    <string name="get_otp">Get OTP</string>
+    <string name="tc_and_pp">By clicking on Get OTP you agree to our</string>
+    <string name="tc">Terms of Service</string>
+    <string name="and">and</string>
+    <string name="pp">Privacy Policy</string>
+    <string name="selectYourCountry">Select Your Country</string>
+    //----------------------------------------------------------------------------------------------
+
+    //---------------------------- OTP Code Activity -----------------------------------------------
+    <string name="otp_code">OTP Code</string>
+    <string name="enter_code">Please Enter OTP sent to\n</string>
+    <string name="verify_otp">Verify OTP</string>
+    <string name="copy_otp">Copy OTP</string>
+    <string name="resend_otp">Resend OTP</string>
+    //----------------------------------------------------------------------------------------------
+
+    //---------------------------- Registration Screen Activity ------------------------------------
+    <string name="name">नाम*</string>
+    <string name="name_hint">Enter your Name</string>
+    <string name="email_id">Enter your Email ID (Optional)</string>
+    <string name="location">पता*</string>
+    <string name="select_state">State</string>
+    <string name="select_city">City</string>
+    <string name="pin_code">PIN Code</string>
+    <string name="address">Search or Type Address</string>
+    <string name="are_u_sp">Truck Owner / Driver / Broker? </string>
+    <string name="truck_owner">I"'"m a Truck Owner</string>
+    <string name="driver">I"'"m a Driver</string>
+    <string name="broker">I"'"m a Broker</string>
+    <string name="ok">OK</string>
+    <string name="customer">I"'"m a Load Poster</string>
+    <string name="yes">YES</string>
+    //----------------------------------------------------------------------------------------------
+
+    //------------------------------------Profile and registration Activity ------------------------
+    <string name="hello">Hello,</string>
+    <string name="mobNo">+91</string>
+    <string name="personalDetails"><p>   </p>Personal Details</string>
+    <string name="personal_and_company"><p>   </p>Personal &amp; Company</string>
+    <string name="BankDetails"><p>   </p>My Bank</string>
+    <string name="AddTrucks"><p>   </p>My Trucks</string>
+    <string name="AddDrivers"><p>   </p>My Drivers</string>
+    <string name="kyc_verification"><p>   </p>KYC - PAN &amp; Aadhar</string>
+    //----------------------------------------------------------------------------------------------
+
+    //---------------------------------------Personal Details Activity------------------------------
+    <string name="PANCard">PAN Card</string>
+    <string name="Upload">Upload</string>
+    <string name="UploadAny">Upload any of the following</string>
+    <string name="Aadhar">Aadhar Card</string>
+    <string name="uploadAadhar">Upload Aadhar Card*</string>
+    <string name="uploadpan">Upload PAN Card*</string>
+    <string name="VoterId">Voter ID</string>
+    <string name="AadharFront">Aadhar Front</string>
+    <string name="AadharBack">Aadhar Back</string>
+    <string name="edit"> </string>
+    <string name="acNo">A/C No: </string>
+    <string name="addBank">+ Add Bank</string>
+    <string name="addTruck">+ Add Truck</string>
+    <string name="addDriver">+ Add Driver</string>
+    //new
+    <string name="Personal_Details">Personal Details</string>
+    <string name="Profile_Uploaded_Successfully">Profile Uploaded Successfully</string>
+    <string name="Profile_not_Uploaded_please_try_again">Profile not Uploaded, please try again</string>
+    <string name="Profile_Picture">Profile Picture</string>
+    <string name="Profile_Picture_added_successfully">Profile Picture added successfully</string>
+    <string name="Selfie_Uploaded">Selfie Uploaded</string>
+
+
+    //----------------------------------------------------------------------------------------------
+
+    //---------------------------------------Bank Details Activity----------------------------------
+    <string name="NameWithStar">Bank Name*</string>
+    <string name="Bank_name_hint">Enter Bank Name</string>
+    <string name="AccountNumber">Account Number*</string>
+    <string name="ReEnterAcc">Re-Enter Account Number*</string>
+    <string name="IFSC">IFSI Code*</string>
+    <string name="EnterAccNumber">Enter your account number</string>
+    <string name="ReEnterAccNumber">Re-Enter your account number</string>
+    <string name="EnterIFSC">Enter IFSC code</string>
+    <string name="bank_details">Bank Details</string>
+    //new
+    <string name="Edit_Bank_Details">Edit Bank Details</string>
+    <string name="Cancelled_cheque_uploaded_successfully">Cancelled cheque uploaded successfully</string>
+    <string name="Bank_Details_added_successfully">Bank Details added successfully</string>
+    <string name="Account_number_does_not_match">Account number does not match</string>
+    <string name="Please_enter_correct_account_number_as_above.">Please enter correct account number as above.</string>
+
+    //----------------------------------------------------------------------------------------------
+
+    //-------------------------------- Vehicle Details Activity ------------------------------------
+    <string name="vehicle_number">Vehicle Number</string>
+    <string name="vehicle_details">Vehicle Details*</string>
+    <string name="body_type">Vehicle Body Type</string>
+    <string name="open">Open</string>
+    <string name="closed">Closed</string>
+    <string name="tarpaulin">Tarpaulin</string>
+    <string name="vehicle_number_edit">Enter Vehicle Number"</string>
+    <string name="rc_book">Upload RC Book*</string>
+    <string name="rc_front">RC Book</string>
+    <string name="uploadInsurance">Upload Insurance*</string>
+    <string name="insurance">Insurance</string>
+    <string name="selectModel">Select Body Type</string>
+    <string name="Ft">Ft.:</string>
+    <string name="Capacity">Capacity</string>
+    //----------------------------------------------------------------------------------------------
+
+    //---------------------------------------Driver Details Activity--------------------------------
+    <string name="DriverName">Driver Name, Number &amp; Email</string>
+    <string name="EnterDriverName">Enter Driver Name</string>
+    <string name="UploadDriverLicense">Upload Driver License</string>
+    <string name="UploadDriverSelfie">Photo - Selfie</string>
+    <string name="DriverLicense">Driver License*</string>
+    <string name="TakePhoto">Take a Photo*</string>
+    <string name="camera">Camera</string>
+    <string name="driver_mobile_number_hint">Enter Driver Mobile Number</string>
+    <string name="AddAnotherDriver">ADD ANOTHER DRIVER</string>
+    <string name="driver_mobile_number">Driver Mobile Number</string>
+    //new
+    <string name="Enter_10_digit_Driver_Number">Enter 10 digit Driver Number</string>
+    <string name="Enter_Driver_Email_Id">Enter Driver Email Id</string>
+    <string name="Driver_Details">Driver Details</string>
+    <string name="Edit_Driver_Details">Edit Driver Details</string>
+    <string name="Please_add_a_Driver">Please add a Driver</string>
+    <string name="Add">+ Add</string>
+    <string name="Driving_License_uploaded_successfully">Driving License uploaded successfully</string>
+    <string name="Driving_License_not_uploaded_please_try_again">Driving License not uploaded, please try again</string>
+    <string name="Driver_Selfie_uploaded_successfully">Driver Selfie uploaded successfully</string>
+    <string name="Driver_Selfie_not_uploaded">Driver Selfie not uploaded, please try again</string>
+    <string name="Take_a_Photo">Take a Photo</string>
+    <string name="Invalid_Mobile_Number">Invalid Mobile Number</string>
+    <string name="Please_enter_a_10_digit_valid_mobile_number">Please enter a 10 digit valid mobile number.</string>
+    <string name="Driver_Details_added_successfully">Driver Details added successfully</string>
+    <string name="Would_you_like_to_add_Drivers_Bank_Details">Would you like to add Drivers Bank Details?</string>
+    <string name="Later">Later</string>
+    <string name="Please_Upload_From_Gallery">Please Upload From Gallery</string>
+    <string name="Choose_from_Gallery">Choose from Gallery</string>
+
+    //----------------------------------------------------------------------------------------------
+
+    //-------------------------------------- Language Dialog----------------------------------------
+    <string name="select_language">Please select your language</string>
+    <string name="english">English</string>
+    <string name="marathi">मराठी</string>
+    <string name="hindi">हिंदी</string>
+    //----------------------------------------------------------------------------------------------
+
+    //-------------------------------------- Company Details ---------------------------------------
+    <string name="company_name">Company Name*</string>
+    <string name="company_address">Company Address*</string>
+    <string name="company_name_hint">Enter Company Name</string>
+    <string name="gst_number_hint">GST Number*</string>
+    <string name="pan_number">PAN Number*</string>
+    //new
+    <string name="Company_Details">Company Details</string>
+    <string name="Company_Details_added_Successfully">Company Details added Successfully</string>
+
+
+    //----------------------------------------------------------------------------------------------
+
+    //--------------------------- Personal Details And Id Proof Activity ---------------------------
+    <string name="personal">Personal &amp; Address</string>
+    <string name="pan_and_aadhar">PAN &amp; Aadhar</string>
+    <string name="phone">Phone:</string>
+    <string name="firm">Firm Name:</string>
+    <string name="addressColon">Address:</string>
+    <string name="add_company">+ Add Company</string>
+    //----------------------------------------------------------------------------------------------
+
+    //------------------------------------BASE URL--------------------------------------------------
+    <string name="baseURL">http://13.234.163.179:3000</string>
+    <string name="internal_storage">internal storage</string>
+    //----------------------------------------------------------------------------------------------
+
+    //-----------------------------------Post A Load------------------------------------------------
+    <string name="pick_up_date">Pick-up Date*</string>
+    <string name="pick_up_time">Pick-up Time*</string>
+    <string name="enterYourBudget">Enter Your Budget</string>
+    <string name="budget">Budget</string>
+    <string name="budgetRs">Budget ₹</string>
+    <string name="truckTypeAndCapacity">Truck Type &amp; Capacity*</string>
+    <string name="SelectVehicleModel">Vehicle Model</string>
+    <string name="bodyType">Body</string>
+    <string name="pickUpLocationDetails">Pick-up Address*</string>
+    <string name="dropLocationDetails">Drop Address*</string>
+    <string name="km">KM (approx)</string>
+    <string name="noteAndMaterial">Notes &amp; Material Description (Optional)</string>
+    <string name="postALoad">POST A LOAD</string>
+    <string name="date">DD-Month-YY</string>
+    <string name="time">hh:mm AM/PM</string>
+    <string name="inrRs">₹ XXXX</string>
+    <string name="KMAutoCal">KM auto calculated</string>
+    <string name="note_to_post_load">1. Electronic appliances, must handled with care.<br></br>2. Bubble wrap required.<br></br>3. Preferable pick-up time after 12:00pm<br></br>4. Please call and confirm before starting.</string>
+    //new
+    <string name="Loads_History">Loads History</string>
+    //----------------------------------------------------------------------------------------------
+
+    //--------------------------------------Bid_now dialog------------------------------------------
+    <string name="load_id">Load ID: city-city-000 </string>
+    <string name="timeLeft"> <p>   </p> Time left</string>
+    <string name="timeinmin">00:00</string>
+    <string name="pickUpDateWithColon">Pick-up Date:</string>
+    <string name="pickUpLocationWithColon"><p>  </p>Pick-up:</string>
+    <string name="addressForPickUpLocation">City, State, PIN Code, Address</string>
+    <string name="dropLocationWithColon"><p>  </p>Drop:</string>
+    <string name="no">No</string>
+    <string name="selectTruck">Select Truck</string>
+    <string name="selectDriver">Select Driver</string>
+    <string name="yes_small">Yes</string>
+    <string name="noteAndMaterialWithColon">Notes &amp; Material Description:</string>
+    <string name="timeOnly">Time:</string>
+    <string name="budgetWithColon">Budget:</string>
+    <string name="capacityWithColon">Capacity:</string>
+    <string name="distanceWithColon">Distance:</string>
+    <string name="xx_km">XXX km</string>
+    <string name="xx_capacity">XXX kgs</string>
+    <string name="xx_feet">XX ft</string>
+    <string name="timewithoutAMPM">hh:mm </string>
+    <string name="distance">Distance</string>
+    <string name="modelwithColon">Model:</string>
+    <string name="model">Model</string>
+    <string name="body">Body:</string>
+    <string name="selectAndAssignTruck">Assign a Truck &amp; Driver for this load</string>
+    <string name="yourQuote">Your Quote</string>
+    <string name="negotiable">Negotiable</string>
+    <string name="truck">Truck</string>
+    <string name="feet">Feet</string>
+    <string name="Notes">Notes</string>
+    <string name="NotesIfAny">Type or select</string>
+    <string name="acceptBid">Accept &amp; Bid</string>
+    <string name="cancel">Cancel</string>
+    <string name="declaration"><b>Declaration: </b><em>I hereby declare, driver will reach Pick-up location 15 minutes prior Pick-up Time.</em> </string>
+    <string name="preferred_locations">Preferred Locations: </string>
+    //----------------------------------------------------------------------------------------------
+
+    //--------------------------------Customer Dashboard Activity-----------------------------------
+    //new
+    <string name="Load_Poster_Dashboard">Load Poster Dashboard</string>
+    <string name="Find_Trucks">Find Trucks</string>
+    <string name="Load_Response">Load Response</string>
+    <string name="Response_submitted_Successfully">Response submitted Successfully</string>
+    <string name="Successfully_selected_three_Bidders">Successfully selected three Bidders</string>
+    <string name="Please_Review_and_Accept_any_one_offer.">Please Review and Accept any one offer.</string>
+    <string name="Accept_Final_Offer">Accept Final Offer</string>
+    <string name="Amount_To_Be_Billed_1">Amount | To Be Billed 1%</string>
+    <string name="Amount_Pay_Now_3">Amount | Pay Now 3%</string>
+    <string name="Payment_Successful">Payment Successful</string>
+    <string name="Payment_Id">Payment Id: </string>
+    <string name="Payment_Failed">Payment Failed</string>
+    <string name="Your_transaction_has_failed._Please_try_again">Your transaction has failed. Please try again</string>
+    <string name="Load_Details">Load Details: </string>
+    <string name="CONSIGNMENT">CONSIGNMENT</string>
+    <string name="Withdraw">Withdraw</string>
+    <string name="Withdraw_Load">Withdraw Load</string>
+    <string name="Do_you_want_to_withdraw_your_load_posting_or_withdraw_from_the_current_bidder.">Do you want to withdraw your load posting or withdraw from the current bidder.</string>
+    <string name="Withdraw_Bidder">Withdraw Bidder</string>
+    <string name="Load_withdrawn_successfully_and_no_longer_visible_for_anyone">Load withdrawn successfully and no longer visible for anyone</string>
+    <string name="Withdraw_from_current_Service_Provider">Withdraw from current Service Provider</string>
+    <string name="Load_withdrawn_from_current_Service_Provider_and_visible_for_other_Service_Provider">Load withdrawn from current Service Provider and visible for other Service Provider</string>
+    <string name="Back">Back</string>
+    <string name="Log_Out">Log Out</string>
+    <string name="Log_Out_message">Are you sure you want to logout?</string>
+    <string name="ReActivate_Load">Re-activate Load</string>
+    <string name="Do_you_want_to_ReActivate_Load">Do you want to re-activate load</string>
+    <string name="Continue_with_other_Service_Provider">Continue with other Service Provider</string>
+    <string name="Current_Bidder_have_withdrawn_Bid">Current Bidder have withdrawn Bid, do you still want to continue with other Service Provider?</string>
+    <string name="Continue">Continue</string>
+    <string name="Cancel">Cancel</string>
+    <string name="visible_for_other_Service_Provider">Load withdrawn from current Service Provider and visible for other Service Provider</string>
+    <string name="Close">Close</string>
+
+    //----------------------------------------------------------------------------------------------
+
+    //--------------------------------Customer Settings And Preferences-----------------------------------
+    //new
+    <string name="Settings_and_Preferences">Settings and Preferences</string>
+
+    //----------------------------------------------------------------------------------------------
+
+
+</resources>

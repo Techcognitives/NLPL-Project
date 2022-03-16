@@ -167,9 +167,9 @@ public class DriverDetailsActivity extends AppCompatActivity {
         selectStateText = (TextView) personalAndAddress.findViewById(R.id.registration_select_state);
         selectDistrictText = (TextView) personalAndAddress.findViewById(R.id.registration_select_city);
 
-        driverName.setHint("Enter Driver Name");
-        driverMobile.setHint("Enter 10 digit Driver Number");
-        driverEmailId.setHint("Enter Driver Email Id");
+        driverName.setHint(getString(R.string.EnterDriverName));
+        driverMobile.setHint(getString(R.string.Enter_10_digit_Driver_Number));
+        driverEmailId.setHint(getString(R.string.Enter_Driver_Email_Id));
 
         driverName.addTextChangedListener(driverNameWatcher);
         driverMobile.addTextChangedListener(driverMobileWatcher);
@@ -210,12 +210,12 @@ public class DriverDetailsActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         driverName.setFilters(new InputFilter[]{filter});
 
-        actionBarTitle.setText("Driver Details");
+        actionBarTitle.setText(getString(R.string.Driver_Details));
         actionBarBackButton.setVisibility(View.GONE);
         actionBarSkipButton.setVisibility(View.VISIBLE);
 
         if (isEdit) {
-            actionBarTitle.setText("Edit Driver Details");
+            actionBarTitle.setText(getString(R.string.Edit_Driver_Details));
             actionBarBackButton.setVisibility(View.VISIBLE);
             actionBarSkipButton.setVisibility(View.INVISIBLE);
             actionBarBackButton.setOnClickListener(new View.OnClickListener() {
@@ -229,7 +229,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         }
 
         if (truckIdPass == null) {
-            actionBarTitle.setText("Driver Details");
+            actionBarTitle.setText(getString(R.string.Driver_Details));
             actionBarBackButton.setVisibility(View.VISIBLE);
             actionBarSkipButton.setVisibility(View.INVISIBLE);
             actionBarBackButton.setOnClickListener(new View.OnClickListener() {
@@ -266,9 +266,9 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Please add a Driver");
+                alertTitle.setText(getString(R.string.Please_add_a_Driver));
                 alertMessage.setText("You cannot bid unless you have a Driver");
-                alertPositiveButton.setText("+ Add");
+                alertPositiveButton.setText(getString(R.string.Add));
                 alertPositiveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -276,7 +276,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                     }
                 });
 
-                alertNegativeButton.setText("OK");
+                alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -547,7 +547,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 okDriverDetails.setBackgroundResource(R.drawable.button_active);
             }
 
-            textDS.setText("Selfie Uploaded");
+            textDS.setText(getString(R.string.Selfie_Uploaded));
             textDS.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadSelfie.setVisibility(View.INVISIBLE);
             editDS.setVisibility(View.VISIBLE);
@@ -576,7 +576,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 okDriverDetails.setBackgroundResource(R.drawable.button_active);
             }
 
-            textDS.setText("Selfie Uploaded");
+            textDS.setText(R.string.Selfie_Uploaded);
             textDS.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadSelfie.setVisibility(View.INVISIBLE);
             editDS.setVisibility(View.VISIBLE);
@@ -623,10 +623,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Driver Details");
-            alertMessage.setText("Driving License uploaded successfully");
+            alertTitle.setText(getString(R.string.Driver_Details));
+            alertMessage.setText(getString(R.string.Driving_License_uploaded_successfully));
             alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
+            alertNegativeButton.setText(getString(R.string.ok));
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
             alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -708,10 +708,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Driver Details");
-                alertMessage.setText("Driving License uploaded successfully");
+                alertTitle.setText(getString(R.string.Driver_Details));
+                alertMessage.setText(getString(R.string.Driving_License_uploaded_successfully));
                 alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText("OK");
+                alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -743,10 +743,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Driver Details");
-                alertMessage.setText("Driving License not uploaded, please try again");
+                alertTitle.setText(getString(R.string.Driver_Details));
+                alertMessage.setText(getString(R.string.Driving_License_not_uploaded_please_try_again));
                 alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText("OK");
+                alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -787,7 +787,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 okDriverDetails.setBackgroundResource(R.drawable.button_active);
             }
 
-            textDS.setText("Selfie Uploaded");
+            textDS.setText(getString(R.string.Selfie_Uploaded));
             textDS.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadSelfie.setVisibility(View.INVISIBLE);
             editDS.setVisibility(View.VISIBLE);
@@ -818,10 +818,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Driver Details");
-                alertMessage.setText("Driver Selfie uploaded successfully");
+                alertTitle.setText(getString(R.string.Driver_Details));
+                alertMessage.setText(getString(R.string.Driver_Selfie_uploaded_successfully));
                 alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText("OK");
+                alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -854,10 +854,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Driver Details");
-                alertMessage.setText("Driver Selfie not uploaded, please try again");
+                alertTitle.setText(getString(R.string.Driver_Details));
+                alertMessage.setText(getString(R.string.Driver_Selfie_not_uploaded));
                 alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText("OK");
+                alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -868,7 +868,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                         if (isEdit) {
 
                         } else {
-                            textDS.setText("Take a Photo");
+                            textDS.setText(getString(R.string.Take_a_Photo));
                             textDS.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                             uploadSelfie.setVisibility(View.VISIBLE);
                             editDS.setVisibility(View.INVISIBLE);
@@ -901,10 +901,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Driver Details");
-            alertMessage.setText("Driver Selfie uploaded successfully");
+            alertTitle.setText(getString(R.string.Driver_Details));
+            alertMessage.setText(getString(R.string.Driver_Selfie_uploaded_successfully));
             alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
+            alertNegativeButton.setText(getString(R.string.ok));
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
             alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -926,7 +926,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 okDriverDetails.setBackgroundResource(R.drawable.button_active);
             }
 
-            textDS.setText("Selfie Uploaded");
+            textDS.setText(getString(R.string.Selfie_Uploaded));
             textDS.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadSelfie.setVisibility(View.INVISIBLE);
             editDS.setVisibility(View.VISIBLE);
@@ -974,10 +974,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Invalid Mobile Number");
-                alertMessage.setText("Please enter a 10 digit valid mobile number.");
+                alertTitle.setText(getString(R.string.Invalid_Mobile_Number));
+                alertMessage.setText(getString(R.string.Please_enter_a_10_digit_valid_mobile_number));
                 alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText("OK");
+                alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -1069,10 +1069,10 @@ public class DriverDetailsActivity extends AppCompatActivity {
                     TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                    alertTitle.setText("Driver Details added successfully");
-                    alertMessage.setText("Would you like to add Driver's Bank Details?");
+                    alertTitle.setText(getString(R.string.Driver_Details_added_successfully));
+                    alertMessage.setText(getString(R.string.Would_you_like_to_add_Drivers_Bank_Details));
 
-                    alertPositiveButton.setText("+ Add");
+                    alertPositiveButton.setText(getString(R.string.Add));
                     alertPositiveButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -1086,7 +1086,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                         }
                     });
 
-                    alertNegativeButton.setText("Later");
+                    alertNegativeButton.setText(getString(R.string.Later));
                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                     alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
                     alertNegativeButton.setOnClickListener(new View.OnClickListener() {
@@ -1672,11 +1672,11 @@ public class DriverDetailsActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Please Upload From Gallery");
-            alertMessage.setText("Choose from Gallery");
+            alertTitle.setText(getString(R.string.Please_Upload_From_Gallery));
+            alertMessage.setText(getString(R.string.Choose_from_Gallery));
             alertPositiveButton.setVisibility(View.GONE);
 
-            alertNegativeButton.setText("OK");
+            alertNegativeButton.setText(getString(R.string.ok));
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
             alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 

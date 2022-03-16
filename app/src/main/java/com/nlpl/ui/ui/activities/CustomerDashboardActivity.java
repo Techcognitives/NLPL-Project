@@ -228,7 +228,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         actionBarWhatsApp = (ImageView) actionBar.findViewById(R.id.action_bar_whats_app);
         actionBarWhatsApp.setVisibility(View.VISIBLE);
 
-        actionBarTitle.setText("Load Poster Dashboard");
+        actionBarTitle.setText(getString(R.string.Load_Poster_Dashboard));
         actionBarBackButton.setVisibility(View.GONE);
         actionBarMenuButton.setVisibility(View.VISIBLE);
         //------------------------------------------------------------------------------------------
@@ -257,7 +257,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
         TextView profileText = (TextView) bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
 
-        profileText.setText("Find Trucks");
+        profileText.setText(getString(R.string.Find_Trucks));
 
         acceptedList = new ArrayList<>();
         arrayAssignedDriverId = new ArrayList<>();
@@ -642,9 +642,9 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         notesBySP.setText(obj.getNotes());
         String isNegotiableBySP = obj.getIs_negatiable();
         if (isNegotiableBySP.equals("1")) {
-            negotiableBySP.setText("Yes");
+            negotiableBySP.setText(getString(R.string.yes));
         } else {
-            negotiableBySP.setText("No");
+            negotiableBySP.setText(getString(R.string.no));
         }
         //----------------------------------------------------------------------------------------------------------------
         customerQuote = (TextView) previewDialogAcceptANdBid.findViewById(R.id.dialog_accept_bid_customer_final_quote_textview);
@@ -712,10 +712,10 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Load Response");
-                alertMessage.setText("Response submitted Successfully");
+                alertTitle.setText(getString(R.string.Load_Response));
+                alertMessage.setText(getString(R.string.Response_submitted_Successfully));
                 alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText("OK");
+                alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -743,10 +743,10 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                            alertTitle.setText("Successfully selected three Bidders");
-                            alertMessage.setText("Please Review & Accept any one offer.");
+                            alertTitle.setText(getString(R.string.Successfully_selected_three_Bidders));
+                            alertMessage.setText(getString(R.string.Please_Review_and_Accept_any_one_offer_));
                             alertPositiveButton.setVisibility(View.GONE);
-                            alertNegativeButton.setText("OK");
+                            alertNegativeButton.setText(getString(R.string.ok));
                             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                             alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -1191,7 +1191,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         negotiable_yes.setEnabled(false);
         negotiable_no.setChecked(true);
         customerQuote.setText(obj.getSp_quote());
-        submitResponseBtn.setText("Accept Final Offer");
+        submitResponseBtn.setText(getString(R.string.Accept_Final_Offer));
 
         submitResponseBtn.setEnabled(true);
         submitResponseBtn.setBackgroundResource((R.drawable.button_active));
@@ -1393,7 +1393,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
 //                                makePayment(customerNameAPI, String.valueOf(finalQuote), customerEmail, s1);
                                 AlertDialog.Builder builder = new AlertDialog.Builder(CustomerDashboardActivity.this);
-                                builder.setTitle("Amount | To Be Billed 1%");
+                                builder.setTitle(getString(R.string.Amount_To_Be_Billed_1));
                                 builder.setMessage(String.valueOf(finalQuote));
                                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
@@ -1413,7 +1413,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
 //                                makePayment(customerNameAPI, String.valueOf(finalQuote), customerEmail, s1);
                                 AlertDialog.Builder builder = new AlertDialog.Builder(CustomerDashboardActivity.this);
-                                builder.setTitle("Amount | Pay Now 3%");
+                                builder.setTitle(getString(R.string.Amount_Pay_Now_3));
                                 builder.setMessage(String.valueOf(finalQuote));
                                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
@@ -1433,7 +1433,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
 //                                makePayment(customerNameAPI, String.valueOf(finalQuote), customerEmail, s1);
                                 AlertDialog.Builder builder = new AlertDialog.Builder(CustomerDashboardActivity.this);
-                                builder.setTitle("Amount | Pay Now 1%");
+                                builder.setTitle(getString(R.string.Amount_To_Be_Billed_1));
                                 builder.setMessage(String.valueOf(finalQuote));
                                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
@@ -1545,10 +1545,10 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
         TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-        alertTitle.setText("Payment Successful");
-        alertMessage.setText("Payment Id: " + s);
+        alertTitle.setText(getString(R.string.Payment_Successful));
+        alertMessage.setText(getString(R.string.Payment_Id) + s);
         alertPositiveButton.setVisibility(View.GONE);
-        alertNegativeButton.setText("Ok");
+        alertNegativeButton.setText(getString(R.string.ok));
         alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
         alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -1584,10 +1584,10 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
         TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-        alertTitle.setText("Payment Failed");
-        alertMessage.setText("Your transaction has failed. Please try again");
+        alertTitle.setText(getString(R.string.Payment_Failed));
+        alertMessage.setText(getString(R.string.Your_transaction_has_failed__Please_try_again));
         alertPositiveButton.setVisibility(View.GONE);
-        alertNegativeButton.setText("Ok");
+        alertNegativeButton.setText(getString(R.string.ok));
         alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
         alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -1630,7 +1630,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         TextView driverName = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_driver_name);
         driverNumber = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_driver_number);
         TextView tripToFrom = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_bid_now_loadId_heading);
-        tripToFrom.setText("Load Details: " + obj.getPick_city() + "-" + obj.getDrop_city() + "-000");
+        tripToFrom.setText(getString(R.string.Load_Details) + obj.getPick_city() + "-" + obj.getDrop_city() + "-000");
 
         TextView rateSp = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_rate_sp);
         TextView rateDriver = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_rate_driver);
@@ -1793,7 +1793,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                         mQueue.add(request1);
                         //----------------------------------------------------------
                     }
-                    negotiableBySP.setText("No");
+                    negotiableBySP.setText(getString(R.string.no));
                     notesBySP.setText(noteBySPToCustomer);
                     //----------------------------------------------------------------------------------------------------------------
 
@@ -1807,7 +1807,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                     timeLeft00 = viewConsignmentCustomer.findViewById(R.id.accept_bid_time_left_00_textview);
                     TextView noteHeading = viewConsignmentCustomer.findViewById(R.id.notes_text_heading_view_consignment_customer);
 
-                    timeLeftTextview.setText("CONSIGNMENT");
+                    timeLeftTextview.setText(getString(R.string.CONSIGNMENT));
                     timeLeft00.setVisibility(View.GONE);
                     timeLeftTextview.setTextColor(getResources().getColorStateList(R.color.black));
                     timeLeftTextview.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
@@ -1819,7 +1819,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                     negotiable_no.setChecked(true);
 
 
-                    submitResponseBtn.setText("Withdraw");
+                    submitResponseBtn.setText(getString(R.string.Withdraw));
                     submitResponseBtn.setBackgroundResource((R.drawable.button_active));
                     submitResponseBtn.setBackgroundTintList(getResources().getColorStateList(R.color.light_black));
                     submitResponseBtn.setEnabled(true);
@@ -1848,11 +1848,11 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
                             TextView alertCancelButton = (TextView) alert.findViewById(R.id.dialog_alert_cancel);
 
-                            alertTitle.setText("Withdraw Load");
-                            alertMessage.setText("Do you want to withdraw your load posting or withdraw from the current bidder.");
+                            alertTitle.setText(getString(R.string.Withdraw_Load));
+                            alertMessage.setText(getString(R.string.Do_you_want_to_withdraw_your_load_posting_or_withdraw_from_the_current_bidder_));
                             alertPositiveButton.setVisibility(View.VISIBLE);
-                            alertPositiveButton.setText("Withdraw Load");
-                            alertNegativeButton.setText("Withdraw Bidder");
+                            alertPositiveButton.setText(getString(R.string.Withdraw_Load));
+                            alertNegativeButton.setText(getString(R.string.Withdraw_Bidder));
                             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                             alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
                             alertCancelButton.setVisibility(View.VISIBLE);
@@ -1883,10 +1883,10 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                                     TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                                    alertTitle.setText("Withdraw Load");
-                                    alertMessage.setText("Load withdrawn successfully and no longer visible for anyone");
+                                    alertTitle.setText(getString(R.string.Withdraw_Load));
+                                    alertMessage.setText(getString(R.string.Load_withdrawn_successfully_and_no_longer_visible_for_anyone));
                                     alertPositiveButton.setVisibility(View.GONE);
-                                    alertNegativeButton.setText("Ok");
+                                    alertNegativeButton.setText(getString(R.string.ok));
                                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                                     alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -1930,10 +1930,10 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                                     TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                                    alertTitle.setText("Withdraw from current Service Provider");
-                                    alertMessage.setText("Load withdrawn from current Service Provider and visible for other Service Provider");
+                                    alertTitle.setText(getString(R.string.Withdraw_from_current_Service_Provider));
+                                    alertMessage.setText(getString(R.string.Load_withdrawn_from_current_Service_Provider_and_visible_for_other_Service_Provider));
                                     alertPositiveButton.setVisibility(View.GONE);
-                                    alertNegativeButton.setText("Ok");
+                                    alertNegativeButton.setText(getString(R.string.ok));
                                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                                     alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -1961,7 +1961,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
                     cancleBtn.setEnabled(true);
                     cancleBtn.setBackgroundResource((R.drawable.button_active));
-                    cancleBtn.setText("Back");
+                    cancleBtn.setText(getString(R.string.Back));
 
                     cancleBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -2217,10 +2217,10 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
         TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-        alertTitle.setText("Log Out");
-        alertMessage.setText("Are you sure you want to logout?");
-        alertPositiveButton.setText("Yes");
-        alertNegativeButton.setText("No");
+        alertTitle.setText(getString(R.string.Log_Out));
+        alertMessage.setText(getString(R.string.Log_Out_message));
+        alertPositiveButton.setText(getString(R.string.yes));
+        alertNegativeButton.setText(getString(R.string.no));
 
         alertNegativeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -2486,10 +2486,10 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Personal Details");
-            alertMessage.setText("Profile Uploaded Successfully");
+            alertTitle.setText(getString(R.string.Personal_Details));
+            alertMessage.setText(getString(R.string.Profile_Uploaded_Successfully));
             alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
+            alertNegativeButton.setText(getString(R.string.ok));
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
             alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -2540,10 +2540,10 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Personal Details");
-                alertMessage.setText("Profile Uploaded Successfully");
+                alertTitle.setText(getString(R.string.Personal_Details));
+                alertMessage.setText(getString(R.string.Profile_Uploaded_Successfully));
                 alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText("OK");
+                alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -2575,10 +2575,10 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Personal Details");
-                alertMessage.setText("Profile not Uploaded, please try again");
+                alertTitle.setText(getString(R.string.Personal_Details));
+                alertMessage.setText(getString(R.string.Profile_not_Uploaded_please_try_again));
                 alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText("OK");
+                alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -2673,10 +2673,10 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
         TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-        alertTitle.setText("Profile Picture");
-        alertMessage.setText("Profile Picture added successfully");
+        alertTitle.setText(getString(R.string.Profile_Picture));
+        alertMessage.setText(getString(R.string.Profile_Picture_added_successfully));
         alertPositiveButton.setVisibility(View.GONE);
-        alertNegativeButton.setText("OK");
+        alertNegativeButton.setText(getString(R.string.ok));
         alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
         alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -2757,9 +2757,9 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         TextView alertPositiveButton = (TextView) reActivateLoad.findViewById(R.id.dialog_alert_positive_button);
         TextView alertNegativeButton = (TextView) reActivateLoad.findViewById(R.id.dialog_alert_negative_button);
 
-        alertTitle.setText("Re-activate Load");
-        alertMessage.setText("Do you want to re-activate load");
-        alertNegativeButton.setText("Re-activate Load");
+        alertTitle.setText(getString(R.string.ReActivate_Load));
+        alertMessage.setText(getString(R.string.Do_you_want_to_ReActivate_Load));
+        alertNegativeButton.setText(getString(R.string.ReActivate_Load));
         alertPositiveButton.setVisibility(View.GONE);
         alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
         alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
@@ -2801,11 +2801,11 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
         TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-        alertTitle.setText("Continue with other Service Provider");
-        alertMessage.setText("Current Bidder have withdrawn Bid, do you still want to continue with other Service Provider?");
+        alertTitle.setText(getString(R.string.Continue_with_other_Service_Provider));
+        alertMessage.setText(getString(R.string.Current_Bidder_have_withdrawn_Bid));
         alertPositiveButton.setVisibility(View.VISIBLE);
-        alertPositiveButton.setText("Continue");
-        alertNegativeButton.setText("Cancel");
+        alertPositiveButton.setText(getString(R.string.Continue));
+        alertNegativeButton.setText(getString(R.string.Cancel));
         alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
         alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -2845,10 +2845,10 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Continue with other Service Provider");
-                alertMessage.setText("Load withdrawn from current Service Provider and visible for other Service Provider");
+                alertTitle.setText(getString(R.string.Continue_with_other_Service_Provider));
+                alertMessage.setText(getString(R.string.visible_for_other_Service_Provider));
                 alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText("Ok");
+                alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 

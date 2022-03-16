@@ -113,7 +113,7 @@ public class BankDetailsActivity extends AppCompatActivity {
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
 
-        actionBarTitle.setText("Bank Details");
+        actionBarTitle.setText(getString(R.string.bank_details));
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -165,7 +165,7 @@ public class BankDetailsActivity extends AppCompatActivity {
         ifscCode.setEnabled(false);
 
         if (isEdit) {
-            actionBarTitle.setText("Edit Bank Details");
+            actionBarTitle.setText(getString(R.string.Edit_Bank_Details));
             canceledCheckRadioButton.setChecked(true);
             acDetailsRadioButton.setChecked(false);
             getBankDetails();
@@ -309,10 +309,10 @@ public class BankDetailsActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Bank Details");
-            alertMessage.setText("Cancelled cheque uploaded successfully");
+            alertTitle.setText(getString(R.string.bank_details));
+            alertMessage.setText(getString(R.string.Cancelled_cheque_uploaded_successfully));
             alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
+            alertNegativeButton.setText(getString(R.string.ok));
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
             alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -380,10 +380,10 @@ public class BankDetailsActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Bank Details");
-                alertMessage.setText("Cancelled cheque uploaded successfully");
+                alertTitle.setText(getString(R.string.bank_details));
+                alertMessage.setText(getString(R.string.Cancelled_cheque_uploaded_successfully));
                 alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText("OK");
+                alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -418,7 +418,7 @@ public class BankDetailsActivity extends AppCompatActivity {
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
                 alertTitle.setText(getString(R.string.bank_details));
-                alertMessage.setText("Cancelled cheque not uploaded, please try again");
+                alertMessage.setText(getString(R.string.Cancelled_cheque_uploaded_successfully));
                 alertPositiveButton.setVisibility(View.GONE);
                 alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -480,10 +480,10 @@ public class BankDetailsActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Bank Details");
-                alertMessage.setText("Bank Details added successfully");
+                alertTitle.setText(getString(R.string.bank_details));
+                alertMessage.setText(getString(R.string.Bank_Details_added_successfully));
                 alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText("OK");
+                alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -520,10 +520,10 @@ public class BankDetailsActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Account number does not match");
-            alertMessage.setText("Please enter correct account number as above.");
+            alertTitle.setText(getString(R.string.Account_number_does_not_match));
+            alertMessage.setText(getString(R.string.Please_enter_correct_account_number_as_above_));
             alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
+            alertNegativeButton.setText(getString(R.string.ok));
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
             alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -669,10 +669,10 @@ public class BankDetailsActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Account number does not match");
-            alertMessage.setText("Please enter correct account number as above.");
+            alertTitle.setText(getString(R.string.Account_number_does_not_match));
+            alertMessage.setText(getString(R.string.Please_enter_correct_account_number_as_above_));
             alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
+            alertNegativeButton.setText(getString(R.string.ok));
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
             alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
