@@ -22,6 +22,7 @@ public class SelectCity {
         selectDistrictDialog.show();
         TextView title = selectDistrictDialog.findViewById(R.id.dialog_spinner_title);
         title.setText("Select City");
+
         ListView districtList = (ListView) selectDistrictDialog.findViewById(R.id.list_state);
 
         switch (selectedState) {
