@@ -63,6 +63,7 @@ import com.nlpl.utils.GetCurrentLocation;
 import com.nlpl.utils.GetStateCityUsingPINCode;
 import com.nlpl.utils.InAppNotification;
 import com.nlpl.utils.JumpTo;
+import com.nlpl.utils.LanguageManager;
 import com.nlpl.utils.SelectCity;
 import com.nlpl.utils.SelectState;
 import com.nlpl.utils.ShowAlert;
@@ -143,36 +144,68 @@ public class RegistrationActivity extends AppCompatActivity {
         marathi = language.findViewById(R.id.marathi);
         hindi = language.findViewById(R.id.hindi);
 
+        LanguageManager lang = new LanguageManager(this);
+
         mQueue = Volley.newRequestQueue(RegistrationActivity.this);
 
-        english.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                language.dismiss();
-                roleDialog.show();
-                roleDialog.getWindow().setAttributes(lp);
-                roleDialog.setCancelable(false);
-            }
+//        english.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                language.dismiss();
+//                roleDialog.show();
+//                roleDialog.getWindow().setAttributes(lp);
+//                roleDialog.setCancelable(false);
+//            }
+//        });
+
+        english.setOnClickListener(view ->
+        {
+            lang.updateResource("en");
+            language.dismiss();
+            roleDialog.show();
+            roleDialog.getWindow().setAttributes(lp);
+            roleDialog.setCancelable(false);
+            recreate();
         });
 
-        hindi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                language.dismiss();
-                roleDialog.show();
-                roleDialog.getWindow().setAttributes(lp);
-                roleDialog.setCancelable(false);
-            }
+//        hindi.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                language.dismiss();
+//                roleDialog.show();
+//                roleDialog.getWindow().setAttributes(lp);
+//                roleDialog.setCancelable(false);
+//            }
+//        });
+
+        hindi.setOnClickListener(view ->
+        {
+            lang.updateResource("hi");
+            language.dismiss();
+            roleDialog.show();
+            roleDialog.getWindow().setAttributes(lp);
+            roleDialog.setCancelable(false);
+            recreate();
         });
 
-        marathi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                language.dismiss();
-                roleDialog.show();
-                roleDialog.getWindow().setAttributes(lp);
-                roleDialog.setCancelable(false);
-            }
+//        marathi.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                language.dismiss();
+//                roleDialog.show();
+//                roleDialog.getWindow().setAttributes(lp);
+//                roleDialog.setCancelable(false);
+//            }
+//        });
+
+        marathi.setOnClickListener(view ->
+        {
+            lang.updateResource("mr");
+            language.dismiss();
+            roleDialog.show();
+            roleDialog.getWindow().setAttributes(lp);
+            roleDialog.setCancelable(false);
+            recreate();
         });
 
         action_bar = (View) findViewById(R.id.registration_action_bar);

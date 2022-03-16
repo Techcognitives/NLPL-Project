@@ -1121,6 +1121,13 @@
     <string name="addBank">+ Add Bank</string>
     <string name="addTruck">+ Add Truck</string>
     <string name="addDriver">+ Add Driver</string>
+    //new
+    <string name="Personal_Details">Personal Details</string>
+    <string name="Profile_Uploaded_Successfully">Profile Uploaded Successfully</string>
+    <string name="Profile_not_Uploaded_please_try_again">Profile not Uploaded, please try again</string>
+    <string name="Profile_Picture">Profile Picture</string>
+    <string name="Profile_Picture_added_successfully">Profile Picture added successfully</string>
+    <string name="Selfie_Uploaded">Selfie Uploaded</string>
     //----------------------------------------------------------------------------------------------
 
     //---------------------------------------Bank Details Activity----------------------------------
@@ -1133,7 +1140,14 @@
     <string name="ReEnterAccNumber">Re-Enter your account number</string>
     <string name="EnterIFSC">Enter IFSC code</string>
     <string name="bank_details">Bank Details</string>
-    //----------------------------------------------------------------------------------------------
+    //new
+    <string name="Edit_Bank_Details">Edit Bank Details</string>
+    <string name="Cancelled_cheque_uploaded_successfully">Cancelled cheque uploaded successfully</string>
+    <string name="Bank_Details_added_successfully">Bank Details added successfully</string>
+    <string name="Account_number_does_not_match">Account number does not match</string>
+    <string name="Please_enter_correct_account_number_as_above.">Please enter correct account number as above.</string>
+
+    //--------------------------------------------Done--------------------------------------------------
 
     //-------------------------------- Vehicle Details Activity ------------------------------------
     <string name="vehicle_number">Vehicle Number</string>
@@ -1163,6 +1177,26 @@
     <string name="driver_mobile_number_hint">Enter Driver Mobile Number</string>
     <string name="AddAnotherDriver">ADD ANOTHER DRIVER</string>
     <string name="driver_mobile_number">Driver Mobile Number</string>
+    //new
+    <string name="Enter_10_digit_Driver_Number">Enter 10 digit Driver Number</string>
+    <string name="Enter_Driver_Email_Id">Enter Driver Email Id</string>
+    <string name="Driver_Details">Driver Details</string>
+    <string name="Edit_Driver_Details">Edit Driver Details</string>
+    <string name="Please_add_a_Driver">Please add a Driver</string>
+    <string name="Add">+ Add</string>
+    <string name="Driving_License_uploaded_successfully">Driving License uploaded successfully</string>
+    <string name="Driving_License_not_uploaded_please_try_again">Driving License not uploaded, please try again</string>
+    <string name="Driver_Selfie_uploaded_successfully">Driver Selfie uploaded successfully</string>
+    <string name="Driver_Selfie_not_uploaded">Driver Selfie not uploaded, please try again</string>
+    <string name="Take_a_Photo">Take a Photo</string>
+    <string name="Invalid_Mobile_Number">Invalid Mobile Number</string>
+    <string name="Please_enter_a_10_digit_valid_mobile_number">Please enter a 10 digit valid mobile number.</string>
+    <string name="Driver_Details_added_successfully">Driver Details added successfully</string>
+    <string name="Would_you_like_to_add_Drivers_Bank_Details">Would you like to add Drivers Bank Details?</string>
+    <string name="Later">Later</string>
+    <string name="Please_Upload_From_Gallery">Please Upload From Gallery</string>
+    <string name="Choose_from_Gallery">Choose from Gallery</string>
+
     //----------------------------------------------------------------------------------------------
 
     //-------------------------------------- Language Dialog----------------------------------------
@@ -1178,7 +1212,11 @@
     <string name="company_name_hint">Enter Company Name</string>
     <string name="gst_number_hint">GST Number*</string>
     <string name="pan_number">PAN Number*</string>
-    //----------------------------------------------------------------------------------------------
+    //new
+    <string name="Company_Details">Company Details</string>
+    <string name="Company_Details_added_Successfully">Company Details added Successfully</string>
+
+    //---------------------------------------------Done-------------------------------------------------
 
     //--------------------------- Personal Details And Id Proof Activity ---------------------------
     <string name="personal">Personal &amp; Address</string>
@@ -1213,6 +1251,8 @@
     <string name="inrRs">₹ XXXX</string>
     <string name="KMAutoCal">KM auto calculated</string>
     <string name="note_to_post_load">1. Electronic appliances, must handled with care.<br></br>2. Bubble wrap required.<br></br>3. Preferable pick-up time after 12:00pm<br></br>4. Please call and confirm before starting.</string>
+    //new
+    <string name="Loads_History">Loads History</string>
     //----------------------------------------------------------------------------------------------
 
     //--------------------------------------Bid_now dialog------------------------------------------
@@ -1251,6 +1291,49 @@
     <string name="cancel">Cancel</string>
     <string name="declaration"><b>Declaration: </b><em>I hereby declare, driver will reach Pick-up location 15 minutes prior Pick-up Time.</em> </string>
     <string name="preferred_locations">Preferred Locations: </string>
+    //----------------------------------------------------------------------------------------------
+
+    //--------------------------------Customer Dashboard Activity-----------------------------------
+    //new
+    <string name="Load_Poster_Dashboard">Load Poster Dashboard</string>
+    <string name="Find_Trucks">Find Trucks</string>
+    <string name="Load_Response">Load Response</string>
+    <string name="Response_submitted_Successfully">Response submitted Successfully</string>
+    <string name="Successfully_selected_three_Bidders">Successfully selected three Bidders</string>
+    <string name="Please_Review_and_Accept_any_one_offer.">Please Review and Accept any one offer.</string>
+    <string name="Accept_Final_Offer">Accept Final Offer</string>
+    <string name="Amount_To_Be_Billed_1">Amount | To Be Billed 1%</string>
+    <string name="Amount_Pay_Now_3">Amount | Pay Now 3%</string>
+    <string name="Payment_Successful">Payment Successful</string>
+    <string name="Payment_Id">Payment Id: </string>
+    <string name="Payment_Failed">Payment Failed</string>
+    <string name="Your_transaction_has_failed._Please_try_again">Your transaction has failed. Please try again</string>
+    <string name="Load_Details">Load Details: </string>
+    <string name="CONSIGNMENT">CONSIGNMENT</string>
+    <string name="Withdraw">Withdraw</string>
+    <string name="Withdraw_Load">Withdraw Load</string>
+    <string name="Do_you_want_to_withdraw_your_load_posting_or_withdraw_from_the_current_bidder.">Do you want to withdraw your load posting or withdraw from the current bidder.</string>
+    <string name="Withdraw_Bidder">Withdraw Bidder</string>
+    <string name="Load_withdrawn_successfully_and_no_longer_visible_for_anyone">Load withdrawn successfully and no longer visible for anyone</string>
+    <string name="Withdraw_from_current_Service_Provider">Withdraw from current Service Provider</string>
+    <string name="Load_withdrawn_from_current_Service_Provider_and_visible_for_other_Service_Provider">Load withdrawn from current Service Provider and visible for other Service Provider</string>
+    <string name="Back">Back</string>
+    <string name="Log_Out">Log Out</string>
+    <string name="Log_Out_message">Are you sure you want to logout?</string>
+    <string name="ReActivate_Load">Re-activate Load</string>
+    <string name="Do_you_want_to_ReActivate_Load">Do you want to re-activate load</string>
+    <string name="Continue_with_other_Service_Provider">Continue with other Service Provider</string>
+    <string name="Current_Bidder_have_withdrawn_Bid">Current Bidder have withdrawn Bid, do you still want to continue with other Service Provider?</string>
+    <string name="Continue">Continue</string>
+    <string name="Cancel">Cancel</string>
+    <string name="visible_for_other_Service_Provider">Load withdrawn from current Service Provider and visible for other Service Provider</string>
+    <string name="Close">Close</string>
+    //----------------------------------------------------------------------------------------------
+
+    //--------------------------------Customer Settings And Preferences-----------------------------------
+    //new
+    <string name="Settings_and_Preferences">Settings and Preferences</string>
+
     //----------------------------------------------------------------------------------------------
 
 </resources>

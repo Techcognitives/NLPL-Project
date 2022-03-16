@@ -111,7 +111,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
-        actionBarTitle.setText("Company Details");
+        actionBarTitle.setText(getString(R.string.Company_Details));
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -290,10 +290,10 @@ public class CompanyDetailsActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Company Details");
-            alertMessage.setText("Company Details added Successfully");
+            alertTitle.setText(getString(R.string.Company_Details));
+            alertMessage.setText(getString(R.string.Company_Details_added_Successfully));
             alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
+            alertNegativeButton.setText(getString(R.string.ok));
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
             alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 

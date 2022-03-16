@@ -41,7 +41,7 @@ public class CustomerSettingsAndPreferences extends AppCompatActivity {
         actionBarBackButton = (ImageView) actionBar.findViewById(R.id.action_bar_back_button);
         actionBarMenuButton = (ImageView) actionBar.findViewById(R.id.action_bar_menu);
 
-        actionBarTitle.setText("Settings and Preferences");
+        actionBarTitle.setText(getString(R.string.Settings_and_Preferences));
         actionBarBackButton.setVisibility(View.VISIBLE);
         actionBarMenuButton.setVisibility(View.INVISIBLE);
 

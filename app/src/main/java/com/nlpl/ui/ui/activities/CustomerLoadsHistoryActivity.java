@@ -88,7 +88,7 @@ public class CustomerLoadsHistoryActivity extends AppCompatActivity {
         actionBarBackButton = (ImageView) actionBar.findViewById(R.id.action_bar_back_button);
         actionBarMenuButton = (ImageView) actionBar.findViewById(R.id.action_bar_menu);
 
-        actionBarTitle.setText("Loads History");
+        actionBarTitle.setText(getString(R.string.Loads_History));
         actionBarBackButton.setVisibility(View.VISIBLE);
         actionBarMenuButton.setVisibility(View.GONE);
 
@@ -315,9 +315,9 @@ public class CustomerLoadsHistoryActivity extends AppCompatActivity {
         TextView alertPositiveButton = (TextView) reActivateLoad.findViewById(R.id.dialog_alert_positive_button);
         TextView alertNegativeButton = (TextView) reActivateLoad.findViewById(R.id.dialog_alert_negative_button);
 
-        alertTitle.setText("Re-activate Load");
-        alertMessage.setText("Do you want to re-activate load");
-        alertNegativeButton.setText("Re-activate Load");
+        alertTitle.setText(getString(R.string.ReActivate_Load));
+        alertMessage.setText(getString(R.string.Do_you_want_to_ReActivate_Load));
+        alertNegativeButton.setText(getString(R.string.ReActivate_Load));
         alertPositiveButton.setVisibility(View.GONE);
         alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
         alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
@@ -556,7 +556,7 @@ public class CustomerLoadsHistoryActivity extends AppCompatActivity {
         TextView timeLeft00 = viewLoadDetailsDialog.findViewById(R.id.accept_bid_time_left_00_textview);
         TextView noteHeading = viewLoadDetailsDialog.findViewById(R.id.notes_text_heading_view_consignment_customer);
 
-        timeLeftTextview.setText("Load Details");
+        timeLeftTextview.setText(getString(R.string.Load_Details));
         timeLeft00.setVisibility(View.GONE);
         timeLeftTextview.setTextColor(getResources().getColorStateList(R.color.black));
         timeLeftTextview.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
@@ -568,7 +568,7 @@ public class CustomerLoadsHistoryActivity extends AppCompatActivity {
         negotiable_no.setChecked(true);
         customerQuote.setText(obj.getBudget());
 
-        submitResponseBtn.setText("Close");
+        submitResponseBtn.setText(getString(R.string.Close));
         submitResponseBtn.setBackgroundResource((R.drawable.button_active));
         submitResponseBtn.setBackgroundTintList(getResources().getColorStateList(R.color.light_black));
         submitResponseBtn.setEnabled(true);
