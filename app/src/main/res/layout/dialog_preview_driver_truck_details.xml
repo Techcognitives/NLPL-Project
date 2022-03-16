@@ -74,15 +74,17 @@
         android:id="@+id/dialog_driver_truck_details_vehicle_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
         android:paddingStart="5dp"
         android:paddingTop="5dp"
         android:paddingEnd="5dp"
         android:paddingBottom="3dp"
         android:text=""
-        android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="14sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/dialog_driver_truck_details_vehicle_model"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -103,26 +105,9 @@
         android:textColor="#000000"
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/dialog_driver_truck_details_capacity"
-        app:layout_constraintEnd_toStartOf="@+id/dialog_driver_truck_details_title_feet"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialog_driver_truck_details_vehicle_number" />
-
-    <TextView
-        android:id="@+id/dialog_driver_truck_details_title_feet"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:paddingStart="5dp"
-        android:paddingTop="5dp"
-        android:paddingEnd="5dp"
-        android:paddingBottom="3dp"
-        android:text=""
-        android:textColor="#000000"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/dialog_driver_truck_details_vehicle_model"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/dialog_driver_truck_details_vehicle_model"
-        app:layout_constraintTop_toTopOf="@+id/dialog_driver_truck_details_vehicle_model" />
 
     <TextView
         android:id="@+id/dialog_driver_truck_details_capacity"
@@ -140,26 +125,9 @@
         android:textColor="#000000"
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/dialog_driver_truck_details_rc_book_preview"
-        app:layout_constraintEnd_toStartOf="@+id/dialog_driver_truck_details_type"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialog_driver_truck_details_vehicle_model" />
-
-    <TextView
-        android:id="@+id/dialog_driver_truck_details_type"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:paddingStart="5dp"
-        android:paddingTop="5dp"
-        android:paddingEnd="5dp"
-        android:paddingBottom="3dp"
-        android:text=""
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/dialog_driver_truck_details_capacity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/dialog_driver_truck_details_capacity"
-        app:layout_constraintTop_toTopOf="@+id/dialog_driver_truck_details_capacity" />
 
     <TextView
         android:id="@+id/dialog_driver_truck_details_insurance_preview"

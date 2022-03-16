@@ -4,12 +4,8 @@ import com.nlpl.model.Requests.AddTruckRequest;
 import com.nlpl.model.Responses.AddTruckResponse;
 import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckCarryingCapacity;
 import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckDriverId;
-import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckFeet;
-import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckRcBook;
 import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckType;
-import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckVehicleInsurance;
 import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckVehicleNumber;
-import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateVehicleType;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -25,19 +21,7 @@ public interface AddTruckService {
     Call<UpdateTruckVehicleNumber> updateTruckVehicleNumber(@Path("truckId") String truckId, @Body UpdateTruckVehicleNumber updateTruckVehicleNumber);
 
     @PUT("/truck/{truckId}")
-    Call<UpdateVehicleType> updateVehicleType(@Path("truckId") String truckId, @Body UpdateVehicleType updateVehicleType);
-
-    @PUT("/truck/{truckId}")
-    Call<UpdateTruckFeet> updateTruckFeet(@Path("truckId") String truckId, @Body UpdateTruckFeet updateTruckFeet);
-
-    @PUT("/truck/{truckId}")
     Call<UpdateTruckCarryingCapacity> updateTruckCarryingCapacity(@Path("truckId") String truckId, @Body UpdateTruckCarryingCapacity updateTruckCarryingCapacity);
-
-    @PUT("/truck/{truckId}")
-    Call<UpdateTruckRcBook> updateTruckRcBook(@Path("truckId") String truckId, @Body UpdateTruckRcBook updateTruckRcBook);
-
-    @PUT("/truck/{truckId}")
-    Call<UpdateTruckVehicleInsurance> updateTruckVehicleInsurance(@Path("truckId") String truckId, @Body UpdateTruckVehicleInsurance updateTruckVehicleInsurance);
 
     @PUT("/truck/{truckId}")
     Call<UpdateTruckType> updateTruckType(@Path("truckId") String truckId, @Body UpdateTruckType updateTruckType);

@@ -4,10 +4,8 @@ import android.util.Log;
 
 import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckCarryingCapacity;
 import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckDriverId;
-import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckFeet;
 import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckType;
 import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckVehicleNumber;
-import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateVehicleType;
 import com.nlpl.utils.ApiClient;
 
 import retrofit2.Call;
@@ -76,45 +74,6 @@ public class UpdateTruckDetails {
         });
     }
 
-    //-------------------------------- Update Truck body Type --------------------------------------
-    public static void updateTruckBodyType(String truckId, String bodyTypeSelected) {
-        UpdateVehicleType updateVehicleType = new UpdateVehicleType(bodyTypeSelected);
-        Call<UpdateVehicleType> call = ApiClient.addTruckService().updateVehicleType("" + truckId, updateVehicleType);
-        call.enqueue(new Callback<UpdateVehicleType>() {
-            @Override
-            public void onResponse(Call<UpdateVehicleType> call, Response<UpdateVehicleType> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Truck Added");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateVehicleType> call, Throwable t) {
-                Log.i("Not Successful", "User is Truck Added");
-
-            }
-        });
-    }
-
-    //-------------------------------- Update Truck Feet -------------------------------------------
-    public static void updateTruckFeet(String truckId, String truckFeet) {
-        UpdateTruckFeet updateTruckFeet = new UpdateTruckFeet(truckFeet);
-        Call<UpdateTruckFeet> call = ApiClient.addTruckService().updateTruckFeet("" + truckId, updateTruckFeet);
-        call.enqueue(new Callback<UpdateTruckFeet>() {
-            @Override
-            public void onResponse(Call<UpdateTruckFeet> call, Response<UpdateTruckFeet> response) {
-                if (response.isSuccessful()) {
-                    Log.i("Successful", "User is Truck Added");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UpdateTruckFeet> call, Throwable t) {
-                Log.i("Not Successful", "User is Truck Added");
-
-            }
-        });
-    }
 
     //-------------------------------- Update Truck DriverId ---------------------------------------
     public static void updateTruckDriverId(String truckId, String truckDriverId) {

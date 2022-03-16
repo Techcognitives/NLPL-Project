@@ -404,8 +404,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         model.setUser_id(obj.getString("user_id"));
                         model.setVehicle_no(obj.getString("vehicle_no"));
                         model.setTruck_type(obj.getString("truck_type"));
-                        model.setVehicle_type(obj.getString("vehicle_type"));
-                        model.setTruck_ft(obj.getString("truck_ft"));
                         model.setTruck_carrying_capacity(obj.getString("truck_carrying_capacity"));
                         model.setRc_book(obj.getString("rc_book"));
                         model.setVehicle_insurance(obj.getString("vehicle_insurance"));
@@ -2408,8 +2406,6 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         selectTruck.setText(obj.getVehicle_no());
         getDriverDetailsAssigned(obj.getDriver_id());
         selectedTruckModel.setText(obj.getTruck_type());
-        selectedTruckBodyType.setText(obj.getVehicle_type());
-        selectedTruckFeet.setText(obj.getTruck_ft());
         selectedTruckCapacity.setText(obj.getTruck_carrying_capacity());
     }
 
