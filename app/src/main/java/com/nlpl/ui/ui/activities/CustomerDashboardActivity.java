@@ -112,14 +112,14 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     private RecyclerView bidsAcceptedRecyclerView;
 
     private BidsResponsesAdapter bidsResponsesAdapter;
-    boolean dismiss, isBackPressed = false, bidsReceivedSelected = true, isbidsReceivedSelected;
+    boolean fabVisible = false, isBackPressed = false, bidsReceivedSelected = true, isbidsReceivedSelected;
 
     private int CAMERA_PIC_REQUEST2 = 4;
     private int GET_FROM_GALLERY2 = 5;
 
     Dialog menuDialog, loadingDialog;
-    TextView userNameTextViewMenu, mobileTextViewMenu, spNumber, driverNumber;
-    ImageView personalDetailsLogoImageView, bankDetailsLogoImageView;
+    TextView userNameTextViewMenu, mobileTextViewMenu, spNumber, driverNumber, postALoadButton;
+    ImageView personalDetailsLogoImageView, bankDetailsLogoImageView, actionBarWhatsApp;
     Dialog previewDialogProfile, previewDialogProfileOfSp;
     ImageView profilePic;
     Boolean checkedReasonOne = true, checkedReasonTwo = true, checkedReasonThree = true, checkedReasonFour = true, checkedReasonFive = true, checkedReasonSix = true, checkedReasonSeven = true;
@@ -166,6 +166,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         bidsReceivedTextView = (TextView) findViewById(R.id.customer_dashboard_bids_received_button);
         bidsReceivedUnderline = (View) findViewById(R.id.customer_dashboard_bids_received_view);
         bidsAcceptedUnderline = (View) findViewById(R.id.customer_dashboard_bids_Accepted_view);
+        postALoadButton = (TextView) findViewById(R.id.customer_dashboard_post_a_load_button);
 
         if (isbidsReceivedSelected) {
             bidsReceivedSelected = true;
@@ -224,6 +225,8 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         actionBarTitle = (TextView) actionBar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) actionBar.findViewById(R.id.action_bar_back_button);
         actionBarMenuButton = (ImageView) actionBar.findViewById(R.id.action_bar_menu);
+        actionBarWhatsApp = (ImageView) actionBar.findViewById(R.id.action_bar_whats_app);
+        actionBarWhatsApp.setVisibility(View.VISIBLE);
 
         actionBarTitle.setText("Load Poster Dashboard");
         actionBarBackButton.setVisibility(View.GONE);
@@ -488,9 +491,15 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     }
 
     public void onClickPostALoad(View view) {
-        ShowAlert.loadingDialog(CustomerDashboardActivity.this);
-        JumpTo.goToPostALoad(CustomerDashboardActivity.this, userId, phone, false, false, null, false);
+        if (fabVisible){
+            postALoadButton.setVisibility(View.VISIBLE);
+            fabVisible = false;
+        }else{
+            postALoadButton.setVisibility(View.GONE);
+            fabVisible = true;
+        }
     }
+
 
     public void onClickBottomNavigation(View view) {
         switch (view.getId()) {
@@ -2581,11 +2590,8 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                 });
                 //------------------------------------------------------------------------------------------
             }
-
-
         }
     }
-
 
     @NonNull
     private MultipartBody.Part prepareFilePart(String partName, Uri fileUri) {
@@ -2888,5 +2894,61 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     public void CustomerSettingsAndPreferences(View view) {
         ShowAlert.loadingDialog(CustomerDashboardActivity.this);
         JumpTo.getToSettingAndPreferences(CustomerDashboardActivity.this, phone, userId);
+    }
+
+    public void onClickOpenPostALoad(View view) {
+        ShowAlert.loadingDialog(CustomerDashboardActivity.this);
+        JumpTo.goToPostALoad(CustomerDashboardActivity.this, userId, phone, false, false, null, false);
+    }
+
+    public void onClickWhatsApp(View view) {
+        Dialog chooseDialog = new Dialog(CustomerDashboardActivity.this);
+        chooseDialog.setContentView(R.layout.dialog_choose);
+        chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+        lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+        lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.gravity = Gravity.BOTTOM;
+
+        chooseDialog.show();
+        chooseDialog.getWindow().setAttributes(lp2);
+
+        TextView cameraText = chooseDialog.findViewById(R.id.dialog_camera_text);
+        cameraText.setText("Whats App");
+        TextView galleryText = chooseDialog.findViewById(R.id.dialog_photo_library_text);
+        galleryText.setText("Call");
+
+        ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
+        camera.setImageDrawable(getResources().getDrawable(R.drawable.whats_app_small));
+        ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
+        gallery.setImageDrawable(getResources().getDrawable(R.drawable.ic_phone));
+        gallery.setColorFilter(ContextCompat.getColor(this, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN);
+
+        camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseDialog.dismiss();
+                String mobileNumber = "8806930081";
+                String message = "";
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse("http://api.whatsapp.com/send?phone="+"+91"+mobileNumber + "&text="+message));
+                    startActivity(intent);
+                }catch (Exception e){
+                    Toast.makeText(CustomerDashboardActivity.this, "Whats app not installed on your device", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseDialog.dismiss();
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + "+918806930081"));
+                startActivity(intent);
+            }
+        });
     }
 }
