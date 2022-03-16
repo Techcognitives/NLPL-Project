@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.nlpl.R;
 
 public class SelectVehicleType {
+
     public static void selectBodyType(Activity context, TextView setModel, TextView tobeClicked){
         ArrayAdapter<CharSequence> selectStateArray;
         Dialog selectTypeDialog = new Dialog(context);
@@ -41,41 +42,41 @@ public class SelectVehicleType {
     }
 
     public static void selectLoadType(Activity context, String selectedModel, TextView setLoadType){
-        ArrayAdapter<CharSequence> selectDistrictArray = null;
+        ArrayAdapter<CharSequence> selectLoadTypeArray = null;
 
-        Dialog selectDistrictDialog = new Dialog(context);
-        selectDistrictDialog.setContentView(R.layout.dialog_spinner);
+        Dialog selectLoadTypeDialog = new Dialog(context);
+        selectLoadTypeDialog.setContentView(R.layout.dialog_spinner);
 //                dialog.getWindow().setLayout(1000,3000);
-        selectDistrictDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        selectDistrictDialog.show();
-        TextView title = selectDistrictDialog.findViewById(R.id.dialog_spinner_title);
+        selectLoadTypeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        selectLoadTypeDialog.show();
+        TextView title = selectLoadTypeDialog.findViewById(R.id.dialog_spinner_title);
         title.setText("Select Load Type");
-        ListView districtList = (ListView) selectDistrictDialog.findViewById(R.id.list_state);
+        ListView loadTypeList = (ListView) selectLoadTypeDialog.findViewById(R.id.list_state);
 
         switch (selectedModel) {
             case "Container":
-                selectDistrictArray = ArrayAdapter.createFromResource(context,
+                selectLoadTypeArray = ArrayAdapter.createFromResource(context,
                         R.array.array_load_type_container, R.layout.custom_list_row);
                 break;
             case "Trailers Flat Body":
-                selectDistrictArray = ArrayAdapter.createFromResource(context,
+                selectLoadTypeArray = ArrayAdapter.createFromResource(context,
                         R.array.array_load_type_trailers_flat_body, R.layout.custom_list_row);
                 break;
             case "Trailers Dala Body":
-                selectDistrictArray = ArrayAdapter.createFromResource(context,
+                selectLoadTypeArray = ArrayAdapter.createFromResource(context,
                         R.array.array_load_type_trailers_dala_body, R.layout.custom_list_row);
                 break;
             default:
-                selectDistrictArray = ArrayAdapter.createFromResource(context,
+                selectLoadTypeArray = ArrayAdapter.createFromResource(context,
                         R.array.array_load_type_open_close_tarpaulin, R.layout.custom_list_row);
                 break;
         }
-        districtList.setAdapter(selectDistrictArray);
+        loadTypeList.setAdapter(selectLoadTypeArray);
 
-        ArrayAdapter<CharSequence> finalSelectDistrictArray = selectDistrictArray;
-        districtList.setOnItemClickListener((adapterView, view, i, l) -> {
+        ArrayAdapter<CharSequence> finalSelectDistrictArray = selectLoadTypeArray;
+        loadTypeList.setOnItemClickListener((adapterView, view, i, l) -> {
             setLoadType.setText(finalSelectDistrictArray.getItem(i)); //Set Selected Credentials
-            selectDistrictDialog.dismiss();
+            selectLoadTypeDialog.dismiss();
         });
     }
 }
