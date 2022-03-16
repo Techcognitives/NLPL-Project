@@ -14,7 +14,6 @@ public class SelectCity {
     
     public static void selectCity(Activity context, String selectedState, TextView setCity){
         ArrayAdapter<CharSequence> selectDistrictArray = null;
-        
         Dialog selectDistrictDialog = new Dialog(context);
         selectDistrictDialog.setContentView(R.layout.dialog_spinner);
 //                dialog.getWindow().setLayout(1000,3000);
