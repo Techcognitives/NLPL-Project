@@ -1,6 +1,6 @@
 <resources>
     //------------------------------- Application name ---------------------------------------------
-    <string name="app_name">FindYourTruck</string>
+    <string name="app_name" translatable="false">FindYourTruck</string>
     //----------------------------------------------------------------------------------------------
 
     //------------------------------------- States List --------------------------------------------
@@ -990,65 +990,68 @@
 
     //------------------------------- Load Type List -----------------------------------------------
     <string-array name="array_load_type_open_close_tarpaulin">
-        <item>TATA ACE</item>
-        <item>PICK UP</item>
-        <item>Ashok Layland</item>
-        <item>TATA 407</item>
-        <item>TATA 709</item>
-        <item>TATA 909</item>
-        <item>TATA 1109</item>
-        <item>TATA 22 FT</item>
+        <item><b>TATA ACE</b> \n<b>L:</b>6.5FT <b>W:</b>5.5FT <b>H:</b>6.5FT</item>
+        <item><b>PICK UP</b> \n<b>L:</b>7FT <b>W:</b>6FT <b>H:</b>6.5FT</item>
+        <item><b>Ashok Leyland</b> \n<b>L:</b>8FT <b>W:</b>6.5FT <b>H:</b>7FT <b>KG:</b>1800</item>
+        <item><b>TATA 407</b> \n<b>L:</b>9FT <b>W:</b>7FT <b>H:</b>7.5FT <b>KG:</b>2500</item>
+        <item><b>TATA 709</b> \n<b>L:</b>14FT <b>W:</b>7FT <b>H:</b>7.5FT <b>KG:</b>3500</item>
+        <item><b>TATA 909</b> \n<b>L:</b>17FT <b>W:</b>7FT <b>H:</b>7.5FT <b>KG:</b>5500</item>
+        <item><b>TATA 1109</b> \n<b>L:</b>19FT <b>W:</b>7.2FT <b>H:</b>7.5FT <b>KG:</b>7000</item>
+        <item><b>TATA 22 FT</b> \n<b>L:</b>22FT <b>W:</b>7.2FT <b>H:</b>7.5FT <b>KG:</b>7000</item>
     </string-array>
 
     <string-array name="array_load_type_container">
-        <item>CONTAINER 14 FT</item>
-        <item>CONTAINER 17 FT</item>
-        <item>CONTAINER 19 FT</item>
-        <item>CONTAINER 20 FT</item>
-        <item>CONTAINER 22 FT</item>
-        <item>CONTAINER 30 FT</item>
-        <item>CONTAINER 30 FT HQ</item>
-        <item>CONTAINER 32 FT</item>
-        <item>CONTAINER 32 FT HQ</item>
-        <item>CONTAINER 32 FT  9 MT</item>
-        <item>CONTAINER 32 FT HQ 9 MT</item>
-        <item>CONTAINER 32 FT  MXL</item>
-        <item>CONTAINER 32 FT HQ MXL</item>
-        <item>CONTAINER 34 FT</item>
-        <item>CONTAINER 34 FT HQ</item>
-        <item>CONTAINER 34 FT MXL</item>
-        <item>CONTAINER 34 HQ MXL</item>
-        <item>CONTAINER 36FT</item>
-        <item>CONTAINER 36FT HQ</item>
-        <item>CONTAINER 38 FT</item>
-        <item>CONTAINER 38 FT HQ</item>
+        <item><b>CONTAINER 14 FT</b> \n<b>L:</b>14FT <b>W:</b>7FT <b>H:</b>8FT <b>KG:</b>3500</item>
+        <item><b>CONTAINER 17 FT</b> \n<b>L:</b>17FT <b>W:</b>7FT <b>H:</b>8FT <b>KG:</b>5500</item>
+        <item><b>CONTAINER 19 FT</b> \n<b>L:</b>19FT <b>W:</b>7.2FT <b>H:</b>8FT <b>KG:</b>7000</item>
+        <item><b>CONTAINER 20 FT</b> \n<b>L:</b>20FT <b>W:</b>7.2FT <b>H:</b>8FT <b>KG:</b>7000</item>
+        <item><b>CONTAINER 22 FT</b> \n<b>L:</b>22FT <b>W:</b>7.2FT <b>H:</b>8FT <b>KG:</b>7000</item>
+        <item><b>CONTAINER 30 FT</b> \n<b>L:</b>30FT <b>W:</b>8FT <b>H:</b>9.5FT <b>KG:</b>7000</item>
+        <item><b>CONTAINER 30 FT HQ</b> \n<b>L:</b>30FT <b>W:</b>8FT <b>H:</b>10.2FT <b>KG:</b>7000</item>
+        <item><b>CONTAINER 32 FT</b> \n<b>L:</b>32FT <b>W:</b>8FT <b>H:</b>8.5FT <b>KG:</b>7000</item>
+        <item><b>CONTAINER 32 FT HQ</b> \n<b>L:</b>32FT <b>W:</b>8FT <b>H:</b>10.2FT <b>KG:</b>7000</item>
+        <item><b>CONTAINER 32 FT  9 MT</b> \n<b>L:</b>32FT <b>W:</b>8FT <b>H:</b>8.5FT <b>KG:</b>9000</item>
+        <item><b>CONTAINER 32 FT HQ 9 MT</b> \n<b>L:</b>32FT <b>W:</b>8FT <b>H:</b>10.2FT <b>KG:</b>9000</item>
+        <item><b>CONTAINER 32 FT  MXL</b> \n<b>L:</b>32FT <b>W:</b>8FT <b>H:</b>8.5FT <b>KG:</b>16000</item>
+        <item><b>CONTAINER 32 FT HQ MXL</b> \n<b>L:</b>32FT <b>W:</b>8FT <b>H:</b>10.2FT <b>KG:</b>16000</item>
+        <item><b>CONTAINER 34 FT</b> \n<b>L:</b>34FT <b>W:</b>8FT <b>H:</b>8.5FT <b>KG:</b>7000</item>
+        <item><b>CONTAINER 34 FT HQ</b> \n<b>L:</b>34FT <b>W:</b>8FT <b>H:</b>10.2FT <b>KG:</b>7000</item>
+        <item><b>CONTAINER 34 FT MXL</b> \n<b>L:</b>34FT <b>W:</b>8FT <b>H:</b>8.5FT <b>KG:</b>16000</item>
+        <item><b>CONTAINER 34 HQ MXL</b> \n<b>L:</b>34FT <b>W:</b>8FT <b>H:</b>10.2FT <b>KG:</b>16000</item>
+        <item><b>CONTAINER 36FT</b> \n<b>L:</b>36FT <b>W:</b>8FT <b>H:</b>8.5FT <b>KG:</b>7000</item>
+        <item><b>CONTAINER 36FT HQ</b> \n<b>L:</b>36FT <b>W:</b>8FT <b>H:</b>10.2FT <b>KG:</b>7000</item>
+        <item><b>CONTAINER 38 FT</b> \n<b>L:</b>38FT <b>W:</b>8FT <b>H:</b>10.2FT <b>KG:</b>7000</item>
+        <item><b>CONTAINER 38 FT HQ</b> \n<b>L:</b>38FT <b>W:</b>8FT <b>H:</b>10.2FT <b>KG:</b>7000</item>
     </string-array>
 
     <string-array name="array_load_type_trailers_flat_body">
-        <item>16 MT 19 FT</item>
-        <item>20 MT 19 FT</item>
-        <item>24 MT 20 FT</item>
-        <item>28 MT 20 FT</item>
-        <item>28 MT 35 FT</item>
-        <item>28 MT 40 FT</item>
-        <item>32 MT 38 FT</item>
-        <item>32 MT 40 FT</item>
-        <item>35 MT 38 FT</item>
-        <item>35 MT 40 FT</item>
-        <item>40 MT 40 FT</item>
-        <item>40 MT 42 FT</item>
+        <item><b>16 MT 19 FT</b> \n<b>L:</b>19FT <b>W:</b>8FT <b>H:</b>Open <b>TON:</b>16</item>
+        <item><b>20 MT 19 FT</b> \n<b>L:</b>19FT <b>W:</b>8FT <b>H:</b>Open <b>TON:</b>20</item>
+        <item><b>24 MT 20 FT</b> \n<b>L:</b>20FT <b>W:</b>8FT <b>H:</b>Open <b>TON:</b>24</item>
+        <item><b>28 MT 20 FT</b> \n<b>L:</b>20FT <b>W:</b>8FT <b>H:</b>Open <b>TON:</b>28</item>
+        <item><b>28 MT 35 FT</b> \n<b>L:</b>36FT <b>W:</b>8FT <b>H:</b>Open <b>TON:</b>28</item>
+        <item><b>28 MT 40 FT</b> \n<b>L:</b>40FT <b>W:</b>8FT <b>H:</b>Open <b>TON:</b>28</item>
+        <item><b>32 MT 38 FT</b> \n<b>L:</b>40FT <b>W:</b>8FT <b>H:</b>Open <b>TON:</b>32</item>
+        <item><b>32 MT 40 FT</b> \n<b>L:</b>40FT <b>W:</b>8FT <b>H:</b>Open <b>TON:</b>32</item>
+        <item><b>35 MT 38 FT</b> \n<b>L:</b>40FT <b>W:</b>8FT <b>H:</b>Open <b>TON:</b>35</item>
+        <item><b>35 MT 40 FT</b> \n<b>L:</b>40FT <b>W:</b>8FT <b>H:</b>Open <b>TON:</b>35</item>
+        <item><b>40 MT 40 FT</b> \n<b>L:</b>40FT <b>W:</b>8FT <b>H:</b>Open <b>TON:</b>40</item>
+        <item><b>40 MT 42 FT</b> \n<b>L:</b>40FT <b>W:</b>8FT <b>H:</b>Open <b>TON:</b>40</item>
     </string-array>
 
     <string-array name="array_load_type_trailers_dala_body">
-        <item>22 MT</item>
-        <item>25 MT</item>
-        <item>28 MT</item>
-        <item>30 MT</item>
-        <item>32 MT</item>
-        <item>34 MT</item>
-        <item>38 MT</item>
-        <item>40 MT</item>
-        <item>42 MT</item>
+        <item><b>16 MT 19 FT</b> \n<b>L:</b>19FT <b>W:</b>8FT <b>H:</b>Open <b>TON:</b>16</item>
+        <item><b>20 MT 19 FT</b> \n<b>L:</b>19FT <b>W:</b>8FT <b>H:</b>Open <b>TON:</b>20</item>
+        <item><b>24 MT 20 FT</b> \n<b>L:</b>20FT <b>W:</b>8FT <b>H:</b>Open <b>TON:</b>24</item>
+        <item><b>28 MT 20 FT</b> \n<b>L:</b>20FT <b>W:</b>8FT <b>H:</b>Open <b>TON:</b>28</item>
+        <item><b>28 MT 35 FT</b> \n<b>L:</b>36FT <b>W:</b>8FT <b>H:</b>Open <b>TON:</b>28</item>
+        <item><b>28 MT 40 FT</b> \n<b>L:</b>40FT <b>W:</b>8FT <b>H:</b>Open <b>TON:</b>28</item>
+        <item><b>32 MT 38 FT</b> \n<b>L:</b>40FT <b>W:</b>8FT <b>H:</b>Open <b>TON:</b>32</item>
+        <item><b>32 MT 40 FT</b> \n<b>L:</b>40FT <b>W:</b>8FT <b>H:</b>Open <b>TON:</b>32</item>
+        <item><b>35 MT 38 FT</b> \n<b>L:</b>40FT <b>W:</b>8FT <b>H:</b>Open <b>TON:</b>35</item>
+        <item><b>35 MT 40 FT</b> \n<b>L:</b>40FT <b>W:</b>8FT <b>H:</b>Open <b>TON:</b>35</item>
+        <item><b>40 MT 40 FT</b> \n<b>L:</b>40FT <b>W:</b>8FT <b>H:</b>Open <b>TON:</b>40</item>
+        <item><b>40 MT 42 FT</b> \n<b>L:</b>40FT <b>W:</b>8FT <b>H:</b>Open <b>TON:</b>40</item>
     </string-array>
     //----------------------------------------------------------------------------------------------
 

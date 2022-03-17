@@ -1619,8 +1619,18 @@ public class DriverDetailsActivity extends AppCompatActivity {
                             selectDistrictText.setText(userCityAPI);
                             pinCode.setText(userPinCodeAPI);
                             driverEmailId.setText(emailIdAPI);
-                            String s2 = alternateMob.substring(2, 12);
-                            driverAlternateMobile.setText(s2);
+                            try {
+                                if (alternateMob.equals("null")||alternateMob==null){
+                                    driverAlternateMobile.setText("");
+                                }else{
+                                    String s2 = alternateMob.substring(2, 12);
+                                    driverAlternateMobile.setText(s2);
+                                }
+
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+
                         }
 
                     }
