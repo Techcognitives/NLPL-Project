@@ -1269,6 +1269,8 @@
     <string name="Driver">Driver</string>           //new
     <string name="Broker">Broker</string>           //new
     <string name="Enter_Driving_License_Number">Enter Driving License Number</string>       //new
+    <string name="Choose_any_of_the_following">Choose any of the following</string>         //new
+    <string name="Photo_Library">Photo Library</string>             //new
 
     //----------------------------------------------------------------------------------------------
 
@@ -1403,6 +1405,7 @@
     <string name="Bidder_Quote">Bidder Quote:</string>          //new
     <string name="My_Final_Quote">My Final Quote</string>       //new
     <string name="Submit">Submit</string>                       //new
+    <string name="Load">Load</string>                           //new
 
     //----------------------------------------------------------------------------------------------
 
