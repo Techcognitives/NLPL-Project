@@ -318,7 +318,7 @@
     <string name="timewithoutAMPM">hh:mm </string>
     <string name="distance">Distance</string>
     <string name="modelwithColon">Model:</string>
-    <string name="model">Model</string>
+    <string name="model">Model:</string>
     <string name="body">Body:</string>
     <string name="selectAndAssignTruck">Assign a Truck &amp; Driver for this load</string>
     <string name="yourQuote">Your Quote</string>
@@ -349,6 +349,10 @@
     <string name="Whats_App">Whats App</string>
     <string name="Bids_Submitted">Bids Submitted</string>       //new
     <string name="No_Bids_Submitted">No Bids Submitted</string> //new
+    <string name="View_and_Accept_Bid">View and\nAccept Bid</string>       //new
+    <string name="Bidder_Quote">Bidder Quote:</string>          //new
+    <string name="My_Final_Quote">My Final Quote</string>       //new
+    <string name="Submit">Submit</string>                       //new
 
     //----------------------------------------------------------------------------------------------
 

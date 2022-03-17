@@ -109,7 +109,7 @@
         android:paddingBottom="5dp"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:text="View and\nAccept Bid"
+        android:text="@string/View_and_Accept_Bid"
         android:textAlignment="center"
         android:gravity="center"
         android:textColor="@color/white"
