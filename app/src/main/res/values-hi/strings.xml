@@ -27,6 +27,7 @@
     <string name="six_digit_OTP">Please enter a 6 digit OTP sent to your mobile number.</string>
     <string name="OTP_sent_successfully">OTP sent successfully</string>
     <string name="OTP_sent_to">OTP sent to </string>
+    <string name="Change_Number">Change Number</string>     //new
 
 
     //----------------------------------------------------------------------------------------------
@@ -57,6 +58,7 @@
     <string name="Please_Register">Please Register</string>
     <string name="You_cannot_bid_without_Registration">You cannot bid without Registration</string>
     <string name="Register_Now">Register Now</string>
+    <string name="Explore_Now">Explore Now</string>         //new
 
 
     //----------------------------------------------------------------------------------------------
@@ -73,6 +75,9 @@
     //----------------------------------------------------------------------------------------------
 
     //---------------------------------------Personal Details Activity------------------------------
+    <string name="Name">Name:</string>       //new
+    <string name="Email">Email:</string>       //new
+    <string name="Address">Address:</string>   //new
     <string name="PANCard">PAN Card</string>
     <string name="Upload">Upload</string>
     <string name="UploadAny">Upload any of the following</string>
@@ -122,6 +127,7 @@
     //new
     <string name="Edit_Bank_Details">Edit Bank Details</string>
     <string name="Cancelled_cheque_uploaded_successfully">Cancelled cheque uploaded successfully</string>
+    <string name="Cancelled_cheque_not_uploaded_successfully">Cancelled cheque not uploaded successfully</string>
     <string name="Bank_Details_added_successfully">Bank Details added successfully</string>
     <string name="Account_number_does_not_match">Account number does not match</string>
     <string name="Please_enter_correct_account_number_as_above.">Please enter correct account number as above.</string>
@@ -129,6 +135,12 @@
     <string name="Bank_Name"> Bank Name: </string>
     <string name="Account_No"> Account No.: </string>
     <string name="IFSI_Code"> IFSI Code: </string>
+    <string name="Upload_a_cancelled_Cheque">Upload a cancelled Cheque</string>     //new
+    <string name="Enter_AC_Details">Enter A/C Details</string>     //new
+    <string name="Upload_a_photo_of_Canceled_Check">Upload a photo of Canceled Check</string>   //new
+    <string name="Cancelled_Cheque">Cancelled Cheque*</string>
+    <string name="OR">--------------------- OR ---------------------</string>   //new
+
 
     //----------------------------------------------------------------------------------------------
 
@@ -160,6 +172,9 @@
     <string name="You_cannot_bid_unless_you_have_a_Driver">You cannot bid unless you have a Driver</string>
     <string name="Assign_Truck">Assign Truck</string>
     <string name="ReAssign_Truck">Re-Assign Truck</string>
+    <string name="Select_Load_Type">Select Load Type</string>       //new
+    <string name="Selected_Body_Type_Load_Type">Selected Body Type &amp; Load Type</string>     //new
+
 
     //----------------------------------------------------------------------------------------------
 
@@ -197,6 +212,12 @@
     <string name="Add_Truck">+ Add Truck</string>
     <string name="Assign_Driver">Assign Driver</string>
     <string name="ReAssign_Driver">Re-Assign Driver</string>
+    <string name="Self">Self</string>               //new
+    <string name="Search">Search</string>           //new
+    <string name="Truck_Owner">Truck Owner</string> //new
+    <string name="Driver">Driver</string>           //new
+    <string name="Broker">Broker</string>           //new
+    <string name="Enter_Driving_License_Number">Enter Driving License Number</string>       //new
 
 
     //----------------------------------------------------------------------------------------------
@@ -217,6 +238,11 @@
     //new
     <string name="Company_Details">Company Details</string>
     <string name="Company_Details_added_Successfully">Company Details added Successfully</string>
+    <string name="Company_Type">Company Type*</string>      //new
+    <string name="Proprietary">Proprietary</string>         //new
+    <string name="Partnership">Partnership</string>         //new
+    <string name="Pvt_Ltd">Pvt. Ltd.</string>               //New
+    <string name="Set_Address">Set Address</string>         //new
 
 
     //----------------------------------------------------------------------------------------------
@@ -243,7 +269,8 @@
     <string name="budgetRs">Budget ₹</string>
     <string name="truckTypeAndCapacity">Truck Type &amp; Capacity*</string>
     <string name="SelectVehicleModel">Vehicle Model</string>
-    <string name="bodyType">Body</string>
+    <string name="bodyType">Body Type</string>
+    <string name="Load_Type">Load Type</string>                     //new
     <string name="pickUpLocationDetails">Pick-up Address*</string>
     <string name="dropLocationDetails">Drop Address*</string>
     <string name="km">KM (approx)</string>
@@ -320,6 +347,8 @@
     <string name="You_can_track_your_trip_in_track_section">You can track your trip in track section</string>
     <string name="Call">Call</string>
     <string name="Whats_App">Whats App</string>
+    <string name="Bids_Submitted">Bids Submitted</string>       //new
+    <string name="No_Bids_Submitted">No Bids Submitted</string> //new
 
     //----------------------------------------------------------------------------------------------
 
@@ -358,12 +387,22 @@
     <string name="Cancel">Cancel</string>
     <string name="visible_for_other_Service_Provider">Load withdrawn from current Service Provider and visible for other Service Provider</string>
     <string name="Close">Close</string>
+    <string name="Bids_Received">Bids Received</string>         //new
+    <string name="Loads_Accepted">Loads Accepted</string>       //new
+    <string name="Profile">Profile</string>                     //new
+    <string name="Track">Track</string>                         //new
+    <string name="Loads_Expired">Loads Expired</string>         //new
+    <string name="Loads_Completed">Loads Completed</string>     //new
 
     //----------------------------------------------------------------------------------------------
 
     //--------------------------------Customer Settings And Preferences-----------------------------------
     //new
     <string name="Settings_and_Preferences">Settings and Preferences</string>
+    <string name="Preferred_Location_1">Preferred Location 1 +</string>     //new
+    <string name="Preferred_Location_2">Preferred Location 2 +</string>     //new
+    <string name="Preferred_Location_3">Preferred Location 3 +</string>     //new
+
 
     //----------------------------------------------------------------------------------------------
 

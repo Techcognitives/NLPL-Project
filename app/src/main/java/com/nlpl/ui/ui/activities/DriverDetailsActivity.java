@@ -383,7 +383,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         if (isEdit) {
             if (mobile.equals("91" + driverMobile.getText().toString())) {
                 selfCheckBox.setVisibility(View.GONE);
-                setCurrentLocation.setVisibility(View.INVISIBLE);
+                setCurrentLocation.setVisibility(View.GONE);
                 driverName.setCursorVisible(false);
                 driverName.setEnabled(false);
                 driverMobile.setCursorVisible(false);
@@ -400,7 +400,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 selectStateText.setEnabled(false);
             } else {
                 selfCheckBox.setVisibility(View.VISIBLE);
-                setCurrentLocation.setVisibility(View.INVISIBLE);
+                setCurrentLocation.setVisibility(View.GONE);
                 driverName.setCursorVisible(true);
                 driverName.setEnabled(true);
                 driverMobile.setCursorVisible(true);
@@ -1020,6 +1020,12 @@ public class DriverDetailsActivity extends AppCompatActivity {
                         UpdateUserDetails.updateUserPhoneNumber(driverUserIdGet, "91" + driverMobile.getText().toString());
                     }
 
+                    if (driverAlternateMobile.getText().toString() != null) {
+                        UpdateDriverDetails.updateDriverAlternateNumber(driverId, "91" + driverAlternateMobile.getText().toString());
+                        //update Driver as a user (Alternate Phone)
+                        UpdateUserDetails.updateUserAlternatePhoneNumber(driverUserIdGet, "91" + driverAlternateMobile.getText().toString());
+                    }
+
                     if (address.getText().toString() != null) {
                         //update Driver as a user (Address)
                         UpdateUserDetails.updateUserAddress(driverUserIdGet, address.getText().toString());
@@ -1539,7 +1545,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         if (selfCheckBox.isChecked()) {
             getUserDetails();
 
-            setCurrentLocation.setVisibility(View.INVISIBLE);
+            setCurrentLocation.setVisibility(View.GONE);
             driverName.setCursorVisible(false);
             driverName.setEnabled(false);
             driverMobile.setCursorVisible(false);
@@ -1613,8 +1619,18 @@ public class DriverDetailsActivity extends AppCompatActivity {
                             selectDistrictText.setText(userCityAPI);
                             pinCode.setText(userPinCodeAPI);
                             driverEmailId.setText(emailIdAPI);
-                            String s2 = alternateMob.substring(2, 12);
-                            driverAlternateMobile.setText(s2);
+                            try {
+                                if (alternateMob.equals("null")||alternateMob==null){
+                                    driverAlternateMobile.setText("");
+                                }else{
+                                    String s2 = alternateMob.substring(2, 12);
+                                    driverAlternateMobile.setText(s2);
+                                }
+
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+
                         }
 
                     }

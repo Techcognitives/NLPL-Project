@@ -373,7 +373,18 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
                     for (int i = 0; i < truckLists.length(); i++) {
                         JSONObject obj = truckLists.getJSONObject(i);
                         previewDriverDetailsDriverName.setText(obj.getString("driver_name"));
-                        previewDriverDetailsDriverNumber.setText(obj.getString("driver_number"));
+
+                        String driverNumber = obj.getString("driver_number");
+                        String s1 = driverNumber.substring(2, 12);
+
+                        String driverAltNumber = obj.getString("alternate_ph_no");
+                        String s2 = driverAltNumber.substring(2, 12);
+                        try {
+                            previewDriverDetailsDriverNumber.setText("+91 "+ s1 +"\n"+ "+91 "+s2);
+                        }catch (Exception e){
+                            previewDriverDetailsDriverNumber.setText("+91 "+ s1);
+                        }
+
                         String driverEmail = obj.getString("driver_emailId");
                         String driverDlURL = obj.getString("upload_dl");
                         String driverSelfieURL = obj.getString("driver_selfie");

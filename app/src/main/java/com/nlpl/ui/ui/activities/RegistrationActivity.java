@@ -133,7 +133,7 @@ public class RegistrationActivity extends AppCompatActivity {
         WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
         lp2.copyFrom(language.getWindow().getAttributes());
         lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp2.gravity = Gravity.BOTTOM;
 
         language.show();
@@ -165,7 +165,7 @@ public class RegistrationActivity extends AppCompatActivity {
             roleDialog.show();
             roleDialog.getWindow().setAttributes(lp);
             roleDialog.setCancelable(false);
-            recreate();
+//            recreate();
         });
 
 //        hindi.setOnClickListener(new View.OnClickListener() {

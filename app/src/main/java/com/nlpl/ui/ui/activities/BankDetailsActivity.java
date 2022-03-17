@@ -418,7 +418,7 @@ public class BankDetailsActivity extends AppCompatActivity {
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
                 alertTitle.setText(getString(R.string.bank_details));
-                alertMessage.setText(getString(R.string.Cancelled_cheque_uploaded_successfully));
+                alertMessage.setText(getString(R.string.Cancelled_cheque_not_uploaded_successfully));
                 alertPositiveButton.setVisibility(View.GONE);
                 alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));

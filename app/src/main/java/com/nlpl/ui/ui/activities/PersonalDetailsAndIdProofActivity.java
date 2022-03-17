@@ -93,9 +93,9 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     View personalView;
     RadioButton ownerButton, driverButton, brokerButton, customerButton;
     TextView selectStateText, selectDistrictText, series;
-    String isPersonalDetailsDone, stateByPinCode, distByPinCode, selectedDistrict, selectedState, role, img_type;
+    String isPersonalDetailsDone, stateByPinCode, distByPinCode, selectedDistrict, selectedState, role, img_type, alternateMobileNumberAPI;
 
-    EditText name, pinCode, address, mobileEdit, emailIdEdit;
+    EditText name, pinCode, address, mobileEdit, emailIdEdit, alternateMobileNumber;
     Button okButton;
     //----------------------------------------------------------------------------------------------
     View panAndAadharView;
@@ -172,6 +172,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         previewPan = (ImageView) panAndAadharView.findViewById(R.id.pan_aadhar_preview_pan);
         previewAadhar = (ImageView) panAndAadharView.findViewById(R.id.pan_aadhar_preview_aadhar);
         setCurrentLocation = (TextView) personalAndAddressView.findViewById(R.id.personal_and_address_get_current_location);
+        alternateMobileNumber = (EditText) personalAndAddressView.findViewById(R.id.registration_mobile_no_edit_alternate);
 
         aadharConstrain = panAndAadharView.findViewById(R.id.aadhar_constrain);
         panConstrain = panAndAadharView.findViewById(R.id.pan_card_constrain);
@@ -516,6 +517,10 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
     public void onClickPersonalProof(View view) {
         if (name.getText().toString() != null) {
             UpdateUserDetails.updateUserName(userId, name.getText().toString());
+        }
+
+        if (alternateMobileNumber.getText().toString() != null) {
+            UpdateUserDetails.updateUserAlternatePhoneNumber(userId, "91"+alternateMobileNumber.getText().toString());
         }
 
         if (emailIdEdit.getText().toString() != null) {
@@ -1169,6 +1174,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                         roleAPI = obj.getString("user_type");
                         emailAPI = obj.getString("email_id");
                         isPersonalDetailsDone = obj.getString("isPersonal_dt_added");
+                        alternateMobileNumberAPI = obj.getString("alternate_ph_no");
 
                         if (isPersonalDetailsDone.equals("1")) {
                             panAndAadharButton.setEnabled(true);
@@ -1199,6 +1205,15 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
                         if (emailAPI != null) {
                             emailIdEdit.setText(emailAPI);
+                        }
+
+                        if (alternateMobileNumberAPI != null || !alternateMobileNumberAPI.equals("null")) {
+                            try {
+                                String s2 = alternateMobileNumberAPI.substring(2, 12);
+                                alternateMobileNumber.setText(s2);
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
                         }
 
                         address.setText(addressAPI);

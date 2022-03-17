@@ -2,6 +2,7 @@ package com.nlpl.model.UpdateMethods;
 
 import android.util.Log;
 
+import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverAlternateNumber;
 import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverEmailId;
 import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverName;
 import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverNumber;
@@ -49,6 +50,25 @@ public class UpdateDriverDetails {
 
             @Override
             public void onFailure(Call<UpdateDriverNumber> call, Throwable t) {
+                Log.i("Not Successful", "User is Driver Added");
+
+            }
+        });
+    }
+
+    public static void updateDriverAlternateNumber(String driverId, String driverMobile) {
+        UpdateDriverAlternateNumber updateDriverAlternateNumber = new UpdateDriverAlternateNumber(driverMobile);
+        Call<UpdateDriverAlternateNumber> call = ApiClient.addDriverService().updateDriverAlternateNumber("" + driverId, updateDriverAlternateNumber);
+        call.enqueue(new Callback<UpdateDriverAlternateNumber>() {
+            @Override
+            public void onResponse(Call<UpdateDriverAlternateNumber> call, Response<UpdateDriverAlternateNumber> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Driver Number");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateDriverAlternateNumber> call, Throwable t) {
                 Log.i("Not Successful", "User is Driver Added");
 
             }
