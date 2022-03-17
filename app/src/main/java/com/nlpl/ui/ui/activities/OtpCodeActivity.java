@@ -177,10 +177,10 @@ public class OtpCodeActivity extends AppCompatActivity {
                     TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                    alertTitle.setText("Invalid OTP");
-                    alertMessage.setText("Please enter a 6 digit OTP sent to your mobile number.");
+                    alertTitle.setText(getString(R.string.Invalid_OTP));
+                    alertMessage.setText(getString(R.string.six_digit_OTP));
                     alertPositiveButton.setVisibility(View.GONE);
-                    alertNegativeButton.setText("OK");
+                    alertNegativeButton.setText(getString(R.string.ok));
                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                     alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -289,10 +289,10 @@ public class OtpCodeActivity extends AppCompatActivity {
                     TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                    alertTitle.setText("Invalid OTP");
-                    alertMessage.setText("Please enter a 6 digit OTP sent to your mobile number.");
+                    alertTitle.setText(getString(R.string.Invalid_OTP));
+                    alertMessage.setText(getString(R.string.six_digit_OTP));
                     alertPositiveButton.setVisibility(View.GONE);
-                    alertNegativeButton.setText("OK");
+                    alertNegativeButton.setText(getString(R.string.ok));
                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                     alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 

@@ -141,7 +141,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
         action_bar = findViewById(R.id.personal_details_id_proof_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
-        actionBarTitle.setText("Personal Details");
+        actionBarTitle.setText(getString(R.string.Personal_Details));
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -565,9 +565,9 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Personal Details");
-            alertMessage.setText("Do you really want to update your phone number?");
-            alertPositiveButton.setText("YES");
+            alertTitle.setText(getString(R.string.Personal_Details));
+            alertMessage.setText(getString(R.string.update_your_phone_number));
+            alertPositiveButton.setText(getString(R.string.yes));
             alertPositiveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -590,10 +590,10 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                     TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                    alertTitle.setText("OTP sent successfully");
-                    alertMessage.setText("OTP sent to " + "+91" + mobileEdit.getText().toString());
+                    alertTitle.setText(getString(R.string.OTP_sent_successfully));
+                    alertMessage.setText(getString(R.string.OTP_sent_to) + "+91" + mobileEdit.getText().toString());
                     alertPositiveButton.setVisibility(View.GONE);
-                    alertNegativeButton.setText("OK");
+                    alertNegativeButton.setText(getString(R.string.ok));
                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                     alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -607,7 +607,7 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 }
             });
 
-            alertNegativeButton.setText("NO");
+            alertNegativeButton.setText(getString(R.string.no));
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
             alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -769,10 +769,10 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Personal Details");
-            alertMessage.setText("PAN Card Uploaded Successfully");
+            alertTitle.setText(getString(R.string.Personal_Details));
+            alertMessage.setText(getString(R.string.PAN_Card_Uploaded_Successfully));
             alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
+            alertNegativeButton.setText(getString(R.string.ok));
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
             alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -828,10 +828,10 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Personal Details");
-            alertMessage.setText("Aadhar Card Uploaded Successfully");
+            alertTitle.setText(getString(R.string.Personal_Details));
+            alertMessage.setText(getString(R.string.Aadhar_Card_Uploaded_Successfully));
             alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
+            alertNegativeButton.setText(getString(R.string.ok));
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
             alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -900,10 +900,10 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Personal Details");
-                alertMessage.setText("PAN Card Uploaded Successfully");
+                alertTitle.setText(getString(R.string.Personal_Details));
+                alertMessage.setText(getString(R.string.PAN_Card_Uploaded_Successfully));
                 alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText("OK");
+                alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -934,10 +934,10 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Personal Details");
-                alertMessage.setText("PAN Card not Uploaded, please try again");
+                alertTitle.setText(getString(R.string.Personal_Details));
+                alertMessage.setText(getString(R.string.PAN_Card_not_Uploaded));
                 alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText("OK");
+                alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -988,10 +988,10 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Personal Details");
-                alertMessage.setText("Aadhar Card Uploaded Successfully");
+                alertTitle.setText(getString(R.string.Personal_Details));
+                alertMessage.setText(getString(R.string.Aadhar_Card_Uploaded_Successfully));
                 alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText("OK");
+                alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -1023,10 +1023,10 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Personal Details");
-                alertMessage.setText("Aadhar Card not Uploaded, Please try again");
+                alertTitle.setText(getString(R.string.Personal_Details));
+                alertMessage.setText(getString(R.string.Aadhar_Card_not_Uploaded));
                 alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText("OK");
+                alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -1061,10 +1061,10 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Personal Details");
-            alertMessage.setText("Profile Uploaded Successfully");
+            alertTitle.setText(getString(R.string.Personal_Details));
+            alertMessage.setText(getString(R.string.Profile_Uploaded_Successfully));
             alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
+            alertNegativeButton.setText(getString(R.string.ok));
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
             alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -1118,10 +1118,10 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Personal Details");
-            alertMessage.setText("Profile Uploaded Successfully");
+            alertTitle.setText(getString(R.string.Personal_Details));
+            alertMessage.setText(getString(R.string.Profile_Uploaded_Successfully));
             alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
+            alertNegativeButton.setText(getString(R.string.ok));
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
             alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 

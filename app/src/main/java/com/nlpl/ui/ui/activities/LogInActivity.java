@@ -108,10 +108,10 @@ public class LogInActivity extends AppCompatActivity {
                     TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                    alertTitle.setText("Invalid mobile number");
-                    alertMessage.setText("Please enter a 10 digit valid mobile number.");
+                    alertTitle.setText(getString(R.string.Invalid_Mobile_Number));
+                    alertMessage.setText(getString(R.string.Please_enter_a_10_digit_valid_mobile_number));
                     alertPositiveButton.setVisibility(View.GONE);
-                    alertNegativeButton.setText("OK");
+                    alertNegativeButton.setText(getString(R.string.ok));
                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                     alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 

@@ -70,7 +70,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
         actionBarMenuButton = (ImageView) actionBar.findViewById(R.id.action_bar_menu);
         actionBarSkip = (TextView) actionBar.findViewById(R.id.action_bar_skip);
 
-        actionBarTitle.setText("Personal Details");
+        actionBarTitle.setText(getString(R.string.Personal_Details));
         actionBarMenuButton.setVisibility(View.GONE);
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +85,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
         });
 
         actionBarSkip.setVisibility(View.VISIBLE);
-        actionBarSkip.setText("Edit");
+        actionBarSkip.setText(getString(R.string.edit));
         actionBarSkip.setOnClickListener(view -> {
             ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
             JumpTo.goToPersonalDetailsIdProofActivity(ViewPersonalDetailsActivity.this, userId, phone, false);
@@ -263,7 +263,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
 
                         userFirmAddCompany.setVisibility(View.INVISIBLE);
                         userFirmTitle.setVisibility(View.VISIBLE);
-                        userFirmTitle.setText("Firm Details");
+                        userFirmTitle.setText(getString(R.string.Firm_Details));
                         userFirmTitle.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.redDark)));
                         userFirmNameTitleTextView.setVisibility(View.VISIBLE);
                         userFirmNameTextView.setVisibility(View.VISIBLE);

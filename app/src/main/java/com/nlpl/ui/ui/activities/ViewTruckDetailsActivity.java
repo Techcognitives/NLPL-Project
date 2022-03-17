@@ -100,7 +100,7 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
         actionBarBackButton = (ImageView) actionBar.findViewById(R.id.action_bar_back_button);
         actionBarMenuButton = (ImageView) actionBar.findViewById(R.id.action_bar_menu);
 
-        actionBarTitle.setText("My Trucks");
+        actionBarTitle.setText(getString(R.string.My_Trucks));
         actionBarMenuButton.setVisibility(View.GONE);
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -333,10 +333,10 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
         previewDialogDriverDetails.getWindow().setAttributes(lp);
         previewDialogDriverDetails.setCancelable(true);
 
-        previewDriverDetailsTitle.setText("Driver Details");
-        previewDriverDetailsDriverLicence.setText("Driver Licence");
-        previewDriverDetailsDriverSelfie.setText("Driver Selfie");
-        previewDriverDetailsMessage.setText("Please add a Driver");
+        previewDriverDetailsTitle.setText(getString(R.string.Driver_Details));
+        previewDriverDetailsDriverLicence.setText(getString(R.string.Driver_Licence));
+        previewDriverDetailsDriverSelfie.setText(getString(R.string.Driver_Selfie));
+        previewDriverDetailsMessage.setText(getString(R.string.Please_add_a_Driver));
         previewDriverDetailsMessage.setVisibility(View.INVISIBLE);
 
         if (obj.getDriver_id().equals("null")) {
@@ -346,9 +346,9 @@ public class ViewTruckDetailsActivity extends AppCompatActivity {
             previewDriverDetailsDriverName.setVisibility(View.INVISIBLE);
             previewDriverDetailsDriverNumber.setVisibility(View.INVISIBLE);
             previewDriverDetailsDriverEmails.setVisibility(View.INVISIBLE);
-            previewDriverDetailsAssignDriverButton.setText("Assign Driver");
+            previewDriverDetailsAssignDriverButton.setText(getString(R.string.Assign_Driver));
         } else {
-            previewDriverDetailsAssignDriverButton.setText("Re-Assign Driver");
+            previewDriverDetailsAssignDriverButton.setText(getString(R.string.ReAssign_Driver));
             previewDriverDetailsMessage.setVisibility(View.INVISIBLE);
             previewDriverDetailsDriverLicence.setVisibility(View.VISIBLE);
             previewDriverDetailsDriverSelfie.setVisibility(View.VISIBLE);

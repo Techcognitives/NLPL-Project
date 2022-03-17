@@ -1075,6 +1075,12 @@
     <string name="verify_otp">Verify OTP</string>
     <string name="copy_otp">Copy OTP</string>
     <string name="resend_otp">Resend OTP</string>
+    //new
+    <string name="Invalid_OTP">Invalid OTP</string>
+    <string name="six_digit_OTP">Please enter a 6 digit OTP sent to your mobile number.</string>
+    <string name="OTP_sent_successfully">OTP sent successfully</string>
+    <string name="OTP_sent_to">OTP sent to </string>
+
     //----------------------------------------------------------------------------------------------
 
     //---------------------------- Registration Screen Activity ------------------------------------
@@ -1093,6 +1099,18 @@
     <string name="ok">OK</string>
     <string name="customer">I"'"m a Load Poster</string>
     <string name="yes">YES</string>
+    //new
+    <string name="Registration_as">Registration as </string>
+    <string name="Load_Poster">Load Poster</string>
+    <string name="Registration_Successful">Registration Successful</string>
+    <string name="Welcome_to">Welcome to </string>
+    <string name="Please_update_your_profile">\n\nPlease update your profile and explore platform benefits.</string>
+    <string name="Dashboard">Dashboard</string>
+    <string name="Please_Register">Please Register</string>
+    <string name="You_cannot_bid_without_Registration">You cannot bid without Registration</string>
+    <string name="Register_Now">Register Now</string>
+
+
     //----------------------------------------------------------------------------------------------
 
     //------------------------------------Profile and registration Activity ------------------------
@@ -1116,7 +1134,7 @@
     <string name="VoterId">Voter ID</string>
     <string name="AadharFront">Aadhar Front</string>
     <string name="AadharBack">Aadhar Back</string>
-    <string name="edit"> </string>
+    <string name="edit">Edit </string>
     <string name="acNo">A/C No: </string>
     <string name="addBank">+ Add Bank</string>
     <string name="addTruck">+ Add Truck</string>
@@ -1128,6 +1146,14 @@
     <string name="Profile_Picture">Profile Picture</string>
     <string name="Profile_Picture_added_successfully">Profile Picture added successfully</string>
     <string name="Selfie_Uploaded">Selfie Uploaded</string>
+    <string name="PAN_Card_Uploaded_Successfully">PAN Card Uploaded Successfully</string>
+    <string name="Aadhar_Card_Uploaded_Successfully">Aadhar Card Uploaded Successfully</string>
+    <string name="PAN_Card_not_Uploaded">PAN Card not Uploaded, please try again</string>
+    <string name="Aadhar_Card_not_Uploaded">Aadhar Card not Uploaded, please try again</string>
+    <string name="Personal_Details_added_successfully">Personal Details added successfully</string>
+    <string name="update_your_phone_number">Do you really want to update your phone number?</string>
+    <string name="Firm_Details">Firm Details</string>
+
     //----------------------------------------------------------------------------------------------
 
     //---------------------------------------Bank Details Activity----------------------------------
@@ -1146,6 +1172,10 @@
     <string name="Bank_Details_added_successfully">Bank Details added successfully</string>
     <string name="Account_number_does_not_match">Account number does not match</string>
     <string name="Please_enter_correct_account_number_as_above.">Please enter correct account number as above.</string>
+    <string name="My_Bank">My Bank</string>
+    <string name="Bank_Name"> Bank Name: </string>
+    <string name="Account_No"> Account No.: </string>
+    <string name="IFSI_Code"> IFSI Code: </string>
 
     //--------------------------------------------Done--------------------------------------------------
 
@@ -1163,7 +1193,25 @@
     <string name="insurance">Insurance</string>
     <string name="selectModel">Select Body Type</string>
     <string name="Ft">Ft.:</string>
-    <string name="Capacity">Capacity</string>
+    <string name="Capacity">Capacity: </string>
+    //new
+    <string name="Edit_Vehicle_Details">Edit Vehicle Details</string>
+    <string name="Truck_Details">Truck Details</string>
+    <string name="RC_Uploaded_Successfully">RC Uploaded Successfully</string>
+    <string name="RC_not_Uploaded">RC not Uploaded, Please try again</string>
+    <string name="Insurance_Uploaded_Successfully">Insurance Uploaded Successfully</string>
+    <string name="Insurance_not_uploaded">Insurance not uploaded, please try again</string>
+    <string name="Vehicle_Details_added_successfully">Vehicle Details added successfully</string>
+    <string name="Add_Driver">+ Add Driver</string>
+    <string name="Skip">Skip</string>
+    <string name="You_cannot_bid_unless_you_have_a_Driver">You cannot bid unless you have a Driver</string>
+    <string name="Assign_Truck">Assign Truck</string>
+    <string name="ReAssign_Truck">Re-Assign Truck</string>
+    <string name="My_Trucks">My Trucks</string>
+    <string name="Driver_Licence">Driver Licence</string>
+    <string name="Driver_Selfie">Driver Selfie</string>
+
+
     //----------------------------------------------------------------------------------------------
 
     //---------------------------------------Driver Details Activity--------------------------------
@@ -1196,6 +1244,10 @@
     <string name="Later">Later</string>
     <string name="Please_Upload_From_Gallery">Please Upload From Gallery</string>
     <string name="Choose_from_Gallery">Choose from Gallery</string>
+    <string name="My_Drivers">My Drivers</string>
+    <string name="Add_Truck">+ Add Truck</string>
+    <string name="Assign_Driver">Assign Driver</string>
+    <string name="ReAssign_Driver">Re-Assign Driver</string>
 
     //----------------------------------------------------------------------------------------------
 
@@ -1253,6 +1305,17 @@
     <string name="note_to_post_load">1. Electronic appliances, must handled with care.<br></br>2. Bubble wrap required.<br></br>3. Preferable pick-up time after 12:00pm<br></br>4. Please call and confirm before starting.</string>
     //new
     <string name="Loads_History">Loads History</string>
+    <string name="Post_a_Load">Post a Load</string>
+    <string name="Edit_a_Load">Edit a Load</string>
+    <string name="Update_a_Load">Update a Load</string>
+    <string name="Load_Updated_Successfully">Load Updated Successfully</string>
+    <string name="Load_Posted_Successfully">Load Posted Successfully</string>
+    <string name="Delete_Load">Delete Load</string>
+    <string name="Do_you_really_want_to_delete_load">Do you really want to delete load</string>
+    <string name="Select_Material_Type">Select Material Type</string>
+
+
+
     //----------------------------------------------------------------------------------------------
 
     //--------------------------------------Bid_now dialog------------------------------------------
@@ -1278,8 +1341,8 @@
     <string name="timewithoutAMPM">hh:mm </string>
     <string name="distance">Distance</string>
     <string name="modelwithColon">Model:</string>
-    <string name="model">Model</string>
-    <string name="body">Body:</string>
+    <string name="model">Model: </string>
+    <string name="body">Body: </string>
     <string name="selectAndAssignTruck">Assign a Truck &amp; Driver for this load</string>
     <string name="yourQuote">My Quote</string>
     <string name="negotiable">Negotiable</string>
@@ -1291,6 +1354,23 @@
     <string name="cancel">Cancel</string>
     <string name="declaration"><b>Declaration: </b><em>I hereby declare, driver will reach Pick-up location 15 minutes prior Pick-up Time.</em> </string>
     <string name="preferred_locations">Preferred Locations: </string>
+    //new
+    <string name="Your_Budget_is_High">Your Budget is High</string>
+    <string name="Your_Budget_is_Higher_than_the_Load_Poster">Your Budget is Higher than the Load Poster</string>
+    <string name="Your_Budget_is_Low">Your Budget is Low</string>
+    <string name="Your_Budget_is_Lower_than_the_Load_Poster">Your Budget is Lower than the Load Poster</string>
+    <string name="Bid_Revised_and_Responded">Bid Revised and Responded</string>
+    <string name="Bid_Revised_and_Responded_Successfully">Bid Revised and Responded Successfully</string>
+    <string name="My_Bid_Response">My Bid Response</string>
+    <string name="Withdraw_Bid">Withdraw Bid</string>
+    <string name="Do_you_really_want_to_withdraw_bid">Do you really want to withdraw bid.</string>
+    <string name="Bid_is_withdrawn_successfully">Bid is withdrawn successfully. Customer will no longer see your Bid.</string>
+    <string name="Start_Trip">Start Trip</string>
+    <string name="Trip_Started_Successfully">Trip Started Successfully</string>
+    <string name="You_can_track_your_trip_in_track_section">You can track your trip in track section</string>
+    <string name="Call">Call</string>
+    <string name="Whats_App">Whats App</string>
+
     //----------------------------------------------------------------------------------------------
 
     //--------------------------------Customer Dashboard Activity-----------------------------------
@@ -1353,6 +1433,7 @@
     <string name="Select_Driver_to_Bid">Select Driver to Bid</string>
 
     //----------------------------------------------------------------------------------------------
+
 
 
 </resources>

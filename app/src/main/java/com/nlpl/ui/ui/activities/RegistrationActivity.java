@@ -293,9 +293,9 @@ public class RegistrationActivity extends AppCompatActivity {
                 Log.i("Role Selected", role);
                 if (role!=null) {
                     if (role.equals("Customer")) {
-                        actionBarTitle.setText("Registration as " + "Load Poster");
+                        actionBarTitle.setText(getString(R.string.Registration_as) + getString(R.string.Load_Poster));
                     } else {
-                        actionBarTitle.setText("Registration as " + role);
+                        actionBarTitle.setText(getString(R.string.Registration_as) + role);
                     }
                 }
             }
@@ -409,10 +409,10 @@ public class RegistrationActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Registration Successful");
-            alertMessage.setText("Welcome to " + getString(R.string.app_name) + "\n\nPlease update your profile and explore platform benefits.");
+            alertTitle.setText(getString(R.string.Registration_Successful));
+            alertMessage.setText(getString(R.string.Welcome_to) + getString(R.string.app_name) + getString(R.string.Please_update_your_profile));
             alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
+            alertNegativeButton.setText(getString(R.string.ok));
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
             alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
