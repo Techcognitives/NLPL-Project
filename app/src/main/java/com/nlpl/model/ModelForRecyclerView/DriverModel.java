@@ -6,6 +6,7 @@ public class DriverModel {
     private String driver_name;
     private String upload_lc;
     private String driver_number;
+    private String alternate_ph_no;
     private String driver_emailId;
     private String driver_selfie;
     private String truck_id;
@@ -72,5 +73,13 @@ public class DriverModel {
 
     public void setTruck_id(String truck_id) {
         this.truck_id = truck_id;
+    }
+
+    public String getAlternate_ph_no() {
+        return alternate_ph_no;
+    }
+
+    public void setAlternate_ph_no(String alternate_ph_no) {
+        this.alternate_ph_no = alternate_ph_no;
     }
 }

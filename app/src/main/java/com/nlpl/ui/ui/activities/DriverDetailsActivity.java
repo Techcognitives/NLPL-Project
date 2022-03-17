@@ -1020,6 +1020,12 @@ public class DriverDetailsActivity extends AppCompatActivity {
                         UpdateUserDetails.updateUserPhoneNumber(driverUserIdGet, "91" + driverMobile.getText().toString());
                     }
 
+                    if (driverAlternateMobile.getText().toString() != null) {
+                        UpdateDriverDetails.updateDriverAlternateNumber(driverId, "91" + driverAlternateMobile.getText().toString());
+                        //update Driver as a user (Alternate Phone)
+                        UpdateUserDetails.updateUserAlternatePhoneNumber(driverUserIdGet, "91" + driverAlternateMobile.getText().toString());
+                    }
+
                     if (address.getText().toString() != null) {
                         //update Driver as a user (Address)
                         UpdateUserDetails.updateUserAddress(driverUserIdGet, address.getText().toString());

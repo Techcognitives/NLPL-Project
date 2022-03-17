@@ -3,6 +3,7 @@ package com.nlpl.model.UpdateMethods;
 import android.util.Log;
 
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserAddress;
+import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserAlternatePhoneNumber;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserEmailId;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsBankDetailsGiven;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsCompanyAdded;
@@ -184,6 +185,29 @@ public class UpdateUserDetails {
 
             @Override
             public void onFailure(Call<UpdateUserPhoneNumber> call, Throwable t) {
+                Log.i("Not Successful", "PhoneNumber");
+
+            }
+        });
+    }
+
+    public static void updateUserAlternatePhoneNumber(String userId, String mobile) {
+        Log.i("Mobile No Update", mobile);
+        Log.i("user Id at update", userId);
+        UpdateUserAlternatePhoneNumber updateUserAlternatePhoneNumber = new UpdateUserAlternatePhoneNumber(mobile);
+
+        Call<UpdateUserAlternatePhoneNumber> call = ApiClient.getUserService().updateUserAlternatePhoneNumber("" + userId, updateUserAlternatePhoneNumber);
+
+        call.enqueue(new Callback<UpdateUserAlternatePhoneNumber>() {
+            @Override
+            public void onResponse(Call<UpdateUserAlternatePhoneNumber> call, Response<UpdateUserAlternatePhoneNumber> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "PhoneNumber");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserAlternatePhoneNumber> call, Throwable t) {
                 Log.i("Not Successful", "PhoneNumber");
 
             }

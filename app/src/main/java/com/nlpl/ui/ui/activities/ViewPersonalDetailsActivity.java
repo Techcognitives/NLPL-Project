@@ -43,7 +43,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
     Dialog previewDialogPan, previewDialogAadhar, previewDialogProfile;
 
     View actionBar;
-    TextView actionBarTitle, actionBarSkip, previewAadharBtn, previewPANBtn, previewProfileBtn;
+    TextView actionBarTitle, actionBarSkip, previewAadharBtn, previewPANBtn, previewProfileBtn, userAlternateNumber;
     ImageView actionBarBackButton, actionBarMenuButton;
 
     View bottomNav;
@@ -102,6 +102,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
         userPhoneNumberTextView = (TextView) findViewById(R.id.view_personal_details_phone_number_text_view);
         userEmailTextView = (TextView) findViewById(R.id.view_personal_details_email_id_text_view);
         userAddressTextView = (TextView) findViewById(R.id.view_personal_details_address_text_view);
+        userAlternateNumber = (TextView) findViewById(R.id.personal_details_alternate_numbr);
 
         uploadPanAAdharBtnTitle = (TextView) findViewById(R.id.view_personal_details_complete_personal_details_text);
         uploadPanAAdharBtn = (TextView) findViewById(R.id.view_personal_details_add_personal_details);
@@ -160,6 +161,7 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
                         userRoleAPI = obj.getString("user_type");
                         isPersonalDetailsDone = obj.getString("isPersonal_dt_added");
                         isProfilePicAdded = obj.getString("isProfile_pic_added");
+                        String userAlternateMobileNumber = obj.getString("alternate_ph_no");
 
 
 //                        if (userRoleAPI.equals("Customer")) {
@@ -214,8 +216,14 @@ public class ViewPersonalDetailsActivity extends AppCompatActivity {
 
                         userEmailTextView.setText(userEmailIdAPI);
 
-                        userAddressTextView.setText(userAddressAPI + ", " + userCityAPI + " " + userPinCodeAPI);
+                        try {
+                            String s2 = userAlternateMobileNumber.substring(2, 12);
+                            userAlternateNumber.setText("+91 " + s2);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
 
+                        userAddressTextView.setText(userAddressAPI + ", " + userCityAPI + " " + userPinCodeAPI);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

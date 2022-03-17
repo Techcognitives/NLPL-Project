@@ -253,6 +253,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
                         modelDriver.setDriver_selfie(obj.getString("driver_selfie"));
                         modelDriver.setDriver_number(obj.getString("driver_number"));
                         modelDriver.setDriver_emailId(obj.getString("driver_emailId"));
+                        modelDriver.setAlternate_ph_no(obj.getString("alternate_ph_no"));
                         driverList.add(modelDriver);
                     }
                     if (driverList.size() > 0) {

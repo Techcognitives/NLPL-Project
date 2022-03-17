@@ -41,14 +41,35 @@ public class DriversAdapter extends RecyclerView.Adapter<DriversAdapter.DriverVi
 
         holder.list_title.setText(" " + obj.getDriver_name());
 
-        holder.list_driver_number.setText("+" + obj.getDriver_number());
+        String s1 = obj.getDriver_number().substring(2, 12);
+        holder.list_driver_number.setText("+91 " + s1);
 
         holder.list_driver_email_id.setText(" " + obj.getDriver_emailId());
+
+        try{
+            if (obj.getAlternate_ph_no().equals("null")||obj.getAlternate_ph_no()==null){
+                holder.alternateDriverNumber.setVisibility(View.GONE);
+            }else {
+                String s2 = obj.getAlternate_ph_no().substring(2, 12);
+                holder.alternateDriverNumber.setText("+91 "+ s2);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            holder.alternateDriverNumber.setVisibility(View.GONE);
+        }
 
         holder.list_driver_number.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i2 = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + obj.getDriver_number()));
+                activity.startActivity(i2);
+            }
+        });
+
+        holder.alternateDriverNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i2 = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + obj.getAlternate_ph_no()));
                 activity.startActivity(i2);
             }
         });
@@ -100,7 +121,7 @@ public class DriversAdapter extends RecyclerView.Adapter<DriversAdapter.DriverVi
     }
 
     public class DriverViewHolder extends RecyclerView.ViewHolder {
-        private TextView list_title, list_edit, list_driver_number, list_driver_email_id, list_preview_driver_license, list_preview_driver_selfie, list_preview_driver_bank_details, list_preview_truck_assigned;
+        private TextView list_title, list_edit, list_driver_number, alternateDriverNumber, list_driver_email_id, list_preview_driver_license, list_preview_driver_selfie, list_preview_driver_bank_details, list_preview_truck_assigned;
 
         public DriverViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -113,6 +134,7 @@ public class DriversAdapter extends RecyclerView.Adapter<DriversAdapter.DriverVi
             list_preview_driver_selfie = itemView.findViewById(R.id.my_driver_list_driver_selfie);
             list_preview_driver_bank_details = itemView.findViewById(R.id.my_driver_list_driver_bank_details);
             list_preview_truck_assigned = itemView.findViewById(R.id.my_driver_list_truck_details);
+            alternateDriverNumber = itemView.findViewById(R.id.my_driver_list_driver_alternate_mobile_number);
         }
 
     }
