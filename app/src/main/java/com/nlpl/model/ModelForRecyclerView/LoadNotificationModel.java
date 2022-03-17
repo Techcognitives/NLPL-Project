@@ -2,7 +2,7 @@ package com.nlpl.model.ModelForRecyclerView;
 
 public class LoadNotificationModel {
 
-    private String bid_ends_at, idpost_load, user_id, pick_up_date, pick_up_time, budget, bid_status, vehicle_model, feet, capacity, body_type, pick_add, pick_pin_code, pick_city, pick_state, pick_country, drop_add, drop_pin_code, drop_city, drop_state, drop_country, km_approx, notes_meterial_des;
+    private String bid_ends_at, idpost_load, user_id, pick_up_date, pick_up_time, budget, bid_status, capacity, body_type, pick_add, pick_pin_code, pick_city, pick_state, pick_country, drop_add, drop_pin_code, drop_city, drop_state, drop_country, km_approx, notes_meterial_des;
 
     public String getBid_ends_at() {
         return bid_ends_at;
@@ -58,22 +58,6 @@ public class LoadNotificationModel {
 
     public void setBid_status(String bid_status) {
         this.bid_status = bid_status;
-    }
-
-    public String getVehicle_model() {
-        return vehicle_model;
-    }
-
-    public void setVehicle_model(String vehicle_model) {
-        this.vehicle_model = vehicle_model;
-    }
-
-    public String getFeet() {
-        return feet;
-    }
-
-    public void setFeet(String feet) {
-        this.feet = feet;
     }
 
     public String getCapacity() {

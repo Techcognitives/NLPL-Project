@@ -1146,6 +1146,7 @@
     //new
     <string name="Edit_Bank_Details">Edit Bank Details</string>
     <string name="Cancelled_cheque_uploaded_successfully">Cancelled cheque uploaded successfully</string>
+    <string name="Cancelled_cheque_not_uploaded_successfully">Cancelled cheque not uploaded successfully</string>
     <string name="Bank_Details_added_successfully">Bank Details added successfully</string>
     <string name="Account_number_does_not_match">Account number does not match</string>
     <string name="Please_enter_correct_account_number_as_above.">Please enter correct account number as above.</string>
@@ -1357,5 +1358,8 @@
 
     //----------------------------------------------------------------------------------------------
 
+    //---------------------------- Customer Accept Bid Dialog --------------------------------------
+    <string name="declaration_lp"><b>Truck Owner / Driver Declaration:</b>\nI hereby declare, will reach Pick-up location 15 minutes prior Pick-up.\n\nI hereby declare, will provide appropriate Truck matching Load Poster requirement.</string>
+    //----------------------------------------------------------------------------------------------
 
 </resources>

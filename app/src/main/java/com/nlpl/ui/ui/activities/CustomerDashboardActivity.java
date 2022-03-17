@@ -112,7 +112,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     private RecyclerView bidsAcceptedRecyclerView;
 
     private BidsResponsesAdapter bidsResponsesAdapter;
-    boolean fabVisible = false, isBackPressed = false, bidsReceivedSelected = true, isbidsReceivedSelected;
+    boolean fabVisible = true, isBackPressed = false, bidsReceivedSelected = true, isbidsReceivedSelected;
 
     private int CAMERA_PIC_REQUEST2 = 4;
     private int GET_FROM_GALLERY2 = 5;
