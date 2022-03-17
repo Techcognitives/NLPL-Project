@@ -383,7 +383,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         if (isEdit) {
             if (mobile.equals("91" + driverMobile.getText().toString())) {
                 selfCheckBox.setVisibility(View.GONE);
-                setCurrentLocation.setVisibility(View.INVISIBLE);
+                setCurrentLocation.setVisibility(View.GONE);
                 driverName.setCursorVisible(false);
                 driverName.setEnabled(false);
                 driverMobile.setCursorVisible(false);
@@ -400,7 +400,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
                 selectStateText.setEnabled(false);
             } else {
                 selfCheckBox.setVisibility(View.VISIBLE);
-                setCurrentLocation.setVisibility(View.INVISIBLE);
+                setCurrentLocation.setVisibility(View.GONE);
                 driverName.setCursorVisible(true);
                 driverName.setEnabled(true);
                 driverMobile.setCursorVisible(true);
@@ -1545,7 +1545,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         if (selfCheckBox.isChecked()) {
             getUserDetails();
 
-            setCurrentLocation.setVisibility(View.INVISIBLE);
+            setCurrentLocation.setVisibility(View.GONE);
             driverName.setCursorVisible(false);
             driverName.setEnabled(false);
             driverMobile.setCursorVisible(false);

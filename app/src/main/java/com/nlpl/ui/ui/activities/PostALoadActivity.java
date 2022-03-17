@@ -35,6 +35,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -294,107 +295,128 @@ public class PostALoadActivity extends AppCompatActivity {
         Ok_PostLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (pick_up_date.getText().toString().length()==0){
-
-                }else if (pick_up_time.getText().toString().length()==0){
-
-                }
-
-                ShowAlert.loadingDialog(PostALoadActivity.this);
-                if (isEdit || reActivate) {
-                    if (isEdit) {
-                        UpdatePostLoadDetails.updatePickUpDate(loadId, pick_up_date.getText().toString());
-                        UpdatePostLoadDetails.updatePickUpTime(loadId, pick_up_time.getText().toString());
-                        UpdatePostLoadDetails.updateBudget(loadId, select_budget.getText().toString());
-                        UpdatePostLoadDetails.updateVehicleCapacity(loadId, select_capacity.getText().toString());
-                        UpdatePostLoadDetails.updateVehicleBodyType(loadId, selectModel.getText().toString());
-                        UpdatePostLoadDetails.updatePickUpCountry(loadId, "India");
-                        UpdatePostLoadDetails.updatePickUpAddress(loadId, pickUpAddressEdit.getText().toString());
-                        UpdatePostLoadDetails.updatePickUpPinCode(loadId, pickupPinCodeEdit.getText().toString());
-                        UpdatePostLoadDetails.updatePickUpState(loadId, pickUpStateText.getText().toString());
-                        UpdatePostLoadDetails.updatePickUpCity(loadId, pickUpCityText.getText().toString());
-                        UpdatePostLoadDetails.updateDropCountry(loadId, "India");
-                        UpdatePostLoadDetails.updateDropAddress(loadId, dropAddressEdit.getText().toString());
-                        UpdatePostLoadDetails.updateDropPinCode(loadId, dropPinCodeEdit.getText().toString());
-                        UpdatePostLoadDetails.updateDropState(loadId, dropStateText.getText().toString());
-                        UpdatePostLoadDetails.updateDropCity(loadId, dropCityText.getText().toString());
-                        UpdatePostLoadDetails.updateApproxKM(loadId, setApproxDistance.getText().toString());
-                        UpdatePostLoadDetails.updateNotes(loadId, note_to_post_load.getText().toString());
-                    }
-                    if (reActivate) {
-                        UpdatePostLoadDetails.updateStatus(loadId, "delete");
-                        saveLoad(createLoadRequest());
-                    }
-                    //----------------------- Alert Dialog -------------------------------------------------
-                    Dialog alert = new Dialog(PostALoadActivity.this);
-                    alert.setContentView(R.layout.dialog_alert_single_button);
-                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                    lp.copyFrom(alert.getWindow().getAttributes());
-                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-                    lp.gravity = Gravity.CENTER;
-
-                    alert.show();
-                    alert.getWindow().setAttributes(lp);
-                    alert.setCancelable(false);
-
-                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-                    alertTitle.setText("Post a Load");
-                    alertMessage.setText("Load Updated Successfully");
-                    alertPositiveButton.setVisibility(View.GONE);
-                    alertNegativeButton.setText("OK");
-                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
-
-                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            alert.dismiss();
-                            JumpTo.goToCustomerDashboard(PostALoadActivity.this, phone, true);
-                        }
-                    });
-                    //------------------------------------------------------------------------------------------
+                if (pick_up_date.getText().toString().isEmpty()) {
+                    Toast.makeText(PostALoadActivity.this, "Please select Pick-up Date", Toast.LENGTH_SHORT).show();
+                } else if (pick_up_time.getText().toString().isEmpty()) {
+                    Toast.makeText(PostALoadActivity.this, "Please select Pick-up Time", Toast.LENGTH_SHORT).show();
+                } else if (selectModel.getText().toString().isEmpty()) {
+                    Toast.makeText(PostALoadActivity.this, "Please select Body Type", Toast.LENGTH_SHORT).show();
+                } else if (select_capacity.getText().toString().isEmpty()) {
+                    Toast.makeText(PostALoadActivity.this, "Please select Load Type", Toast.LENGTH_SHORT).show();
+                } else if (pickUpAddressEdit.getText().toString().isEmpty()) {
+                    Toast.makeText(PostALoadActivity.this, "Please select / enter Pick-up Address", Toast.LENGTH_SHORT).show();
+                } else if (pickupPinCodeEdit.getText().toString().isEmpty()) {
+                    Toast.makeText(PostALoadActivity.this, "Please enter Pick-up PIN Code", Toast.LENGTH_SHORT).show();
+                } else if (pickUpStateText.getText().toString().isEmpty()) {
+                    Toast.makeText(PostALoadActivity.this, "Please select Pick-up State", Toast.LENGTH_SHORT).show();
+                } else if (pickUpCityText.getText().toString().isEmpty()) {
+                    Toast.makeText(PostALoadActivity.this, "Please select Pick-up City", Toast.LENGTH_SHORT).show();
+                } else if (dropAddressEdit.getText().toString().isEmpty()) {
+                    Toast.makeText(PostALoadActivity.this, "Please select / enter drop Address", Toast.LENGTH_SHORT).show();
+                } else if (dropPinCodeEdit.getText().toString().isEmpty()) {
+                    Toast.makeText(PostALoadActivity.this, "Please enter Drop PIN Code", Toast.LENGTH_SHORT).show();
+                } else if (dropStateText.getText().toString().isEmpty()) {
+                    Toast.makeText(PostALoadActivity.this, "Please select Drop State", Toast.LENGTH_SHORT).show();
+                } else if (dropCityText.getText().toString().isEmpty()) {
+                    Toast.makeText(PostALoadActivity.this, "Please select Drop City", Toast.LENGTH_SHORT).show();
+                } else if (setApproxDistance.getText().toString().isEmpty()) {
+                    Toast.makeText(PostALoadActivity.this, "Please wait until approx KM calculation", Toast.LENGTH_SHORT).show();
                 } else {
-                    saveLoad(createLoadRequest());
-                    //----------------------- Alert Dialog -------------------------------------------------
-                    Dialog alert = new Dialog(PostALoadActivity.this);
-                    alert.setContentView(R.layout.dialog_alert_single_button);
-                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                    lp.copyFrom(alert.getWindow().getAttributes());
-                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-                    lp.gravity = Gravity.CENTER;
-
-                    alert.show();
-                    alert.getWindow().setAttributes(lp);
-                    alert.setCancelable(false);
-
-                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-                    alertTitle.setText("Post a Load");
-                    alertMessage.setText("Load Posted Successfully");
-                    alertPositiveButton.setVisibility(View.GONE);
-                    alertNegativeButton.setText("OK");
-                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
-
-                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            alert.dismiss();
-                            JumpTo.goToCustomerDashboard(PostALoadActivity.this, phone, true);
+                    if (isEdit || reActivate) {
+                        if (isEdit) {
+                            UpdatePostLoadDetails.updatePickUpDate(loadId, pick_up_date.getText().toString());
+                            UpdatePostLoadDetails.updatePickUpTime(loadId, pick_up_time.getText().toString());
+                            UpdatePostLoadDetails.updateBudget(loadId, select_budget.getText().toString());
+                            UpdatePostLoadDetails.updateVehicleCapacity(loadId, select_capacity.getText().toString());
+                            UpdatePostLoadDetails.updateVehicleBodyType(loadId, selectModel.getText().toString());
+                            UpdatePostLoadDetails.updatePickUpCountry(loadId, "India");
+                            UpdatePostLoadDetails.updatePickUpAddress(loadId, pickUpAddressEdit.getText().toString());
+                            UpdatePostLoadDetails.updatePickUpPinCode(loadId, pickupPinCodeEdit.getText().toString());
+                            UpdatePostLoadDetails.updatePickUpState(loadId, pickUpStateText.getText().toString());
+                            UpdatePostLoadDetails.updatePickUpCity(loadId, pickUpCityText.getText().toString());
+                            UpdatePostLoadDetails.updateDropCountry(loadId, "India");
+                            UpdatePostLoadDetails.updateDropAddress(loadId, dropAddressEdit.getText().toString());
+                            UpdatePostLoadDetails.updateDropPinCode(loadId, dropPinCodeEdit.getText().toString());
+                            UpdatePostLoadDetails.updateDropState(loadId, dropStateText.getText().toString());
+                            UpdatePostLoadDetails.updateDropCity(loadId, dropCityText.getText().toString());
+                            UpdatePostLoadDetails.updateApproxKM(loadId, setApproxDistance.getText().toString());
+                            UpdatePostLoadDetails.updateNotes(loadId, note_to_post_load.getText().toString());
                         }
-                    });
-                    //------------------------------------------------------------------------------------------
+                        if (reActivate) {
+                            UpdatePostLoadDetails.updateStatus(loadId, "delete");
+                            saveLoad(createLoadRequest());
+                        }
+                        //----------------------- Alert Dialog -------------------------------------------------
+                        Dialog alert = new Dialog(PostALoadActivity.this);
+                        alert.setContentView(R.layout.dialog_alert_single_button);
+                        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                        lp.copyFrom(alert.getWindow().getAttributes());
+                        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                        lp.gravity = Gravity.CENTER;
+
+                        alert.show();
+                        alert.getWindow().setAttributes(lp);
+                        alert.setCancelable(false);
+
+                        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                        alertTitle.setText("Post a Load");
+                        alertMessage.setText("Load Updated Successfully");
+                        alertPositiveButton.setVisibility(View.GONE);
+                        alertNegativeButton.setText("OK");
+                        alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+
+                        alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                alert.dismiss();
+                                JumpTo.goToCustomerDashboard(PostALoadActivity.this, phone, true);
+                            }
+                        });
+                        //------------------------------------------------------------------------------------------
+                    } else {
+                        saveLoad(createLoadRequest());
+                        //----------------------- Alert Dialog -------------------------------------------------
+                        Dialog alert = new Dialog(PostALoadActivity.this);
+                        alert.setContentView(R.layout.dialog_alert_single_button);
+                        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                        lp.copyFrom(alert.getWindow().getAttributes());
+                        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                        lp.gravity = Gravity.CENTER;
+
+                        alert.show();
+                        alert.getWindow().setAttributes(lp);
+                        alert.setCancelable(false);
+
+                        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                        alertTitle.setText("Post a Load");
+                        alertMessage.setText("Load Posted Successfully");
+                        alertPositiveButton.setVisibility(View.GONE);
+                        alertNegativeButton.setText("OK");
+                        alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+
+                        alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                alert.dismiss();
+                                JumpTo.goToCustomerDashboard(PostALoadActivity.this, phone, true);
+                            }
+                        });
+                        //------------------------------------------------------------------------------------------
+                    }
                 }
             }
         });
@@ -818,7 +840,7 @@ public class PostALoadActivity extends AppCompatActivity {
         geoLocation.geLatLongPickUp(pickUpPinCode, getApplicationContext(), new GeoHandlerLatitude());
     }
 
-    public void calculateApproxKM(){
+    public void calculateApproxKM() {
         if (pickupPinCodeEdit.getText().toString().length() == 6 && dropPinCodeEdit.getText().toString().length() == 6) {
             new Thread(new Runnable() {
                 @Override
@@ -1038,9 +1060,9 @@ public class PostALoadActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (isPickDrop.equals("1")){
+        if (isPickDrop.equals("1")) {
             getCurrentLocation.setAddressAndPin(PostALoadActivity.this, data, pickUpAddressEdit, pickupPinCodeEdit);
-        }else if (isPickDrop.equals("2")){
+        } else if (isPickDrop.equals("2")) {
             getCurrentLocation.setAddressAndPin(PostALoadActivity.this, data, dropAddressEdit, dropPinCodeEdit);
         }
     }
@@ -1111,7 +1133,7 @@ public class PostALoadActivity extends AppCompatActivity {
                 getDropLocation(dropPinCodeEdit.getText().toString());
             }
 
-            if (pinCodeWatcherPickUp.length() == 6 && pinCodeWatcherDrop.length() == 6){
+            if (pinCodeWatcherPickUp.length() == 6 && pinCodeWatcherDrop.length() == 6) {
                 calculateApproxKM();
             }
         }
