@@ -2974,7 +2974,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         chooseDialog.getWindow().setAttributes(lp2);
 
         TextView cameraText = chooseDialog.findViewById(R.id.dialog_camera_text);
-        cameraText.setText(getString(R.string.Whats_App));
+        cameraText.setText("Whats App");
         TextView galleryText = chooseDialog.findViewById(R.id.dialog_photo_library_text);
         galleryText.setText(getString(R.string.Call));
 
