@@ -127,7 +127,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
     String isPersonalDetailsDone, isBankDetailsDone, isProfileAdded, profileImgUrlForRating, reasonForLowRate = "";
     float ratingGiven;
     int count = 0;
-    String img_type, numberOfBids, paymentMethod = "", paymentPercentage = "threePercent";
+    String img_type, paymentTypeFromAPI, numberOfBids, paymentMethod = "", paymentPercentage = "threePercent";
 
     View actionBar, bidsReceivedUnderline, bidsAcceptedUnderline;
     TextView actionBarTitle;
@@ -534,8 +534,6 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                         bidsReceivedModel.setPick_up_time(obj.getString("pick_up_time"));
                         bidsReceivedModel.setBudget(obj.getString("budget"));
                         bidsReceivedModel.setBid_status(obj.getString("bid_status"));
-                        bidsReceivedModel.setVehicle_model(obj.getString("vehicle_model"));
-                        bidsReceivedModel.setFeet(obj.getString("feet"));
                         bidsReceivedModel.setCapacity(obj.getString("capacity"));
                         bidsReceivedModel.setBody_type(obj.getString("body_type"));
                         bidsReceivedModel.setPick_add(obj.getString("pick_add"));
@@ -598,8 +596,6 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
         //-------------------------------------------Display Load Information---------------------------------------------
         TextView nameSP = (TextView) previewDialogAcceptANdBid.findViewById(R.id.dialog_accept_bit_service_provider_name);
-        TextView modelBySP = (TextView) previewDialogAcceptANdBid.findViewById(R.id.dialog_accept_bid_model_textview);
-        TextView feetBySP = (TextView) previewDialogAcceptANdBid.findViewById(R.id.dialog_accept_bid_feet_textview);
         TextView capacityBySP = (TextView) previewDialogAcceptANdBid.findViewById(R.id.dialog_accept_bid_capacity_textview);
         TextView bodyTypeBySP = (TextView) previewDialogAcceptANdBid.findViewById(R.id.dialog_accept_bid_body_type_textview);
         quoteBySp1 = (TextView) previewDialogAcceptANdBid.findViewById(R.id.dialog_accept_bid_bidder_quote_textview);
@@ -635,8 +631,6 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         Log.i("Load-id", obj.getIdpost_load());
 
         quoteBySp1.setText(obj.getSp_quote());
-        modelBySP.setText(obj.getVehicle_model());
-        feetBySP.setText(obj.getFeet());
         capacityBySP.setText(obj.getCapacity());
         bodyTypeBySP.setText(obj.getBody_type());
         notesBySP.setText(obj.getNotes());
@@ -1135,13 +1129,12 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
         //-------------------------------------------Display Load Information---------------------------------------------
         TextView nameSP = (TextView) acceptFinalBid.findViewById(R.id.dialog_accept_bit_service_provider_name);
-        TextView modelBySP = (TextView) acceptFinalBid.findViewById(R.id.dialog_accept_bid_model_textview);
-        TextView feetBySP = (TextView) acceptFinalBid.findViewById(R.id.dialog_accept_bid_feet_textview);
         TextView capacityBySP = (TextView) acceptFinalBid.findViewById(R.id.dialog_accept_bid_capacity_textview);
         TextView bodyTypeBySP = (TextView) acceptFinalBid.findViewById(R.id.dialog_accept_bid_body_type_textview);
         TextView quoteBySP = (TextView) acceptFinalBid.findViewById(R.id.dialog_accept_bid_bidder_quote_textview);
         TextView negotiableBySP = (TextView) acceptFinalBid.findViewById(R.id.dialog_accept_bid_negotiable_textview);
         TextView notesBySP = (TextView) acceptFinalBid.findViewById(R.id.dialog_accept_bid_received_notes_textview);
+        TextView headingLoad = (TextView) acceptFinalBid.findViewById(R.id.dialog_bid_now_loadId_heading);
 
         //----------------------------------------------------------
         String url = getString(R.string.baseURL) + "/user/" + obj.getUser_id();
@@ -1172,8 +1165,6 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         Log.i("Load-id", obj.getIdpost_load());
 
         quoteBySP.setText(obj.getSp_quote());
-        modelBySP.setText(obj.getVehicle_model());
-        feetBySP.setText(obj.getFeet());
         capacityBySP.setText(obj.getCapacity());
         bodyTypeBySP.setText(obj.getBody_type());
         notesBySP.setText(obj.getNotes());
@@ -1196,6 +1187,44 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
         submitResponseBtn.setEnabled(true);
         submitResponseBtn.setBackgroundResource((R.drawable.button_active));
 
+        //------------------------------------------------------------------------------------------
+        String url1 = getString(R.string.baseURL) + "/loadpost/getLoadDtByPostId/" + obj.getIdpost_load();
+        Log.i("URL: ", url1);
+
+        JsonObjectRequest request2 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    bidsList = new ArrayList<>();
+                    JSONArray bidsLists = response.getJSONArray("data");
+                    for (int i = 0; i < bidsLists.length(); i++) {
+                        JSONObject obj = bidsLists.getJSONObject(i);
+                        String pickupCity = obj.getString("pick_city");
+                        String dropCity = obj.getString("drop_city");
+
+                        paymentTypeFromAPI = obj.getString("payment_type");
+                        if (paymentTypeFromAPI.equals("Payment Method: " + "To Pay(Pay while Unloading)")){
+                            paymentMethod = "ToPay";
+                        }else if (paymentTypeFromAPI.equals("Payment Method: " + "To be Billed (Pay to Truck Owner / Broker / Driver)")){
+                            paymentMethod = "ToBeBilled";
+                        }else{
+                            paymentMethod = "PayNow";
+                        }
+                        headingLoad.setText("Load Details: "+pickupCity+"-"+dropCity+"-000");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request2);
+        //------------------------------------------------------------------------------------------
+
         submitResponseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -1205,7 +1234,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                 noteForUpdate = notesCustomer.getText().toString();
                 quoteForUpdate = obj.getSp_quote();
                 //----------------------------------------------------------------------------------
-                //----------------------- Alert Dialog -------------------------------------------------
+                //----------------------- Alert Dialog ---------------------------------------------
                 Dialog alert = new Dialog(CustomerDashboardActivity.this);
                 alert.setContentView(R.layout.dialog_payment);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -1223,82 +1252,34 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
                 RadioButton toPay, payNow, toBeBilled;
                 toPay = alert.findViewById(R.id.dialog_payment_to_pay_radio_button);
+                toPay.setVisibility(View.GONE);
                 payNow = alert.findViewById(R.id.dialog_payment_pay_now_radio_button);
+                payNow.setVisibility(View.GONE);
                 toBeBilled = alert.findViewById(R.id.dialog_payment_to_be_billed_radio_button);
+                toBeBilled.setVisibility(View.GONE);
 
-                RadioButton threePercentage, onePercentage, fullAmountPay;
+                EditText advancePercentage = (EditText) alert.findViewById(R.id.dialog_payment_advance_percentages);
+                advancePercentage.setVisibility(View.GONE);
+
+                RadioButton threePercentage, onePercentage;
                 threePercentage = alert.findViewById(R.id.dialog_payment_three_percent_radio_button);
                 onePercentage = alert.findViewById(R.id.dialog_payment_one_percent_radio_button);
-                fullAmountPay = alert.findViewById(R.id.dialog_payment_full_amount_radio_button);
 
                 View stepOne, stepTwo;
                 stepOne = alert.findViewById(R.id.dialog_payment_step_one_view);
                 stepTwo = alert.findViewById(R.id.dialog_payment_step_two_view);
+                stepTwo.setVisibility(View.VISIBLE);
 
-                TextView payButton, cancelButton;
+                TextView payButton, cancelButton, paymentMethodText;
                 payButton = alert.findViewById(R.id.dialog_payment_pay_button);
                 cancelButton = alert.findViewById(R.id.dialog_payment_cancel_button);
+                paymentMethodText = (TextView) alert.findViewById(R.id.dialog_payment_payment_method_text);
+                paymentMethodText.setVisibility(View.GONE);
 
                 ImageView infoThreePercentage, infoOnePercentage;
                 infoOnePercentage = alert.findViewById(R.id.dialog_payment_info_one_percent_button);
                 infoThreePercentage = alert.findViewById(R.id.dialog_payment_info_three_percent_button);
 
-                toPay.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        paymentMethod = "ToPay";
-                        toPay.setChecked(true);
-                        payNow.setChecked(false);
-                        toBeBilled.setChecked(false);
-                        fullAmountPay.setVisibility(View.GONE);
-
-                        if (paymentMethod.equals("ToPay") || paymentMethod.equals("PayNow") || paymentMethod.equals("ToBeBilled") && paymentPercentage.equals("threePercent") || paymentPercentage.equals("onePercent")) {
-                            payButton.setBackgroundResource((R.drawable.button_active));
-                            stepTwo.setVisibility(View.VISIBLE);
-                        } else {
-                            payButton.setBackgroundResource((R.drawable.button_de_active));
-                            stepTwo.setVisibility(View.INVISIBLE);
-                        }
-                    }
-                });
-
-                payNow.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        paymentMethod = "PayNow";
-                        toPay.setChecked(false);
-                        payNow.setChecked(true);
-                        toBeBilled.setChecked(false);
-                        fullAmountPay.setVisibility(View.VISIBLE);
-
-                        if (paymentMethod.equals("ToPay") || paymentMethod.equals("PayNow") || paymentMethod.equals("ToBeBilled") && paymentPercentage.equals("threePercent") || paymentPercentage.equals("onePercent")) {
-                            payButton.setBackgroundResource((R.drawable.button_active));
-                            stepTwo.setVisibility(View.VISIBLE);
-                        } else {
-                            payButton.setBackgroundResource((R.drawable.button_de_active));
-                            stepTwo.setVisibility(View.INVISIBLE);
-                        }
-                    }
-                });
-
-                toBeBilled.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        paymentMethod = "ToBeBilled";
-                        toPay.setChecked(false);
-                        payNow.setChecked(false);
-                        toBeBilled.setChecked(true);
-                        fullAmountPay.setVisibility(View.GONE);
-
-                        if (paymentMethod.equals("ToPay") || paymentMethod.equals("PayNow") || paymentMethod.equals("ToBeBilled") && paymentPercentage.equals("threePercent") || paymentPercentage.equals("onePercent")) {
-                            payButton.setBackgroundResource((R.drawable.button_active));
-                            stepTwo.setVisibility(View.VISIBLE);
-                        } else {
-                            payButton.setBackgroundResource((R.drawable.button_de_active));
-                            stepTwo.setVisibility(View.INVISIBLE);
-                        }
-                    }
-                });
 
                 threePercentage.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -1321,6 +1302,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                 payButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Log.i("Payment Method From API", paymentMethod);
                         if (paymentMethod.equals("ToPay") || paymentMethod.equals("PayNow") || paymentMethod.equals("ToBeBilled") && paymentPercentage.equals("threePercent") || paymentPercentage.equals("onePercent")) {
                             if (paymentMethod.equals("ToPay") && paymentPercentage.equals("threePercent")) {
 
@@ -1332,16 +1314,59 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                                 Log.i("Amount 3%", String.valueOf(finalQuote));
 
 //                                makePayment(customerNameAPI, String.valueOf(finalQuote), customerEmail, s1);
-                                AlertDialog.Builder builder = new AlertDialog.Builder(CustomerDashboardActivity.this);
-                                builder.setTitle("Amount | To Pay 3%");
-                                builder.setMessage(String.valueOf(finalQuote));
-                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                AlertDialog.Builder builder = new AlertDialog.Builder(CustomerDashboardActivity.this);
+//                                builder.setTitle("Amount | To Pay 3%");
+//                                builder.setMessage(String.valueOf(finalQuote));
+//                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialogInterface, int i) {
+//                                        makePayment(customerNameAPI, String.valueOf(finalQuote), customerEmail, s1);
+//                                    }
+//                                });
+//                                builder.show();
+
+                                //------------------------------------------------------------------
+                                Dialog alert = new Dialog(CustomerDashboardActivity.this);
+                                alert.setContentView(R.layout.dialog_alert);
+                                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                                lp.copyFrom(alert.getWindow().getAttributes());
+                                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                                lp.gravity = Gravity.CENTER;
+
+                                alert.show();
+                                alert.getWindow().setAttributes(lp);
+                                alert.setCancelable(false);
+
+                                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                                alertMessage.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+                                alertTitle.setText("Make Payment");
+                                alertMessage.setText("Payment Details\n\n" +
+                                        "FYT Platform Charges 3%.              ₹     "+finalQuote+"\n" +
+                                        "(-) FYT Promotional Discount 3%.  ₹   - "+finalQuote+"\n\n" +
+                                        "Your Final Payment                        ₹       0.00");
+                                alertPositiveButton.setText("Pay");
+                                alertNegativeButton.setText("Cancel");
+
+                                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                                     @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        makePayment(customerNameAPI, String.valueOf(finalQuote), customerEmail, s1);
+                                    public void onClick(View view) {
+                                        alert.dismiss();
                                     }
                                 });
-                                builder.show();
+
+                                alertPositiveButton.setOnClickListener(view1 -> {
+                                    alert.dismiss();
+                                    updateAfterSuccess(loadIdForUpdate, spBidIdForUpdate, noteForUpdate, quoteForUpdate);
+                                    RearrangeItems();
+                                });
+                                //------------------------------------------------------------------
+
                             } else if (paymentMethod.equals("ToPay") && paymentPercentage.equals("onePercent")) {
 
                                 String valueInString = totalQuote;
@@ -1352,16 +1377,57 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                                 Log.i("Amount 1%", String.valueOf(finalQuote));
 
 //                                makePayment(customerNameAPI, String.valueOf(finalQuote), customerEmail, s1);
-                                AlertDialog.Builder builder = new AlertDialog.Builder(CustomerDashboardActivity.this);
-                                builder.setTitle("Amount | To Pay 1%");
-                                builder.setMessage(String.valueOf(finalQuote));
-                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                AlertDialog.Builder builder = new AlertDialog.Builder(CustomerDashboardActivity.this);
+//                                builder.setTitle("Amount | To Pay 1%");
+//                                builder.setMessage(String.valueOf(finalQuote));
+//                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialogInterface, int i) {
+//                                        makePayment(customerNameAPI, String.valueOf(finalQuote), customerEmail, s1);
+//                                    }
+//                                });
+//                                builder.show();
+                                //------------------------------------------------------------------
+                                Dialog alert = new Dialog(CustomerDashboardActivity.this);
+                                alert.setContentView(R.layout.dialog_alert);
+                                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                                lp.copyFrom(alert.getWindow().getAttributes());
+                                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                                lp.gravity = Gravity.CENTER;
+
+                                alert.show();
+                                alert.getWindow().setAttributes(lp);
+                                alert.setCancelable(false);
+
+                                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                                alertMessage.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+                                alertTitle.setText("Make Payment");
+                                alertMessage.setText("Payment Details\n\n" +
+                                        "FYT Platform Charges 1%.              ₹     "+finalQuote+"\n" +
+                                        "(-) FYT Promotional Discount 1%.  ₹   - "+finalQuote+"\n\n" +
+                                        "Your Final Payment                       ₹       0.00");
+                                alertPositiveButton.setText("Pay");
+                                alertNegativeButton.setText("Cancel");
+
+                                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                                     @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        makePayment(customerNameAPI, String.valueOf(finalQuote), customerEmail, s1);
+                                    public void onClick(View view) {
+                                        alert.dismiss();
                                     }
                                 });
-                                builder.show();
+
+                                alertPositiveButton.setOnClickListener(view1 -> {
+                                    alert.dismiss();
+                                    updateAfterSuccess(loadIdForUpdate, spBidIdForUpdate, noteForUpdate, quoteForUpdate);
+                                    RearrangeItems();
+                                });
+                                //------------------------------------------------------------------
                             } else if (paymentMethod.equals("ToBeBilled") && paymentPercentage.equals("threePercent")) {
 
                                 String valueInString = totalQuote;
@@ -1372,16 +1438,57 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                                 Log.i("Amount 3%", String.valueOf(finalQuote));
 
 //                                makePayment(customerNameAPI, String.valueOf(finalQuote), customerEmail, s1);
-                                AlertDialog.Builder builder = new AlertDialog.Builder(CustomerDashboardActivity.this);
-                                builder.setTitle("Amount | To Be Billed 3%");
-                                builder.setMessage(String.valueOf(finalQuote));
-                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                AlertDialog.Builder builder = new AlertDialog.Builder(CustomerDashboardActivity.this);
+//                                builder.setTitle("Amount | To Be Billed 3%");
+//                                builder.setMessage(String.valueOf(finalQuote));
+//                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialogInterface, int i) {
+//                                        makePayment(customerNameAPI, String.valueOf(finalQuote), customerEmail, s1);
+//                                    }
+//                                });
+//                                builder.show();
+                                //------------------------------------------------------------------
+                                Dialog alert = new Dialog(CustomerDashboardActivity.this);
+                                alert.setContentView(R.layout.dialog_alert);
+                                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                                lp.copyFrom(alert.getWindow().getAttributes());
+                                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                                lp.gravity = Gravity.CENTER;
+
+                                alert.show();
+                                alert.getWindow().setAttributes(lp);
+                                alert.setCancelable(false);
+
+                                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                                alertMessage.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+                                alertTitle.setText("Make Payment");
+                                alertMessage.setText("Payment Details\n\n" +
+                                        "FYT Platform Charges 3%.              ₹     "+finalQuote+"\n" +
+                                        "(-) FYT Promotional Discount 3%.  ₹   - "+finalQuote+"\n\n" +
+                                        "Your Final Payment                        ₹       0.00");
+                                alertPositiveButton.setText("Pay");
+                                alertNegativeButton.setText("Cancel");
+
+                                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                                     @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        makePayment(customerNameAPI, String.valueOf(finalQuote), customerEmail, s1);
+                                    public void onClick(View view) {
+                                        alert.dismiss();
                                     }
                                 });
-                                builder.show();
+
+                                alertPositiveButton.setOnClickListener(view1 -> {
+                                    alert.dismiss();
+                                    updateAfterSuccess(loadIdForUpdate, spBidIdForUpdate, noteForUpdate, quoteForUpdate);
+                                    RearrangeItems();
+                                });
+                                //------------------------------------------------------------------
                             } else if (paymentMethod.equals("ToBeBilled") && paymentPercentage.equals("onePercent")) {
 
                                 String valueInString = totalQuote;
@@ -1392,56 +1499,183 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                                 Log.i("Amount 1%", String.valueOf(finalQuote));
 
 //                                makePayment(customerNameAPI, String.valueOf(finalQuote), customerEmail, s1);
-                                AlertDialog.Builder builder = new AlertDialog.Builder(CustomerDashboardActivity.this);
-                                builder.setTitle(getString(R.string.Amount_To_Be_Billed_1));
-                                builder.setMessage(String.valueOf(finalQuote));
-                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                AlertDialog.Builder builder = new AlertDialog.Builder(CustomerDashboardActivity.this);
+//                                builder.setTitle(getString(R.string.Amount_To_Be_Billed_1));
+//                                builder.setMessage(String.valueOf(finalQuote));
+//                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialogInterface, int i) {
+//                                        makePayment(customerNameAPI, String.valueOf(finalQuote), customerEmail, s1);
+//                                    }
+//                                });
+//                                builder.show();
+                                //------------------------------------------------------------------
+                                Dialog alert = new Dialog(CustomerDashboardActivity.this);
+                                alert.setContentView(R.layout.dialog_alert);
+                                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                                lp.copyFrom(alert.getWindow().getAttributes());
+                                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                                lp.gravity = Gravity.CENTER;
+
+                                alert.show();
+                                alert.getWindow().setAttributes(lp);
+                                alert.setCancelable(false);
+
+                                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                                alertMessage.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+                                alertTitle.setText("Make Payment");
+                                alertMessage.setText("Payment Details\n\n" +
+                                        "FYT Platform Charges 1%.              ₹     "+finalQuote+"\n" +
+                                        "(-) FYT Promotional Discount 1%.  ₹   - "+finalQuote+"\n\n" +
+                                        "Your Final Payment                       ₹       0.00");
+                                alertPositiveButton.setText("Pay");
+                                alertNegativeButton.setText("Cancel");
+
+                                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                                     @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        makePayment(customerNameAPI, String.valueOf(finalQuote), customerEmail, s1);
+                                    public void onClick(View view) {
+                                        alert.dismiss();
                                     }
                                 });
-                                builder.show();
+
+                                alertPositiveButton.setOnClickListener(view1 -> {
+                                    alert.dismiss();
+                                    updateAfterSuccess(loadIdForUpdate, spBidIdForUpdate, noteForUpdate, quoteForUpdate);
+                                    RearrangeItems();
+                                });
+                                //------------------------------------------------------------------
                             } else if (paymentMethod.equals("PayNow") && paymentPercentage.equals("threePercent")) {
                                 String valueInString = totalQuote;
+                                float percentInFloat = Float.parseFloat(paymentTypeFromAPI);
                                 float num = parseFloat(valueInString);
                                 float val = (float) (num - (num * .03));
+                                float percentVal = (float) (num - (num * percentInFloat/100));
 
                                 float semiFinalQuote = num - val;
                                 float finalQuote = num + semiFinalQuote;
                                 Log.i("Amount 3%", String.valueOf(finalQuote));
 
 //                                makePayment(customerNameAPI, String.valueOf(finalQuote), customerEmail, s1);
-                                AlertDialog.Builder builder = new AlertDialog.Builder(CustomerDashboardActivity.this);
-                                builder.setTitle(getString(R.string.Amount_Pay_Now_3));
-                                builder.setMessage(String.valueOf(finalQuote));
-                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                AlertDialog.Builder builder = new AlertDialog.Builder(CustomerDashboardActivity.this);
+//                                builder.setTitle(getString(R.string.Amount_Pay_Now_3));
+//                                builder.setMessage(String.valueOf(num + " " + semiFinalQuote));
+//                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialogInterface, int i) {
+//                                        makePayment(customerNameAPI, String.valueOf(finalQuote), customerEmail, s1);
+//                                    }
+//                                });
+//                                builder.show();
+                                //------------------------------------------------------------------
+                                Dialog alert = new Dialog(CustomerDashboardActivity.this);
+                                alert.setContentView(R.layout.dialog_alert);
+                                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                                lp.copyFrom(alert.getWindow().getAttributes());
+                                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                                lp.gravity = Gravity.CENTER;
+
+                                alert.show();
+                                alert.getWindow().setAttributes(lp);
+                                alert.setCancelable(false);
+
+                                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                                alertMessage.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+                                alertTitle.setText("Make Payment");
+                                alertMessage.setText("Payment Details\n\n" +
+                                        "Advance Payment "+paymentTypeFromAPI+"%                  ₹     "+percentVal+"\n"+
+                                        "FYT Platform Charges 3%.              ₹     "+semiFinalQuote+"\n" +
+                                        "(-) FYT Promotional Discount 3%.  ₹   - "+semiFinalQuote+"\n\n" +
+                                        "Your Final Payment                        ₹       0.00");
+                                alertPositiveButton.setText("Pay");
+                                alertNegativeButton.setText("Cancel");
+
+                                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                                     @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        makePayment(customerNameAPI, String.valueOf(finalQuote), customerEmail, s1);
+                                    public void onClick(View view) {
+                                        alert.dismiss();
                                     }
                                 });
-                                builder.show();
+
+                                alertPositiveButton.setOnClickListener(view1 -> {
+                                    alert.dismiss();
+                                    makePayment(customerNameAPI, String.valueOf(percentVal), customerEmail, s1);
+                                });
+                                //------------------------------------------------------------------
                             } else if (paymentMethod.equals("PayNow") && paymentPercentage.equals("onePercent")) {
                                 String valueInString = totalQuote;
+                                float percentInFloat = Float.parseFloat(paymentTypeFromAPI);
                                 float num = parseFloat(valueInString);
                                 float val = (float) (num - (num * .01));
+                                float percentVal = (float) (num - (num * percentInFloat/100));
 
                                 float semiFinalQuote = num - val;
                                 float finalQuote = num + semiFinalQuote;
                                 Log.i("Amount 3%", String.valueOf(finalQuote));
 
 //                                makePayment(customerNameAPI, String.valueOf(finalQuote), customerEmail, s1);
-                                AlertDialog.Builder builder = new AlertDialog.Builder(CustomerDashboardActivity.this);
-                                builder.setTitle(getString(R.string.Amount_To_Be_Billed_1));
-                                builder.setMessage(String.valueOf(finalQuote));
-                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                AlertDialog.Builder builder = new AlertDialog.Builder(CustomerDashboardActivity.this);
+//                                builder.setTitle(getString(R.string.Amount_To_Be_Billed_1));
+//                                builder.setMessage(String.valueOf(num + " " + semiFinalQuote));
+//                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialogInterface, int i) {
+//                                        makePayment(customerNameAPI, String.valueOf(finalQuote), customerEmail, s1);
+//                                    }
+//                                });
+//                                builder.show();
+                                //------------------------------------------------------------------
+                                Dialog alert = new Dialog(CustomerDashboardActivity.this);
+                                alert.setContentView(R.layout.dialog_alert);
+                                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                                lp.copyFrom(alert.getWindow().getAttributes());
+                                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                                lp.gravity = Gravity.CENTER;
+
+                                alert.show();
+                                alert.getWindow().setAttributes(lp);
+                                alert.setCancelable(false);
+
+                                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                                alertMessage.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+                                alertTitle.setText("Make Payment");
+                                alertMessage.setText("Payment Details\n\n" +
+                                        "Advance Payment "+paymentTypeFromAPI+"%                  ₹     "+percentVal+"\n"+
+                                        "FYT Platform Charges 1%.              ₹     "+semiFinalQuote+"\n" +
+                                        "(-) FYT Promotional Discount 1%.  ₹   - "+semiFinalQuote+"\n\n" +
+                                        "Your Final Payment                       ₹       0.00");
+                                alertPositiveButton.setText("Pay");
+                                alertNegativeButton.setText("Cancel");
+
+                                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                                     @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        makePayment(customerNameAPI, String.valueOf(finalQuote), customerEmail, s1);
+                                    public void onClick(View view) {
+                                        alert.dismiss();
                                     }
                                 });
-                                builder.show();
+
+                                alertPositiveButton.setOnClickListener(view1 -> {
+                                    alert.dismiss();
+                                    makePayment(customerNameAPI, String.valueOf(percentVal), customerEmail, s1);
+                                });
+                                //------------------------------------------------------------------
                             }
                         }
                     }
@@ -1614,8 +1848,6 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
 
         //-------------------------------------------Display Load Information---------------------------------------------
         TextView nameSP = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bit_service_provider_name);
-        TextView modelBySP = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_model_textview);
-        TextView feetBySP = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_feet_textview);
         TextView capacityBySP = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_capacity_textview);
         TextView bodyTypeBySP = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_body_type_textview);
         TextView quoteBySP = (TextView) viewConsignmentCustomer.findViewById(R.id.dialog_accept_bid_bidder_quote_textview);
@@ -1689,8 +1921,6 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                                         spQuoteByApi = obj.getString("sp_quote");
                                         customerQuote.setText(spQuoteByApi);
                                         quoteBySP.setText(spQuoteByApi);
-                                        modelBySP.setText(obj.getString("vehicle_model"));
-                                        feetBySP.setText(obj.getString("feet"));
                                         capacityBySP.setText(obj.getString("capacity"));
                                         bodyTypeBySP.setText(obj.getString("body_type"));
                                     }

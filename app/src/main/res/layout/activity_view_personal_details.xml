@@ -108,6 +108,7 @@
                     android:layout_marginEnd="8dp"
                     android:background="@drawable/edit_text_border_grey"
                     android:paddingStart="10dp"
+                    android:paddingEnd="5dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="Address"
@@ -122,6 +123,7 @@
                     android:id="@+id/view_personal_details_firm_name_text_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="8dp"
                     android:background="@drawable/edit_text_border_grey"
                     android:paddingStart="10dp"
@@ -135,7 +137,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/view_personal_details_firm_address_text_view"
-                    app:layout_constraintTop_toTopOf="@+id/view_personal_details_firm_name_title" />
+                    app:layout_constraintTop_toBottomOf="@+id/view_personal_details_firm_btn" />
 
                 <TextView
                     android:id="@+id/view_personal_details_firm_address_text_view"

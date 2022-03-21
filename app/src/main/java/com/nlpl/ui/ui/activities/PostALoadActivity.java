@@ -1,14 +1,18 @@
 package com.nlpl.ui.ui.activities;
 
+import static java.lang.Float.parseFloat;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -33,6 +37,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -90,11 +95,11 @@ public class PostALoadActivity extends AppCompatActivity {
     TextView pick_up_date, dropAddressText, pickAddressText, pick_up_time, select_budget, selectModel, select_capacity;
     EditText note_to_post_load, pickUpAddressEdit, pickupPinCodeEdit, dropAddressEdit, dropPinCodeEdit;
 
-    String phone, userId, selectedState, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI, customerBudget, sDate, eDate, monthS, monthE, startingDate, endingDate, todayDate;
+    String phone, advancePercentageInt, userId, paymentMethod = "", selectedState, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI, customerBudget, sDate, eDate, monthS, monthE, startingDate, endingDate, todayDate;
     int sMonth, eMonth, count, startCount;
     Date currentDate, date1, date2, date3, date4;
     ArrayList currentSepDate;
-    TextView setApproxDistance, deleteLoad, pickUpStateText, pickUpCityText, dropStateText, dropCityText;
+    TextView setApproxDistance, paymentMethodText, deleteLoad, pickUpStateText, pickUpCityText, dropStateText, dropCityText;
     long startD, endD, todayD, diff, diff1;
     Dialog setBudget;
 
@@ -152,6 +157,7 @@ public class PostALoadActivity extends AppCompatActivity {
         deleteLoad = findViewById(R.id.delete_load_in_post_a_load);
         dropAddressText = findViewById(R.id.post_a_load_enter_drop_location);
         pickAddressText = findViewById(R.id.post_a_load_enter_pick_location);
+        paymentMethodText = (TextView) findViewById(R.id.post_a_load_payment_method_text);
 
         pickUpAddressEdit = (EditText) findViewById(R.id.post_a_load_address_edit_pick_up);
         pickupPinCodeEdit = (EditText) findViewById(R.id.post_a_load_pin_code_edit_pick_up);
@@ -319,6 +325,8 @@ public class PostALoadActivity extends AppCompatActivity {
                     Toast.makeText(PostALoadActivity.this, "Please select Drop State", Toast.LENGTH_SHORT).show();
                 } else if (dropCityText.getText().toString().isEmpty()) {
                     Toast.makeText(PostALoadActivity.this, "Please select Drop City", Toast.LENGTH_SHORT).show();
+                } else if (paymentMethodText.getText().toString().equals("Payment Method:")) {
+                    Toast.makeText(PostALoadActivity.this, "Please select Payment Method", Toast.LENGTH_SHORT).show();
                 } else if (setApproxDistance.getText().toString().isEmpty()) {
                     Toast.makeText(PostALoadActivity.this, "Please wait until approx KM calculation", Toast.LENGTH_SHORT).show();
                 } else {
@@ -341,6 +349,11 @@ public class PostALoadActivity extends AppCompatActivity {
                             UpdatePostLoadDetails.updateDropCity(loadId, dropCityText.getText().toString());
                             UpdatePostLoadDetails.updateApproxKM(loadId, setApproxDistance.getText().toString());
                             UpdatePostLoadDetails.updateNotes(loadId, note_to_post_load.getText().toString());
+                            if (paymentMethod.equals("PayNow")) {
+                                UpdatePostLoadDetails.updatePaymentMethod(loadId, advancePercentageInt);
+                            } else {
+                                UpdatePostLoadDetails.updatePaymentMethod(loadId, paymentMethodText.getText().toString());
+                            }
                         }
                         if (reActivate) {
                             UpdatePostLoadDetails.updateStatus(loadId, "delete");
@@ -737,6 +750,12 @@ public class PostALoadActivity extends AppCompatActivity {
         postLoadRequest.setSp_count(0);
         postLoadRequest.setKm_approx(setApproxDistance.getText().toString());
         postLoadRequest.setNotes_meterial_des(note_to_post_load.getText().toString());
+        if (paymentMethod.equals("PayNow")) {
+            postLoadRequest.setPayment_type(advancePercentageInt);
+        } else {
+            postLoadRequest.setPayment_type(paymentMethodText.getText().toString());
+        }
+
         if (reActivate) {
             postLoadRequest.setBid_status("loadReactivated");
         } else {
@@ -787,6 +806,7 @@ public class PostALoadActivity extends AppCompatActivity {
                         String dropCountry = obj.getString("drop_country");
                         String approxKM = obj.getString("km_approx");
                         String notesFromLP = obj.getString("notes_meterial_des");
+                        String paymentMethodAPI = obj.getString("payment_type");
 
                         pick_up_date.setText(pickUpDate);
                         pick_up_time.setText(pickUpTime);
@@ -811,6 +831,7 @@ public class PostALoadActivity extends AppCompatActivity {
                         dropPinCode = dropPinCodes;
                         dropPinCodeEdit.setText(dropPinCodes);
                         note_to_post_load.setText(notesFromLP);
+                        paymentMethodText.setText(paymentMethodAPI);
                     }
 
                 } catch (JSONException e) {
@@ -946,6 +967,121 @@ public class PostALoadActivity extends AppCompatActivity {
                 SelectVehicleType.selectLoadType(PostALoadActivity.this, selectModel.getText().toString(), select_capacity);
                 break;
         }
+    }
+
+    public void onClickPaymentMethod(View view) {
+        //----------------------- Alert Dialog ---------------------------------------------
+        Dialog alert = new Dialog(PostALoadActivity.this);
+        alert.setContentView(R.layout.dialog_payment);
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(alert.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        alert.show();
+        alert.getWindow().setAttributes(lp);
+        alert.setCancelable(false);
+
+        RadioButton toPay, payNow, toBeBilled;
+        toPay = alert.findViewById(R.id.dialog_payment_to_pay_radio_button);
+        payNow = alert.findViewById(R.id.dialog_payment_pay_now_radio_button);
+        toBeBilled = alert.findViewById(R.id.dialog_payment_to_be_billed_radio_button);
+
+        RadioButton threePercentage, onePercentage;
+        threePercentage = alert.findViewById(R.id.dialog_payment_three_percent_radio_button);
+        threePercentage.setVisibility(View.GONE);
+        onePercentage = alert.findViewById(R.id.dialog_payment_one_percent_radio_button);
+        onePercentage.setVisibility(View.GONE);
+
+        TextView chargesText;
+        chargesText = alert.findViewById(R.id.dialog_payment_charges_text);
+        chargesText.setVisibility(View.GONE);
+
+        View stepOne, stepTwo, underlineBetween;
+        stepOne = alert.findViewById(R.id.dialog_payment_step_one_view);
+        stepOne.setVisibility(View.INVISIBLE);
+        stepTwo = alert.findViewById(R.id.dialog_payment_step_two_view);
+        stepTwo.setVisibility(View.INVISIBLE);
+        underlineBetween = alert.findViewById(R.id.dialog_payment_underline);
+        underlineBetween.setVisibility(View.GONE);
+
+        TextView payButton, cancelButton;
+        payButton = alert.findViewById(R.id.dialog_payment_pay_button);
+        payButton.setText(getString(R.string.ok));
+        cancelButton = alert.findViewById(R.id.dialog_payment_cancel_button);
+
+        ImageView infoThreePercentage, infoOnePercentage;
+        infoOnePercentage = alert.findViewById(R.id.dialog_payment_info_one_percent_button);
+        infoOnePercentage.setVisibility(View.GONE);
+        infoThreePercentage = alert.findViewById(R.id.dialog_payment_info_three_percent_button);
+        infoThreePercentage.setVisibility(View.GONE);
+
+        EditText advancePercentage;
+        advancePercentage = alert.findViewById(R.id.dialog_payment_advance_percentages);
+
+        toPay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                paymentMethod = "ToPay";
+                toPay.setChecked(true);
+                payNow.setChecked(false);
+                toBeBilled.setChecked(false);
+            }
+        });
+
+        payNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                paymentMethod = "PayNow";
+                toPay.setChecked(false);
+                payNow.setChecked(true);
+                toBeBilled.setChecked(false);
+            }
+        });
+
+        toBeBilled.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                paymentMethod = "ToBeBilled";
+                toPay.setChecked(false);
+                payNow.setChecked(false);
+                toBeBilled.setChecked(true);
+            }
+        });
+
+        payButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (paymentMethod) {
+                    case "ToPay":
+                        alert.dismiss();
+                        paymentMethodText.setText("Payment Method: " + "To Pay(Pay while Unloading)");
+                        break;
+                    case "PayNow":
+                        if (advancePercentage.getText().toString().isEmpty()) {
+                            Toast.makeText(PostALoadActivity.this, "Please enter advance payment percentage (%)", Toast.LENGTH_SHORT).show();
+                        } else {
+                            alert.dismiss();
+                            paymentMethodText.setText("Payment Method: " + "Pay " + advancePercentage.getText().toString() + "% in Advance");
+                        }
+                        advancePercentageInt = advancePercentage.getText().toString();
+                        break;
+                    case "ToBeBilled":
+                        alert.dismiss();
+                        paymentMethodText.setText("Payment Method: " + "To be Billed (Pay to Truck Owner / Broker / Driver)");
+                        break;
+                }
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+            }
+        });
     }
 
     private class GeoHandlerLatitude extends Handler {

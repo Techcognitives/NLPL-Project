@@ -917,6 +917,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         modelLoadNotification.setKm_approx(obj.getString("km_approx"));
                         modelLoadNotification.setNotes_meterial_des(obj.getString("notes_meterial_des"));
                         modelLoadNotification.setBid_ends_at(obj.getString("bid_ends_at"));
+                        modelLoadNotification.setPayment_type(obj.getString("payment_type"));
 
                         if (obj.getString("bid_status").equals("loadPosted") || obj.getString("bid_status").equals("loadReactivated")) {
                             loadList.add(modelLoadNotification);
@@ -1103,6 +1104,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 TextView receivedNotes = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_received_notes_textview);
                 TextView loadIdHeading = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_loadId_heading);
                 arrowImage = (ImageView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_arrow_budget);
+                TextView paymentType = (TextView) previewDialogBidNow.findViewById(R.id.dialog_bid_now_customer_payment_method);
 
                 pickUpDate.setText(pick_up_date);
                 pickUpTime.setText(pick_up_time);
@@ -1113,6 +1115,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 pickUpLocation.setText(pick_up_location);
                 dropLocation.setText(drop_location);
                 receivedNotes.setText(received_notes_description);
+                paymentType.setText(obj.getPayment_type());
                 loadIdHeading.setText("Load Details: " + obj.getPick_city() + "-" + obj.getDrop_city() + "-000");
                 //----------------------------------------------------------------------------------------------------------------
 

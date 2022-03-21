@@ -136,7 +136,7 @@ public class OtpCodeActivity extends AppCompatActivity {
                 if (otp.length()==6){
                     //------------------------ Without OTP ---------------------------------------------
                     if (isEditPhone) {
-                        OtpCodeActivity.this.finish();
+                        JumpTo.goToViewPersonalDetailsActivity(OtpCodeActivity.this, userIdBundle, mobile, true);
                     } else {
                         checkPhoneInAPI(mobileNoFirebase);
                     }

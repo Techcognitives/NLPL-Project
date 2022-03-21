@@ -433,6 +433,8 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 boolean driver = driverButton.isChecked();
                 boolean broker = brokerButton.isChecked();
                 boolean customer = customerButton.isChecked();
+                personalView.setVisibility(View.VISIBLE);
+                panView.setVisibility(View.INVISIBLE);
 
                 if (!nameWatcher.isEmpty() && !stateWatcher.isEmpty() && !cityWatcher.isEmpty() && !pinCodeWatcher.isEmpty() && !addressWatcher.isEmpty() && !mobileWatcher.isEmpty() && !emailIdWatcher.isEmpty()) {
                     okButton.setEnabled(true);
@@ -443,11 +445,9 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
                 }
 
                 personalAddressButton.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
-                personalView.setBackgroundColor(getResources().getColor(R.color.dark_blue));
                 personalAndAddressView.setVisibility(View.VISIBLE);
 
                 panAndAadharButton.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
-                panView.setBackgroundColor(getResources().getColor(R.color.medium_blue));
                 panAndAadharView.setVisibility(View.GONE);
                 break;
 
@@ -455,13 +455,13 @@ public class PersonalDetailsAndIdProofActivity extends AppCompatActivity {
 
                 okButton.setEnabled(true);
                 okButton.setBackground(getDrawable(R.drawable.button_active));
+                personalView.setVisibility(View.INVISIBLE);
+                panView.setVisibility(View.VISIBLE);
 
                 panAndAadharButton.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
-                panView.setBackgroundColor(getResources().getColor(R.color.dark_blue));
                 panAndAadharView.setVisibility(View.VISIBLE);
 
                 personalAddressButton.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
-                personalView.setBackgroundColor(getResources().getColor(R.color.medium_blue));
                 personalAndAddressView.setVisibility(View.GONE);
                 break;
         }
