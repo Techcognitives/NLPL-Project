@@ -217,6 +217,8 @@
     <string name="Enter_Driving_License_Number">Enter Driving License Number</string>       //new
     <string name="Choose_any_of_the_following">Choose any of the following</string>         //new
     <string name="Photo_Library">Photo Library</string>             //new
+    <string name="Drivers_Bank_Details">Driver\'s Bank Details</string>          //new
+    <string name="Add_Drivers_Bank">+ Add Driver\'s Bank</string>           //new
 
 
 
@@ -227,6 +229,8 @@
     <string name="english">English</string>
     <string name="marathi">मराठी</string>
     <string name="hindi">हिंदी</string>
+    <string name="Language">Language</string>       //new
+
     //----------------------------------------------------------------------------------------------
 
     //-------------------------------------- Company Details ---------------------------------------
@@ -398,6 +402,7 @@
     <string name="Track">Track</string>                         //new
     <string name="Loads_Expired">Loads Expired</string>         //new
     <string name="Loads_Completed">Loads Completed</string>     //new
+    <string name="Payments">Payments</string>                   //new
 
     //----------------------------------------------------------------------------------------------
 
@@ -426,10 +431,32 @@
     <string name="Add_a_Driver">Add a Driver</string>
     <string name="Please_add_a_Driver_to_submit_your_response">Please add a Driver to submit your response</string>
     <string name="Select_Driver_to_Bid">Select Driver to Bid</string>
+    <string name="Loads_and_Trips">Loads and Trips</string>             //new
+    <string name="Trip_History">Trip History</string>                   //new
 
 
     //----------------------------------------------------------------------------------------------
 
+    //-------------------------------------------Payment--------------------------------------------
+    //new
+    <string name="Pay_and_Accept_Final_Offer">Pay and Accept Final Offer</string>
+    <string name="Select_Payment_Method">Select Payment Method</string>
+    <string name="To_Pay">To Pay (Pay while Unloading)</string>
+    <string name="Pay_Now">Pay Now (Pay in Advance)</string>
+    <string name="To_be_billed">To be billed (Pay to Truck Owner / Broker / Driver)</string>
+    <string name="Select_Platform_Charges">Select Platform Charges</string>
+    <string name="NLPL_will_take_ownership_of_delivery">3% NLPL will take end-to-end ownership of delivery</string>
+    <string name="Connect_with_Driver_Truck_Owner_Broker">1% Connect with Driver / Truck Owner / Broker</string>
+    <string name="Pay">Pay</string>
+    <string name="Please_add_Driver_Bank_Details">Please add Driver Bank Details</string>
+
+
+    //----------------------------------------------------------------------------------------------
+
+
+    //---------------------------- Customer Accept Bid Dialog --------------------------------------
+    <string name="declaration_lp"><b>Truck Owner / Driver Declaration:</b>\nI hereby declare, will reach Pick-up location 15 minutes prior Pick-up.\n\nI hereby declare, will provide appropriate Truck matching Load Poster requirement.</string>
+    //----------------------------------------------------------------------------------------------
 
 
 </resources>
