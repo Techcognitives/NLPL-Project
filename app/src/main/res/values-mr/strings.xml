@@ -30,10 +30,10 @@
     //----------------------------------------------------------------------------------------------
 
     //---------------------------- Registration Screen Activity ------------------------------------
-    <string name="name">नाम*</string>
+    <string name="name">Name*</string>
     <string name="name_hint">Enter your Name</string>
     <string name="email_id">Enter your Email ID (Optional)</string>
-    <string name="location">पत्ता*</string>
+    <string name="location">Address*</string>
     <string name="select_state">State</string>
     <string name="Select_State">Select State</string>       //new
     <string name="select_city">City</string>
@@ -58,7 +58,6 @@
     <string name="Register_Now">Register Now</string>
     <string name="Explore_Now">Explore Now</string>         //new
     <string name="Select_your_Role">Select your Role</string>       //new
-
 
     //----------------------------------------------------------------------------------------------
 
@@ -105,11 +104,7 @@
     <string name="Personal_Details_added_successfully">Personal Details added successfully</string>
     <string name="update_your_phone_number">Do you really want to update your phone number?</string>
     <string name="Firm_Details">Firm Details</string>
-    <string name="My_Trucks">My Trucks</string>
-    <string name="Driver_Licence">Driver Licence</string>
-    <string name="Driver_Selfie">Driver Selfie</string>
     <string name="Edit_Profile_Picture">Edit Profile Picture</string>       //new
-
 
     //----------------------------------------------------------------------------------------------
 
@@ -140,9 +135,7 @@
     <string name="Cancelled_Cheque">Cancelled Cheque*</string>
     <string name="OR">--------------------- OR ---------------------</string>   //new
 
-
-
-    //----------------------------------------------------------------------------------------------
+    //--------------------------------------------Done--------------------------------------------------
 
     //-------------------------------- Vehicle Details Activity ------------------------------------
     <string name="vehicle_number">Vehicle Number</string>
@@ -172,9 +165,11 @@
     <string name="You_cannot_bid_unless_you_have_a_Driver">You cannot bid unless you have a Driver</string>
     <string name="Assign_Truck">Assign Truck</string>
     <string name="ReAssign_Truck">Re-Assign Truck</string>
+    <string name="My_Trucks">My Trucks</string>
+    <string name="Driver_Licence">Driver Licence</string>
+    <string name="Driver_Selfie">Driver Selfie</string>
     <string name="Select_Load_Type">Select Load Type</string>       //new
     <string name="Selected_Body_Type_Load_Type">Selected Body Type &amp; Load Type</string>     //new
-
 
     //----------------------------------------------------------------------------------------------
 
@@ -220,10 +215,8 @@
     <string name="Enter_Driving_License_Number">Enter Driving License Number</string>       //new
     <string name="Choose_any_of_the_following">Choose any of the following</string>         //new
     <string name="Photo_Library">Photo Library</string>             //new
-    <string name="Drivers_Bank_Details">Driver\'s Bank Details</string>          //new
+    <string name="Drivers_Bank_Details">Driver\'s Bank Details</string>      //new
     <string name="Add_Drivers_Bank">+ Add Driver\'s Bank</string>           //new
-
-
 
     //----------------------------------------------------------------------------------------------
 
@@ -251,8 +244,7 @@
     <string name="Pvt_Ltd">Pvt. Ltd.</string>               //New
     <string name="Set_Address">Set Address</string>         //new
 
-
-    //----------------------------------------------------------------------------------------------
+    //---------------------------------------------Done-------------------------------------------------
 
     //--------------------------- Personal Details And Id Proof Activity ---------------------------
     <string name="personal">Personal &amp; Address</string>
@@ -274,7 +266,7 @@
     <string name="enterYourBudget">Enter Your Budget</string>
     <string name="budget">Budget</string>
     <string name="budgetRs">Budget ₹</string>
-    <string name="truckTypeAndCapacity">Truck Type &amp; Capacity*</string>
+    <string name="truckTypeAndCapacity">Truck Body &amp; Load Type*</string>
     <string name="SelectVehicleModel">Vehicle Model</string>
     <string name="bodyType">Body Type</string>
     <string name="Load_Type">Load Type</string>                     //new
@@ -302,6 +294,8 @@
     <string name="Bid_Now">Bid Now</string>
     <string name="View_Load_History">View Load\n History</string>
 
+
+
     //----------------------------------------------------------------------------------------------
 
     //--------------------------------------Bid_now dialog------------------------------------------
@@ -328,9 +322,9 @@
     <string name="distance">Distance</string>
     <string name="modelwithColon">Model:</string>
     <string name="model">Model:</string>
-    <string name="body">Body:</string>
+    <string name="body">Body: </string>
     <string name="selectAndAssignTruck">Assign a Truck &amp; Driver for this load</string>
-    <string name="yourQuote">Your Quote</string>
+    <string name="yourQuote">My Quote</string>
     <string name="negotiable">Negotiable</string>
     <string name="truck">Truck</string>
     <string name="feet">Feet</string>
@@ -363,7 +357,6 @@
     <string name="My_Final_Quote">My Final Quote</string>       //new
     <string name="Submit">Submit</string>                       //new
     <string name="Load">Load</string>                           //new
-
 
     //----------------------------------------------------------------------------------------------
 
@@ -456,7 +449,6 @@
     <string name="Pay">Pay</string>
     <string name="Please_add_Driver_Bank_Details">Please add Driver Bank Details</string>
 
-
     //----------------------------------------------------------------------------------------------
 
     //---------------------------- Rating --------------------------------------
@@ -471,6 +463,7 @@
     <string name="Did_not_deliver_on_time">Did not deliver on time</string>
     <string name="Goods_Damaged">Goods Damaged</string>
     <string name="Other">Other</string>
+
 
     //----------------------------------------------------------------------------------------------
 
