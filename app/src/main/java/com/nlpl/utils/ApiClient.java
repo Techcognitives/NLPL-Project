@@ -8,6 +8,7 @@ import com.nlpl.services.CompanyService;
 import com.nlpl.services.ImageService;
 import com.nlpl.services.ImageUploadService;
 import com.nlpl.services.PostLoadService;
+import com.nlpl.services.RatingService;
 import com.nlpl.services.UploadChequeService;
 import com.nlpl.services.UploadDriverLicenseService;
 import com.nlpl.services.UploadDriverSelfieService;
@@ -104,5 +105,9 @@ public class ApiClient {
     public static BidLoadService getBidLoadService() {
         BidLoadService bidLoadService = getRetrofit().create(BidLoadService.class);
         return bidLoadService;
+    }
+    public static RatingService getRatingService() {
+        RatingService ratingService = getRetrofit().create(RatingService.class);
+        return ratingService;
     }
 }
