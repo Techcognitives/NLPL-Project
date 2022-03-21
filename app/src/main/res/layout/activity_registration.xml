@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".ui.ui.activities.RegistrationActivity">
+    tools:context=".ui.activities.RegistrationActivity">
 
     <include
         android:id="@+id/registration_action_bar"

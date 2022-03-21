@@ -2,7 +2,6 @@ package com.nlpl.utils;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
@@ -12,7 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nlpl.R;
-import com.nlpl.ui.ui.activities.DriverDetailsActivity;
+import com.nlpl.ui.activities.DriverDetailsActivity;
 
 public class SelectState {
 

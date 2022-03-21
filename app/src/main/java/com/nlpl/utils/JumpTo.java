@@ -3,27 +3,27 @@ package com.nlpl.utils;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.nlpl.ui.ui.activities.BankDetailsActivity;
-import com.nlpl.ui.ui.activities.CompanyDetailsActivity;
-import com.nlpl.ui.ui.activities.CustomerDashboardActivity;
-import com.nlpl.ui.ui.activities.CustomerLoadsHistoryActivity;
-import com.nlpl.ui.ui.activities.CustomerSettingsAndPreferences;
-import com.nlpl.ui.ui.activities.DriverDetailsActivity;
-import com.nlpl.ui.ui.activities.FindLoadsActivity;
-import com.nlpl.ui.ui.activities.FindTrucksActivity;
-import com.nlpl.ui.ui.activities.LogInActivity;
-import com.nlpl.ui.ui.activities.OtpCodeActivity;
-import com.nlpl.ui.ui.activities.PersonalDetailsActivity;
-import com.nlpl.ui.ui.activities.PersonalDetailsAndIdProofActivity;
-import com.nlpl.ui.ui.activities.PostALoadActivity;
-import com.nlpl.ui.ui.activities.RegistrationActivity;
-import com.nlpl.ui.ui.activities.ServiceProviderDashboardActivity;
-import com.nlpl.ui.ui.activities.SliderActivity;
-import com.nlpl.ui.ui.activities.VehicleDetailsActivity;
-import com.nlpl.ui.ui.activities.ViewBankDetailsActivity;
-import com.nlpl.ui.ui.activities.ViewDriverDetailsActivity;
-import com.nlpl.ui.ui.activities.ViewPersonalDetailsActivity;
-import com.nlpl.ui.ui.activities.ViewTruckDetailsActivity;
+import com.nlpl.ui.activities.BankDetailsActivity;
+import com.nlpl.ui.activities.CompanyDetailsActivity;
+import com.nlpl.ui.activities.CustomerDashboardActivity;
+import com.nlpl.ui.activities.CustomerLoadsHistoryActivity;
+import com.nlpl.ui.activities.CustomerSettingsAndPreferences;
+import com.nlpl.ui.activities.DriverDetailsActivity;
+import com.nlpl.ui.activities.FindLoadsActivity;
+import com.nlpl.ui.activities.FindTrucksActivity;
+import com.nlpl.ui.activities.LogInActivity;
+import com.nlpl.ui.activities.OtpCodeActivity;
+import com.nlpl.ui.activities.PersonalDetailsActivity;
+import com.nlpl.ui.activities.PersonalDetailsAndIdProofActivity;
+import com.nlpl.ui.activities.PostALoadActivity;
+import com.nlpl.ui.activities.RegistrationActivity;
+import com.nlpl.ui.activities.ServiceProviderDashboardActivity;
+import com.nlpl.ui.activities.SliderActivity;
+import com.nlpl.ui.activities.VehicleDetailsActivity;
+import com.nlpl.ui.activities.ViewBankDetailsActivity;
+import com.nlpl.ui.activities.ViewDriverDetailsActivity;
+import com.nlpl.ui.activities.ViewPersonalDetailsActivity;
+import com.nlpl.ui.activities.ViewTruckDetailsActivity;
 
 public class JumpTo {
 

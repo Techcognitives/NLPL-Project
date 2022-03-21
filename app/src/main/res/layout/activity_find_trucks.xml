@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ui.activities.FindTrucksActivity">
+    tools:context=".ui.activities.FindTrucksActivity">
 
     <include
         android:id="@+id/find_trucks_action_bar"
@@ -25,7 +25,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/find_trucks_action_bar"
-        tools:context=".ui.ui.activities.FindTrucksActivity" />
+        tools:context=".ui.activities.FindTrucksActivity" />
 
     <include
         android:id="@+id/find_trucks_bottom_nav"

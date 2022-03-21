@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ui.activities.CompanyDetailsActivity">
+    tools:context=".ui.activities.CompanyDetailsActivity">
 
     <include
         android:id="@+id/company_details_action_bar"
