@@ -177,7 +177,7 @@
         android:backgroundTint="@color/light_black"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:text="Bid Now"
+        android:text="@string/Bid_Now"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="15sp"
