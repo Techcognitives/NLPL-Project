@@ -508,8 +508,8 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
-//                ShowAlert.loadingDialog(CustomerDashboardActivity.this);
-//                JumpTo.goToFindTrucksActivity(CustomerDashboardActivity.this, userId, phone);
+                ShowAlert.loadingDialog(CustomerDashboardActivity.this);
+                JumpTo.goToFindTrucksActivity(CustomerDashboardActivity.this, userId, phone);
                 break;
         }
     }
