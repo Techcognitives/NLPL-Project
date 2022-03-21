@@ -121,13 +121,13 @@ public class FindTrucksActivity extends AppCompatActivity implements OnMapReadyC
     }
 
     private void initmarker(List<LocationModel> mListMarker) {
-        for (int i = 0; i<mListMarker.size(); i++){
+//        for (int i = 0; i<mListMarker.size(); i++){
 
-        double latt = Double.parseDouble(mListMarker.get(0).getLatitude());
-        double longi = Double.parseDouble(mListMarker.get(0).getLongitude());
+//        double latt = Double.parseDouble(mListMarker.get(0).getLatitude());
+//        double longi = Double.parseDouble(mListMarker.get(0).getLongitude());
 
-//        double latt = 18.5204;
-//        double longi = 73.8567;
+        double latt = 18.5204;
+        double longi = 73.8567;
 
         LatLng location = new LatLng(latt,
                 longi);
@@ -150,7 +150,7 @@ public class FindTrucksActivity extends AppCompatActivity implements OnMapReadyC
             mMap.setInfoWindowAdapter(testInfoWindowAdapter);
 //        }
 
-        }
+//        }
     }
 
     private class TextInfoWindowAdapter implements GoogleMap.InfoWindowAdapter{
@@ -168,8 +168,14 @@ public class FindTrucksActivity extends AppCompatActivity implements OnMapReadyC
 
             TextView city = view.findViewById(R.id.bids_responses_sp_name);
             ImageView imageView = view.findViewById(R.id.bids_responses_sp_profilePhto);
+            TextView nego = view.findViewById(R.id.bids_responses_nego);
+            nego.setVisibility(View.GONE);
+            TextView budget = view.findViewById(R.id.bids_responses_budget_sp);
+            budget.setVisibility(View.GONE);
+            TextView button = view.findViewById(R.id.bids_responses_view_accept_bids);
+            button.setVisibility(View.GONE);
 
-            city.setText("Pune ahe he");
+            city.setText("Pune");
             LocationModel infomodel = (LocationModel) marker.getTag();
 //            URLString = infomodel.getUrl();
             URLString = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS08Ro2ghnOTqSDfJ1-8dIUSWTdiXcQPk9OkQ&usqp=CAU";
