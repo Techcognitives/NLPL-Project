@@ -131,20 +131,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView56" />
 
                 <TextView
-                    android:id="@+id/dialog_accept_bid_feet_textview"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:text="@string/xx_feet"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView46"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView46"
-                    app:layout_constraintTop_toTopOf="@+id/textView46"
-                    app:layout_constraintVertical_bias="0.4" />
-
-                <TextView
                     android:id="@+id/dialog_accept_bid_body_type_textview"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -204,25 +190,6 @@
                     app:layout_constraintTop_toTopOf="@+id/dialog_bid_now_pick_up_date_textview" />
 
                 <TextView
-                    android:id="@+id/textView44"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:background="@drawable/button_active"
-                    android:backgroundTint="@color/grey"
-                    android:paddingLeft="2dp"
-                    android:paddingTop="2dp"
-                    android:paddingEnd="2dp"
-                    android:paddingBottom="2dp"
-                    android:text="@string/model"
-                    android:textSize="13dp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/dialog_accept_bid_model_textview"
-                    app:layout_constraintEnd_toStartOf="@+id/dialog_accept_bid_model_textview"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/dialog_accept_bid_model_textview" />
-
-                <TextView
                     android:id="@+id/textView50"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -233,7 +200,7 @@
                     android:paddingTop="2dp"
                     android:paddingEnd="2dp"
                     android:paddingBottom="2dp"
-                    android:text="@string/capacityWithColon"
+                    android:text="Load"
                     android:textSize="13dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/dialog_accept_bid_capacity_textview"
@@ -281,25 +248,6 @@
                     app:layout_constraintVertical_bias="0.6" />
 
                 <TextView
-                    android:id="@+id/textView46"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/button_active"
-                    android:backgroundTint="@color/grey"
-                    android:paddingLeft="2dp"
-                    android:paddingTop="2dp"
-                    android:paddingEnd="2dp"
-                    android:paddingBottom="2dp"
-                    android:text="@string/feet"
-                    android:textSize="13dp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/textView52"
-                    app:layout_constraintEnd_toStartOf="@+id/dialog_accept_bid_feet_textview"
-                    app:layout_constraintStart_toStartOf="@+id/textView52"
-                    app:layout_constraintTop_toBottomOf="@+id/dialog_accept_bid_driver_name" />
-
-                <TextView
                     android:id="@+id/textView52"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -311,13 +259,13 @@
                     android:paddingTop="2dp"
                     android:paddingEnd="2dp"
                     android:paddingBottom="2dp"
-                    android:text="@string/bodyType"
+                    android:text="Body"
                     android:textSize="13dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@+id/textView56"
                     app:layout_constraintEnd_toStartOf="@+id/dialog_accept_bid_body_type_textview"
                     app:layout_constraintStart_toEndOf="@+id/dialog_accept_bid_capacity_textview"
-                    app:layout_constraintTop_toBottomOf="@+id/textView46" />
+                    app:layout_constraintTop_toBottomOf="@+id/dialog_accept_bid_driver_name" />
 
                 <RatingBar
                     android:id="@+id/dialog_accept_bid_customer_sp_rate"
@@ -350,19 +298,6 @@
                     app:layout_constraintEnd_toStartOf="@+id/dialog_accept_bid_customer_sp_rate"
                     app:layout_constraintStart_toEndOf="@+id/dialog_accept_bit_service_provider_name"
                     app:layout_constraintTop_toTopOf="@+id/dialog_accept_bid_customer_sp_rate" />
-
-                <TextView
-                    android:id="@+id/dialog_accept_bid_model_textview"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:text="Tata"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView46"
-                    app:layout_constraintEnd_toStartOf="@+id/textView46"
-                    app:layout_constraintStart_toEndOf="@+id/textView44"
-                    app:layout_constraintTop_toTopOf="@+id/textView46" />
 
                 <TextView
                     android:id="@+id/dialog_accept_bid_capacity_textview"
@@ -471,7 +406,7 @@
                     android:text="Driver Name"
                     android:textSize="12sp"
                     android:visibility="gone"
-                    app:layout_constraintBottom_toTopOf="@+id/textView46"
+                    app:layout_constraintBottom_toTopOf="@+id/textView52"
                     app:layout_constraintEnd_toStartOf="@+id/dialog_accept_bid_driver_number"
                     app:layout_constraintStart_toEndOf="@+id/dialog_accept_bid_driver_name_heading"
                     app:layout_constraintTop_toBottomOf="@+id/dialog_accept_bid_company_name" />

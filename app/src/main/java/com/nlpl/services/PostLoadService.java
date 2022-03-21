@@ -21,6 +21,7 @@ import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPickState;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPostPickUpDate;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPostPickUpTime;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadStatusSubmitted;
+import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdatePaymentType;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -89,4 +90,6 @@ public interface PostLoadService {
     @PUT("/loadpost/updatePostByPID/{loadId}")
     Call<UpdateCount> updateCount(@Path("loadId") String bidId, @Body UpdateCount updateCount);
 
+    @PUT("/loadpost/updatePostByPID/{loadId}")
+    Call<UpdatePaymentType> updatePaymentType(@Path("loadId") String bidId, @Body UpdatePaymentType updatePaymentType);
 }

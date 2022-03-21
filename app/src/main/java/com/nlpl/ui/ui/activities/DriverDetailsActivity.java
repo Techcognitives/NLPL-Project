@@ -38,6 +38,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -96,7 +97,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
     CheckBox selfCheckBox;
     GetCurrentLocation getCurrentLocation;
 
-    Button uploadDL, okDriverDetails, uploadSelfie;
+    Button uploadDL, uploadSelfie;
     TextView textDL, editDL, series, textDS, editDS;
     int GET_FROM_GALLERY = 0;
     int GET_FROM_GALLERY1 = 1;
@@ -151,7 +152,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
         driverMobile = (EditText) personalAndAddress.findViewById(R.id.registration_mobile_no_edit);
         driverAlternateMobile = (EditText) personalAndAddress.findViewById(R.id.registration_mobile_no_edit_alternate);
         driverName = personalAndAddress.findViewById(R.id.registration_edit_name);
-        okDriverDetails = findViewById(R.id.driver_details_ok_button);
         series = (TextView) personalAndAddress.findViewById(R.id.registration_prefix);
         driverEmailId = (EditText) personalAndAddress.findViewById(R.id.registration_email_id_edit);
         setCurrentLocation = (TextView) personalAndAddress.findViewById(R.id.personal_and_address_get_current_location);
@@ -328,8 +328,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
         if (isEdit) {
             isDLUploaded = true;
             isSelfieUploded = true;
-            okDriverDetails.setEnabled(false);
-            okDriverDetails.setBackgroundResource(R.drawable.button_de_active);
             uploadDL.setVisibility(View.INVISIBLE);
             uploadSelfie.setVisibility(View.INVISIBLE);
             editDS.setVisibility(View.VISIBLE);
@@ -481,11 +479,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
             String mobileNoWatcher = driverMobile.getText().toString();
             String nameWatcher = driverName.getText().toString();
 
-            if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && isDLUploaded && isSelfieUploded) {
-                okDriverDetails.setEnabled(true);
-                okDriverDetails.setBackgroundResource(R.drawable.button_active);
-            }
-
             Uri selectedImage = data.getData();
             String[] filePathColumn = {MediaStore.Images.Media.DATA};
             Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
@@ -512,11 +505,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
             String mobileNoWatcher = driverMobile.getText().toString();
             String nameWatcher = driverName.getText().toString();
 
-            if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && isDLUploaded && isSelfieUploded) {
-                okDriverDetails.setEnabled(true);
-                okDriverDetails.setBackgroundResource(R.drawable.button_active);
-            }
-
             try {
                 Bitmap image = (Bitmap) data.getExtras().get("data");
                 String path = getRealPathFromURI(getImageUri(this, image));
@@ -539,14 +527,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
             isSelfieUploded = true;
 
-            String mobileNoWatcher = driverMobile.getText().toString();
-            String nameWatcher = driverName.getText().toString();
-
-            if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && isDLUploaded && isSelfieUploded) {
-                okDriverDetails.setEnabled(true);
-                okDriverDetails.setBackgroundResource(R.drawable.button_active);
-            }
-
             textDS.setText(getString(R.string.Selfie_Uploaded));
             textDS.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadSelfie.setVisibility(View.INVISIBLE);
@@ -567,14 +547,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
         } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
 
             isSelfieUploded = true;
-
-            String mobileNoWatcher = driverMobile.getText().toString();
-            String nameWatcher = driverName.getText().toString();
-
-            if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && isDLUploaded && isSelfieUploded) {
-                okDriverDetails.setEnabled(true);
-                okDriverDetails.setBackgroundResource(R.drawable.button_active);
-            }
 
             textDS.setText(R.string.Selfie_Uploaded);
             textDS.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
@@ -643,13 +615,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
             previewDLImageView.setVisibility(View.VISIBLE);
 
             isDLUploaded = true;
-            String mobileNoWatcher = driverMobile.getText().toString();
-            String nameWatcher = driverName.getText().toString();
-
-            if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && isDLUploaded && isSelfieUploded) {
-                okDriverDetails.setEnabled(true);
-                okDriverDetails.setBackgroundResource(R.drawable.button_active);
-            }
 
             Uri selectedImage = data.getData();
             String[] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -673,14 +638,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
             previewSelfieImageView.setVisibility(View.VISIBLE);
 
             isDLUploaded = true;
-
-            String mobileNoWatcher = driverMobile.getText().toString();
-            String nameWatcher = driverName.getText().toString();
-
-            if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && isDLUploaded && isSelfieUploded) {
-                okDriverDetails.setEnabled(true);
-                okDriverDetails.setBackgroundResource(R.drawable.button_active);
-            }
 
             try {
                 Bitmap image = (Bitmap) data.getExtras().get("data");
@@ -778,14 +735,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
         if (requestCode == CAMERA_PIC_REQUEST) {
             isSelfieUploded = true;
-
-            String mobileNoWatcher = driverMobile.getText().toString();
-            String nameWatcher = driverName.getText().toString();
-
-            if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && isDLUploaded && isSelfieUploded) {
-                okDriverDetails.setEnabled(true);
-                okDriverDetails.setBackgroundResource(R.drawable.button_active);
-            }
 
             textDS.setText(getString(R.string.Selfie_Uploaded));
             textDS.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
@@ -918,14 +867,6 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
             isSelfieUploded = true;
 
-            String mobileNoWatcher = driverMobile.getText().toString();
-            String nameWatcher = driverName.getText().toString();
-
-            if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && isDLUploaded && isSelfieUploded) {
-                okDriverDetails.setEnabled(true);
-                okDriverDetails.setBackgroundResource(R.drawable.button_active);
-            }
-
             textDS.setText(getString(R.string.Selfie_Uploaded));
             textDS.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadSelfie.setVisibility(View.INVISIBLE);
@@ -949,15 +890,84 @@ public class DriverDetailsActivity extends AppCompatActivity {
     }
 
     public void onClickDriverDetailsOk(View view) {
-        ShowAlert.loadingDialog(DriverDetailsActivity.this);
-        String driverMobileText = driverMobile.getText().toString();
-        String driverNameText = driverName.getText().toString();
-
-        if (!driverNameText.isEmpty() && !driverMobileText.isEmpty() && isDLUploaded && isSelfieUploded) {
-            if (driverMobileText.length() != 10) {
+        if (driverName.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Please enter driver name", Toast.LENGTH_SHORT).show();
+        } else if (driverMobile.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Please enter mobile number", Toast.LENGTH_SHORT).show();
+        } else if (driverMobile.getText().toString().length()!=10) {
+            Toast.makeText(this, "Please enter valid 10 digit mobile number", Toast.LENGTH_SHORT).show();
+        } else if (address.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Please enter driver Address", Toast.LENGTH_SHORT).show();
+        } else if (pinCode.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Please enter PIN Code", Toast.LENGTH_SHORT).show();
+        } else if (pinCode.getText().toString().length()!=6) {
+            Toast.makeText(this, "Please enter 6 digit PIN Code", Toast.LENGTH_SHORT).show();
+        } else if (selectStateText.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Please select State", Toast.LENGTH_SHORT).show();
+        } else if (selectDistrictText.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Please select City", Toast.LENGTH_SHORT).show();
+        } else if (!isDLUploaded) {
+            Toast.makeText(this, "Please upload Driving License", Toast.LENGTH_SHORT).show();
+        } else if (!isSelfieUploded) {
+            Toast.makeText(this, "Please upload Driver Selfie", Toast.LENGTH_SHORT).show();
+        } else {
+            //update Driver as a user (IsDriverAdded)
+            UpdateUserDetails.updateUserIsDriverAdded(userId, "1");
+            if (isEdit) {
+                if (idDLEdited) {
+                    uploadDriverLicense(driverId, pathForDL);
+                }
+                if (isSelfieEdited) {
+                    uploadDriverSelfie(driverId, pathForSelfie);
+                }
+                if (driverName.getText().toString() != null) {
+                    UpdateDriverDetails.updateDriverName(driverId, driverName.getText().toString());
+                    //update Driver as a user (Name)
+                    UpdateUserDetails.updateUserName(driverUserIdGet, driverName.getText().toString());
+                }
+                if (driverEmailId.getText().toString() != null) {
+                    UpdateDriverDetails.updateDriverEmailId(driverId, driverEmailId.getText().toString());
+                    //update Driver as a user (Email)
+                    UpdateUserDetails.updateUserEmailId(driverUserIdGet, driverEmailId.getText().toString());
+                }
+                if (driverMobile.getText().toString() != null && !driverNumberAPI.equals("91" + driverMobile.getText().toString())) {
+                    UpdateDriverDetails.updateDriverNumber(driverId, "91" + driverMobile.getText().toString());
+                    //update Driver as a user (Phone)
+                    UpdateUserDetails.updateUserPhoneNumber(driverUserIdGet, "91" + driverMobile.getText().toString());
+                }
+                if (driverAlternateMobile.getText().toString() != null) {
+                    UpdateDriverDetails.updateDriverAlternateNumber(driverId, "91" + driverAlternateMobile.getText().toString());
+                    //update Driver as a user (Alternate Phone)
+                    UpdateUserDetails.updateUserAlternatePhoneNumber(driverUserIdGet, "91" + driverAlternateMobile.getText().toString());
+                }
+                if (address.getText().toString() != null) {
+                    //update Driver as a user (Address)
+                    UpdateUserDetails.updateUserAddress(driverUserIdGet, address.getText().toString());
+                }
+                if (pinCode.getText().toString() != null) {
+                    //update Driver as a user (PinCode)
+                    UpdateUserDetails.updateUserPinCode(driverUserIdGet, pinCode.getText().toString());
+                }
+                if (selectStateText.getText().toString() != null) {
+                    //update Driver as a user (PinCode)
+                    UpdateUserDetails.updateUserState(driverUserIdGet, selectStateText.getText().toString());
+                }
+                if (selectDistrictText.getText().toString() != null) {
+                    //update Driver as a user (City)
+                    UpdateUserDetails.updateUserCity(driverUserIdGet, selectDistrictText.getText().toString());
+                }
+                ShowAlert.loadingDialog(DriverDetailsActivity.this);
+                JumpTo.goToViewDriverDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
+            } else {
+                if (alreadyDriver) {
+                    saveDriver(createDriver());
+                } else {
+                    saveDriver(createDriver());
+                    CreateUser.saveUser(CreateUser.createUser(driverName.getText().toString(), "91" + driverMobile.getText().toString(), "91" + driverAlternateMobile.getText().toString(), address.getText().toString(), "Driver", driverEmailId.getText().toString(), pinCode.getText().toString(), selectDistrictText.getText().toString(), selectStateText.getText().toString()));
+                }
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(DriverDetailsActivity.this);
-                alert.setContentView(R.layout.dialog_alert_single_button);
+                alert.setContentView(R.layout.dialog_alert);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(alert.getWindow().getAttributes());
@@ -967,148 +977,46 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
                 alert.show();
                 alert.getWindow().setAttributes(lp);
-                alert.setCancelable(true);
+                alert.setCancelable(false);
 
                 TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
                 TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText(getString(R.string.Invalid_Mobile_Number));
-                alertMessage.setText(getString(R.string.Please_enter_a_10_digit_valid_mobile_number));
-                alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText(getString(R.string.ok));
+                alertTitle.setText(getString(R.string.Driver_Details_added_successfully));
+                alertMessage.setText(getString(R.string.Would_you_like_to_add_Drivers_Bank_Details));
+
+                alertPositiveButton.setText(getString(R.string.Add));
+                alertPositiveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                        ShowAlert.loadingDialog(DriverDetailsActivity.this);
+                        if (alreadyDriver) {
+                            JumpTo.goToBankDetailsActivity(DriverDetailsActivity.this, userId, mobile, false, true, null);
+                        } else {
+                            JumpTo.goToBankDetailsActivity(DriverDetailsActivity.this, driverUserId, mobile, false, true, null);
+                        }
+                    }
+                });
+
+                alertNegativeButton.setText(getString(R.string.Later));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
-
                 alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         alert.dismiss();
+                        ShowAlert.loadingDialog(DriverDetailsActivity.this);
+                        if (fromBidNow) {
+                            DriverDetailsActivity.this.finish();
+                        } else {
+                            JumpTo.goToViewDriverDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
+                        }
                     }
                 });
                 //------------------------------------------------------------------------------------------
-            } else {
-                //update Driver as a user (IsDriverAdded)
-                UpdateUserDetails.updateUserIsDriverAdded(userId, "1");
-
-
-                if (isEdit) {
-
-                    if (idDLEdited) {
-                        uploadDriverLicense(driverId, pathForDL);
-                    }
-
-                    if (isSelfieEdited) {
-                        uploadDriverSelfie(driverId, pathForSelfie);
-                    }
-
-                    if (driverName.getText().toString() != null) {
-                        UpdateDriverDetails.updateDriverName(driverId, driverName.getText().toString());
-                        //update Driver as a user (Name)
-                        UpdateUserDetails.updateUserName(driverUserIdGet, driverName.getText().toString());
-                    }
-                    if (driverEmailId.getText().toString() != null) {
-                        UpdateDriverDetails.updateDriverEmailId(driverId, driverEmailId.getText().toString());
-                        //update Driver as a user (Email)
-                        UpdateUserDetails.updateUserEmailId(driverUserIdGet, driverEmailId.getText().toString());
-                    }
-
-                    if (driverMobile.getText().toString() != null && !driverNumberAPI.equals("91" + driverMobile.getText().toString())) {
-                        UpdateDriverDetails.updateDriverNumber(driverId, "91" + driverMobile.getText().toString());
-                        //update Driver as a user (Phone)
-                        UpdateUserDetails.updateUserPhoneNumber(driverUserIdGet, "91" + driverMobile.getText().toString());
-                    }
-
-                    if (driverAlternateMobile.getText().toString() != null) {
-                        UpdateDriverDetails.updateDriverAlternateNumber(driverId, "91" + driverAlternateMobile.getText().toString());
-                        //update Driver as a user (Alternate Phone)
-                        UpdateUserDetails.updateUserAlternatePhoneNumber(driverUserIdGet, "91" + driverAlternateMobile.getText().toString());
-                    }
-
-                    if (address.getText().toString() != null) {
-                        //update Driver as a user (Address)
-                        UpdateUserDetails.updateUserAddress(driverUserIdGet, address.getText().toString());
-                    }
-
-                    if (pinCode.getText().toString() != null) {
-                        //update Driver as a user (PinCode)
-                        UpdateUserDetails.updateUserPinCode(driverUserIdGet, pinCode.getText().toString());
-                    }
-
-                    if (selectStateText.getText().toString() != null) {
-                        //update Driver as a user (PinCode)
-                        UpdateUserDetails.updateUserState(driverUserIdGet, selectStateText.getText().toString());
-                    }
-
-                    if (selectDistrictText.getText().toString() != null) {
-                        //update Driver as a user (City)
-                        UpdateUserDetails.updateUserCity(driverUserIdGet, selectDistrictText.getText().toString());
-                    }
-                    ShowAlert.loadingDialog(DriverDetailsActivity.this);
-                    JumpTo.goToViewDriverDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
-                } else {
-
-                    if (alreadyDriver) {
-                        saveDriver(createDriver());
-                    } else {
-                        saveDriver(createDriver());
-                        CreateUser.saveUser(CreateUser.createUser(driverName.getText().toString(), "91" + driverMobile.getText().toString(), "91" + driverAlternateMobile.getText().toString(), address.getText().toString(), "Driver", driverEmailId.getText().toString(), pinCode.getText().toString(), selectDistrictText.getText().toString(), selectStateText.getText().toString()));
-                    }
-
-                    //----------------------- Alert Dialog -------------------------------------------------
-                    Dialog alert = new Dialog(DriverDetailsActivity.this);
-                    alert.setContentView(R.layout.dialog_alert);
-                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                    lp.copyFrom(alert.getWindow().getAttributes());
-                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-                    lp.gravity = Gravity.CENTER;
-
-                    alert.show();
-                    alert.getWindow().setAttributes(lp);
-                    alert.setCancelable(false);
-
-                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-                    alertTitle.setText(getString(R.string.Driver_Details_added_successfully));
-                    alertMessage.setText(getString(R.string.Would_you_like_to_add_Drivers_Bank_Details));
-
-                    alertPositiveButton.setText(getString(R.string.Add));
-                    alertPositiveButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            alert.dismiss();
-                            ShowAlert.loadingDialog(DriverDetailsActivity.this);
-                            if (alreadyDriver) {
-                                JumpTo.goToBankDetailsActivity(DriverDetailsActivity.this, userId, mobile, false, true, null);
-                            } else {
-                                JumpTo.goToBankDetailsActivity(DriverDetailsActivity.this, driverUserId, mobile, false, true, null);
-                            }
-                        }
-                    });
-
-                    alertNegativeButton.setText(getString(R.string.Later));
-                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
-                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            alert.dismiss();
-                            ShowAlert.loadingDialog(DriverDetailsActivity.this);
-                            if (fromBidNow) {
-                                DriverDetailsActivity.this.finish();
-                            } else {
-                                JumpTo.goToViewDriverDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
-                            }
-                        }
-                    });
-                    //------------------------------------------------------------------------------------------
-                }
             }
         }
     }
@@ -1121,7 +1029,7 @@ public class DriverDetailsActivity extends AppCompatActivity {
         addDriverRequest.setDriver_number("91" + driverMobile.getText().toString());
         addDriverRequest.setDriver_emailId(driverEmailId.getText().toString());
         addDriverRequest.setTruck_id(truckIdPass);
-        addDriverRequest.setAlternate_ph_no("91"+driverAlternateMobile.getText().toString());
+        addDriverRequest.setAlternate_ph_no("91" + driverAlternateMobile.getText().toString());
         return addDriverRequest;
     }
 
@@ -1142,26 +1050,18 @@ public class DriverDetailsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<AddDriverResponse> call, Throwable t) {}
+            public void onFailure(Call<AddDriverResponse> call, Throwable t) {
+            }
         });
     }
 
     private TextWatcher driverNameWatcher = new TextWatcher() {
         @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            String mobileNoWatcher = driverMobile.getText().toString().trim();
-            String nameWatcher = driverName.getText().toString().trim();
-
-            if (!nameWatcher.isEmpty() && !mobileNoWatcher.isEmpty() && isDLUploaded && isSelfieUploded) {
-                okDriverDetails.setEnabled(true);
-                okDriverDetails.setBackgroundResource(R.drawable.button_active);
-            } else {
-//                okDriverDetails.setEnabled(false);
-                okDriverDetails.setBackgroundResource(R.drawable.button_de_active);
-            }
         }
 
         @Override
@@ -1178,7 +1078,8 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
     private TextWatcher driverMobileWatcher = new TextWatcher() {
         @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -1187,27 +1088,19 @@ public class DriverDetailsActivity extends AppCompatActivity {
 
             if (mobileNoWatcher.length() == 10) {
                 checkPhoneInAPI("91" + driverMobile.getText().toString());
-                if (!nameWatcher.isEmpty() && isDLUploaded && isSelfieUploded) {
-                    okDriverDetails.setEnabled(true);
-                    okDriverDetails.setBackgroundResource(R.drawable.button_active);
-                } else {
-//                    okDriverDetails.setEnabled(false);
-                    okDriverDetails.setBackgroundResource(R.drawable.button_de_active);
-                }
-
 
                 driverMobile.setBackground(getResources().getDrawable(R.drawable.mobile_number_right));
                 series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left));
             } else {
-//                okDriverDetails.setEnabled(false);
-                okDriverDetails.setBackgroundResource(R.drawable.button_de_active);
+
                 driverMobile.setBackground(getResources().getDrawable(R.drawable.mobile_number_right_red));
                 series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left_red));
             }
         }
 
         @Override
-        public void afterTextChanged(Editable editable) {}
+        public void afterTextChanged(Editable editable) {
+        }
     };
 
 
@@ -1620,14 +1513,14 @@ public class DriverDetailsActivity extends AppCompatActivity {
                             pinCode.setText(userPinCodeAPI);
                             driverEmailId.setText(emailIdAPI);
                             try {
-                                if (alternateMob.equals("null")||alternateMob==null){
+                                if (alternateMob.equals("null") || alternateMob == null) {
                                     driverAlternateMobile.setText("");
-                                }else{
+                                } else {
                                     String s2 = alternateMob.substring(2, 12);
                                     driverAlternateMobile.setText(s2);
                                 }
 
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
 

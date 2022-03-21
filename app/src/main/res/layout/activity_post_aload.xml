@@ -275,10 +275,10 @@
                     android:ems="10"
                     android:hint="@string/pin_code"
                     android:inputType="number"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/hint"
                     android:maxLength="6"
                     android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="@+id/post_a_load_select_city_drop"
                     app:layout_constraintEnd_toStartOf="@+id/post_a_load_select_state_drop"
@@ -295,10 +295,10 @@
                     android:background="@drawable/edit_text_border"
                     android:drawableEnd="@drawable/ic_down"
                     android:drawableTint="@color/black"
-                    android:onClick="onClickDropCity"
                     android:ellipsize="end"
                     android:hint="@string/select_city"
                     android:maxLines="1"
+                    android:onClick="onClickDropCity"
                     android:padding="8dp"
                     android:singleLine="true"
                     android:textColor="@color/black"
@@ -316,11 +316,11 @@
                     android:background="@drawable/edit_text_border"
                     android:drawableEnd="@drawable/ic_down"
                     android:drawableTint="@color/black"
-                    android:onClick="onClickDropState"
                     android:hint="@string/select_state"
+                    android:onClick="onClickDropState"
+                    android:padding="8dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/hint"
-                    android:padding="8dp"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="@+id/post_a_load_select_city_drop"
                     app:layout_constraintEnd_toStartOf="@+id/post_a_load_select_city_drop"
@@ -363,7 +363,7 @@
                     android:id="@+id/textView30"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:paddingStart="5dp"
                     android:text="@string/noteAndMaterial"
                     android:textColor="@color/black"
@@ -371,7 +371,7 @@
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/post_a_load_auto_calculated_km_edit_text" />
+                    app:layout_constraintTop_toBottomOf="@+id/post_a_load_payment_method_text" />
 
                 <EditText
                     android:id="@+id/post_a_load_notes_edit_text"
@@ -530,8 +530,8 @@
                     android:background="@drawable/edit_text_border"
                     android:drawableEnd="@drawable/ic_down"
                     android:drawableTint="@color/black"
-                    android:onClick="onClickPickUpState"
                     android:hint="@string/select_state"
+                    android:onClick="onClickPickUpState"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/hint"
@@ -550,10 +550,10 @@
                     android:background="@drawable/edit_text_border"
                     android:drawableEnd="@drawable/ic_down"
                     android:drawableTint="@color/black"
-                    android:onClick="onClickPickUpCity"
                     android:ellipsize="end"
                     android:hint="@string/select_city"
                     android:maxLines="1"
+                    android:onClick="onClickPickUpCity"
                     android:padding="8dp"
                     android:singleLine="true"
                     android:textColor="@color/black"
@@ -562,6 +562,32 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/post_a_load_select_state_pick_up"
                     app:layout_constraintTop_toBottomOf="@+id/post_a_load_address_edit_pick_up" />
+
+                <TextView
+                    android:id="@+id/post_a_load_payment_method_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:text="Payment Method:"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@+id/post_a_load_change_payment_method"
+                    app:layout_constraintStart_toStartOf="@+id/textView28"
+                    app:layout_constraintTop_toBottomOf="@+id/post_a_load_auto_calculated_km_edit_text" />
+
+                <TextView
+                    android:id="@+id/post_a_load_change_payment_method"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Change"
+                    android:onClick="onClickPaymentMethod"
+                    android:textColor="@color/button_blue"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/post_a_load_payment_method_text"
+                    app:layout_constraintEnd_toEndOf="@+id/post_a_load_auto_calculated_km_edit_text"
+                    app:layout_constraintStart_toEndOf="@+id/post_a_load_payment_method_text"
+                    app:layout_constraintTop_toTopOf="@+id/post_a_load_payment_method_text" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

@@ -1,32 +1,33 @@
 package com.nlpl.model.Requests;
 
 public class PostLoadRequest {
-    String user_id, drop_city, notes_meterial_des, km_approx, drop_country, drop_state, drop_pin_code, pick_up_date,drop_add, pick_country, pick_state, pick_up_time,pick_city, budget, bid_status, vehicle_model, feet, capacity, body_type, pick_add, pick_pin_code;
+    String user_id, drop_city, notes_meterial_des, km_approx, drop_country, drop_state, drop_pin_code, pick_up_date, drop_add, pick_country, payment_type, pick_state, pick_up_time, pick_city, budget, bid_status, vehicle_model, feet, capacity, body_type, pick_add, pick_pin_code;
     int sp_count;
+
     public PostLoadRequest() {
         this.sp_count = sp_count;
         this.user_id = user_id;
-        this.pick_up_date = pick_up_date ;
-        this.pick_up_time = pick_up_time ;
-        this.budget = budget ;
-        this.bid_status = bid_status ;
-        this.vehicle_model = vehicle_model ;
-        this.feet = feet ;
-        this.capacity = capacity ;
-        this.body_type = body_type ;
-        this.pick_add = pick_add ;
-        this.pick_pin_code = pick_pin_code ;
-        this.pick_city = pick_city ;
-        this.pick_state = pick_state ;
-        this.pick_country = pick_country ;
-        this.drop_add = drop_add ;
-        this.drop_pin_code = drop_pin_code ;
-        this.drop_city = drop_city ;
-        this.drop_state = drop_state ;
-        this.drop_country = drop_country ;
-        this.km_approx = km_approx ;
-        this.notes_meterial_des = notes_meterial_des ;
-
+        this.pick_up_date = pick_up_date;
+        this.pick_up_time = pick_up_time;
+        this.budget = budget;
+        this.bid_status = bid_status;
+        this.vehicle_model = vehicle_model;
+        this.feet = feet;
+        this.capacity = capacity;
+        this.body_type = body_type;
+        this.pick_add = pick_add;
+        this.pick_pin_code = pick_pin_code;
+        this.pick_city = pick_city;
+        this.pick_state = pick_state;
+        this.pick_country = pick_country;
+        this.drop_add = drop_add;
+        this.drop_pin_code = drop_pin_code;
+        this.drop_city = drop_city;
+        this.drop_state = drop_state;
+        this.drop_country = drop_country;
+        this.km_approx = km_approx;
+        this.notes_meterial_des = notes_meterial_des;
+        this.payment_type = payment_type;
     }
 
     public int getSp_count() {
@@ -203,5 +204,13 @@ public class PostLoadRequest {
 
     public void setPick_pin_code(String pick_pin_code) {
         this.pick_pin_code = pick_pin_code;
+    }
+
+    public String getPayment_type() {
+        return payment_type;
+    }
+
+    public void setPayment_type(String payment_type) {
+        this.payment_type = payment_type;
     }
 }

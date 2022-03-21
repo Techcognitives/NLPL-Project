@@ -21,6 +21,7 @@ import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPickState;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPostPickUpDate;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadPostPickUpTime;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateLoadStatusSubmitted;
+import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdatePaymentType;
 import com.nlpl.utils.ApiClient;
 
 import retrofit2.Call;
@@ -399,6 +400,23 @@ public class UpdatePostLoadDetails {
 
             @Override
             public void onFailure(Call<UpdateLoadStatusSubmitted> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //-------------------------------- Update Load Payment type ------------------------------------
+    public static void updatePaymentMethod(String loadId, String method) {
+        UpdatePaymentType updatePaymentType = new UpdatePaymentType(method);
+        Call<UpdatePaymentType> call = ApiClient.getPostLoadService().updatePaymentType("" + loadId, updatePaymentType);
+        call.enqueue(new Callback<UpdatePaymentType>() {
+            @Override
+            public void onResponse(Call<UpdatePaymentType> call, retrofit2.Response<UpdatePaymentType> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UpdatePaymentType> call, Throwable t) {
 
             }
         });

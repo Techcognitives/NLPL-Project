@@ -173,8 +173,6 @@ public class CustomerLoadsHistoryActivity extends AppCompatActivity {
                         bidsReceivedModel.setPick_city(obj.getString("pick_city"));
                         bidsReceivedModel.setDrop_city(obj.getString("drop_city"));
                         bidsReceivedModel.setUser_id(obj.getString("user_id"));
-                        bidsReceivedModel.setVehicle_model(obj.getString("vehicle_model"));
-                        bidsReceivedModel.setFeet(obj.getString("feet"));
                         bidsReceivedModel.setCapacity(obj.getString("capacity"));
                         bidsReceivedModel.setBody_type(obj.getString("body_type"));
 
@@ -226,8 +224,6 @@ public class CustomerLoadsHistoryActivity extends AppCompatActivity {
                         bidsReceivedModel.setPick_up_time(obj.getString("pick_up_time"));
                         bidsReceivedModel.setBudget(obj.getString("budget"));
                         bidsReceivedModel.setBid_status(obj.getString("bid_status"));
-                        bidsReceivedModel.setVehicle_model(obj.getString("vehicle_model"));
-                        bidsReceivedModel.setFeet(obj.getString("feet"));
                         bidsReceivedModel.setCapacity(obj.getString("capacity"));
                         bidsReceivedModel.setBody_type(obj.getString("body_type"));
                         bidsReceivedModel.setPick_add(obj.getString("pick_add"));
@@ -431,8 +427,6 @@ public class CustomerLoadsHistoryActivity extends AppCompatActivity {
 
         //-------------------------------------------Display Load Information---------------------------------------------
         TextView nameSP = (TextView) viewLoadDetailsDialog.findViewById(R.id.dialog_accept_bit_service_provider_name);
-        TextView modelBySP = (TextView) viewLoadDetailsDialog.findViewById(R.id.dialog_accept_bid_model_textview);
-        TextView feetBySP = (TextView) viewLoadDetailsDialog.findViewById(R.id.dialog_accept_bid_feet_textview);
         TextView capacityBySP = (TextView) viewLoadDetailsDialog.findViewById(R.id.dialog_accept_bid_capacity_textview);
         TextView bodyTypeBySP = (TextView) viewLoadDetailsDialog.findViewById(R.id.dialog_accept_bid_body_type_textview);
         TextView quoteBySP = (TextView) viewLoadDetailsDialog.findViewById(R.id.dialog_accept_bid_bidder_quote_textview);
@@ -449,8 +443,6 @@ public class CustomerLoadsHistoryActivity extends AppCompatActivity {
         driverNameHeading.setVisibility(View.VISIBLE);
 
         quoteBySP.setText(obj.getBudget());
-        modelBySP.setText(obj.getVehicle_model());
-        feetBySP.setText(obj.getFeet());
         capacityBySP.setText(obj.getCapacity());
         bodyTypeBySP.setText(obj.getBody_type());
         negotiableBySP.setText("No");
