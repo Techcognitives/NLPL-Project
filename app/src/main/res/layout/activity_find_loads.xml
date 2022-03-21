@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:id="@+id/find_loads_swipe"
-    tools:context=".ui.ui.activities.FindLoadsActivity">
+    tools:context=".ui.activities.FindLoadsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout4"

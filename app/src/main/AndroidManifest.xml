@@ -24,11 +24,11 @@
         android:theme="@style/Theme.NLPL"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.ui.activities.CustomerSettingsAndPreferences"
+            android:name=".ui.activities.CustomerSettingsAndPreferences"
             android:exported="true"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.ui.activities.FindTrucksActivity"
+            android:name=".ui.activities.FindTrucksActivity"
             android:exported="true"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
 
@@ -37,91 +37,91 @@
             android:value="AIzaSyDAAes8x5HVKYB5YEIGBmdnCdyBrAHUijM" />
 
         <activity
-            android:name=".ui.ui.activities.CustomerLoadsHistoryActivity"
+            android:name=".ui.activities.CustomerLoadsHistoryActivity"
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.ui.activities.FindLoadsActivity"
+            android:name=".ui.activities.FindLoadsActivity"
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.ui.activities.SliderActivity"
+            android:name=".ui.activities.SliderActivity"
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.ui.activities.ViewDriverDetailsActivity"
+            android:name=".ui.activities.ViewDriverDetailsActivity"
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.ui.activities.PostATripActivity"
+            android:name=".ui.activities.PostATripActivity"
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.ui.activities.CustomerDashboardActivity"
+            android:name=".ui.activities.CustomerDashboardActivity"
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.ui.activities.ViewTruckDetailsActivity"
+            android:name=".ui.activities.ViewTruckDetailsActivity"
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.ui.activities.ViewBankDetailsActivity"
+            android:name=".ui.activities.ViewBankDetailsActivity"
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.ui.activities.ViewPersonalDetailsActivity"
+            android:name=".ui.activities.ViewPersonalDetailsActivity"
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.ui.activities.PostALoadActivity"
+            android:name=".ui.activities.PostALoadActivity"
             android:exported="true"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.ui.activities.PersonalDetailsAndIdProofActivity"
+            android:name=".ui.activities.PersonalDetailsAndIdProofActivity"
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.ui.activities.CompanyDetailsActivity"
+            android:name=".ui.activities.CompanyDetailsActivity"
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.ui.activities.DriverDetailsActivity"
+            android:name=".ui.activities.DriverDetailsActivity"
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.ui.activities.VehicleDetailsActivity"
+            android:name=".ui.activities.VehicleDetailsActivity"
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.ui.activities.PersonalDetailsActivity"
+            android:name=".ui.activities.PersonalDetailsActivity"
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.ui.activities.BankDetailsActivity"
+            android:name=".ui.activities.BankDetailsActivity"
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.ui.activities.ServiceProviderDashboardActivity"
+            android:name=".ui.activities.ServiceProviderDashboardActivity"
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.ui.activities.RegistrationActivity"
+            android:name=".ui.activities.RegistrationActivity"
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.ui.activities.RazorPayActivity"
+            android:name=".ui.activities.RazorPayActivity"
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.ui.activities.OtpCodeActivity"
+            android:name=".ui.activities.OtpCodeActivity"
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.ui.activities.LogInActivity"
+            android:name=".ui.activities.LogInActivity"
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.ui.activities.SplashScreenActivity"
+            android:name=".ui.activities.SplashScreenActivity"
             android:exported="true"
             android:theme="@style/Theme.Design.Light.NoActionBar">
             <intent-filter>

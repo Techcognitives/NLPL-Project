@@ -9,7 +9,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.nlpl.ui.ui.activities.PostALoadActivity;
+import com.nlpl.ui.activities.PostALoadActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;

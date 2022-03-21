@@ -14,10 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nlpl.R;
-import com.nlpl.ui.ui.activities.OtpCodeActivity;
-
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.atomic.AtomicReference;
+import com.nlpl.ui.activities.OtpCodeActivity;
 
 public class ShowAlert {
 
