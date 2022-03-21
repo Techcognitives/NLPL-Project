@@ -250,7 +250,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         actionBarWhatsApp = (ImageView) actionBar.findViewById(R.id.action_bar_whats_app);
         actionBarWhatsApp.setVisibility(View.VISIBLE);
 
-        actionBarTitle.setText("Dashboard");
+        actionBarTitle.setText(getString(R.string.Dashboard));
         actionBarMenuButton.setVisibility(View.VISIBLE);
         actionBarBackButton.setVisibility(View.GONE);
 
@@ -261,7 +261,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         spDashboard.setBackgroundColor(getResources().getColor(R.color.nav_selected_blue));
         TextView profileText = (TextView) bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
         ImageView profileImageView = (ImageView) bottomNav.findViewById(R.id.bottom_nav_profile_image_view);
-        profileText.setText("Find Loads");
+        profileText.setText(getString(R.string.Find_Loads));
         profileImageView.setImageDrawable(getDrawable(R.drawable.bottom_nav_search_small));
 
         arrayUserId = new ArrayList<>();
@@ -350,7 +350,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         TextView dialogSelectTruckAddTruck = (TextView) dialogSelectTruck.findViewById(R.id.dialog_spinner_bind_add_details);
         TextView dialogSelectTruckOkButton = (TextView) dialogSelectTruck.findViewById(R.id.dialog_spinner_bind_cancel);
 
-        dialogSelectTruckTitle.setText("Select Truck");
+        dialogSelectTruckTitle.setText(getString(R.string.selectTruck));
         dialogSelectTruckAddTruck.setVisibility(View.GONE);
         dialogSelectTruckOkButton.setVisibility(View.GONE);
 
@@ -373,7 +373,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         TextView previewSpinnerAddTruck = (TextView) dialogSelectDriver.findViewById(R.id.dialog_spinner_bind_add_details);
         TextView previewSpinnerOkButton = (TextView) dialogSelectDriver.findViewById(R.id.dialog_spinner_bind_cancel);
 
-        previewSpinnerTitle.setText("Select Driver");
+        previewSpinnerTitle.setText(getString(R.string.selectDriver));
         previewSpinnerAddTruck.setVisibility(View.GONE);
         previewSpinnerOkButton.setVisibility(View.GONE);
 
@@ -703,10 +703,10 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Please Register");
-            alertMessage.setText("You cannot bid without Registration");
-            alertPositiveButton.setText("Register Now");
-            alertNegativeButton.setText("Cancel");
+            alertTitle.setText(getString(R.string.Please_Register));
+            alertMessage.setText(getString(R.string.You_cannot_bid_without_Registration));
+            alertPositiveButton.setText(getString(R.string.Register_Now));
+            alertNegativeButton.setText(getString(R.string.cancel));
 
             alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -756,10 +756,10 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
         TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-        alertTitle.setText("Log Out");
-        alertMessage.setText("Are you sure you want to logout?");
-        alertPositiveButton.setText("Yes");
-        alertNegativeButton.setText("No");
+        alertTitle.setText(getString(R.string.Log_Out));
+        alertMessage.setText(getString(R.string.Log_Out_message));
+        alertPositiveButton.setText(getString(R.string.yes));
+        alertNegativeButton.setText(getString(R.string.no));
 
         alertNegativeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -833,10 +833,10 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                     TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                    alertTitle.setText("Please Register");
-                    alertMessage.setText("You cannot bid without Registration");
-                    alertPositiveButton.setText("Register Now");
-                    alertNegativeButton.setText("Cancel");
+                    alertTitle.setText(getString(R.string.Please_Register));
+                    alertMessage.setText(getString(R.string.You_cannot_bid_without_Registration));
+                    alertPositiveButton.setText(getString(R.string.Register_Now));
+                    alertNegativeButton.setText(getString(R.string.cancel));
 
                     alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -974,10 +974,10 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Please Register");
-            alertMessage.setText("You cannot bid without Registration");
-            alertPositiveButton.setText("Register Now");
-            alertNegativeButton.setText("Cancel");
+            alertTitle.setText(getString(R.string.Please_Register));
+            alertMessage.setText(getString(R.string.You_cannot_bid_without_Registration));
+            alertPositiveButton.setText(getString(R.string.Register_Now));
+            alertNegativeButton.setText(getString(R.string.cancel));
 
             alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -1116,7 +1116,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 dropLocation.setText(drop_location);
                 receivedNotes.setText(received_notes_description);
                 paymentType.setText(obj.getPayment_type());
-                loadIdHeading.setText("Load Details: " + obj.getPick_city() + "-" + obj.getDrop_city() + "-000");
+                loadIdHeading.setText(getString(R.string.Load_Details) + obj.getPick_city() + "-" + obj.getDrop_city() + "-000");
                 //----------------------------------------------------------------------------------------------------------------
 
                 //-------------------------------------------------Accept Load and Bid now-----------------------------------------
@@ -1199,12 +1199,12 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                            alertTitle.setText("Post Bid");
-                            alertMessage.setText("Bid Posted Successfully");
-                            alertPositiveButton.setVisibility(View.GONE);
-                            alertNegativeButton.setText("OK");
-                            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+                        alertTitle.setText(getString(R.string.Post_Bid));
+                        alertMessage.setText(getString(R.string.Bid_Posted_Successfully));
+                        alertPositiveButton.setVisibility(View.GONE);
+                        alertNegativeButton.setText(getString(R.string.ok));
+                        alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                             alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -1639,10 +1639,10 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                                     TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                                    alertTitle.setText("Your Bidget is High");
-                                    alertMessage.setText("Your Budget is Higher than the Load Poster");
+                                    alertTitle.setText(getString(R.string.Your_Budget_is_High));
+                                    alertMessage.setText(getString(R.string.Your_Budget_is_Higher_than_the_Load_Poster));
                                     alertPositiveButton.setVisibility(View.GONE);
-                                    alertNegativeButton.setText("OK");
+                                    alertNegativeButton.setText(getString(R.string.ok));
                                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                                     alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -1678,10 +1678,10 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                                     TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                                    alertTitle.setText("Your Bidget is Low");
-                                    alertMessage.setText("Your Budget is Lower than the Load Poster");
+                                    alertTitle.setText(getString(R.string.Your_Budget_is_Low));
+                                    alertMessage.setText(getString(R.string.Your_Budget_is_Lower_than_the_Load_Poster));
                                     alertPositiveButton.setVisibility(View.GONE);
-                                    alertNegativeButton.setText("OK");
+                                    alertNegativeButton.setText(getString(R.string.ok));
                                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                                     alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -1833,7 +1833,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         pickUpLocation.setText(pick_up_location);
         dropLocation.setText(drop_location);
         receivedNotes.setText(received_notes_description);
-        loadIdHeading.setText("Load Details: " + obj.getPick_city() + "-" + obj.getDrop_city() + "-000");
+        loadIdHeading.setText(getString(R.string.Load_Details) + obj.getPick_city() + "-" + obj.getDrop_city() + "-000");
         //----------------------------------------------------------------------------------------------------------------
 
         //------------------------------------Accept Load and Bid now-----------------------------------------
@@ -1900,10 +1900,10 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Bid Revised and Responded");
-                alertMessage.setText("Bid Revised and Responded Successfully");
+                alertTitle.setText(getString(R.string.Bid_Revised_and_Responded));
+                alertMessage.setText(getString(R.string.Bid_Revised_and_Responded_Successfully));
                 alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText("OK");
+                alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -2037,7 +2037,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         pickUpLocation.setText(pick_up_location);
         dropLocation.setText(drop_location);
         receivedNotes.setText(received_notes_description);
-        loadIdHeading.setText("Load Details: " + obj.getPick_city() + "-" + obj.getDrop_city() + "-000");
+        loadIdHeading.setText(getString(R.string.Load_Details) + obj.getPick_city() + "-" + obj.getDrop_city() + "-000");
         //----------------------------------------------------------------------------------------------------------------
 
         //------------------------------------Accept Load and Bid now-----------------------------------------
@@ -2070,8 +2070,8 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
 
         notesSp.setVisibility(View.GONE);
         timeLeft00.setVisibility(View.GONE);
-        partitionTextview.setText("My Bid Response");
-        timeLeftTextview.setText("CONSIGNMENT");
+        partitionTextview.setText(getString(R.string.My_Bid_Response));
+        timeLeftTextview.setText(getString(R.string.CONSIGNMENT));
         timeLeftTextview.setTextColor(getResources().getColorStateList(R.color.black));
         timeLeftTextview.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
 
@@ -2085,7 +2085,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         getBidDetailsByBidId(obj.getBidId(), false);
         getCustomerNameAndNumber(obj.getUser_id());
 
-        cancel.setText("Withdraw");
+        cancel.setText(getString(R.string.Withdraw));
         cancel.setEnabled(true);
         cancel.setBackgroundTintList(getResources().getColorStateList(R.color.light_black));
 
@@ -2112,11 +2112,11 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Withdraw Bid");
-                alertMessage.setText("Do you really want to withdraw bid.");
+                alertTitle.setText(getString(R.string.Withdraw_Bid));
+                alertMessage.setText(getString(R.string.Do_you_really_want_to_withdraw_bid));
                 alertPositiveButton.setVisibility(View.VISIBLE);
-                alertNegativeButton.setText("Cancel");
-                alertPositiveButton.setText("Withdraw");
+                alertNegativeButton.setText(getString(R.string.cancel));
+                alertPositiveButton.setText(getString(R.string.Withdraw));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -2150,10 +2150,10 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                         TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                         TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                        alertTitle.setText("Withdrawn Bid");
-                        alertMessage.setText("Bid is withdrawn successfully. Customer will no longer see your Bid.");
+                        alertTitle.setText(getString(R.string.Withdraw_Bid));
+                        alertMessage.setText(getString(R.string.Bid_is_withdrawn_successfully));
                         alertPositiveButton.setVisibility(View.GONE);
-                        alertNegativeButton.setText("Ok");
+                        alertNegativeButton.setText(getString(R.string.ok));
                         alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                         alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -2171,7 +2171,7 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             }
         });
 
-        acceptAndBid.setText("Start Trip");
+        acceptAndBid.setText(getString(R.string.Start_Trip));
         acceptAndBid.setEnabled(false);
         acceptAndBid.setBackgroundResource((R.drawable.button_de_active));
 
@@ -2198,10 +2198,10 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Trip Started Successfully");
-                alertMessage.setText("You can track your trip in track section");
+                alertTitle.setText(getString(R.string.Trip_Started_Successfully));
+                alertMessage.setText(getString(R.string.You_can_track_your_trip_in_track_section));
                 alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText("OK");
+                alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -2748,10 +2748,10 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
         TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-        alertTitle.setText("Profile Picture");
-        alertMessage.setText("Profile Picture added successfully");
+        alertTitle.setText(getString(R.string.Profile_Picture));
+        alertMessage.setText(getString(R.string.Profile_Picture_added_successfully));
         alertPositiveButton.setVisibility(View.GONE);
-        alertNegativeButton.setText("OK");
+        alertNegativeButton.setText(getString(R.string.ok));
         alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
         alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -2847,10 +2847,10 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Personal Details");
-            alertMessage.setText("Profile Uploaded Successfully");
+            alertTitle.setText(getString(R.string.Personal_Details));
+            alertMessage.setText(getString(R.string.Profile_Uploaded_Successfully));
             alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
+            alertNegativeButton.setText(getString(R.string.ok));
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
             alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -2903,10 +2903,10 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Personal Details");
-                alertMessage.setText("Profile Uploaded Successfully");
+                alertTitle.setText(getString(R.string.Personal_Details));
+                alertMessage.setText(getString(R.string.Profile_Uploaded_Successfully));
                 alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText("OK");
+                alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -2939,10 +2939,10 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Personal Details");
-                alertMessage.setText("Profile not Uploaded, please try again");
+                alertTitle.setText(getString(R.string.Personal_Details));
+                alertMessage.setText(getString(R.string.Profile_not_Uploaded_please_try_again));
                 alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText("OK");
+                alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -2974,9 +2974,9 @@ public class ServiceProviderDashboardActivity extends AppCompatActivity {
         chooseDialog.getWindow().setAttributes(lp2);
 
         TextView cameraText = chooseDialog.findViewById(R.id.dialog_camera_text);
-        cameraText.setText("Whats App");
+        cameraText.setText(getString(R.string.Whats_App));
         TextView galleryText = chooseDialog.findViewById(R.id.dialog_photo_library_text);
-        galleryText.setText("Call");
+        galleryText.setText(getString(R.string.Call));
 
         ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
         camera.setImageDrawable(getResources().getDrawable(R.drawable.whats_app_small));

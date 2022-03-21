@@ -117,7 +117,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:text="Change Number"
+        android:text="@string/Change_Number"
         android:drawableStart="@drawable/ic_back_small"
         android:drawableTint="@color/light_black"
         android:onClick="onClickChangeNumber"

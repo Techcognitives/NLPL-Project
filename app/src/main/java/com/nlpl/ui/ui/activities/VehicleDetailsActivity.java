@@ -125,7 +125,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         action_bar = findViewById(R.id.vehicle_details_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
-        actionBarTitle.setText("Vehicle Details");
+        actionBarTitle.setText(getString(R.string.vehicle_details));
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -171,7 +171,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         vehicleNumberEdit.setFilters(new InputFilter[]{filter, new InputFilter.LengthFilter(maxLength)});
 
         if (isEdit) {
-            actionBarTitle.setText("Edit Vehicle Details");
+            actionBarTitle.setText(getString(R.string.Edit_Vehicle_Details));
             isRcUploaded = true;
             isInsurance = true;
             uploadRC.setVisibility(View.INVISIBLE);
@@ -435,10 +435,10 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Truck Details");
-            alertMessage.setText("RC Uploaded Successfully");
+            alertTitle.setText(getString(R.string.Truck_Details));
+            alertMessage.setText(getString(R.string.RC_Uploaded_Successfully));
             alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
+            alertNegativeButton.setText(getString(R.string.ok));
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
             alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -505,10 +505,10 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Truck Details");
-                alertMessage.setText("RC Uploaded Successfully");
+                alertTitle.setText(getString(R.string.Truck_Details));
+                alertMessage.setText(getString(R.string.RC_Uploaded_Successfully));
                 alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText("OK");
+                alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -542,10 +542,10 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Truck Details");
-                alertMessage.setText("RC not Uploaded, Please try again");
+                alertTitle.setText(getString(R.string.Truck_Details));
+                alertMessage.setText(getString(R.string.RC_not_Uploaded));
                 alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText("OK");
+                alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -593,10 +593,10 @@ public class VehicleDetailsActivity extends AppCompatActivity {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Truck Details");
-            alertMessage.setText("Insurance Uploaded Successfully");
+            alertTitle.setText(getString(R.string.Truck_Details));
+            alertMessage.setText(getString(R.string.Insurance_Uploaded_Successfully));
             alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText("OK");
+            alertNegativeButton.setText(getString(R.string.ok));
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
             alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -659,10 +659,10 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Truck Details");
-                alertMessage.setText("Insurance Uploaded Successfully");
+                alertTitle.setText(getString(R.string.Truck_Details));
+                alertMessage.setText(getString(R.string.Insurance_Uploaded_Successfully));
                 alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText("OK");
+                alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -694,10 +694,10 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Truck Details");
-                alertMessage.setText("Insurance not uploaded, please try again");
+                alertTitle.setText(getString(R.string.Truck_Details));
+                alertMessage.setText(getString(R.string.Insurance_not_uploaded));
                 alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText("OK");
+                alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -776,9 +776,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Truck Details");
-                alertMessage.setText("Vehicle Details added successfully");
-                alertPositiveButton.setText("+ Add Driver");
+                alertTitle.setText(getString(R.string.Truck_Details));
+                alertMessage.setText(getString(R.string.Vehicle_Details_added_successfully));
+                alertPositiveButton.setText(getString(R.string.Add_Driver));
                 alertPositiveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -791,7 +791,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                     }
                 });
 
-                alertNegativeButton.setText("Skip");
+                alertNegativeButton.setText(getString(R.string.Skip));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                 alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -826,9 +826,9 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                            alertTitle.setText("Driver Details");
-                            alertMessage.setText("You cannot bid unless you have a Driver");
-                            alertPositiveButton.setText("+ Add");
+                            alertTitle.setText(getString(R.string.Driver_Details));
+                            alertMessage.setText(getString(R.string.You_cannot_bid_unless_you_have_a_Driver));
+                            alertPositiveButton.setText(getString(R.string.Add));
                             alertPositiveButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -841,7 +841,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                                 }
                             });
 
-                            alertNegativeButton.setText("OK");
+                            alertNegativeButton.setText(getString(R.string.ok));
                             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
                             alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 

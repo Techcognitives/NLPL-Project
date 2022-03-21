@@ -75,7 +75,7 @@ public class ViewBankDetailsActivity extends AppCompatActivity {
         actionBarBackButton = (ImageView) actionBar.findViewById(R.id.action_bar_back_button);
         actionBarMenuButton = (ImageView) actionBar.findViewById(R.id.action_bar_menu);
 
-        actionBarTitle.setText("My Bank");
+        actionBarTitle.setText(getString(R.string.My_Bank));
         actionBarMenuButton.setVisibility(View.GONE);
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override

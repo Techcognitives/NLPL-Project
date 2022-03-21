@@ -137,7 +137,7 @@ public class PostALoadActivity extends AppCompatActivity {
 
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
-        actionBarTitle.setText("Post a Load");
+        actionBarTitle.setText(getString(R.string.Post_a_Load));
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -189,8 +189,8 @@ public class PostALoadActivity extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
 
         if (isEdit) {
-            actionBarTitle.setText("Edit a Load");
-            Ok_PostLoad.setText("Update a Load");
+            actionBarTitle.setText(getString(R.string.Edit_a_Load));
+            Ok_PostLoad.setText(getString(R.string.Update_a_Load));
         }
 
         currentSepDate = new ArrayList<>();
@@ -378,12 +378,12 @@ public class PostALoadActivity extends AppCompatActivity {
                         TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                         TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                        alertTitle.setText("Post a Load");
-                        alertMessage.setText("Load Updated Successfully");
-                        alertPositiveButton.setVisibility(View.GONE);
-                        alertNegativeButton.setText("OK");
-                        alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+                    alertTitle.setText(getString(R.string.Post_a_Load));
+                    alertMessage.setText(getString(R.string.Load_Updated_Successfully));
+                    alertPositiveButton.setVisibility(View.GONE);
+                    alertNegativeButton.setText(getString(R.string.ok));
+                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                         alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -414,12 +414,12 @@ public class PostALoadActivity extends AppCompatActivity {
                         TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                         TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                        alertTitle.setText("Post a Load");
-                        alertMessage.setText("Load Posted Successfully");
-                        alertPositiveButton.setVisibility(View.GONE);
-                        alertNegativeButton.setText("OK");
-                        alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+                    alertTitle.setText(getString(R.string.Post_a_Load));
+                    alertMessage.setText(getString(R.string.Load_Posted_Successfully));
+                    alertPositiveButton.setVisibility(View.GONE);
+                    alertNegativeButton.setText(getString(R.string.ok));
+                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                         alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -900,11 +900,11 @@ public class PostALoadActivity extends AppCompatActivity {
         TextView alertPositiveButton = (TextView) deleteLoad.findViewById(R.id.dialog_alert_positive_button);
         TextView alertNegativeButton = (TextView) deleteLoad.findViewById(R.id.dialog_alert_negative_button);
 
-        alertTitle.setText("Delete Load");
-        alertMessage.setText("Do you really want to delete load");
-        alertPositiveButton.setText("Delete Load");
+        alertTitle.setText(getString(R.string.Delete_Load));
+        alertMessage.setText(getString(R.string.Do_you_really_want_to_delete_load));
+        alertPositiveButton.setText(getString(R.string.Delete_Load));
         alertPositiveButton.setVisibility(View.VISIBLE);
-        alertNegativeButton.setText("Cancel");
+        alertNegativeButton.setText(getString(R.string.cancel));
         alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
         alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
@@ -1211,7 +1211,7 @@ public class PostALoadActivity extends AppCompatActivity {
         selectNoteDialog.show();
         selectNoteDialog.setCancelable(true);
         TextView model_title = selectNoteDialog.findViewById(R.id.dialog_spinner_title);
-        model_title.setText("Select Material Type");
+        model_title.setText(getString(R.string.Select_Material_Type));
 
         ListView modelList = (ListView) selectNoteDialog.findViewById(R.id.list_state);
         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, R.layout.custom_list_row, Arrays.asList(getResources().getStringArray(R.array.array_load_notes_suggestions)));

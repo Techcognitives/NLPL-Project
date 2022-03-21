@@ -109,7 +109,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
         actionBarBackButton = (ImageView) actionBar.findViewById(R.id.action_bar_back_button);
         actionBarMenuButton = (ImageView) actionBar.findViewById(R.id.action_bar_menu);
 
-        actionBarTitle.setText("My Drivers");
+        actionBarTitle.setText(getString(R.string.My_Drivers));
         actionBarMenuButton.setVisibility(View.GONE);
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,8 +186,8 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
         TextView previewSpinnerAddTruck = (TextView) previewDialogSpinner.findViewById(R.id.dialog_spinner_bind_add_details);
         TextView previewSpinnerOkButton = (TextView) previewDialogSpinner.findViewById(R.id.dialog_spinner_bind_cancel);
 
-        previewSpinnerTitle.setText("Select Truck");
-        previewSpinnerAddTruck.setText("+ Add Truck");
+        previewSpinnerTitle.setText(getString(R.string.selectTruck));
+        previewSpinnerAddTruck.setText(getString(R.string.Add_Truck));
 
         //---------------------------- Get Driver Details -------------------------------------------
         driverListRecyclerView = (RecyclerView) findViewById(R.id.driver_list_view);
@@ -353,9 +353,9 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
                             previewDriverDetailsDriverBankName.setVisibility(View.VISIBLE);
                             previewDriverDetailsDriverBankAccountNumber.setVisibility(View.VISIBLE);
                             previewDriverDetailsDriverBankIFSICode.setVisibility(View.VISIBLE);
-                            previewDriverDetailsDriverBankName.setText(" Name: " + bankName);
-                            previewDriverDetailsDriverBankAccountNumber.setText(" Account No.: " + bankAccountNumber);
-                            previewDriverDetailsDriverBankIFSICode.setText(" IFSI Code: " + ifsiCode);
+                            previewDriverDetailsDriverBankName.setText(getString(R.string.Bank_Name) + bankName);
+                            previewDriverDetailsDriverBankAccountNumber.setText(getString(R.string.Account_No) + bankAccountNumber);
+                            previewDriverDetailsDriverBankIFSICode.setText(getString(R.string.IFSI_Code) + ifsiCode);
                             previewDriverDetailsLabelAddDriverBank.setVisibility(View.GONE);
                             previewDriverDetailsAddDriverBank.setVisibility(View.GONE);
                         }
@@ -496,8 +496,8 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
                     }
 
                     previewAssignedTruckNumber.setText(vehicleNumberTruckDetails);
-                    previewAssignedTruckModel.setText("Model: " + modelTruckDetails);
-                    previewAssignedTruckCapacity.setText("Capacity: " + capacityTruckDetails);
+                    previewAssignedTruckModel.setText(getString(R.string.model) + modelTruckDetails);
+                    previewAssignedTruckCapacity.setText(getString(R.string.Capacity) + capacityTruckDetails);
 
                     if (vehicleNumberTruckDetails == null) {
                         previewAssignedTruckNumber.setVisibility(View.INVISIBLE);
@@ -506,7 +506,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
                         previewAssignedTruckRcBook.setVisibility(View.INVISIBLE);
                         previewAssignedTruckInsurance.setVisibility(View.INVISIBLE);
                         previewAssignedTruckMessage.setVisibility(View.VISIBLE);
-                        previewAssignedTruckReAssign.setText("Assign Truck");
+                        previewAssignedTruckReAssign.setText(getString(R.string.Assign_Truck));
                     } else {
                         previewAssignedTruckNumber.setVisibility(View.VISIBLE);
                         previewAssignedTruckModel.setVisibility(View.VISIBLE);
@@ -514,7 +514,7 @@ public class ViewDriverDetailsActivity extends AppCompatActivity {
                         previewAssignedTruckRcBook.setVisibility(View.VISIBLE);
                         previewAssignedTruckInsurance.setVisibility(View.VISIBLE);
                         previewAssignedTruckMessage.setVisibility(View.INVISIBLE);
-                        previewAssignedTruckReAssign.setText("Re-Assign Truck");
+                        previewAssignedTruckReAssign.setText(getString(R.string.ReAssign_Truck));
                     }
 
                     new DownloadImageTask(previewRcBook).execute(rcBookTruckDetails);
