@@ -374,7 +374,7 @@ public class OtpCodeActivity extends AppCompatActivity {
 
                     } else {
 //                      Log.i("mobile no not equal", mobileNoAPI);
-                        JumpTo.goToRegistrationActivity(OtpCodeActivity.this, receivedMobile, true);
+                        JumpTo.goToLanguageActivity(OtpCodeActivity.this, receivedMobile);
                     }
 //
                 } catch (JSONException e) {
@@ -455,7 +455,7 @@ public class OtpCodeActivity extends AppCompatActivity {
                         }
 
                     } else {
-                        JumpTo.goToRegistrationActivity(OtpCodeActivity.this, getMobileReceived, true);
+                        JumpTo.goToLanguageActivity(OtpCodeActivity.this, getMobileReceived);
                     }
 //
                 } catch (JSONException e) {

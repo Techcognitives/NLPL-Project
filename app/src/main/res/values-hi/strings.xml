@@ -41,7 +41,7 @@
     <string name="address">पता खोजें या टाइप करें</string>
     <string name="are_u_sp">ट्रक मालिक  / चालक  / ब्रोकर? </string>
     <string name="truck_owner">मैं एक ट्रक मालिक हूँ</string>
-    <string name="driver">मैं "'" एक ड्राइवर हूँ</string>
+    <string name="driver">मैं एक ड्राइवर हूँ</string>
     <string name="broker">मैं एक ब्रोकर हूँ</string>
     <string name="ok">ठीक है</string>
     <string name="customer">मैं एक लोड पोस्टर हूँ</string>

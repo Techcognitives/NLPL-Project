@@ -46,13 +46,11 @@ public class RegistrationActivity extends AppCompatActivity {
 
     RadioButton ownerButton, driverButton, brokerButton, customerButton;
     View action_bar;
-    TextView actionBarTitle, selectStateText, selectDistrictText, english, marathi, hindi, actionBarSkip;
+    TextView actionBarTitle, selectStateText, selectDistrictText, actionBarSkip;
     ImageView actionBarBackButton, actionBarMenuButton;
 
     String selectedState, role;
     String mobile, stateByPinCode, distByPinCode;
-
-    Dialog language;
 
     EditText name, pinCode, address, mobileNoEdit, email_id, alternateMobile;
     TextView series, setCurrentLocation;
@@ -83,90 +81,15 @@ public class RegistrationActivity extends AppCompatActivity {
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp.gravity = Gravity.CENTER;
 
+        roleDialog.show();
+        roleDialog.getWindow().setAttributes(lp);
+        roleDialog.setCancelable(false);
+
         //------------------------------------------------------------------------------------------
-        language = new Dialog(RegistrationActivity.this);
-        language.setContentView(R.layout.dialog_language);
-        language.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
 
         getCurrentLocation = new GetCurrentLocation();
 
-        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-        lp2.copyFrom(language.getWindow().getAttributes());
-        lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp2.height = WindowManager.LayoutParams.MATCH_PARENT;
-        lp2.gravity = Gravity.BOTTOM;
-
-        language.show();
-        language.setCancelable(true);
-        language.getWindow().setAttributes(lp2);
-
-        english = language.findViewById(R.id.english);
-        marathi = language.findViewById(R.id.marathi);
-        hindi = language.findViewById(R.id.hindi);
-
-        LanguageManager lang = new LanguageManager(this);
-
         mQueue = Volley.newRequestQueue(RegistrationActivity.this);
-
-//        english.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                language.dismiss();
-//                roleDialog.show();
-//                roleDialog.getWindow().setAttributes(lp);
-//                roleDialog.setCancelable(false);
-//            }
-//        });
-
-        english.setOnClickListener(view ->
-        {
-            lang.updateResource("en");
-            language.dismiss();
-            roleDialog.show();
-            roleDialog.getWindow().setAttributes(lp);
-            roleDialog.setCancelable(false);
-//            recreate();
-        });
-
-//        hindi.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                language.dismiss();
-//                roleDialog.show();
-//                roleDialog.getWindow().setAttributes(lp);
-//                roleDialog.setCancelable(false);
-//            }
-//        });
-
-        hindi.setOnClickListener(view ->
-        {
-            lang.updateResource("hi");
-            language.dismiss();
-            roleDialog.show();
-            roleDialog.getWindow().setAttributes(lp);
-            roleDialog.setCancelable(false);
-            recreate();
-        });
-
-//        marathi.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                language.dismiss();
-//                roleDialog.show();
-//                roleDialog.getWindow().setAttributes(lp);
-//                roleDialog.setCancelable(false);
-//            }
-//        });
-
-        marathi.setOnClickListener(view ->
-        {
-            lang.updateResource("mr");
-            language.dismiss();
-            roleDialog.show();
-            roleDialog.getWindow().setAttributes(lp);
-            roleDialog.setCancelable(false);
-            recreate();
-        });
 
         action_bar = (View) findViewById(R.id.registration_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);

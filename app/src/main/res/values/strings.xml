@@ -1083,7 +1083,8 @@
     <string name="six_digit_OTP">Please enter a 6 digit OTP sent to your mobile number.</string>
     <string name="OTP_sent_successfully">OTP sent successfully</string>
     <string name="OTP_sent_to">OTP sent to </string>
-    <string name="Change_Number">Change Number</string>     //new
+    <string name="Change_Number">Change Number</string>
+    //new
 
     //----------------------------------------------------------------------------------------------
 
@@ -1093,7 +1094,8 @@
     <string name="email_id">Enter your Email ID (Optional)</string>
     <string name="location">Address*</string>
     <string name="select_state">State</string>
-    <string name="Select_State">Select State</string>       //new
+    <string name="Select_State">Select State</string>
+    //new
     <string name="select_city">City</string>
     <string name="pin_code">PIN Code</string>
     <string name="address">Search or Type Address</string>
@@ -1105,7 +1107,7 @@
     <string name="customer">I"'"m a Load Poster</string>
     <string name="yes">YES</string>
     //new
-    <string name="Registration_as">Registration as </string>
+    <string name="Registration_as">Registration as<p> </p></string>
     <string name="Load_Poster">Load Poster</string>
     <string name="Registration_Successful">Registration Successful</string>
     <string name="Welcome_to">Welcome to </string>
@@ -1114,8 +1116,10 @@
     <string name="Please_Register">Please Register</string>
     <string name="You_cannot_bid_without_Registration">You cannot bid without Registration</string>
     <string name="Register_Now">Register Now</string>
-    <string name="Explore_Now">Explore Now</string>         //new
-    <string name="Select_your_Role">Select your Role</string>       //new
+    <string name="Explore_Now">Explore Now</string>
+    //new
+    <string name="Select_your_Role">Select your Role</string>
+    //new
 
     //----------------------------------------------------------------------------------------------
 
@@ -1131,9 +1135,12 @@
     //----------------------------------------------------------------------------------------------
 
     //---------------------------------------Personal Details Activity------------------------------
-    <string name="Name">Name:</string>       //new
-    <string name="Email">Email:</string>       //new
-    <string name="Address">Address:</string>    //new
+    <string name="Name">Name:</string>
+    //new
+    <string name="Email">Email:</string>
+    //new
+    <string name="Address">Address:</string>
+    //new
     <string name="PANCard">PAN Card</string>
     <string name="Upload">Upload</string>
     <string name="UploadAny">Upload any of the following</string>
@@ -1162,7 +1169,8 @@
     <string name="Personal_Details_added_successfully">Personal Details added successfully</string>
     <string name="update_your_phone_number">Do you really want to update your phone number?</string>
     <string name="Firm_Details">Firm Details</string>
-    <string name="Edit_Profile_Picture">Edit Profile Picture</string>       //new
+    <string name="Edit_Profile_Picture">Edit Profile Picture</string>
+    //new
 
     //----------------------------------------------------------------------------------------------
 
@@ -1187,11 +1195,15 @@
     <string name="Bank_Name"> Bank Name: </string>
     <string name="Account_No"> Account No.: </string>
     <string name="IFSI_Code"> IFSI Code: </string>
-    <string name="Upload_a_cancelled_Cheque">Upload a cancelled Cheque</string>     //new
-    <string name="Enter_AC_Details">Enter A/C Details</string>     //new
-    <string name="Upload_a_photo_of_Canceled_Check">Upload a photo of Canceled Check</string>   //new
+    <string name="Upload_a_cancelled_Cheque">Upload a cancelled Cheque</string>
+    //new
+    <string name="Enter_AC_Details">Enter A/C Details</string>
+    //new
+    <string name="Upload_a_photo_of_Canceled_Check">Upload a photo of Canceled Check</string>
+    //new
     <string name="Cancelled_Cheque">Cancelled Cheque*</string>
-    <string name="OR">--------------------- OR ---------------------</string>   //new
+    <string name="OR">--------------------- OR ---------------------</string>
+    //new
 
     //--------------------------------------------Done--------------------------------------------------
 
@@ -1226,8 +1238,10 @@
     <string name="My_Trucks">My Trucks</string>
     <string name="Driver_Licence">Driver Licence</string>
     <string name="Driver_Selfie">Driver Selfie</string>
-    <string name="Select_Load_Type">Select Load Type</string>       //new
-    <string name="Selected_Body_Type_Load_Type">Selected Body Type &amp; Load Type</string>     //new
+    <string name="Select_Load_Type">Select Load Type</string>
+    //new
+    <string name="Selected_Body_Type_Load_Type">Selected Body Type &amp; Load Type</string>
+    //new
 
     //----------------------------------------------------------------------------------------------
 
@@ -1265,16 +1279,26 @@
     <string name="Add_Truck">+ Add Truck</string>
     <string name="Assign_Driver">Assign Driver</string>
     <string name="ReAssign_Driver">Re-Assign Driver</string>
-    <string name="Self">Self</string>               //new
-    <string name="Search">Search</string>           //new
-    <string name="Truck_Owner">Truck Owner</string> //new
-    <string name="Driver">Driver</string>           //new
-    <string name="Broker">Broker</string>           //new
-    <string name="Enter_Driving_License_Number">Enter Driving License Number</string>       //new
-    <string name="Choose_any_of_the_following">Choose any of the following</string>         //new
-    <string name="Photo_Library">Photo Library</string>             //new
-    <string name="Drivers_Bank_Details">Driver\'s Bank Details</string>      //new
-    <string name="Add_Drivers_Bank">+ Add Driver\'s Bank</string>           //new
+    <string name="Self">Self</string>
+    //new
+    <string name="Search">Search</string>
+    //new
+    <string name="Truck_Owner">Truck Owner</string>
+    //new
+    <string name="Driver">Driver</string>
+    //new
+    <string name="Broker">Broker</string>
+    //new
+    <string name="Enter_Driving_License_Number">Enter Driving License Number</string>
+    //new
+    <string name="Choose_any_of_the_following">Choose any of the following</string>
+    //new
+    <string name="Photo_Library">Photo Library</string>
+    //new
+    <string name="Drivers_Bank_Details">Driver\'s Bank Details</string>
+    //new
+    <string name="Add_Drivers_Bank">+ Add Driver\'s Bank</string>
+    //new
 
     //----------------------------------------------------------------------------------------------
 
@@ -1283,7 +1307,8 @@
     <string name="english">English</string>
     <string name="marathi">मराठी</string>
     <string name="hindi">हिंदी</string>
-    <string name="Language">Language</string>       //new
+    <string name="Language">Language</string>
+    //new
 
     //----------------------------------------------------------------------------------------------
 
@@ -1296,11 +1321,16 @@
     //new
     <string name="Company_Details">Company Details</string>
     <string name="Company_Details_added_Successfully">Company Details added Successfully</string>
-    <string name="Company_Type">Company Type*</string>      //new
-    <string name="Proprietary">Proprietary</string>         //new
-    <string name="Partnership">Partnership</string>         //new
-    <string name="Pvt_Ltd">Pvt. Ltd.</string>               //New
-    <string name="Set_Address">Set Address</string>         //new
+    <string name="Company_Type">Company Type*</string>
+    //new
+    <string name="Proprietary">Proprietary</string>
+    //new
+    <string name="Partnership">Partnership</string>
+    //new
+    <string name="Pvt_Ltd">Pvt. Ltd.</string>
+    //New
+    <string name="Set_Address">Set Address</string>
+    //new
 
     //---------------------------------------------Done-------------------------------------------------
 
@@ -1327,7 +1357,8 @@
     <string name="truckTypeAndCapacity">Truck Body &amp; Load Type*</string>
     <string name="SelectVehicleModel">Vehicle Model</string>
     <string name="bodyType">Body Type</string>
-    <string name="Load_Type">Load Type</string>                     //new
+    <string name="Load_Type">Load Type</string>
+    //new
     <string name="pickUpLocationDetails">Pick-up Address*</string>
     <string name="dropLocationDetails">Drop Address*</string>
     <string name="km">KM (approx)</string>
@@ -1351,7 +1382,6 @@
     <string name="Truck_Type">Truck Type</string>
     <string name="Bid_Now">Bid Now</string>
     <string name="View_Load_History">View Load\n History</string>
-
 
 
     //----------------------------------------------------------------------------------------------
@@ -1408,13 +1438,20 @@
     <string name="You_can_track_your_trip_in_track_section">You can track your trip in track section</string>
     <string name="Call">Call</string>
     <string name="Whats_App">Whats App</string>
-    <string name="Bids_Submitted">Bids Submitted</string>       //new
-    <string name="No_Bids_Submitted">No Bids Submitted</string> //new
-    <string name="View_and_Accept_Bid">View and\nAccept Bid</string>       //new
-    <string name="Bidder_Quote">Bidder Quote:</string>          //new
-    <string name="My_Final_Quote">My Final Quote</string>       //new
-    <string name="Submit">Submit</string>                       //new
-    <string name="Load">Load</string>                           //new
+    <string name="Bids_Submitted">Bids Submitted</string>
+    //new
+    <string name="No_Bids_Submitted">No Bids Submitted</string>
+    //new
+    <string name="View_and_Accept_Bid">View and\nAccept Bid</string>
+    //new
+    <string name="Bidder_Quote">Bidder Quote:</string>
+    //new
+    <string name="My_Final_Quote">My Final Quote</string>
+    //new
+    <string name="Submit">Submit</string>
+    //new
+    <string name="Load">Load</string>
+    //new
 
     //----------------------------------------------------------------------------------------------
 
@@ -1453,22 +1490,33 @@
     <string name="Cancel">Cancel</string>
     <string name="visible_for_other_Service_Provider">Load withdrawn from current Service Provider and visible for other Service Provider</string>
     <string name="Close">Close</string>
-    <string name="Bids_Received">Bids Received</string>         //new
-    <string name="Loads_Accepted">Loads Accepted</string>       //new
-    <string name="Profile">Profile</string>                     //new
-    <string name="Track">Track</string>                         //new
-    <string name="Loads_Expired">Loads Expired</string>         //new
-    <string name="Loads_Completed">Loads Completed</string>     //new
-    <string name="Payments">Payments</string>                   //new
+    <string name="Bids_Received">Bids Received</string>
+    //new
+    <string name="Loads_Accepted">Loads Accepted</string>
+    //new
+    <string name="Profile">Profile</string>
+    //new
+    <string name="Track">Track</string>
+    //new
+    <string name="Loads_Expired">Loads Expired</string>
+    //new
+    <string name="Loads_Completed">Loads Completed</string>
+    //new
+    <string name="Payments">Payments</string>
+    //new
 
     //----------------------------------------------------------------------------------------------
 
-    //--------------------------------Customer Settings And Preferences-----------------------------------
+    //--------------------------------Customer Settings And
+    Preferences-----------------------------------
     //new
     <string name="Settings_and_Preferences">Settings and Preferences</string>
-    <string name="Preferred_Location_1">Preferred Location 1 +</string>     //new
-    <string name="Preferred_Location_2">Preferred Location 2 +</string>     //new
-    <string name="Preferred_Location_3">Preferred Location 3 +</string>     //new
+    <string name="Preferred_Location_1">Preferred Location 1 +</string>
+    //new
+    <string name="Preferred_Location_2">Preferred Location 2 +</string>
+    //new
+    <string name="Preferred_Location_3">Preferred Location 3 +</string>
+    //new
 
 
     //----------------------------------------------------------------------------------------------
@@ -1488,8 +1536,10 @@
     <string name="Add_a_Driver">Add a Driver</string>
     <string name="Please_add_a_Driver_to_submit_your_response">Please add a Driver to submit your response</string>
     <string name="Select_Driver_to_Bid">Select Driver to Bid</string>
-    <string name="Loads_and_Trips">Loads and Trips</string>             //new
-    <string name="Trip_History">Trip History</string>                   //new
+    <string name="Loads_and_Trips">Loads and Trips</string>
+    //new
+    <string name="Trip_History">Trip History</string>
+    //new
 
 
     //----------------------------------------------------------------------------------------------

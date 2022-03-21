@@ -11,6 +11,7 @@ import com.nlpl.ui.activities.CustomerSettingsAndPreferences;
 import com.nlpl.ui.activities.DriverDetailsActivity;
 import com.nlpl.ui.activities.FindLoadsActivity;
 import com.nlpl.ui.activities.FindTrucksActivity;
+import com.nlpl.ui.activities.LanguageActivity;
 import com.nlpl.ui.activities.LogInActivity;
 import com.nlpl.ui.activities.OtpCodeActivity;
 import com.nlpl.ui.activities.PersonalDetailsActivity;
@@ -27,13 +28,13 @@ import com.nlpl.ui.activities.ViewTruckDetailsActivity;
 
 public class JumpTo {
 
-    public static void goToLogInActivity(Activity activity){
+    public static void goToLogInActivity(Activity activity) {
         Intent intent = new Intent(activity, LogInActivity.class);
         activity.startActivity(intent);
         activity.finish();
     }
 
-    public static void goToOTPActivity(Activity activity, String mobileNumber, Boolean isEditMobileNumber, String userId){
+    public static void goToOTPActivity(Activity activity, String mobileNumber, Boolean isEditMobileNumber, String userId) {
         Intent intent = new Intent(activity, OtpCodeActivity.class);
         intent.putExtra("mobile", mobileNumber);
         intent.putExtra("isEditPhone", isEditMobileNumber);
@@ -43,7 +44,7 @@ public class JumpTo {
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void getToSettingAndPreferences(Activity activity, String mobileNumber, String userId){
+    public static void getToSettingAndPreferences(Activity activity, String mobileNumber, String userId) {
         Intent intent = new Intent(activity, CustomerSettingsAndPreferences.class);
         intent.putExtra("mobile", mobileNumber);
         intent.putExtra("userId", userId);
@@ -51,18 +52,27 @@ public class JumpTo {
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void goToRegistrationActivity(Activity activity, String mobileNumber, Boolean isFinish){
+    public static void goToRegistrationActivity(Activity activity, String mobileNumber, Boolean isFinish) {
         Intent intent = new Intent(activity, RegistrationActivity.class);
         intent.putExtra("mobile1", mobileNumber);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivity(intent);
-        if (isFinish){
+        if (isFinish) {
             activity.finish();
         }
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void goToServiceProviderDashboard(Activity activity, String mobileNumber, Boolean isFromLoadNotification){
+    public static void goToLanguageActivity(Activity activity, String mobileNumber) {
+        Intent intent = new Intent(activity, LanguageActivity.class);
+        intent.putExtra("mobile1", mobileNumber);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        activity.startActivity(intent);
+        activity.finish();
+        activity.overridePendingTransition(0, 0);
+    }
+
+    public static void goToServiceProviderDashboard(Activity activity, String mobileNumber, Boolean isFromLoadNotification) {
         Intent intent = new Intent(activity, ServiceProviderDashboardActivity.class);
         intent.putExtra("mobile2", mobileNumber);
         intent.putExtra("loadNotification", isFromLoadNotification);
@@ -72,7 +82,7 @@ public class JumpTo {
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void goToCustomerDashboard(Activity activity, String mobileNumber, Boolean isBidsReceived){
+    public static void goToCustomerDashboard(Activity activity, String mobileNumber, Boolean isBidsReceived) {
         Intent intent = new Intent(activity, CustomerDashboardActivity.class);
         intent.putExtra("mobile", mobileNumber);
         intent.putExtra("bidsReceived", isBidsReceived);
@@ -82,7 +92,7 @@ public class JumpTo {
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void goToSliderActivity(Activity activity, String mobileNumber){
+    public static void goToSliderActivity(Activity activity, String mobileNumber) {
         Intent intent = new Intent(activity, SliderActivity.class);
         intent.putExtra("mobile", mobileNumber);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -90,42 +100,42 @@ public class JumpTo {
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void goToViewPersonalDetailsActivity(Activity activity, String userId, String mobileNumber, Boolean isFinish){
+    public static void goToViewPersonalDetailsActivity(Activity activity, String userId, String mobileNumber, Boolean isFinish) {
         Intent intent = new Intent(activity, ViewPersonalDetailsActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("mobile", mobileNumber);
         activity.startActivity(intent);
-        if (isFinish){
+        if (isFinish) {
             activity.finish();
         }
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void goToViewBankDetailsActivity(Activity activity, String userId, String mobileNumber, Boolean isFinish){
+    public static void goToViewBankDetailsActivity(Activity activity, String userId, String mobileNumber, Boolean isFinish) {
         Intent intent = new Intent(activity, ViewBankDetailsActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("mobile", mobileNumber);
         activity.startActivity(intent);
-        if (isFinish){
+        if (isFinish) {
             activity.finish();
         }
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void goToBankDetailsActivity(Activity activity, String userId, String mobileNumber, Boolean isEdit, Boolean isFinish, String bankId){
+    public static void goToBankDetailsActivity(Activity activity, String userId, String mobileNumber, Boolean isEdit, Boolean isFinish, String bankId) {
         Intent intent = new Intent(activity, BankDetailsActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("mobile", mobileNumber);
         intent.putExtra("isEdit", isEdit);
         intent.putExtra("bankDetailsID", bankId);
         activity.startActivity(intent);
-        if (isFinish){
+        if (isFinish) {
             activity.finish();
         }
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void goToPostALoad(Activity activity, String userId, String mobileNumber, Boolean reActivate, Boolean isEdit, String loadId, Boolean isFinish){
+    public static void goToPostALoad(Activity activity, String userId, String mobileNumber, Boolean reActivate, Boolean isEdit, String loadId, Boolean isFinish) {
         Intent intent = new Intent(activity, PostALoadActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("mobile", mobileNumber);
@@ -133,24 +143,24 @@ public class JumpTo {
         intent.putExtra("isEdit", isEdit);
         intent.putExtra("loadId", loadId);
         activity.startActivity(intent);
-        if (isFinish){
+        if (isFinish) {
             activity.finish();
         }
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void goToCustomerLoadHistoryActivity(Activity activity, String userId, String mobileNumber, Boolean isFinish){
+    public static void goToCustomerLoadHistoryActivity(Activity activity, String userId, String mobileNumber, Boolean isFinish) {
         Intent intent = new Intent(activity, CustomerLoadsHistoryActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("mobile", mobileNumber);
         activity.startActivity(intent);
-        if (isFinish){
+        if (isFinish) {
             activity.finish();
         }
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void goToFindLoadsActivity(Activity activity, String userId, String mobileNumber){
+    public static void goToFindLoadsActivity(Activity activity, String userId, String mobileNumber) {
         Intent intent = new Intent(activity, FindLoadsActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("mobile", mobileNumber);
@@ -158,7 +168,7 @@ public class JumpTo {
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void goToFindTrucksActivity(Activity activity, String userId, String mobileNumber){
+    public static void goToFindTrucksActivity(Activity activity, String userId, String mobileNumber) {
         Intent intent = new Intent(activity, FindTrucksActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("mobile", mobileNumber);
@@ -166,7 +176,7 @@ public class JumpTo {
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void goToVehicleDetailsActivity(Activity activity, String userId, String mobileNumber, Boolean isEdit, Boolean isFromBidNow, Boolean isFromAssignTruck, Boolean isFinish, String driverId, String truckId){
+    public static void goToVehicleDetailsActivity(Activity activity, String userId, String mobileNumber, Boolean isEdit, Boolean isFromBidNow, Boolean isFromAssignTruck, Boolean isFinish, String driverId, String truckId) {
         Intent intent = new Intent(activity, VehicleDetailsActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("mobile", mobileNumber);
@@ -176,24 +186,24 @@ public class JumpTo {
         intent.putExtra("driverId", driverId);
         intent.putExtra("truckId", truckId);
         activity.startActivity(intent);
-        if (isFinish){
+        if (isFinish) {
             activity.finish();
         }
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void goToViewVehicleDetailsActivity(Activity activity, String userId, String mobileNumber, Boolean isFinish){
+    public static void goToViewVehicleDetailsActivity(Activity activity, String userId, String mobileNumber, Boolean isFinish) {
         Intent intent = new Intent(activity, ViewTruckDetailsActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("mobile", mobileNumber);
         activity.startActivity(intent);
-        if (isFinish){
+        if (isFinish) {
             activity.finish();
         }
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void goToDriverDetailsActivity(Activity activity, String userId, String mobileNumber, Boolean isEdit, Boolean isFromBidNow, Boolean isFinish, String truckId, String driverId){
+    public static void goToDriverDetailsActivity(Activity activity, String userId, String mobileNumber, Boolean isEdit, Boolean isFromBidNow, Boolean isFinish, String truckId, String driverId) {
         Intent intent = new Intent(activity, DriverDetailsActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("mobile", mobileNumber);
@@ -203,53 +213,53 @@ public class JumpTo {
         intent.putExtra("driverId", driverId);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivity(intent);
-        if (isFinish){
+        if (isFinish) {
             activity.finish();
         }
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void goToViewDriverDetailsActivity(Activity activity, String userId, String mobileNumber, Boolean isFinish){
+    public static void goToViewDriverDetailsActivity(Activity activity, String userId, String mobileNumber, Boolean isFinish) {
         Intent intent = new Intent(activity, ViewDriverDetailsActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("mobile", mobileNumber);
         activity.startActivity(intent);
-        if (isFinish){
+        if (isFinish) {
             activity.finish();
         }
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void goToPersonalDetailsActivity(Activity activity, String userId, String mobileNumber, Boolean profile, Boolean isFinish){
+    public static void goToPersonalDetailsActivity(Activity activity, String userId, String mobileNumber, Boolean profile, Boolean isFinish) {
         Intent intent = new Intent(activity, PersonalDetailsActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("profile", profile);
         intent.putExtra("mobile", mobileNumber);
         activity.startActivity(intent);
-        if (isFinish){
+        if (isFinish) {
             activity.finish();
         }
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void goToPersonalDetailsIdProofActivity(Activity activity, String userId, String mobileNumber, Boolean isFinish){
+    public static void goToPersonalDetailsIdProofActivity(Activity activity, String userId, String mobileNumber, Boolean isFinish) {
         Intent intent = new Intent(activity, PersonalDetailsAndIdProofActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("mobile", mobileNumber);
         activity.startActivity(intent);
-        if (isFinish){
+        if (isFinish) {
             activity.finish();
         }
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void goToCompanyDetailsActivity(Activity activity, String userId, String mobileNumber, Boolean isEdit, Boolean isFinish){
+    public static void goToCompanyDetailsActivity(Activity activity, String userId, String mobileNumber, Boolean isEdit, Boolean isFinish) {
         Intent intent = new Intent(activity, CompanyDetailsActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("mobile", mobileNumber);
         intent.putExtra("isEdit", isEdit);
         activity.startActivity(intent);
-        if (isFinish){
+        if (isFinish) {
             activity.finish();
         }
         activity.overridePendingTransition(0, 0);
