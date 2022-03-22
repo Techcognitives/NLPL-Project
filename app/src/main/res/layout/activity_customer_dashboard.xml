@@ -149,7 +149,7 @@
                 android:id="@+id/customer_dashboard_no_load_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="No Load Posted"
+                android:text="@string/No_Load_Posted"
                 android:textColor="@color/black"
                 android:textAlignment="center"
                 android:textSize="24sp"
