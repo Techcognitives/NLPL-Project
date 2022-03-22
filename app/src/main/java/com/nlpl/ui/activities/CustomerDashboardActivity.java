@@ -59,6 +59,7 @@ import com.nlpl.model.ModelForRecyclerView.BidsReceivedModel;
 import com.nlpl.model.ModelForRecyclerView.BidsResponsesModel;
 import com.nlpl.model.Requests.ImageRequest;
 import com.nlpl.model.Responses.ImageResponse;
+import com.nlpl.model.Responses.RatingResponse;
 import com.nlpl.model.Responses.UploadImageResponse;
 import com.nlpl.model.UpdateMethods.UpdateBidDetails;
 import com.nlpl.model.UpdateMethods.UpdatePostLoadDetails;
@@ -68,6 +69,7 @@ import com.nlpl.ui.adapters.BidsReceivedAdapter;
 import com.nlpl.ui.adapters.BidsResponsesAdapter;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.AppCompat;
+import com.nlpl.utils.CreateUser;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.EnglishNumberToWords;
 import com.nlpl.utils.FileUtils;
@@ -94,6 +96,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CustomerDashboardActivity extends AppCompat implements PaymentResultListener {
 
@@ -119,7 +122,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
     ImageView personalDetailsLogoImageView, bankDetailsLogoImageView, actionBarWhatsApp;
     Dialog previewDialogProfile, previewDialogProfileOfSp;
     ImageView profilePic;
-    Boolean checkedReasonOne = true, checkedReasonTwo = true, checkedReasonThree = true, checkedReasonFour = true, checkedReasonFive = true, checkedReasonSix = true, checkedReasonSeven = true;
+    Boolean checkedReasonOne = false, checkedReasonTwo = false, checkedReasonThree = false, checkedReasonFour = false, checkedReasonFive = false, checkedReasonSix = false, checkedReasonSeven = false;
 
     String isPersonalDetailsDone, isBankDetailsDone, isProfileAdded, profileImgUrlForRating, reasonForLowRate = "";
     float ratingGiven = 0;
@@ -486,10 +489,10 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
     }
 
     public void onClickPostALoad(View view) {
-        if (fabVisible){
+        if (fabVisible) {
             postALoadButton.setVisibility(View.VISIBLE);
             fabVisible = false;
-        }else{
+        } else {
             postALoadButton.setVisibility(View.GONE);
             fabVisible = true;
         }
@@ -1199,14 +1202,14 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
 
                         paymentTypeFromAPI = obj.getString("payment_type");
                         Log.i("Payment Method:", paymentTypeFromAPI);
-                        if (paymentTypeFromAPI.equals("Payment Method: " + "To Pay(Pay while Unloading)")){
+                        if (paymentTypeFromAPI.equals("Payment Method: " + "To Pay(Pay while Unloading)")) {
                             paymentMethod = "ToPay";
-                        }else if (paymentTypeFromAPI.equals("Payment Method: To be Billed (Pay to Truck Ow")){
+                        } else if (paymentTypeFromAPI.equals("Payment Method: To be Billed (Pay to Truck Ow")) {
                             paymentMethod = "ToBeBilled";
-                        }else{
+                        } else {
                             paymentMethod = "PayNow";
                         }
-                        headingLoad.setText("Load Details: "+pickupCity+"-"+dropCity+"-000");
+                        headingLoad.setText("Load Details: " + pickupCity + "-" + dropCity + "-000");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1343,8 +1346,8 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                                 alertMessage.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
                                 alertTitle.setText("Make Payment");
                                 alertMessage.setText("Payment Details\n\n" +
-                                        "FYT Platform Charges 3%.              ₹     "+finalQuote+"\n" +
-                                        "(-) FYT Promotional Discount 3%.  ₹   - "+finalQuote+"\n\n" +
+                                        "FYT Platform Charges 3%.              ₹     " + finalQuote + "\n" +
+                                        "(-) FYT Promotional Discount 3%.  ₹   - " + finalQuote + "\n\n" +
                                         "Your Final Payment                        ₹       0.00");
                                 alertPositiveButton.setText("Pay");
                                 alertNegativeButton.setText("Cancel");
@@ -1405,8 +1408,8 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                                 alertMessage.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
                                 alertTitle.setText("Make Payment");
                                 alertMessage.setText("Payment Details\n\n" +
-                                        "FYT Platform Charges 1%.              ₹     "+finalQuote+"\n" +
-                                        "(-) FYT Promotional Discount 1%.  ₹   - "+finalQuote+"\n\n" +
+                                        "FYT Platform Charges 1%.              ₹     " + finalQuote + "\n" +
+                                        "(-) FYT Promotional Discount 1%.  ₹   - " + finalQuote + "\n\n" +
                                         "Your Final Payment                       ₹       0.00");
                                 alertPositiveButton.setText("Pay");
                                 alertNegativeButton.setText("Cancel");
@@ -1466,8 +1469,8 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                                 alertMessage.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
                                 alertTitle.setText("Make Payment");
                                 alertMessage.setText("Payment Details\n\n" +
-                                        "FYT Platform Charges 3%.              ₹     "+finalQuote+"\n" +
-                                        "(-) FYT Promotional Discount 3%.  ₹   - "+finalQuote+"\n\n" +
+                                        "FYT Platform Charges 3%.              ₹     " + finalQuote + "\n" +
+                                        "(-) FYT Promotional Discount 3%.  ₹   - " + finalQuote + "\n\n" +
                                         "Your Final Payment                        ₹       0.00");
                                 alertPositiveButton.setText("Pay");
                                 alertNegativeButton.setText("Cancel");
@@ -1527,8 +1530,8 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                                 alertMessage.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
                                 alertTitle.setText("Make Payment");
                                 alertMessage.setText("Payment Details\n\n" +
-                                        "FYT Platform Charges 1%.              ₹     "+finalQuote+"\n" +
-                                        "(-) FYT Promotional Discount 1%.  ₹   - "+finalQuote+"\n\n" +
+                                        "FYT Platform Charges 1%.              ₹     " + finalQuote + "\n" +
+                                        "(-) FYT Promotional Discount 1%.  ₹   - " + finalQuote + "\n\n" +
                                         "Your Final Payment                       ₹       0.00");
                                 alertPositiveButton.setText("Pay");
                                 alertNegativeButton.setText("Cancel");
@@ -1551,7 +1554,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                                 float percentInFloat = Float.parseFloat(paymentTypeFromAPI);
                                 float num = parseFloat(valueInString);
                                 float val = (float) (num - (num * .03));
-                                float percentVal = (float) (num - (num * percentInFloat/100));
+                                float percentVal = (float) (num - (num * percentInFloat / 100));
 
                                 float semiFinalQuote = num - val;
                                 float finalQuote = num + semiFinalQuote;
@@ -1590,9 +1593,9 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                                 alertMessage.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
                                 alertTitle.setText("Make Payment");
                                 alertMessage.setText("Payment Details\n\n" +
-                                        "Advance Payment "+paymentTypeFromAPI+"%                  ₹     "+percentVal+"\n"+
-                                        "FYT Platform Charges 3%.              ₹     "+semiFinalQuote+"\n" +
-                                        "(-) FYT Promotional Discount 3%.  ₹   - "+semiFinalQuote+"\n\n" +
+                                        "Advance Payment " + paymentTypeFromAPI + "%                  ₹     " + percentVal + "\n" +
+                                        "FYT Platform Charges 3%.              ₹     " + semiFinalQuote + "\n" +
+                                        "(-) FYT Promotional Discount 3%.  ₹   - " + semiFinalQuote + "\n\n" +
                                         "Your Final Payment                        ₹       0.00");
                                 alertPositiveButton.setText("Pay");
                                 alertNegativeButton.setText("Cancel");
@@ -1614,7 +1617,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                                 float percentInFloat = Float.parseFloat(paymentTypeFromAPI);
                                 float num = parseFloat(valueInString);
                                 float val = (float) (num - (num * .01));
-                                float percentVal = (float) (num - (num * percentInFloat/100));
+                                float percentVal = (float) (num - (num * percentInFloat / 100));
 
                                 float semiFinalQuote = num - val;
                                 float finalQuote = num + semiFinalQuote;
@@ -1653,9 +1656,9 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                                 alertMessage.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
                                 alertTitle.setText("Make Payment");
                                 alertMessage.setText("Payment Details\n\n" +
-                                        "Advance Payment "+paymentTypeFromAPI+"%                  ₹     "+percentVal+"\n"+
-                                        "FYT Platform Charges 1%.              ₹     "+semiFinalQuote+"\n" +
-                                        "(-) FYT Promotional Discount 1%.  ₹   - "+semiFinalQuote+"\n\n" +
+                                        "Advance Payment " + paymentTypeFromAPI + "%                  ₹     " + percentVal + "\n" +
+                                        "FYT Platform Charges 1%.              ₹     " + semiFinalQuote + "\n" +
+                                        "(-) FYT Promotional Discount 1%.  ₹   - " + semiFinalQuote + "\n\n" +
                                         "Your Final Payment                       ₹       0.00");
                                 alertPositiveButton.setText("Pay");
                                 alertNegativeButton.setText("Cancel");
@@ -1932,7 +1935,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                         });
                         mQueue.add(request4);
                         //--------------------------------------------------------------------------
-
+                        getRatings(assignedUserId, spRatingInInt);
                         //----------------------------------------------------------
                         String url = getString(R.string.baseURL) + "/user/" + assignedUserId;
                         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -2208,12 +2211,12 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         });
         mQueue.add(request1);
         //-------------------------------------------------------------------------------------------
-        rateSp.setOnClickListener(view -> rate(assignedUserId, nameSP.getText().toString()));
+        rateSp.setOnClickListener(view -> rate(assignedUserId, nameSP.getText().toString(), tripToFrom.getText().toString()));
 //        rateCustomer.setOnClickListener(view -> rate("", ""));
 
     }
 
-    private void rate(String userIdForRating, String nameForRating) {
+    private void rate(String userIdForRating, String nameForRating, String transactionId) {
         Log.i("UserId For Rating", userIdForRating);
         //----------------------- Alert Dialog -------------------------------------------------
         Dialog alert = new Dialog(CustomerDashboardActivity.this);
@@ -2261,13 +2264,58 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         skipButton.setOnClickListener(view -> alert.dismiss());
 
         submitButton.setOnClickListener(view -> {
-            if (ratingGiven == 0){
+            if (ratingGiven == 0) {
                 Toast.makeText(this, "Please provide star ratings", Toast.LENGTH_SHORT).show();
-            }else if (ratingGiven == 5) {
-
+            } else if (ratingGiven == 5) {
+                CreateUser.saveRatings(CreateUser.createRatings(transactionId, String.valueOf(ratingBar.getRating()), "5 Stars", userIdForRating, userId));
+                alert.dismiss();
             } else {
-                if (reasonForLowRate.equals("reason")) {
+                ArrayList<String> reasonList = new ArrayList<>();
+                if (checkedReasonOne || checkedReasonTwo || checkedReasonThree || checkedReasonFour || checkedReasonFive || checkedReasonSix || checkedReasonSeven) {
+                    if (checkedReasonOne) {
+                        reasonList.add(reasonOne.getText().toString());
+                    }
+                    if (checkedReasonTwo) {
+                        reasonList.add(reasonTwo.getText().toString());
+                    }
+                    if (checkedReasonThree) {
+                        reasonList.add(reasonThree.getText().toString());
+                    }
+                    if (checkedReasonFour) {
+                        reasonList.add(reasonFour.getText().toString());
+                    }
+                    if (checkedReasonFive) {
+                        reasonList.add(reasonFive.getText().toString());
+                    }
+                    if (checkedReasonSix) {
+                        reasonList.add(reasonSix.getText().toString());
+                    }
+                    if (checkedReasonSeven) {
+                        reasonList.add(reasonSeven.getText().toString());
+                    }
 
+                    if (reasonList.size() == 1) {
+                        CreateUser.saveRatings(CreateUser.createRatings(transactionId, String.valueOf(ratingBar.getRating()), reasonList.get(0), userIdForRating, userId));
+
+                    } else if (reasonList.size() == 2) {
+                        CreateUser.saveRatings(CreateUser.createRatings(transactionId, String.valueOf(ratingBar.getRating()), reasonList.get(0) + " & " + reasonList.get(1), userIdForRating, userId));
+
+                    } else if (reasonList.size() == 3) {
+                        CreateUser.saveRatings(CreateUser.createRatings(transactionId, String.valueOf(ratingBar.getRating()), reasonList.get(0) + " & " + reasonList.get(1) + " & " + reasonList.get(2), userIdForRating, userId));
+
+                    } else if (reasonList.size() == 4) {
+                        CreateUser.saveRatings(CreateUser.createRatings(transactionId, String.valueOf(ratingBar.getRating()), reasonList.get(0) + " & " + reasonList.get(1) + " & " + reasonList.get(2) + " & " + reasonList.get(3), userIdForRating, userId));
+
+                    } else if (reasonList.size() == 5) {
+                        CreateUser.saveRatings(CreateUser.createRatings(transactionId, String.valueOf(ratingBar.getRating()), reasonList.get(0) + " & " + reasonList.get(1) + " & " + reasonList.get(2) + " & " + reasonList.get(3) + " & " + reasonList.get(4), userIdForRating, userId));
+
+                    } else if (reasonList.size() == 6) {
+                        CreateUser.saveRatings(CreateUser.createRatings(transactionId, String.valueOf(ratingBar.getRating()), reasonList.get(0) + " & " + reasonList.get(1) + " & " + reasonList.get(2) + " & " + reasonList.get(3) + " & " + reasonList.get(4) + " & " + reasonList.get(5), userIdForRating, userId));
+
+                    } else if (reasonList.size() == 7) {
+                        CreateUser.saveRatings(CreateUser.createRatings(transactionId, String.valueOf(ratingBar.getRating()), reasonList.get(0) + " & " + reasonList.get(1) + " & " + reasonList.get(2) + " & " + reasonList.get(3) + " & " + reasonList.get(4) + " & " + reasonList.get(5) + " & " + reasonList.get(6), userIdForRating, userId));
+                    }
+                    alert.dismiss();
                 } else {
                     Toast.makeText(this, "Please select a reason", Toast.LENGTH_SHORT).show();
                 }
@@ -2279,7 +2327,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
                 ratingGiven = v;
                 ratingText.setText(v + " / 5.0");
-                if (v < 5 || v==0) {
+                if (v < 5 || v == 0) {
                     issue.setVisibility(View.VISIBLE);
                     issueTwo.setVisibility(View.VISIBLE);
                     reasonOne.setVisibility(View.VISIBLE);
@@ -2304,84 +2352,84 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         });
 
         reasonOne.setOnClickListener(view -> {
-            if (checkedReasonOne) {
+            if (!checkedReasonOne) {
                 reasonForLowRate = "reason";
                 reasonOne.setBackground(getResources().getDrawable(R.drawable.image_view_border_selected));
-                checkedReasonOne = false;
+                checkedReasonOne = true;
             } else {
                 reasonOne.setBackground(getResources().getDrawable(R.drawable.image_view_border));
-                checkedReasonOne = true;
+                checkedReasonOne = false;
                 reasonForLowRate = "";
             }
         });
 
         reasonTwo.setOnClickListener(view -> {
-            if (checkedReasonTwo) {
+            if (!checkedReasonTwo) {
                 reasonForLowRate = "reason";
                 reasonTwo.setBackground(getResources().getDrawable(R.drawable.image_view_border_selected));
-                checkedReasonTwo = false;
+                checkedReasonTwo = true;
             } else {
                 reasonTwo.setBackground(getResources().getDrawable(R.drawable.image_view_border));
-                checkedReasonTwo = true;
+                checkedReasonTwo = false;
                 reasonForLowRate = "";
             }
         });
 
         reasonThree.setOnClickListener(view -> {
-            if (checkedReasonThree) {
+            if (!checkedReasonThree) {
                 reasonForLowRate = "reason";
                 reasonThree.setBackground(getResources().getDrawable(R.drawable.image_view_border_selected));
-                checkedReasonThree = false;
+                checkedReasonThree = true;
             } else {
                 reasonThree.setBackground(getResources().getDrawable(R.drawable.image_view_border));
-                checkedReasonThree = true;
+                checkedReasonThree = false;
                 reasonForLowRate = "";
             }
         });
 
         reasonFour.setOnClickListener(view -> {
-            if (checkedReasonFour) {
+            if (!checkedReasonFour) {
                 reasonFour.setBackground(getResources().getDrawable(R.drawable.image_view_border_selected));
-                checkedReasonFour = false;
+                checkedReasonFour = true;
             } else {
                 reasonFour.setBackground(getResources().getDrawable(R.drawable.image_view_border));
-                checkedReasonFour = true;
+                checkedReasonFour = false;
                 reasonForLowRate = "";
             }
         });
 
         reasonFive.setOnClickListener(view -> {
-            if (checkedReasonFive) {
+            if (!checkedReasonFive) {
                 reasonForLowRate = "reason";
                 reasonFive.setBackground(getResources().getDrawable(R.drawable.image_view_border_selected));
-                checkedReasonFive = false;
+                checkedReasonFive = true;
             } else {
                 reasonFive.setBackground(getResources().getDrawable(R.drawable.image_view_border));
-                checkedReasonFive = true;
+                checkedReasonFive = false;
                 reasonForLowRate = "";
             }
         });
 
         reasonSix.setOnClickListener(view -> {
-            if (checkedReasonSix) {
+            if (!checkedReasonSix) {
                 reasonForLowRate = "reason";
                 reasonSix.setBackground(getResources().getDrawable(R.drawable.image_view_border_selected));
-                checkedReasonSix = false;
+                checkedReasonSix = true;
             } else {
                 reasonSix.setBackground(getResources().getDrawable(R.drawable.image_view_border));
-                checkedReasonSix = true;
+                checkedReasonSix = false;
                 reasonForLowRate = "";
             }
         });
 
         reasonSeven.setOnClickListener(view -> {
-            if (checkedReasonSeven) {
+            if (!checkedReasonSeven) {
                 reasonForLowRate = "reason";
                 reasonSeven.setBackground(getResources().getDrawable(R.drawable.image_view_border_selected));
-                checkedReasonSeven = false;
+                checkedReasonSeven = true;
             } else {
                 reasonSeven.setBackground(getResources().getDrawable(R.drawable.image_view_border));
-                checkedReasonSeven = true;
+                checkedReasonSeven = false;
                 reasonForLowRate = "";
             }
         });
@@ -2525,6 +2573,27 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                 break;
         }
 
+    }
+
+    public void getRatings(String userIdForRatings, TextView setAverage){
+        Call<RatingResponse> call = ApiClient.getRatingService().getRatings(userIdForRatings);
+        call.enqueue(new Callback<RatingResponse>() {
+            @Override
+            public void onResponse(Call<RatingResponse> call, Response<RatingResponse> response) {
+                RatingResponse nameResponse = response.body();
+                String averageInt = nameResponse.getAverage();
+                if (averageInt.equals("null") || averageInt == null){
+                    setAverage.setText("3.5");
+                }else{
+                    setAverage.setText(averageInt);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RatingResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     public void ViewProfileOfSPToCustomer(BidsResponsesModel obj) {
@@ -3168,9 +3237,9 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                 String message = "";
                 try {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse("http://api.whatsapp.com/send?phone="+"+91"+mobileNumber + "&text="+message));
+                    intent.setData(Uri.parse("http://api.whatsapp.com/send?phone=" + "+91" + mobileNumber + "&text=" + message));
                     startActivity(intent);
-                }catch (Exception e){
+                } catch (Exception e) {
                     Toast.makeText(CustomerDashboardActivity.this, "Whats app not installed on your device", Toast.LENGTH_SHORT).show();
                 }
             }
