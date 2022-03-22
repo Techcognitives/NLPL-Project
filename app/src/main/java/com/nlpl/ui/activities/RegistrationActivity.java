@@ -10,6 +10,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -51,7 +52,7 @@ public class RegistrationActivity extends AppCompat {
     ImageView actionBarBackButton, actionBarMenuButton;
 
     String selectedState, role;
-    String mobile, stateByPinCode, distByPinCode;
+    String mobile, stateByPinCode, distByPinCode, deviceId;
 
     EditText name, pinCode, address, mobileNoEdit, email_id, alternateMobile;
     TextView series, setCurrentLocation;
@@ -103,6 +104,7 @@ public class RegistrationActivity extends AppCompat {
 
         actionBarBackButton.setVisibility(View.GONE);
 
+        deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         //------------------------------------------------------------------------------------------
         personalAndAddress = (View) findViewById(R.id.registration_personal_and_address);
         name = (EditText) personalAndAddress.findViewById(R.id.registration_edit_name);
@@ -274,7 +276,7 @@ public class RegistrationActivity extends AppCompat {
         }else if (selectDistrictText.getText().toString().isEmpty()){
             Toast.makeText(this, "Please Select City", Toast.LENGTH_SHORT).show();
         }else{
-            CreateUser.saveUser(CreateUser.createUser(name.getText().toString(), mobile, "91" + alternateMobile.getText().toString(), address.getText().toString(), role, email_id.getText().toString(), pinCode.getText().toString(), selectDistrictText.getText().toString(), selectStateText.getText().toString()));
+            CreateUser.saveUser(CreateUser.createUser(name.getText().toString(), mobile, "91" + alternateMobile.getText().toString(), address.getText().toString(), role, email_id.getText().toString(), pinCode.getText().toString(), selectDistrictText.getText().toString(), selectStateText.getText().toString(), deviceId));
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(RegistrationActivity.this);
             alert.setContentView(R.layout.dialog_alert_single_button);

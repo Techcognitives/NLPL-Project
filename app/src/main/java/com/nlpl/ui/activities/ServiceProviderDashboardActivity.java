@@ -35,6 +35,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -78,6 +79,7 @@ import com.nlpl.model.Responses.ImageResponse;
 import com.nlpl.model.Responses.UploadImageResponse;
 import com.nlpl.model.UpdateMethods.UpdateBidDetails;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
+import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserDeviceId;
 import com.nlpl.ui.adapters.DriversListAdapterBid;
 import com.nlpl.ui.adapters.LoadNotificationAdapter;
 import com.nlpl.ui.adapters.LoadSubmittedAdapter;
@@ -563,6 +565,12 @@ public class ServiceProviderDashboardActivity extends AppCompat {
 
                         emailIdAPI = obj.getString("email_id");
 
+                        String deviceIdFromAPI = obj.getString("device_id");
+                        if (deviceIdFromAPI.equals("null") || deviceIdFromAPI == null){
+                            String deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+                            UpdateUserDetails.updateUserDeviceId(userId, deviceId);
+                        }
+
                         String isRegistrationDone = obj.getString("isRegistration_done");
                         Log.i("IsREg", isRegistrationDone);
                         isPersonalDetailsDone = obj.getString("isPersonal_dt_added");
@@ -609,6 +617,8 @@ public class ServiceProviderDashboardActivity extends AppCompat {
                         } else {
                             driverDetailsLogoImageView.setImageDrawable(getResources().getDrawable(R.drawable.driver));
                         }
+
+
 
                     }
                 } catch (JSONException e) {

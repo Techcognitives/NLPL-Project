@@ -78,6 +78,6 @@
         app:layout_constraintEnd_toStartOf="@+id/action_bar_menu"
         app:layout_constraintStart_toEndOf="@+id/action_bar_title"
         app:layout_constraintTop_toTopOf="@+id/action_bar_title"
-        app:srcCompat="@drawable/whats_app_small" />
+        app:srcCompat="@drawable/ic_phone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

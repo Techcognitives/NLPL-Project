@@ -1,8 +1,8 @@
 package com.nlpl.model.Requests;
 
 public class UserRequest {
-    String name, phone_number, user_type, preferred_location, address, state_code, pin_code, preferred_language, email_id, alternate_ph_no;
-    int isProfile_pic_added, isRegistration_done, isTruck_added, isDriver_added, isBankDetails_given, isCompany_added, isPersonal_dt_added;
+    String name, phone_number, user_type, preferred_location, address, state_code, pin_code, preferred_language, email_id, alternate_ph_no, latitude, longitude, device_id;
+    int isProfile_pic_added, isRegistration_done, isTruck_added, isDriver_added, isBankDetails_given, isCompany_added, isPersonal_dt_added, is_Addhar_verfied, is_pan_verfied, is_user_verfied, is_account_active;
 
     public UserRequest() {
         this.name = name;
@@ -22,7 +22,13 @@ public class UserRequest {
         this.isCompany_added = isCompany_added;
         this.isProfile_pic_added = isProfile_pic_added;
         this.alternate_ph_no = alternate_ph_no;
-
+        this.is_Addhar_verfied = is_Addhar_verfied;
+        this.is_pan_verfied = is_pan_verfied;
+        this.is_user_verfied = is_user_verfied;
+        this.is_account_active = is_account_active;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.device_id = device_id;
     }
 
     public int getIsProfile_pic_added() {
@@ -159,5 +165,61 @@ public class UserRequest {
 
     public void setAlternate_ph_no(String alternate_ph_no) {
         this.alternate_ph_no = alternate_ph_no;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getDevice_id() {
+        return device_id;
+    }
+
+    public void setDevice_id(String device_id) {
+        this.device_id = device_id;
+    }
+
+    public int getIs_Addhar_verfied() {
+        return is_Addhar_verfied;
+    }
+
+    public void setIs_Addhar_verfied(int is_Addhar_verfied) {
+        this.is_Addhar_verfied = is_Addhar_verfied;
+    }
+
+    public int getIs_pan_verfied() {
+        return is_pan_verfied;
+    }
+
+    public void setIs_pan_verfied(int is_pan_verfied) {
+        this.is_pan_verfied = is_pan_verfied;
+    }
+
+    public int getIs_user_verfied() {
+        return is_user_verfied;
+    }
+
+    public void setIs_user_verfied(int is_user_verfied) {
+        this.is_user_verfied = is_user_verfied;
+    }
+
+    public int getIs_account_active() {
+        return is_account_active;
+    }
+
+    public void setIs_account_active(int is_account_active) {
+        this.is_account_active = is_account_active;
     }
 }
