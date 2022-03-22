@@ -62,6 +62,7 @@ public class RegistrationActivity extends AppCompat {
     int PLACE_PICKER_REQUEST = 1;
     GetCurrentLocation getCurrentLocation;
     ConstraintLayout roleConstrain;
+    String latitude, longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

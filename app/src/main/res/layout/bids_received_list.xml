@@ -25,6 +25,7 @@
             android:id="@+id/bids_responses_pick_up_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:gravity="center|start"
@@ -33,19 +34,20 @@
             android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/bids_responses_kms_approx"
             app:layout_constraintEnd_toStartOf="@+id/bids_responses_pick_up_time"
-            app:layout_constraintStart_toStartOf="@+id/bids_received_pick_up"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bids_received_pick_up" />
 
         <TextView
             android:id="@+id/bids_responses_pick_up_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
             android:text="HH:MMpm"
             android:textAlignment="viewEnd"
             android:textColor="@color/light_black"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/bids_responses_pick_up_date"
-            app:layout_constraintEnd_toEndOf="@+id/bids_responses_drop"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/bids_responses_pick_up_date"
             app:layout_constraintTop_toTopOf="@+id/bids_responses_pick_up_date" />
 
@@ -53,6 +55,7 @@
             android:id="@+id/bids_responses_kms_approx"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:text="000Km"
             android:textAlignment="viewStart"
@@ -60,13 +63,14 @@
             android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/bids_responses_body"
             app:layout_constraintEnd_toStartOf="@+id/bids_responses_budget"
-            app:layout_constraintStart_toStartOf="@+id/bids_responses_pick_up_date"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bids_responses_pick_up_date" />
 
         <TextView
             android:id="@+id/bids_responses_capacity"
             android:layout_width="189dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:text="Capacity: 0,000 kgs"
@@ -74,20 +78,21 @@
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/bids_responses_body"
-            app:layout_constraintStart_toStartOf="@+id/bids_responses_body"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bids_responses_body" />
 
         <TextView
             android:id="@+id/bids_responses_body"
             android:layout_width="188dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:text="Body: Open"
             android:textColor="@color/light_black"
             android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/bids_responses_capacity"
             app:layout_constraintEnd_toEndOf="@+id/bids_responses_kms_approx"
-            app:layout_constraintStart_toStartOf="@+id/bids_responses_kms_approx"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bids_responses_kms_approx" />
 
         <TextView
@@ -133,6 +138,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:gravity="center|end"
             android:paddingBottom="2dp"
             android:text="INR X,XXX"
@@ -140,7 +146,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/bids_responses_time_left"
-            app:layout_constraintEnd_toEndOf="@+id/bids_responses_pick_up_time"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/bids_responses_kms_approx"
             app:layout_constraintTop_toTopOf="@+id/bids_responses_kms_approx" />
 
@@ -149,6 +155,7 @@
             android:layout_width="191dp"
             android:layout_height="29dp"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
             android:drawableEnd="@drawable/clock_small"
             android:drawableTint="@color/redDark"
             android:gravity="center|end"
@@ -157,7 +164,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/bids_responses_capacity"
-            app:layout_constraintEnd_toEndOf="@+id/bids_responses_budget"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/bids_responses_budget"
             app:layout_constraintTop_toBottomOf="@+id/bids_responses_budget" />
 
