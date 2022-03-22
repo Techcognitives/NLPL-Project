@@ -18,6 +18,8 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.Html;
@@ -49,11 +51,10 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.nlpl.R;
 import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.CreateUser;
-import com.nlpl.utils.GetCurrentLocation;
+import com.nlpl.utils.GetLocationPickUp;
 import com.nlpl.utils.GetStateCityUsingPINCode;
 import com.nlpl.utils.InAppNotification;
 import com.nlpl.utils.JumpTo;
-import com.nlpl.utils.LanguageManager;
 import com.nlpl.utils.SelectCity;
 import com.nlpl.utils.SelectState;
 import com.nlpl.utils.ShowAlert;
@@ -82,7 +83,6 @@ public class RegistrationActivity extends AppCompat {
     View personalAndAddress;
     private RequestQueue mQueue;
     int PLACE_PICKER_REQUEST = 1;
-    GetCurrentLocation getCurrentLocation;
     ConstraintLayout roleConstrain;
     String latForAddress, longForAddress;
 
@@ -111,8 +111,6 @@ public class RegistrationActivity extends AppCompat {
         roleDialog.setCancelable(false);
 
         //------------------------------------------------------------------------------------------
-
-        getCurrentLocation = new GetCurrentLocation();
 
         mQueue = Volley.newRequestQueue(RegistrationActivity.this);
 
@@ -377,7 +375,7 @@ public class RegistrationActivity extends AppCompat {
         }else if (selectDistrictText.getText().toString().isEmpty()){
             Toast.makeText(this, "Please Select City", Toast.LENGTH_SHORT).show();
         }else{
-            CreateUser.saveUser(CreateUser.createUser(name.getText().toString(), mobile, "91" + alternateMobile.getText().toString(), address.getText().toString(), role, email_id.getText().toString(), pinCode.getText().toString(), selectDistrictText.getText().toString(), selectStateText.getText().toString(), deviceId));
+            CreateUser.saveUser(CreateUser.createUser(name.getText().toString(), mobile, "91" + alternateMobile.getText().toString(), address.getText().toString(), role, email_id.getText().toString(), pinCode.getText().toString(), selectDistrictText.getText().toString(), selectStateText.getText().toString(), deviceId, latForAddress, longForAddress));
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(RegistrationActivity.this);
             alert.setContentView(R.layout.dialog_alert_single_button);
@@ -463,6 +461,10 @@ public class RegistrationActivity extends AppCompat {
                 pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
                 selectStateText.setEnabled(false);
                 selectDistrictText.setEnabled(false);
+
+                GetLocationPickUp geoLocation = new GetLocationPickUp();
+                String addressFull = address.getText().toString()+" "+pinCode.getText().toString();
+                geoLocation.geLatLongPickUp(addressFull, getApplicationContext(), new GeoHandlerLatitude());
             }
         }
 
@@ -564,5 +566,39 @@ public class RegistrationActivity extends AppCompat {
     public void onClickExploreNow(View view) {
         ShowAlert.loadingDialog(RegistrationActivity.this);
         JumpTo.goToSliderActivity(RegistrationActivity.this, mobile);
+    }
+
+    private class GeoHandlerLatitude extends Handler {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            String latLong, lat = null, lon = null;
+            switch (msg.what) {
+                case 1:
+                    try {
+                        Bundle bundle = msg.getData();
+                        latLong = bundle.getString("latLong1");
+                        String[] arrSplit = latLong.split(" ");
+                        for (int i = 0; i < arrSplit.length; i++) {
+                            lat = arrSplit[0];
+                            lon = arrSplit[1];
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
+                default:
+                    lat = null;
+                    lon = null;
+            }
+            try {
+                latForAddress = lat;
+                longForAddress = lon;
+                Log.i("Lat and long 1", String.valueOf(latForAddress + " " + longForAddress));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 }

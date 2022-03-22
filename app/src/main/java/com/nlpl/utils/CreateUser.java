@@ -13,7 +13,7 @@ import retrofit2.Response;
 
 public class CreateUser {
     //------------------------------------- Create User in API -------------------------------------
-    public static UserRequest createUser(String userName, String mobileNumber, String alternateMobileNumber, String address, String role, String emailId, String pinCode, String city, String state, String deviceId) {
+    public static UserRequest createUser(String userName, String mobileNumber, String alternateMobileNumber, String address, String role, String emailId, String pinCode, String city, String state, String deviceId, String latitude, String longitude) {
         UserRequest userRequest = new UserRequest();
         userRequest.setName(userName);
         userRequest.setPhone_number(mobileNumber);
@@ -34,8 +34,8 @@ public class CreateUser {
         userRequest.setIs_Addhar_verfied(0);
         userRequest.setIs_pan_verfied(0);
         userRequest.setIs_user_verfied(0);
-        userRequest.setLatitude("");
-        userRequest.setLongitude("");
+        userRequest.setLatitude(latitude);
+        userRequest.setLongitude(longitude);
         userRequest.setDevice_id(deviceId);
 
         return userRequest;

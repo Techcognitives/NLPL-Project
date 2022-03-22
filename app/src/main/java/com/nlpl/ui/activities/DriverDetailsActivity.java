@@ -19,11 +19,17 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.text.Editable;
 
+import android.text.Html;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextWatcher;
@@ -46,6 +52,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.nlpl.R;
 import com.nlpl.model.Requests.AddDriverRequest;
 import com.nlpl.model.Responses.AddDriverResponse;
@@ -60,6 +74,7 @@ import com.nlpl.utils.CreateUser;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
 import com.nlpl.utils.GetCurrentLocation;
+import com.nlpl.utils.GetLocationPickUp;
 import com.nlpl.utils.GetStateCityUsingPINCode;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.SelectCity;
@@ -72,7 +87,11 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -94,7 +113,6 @@ public class DriverDetailsActivity extends AppCompat {
     int resultCode;
     String isDriverDetailsDoneAPI;
     CheckBox selfCheckBox;
-    GetCurrentLocation getCurrentLocation;
 
     Button uploadDL, uploadSelfie;
     TextView textDL, editDL, series, textDS, editDS;
@@ -106,7 +124,7 @@ public class DriverDetailsActivity extends AppCompat {
 
     private RequestQueue mQueue;
 
-    String driverUserId, driverUserIdGet;
+    String driverUserId, driverUserIdGet, latForAddress, longForAddress;
 
     String pathForDL, pathForSelfie, userId, driverId, driverNameAPI, driverNumberAPI, driverEmailAPI, mobile;
     Boolean fromBidNow = false, isDLUploaded = false, isEdit, isSelfieUploded = false, idDLEdited = false;
@@ -176,7 +194,6 @@ public class DriverDetailsActivity extends AppCompat {
         address.addTextChangedListener(driverNameWatcher);
 
         address.setFilters(new InputFilter[]{filter});
-        getCurrentLocation = new GetCurrentLocation();
 
         driverEmailId.addTextChangedListener(new TextWatcher() {
             @Override
@@ -438,6 +455,10 @@ public class DriverDetailsActivity extends AppCompat {
                 pinCode.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
                 selectStateText.setEnabled(false);
                 selectDistrictText.setEnabled(false);
+
+                GetLocationPickUp geoLocation = new GetLocationPickUp();
+                String addressFull = address.getText().toString()+" "+pinCode.getText().toString();
+                geoLocation.geLatLongPickUp(addressFull, getApplicationContext(), new GeoHandlerLatitude());
             }
         }
 
@@ -447,6 +468,40 @@ public class DriverDetailsActivity extends AppCompat {
         }
     };
 
+    private class GeoHandlerLatitude extends Handler {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            String latLong, lat = null, lon = null;
+            switch (msg.what) {
+                case 1:
+                    try {
+                        Bundle bundle = msg.getData();
+                        latLong = bundle.getString("latLong1");
+                        String[] arrSplit = latLong.split(" ");
+                        for (int i = 0; i < arrSplit.length; i++) {
+                            lat = arrSplit[0];
+                            lon = arrSplit[1];
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
+                default:
+                    lat = null;
+                    lon = null;
+            }
+            try {
+                latForAddress = lat;
+                longForAddress = lon;
+                Log.i("Lat and long 1", String.valueOf(latForAddress + " " + longForAddress));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
     //-----------------------------------------------upload Image------------------------------------------------------------
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -455,12 +510,73 @@ public class DriverDetailsActivity extends AppCompat {
         this.requestCode = requestCode;
         this.data = data;
 
-        getCurrentLocation.setAddressAndPin(DriverDetailsActivity.this, data, address, pinCode);
         DLimagePicker();
         DLimagePickerWithoutAlert();
         selfieImagePicker();
         selfieImagePickerWithoutAlert();
 
+        try {
+            Place place = Autocomplete.getPlaceFromIntent(data);
+//            String[] addressField = place.getAddress().split(",");
+//            address.setText(addressField[0]);
+
+            List<Address> addresses;
+            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
+            try {
+                addresses = geocoder.getFromLocation(place.getLatLng().latitude, place.getLatLng().longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                String address1 = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                String address2 = addresses.get(0).getAddressLine(1); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                String city = addresses.get(0).getLocality();
+                String state = addresses.get(0).getAdminArea();
+                String country = addresses.get(0).getCountryName();
+                String postalCode = addresses.get(0).getPostalCode();
+                latForAddress = String.valueOf(addresses.get(0).getLatitude());
+                longForAddress = String.valueOf(addresses.get(0).getLongitude());
+
+                Log.i("Register Maps Latitude", latForAddress);
+                Log.i("Register Maps Longitude", longForAddress);
+
+//                Log.e("Address1: ", "" + address1);
+//                Log.e("Address2: ", "" + address2);
+//                Log.e("AddressCity: ", "" + city);
+//                Log.e("AddressState: ", "" + state);
+//                Log.e("AddressCountry: ", "" + country);
+//                Log.e("AddressPostal: ", "" + postalCode);
+//                Log.e("AddressLatitude: ", "" + place.getLatLng().latitude);
+//                Log.e("AddressLongitude: ", "" + place.getLatLng().longitude);
+
+                char[] chars = address1.toCharArray();
+                StringBuilder sb = new StringBuilder();
+                for (char c : chars) {
+                    if (!Character.isDigit(c)) {
+                        sb.append(c);
+                    }
+                }
+//                System.out.println("String "+sb);
+
+                String[] addressFieldWithoutCountry = address1.split(country);
+                String[] addressFieldWithoutState = addressFieldWithoutCountry[0].split(state);
+                String[] addressFiledWithoutCity = addressFieldWithoutState[0].split(city);
+
+                try {
+                    address.setText(addressFiledWithoutCity[0]);
+                    pinCode.setText(postalCode);
+                } catch (Exception e) {
+                    address.setText(address1);
+                    pinCode.setText(postalCode);
+                }
+
+                address.setText(address1);
+                pinCode.setText(postalCode);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            //setMarker(latLng);
+        }
     }
 
     private String DLimagePickerWithoutAlert() {
@@ -962,7 +1078,7 @@ public class DriverDetailsActivity extends AppCompat {
                     saveDriver(createDriver());
                 } else {
                     saveDriver(createDriver());
-                    CreateUser.saveUser(CreateUser.createUser(driverName.getText().toString(), "91" + driverMobile.getText().toString(), "91" + driverAlternateMobile.getText().toString(), address.getText().toString(), "Driver", driverEmailId.getText().toString(), pinCode.getText().toString(), selectDistrictText.getText().toString(), selectStateText.getText().toString(), "null"));
+                    CreateUser.saveUser(CreateUser.createUser(driverName.getText().toString(), "91" + driverMobile.getText().toString(), "91" + driverAlternateMobile.getText().toString(), address.getText().toString(), "Driver", driverEmailId.getText().toString(), pinCode.getText().toString(), selectDistrictText.getText().toString(), selectStateText.getText().toString(), "null", latForAddress, longForAddress));
                 }
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(DriverDetailsActivity.this);
@@ -1542,7 +1658,86 @@ public class DriverDetailsActivity extends AppCompat {
     }
 
     public void onClickGetCurrentLocation(View view) {
-        getCurrentLocation.getCurrentLocationMaps(DriverDetailsActivity.this, address, pinCode);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            Dialog chooseDialog = new Dialog(this);
+            chooseDialog.setContentView(R.layout.dialog_choose);
+            chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+            WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+            lp2.copyFrom(chooseDialog.getWindow().getAttributes());
+            lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            lp2.gravity = Gravity.BOTTOM;
+
+            chooseDialog.show();
+            chooseDialog.getWindow().setAttributes(lp2);
+
+            ImageView currentLocation = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
+            currentLocation.setImageResource(R.drawable.google_location_small);
+            ImageView searchFromMaps = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
+            searchFromMaps.setImageResource(R.drawable.google_address_small);
+
+            TextView currentText = chooseDialog.findViewById(R.id.dialog_camera_text);
+            currentText.setText("Current Location");
+            TextView fromMapText = chooseDialog.findViewById(R.id.dialog_photo_library_text);
+            fromMapText.setText("Search");
+
+            currentLocation.setOnClickListener(view2 -> {
+                chooseDialog.dismiss();
+                getCurrentLocation(this, address, pinCode);
+            });
+
+            searchFromMaps.setOnClickListener(view3 -> {
+                chooseDialog.dismiss();
+                Places.initialize(getApplicationContext(), "AIzaSyDAAes8x5HVKYB5YEIGBmdnCdyBrAHUijM");
+                List<Place.Field> fields = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG);
+                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields).build(this);
+                startActivityForResult(intent, 100);
+            });
+
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+        }
+    }
+
+    public void getCurrentLocation(Activity activity, EditText address, EditText pinCode) {
+        FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity);
+
+        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+                @Override
+                public void onComplete(@NonNull Task<Location> task) {
+                    Location location = task.getResult();
+                    if (location != null) {
+                        Geocoder geocoder = new Geocoder(activity, Locale.getDefault());
+                        try {
+                            String latitudeCurrent, longitudeCurrent, countryCurrent, stateCurrent, cityCurrent, subCityCurrent, addressCurrent, pinCodeCurrent;
+                            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                            latitudeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLatitude()));
+                            longitudeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLongitude()));
+                            countryCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getCountryName()));
+                            stateCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getAdminArea()));
+                            cityCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getLocality()));
+                            subCityCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getSubLocality()));
+                            addressCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getAddressLine(0)));
+                            pinCodeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getPostalCode()));
+
+                            address.setText(addressCurrent);
+                            pinCode.setText(pinCodeCurrent);
+
+                            latForAddress = latitudeCurrent;
+                            longForAddress = longitudeCurrent;
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+            });
+        } else {
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+        }
     }
 
     @Override
