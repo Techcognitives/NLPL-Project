@@ -47,6 +47,7 @@ import com.nlpl.model.UpdateMethods.UpdateBankDetails;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
 
 import com.nlpl.utils.ApiClient;
+import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
 import com.nlpl.utils.JumpTo;
@@ -66,7 +67,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BankDetailsActivity extends AppCompatActivity {
+public class BankDetailsActivity extends AppCompat {
 
     View action_bar;
     TextView actionBarTitle;

@@ -16,6 +16,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.nlpl.R;
+import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.JumpTo;
 
 import org.json.JSONArray;
@@ -25,7 +26,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 
-public class SplashScreenActivity extends AppCompatActivity {
+public class SplashScreenActivity extends AppCompat {
 
     private static int SPLASH_SCREEN = 2000; //Delay for Animation
     String mobileNoFirebase, role, roleAPI, cityAPI, city, pinCode, pinCodeAPI, phone, userId, mobileNoAPI, userIdAPI, name, nameAPI, addressAPI, address, isRegistrationDoneAPI, isRegistrationDone;

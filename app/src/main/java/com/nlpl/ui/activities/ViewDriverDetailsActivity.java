@@ -32,6 +32,7 @@ import com.nlpl.model.UpdateMethods.UpdateDriverDetails;
 import com.nlpl.services.AddDriverService;
 import com.nlpl.ui.adapters.DriversAdapter;
 import com.nlpl.ui.adapters.TrucksListAdapter;
+import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.ShowAlert;
@@ -45,7 +46,7 @@ import java.util.ArrayList;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ViewDriverDetailsActivity extends AppCompatActivity {
+public class ViewDriverDetailsActivity extends AppCompat {
 
     private ArrayList<DriverModel> driverList = new ArrayList<>();
     private DriversAdapter driverListAdapter;

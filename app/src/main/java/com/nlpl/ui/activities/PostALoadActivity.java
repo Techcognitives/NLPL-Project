@@ -48,6 +48,7 @@ import com.nlpl.model.Responses.PostLoadResponse;
 import com.nlpl.model.UpdateMethods.UpdatePostLoadDetails;
 
 import com.nlpl.utils.ApiClient;
+import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.EnglishNumberToWords;
 import com.nlpl.utils.GetCurrentLocation;
 import com.nlpl.utils.GetLocationDrop;
@@ -75,7 +76,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PostALoadActivity extends AppCompatActivity {
+public class PostALoadActivity extends AppCompat {
 
     View action_bar;
     TextView actionBarTitle;

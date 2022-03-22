@@ -83,6 +83,7 @@ import com.nlpl.ui.adapters.LoadNotificationAdapter;
 import com.nlpl.ui.adapters.LoadSubmittedAdapter;
 import com.nlpl.ui.adapters.TrucksListAdapterBid;
 import com.nlpl.utils.ApiClient;
+import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.EnglishNumberToWords;
 import com.nlpl.utils.FileUtils;
@@ -110,7 +111,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 
-public class ServiceProviderDashboardActivity extends AppCompatActivity {
+public class ServiceProviderDashboardActivity extends AppCompat {
 
     SwipeRefreshLayout swipeRefreshLayout;
     FusedLocationProviderClient fusedLocationProviderClient;

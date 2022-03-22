@@ -39,6 +39,7 @@ import com.nlpl.model.Responses.ImageResponse;
 import com.nlpl.model.Responses.UploadImageResponse;
 
 import com.nlpl.utils.ApiClient;
+import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.FileUtils;
 import com.nlpl.utils.InAppNotification;
 import com.nlpl.utils.JumpTo;
@@ -55,7 +56,7 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
-public class PersonalDetailsActivity extends AppCompatActivity {
+public class PersonalDetailsActivity extends AppCompat {
 
     View action_bar;
     TextView actionBarTitle;

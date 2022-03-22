@@ -31,6 +31,7 @@ import com.nlpl.model.ModelForRecyclerView.TruckModel;
 import com.nlpl.model.UpdateMethods.UpdateTruckDetails;
 import com.nlpl.ui.adapters.DriversListAdapter;
 import com.nlpl.ui.adapters.TrucksAdapter;
+import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.ShowAlert;
@@ -41,7 +42,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class ViewTruckDetailsActivity extends AppCompatActivity {
+public class ViewTruckDetailsActivity extends AppCompat {
 
     private RequestQueue mQueue;
     private ArrayList<TruckModel> truckList = new ArrayList<>();

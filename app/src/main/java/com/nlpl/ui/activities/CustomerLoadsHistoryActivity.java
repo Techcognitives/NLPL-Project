@@ -29,6 +29,7 @@ import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BidsReceivedModel;
 import com.nlpl.ui.adapters.LoadsCompletedAdapter;
 import com.nlpl.ui.adapters.LoadsExpiredAdapter;
+import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.ShowAlert;
@@ -40,7 +41,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class CustomerLoadsHistoryActivity extends AppCompatActivity {
+public class CustomerLoadsHistoryActivity extends AppCompat {
 
     SwipeRefreshLayout swipeRefreshLayout;
     private ArrayList<BidsReceivedModel> expiredLoadList = new ArrayList<>();

@@ -5,8 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.nlpl.R;
+import com.nlpl.utils.AppCompat;
 
-public class PostATripActivity extends AppCompatActivity {
+public class PostATripActivity extends AppCompat {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
