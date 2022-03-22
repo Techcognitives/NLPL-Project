@@ -73,6 +73,7 @@ import com.nlpl.utils.CreateUser;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.EnglishNumberToWords;
 import com.nlpl.utils.FileUtils;
+import com.nlpl.utils.GetUserDetails;
 import com.nlpl.utils.InAppNotification;
 import com.nlpl.utils.FooThread;
 import com.nlpl.utils.JumpTo;
@@ -1935,7 +1936,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                         });
                         mQueue.add(request4);
                         //--------------------------------------------------------------------------
-                        getRatings(assignedUserId, spRatingInInt);
+                        GetUserDetails.getRatings(assignedUserId, spRatingInInt);
                         //----------------------------------------------------------
                         String url = getString(R.string.baseURL) + "/user/" + assignedUserId;
                         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -2573,27 +2574,6 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                 break;
         }
 
-    }
-
-    public void getRatings(String userIdForRatings, TextView setAverage){
-        Call<RatingResponse> call = ApiClient.getRatingService().getRatings(userIdForRatings);
-        call.enqueue(new Callback<RatingResponse>() {
-            @Override
-            public void onResponse(Call<RatingResponse> call, Response<RatingResponse> response) {
-                RatingResponse nameResponse = response.body();
-                String averageInt = nameResponse.getAverage();
-                if (averageInt.equals("null") || averageInt == null){
-                    setAverage.setText("3.5");
-                }else{
-                    setAverage.setText(averageInt);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<RatingResponse> call, Throwable t) {
-
-            }
-        });
     }
 
     public void ViewProfileOfSPToCustomer(BidsResponsesModel obj) {
