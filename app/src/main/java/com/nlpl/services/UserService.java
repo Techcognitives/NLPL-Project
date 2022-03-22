@@ -4,6 +4,7 @@ import com.nlpl.model.Requests.UserRequest;
 import com.nlpl.model.Responses.UserResponse;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserAddress;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserAlternatePhoneNumber;
+import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserDeviceId;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserEmailId;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsBankDetailsGiven;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsCompanyAdded;
@@ -81,4 +82,7 @@ public interface UserService {
 
     @PUT("/user/{userId}")
     Call<UpdateUserEmailId> updateUserEmailId(@Path("userId") String userId, @Body UpdateUserEmailId updateUserEmailId);
+
+    @PUT("/user/{userId}")
+    Call<UpdateUserDeviceId> updateUserDeviceId(@Path("userId") String userId, @Body UpdateUserDeviceId updateUserDeviceId);
 }

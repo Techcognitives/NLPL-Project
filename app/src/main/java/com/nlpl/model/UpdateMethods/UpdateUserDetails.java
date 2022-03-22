@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserAddress;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserAlternatePhoneNumber;
+import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserDeviceId;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserEmailId;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsBankDetailsGiven;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsCompanyAdded;
@@ -366,6 +367,23 @@ public class UpdateUserDetails {
 
             @Override
             public void onFailure(Call<UpdateUserIsProfileAdded> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //-------------------------------- Update User Device Id ---------------------------------------
+    public static void updateUserDeviceId(String userId, String deviceId) {
+        UpdateUserDeviceId updateUserDeviceId = new UpdateUserDeviceId(deviceId);
+        Call<UpdateUserDeviceId> call = ApiClient.getUserService().updateUserDeviceId("" + userId, updateUserDeviceId);
+        call.enqueue(new Callback<UpdateUserDeviceId>() {
+            @Override
+            public void onResponse(Call<UpdateUserDeviceId> call, Response<UpdateUserDeviceId> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserDeviceId> call, Throwable t) {
 
             }
         });
