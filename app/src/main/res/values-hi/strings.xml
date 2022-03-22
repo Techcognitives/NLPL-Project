@@ -178,7 +178,7 @@
     <string name="EnterDriverName">ड्राइवर का नाम दर्ज करें </string>
     <string name="UploadDriverLicense">ड्राइवर लाइसेंस अपलोड करें </string>
     <string name="UploadDriverSelfie">फोटो - सेल्फी </string>
-    <string name="DriverLicense">चालक लाइसेंस* </string>
+    <string name="DriverLicense">ड्राइवर लाइसेंस* </string>
     <string name="TakePhoto">एक तस्वीर लें* </string>
     <string name="camera">कैमरा </string>
     <string name="driver_mobile_number_hint">ड्राइवर का मोबाइल नंबर दर्ज करें </string>
@@ -211,6 +211,7 @@
     <string name="Search">ढूँढ </string>           //new             //dot
     <string name="Truck_Owner">ट्रक मालिक </string> //new
     <string name="Driver">ड्राइवर </string>           //new
+    <string name="Search_Driver_by_Number">नंबर के आधार पर ड्राइवर खोजें</string>
     <string name="Broker">ब्रोकर </string>           //new
     <string name="Enter_Driving_License_Number">ड्राइविंग लाइसेंस नंबर दर्ज करें </string>       //new
     <string name="Choose_any_of_the_following">नीचे में से कोई भी चुनें </string>         //new          //dot

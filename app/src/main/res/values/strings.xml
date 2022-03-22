@@ -1287,6 +1287,7 @@
     //new
     <string name="Driver">Driver</string>
     //new
+    <string name="Search_Driver_by_Number">Search Driver by Number</string>
     <string name="Broker">Broker</string>
     //new
     <string name="Enter_Driving_License_Number">Enter Driving License Number</string>
