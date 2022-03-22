@@ -1344,6 +1344,8 @@
     <string name="firm">Firm Name:</string>
     <string name="addressColon">Address:</string>
     <string name="add_company">+ Add Company</string>
+    <string name="Enter_PAN_Number">Enter PAN Number</string>
+    <string name="Enter_Aadhar_Number">Enter Aadhar Number</string>
     //----------------------------------------------------------------------------------------------
 
     //------------------------------------BASE URL--------------------------------------------------

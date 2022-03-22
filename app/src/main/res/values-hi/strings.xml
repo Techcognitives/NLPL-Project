@@ -256,6 +256,8 @@
     <string name="firm">फर्म का नाम: </string>       //dot
     <string name="addressColon">पता: </string>
     <string name="add_company">+ कंपनी जोड़ें </string>
+    <string name="Enter_PAN_Number">पैन नंबर दर्ज करें</string>
+    <string name="Enter_Aadhar_Number">आधार नंबर दर्ज करें</string>
     //----------------------------------------------------------------------------------------------
 
     //------------------------------------BASE URL--------------------------------------------------

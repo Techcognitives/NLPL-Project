@@ -69,7 +69,7 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
         ImageView actionBarWhatsApp = (ImageView) actionBar.findViewById(R.id.action_bar_whats_app);
         actionBarWhatsApp.setVisibility(View.VISIBLE);
 
-        actionBarTitle.setText("Find Trucks");
+        actionBarTitle.setText(getString(R.string.Find_Trucks));
         actionBarBackButton.setVisibility(View.VISIBLE);
         actionBarMenuButton.setVisibility(View.GONE);
 
@@ -85,7 +85,7 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
         spDashboard.setBackgroundTintList(getResources().getColorStateList(R.color.light_white));
         TextView profileText = (TextView) bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
         ImageView profileImageView = (ImageView) bottomNav.findViewById(R.id.bottom_nav_profile_image_view);
-        profileText.setText("Find Trucks");
+        profileText.setText(getString(R.string.Find_Trucks));
         profileImageView.setImageDrawable(getDrawable(R.drawable.bottom_nav_search_small));
         View spView = (View) bottomNav.findViewById(R.id.bottom_nav_bar_dashboard_underline);
         spView.setVisibility(View.INVISIBLE);
