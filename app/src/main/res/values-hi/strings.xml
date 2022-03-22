@@ -328,6 +328,7 @@
     <string name="yourQuote">मेरा कोट </string>             //dot
     <string name="negotiable">बातचीत योग्य </string>             //dot
     <string name="truck">ट्रक </string>
+    <string name="Search_by_Truck_Number">ट्रक नंबर द्वारा खोजें </string>
     <string name="feet">फीट </string>
     <string name="Notes">नोट्स </string>
     <string name="NotesIfAny">टाइप करें या चुनें </string>

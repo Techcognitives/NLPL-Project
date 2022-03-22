@@ -328,6 +328,7 @@
     <string name="yourQuote">My Quote</string>
     <string name="negotiable">Negotiable</string>
     <string name="truck">Truck</string>
+    <string name="Search_by_Truck_Number">Search by Truck Number</string>
     <string name="feet">Feet</string>
     <string name="Notes">Notes</string>
     <string name="NotesIfAny">Type or select</string>
