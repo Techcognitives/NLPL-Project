@@ -44,8 +44,8 @@ public class BanksAdapter extends RecyclerView.Adapter<BanksAdapter.BankViewHold
         String bankName = obj.getBank_name();
 
         holder.list_bank_name.setText(bankName);
-        holder.list_acc_no.setText(" A/C: " + accNumber);
-        holder.list_ifsi.setText(" IFSI: "+ ifsiNumber);
+        holder.list_acc_no.setText(activity.getString(R.string.Account_No) + accNumber);
+        holder.list_ifsi.setText(activity.getString(R.string.IFSI_Code)+ ifsiNumber);
 
 //--------------------------------------------------------------------------------------------------
         holder.list_edit.setOnClickListener(new View.OnClickListener() {

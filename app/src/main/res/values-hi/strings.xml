@@ -86,7 +86,7 @@
     <string name="AadharFront">आधार फ्रंट </string>
     <string name="AadharBack">आधार बैक </string>
     <string name="edit">एडिट </string>                        //dot
-    <string name="acNo">खाता संख्या: </string>
+    <string name="acNo">अकाउंट नंबर: </string>
     <string name="addBank">+ बैंक जोड़ें </string>
     <string name="addTruck">+ ट्रक जोड़ें </string>
     <string name="addDriver">+ ड्राइवर जोड़ें </string>
@@ -113,11 +113,11 @@
     //---------------------------------------Bank Details Activity----------------------------------
     <string name="NameWithStar">बैंक का नाम* </string>
     <string name="Bank_name_hint">बैंक का नाम दर्ज करें </string>
-    <string name="AccountNumber">खाता संख्या* </string>
-    <string name="ReEnterAcc">खाता संख्या पुन: दर्ज करें* </string>
+    <string name="AccountNumber">अकाउंट नंबर* </string>
+    <string name="ReEnterAcc">अकाउंट नंबर पुन: दर्ज करें* </string>
     <string name="IFSC">आईएफएससी कोड* </string>
-    <string name="EnterAccNumber">अपना खाता नंबर दर्ज करें </string>
-    <string name="ReEnterAccNumber">अपना खाता नंबर फिर से दर्ज करें </string>
+    <string name="EnterAccNumber">अपना अकाउंट नंबर दर्ज करें </string>
+    <string name="ReEnterAccNumber">अपना अकाउंट नंबर फिर से दर्ज करें </string>
     <string name="EnterIFSC">आईएफएससी कोड दर्ज करें </string>
     <string name="bank_details">बैंक जानकारी </string>
     //new
@@ -125,14 +125,14 @@
     <string name="Cancelled_cheque_uploaded_successfully">रद्द किया गया चेक सफलतापूर्वक अपलोड किया गया </string>
     <string name="Cancelled_cheque_not_uploaded_successfully">रद्द किया गया चेक सफलतापूर्वक अपलोड नहीं किया गया </string>
     <string name="Bank_Details_added_successfully">बैंक जानकारी सफलतापूर्वक जोड़ा गया </string>
-    <string name="Account_number_does_not_match">खाता संख्या मेल नहीं खाती </string>
-    <string name="Please_enter_correct_account_number_as_above.">कृपया ऊपर दिए गए अनुसार सही खाता संख्या दर्ज करें. </string>
+    <string name="Account_number_does_not_match">अकाउंट नंबर मेल नहीं खाती </string>
+    <string name="Please_enter_correct_account_number_as_above.">कृपया ऊपर दिए गए अनुसार सही अकाउंट नंबर दर्ज करें. </string>
     <string name="My_Bank">मेरा बैंक </string>
     <string name="Bank_Name"> बैंक का नाम: </string>
-    <string name="Account_No"> खाता संख्या: </string>
+    <string name="Account_No"> अकाउंट नंबर: </string>
     <string name="IFSI_Code"> आईएफएससी कोड: </string>
     <string name="Upload_a_cancelled_Cheque">रद्द किया गया चेक अपलोड करें </string>     //new
-    <string name="Enter_AC_Details">खाता संख्या जानकारी दर्ज करें </string>     //new
+    <string name="Enter_AC_Details">अकाउंट नंबर जानकारी दर्ज करें </string>     //new
     <string name="Upload_a_photo_of_Canceled_Check">रद्द की गई जाँच की फ़ोटो अपलोड करें </string>   //new
     <string name="Cancelled_Cheque">रद्द किया गया चेक* </string>
     <string name="OR">--------------------- या ---------------------</string>   //new
@@ -187,7 +187,7 @@
     <string name="AddAnotherDriver">एक और ड्राइवर जोड़ें </string>
     <string name="driver_mobile_number">ड्राइवर का मोबाइल नंबर </string>
     //new
-    <string name="Enter_10_digit_Driver_Number">10 अंकों की ड्राइवर संख्या दर्ज करें </string>       //dot
+    <string name="Enter_10_digit_Driver_Number">10 अंकों की ड्राइवर नंबर दर्ज करें </string>       //dot
     <string name="Enter_Driver_Email_Id">ड्राइवर ईमेल आईडी दर्ज करें </string>
     <string name="Driver_Details">ड्राइवर जानकारी </string>
     <string name="Edit_Driver_Details">ड्राइवर जानकारी एडिट करें </string>                    //dot
@@ -273,8 +273,8 @@
     <string name="budgetRs">बजट ₹ </string>
     <string name="truckTypeAndCapacity">ट्रक का प्रकार और क्षमता* </string>
     <string name="SelectVehicleModel">वाहन का प्रकार चुनें </string>
-    <string name="bodyType">बॉडी प्रकार </string>
-    <string name="Load_Type">लोड प्रकार </string>                     //new
+    <string name="bodyType">बॉडी प्रकार: </string>
+    <string name="Load_Type">लोड प्रकार: </string>                     //new
     <string name="pickUpLocationDetails">पिक-अप पता* </string>
     <string name="dropLocationDetails">ड्रॉप पता* </string>
     <string name="km">किमी (लगभग) </string>                     //dot
