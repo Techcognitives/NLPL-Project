@@ -144,7 +144,7 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
 
         LatLng latLng = new LatLng(latt,
                 longi);
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latLng.latitude, latLng.longitude), 11.0f));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(20.5937, 78.9629), 5.0f));
 
 //        if(mListMarker.size() != 0){
             TextInfoWindowAdapter testInfoWindowAdapter = new TextInfoWindowAdapter(this);
