@@ -48,8 +48,10 @@
             android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/delete_load_in_post_a_load">
+            app:layout_constraintTop_toBottomOf="@id/delete_load_in_post_a_load"
+            app:layout_constraintVertical_bias="0.0">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -569,7 +571,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="5dp"
-                    android:text="Payment Method:"
+                    android:text="@string/Payment_Method"
                     android:textColor="@color/dark_grey"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toStartOf="@+id/post_a_load_change_payment_method"
@@ -580,8 +582,8 @@
                     android:id="@+id/post_a_load_change_payment_method"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Change"
                     android:onClick="onClickPaymentMethod"
+                    android:text="Change"
                     android:textColor="@color/button_blue"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="@+id/post_a_load_payment_method_text"

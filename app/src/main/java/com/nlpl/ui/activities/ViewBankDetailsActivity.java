@@ -25,6 +25,7 @@ import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BankModel;
 import com.nlpl.ui.adapters.BanksAdapter;
+import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.ShowAlert;
@@ -35,7 +36,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class ViewBankDetailsActivity extends AppCompatActivity {
+public class ViewBankDetailsActivity extends AppCompat {
 
     private RequestQueue mQueue;
     private ArrayList<BankModel> bankList = new ArrayList<>();

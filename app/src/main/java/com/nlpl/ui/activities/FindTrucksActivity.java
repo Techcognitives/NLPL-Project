@@ -32,6 +32,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.nlpl.R;
 import com.nlpl.model.MapsModel.LocationModel;
+import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.ShowAlert;
 import com.squareup.picasso.Picasso;
@@ -39,7 +40,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FindTrucksActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback {
 
     String phone, userId, URLString;
 

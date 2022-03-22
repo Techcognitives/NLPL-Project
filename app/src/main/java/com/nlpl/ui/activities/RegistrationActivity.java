@@ -29,6 +29,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
 import com.nlpl.R;
+import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.CreateUser;
 import com.nlpl.utils.GetCurrentLocation;
 import com.nlpl.utils.GetStateCityUsingPINCode;
@@ -39,7 +40,7 @@ import com.nlpl.utils.SelectCity;
 import com.nlpl.utils.SelectState;
 import com.nlpl.utils.ShowAlert;
 
-public class RegistrationActivity extends AppCompatActivity {
+public class RegistrationActivity extends AppCompat {
 
     final String NOTIFICATION_CHANNEL_ID = "100012";
     final String default_notification_channel_id = "defaults";

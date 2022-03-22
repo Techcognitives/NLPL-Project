@@ -47,6 +47,7 @@ import com.nlpl.model.Responses.UploadTruckRCResponse;
 import com.nlpl.model.UpdateMethods.UpdateTruckDetails;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
 import com.nlpl.utils.ApiClient;
+import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
 import com.nlpl.utils.JumpTo;
@@ -67,7 +68,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class VehicleDetailsActivity extends AppCompatActivity {
+public class VehicleDetailsActivity extends AppCompat {
 
     View action_bar;
     TextView actionBarTitle;

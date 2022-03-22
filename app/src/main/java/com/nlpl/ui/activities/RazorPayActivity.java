@@ -12,12 +12,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nlpl.R;
+import com.nlpl.utils.AppCompat;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
 
 import org.json.JSONObject;
 
-public class RazorPayActivity extends AppCompatActivity implements PaymentResultListener  {
+public class RazorPayActivity extends AppCompat implements PaymentResultListener  {
 
     Button payBtn;
     TextView payText;

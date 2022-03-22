@@ -40,6 +40,7 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.nlpl.R;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
+import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.OTPReceiver;
 
@@ -50,7 +51,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-public class OtpCodeActivity extends AppCompatActivity {
+public class OtpCodeActivity extends AppCompat {
 
     TextView countdown, otpTitle, reSendOtp;
     String mobile, otpId;

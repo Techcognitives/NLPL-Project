@@ -68,6 +68,7 @@ import com.nlpl.ui.adapters.BidsAcceptedAdapter;
 import com.nlpl.ui.adapters.BidsReceivedAdapter;
 import com.nlpl.ui.adapters.BidsResponsesAdapter;
 import com.nlpl.utils.ApiClient;
+import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.CreateUser;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.EnglishNumberToWords;
@@ -97,7 +98,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CustomerDashboardActivity extends AppCompatActivity implements PaymentResultListener {
+public class CustomerDashboardActivity extends AppCompat implements PaymentResultListener {
 
     SwipeRefreshLayout swipeRefreshLayout;
     private RequestQueue mQueue;

@@ -46,6 +46,7 @@ import com.nlpl.ui.adapters.FindLoadAdapter;
 import com.nlpl.ui.adapters.SearchLoadAdapter;
 import com.nlpl.ui.adapters.StateLoadAdapter;
 import com.nlpl.utils.ApiClient;
+import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.EnglishNumberToWords;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.ShowAlert;
@@ -60,7 +61,7 @@ import java.util.Arrays;
 import retrofit2.Call;
 import retrofit2.Callback;
 
-public class FindLoadsActivity extends AppCompatActivity {
+public class FindLoadsActivity extends AppCompat {
 
     private RequestQueue mQueue;
     private ArrayList<FindLoadsModel> bidsList = new ArrayList<>();

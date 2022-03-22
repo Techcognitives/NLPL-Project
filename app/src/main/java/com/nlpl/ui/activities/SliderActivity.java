@@ -10,13 +10,14 @@ import android.view.View;
 
 import com.nlpl.R;
 import com.nlpl.ui.adapters.SliderAdapter;
+import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.ShowAlert;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
 
-public class SliderActivity extends AppCompatActivity {
+public class SliderActivity extends AppCompat {
 
     String url1 = "https://www.geeksforgeeks.org/wp-content/uploads/gfg_200X200-1.png";
     String url2 = "https://qphs.fs.quoracdn.net/main-qimg-8e203d34a6a56345f86f1a92570557ba.webp";

@@ -34,6 +34,7 @@ import com.nlpl.model.Responses.CompanyResponse;
 import com.nlpl.model.UpdateMethods.UpdateCompanyDetails;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
 import com.nlpl.utils.ApiClient;
+import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.GetCurrentLocation;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.SelectCity;
@@ -48,7 +49,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CompanyDetailsActivity extends AppCompatActivity {
+public class CompanyDetailsActivity extends AppCompat {
 
     View action_bar;
     TextView actionBarTitle;

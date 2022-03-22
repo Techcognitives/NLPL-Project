@@ -8,10 +8,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nlpl.R;
+import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.ShowAlert;
 
-public class CustomerSettingsAndPreferences extends AppCompatActivity {
+public class CustomerSettingsAndPreferences extends AppCompat {
 
     String phone, userId;
     View actionBar;

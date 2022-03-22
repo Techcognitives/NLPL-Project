@@ -440,6 +440,7 @@
     //new
     <string name="Pay_and_Accept_Final_Offer">पेमेंट करें और अंतिम प्रस्ताव स्वीकार करें </string>       //dot
     <string name="Select_Payment_Method">पेमेंट का तरीका चुनें </string>
+    <string name="Payment_Method">पेमेंट का तरीका : </string>
     <string name="To_Pay">पेमेंट करने के लिए (अनलोडिंग करते समय पेमेंट करें) </string>
     <string name="Pay_Now">अब पेमेंट करें (एडवांस में पेमेंट करें) </string>
     <string name="To_be_billed">बिल किया जाना (ट्रक मालिक को पेमेंट करें / ब्रोकर  / ड्राइवर )</string>
@@ -448,6 +449,8 @@
     <string name="Connect_with_Driver_Truck_Owner_Broker">1% ड्राइवर के साथ कनेक्ट करें / ट्रक मालिक / ब्रोकर </string>
     <string name="Pay">पेमेंट </string>
     <string name="Please_add_Driver_Bank_Details">कृपया ड्राइवर बैंक जानकारी जोड़ें </string>
+    <string name="in_Advance">% एडवांस में </string>         //new
+
 
     //----------------------------------------------------------------------------------------------
 
