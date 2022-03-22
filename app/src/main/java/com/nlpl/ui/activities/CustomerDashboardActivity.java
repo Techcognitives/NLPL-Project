@@ -378,9 +378,7 @@ public class CustomerDashboardActivity extends AppCompatActivity implements Paym
             }
         });
         mQueue.add(request);
-
         //------------------------------------------------------------------------------------------------
-
     }
 
     public void RearrangeItems() {
