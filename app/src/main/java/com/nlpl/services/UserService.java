@@ -17,7 +17,6 @@ import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserPhoneNumber
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserPinCode;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserPreferredLanguage;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserPreferredLocation;
-import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserRating;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserStateCode;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserType;
 
@@ -82,7 +81,4 @@ public interface UserService {
 
     @PUT("/user/{userId}")
     Call<UpdateUserEmailId> updateUserEmailId(@Path("userId") String userId, @Body UpdateUserEmailId updateUserEmailId);
-
-    @PUT("/user/{userId}")
-    Call<UpdateUserRating> updateUserRating(@Path("userId") String userId, @Body UpdateUserRating updateUserRating);
 }

@@ -176,6 +176,8 @@ public class VehicleDetailsActivity extends AppCompat {
             editRC.setVisibility(View.VISIBLE);
             previewRcBook.setVisibility(View.VISIBLE);
             previewInsurance.setVisibility(View.VISIBLE);
+            previewInsuranceImageView.setVisibility(View.VISIBLE);
+            previewRcBookImageView.setVisibility(View.VISIBLE);
 
             textRC.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             textInsurance.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
@@ -451,6 +453,8 @@ public class VehicleDetailsActivity extends AppCompat {
             editRC.setVisibility(View.VISIBLE);
             previewRcBook.setVisibility(View.VISIBLE);
             previewInsurance.setVisibility(View.VISIBLE);
+            previewInsuranceImageView.setVisibility(View.VISIBLE);
+            previewRcBookImageView.setVisibility(View.VISIBLE);
 
             isRcUploaded = true;
 
@@ -473,6 +477,8 @@ public class VehicleDetailsActivity extends AppCompat {
             editRC.setVisibility(View.VISIBLE);
             previewRcBook.setVisibility(View.VISIBLE);
             previewInsurance.setVisibility(View.VISIBLE);
+            previewInsuranceImageView.setVisibility(View.VISIBLE);
+            previewRcBookImageView.setVisibility(View.VISIBLE);
 
             try {
                 Bitmap image = (Bitmap) data.getExtras().get("data");

@@ -181,17 +181,16 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:drawableStart="@drawable/ic_edit"
-            android:padding="10dp"
             android:text="@string/edit"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/vehicle_details_rc_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.967"
             app:layout_constraintStart_toEndOf="@+id/vehicle_details_rc_text"
             app:layout_constraintTop_toTopOf="@+id/vehicle_details_rc_text"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.466" />
 
         <ImageView
             android:id="@+id/vehicle_details_preview_rc_book_image_view"
@@ -311,17 +310,16 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:drawableStart="@drawable/ic_edit"
-            android:padding="10dp"
             android:text="@string/edit"
             android:textColor="#000000"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/vehicle_details_insurance_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.967"
             app:layout_constraintStart_toEndOf="@+id/vehicle_details_insurance_text"
             app:layout_constraintTop_toTopOf="@+id/vehicle_details_insurance_text"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.466" />
 
         <ImageView
             android:id="@+id/vehicle_details_preview_insurance_image_view"

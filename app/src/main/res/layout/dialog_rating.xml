@@ -100,7 +100,7 @@
             android:layout_marginEnd="10dp"
             android:foregroundGravity="center"
             android:numStars="5"
-            android:stepSize="0.5"
+            android:stepSize="1"
             android:theme="@style/RatingBar"
             app:layout_constraintBottom_toTopOf="@+id/dialog_rating_issue_title"
             app:layout_constraintEnd_toStartOf="@+id/dialog_rating_in_int"

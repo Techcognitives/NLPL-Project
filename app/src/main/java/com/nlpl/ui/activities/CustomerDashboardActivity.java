@@ -122,7 +122,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
     Boolean checkedReasonOne = true, checkedReasonTwo = true, checkedReasonThree = true, checkedReasonFour = true, checkedReasonFive = true, checkedReasonSix = true, checkedReasonSeven = true;
 
     String isPersonalDetailsDone, isBankDetailsDone, isProfileAdded, profileImgUrlForRating, reasonForLowRate = "";
-    float ratingGiven;
+    float ratingGiven = 0;
     int count = 0;
     String img_type, paymentTypeFromAPI, numberOfBids, paymentMethod = "", paymentPercentage = "threePercent";
 
@@ -1198,9 +1198,10 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                         String dropCity = obj.getString("drop_city");
 
                         paymentTypeFromAPI = obj.getString("payment_type");
+                        Log.i("Payment Method:", paymentTypeFromAPI);
                         if (paymentTypeFromAPI.equals("Payment Method: " + "To Pay(Pay while Unloading)")){
                             paymentMethod = "ToPay";
-                        }else if (paymentTypeFromAPI.equals("Payment Method: " + "To be Billed (Pay to Truck Owner / Broker / Driver)")){
+                        }else if (paymentTypeFromAPI.equals("Payment Method: To be Billed (Pay to Truck Ow")){
                             paymentMethod = "ToBeBilled";
                         }else{
                             paymentMethod = "PayNow";
@@ -2246,21 +2247,29 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         reasonSix = (TextView) alert.findViewById(R.id.dialog_rating_reason_six);
         reasonSeven = (TextView) alert.findViewById(R.id.dialog_rating_reason_seven);
 
+        issue.setVisibility(View.GONE);
+        issueTwo.setVisibility(View.GONE);
+        reasonOne.setVisibility(View.GONE);
+        reasonTwo.setVisibility(View.GONE);
+        reasonThree.setVisibility(View.GONE);
+        reasonFour.setVisibility(View.GONE);
+        reasonFive.setVisibility(View.GONE);
+        reasonSix.setVisibility(View.GONE);
+        reasonSeven.setVisibility(View.GONE);
+
         name.setText(nameForRating);
         skipButton.setOnClickListener(view -> alert.dismiss());
+
         submitButton.setOnClickListener(view -> {
-            alert.dismiss();
-            if (ratingGiven == 5) {
-                alert.dismiss();
-                UpdateUserDetails.updateUserRating(userIdForRating, String.valueOf(ratingGiven));
-                submitButton.setBackground(getDrawable(R.drawable.button_active));
+            if (ratingGiven == 0){
+                Toast.makeText(this, "Please provide star ratings", Toast.LENGTH_SHORT).show();
+            }else if (ratingGiven == 5) {
+
             } else {
                 if (reasonForLowRate.equals("reason")) {
-                    alert.dismiss();
-                    submitButton.setBackground(getDrawable(R.drawable.button_active));
-                    UpdateUserDetails.updateUserRating(userIdForRating, String.valueOf(ratingGiven));
+
                 } else {
-                    submitButton.setBackground(getDrawable(R.drawable.button_de_active));
+                    Toast.makeText(this, "Please select a reason", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -2270,7 +2279,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
                 ratingGiven = v;
                 ratingText.setText(v + " / 5.0");
-                if (v < 5) {
+                if (v < 5 || v==0) {
                     issue.setVisibility(View.VISIBLE);
                     issueTwo.setVisibility(View.VISIBLE);
                     reasonOne.setVisibility(View.VISIBLE);
