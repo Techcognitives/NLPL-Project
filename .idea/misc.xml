@@ -5,7 +5,19 @@
       <map>
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/action_bar.xml" value="0.16197916666666667" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_bank_details.xml" value="0.25" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_company_details.xml" value="0.33" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_customer_dashboard.xml" value="0.25" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_customer_loads_history.xml" value="0.25" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_customer_setings_and_preferences.xml" value="0.16197916666666667" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_driver_details.xml" value="0.16197916666666667" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_find_loads.xml" value="0.33" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_find_trucks.xml" value="0.33" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_language.xml" value="0.16197916666666667" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_log_in.xml" value="0.16197916666666667" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_otp_code.xml" value="0.16197916666666667" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_personal_details.xml" value="0.25" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_registration.xml" value="0.25" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/bottom_nav_bar.xml" value="0.33" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/personal_and_address.xml" value="0.25" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/slider_layout.xml" value="0.16197916666666667" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/drawable/driver_success.xml" value="0.2203125" />
