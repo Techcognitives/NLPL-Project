@@ -1053,20 +1053,20 @@ public class PostALoadActivity extends AppCompat {
                 switch (paymentMethod) {
                     case "ToPay":
                         alert.dismiss();
-                        paymentMethodText.setText("Payment Method: " + "To Pay(Pay while Unloading)");
+                        paymentMethodText.setText(getString(R.string.Payment_Method) + getString(R.string.To_Pay));
                         break;
                     case "PayNow":
                         if (advancePercentage.getText().toString().isEmpty()) {
                             Toast.makeText(PostALoadActivity.this, "Please enter advance payment percentage (%)", Toast.LENGTH_SHORT).show();
                         } else {
                             alert.dismiss();
-                            paymentMethodText.setText("Payment Method: " + "Pay " + advancePercentage.getText().toString() + "% in Advance");
+                            paymentMethodText.setText(getString(R.string.Payment_Method) + getString(R.string.Pay) + advancePercentage.getText().toString() + getString(R.string.in_Advance));
                         }
                         advancePercentageInt = advancePercentage.getText().toString();
                         break;
                     case "ToBeBilled":
                         alert.dismiss();
-                        paymentMethodText.setText("Payment Method: " + "To be Billed (Pay to Truck Owner / Broker / Driver)");
+                        paymentMethodText.setText(getString(R.string.Payment_Method) + getString(R.string.To_be_billed));
                         break;
                 }
             }
