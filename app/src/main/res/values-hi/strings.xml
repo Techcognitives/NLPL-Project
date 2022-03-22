@@ -39,7 +39,7 @@
     <string name="select_city">शहर</string>
     <string name="pin_code">पिन कोड</string>
     <string name="address">पता खोजें या टाइप करें</string>
-    <string name="are_u_sp">ट्रक मालिक  / चालक  / ब्रोकर? </string>
+    <string name="are_u_sp">ट्रक मालिक  / ड्राइवर  / ब्रोकर? </string>
     <string name="truck_owner">मैं एक ट्रक मालिक हूँ</string>
     <string name="driver">मैं एक ड्राइवर हूँ</string>
     <string name="broker">मैं एक ब्रोकर हूँ</string>
@@ -64,7 +64,7 @@
     //------------------------------------Profile and registration Activity ------------------------
     <string name="hello">नमस्कार,</string>
     <string name="mobNo">+91</string>
-    <string name="personalDetails"><p>   </p>व्यक्तिगत विस्तार</string>
+    <string name="personalDetails"><p>   </p>व्यक्तिगत जानकारी</string>
     <string name="personal_and_company"><p>   </p>व्यक्तिगत और कंपनी</string>
     <string name="BankDetails"><p>   </p>मेरा बैंक</string>
     <string name="AddTrucks"><p>   </p>मेरे ट्रक</string>
