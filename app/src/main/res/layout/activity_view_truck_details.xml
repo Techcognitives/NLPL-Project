@@ -109,7 +109,7 @@
             android:drawableStart="@drawable/find_small"
             android:ems="10"
             android:singleLine="true"
-            android:hint="Search by Truck Number"
+            android:hint="@string/Search_by_Truck_Number"
             android:inputType="textPersonName"
             android:paddingStart="5dp"
             android:paddingTop="5dp"
