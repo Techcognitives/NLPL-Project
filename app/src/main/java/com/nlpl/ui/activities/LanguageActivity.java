@@ -7,10 +7,11 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.nlpl.R;
+import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.LanguageManager;
 
-public class LanguageActivity extends AppCompatActivity {
+public class LanguageActivity extends AppCompat {
 
     String mobile;
     TextView english, marathi, hindi;

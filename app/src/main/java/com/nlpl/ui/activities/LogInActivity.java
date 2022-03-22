@@ -23,9 +23,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.nlpl.R;
+import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.JumpTo;
 
-public class LogInActivity extends AppCompatActivity {
+public class LogInActivity extends AppCompat {
 
     EditText mobileNo;
     TextView series;
