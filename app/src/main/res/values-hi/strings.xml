@@ -211,6 +211,7 @@
     <string name="ReAssign_Driver">ड्राइवर को पुन: असाइन करें </string>
     <string name="Self">स्वयं </string>               //new          //dot
     <string name="Search">ढूँढ </string>           //new             //dot
+    <string name="Current_Location">वर्तमान स्थान</string>
     <string name="Truck_Owner">ट्रक मालिक </string> //new
     <string name="Driver">ड्राइवर </string>           //new
     <string name="Search_Driver_by_Number">नंबर के आधार पर ड्राइवर खोजें</string>
@@ -362,7 +363,7 @@
     <string name="Bidder_Quote">बिड लगाने कोट : </string>          //new
     <string name="My_Final_Quote">मेरा अंतिम कोट </string>       //new
     <string name="Submit">सबमिट </string>                       //new
-    <string name="Load">लोड </string>                           //new
+    <string name="Load">लोड: </string>                           //new
 
     //----------------------------------------------------------------------------------------------
 

@@ -38,7 +38,7 @@
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/dialog_acept_bid_customer.xml" value="0.33" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/dialog_alert.xml" value="0.25" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/dialog_alert_single_button.xml" value="0.5" />
-        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/dialog_bid_now.xml" value="0.16197916666666667" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/dialog_bid_now.xml" value="0.33" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/dialog_budget.xml" value="0.16197916666666667" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/dialog_choose.xml" value="0.25" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/dialog_customer_menu.xml" value="0.16197916666666667" />
@@ -50,6 +50,7 @@
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/dialog_preview_images.xml" value="0.16197916666666667" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/dialog_preview_profile.xml" value="0.16197916666666667" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/dialog_rating.xml" value="0.16197916666666667" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/dialog_role.xml" value="0.16197916666666667" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/dialog_spinner.xml" value="0.33" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/dialog_spinner_bind.xml" value="0.16197916666666667" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/find_load_list.xml" value="0.16197916666666667" />

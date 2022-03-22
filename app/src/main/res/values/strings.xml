@@ -1285,6 +1285,7 @@
     //new
     <string name="Search">Search</string>
     //new
+    <string name="Current_Location">Current Location</string>
     <string name="Truck_Owner">Truck Owner</string>
     //new
     <string name="Driver">Driver</string>
