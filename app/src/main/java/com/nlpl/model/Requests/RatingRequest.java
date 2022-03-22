@@ -3,7 +3,7 @@ package com.nlpl.model.Requests;
 public class RatingRequest {
     String transection_id, rated_no, ratings_comment, user_id, given_by;
 
-    public RatingRequest(String transection_id, String rated_no, String ratings_comment, String user_id, String given_by) {
+    public RatingRequest() {
         this.transection_id = transection_id;
         this.rated_no = rated_no;
         this.ratings_comment = ratings_comment;
