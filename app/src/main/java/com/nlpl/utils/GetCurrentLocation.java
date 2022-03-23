@@ -98,9 +98,9 @@ public class GetCurrentLocation {
             searchFromMaps.setImageResource(R.drawable.google_address_small);
 
             TextView currentText = chooseDialog.findViewById(R.id.dialog_camera_text);
-            currentText.setText("Current Location");
+            currentText.setText(activity.getString(R.string.Current_Location));
             TextView fromMapText = chooseDialog.findViewById(R.id.dialog_photo_library_text);
-            fromMapText.setText("Search");
+            fromMapText.setText(activity.getString(R.string.Search));
 
             currentLocation.setOnClickListener(view -> {
                 chooseDialog.dismiss();

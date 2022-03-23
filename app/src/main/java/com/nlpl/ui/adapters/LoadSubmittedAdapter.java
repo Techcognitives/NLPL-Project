@@ -192,12 +192,12 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
                 // When the task is over it will print 00:00:00 there
                 public void onFinish() {
                     UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadExpired");
-                    holder.timeLeft.setText("  Load Expired");
+                    holder.timeLeft.setText(activity.getString(R.string.Load_Expired));
                 }
             }.start();
         } else {
             UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadExpired");
-            holder.timeLeft.setText("  Load Expired");
+            holder.timeLeft.setText(activity.getString(R.string.Load_Expired));
         }
         //------------------------------------------------------------------------------------------
 
@@ -208,7 +208,7 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
         holder.destinationEnd.setText("  " + dropCity);
 
         String date = obj.getPick_up_date();
-        holder.date.setText("Pick-up Date: " + date);
+        holder.date.setText(activity.getString(R.string.pick_up_date_colon) + date);
 
         String time = obj.getPick_up_time();
         holder.time.setText("" + time);
@@ -217,10 +217,10 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
         holder.distance.setText("" + approxKms);
 
         String capacity = obj.getCapacity();
-        holder.capacity.setText("Load Type: " + capacity);
+        holder.capacity.setText(activity.getString(R.string.Load_Type) + capacity);
 
         String bodyType = obj.getBody_type();
-        holder.body.setText("Body Type: " + bodyType);
+        holder.body.setText(activity.getString(R.string.bodyType) + bodyType);
 
         String pickUpLocation = obj.getPick_add();
         holder.pickUpLocation.setText(" " + pickUpLocation);
@@ -238,26 +238,26 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
 
                         if (bid_status.equals("submittedNego")) {
                             holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
-                            holder.bidNowButton.setText("Bid Submitted");
+                            holder.bidNowButton.setText(activity.getString(R.string.Bid_Submitted));
                         }
 
                         if (bid_status.equals("Accepted")) {
                             holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
-                            holder.bidNowButton.setText("You Responded");
+                            holder.bidNowButton.setText(activity.getString(R.string.You_Responded_singleLine));
                             holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.button_blue));
 
                         }
 
                         if (bid_status.equals("AcceptedBySp")) {
                             holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
-                            holder.bidNowButton.setText("You Responded");
+                            holder.bidNowButton.setText(activity.getString(R.string.You_Responded_singleLine));
                             holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.button_blue));
 
                         }
 
                         if (bid_status.equals("RespondedByLp")) {
                             holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
-                            holder.bidNowButton.setText("Accept Revised");
+                            holder.bidNowButton.setText(activity.getString(R.string.Accept_Revised));
                             holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.red));
 
                             holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
@@ -269,13 +269,13 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
                         }
                         if (bid_status.equals("submittedNonNego")) {
                             holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
-                            holder.bidNowButton.setText("You Responded");
+                            holder.bidNowButton.setText(activity.getString(R.string.You_Responded_singleLine));
                             holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.button_blue));
                         }
 
                         if (bid_status.equals("FinalAccepted")) {
                             holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
-                            holder.bidNowButton.setText("View Consignment");
+                            holder.bidNowButton.setText(activity.getString(R.string.View_Consignment));
                             holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.green));
                             holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -287,13 +287,13 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
 
                         if (bid_status.equals("withdrawnByLp")){
                             holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
-                            holder.bidNowButton.setText("Customer Withdrawn");
+                            holder.bidNowButton.setText(activity.getString(R.string.Customer_Withdrawn));
                             holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.dark_grey));
                         }
 
                         if (bid_status.equals("withdrawnBySp")){
                             holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
-                            holder.bidNowButton.setText("You\n Withdrawn");
+                            holder.bidNowButton.setText(activity.getString(R.string.You_Withdrawn));
                             holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.dark_grey));
                         }
 

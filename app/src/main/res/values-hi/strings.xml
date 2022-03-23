@@ -26,6 +26,7 @@
     <string name="OTP_sent_successfully">ओटीपी सफलतापूर्वक भेजा गया </string>
     <string name="OTP_sent_to">ओटीपी को भेजा गया </string>
     <string name="Change_Number">नंबर बदलने </string>     //new
+    <string name="Change">बदलने</string>
 
     //----------------------------------------------------------------------------------------------
 
@@ -86,7 +87,7 @@
     <string name="AadharFront">आधार फ्रंट </string>
     <string name="AadharBack">आधार बैक </string>
     <string name="edit">एडिट </string>                        //dot
-    <string name="acNo">खाता संख्या: </string>
+    <string name="acNo">अकाउंट नंबर: </string>
     <string name="addBank">+ बैंक जोड़ें </string>
     <string name="addTruck">+ ट्रक जोड़ें </string>
     <string name="addDriver">+ ड्राइवर जोड़ें </string>
@@ -113,11 +114,11 @@
     //---------------------------------------Bank Details Activity----------------------------------
     <string name="NameWithStar">बैंक का नाम* </string>
     <string name="Bank_name_hint">बैंक का नाम दर्ज करें </string>
-    <string name="AccountNumber">खाता संख्या* </string>
-    <string name="ReEnterAcc">खाता संख्या पुन: दर्ज करें* </string>
+    <string name="AccountNumber">अकाउंट नंबर* </string>
+    <string name="ReEnterAcc">अकाउंट नंबर पुन: दर्ज करें* </string>
     <string name="IFSC">आईएफएससी कोड* </string>
-    <string name="EnterAccNumber">अपना खाता नंबर दर्ज करें </string>
-    <string name="ReEnterAccNumber">अपना खाता नंबर फिर से दर्ज करें </string>
+    <string name="EnterAccNumber">अपना अकाउंट नंबर दर्ज करें </string>
+    <string name="ReEnterAccNumber">अपना अकाउंट नंबर फिर से दर्ज करें </string>
     <string name="EnterIFSC">आईएफएससी कोड दर्ज करें </string>
     <string name="bank_details">बैंक जानकारी </string>
     //new
@@ -125,14 +126,14 @@
     <string name="Cancelled_cheque_uploaded_successfully">रद्द किया गया चेक सफलतापूर्वक अपलोड किया गया </string>
     <string name="Cancelled_cheque_not_uploaded_successfully">रद्द किया गया चेक सफलतापूर्वक अपलोड नहीं किया गया </string>
     <string name="Bank_Details_added_successfully">बैंक जानकारी सफलतापूर्वक जोड़ा गया </string>
-    <string name="Account_number_does_not_match">खाता संख्या मेल नहीं खाती </string>
-    <string name="Please_enter_correct_account_number_as_above.">कृपया ऊपर दिए गए अनुसार सही खाता संख्या दर्ज करें. </string>
+    <string name="Account_number_does_not_match">अकाउंट नंबर मेल नहीं खाती </string>
+    <string name="Please_enter_correct_account_number_as_above.">कृपया ऊपर दिए गए अनुसार सही अकाउंट नंबर दर्ज करें. </string>
     <string name="My_Bank">मेरा बैंक </string>
     <string name="Bank_Name"> बैंक का नाम: </string>
-    <string name="Account_No"> खाता संख्या: </string>
+    <string name="Account_No"> अकाउंट नंबर: </string>
     <string name="IFSI_Code"> आईएफएससी कोड: </string>
     <string name="Upload_a_cancelled_Cheque">रद्द किया गया चेक अपलोड करें </string>     //new
-    <string name="Enter_AC_Details">खाता संख्या जानकारी दर्ज करें </string>     //new
+    <string name="Enter_AC_Details">अकाउंट नंबर जानकारी दर्ज करें </string>     //new
     <string name="Upload_a_photo_of_Canceled_Check">रद्द की गई जाँच की फ़ोटो अपलोड करें </string>   //new
     <string name="Cancelled_Cheque">रद्द किया गया चेक* </string>
     <string name="OR">--------------------- या ---------------------</string>   //new
@@ -187,7 +188,7 @@
     <string name="AddAnotherDriver">एक और ड्राइवर जोड़ें </string>
     <string name="driver_mobile_number">ड्राइवर का मोबाइल नंबर </string>
     //new
-    <string name="Enter_10_digit_Driver_Number">10 अंकों की ड्राइवर संख्या दर्ज करें </string>       //dot
+    <string name="Enter_10_digit_Driver_Number">10 अंकों की ड्राइवर नंबर दर्ज करें </string>       //dot
     <string name="Enter_Driver_Email_Id">ड्राइवर ईमेल आईडी दर्ज करें </string>
     <string name="Driver_Details">ड्राइवर जानकारी </string>
     <string name="Edit_Driver_Details">ड्राइवर जानकारी एडिट करें </string>                    //dot
@@ -211,6 +212,7 @@
     <string name="ReAssign_Driver">ड्राइवर को पुन: असाइन करें </string>
     <string name="Self">स्वयं </string>               //new          //dot
     <string name="Search">ढूँढ </string>           //new             //dot
+    <string name="Current_Location">वर्तमान स्थान</string>
     <string name="Truck_Owner">ट्रक मालिक </string> //new
     <string name="Driver">ड्राइवर </string>           //new
     <string name="Search_Driver_by_Number">नंबर के आधार पर ड्राइवर खोजें</string>
@@ -220,6 +222,11 @@
     <string name="Photo_Library">फ़ोटो लाइब्रेरी </string>             //new
     <string name="Drivers_Bank_Details">ड्राइवर के बैंक जानकारी </string>      //new
     <string name="Add_Drivers_Bank">+ ड्राइवर का बैंक जोड़ें </string>           //new
+    <string name="Truck_doesnt_match">ट्रक मेल नहीं खाता</string>
+    <string name="Truck_doesnt_match_message1">असाइन किया गया ट्रक लोड पोस्टर आवश्यकताओं से मेल नहीं खाता है।</string>
+    <string name="Truck_doesnt_match_message2">\n\nमैं इसके द्वारा घोषणा करता हूं, उपयुक्त ट्रक मिलान लोड पोस्टर आवश्यकता प्रदान करेगा.</string>
+
+
 
     //----------------------------------------------------------------------------------------------
 
@@ -267,14 +274,15 @@
 
     //-----------------------------------Post A Load------------------------------------------------
     <string name="pick_up_date">पिकअप तारीख* </string>
+    <string name="pick_up_date_colon">पिकअप तारीख: </string>
     <string name="pick_up_time">पिकअप समय* </string>
     <string name="enterYourBudget">अपना बजट दर्ज करें </string>
     <string name="budget">बजट </string>
     <string name="budgetRs">बजट ₹ </string>
     <string name="truckTypeAndCapacity">ट्रक का प्रकार और क्षमता* </string>
     <string name="SelectVehicleModel">वाहन का प्रकार चुनें </string>
-    <string name="bodyType">बॉडी प्रकार </string>
-    <string name="Load_Type">लोड प्रकार </string>                     //new
+    <string name="bodyType">बॉडी प्रकार: </string>
+    <string name="Load_Type">लोड प्रकार: </string>                     //new
     <string name="pickUpLocationDetails">पिक-अप पता* </string>
     <string name="dropLocationDetails">ड्रॉप पता* </string>
     <string name="km">किमी (लगभग) </string>                     //dot
@@ -298,7 +306,7 @@
     <string name="Truck_Type">ट्रक प्रकार </string>
     <string name="Bid_Now">अभी बिड लगाएं </string>
     <string name="View_Load_History">लोड देखें\n इतिहास </string>                //dot
-
+    <string name="Load_Expired">लोड की समय सीमा समाप्त हो गई</string>
 
 
     //----------------------------------------------------------------------------------------------
@@ -330,7 +338,8 @@
     <string name="body">बॉडी: </string>
     <string name="selectAndAssignTruck">इस लोड के लिए एक ट्रक और ड्राइवर असाइन करें </string>
     <string name="yourQuote">मेरा कोट </string>             //dot
-    <string name="negotiable">बातचीत योग्य </string>             //dot
+    <string name="negotiable">निगोशिएबल </string>             //dot
+    <string name="Non_negotiable">नॉन-निगोशिएबल </string>
     <string name="truck">ट्रक </string>
     <string name="Search_by_Truck_Number">ट्रक नंबर द्वारा खोजें </string>
     <string name="feet">फीट </string>
@@ -362,7 +371,11 @@
     <string name="Bidder_Quote">बिड लगाने कोट : </string>          //new
     <string name="My_Final_Quote">मेरा अंतिम कोट </string>       //new
     <string name="Submit">सबमिट </string>                       //new
-    <string name="Load">लोड </string>                           //new
+    <string name="Load">लोड: </string>                           //new
+    <string name="SP_Withdrawn">एसपी वापस लिया गया </string>
+    <string name="View_Consignment">देखें भेजा गया माल </string>
+    <string name="Bid_Submitted">बिड सबमिट</string>
+
 
     //----------------------------------------------------------------------------------------------
 
@@ -429,6 +442,13 @@
     <string name="No_Load_Available">कोई लोड उपलब्ध नहीं है </string>
     <string name="No_Load_Posted">कोई लोड पोस्ट नहीं</string>
     <string name="No_Load_Accepted">कोई लोड स्वीकार नहीं किया गया</string>
+    <string name="Accepted">स्वीकार </string>
+    <string name="You_Responded">आपको जवाब</string>
+    <string name="You_Withdrawn">आपको/n वापस ले लिया </string>
+    <string name="You_Responded_singleLine">आपको जवाब</string>
+    <string name="Accept_Revised">संशोधित स्वीकार करें</string>
+    <string name="Customer_Withdrawn">ग्राहक ने वापस ले लिया </string>
+    <string name="Accept_Final_Offer_newLine">स्वीकार\n अंतिम प्रस्ताव </string>
     <string name="Loads_for">के लिए लोड करता है </string>
     <string name="Load_ID">लोड आईडी : </string>
     <string name="Post_Bid">पोस्ट बिड </string>

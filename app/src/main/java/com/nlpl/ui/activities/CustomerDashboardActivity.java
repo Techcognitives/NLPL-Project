@@ -3201,7 +3201,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         TextView cameraText = chooseDialog.findViewById(R.id.dialog_camera_text);
         cameraText.setText("Whats App");
         TextView galleryText = chooseDialog.findViewById(R.id.dialog_photo_library_text);
-        galleryText.setText("Call");
+        galleryText.setText(getString(R.string.Call));
 
         ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
         camera.setImageDrawable(getResources().getDrawable(R.drawable.whats_app_small));

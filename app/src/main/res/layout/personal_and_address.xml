@@ -265,7 +265,7 @@
             android:id="@+id/bsjdufcsdkcs"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="--------------------- OR ---------------------"
+            android:text="@string/OR"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="14sp"

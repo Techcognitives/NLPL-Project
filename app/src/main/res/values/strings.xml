@@ -1084,6 +1084,7 @@
     <string name="OTP_sent_successfully">OTP sent successfully</string>
     <string name="OTP_sent_to">OTP sent to </string>
     <string name="Change_Number">Change Number</string>
+    <string name="Change">Change</string>
     //new
 
     //----------------------------------------------------------------------------------------------
@@ -1285,6 +1286,7 @@
     //new
     <string name="Search">Search</string>
     //new
+    <string name="Current_Location">Current Location</string>
     <string name="Truck_Owner">Truck Owner</string>
     //new
     <string name="Driver">Driver</string>
@@ -1302,6 +1304,9 @@
     //new
     <string name="Add_Drivers_Bank">+ Add Driver\'s Bank</string>
     //new
+    <string name="Truck_doesnt_match">Truck doesn\'t match</string>
+    <string name="Truck_doesnt_match_message1">The Truck assigned doesn\'t match Load Poster requirements.</string>
+    <string name="Truck_doesnt_match_message2">\n\nI hereby declare, will provide appropriate Truck matching Load Poster requirement.</string>
 
     //----------------------------------------------------------------------------------------------
 
@@ -1355,14 +1360,15 @@
 
     //-----------------------------------Post A Load------------------------------------------------
     <string name="pick_up_date">Pick-up Date*</string>
+    <string name="pick_up_date_colon">Pick-up Date: </string>
     <string name="pick_up_time">Pick-up Time*</string>
     <string name="enterYourBudget">Enter Your Budget</string>
     <string name="budget">Budget</string>
     <string name="budgetRs">Budget ₹</string>
     <string name="truckTypeAndCapacity">Truck Body &amp; Load Type*</string>
     <string name="SelectVehicleModel">Vehicle Model</string>
-    <string name="bodyType">Body Type</string>
-    <string name="Load_Type">Load Type</string>
+    <string name="bodyType">Body Type: </string>
+    <string name="Load_Type">Load Type: </string>
     //new
     <string name="pickUpLocationDetails">Pick-up Address*</string>
     <string name="dropLocationDetails">Drop Address*</string>
@@ -1387,7 +1393,8 @@
     <string name="Truck_Type">Truck Type</string>
     <string name="Bid_Now">Bid Now</string>
     <string name="View_Load_History">View Load\n History</string>
-
+    <string name="Load_Expired">Load Expired</string>
+    <string name="Bid_Submitted">Bid Submitted</string>
 
     //----------------------------------------------------------------------------------------------
 
@@ -1419,6 +1426,7 @@
     <string name="selectAndAssignTruck">Assign a Truck &amp; Driver for this load</string>
     <string name="yourQuote">My Quote</string>
     <string name="negotiable">Negotiable</string>
+    <string name="Non_negotiable">Non-negotiable</string>
     <string name="truck">Truck</string>
     <string name="Search_by_Truck_Number">Search by Truck Number</string>
     <string name="feet">Feet</string>
@@ -1458,6 +1466,8 @@
     //new
     <string name="Load">Load</string>
     //new
+    <string name="SP_Withdrawn">SP Withdrawn</string>
+    <string name="View_Consignment">View Consignment</string>
 
     //----------------------------------------------------------------------------------------------
 
@@ -1535,6 +1545,13 @@
     <string name="No_Load_Available">No Load Available</string>
     <string name="No_Load_Posted">No Load Posted</string>
     <string name="No_Load_Accepted">No Load Accepted</string>
+    <string name="Accepted">Accepted</string>
+    <string name="Accept_Final_Offer_newLine">Accept\n Final Offer </string>
+    <string name="You_Responded">You Responded</string>
+    <string name="You_Withdrawn">You/n Withdrawn</string>
+    <string name="You_Responded_singleLine">You Responded</string>
+    <string name="Accept_Revised">Accept Revised</string>
+    <string name="Customer_Withdrawn">Customer Withdrawn</string>
     <string name="Loads_for">Loads for </string>
     <string name="Load_ID">Load ID: </string>
     <string name="Post_Bid">Post Bid</string>

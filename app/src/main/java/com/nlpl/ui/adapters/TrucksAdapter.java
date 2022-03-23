@@ -69,8 +69,8 @@ public class TrucksAdapter extends RecyclerView.Adapter<TrucksAdapter.TruckViewH
             }
         });
 
-        holder.list_truck_type.setText("Body Type: " + obj.getTruck_type());
-        holder.list_capacity.setText("Load Type: " + obj.getTruck_carrying_capacity());
+        holder.list_truck_type.setText(activity.getString(R.string.bodyType) + obj.getTruck_type());
+        holder.list_capacity.setText(activity.getString(R.string.Load_Type) + obj.getTruck_carrying_capacity());
     }
 
     @Override

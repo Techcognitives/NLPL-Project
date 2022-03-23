@@ -195,12 +195,12 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
                 // When the task is over it will print 00:00:00 there
                 public void onFinish() {
                     UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadExpired");
-                    holder.timeLeft.setText("  Load Expired");
+                    holder.timeLeft.setText(activity.getString(R.string.Load_Expired));
                 }
             }.start();
         } else {
             UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadExpired");
-            holder.timeLeft.setText("  Load Expired");
+            holder.timeLeft.setText(activity.getString(R.string.Load_Expired));
         }
         //------------------------------------------------------------------------------------------
 
@@ -214,7 +214,7 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
         holder.budget.setText("₹ " + budget);
 
         String date = obj.getPick_up_date();
-        holder.date.setText("Pick-up Date: "+date);
+        holder.date.setText(activity.getString(R.string.pick_up_date_colon)+date);
 
         String time = obj.getPick_up_time();
         holder.time.setText(time);
@@ -223,10 +223,10 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
         holder.distance.setText(approxKms);
 
         String capacity = obj.getCapacity();
-        holder.capacity.setText("load Type: " + capacity);
+        holder.capacity.setText(activity.getString(R.string.Load_Type) + capacity);
 
         String bodyType = obj.getBody_type();
-        holder.body.setText("Body Type: " + bodyType);
+        holder.body.setText(activity.getString(R.string.bodyType) + bodyType);
 
         LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(activity);
         linearLayoutManagerBank.setReverseLayout(false);
