@@ -1203,7 +1203,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
 
                         paymentTypeFromAPI = obj.getString("payment_type");
                         Log.i("Payment Method:", paymentTypeFromAPI);
-                        if (paymentTypeFromAPI.equals("Payment Method: " + "To Pay(Pay while Unloading)")) {
+                        if (paymentTypeFromAPI.equals("Payment Method :To Pay (Pay while Unloading)")) {
                             paymentMethod = "ToPay";
                         } else if (paymentTypeFromAPI.equals("Payment Method: To be Billed (Pay to Truck Ow")) {
                             paymentMethod = "ToBeBilled";

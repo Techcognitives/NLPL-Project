@@ -46,9 +46,7 @@ public class CreateUser {
         userResponseCall.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-//                Log.i("Message UserCreated:", userResponse.getData().getPhone_number());
-                UserResponse userResponse = response.body();
-                Log.i("Msg Success", String.valueOf(userResponse));
+
             }
 
             @Override
@@ -57,6 +55,8 @@ public class CreateUser {
             }
         });
     }
+
+
     //----------------------------------------------------------------------------------------------
 
 

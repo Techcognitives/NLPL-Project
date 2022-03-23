@@ -2,7 +2,6 @@ package com.nlpl.ui.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
@@ -19,19 +18,26 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.nlpl.R;
 import com.nlpl.model.MapsModel.LocationModel;
+import com.nlpl.model.Responses.UserResponse;
+import com.nlpl.ui.adapters.GoogleMapTextInfoAdapter;
+import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.ShowAlert;
@@ -40,13 +46,17 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback {
 
     String phone, userId, URLString;
-
     private GoogleMap mMap;
-
-    private List<LocationModel> mListMarker = new ArrayList<>();
+    Marker marker;
+    ArrayList<UserResponse.UserList> userDetails = new ArrayList<>();
+    Dialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,121 +109,117 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
     }
 
     //----------------------------------------------------------------------------------------------
+    public void getAllUserDetails() {
+        Call<UserResponse> call = ApiClient.getUserService().getAllUserDetails();
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                loadingDialog.dismiss();
+                UserResponse userResponse = response.body();
+                for (int i = 0; i < userResponse.getData().size(); i++) {
+                    userDetails.add(userResponse.getData().get(i));
+                }
+                getAllDataLocation(userDetails);
+//                UserResponse.UserList list =userResponse.getData().get(0);
+//                Log.i("Details", list.getName());
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //----------------------------------------------------------------------------------------------
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+        lp2.copyFrom(loadingDialog.getWindow().getAttributes());
+        lp2.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.gravity = Gravity.CENTER;
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        loadingDialog.getWindow().setAttributes(lp2);
+
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
         /*// Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));*/
 
-        getAllDataLocation();
+        getAllUserDetails();
+
     }
 
-    private void getAllDataLocation() {
+    private void getAllDataLocation(ArrayList<UserResponse.UserList> userDetails) {
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Waiting...");
         progressDialog.show();
 
-        initmarker(mListMarker);
+        initmarker(userDetails);
         progressDialog.dismiss();
     }
 
-    private void initmarker(List<LocationModel> mListMarker) {
-//        for (int i = 0; i<mListMarker.size(); i++){
+    private void initmarker(ArrayList<UserResponse.UserList> userDetails) {
+        LatLngBounds boundsIndia = new LatLngBounds(new LatLng(23.63936, 68.14712), new LatLng(28.20453, 97.34466));
+        int padding = 0; // offset from edges of the map in pixels
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(boundsIndia, padding);
+        mMap.animateCamera(cameraUpdate);
 
-//        double latt = Double.parseDouble(mListMarker.get(0).getLatitude());
-//        double longi = Double.parseDouble(mListMarker.get(0).getLongitude());
+        mMap.getUiSettings().setMapToolbarEnabled(false);
 
-        double latt = 18.5204;
-        double longi = 73.8567;
+        for (int i = 0; i < userDetails.size(); i++) {
+            if (!userDetails.get(i).getUser_type().equals("Customer")) {
+                double latt = Double.parseDouble(userDetails.get(i).getLatitude());
+                double longi = Double.parseDouble(userDetails.get(i).getLongitude());
 
-        LatLng location = new LatLng(latt,
-                longi);
+//        double latt = 18.5204;
+//        double longi = 73.8567;
 
-        Marker marker = mMap.addMarker(new MarkerOptions().position(location)
-                .title("Pune")
-                .snippet("stars"));
+                LatLng location = new LatLng(latt,
+                        longi);
 
-        LocationModel info = new LocationModel();
-        info.setUrl("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS08Ro2ghnOTqSDfJ1-8dIUSWTdiXcQPk9OkQ&usqp=CAU");
+                marker = mMap.addMarker(new MarkerOptions().position(location)
+                        .title(userDetails.get(i).getUser_id())
+                        .snippet(userDetails.get(i).getUser_type()));
 
-        marker.setTag(info);
+                LocationModel info = new LocationModel();
+                info.setUrl("");
+                marker.setTag(info);
 
-        LatLng latLng = new LatLng(latt,
-                longi);
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(20.5937, 78.9629), 5.0f));
+//            LatLng latLng = new LatLng(latt,
+//                    longi);
+//            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(20.5937, 78.9629), 5.0f));
+
+//                LatLngBounds boundsIndia = new LatLngBounds(new LatLng(23.63936, 68.14712), new LatLng(28.20453, 97.34466));
+//                int padding = 0; // offset from edges of the map in pixels
+//                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(boundsIndia, padding);
+//                mMap.animateCamera(cameraUpdate);
+
+                mMap.getUiSettings().setMapToolbarEnabled(false);
 
 //        if(mListMarker.size() != 0){
-            TextInfoWindowAdapter testInfoWindowAdapter = new TextInfoWindowAdapter(this);
-            mMap.setInfoWindowAdapter(testInfoWindowAdapter);
-//        }
+                GoogleMapTextInfoAdapter googleMapTextInfoAdapter = new GoogleMapTextInfoAdapter(this, userDetails);
+
+                mMap.setInfoWindowAdapter(googleMapTextInfoAdapter);
 
 //        }
-    }
-
-    private class TextInfoWindowAdapter implements GoogleMap.InfoWindowAdapter{
-
-        private Context context;
-
-        public TextInfoWindowAdapter(Context context){
-            this.context= context;
-        }
-
-        @Nullable
-        @Override
-        public View getInfoContents(@NonNull Marker marker) {
-            View view = ((Activity)context).getLayoutInflater().inflate(R.layout.bids_responses_list, null);
-
-            TextView city = view.findViewById(R.id.bids_responses_sp_name);
-            ImageView imageView = view.findViewById(R.id.bids_responses_sp_profilePhto);
-            TextView nego = view.findViewById(R.id.bids_responses_nego);
-            nego.setVisibility(View.GONE);
-            TextView budget = view.findViewById(R.id.bids_responses_budget_sp);
-            budget.setVisibility(View.GONE);
-            TextView button = view.findViewById(R.id.bids_responses_view_accept_bids);
-            button.setVisibility(View.GONE);
-
-            city.setText("Pune");
-            LocationModel infomodel = (LocationModel) marker.getTag();
-//            URLString = infomodel.getUrl();
-            URLString = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS08Ro2ghnOTqSDfJ1-8dIUSWTdiXcQPk9OkQ&usqp=CAU";
-
-            Picasso.get()
-                    .load(URLString)
-                    .error(R.drawable.delete_icon)
-                    .into(imageView, new MarkerCallBack(marker));
-            return view;
-        }
-
-        @Nullable
-        @Override
-        public View getInfoWindow(@NonNull Marker marker) {
-            return null;
-        }
-    }
-
-    private class MarkerCallBack implements com.squareup.picasso.Callback {
-        Marker marker = null;
-        public MarkerCallBack(Marker marker) {
-            this.marker = marker;
-        }
-
-        @Override
-        public void onSuccess() {
-            if (marker != null && marker.isInfoWindowShown()) {
-                marker.hideInfoWindow();
-                marker.showInfoWindow();
             }
         }
-
-        @Override
-        public void onError(Exception e) {
-            Log.e(getClass().getSimpleName(), "Error Loading thumbnail");
-        }
     }
+
     //----------------------------------------------------------------------------------------------
     public void onClickBottomNavigation(View view) {
         switch (view.getId()) {
@@ -269,9 +275,9 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
                 String message = "";
                 try {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse("http://api.whatsapp.com/send?phone="+"+91"+mobileNumber + "&text="+message));
+                    intent.setData(Uri.parse("http://api.whatsapp.com/send?phone=" + "+91" + mobileNumber + "&text=" + message));
                     startActivity(intent);
-                }catch (Exception e){
+                } catch (Exception e) {
                     Toast.makeText(FindTrucksActivity.this, "Whats app not installed on your device", Toast.LENGTH_SHORT).show();
                 }
             }

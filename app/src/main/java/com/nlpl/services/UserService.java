@@ -1,6 +1,7 @@
 package com.nlpl.services;
 
 import com.nlpl.model.Requests.UserRequest;
+import com.nlpl.model.Responses.RatingResponse;
 import com.nlpl.model.Responses.UserResponse;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserAddress;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserAlternatePhoneNumber;
@@ -13,6 +14,8 @@ import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsPersonalD
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsProfileAdded;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsRegistrationDone;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsTruckAdded;
+import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserLat;
+import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserLong;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserName;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserPhoneNumber;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserPinCode;
@@ -23,6 +26,7 @@ import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserType;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -85,4 +89,13 @@ public interface UserService {
 
     @PUT("/user/{userId}")
     Call<UpdateUserDeviceId> updateUserDeviceId(@Path("userId") String userId, @Body UpdateUserDeviceId updateUserDeviceId);
+
+    @PUT("/user/{userId}")
+    Call<UpdateUserLat> updateUserLat(@Path("userId") String userId, @Body UpdateUserLat updateUserLat);
+
+    @PUT("/user/{userId}")
+    Call<UpdateUserLong> updateUserLong(@Path("userId") String userId, @Body UpdateUserLong updateUserLong);
+
+    @GET("/user/get")
+    Call<UserResponse> getAllUserDetails();
 }

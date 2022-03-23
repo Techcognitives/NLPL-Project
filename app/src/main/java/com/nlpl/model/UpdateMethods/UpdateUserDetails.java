@@ -13,6 +13,8 @@ import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsPersonalD
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsProfileAdded;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsRegistrationDone;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsTruckAdded;
+import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserLat;
+import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserLong;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserName;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserPhoneNumber;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserPinCode;
@@ -384,6 +386,36 @@ public class UpdateUserDetails {
 
             @Override
             public void onFailure(Call<UpdateUserDeviceId> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public static void updateUserLatLong(String userId, String latitude, String longitude) {
+        UpdateUserLat updateUserLat = new UpdateUserLat(latitude);
+        Call<UpdateUserLat> call = ApiClient.getUserService().updateUserLat("" + userId, updateUserLat);
+        call.enqueue(new Callback<UpdateUserLat>() {
+            @Override
+            public void onResponse(Call<UpdateUserLat> call, Response<UpdateUserLat> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserLat> call, Throwable t) {
+
+            }
+        });
+
+        UpdateUserLong updateUserLong = new UpdateUserLong(longitude);
+        Call<UpdateUserLong> call1 = ApiClient.getUserService().updateUserLong("" + userId, updateUserLong);
+        call1.enqueue(new Callback<UpdateUserLong>() {
+            @Override
+            public void onResponse(Call<UpdateUserLong> call, Response<UpdateUserLong> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserLong> call, Throwable t) {
 
             }
         });
