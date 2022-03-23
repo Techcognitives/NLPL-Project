@@ -373,8 +373,9 @@ public class ViewTruckDetailsActivity extends AppCompat {
                         String s1 = driverNumber.substring(2, 12);
 
                         String driverAltNumber = obj.getString("alternate_ph_no");
-                        String s2 = driverAltNumber.substring(2, 12);
+
                         try {
+                            String s2 = driverAltNumber.substring(2, 12);
                             previewDriverDetailsDriverNumber.setText("+91 "+ s1 +"\n"+ "+91 "+s2);
                         }catch (Exception e){
                             previewDriverDetailsDriverNumber.setText("+91 "+ s1);
