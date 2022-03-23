@@ -373,6 +373,8 @@
     <string name="Load">लोड: </string>                           //new
     <string name="SP_Withdrawn">एसपी वापस लिया गया </string>
     <string name="View_Consignment">देखें भेजा गया माल </string>
+    <string name="Bid_Submitted">बिड सबमिट</string>
+
 
     //----------------------------------------------------------------------------------------------
 
@@ -441,6 +443,10 @@
     <string name="No_Load_Accepted">कोई लोड स्वीकार नहीं किया गया</string>
     <string name="Accepted">स्वीकार </string>
     <string name="You_Responded">आपको/nजवाब</string>
+    <string name="You_Withdrawn">आपको/n वापस ले लिया </string>
+    <string name="You_Responded_singleLine">आपको जवाब</string>
+    <string name="Accept_Revised">संशोधित स्वीकार करें</string>
+    <string name="Customer_Withdrawn">ग्राहक ने वापस ले लिया </string>
     <string name="Accept_Final_Offer_newLine">स्वीकार\n अंतिम प्रस्ताव </string>
     <string name="Loads_for">के लिए लोड करता है </string>
     <string name="Load_ID">लोड आईडी : </string>

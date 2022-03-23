@@ -180,12 +180,12 @@ public class StateLoadAdapter extends RecyclerView.Adapter<StateLoadAdapter.Stat
                 // When the task is over it will print 00:00:00 there
                 public void onFinish() {
                     UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadExpired");
-                    holder.timeLeft.setText("  Load Expired");
+                    holder.timeLeft.setText(activity.getString(R.string.Load_Expired));
                 }
             }.start();
         } else {
             UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadExpired");
-            holder.timeLeft.setText("  Load Expired");
+            holder.timeLeft.setText(activity.getString(R.string.Load_Expired));
         }
         //------------------------------------------------------------------------------------------
 
@@ -199,19 +199,19 @@ public class StateLoadAdapter extends RecyclerView.Adapter<StateLoadAdapter.Stat
         holder.budget.setText("₹" + budget);
 
         String date = obj.getPick_up_date();
-        holder.date.setText("Date: " + date);
+        holder.date.setText(activity.getString(R.string.pick_up_date_colon) + date);
 
         String time = obj.getPick_up_time();
-        holder.time.setText("Time: " + time);
+        holder.time.setText(activity.getString(R.string.timeOnly) + time);
 
         String approxKms = obj.getKm_approx();
-        holder.distance.setText("Distance: " + approxKms);
+        holder.distance.setText(activity.getString(R.string.distanceWithColon) + approxKms);
 
         String capacity = obj.getCapacity();
-        holder.capacity.setText("Load Type: " + capacity);
+        holder.capacity.setText(activity.getString(R.string.Load_Type) + capacity);
 
         String bodyType = obj.getBody_type();
-        holder.body.setText("Body Type: " + bodyType);
+        holder.body.setText(activity.getString(R.string.bodyType) + bodyType);
 
         String pickUpLocation = obj.getPick_add();
         holder.pickUpLocation.setText(" "+pickUpLocation);

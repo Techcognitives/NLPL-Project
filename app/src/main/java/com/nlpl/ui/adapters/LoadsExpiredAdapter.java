@@ -52,19 +52,19 @@ public class LoadsExpiredAdapter extends RecyclerView.Adapter<LoadsExpiredAdapte
         holder.destinationEnd.setText("  " + dropCity);
 
         String date = obj.getPick_up_date();
-        holder.date.setText("Date: " + date);
+        holder.date.setText(activity.getString(R.string.pick_up_date_colon) + date);
 
         String time = obj.getPick_up_time();
-        holder.time.setText("Time: " + time);
+        holder.time.setText(activity.getString(R.string.timeOnly) + time);
 
         String approxKms = obj.getKm_approx();
-        holder.distance.setText("Distance: " + approxKms);
+        holder.distance.setText(activity.getString(R.string.distanceWithColon) + approxKms);
 
         String capacity = obj.getCapacity();
-        holder.capacity.setText("Load Type: " + capacity);
+        holder.capacity.setText(activity.getString(R.string.Load_Type) + capacity);
 
         String bodyType = obj.getBody_type();
-        holder.body.setText("Body Type: " + bodyType);
+        holder.body.setText(activity.getString(R.string.bodyType) + bodyType);
 
         String pickUpLocation = obj.getPick_add();
         holder.pickUpLocation.setText(" " + pickUpLocation);
@@ -94,7 +94,7 @@ public class LoadsExpiredAdapter extends RecyclerView.Adapter<LoadsExpiredAdapte
         mQueue.add(request1);
         //----------------------------------------------------------
 
-        holder.bidNowButton.setText("Reactivate Load");
+        holder.bidNowButton.setText(activity.getString(R.string.ReActivate_Load));
         holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.dark_grey));
         holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
             @Override

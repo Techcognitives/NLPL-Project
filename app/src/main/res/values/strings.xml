@@ -1393,7 +1393,7 @@
     <string name="Bid_Now">Bid Now</string>
     <string name="View_Load_History">View Load\n History</string>
     <string name="Load_Expired">Load Expired</string>
-
+    <string name="Bid_Submitted">Bid Submitted</string>
 
     //----------------------------------------------------------------------------------------------
 
@@ -1547,6 +1547,10 @@
     <string name="Accepted">Accepted</string>
     <string name="Accept_Final_Offer_newLine">Accept\n Final Offer </string>
     <string name="You_Responded">You/nResponded</string>
+    <string name="You_Withdrawn">You/n Withdrawn</string>
+    <string name="You_Responded_singleLine">You Responded</string>
+    <string name="Accept_Revised">Accept Revised</string>
+    <string name="Customer_Withdrawn">Customer Withdrawn</string>
     <string name="Loads_for">Loads for </string>
     <string name="Load_ID">Load ID: </string>
     <string name="Post_Bid">Post Bid</string>
