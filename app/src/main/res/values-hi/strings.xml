@@ -221,6 +221,11 @@
     <string name="Photo_Library">फ़ोटो लाइब्रेरी </string>             //new
     <string name="Drivers_Bank_Details">ड्राइवर के बैंक जानकारी </string>      //new
     <string name="Add_Drivers_Bank">+ ड्राइवर का बैंक जोड़ें </string>           //new
+    <string name="Truck_doesnt_match">ट्रक मेल नहीं खाता</string>
+    <string name="Truck_doesnt_match_message1">असाइन किया गया ट्रक लोड पोस्टर आवश्यकताओं से मेल नहीं खाता है।</string>
+    <string name="Truck_doesnt_match_message2">\n\nमैं इसके द्वारा घोषणा करता हूं, उपयुक्त ट्रक मिलान लोड पोस्टर आवश्यकता प्रदान करेगा.</string>
+
+
 
     //----------------------------------------------------------------------------------------------
 
@@ -268,6 +273,7 @@
 
     //-----------------------------------Post A Load------------------------------------------------
     <string name="pick_up_date">पिकअप तारीख* </string>
+    <string name="pick_up_date_colon">पिकअप तारीख: </string>
     <string name="pick_up_time">पिकअप समय* </string>
     <string name="enterYourBudget">अपना बजट दर्ज करें </string>
     <string name="budget">बजट </string>
@@ -299,7 +305,7 @@
     <string name="Truck_Type">ट्रक प्रकार </string>
     <string name="Bid_Now">अभी बिड लगाएं </string>
     <string name="View_Load_History">लोड देखें\n इतिहास </string>                //dot
-
+    <string name="Load_Expired">लोड की समय सीमा समाप्त हो गई</string>
 
 
     //----------------------------------------------------------------------------------------------
@@ -364,6 +370,8 @@
     <string name="My_Final_Quote">मेरा अंतिम कोट </string>       //new
     <string name="Submit">सबमिट </string>                       //new
     <string name="Load">लोड: </string>                           //new
+    <string name="SP_Withdrawn">एसपी वापस लिया गया </string>
+    <string name="View_Consignment">देखें भेजा गया माल </string>
 
     //----------------------------------------------------------------------------------------------
 

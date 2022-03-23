@@ -2476,9 +2476,8 @@ public class ServiceProviderDashboardActivity extends AppCompat {
             TextView alertPositiveButton = (TextView) deleteLoad.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) deleteLoad.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Truck doesn't match");
-            alertMessage.setText("The Truck assigned doesn't match Load Poster requirements."
-                    +"\n\nI hereby declare, will provide appropriate Truck matching Load Poster requirement.");
+            alertTitle.setText(getString(R.string.Truck_doesnt_match));
+            alertMessage.setText(getString(R.string.Truck_doesnt_match_message1) + getString(R.string.Truck_doesnt_match_message2));
             alertPositiveButton.setText(getString(R.string.ok));
             alertPositiveButton.setVisibility(View.VISIBLE);
             alertNegativeButton.setText(getString(R.string.cancel));

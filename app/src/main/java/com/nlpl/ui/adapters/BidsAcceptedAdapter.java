@@ -198,12 +198,12 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
                 // When the task is over it will print 00:00:00 there
                 public void onFinish() {
                     UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadExpired");
-                    holder.timeLeft.setText("  Load Expired");
+                    holder.timeLeft.setText(activity.getString(R.string.Load_Expired));
                 }
             }.start();
         } else {
             UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadExpired");
-            holder.timeLeft.setText("  Load Expired");
+            holder.timeLeft.setText(activity.getString(R.string.Load_Expired));
         }
         //------------------------------------------------------------------------------------------
 
@@ -214,19 +214,19 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
         holder.destinationEnd.setText("  " + dropCity);
 
         String date = obj.getPick_up_date();
-        holder.date.setText("Date: " + date);
+        holder.date.setText(activity.getString(R.string.pickUpDateWithColon) + date);
 
         String time = obj.getPick_up_time();
-        holder.time.setText("Time: " + time);
+        holder.time.setText(activity.getString(R.string.timeOnly) + time);
 
         String approxKms = obj.getKm_approx();
-        holder.distance.setText("Distance: " + approxKms);
+        holder.distance.setText(activity.getString(R.string.distanceWithColon) + approxKms);
 
         String capacity = obj.getCapacity();
-        holder.capacity.setText("load Type: " + capacity);
+        holder.capacity.setText(activity.getString(R.string.Load_Type) + capacity);
 
         String bodyType = obj.getBody_type();
-        holder.body.setText("Body Type: " + bodyType);
+        holder.body.setText(activity.getString(R.string.bodyType) + bodyType);
 
         String pickUpLocation = obj.getPick_add();
         holder.pickUpLocation.setText(" " + pickUpLocation);
@@ -263,9 +263,9 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
                                             String bid_status = obj1.getString("bid_status");
 
                                             if (bid_status.equals("withdrawnBySp")) {
-                                                holder.timeLeft.setText("SP Withdrawn");
+                                                holder.timeLeft.setText(activity.getString(R.string.SP_Withdrawn));
 //                                                holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
-                                                holder.bidNowButton.setText("Re-activate Load");
+                                                holder.bidNowButton.setText(activity.getString(R.string.ReActivate_Load));
                                                 holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.dark_grey));
                                                 holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
                                                     @Override
@@ -275,7 +275,7 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
                                                 });
                                             } else {
 //                                                holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
-                                                holder.bidNowButton.setText("View Consignment");
+                                                holder.bidNowButton.setText(activity.getString(R.string.View_Consignment));
                                                 holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.green));
                                                 holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
                                                     @Override

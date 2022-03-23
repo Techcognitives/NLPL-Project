@@ -1303,6 +1303,9 @@
     //new
     <string name="Add_Drivers_Bank">+ Add Driver\'s Bank</string>
     //new
+    <string name="Truck_doesnt_match">Truck doesn\'t match</string>
+    <string name="Truck_doesnt_match_message1">The Truck assigned doesn\'t match Load Poster requirements.</string>
+    <string name="Truck_doesnt_match_message2">\n\nI hereby declare, will provide appropriate Truck matching Load Poster requirement.</string>
 
     //----------------------------------------------------------------------------------------------
 
@@ -1356,6 +1359,7 @@
 
     //-----------------------------------Post A Load------------------------------------------------
     <string name="pick_up_date">Pick-up Date*</string>
+    <string name="pick_up_date_colon">Pick-up Date: </string>
     <string name="pick_up_time">Pick-up Time*</string>
     <string name="enterYourBudget">Enter Your Budget</string>
     <string name="budget">Budget</string>
@@ -1388,6 +1392,7 @@
     <string name="Truck_Type">Truck Type</string>
     <string name="Bid_Now">Bid Now</string>
     <string name="View_Load_History">View Load\n History</string>
+    <string name="Load_Expired">Load Expired</string>
 
 
     //----------------------------------------------------------------------------------------------
@@ -1459,6 +1464,8 @@
     //new
     <string name="Load">Load</string>
     //new
+    <string name="SP_Withdrawn">SP Withdrawn</string>
+    <string name="View_Consignment">View Consignment</string>
 
     //----------------------------------------------------------------------------------------------
 
