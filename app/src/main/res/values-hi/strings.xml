@@ -26,6 +26,7 @@
     <string name="OTP_sent_successfully">ओटीपी सफलतापूर्वक भेजा गया </string>
     <string name="OTP_sent_to">ओटीपी को भेजा गया </string>
     <string name="Change_Number">नंबर बदलने </string>     //new
+    <string name="Change">बदलने</string>
 
     //----------------------------------------------------------------------------------------------
 
@@ -442,7 +443,7 @@
     <string name="No_Load_Posted">कोई लोड पोस्ट नहीं</string>
     <string name="No_Load_Accepted">कोई लोड स्वीकार नहीं किया गया</string>
     <string name="Accepted">स्वीकार </string>
-    <string name="You_Responded">आपको/nजवाब</string>
+    <string name="You_Responded">आपको जवाब</string>
     <string name="You_Withdrawn">आपको/n वापस ले लिया </string>
     <string name="You_Responded_singleLine">आपको जवाब</string>
     <string name="Accept_Revised">संशोधित स्वीकार करें</string>

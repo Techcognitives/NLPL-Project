@@ -26,6 +26,7 @@
     <string name="OTP_sent_successfully">OTP sent successfully</string>
     <string name="OTP_sent_to">OTP sent to </string>
     <string name="Change_Number">Change Number</string>     //new
+    <string name="Change">Change</string>
 
     //----------------------------------------------------------------------------------------------
 
@@ -441,7 +442,7 @@
     <string name="No_Load_Posted">No Load Posted</string>
     <string name="No_Load_Accepted">No Load Accepted</string>
     <string name="Accepted">Accepted</string>
-    <string name="You_Responded">You/nResponded</string>
+    <string name="You_Responded">You Responded</string>
     <string name="You_Withdrawn">You/n Withdrawn</string>
     <string name="You_Responded_singleLine">You Responded</string>
     <string name="Accept_Revised">Accept Revised</string>
