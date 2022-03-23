@@ -84,7 +84,6 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
             phone = bundle.getString("mobile");
             Log.i("Mobile No View Personal", phone);
             userId = bundle.getString("userId");
-            Log.i("userId find loads", userId);
         }
 
         getCurrentLocation(FindTrucksActivity.this);
@@ -102,39 +101,10 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
 
         actionBarBackButton.setOnClickListener(view -> {
             if (userId == null) {
-                //----------------------- Alert Dialog -------------------------------------------------
-                Dialog alert = new Dialog(FindTrucksActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
-                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                lp.copyFrom(alert.getWindow().getAttributes());
-                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.gravity = Gravity.CENTER;
-
-                alert.show();
-                alert.getWindow().setAttributes(lp);
-                alert.setCancelable(false);
-
-                TextView alertTitle = alert.findViewById(R.id.dialog_alert_title);
-                TextView alertMessage = alert.findViewById(R.id.dialog_alert_message);
-                TextView alertPositiveButton = alert.findViewById(R.id.dialog_alert_positive_button);
-                TextView alertNegativeButton = alert.findViewById(R.id.dialog_alert_negative_button);
-
-                alertTitle.setText(getString(R.string.Please_Register));
-                alertMessage.setText(getString(R.string.You_cannot_bid_without_Registration));
-                alertPositiveButton.setText(getString(R.string.Register_Now));
-                alertNegativeButton.setText(getString(R.string.cancel));
-
-                alertNegativeButton.setOnClickListener(view12 -> alert.dismiss());
-
-                alertPositiveButton.setOnClickListener(view1 -> {
-                    alert.dismiss();
-                    ShowAlert.loadingDialog(FindTrucksActivity.this);
-                    JumpTo.goToRegistrationActivity(FindTrucksActivity.this, phone, true);
-                });
-                //------------------------------------------------------------------------------------------
+                ShowAlert.loadingDialog(FindTrucksActivity.this);
+                JumpTo.goToRegistrationActivity(FindTrucksActivity.this, phone, true);
             } else {
+                ShowAlert.loadingDialog(FindTrucksActivity.this);
                 JumpTo.goToCustomerDashboard(FindTrucksActivity.this, phone, true);
             }
         });
@@ -378,9 +348,9 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
         chooseDialog.getWindow().setAttributes(lp2);
 
         TextView cameraText = chooseDialog.findViewById(R.id.dialog_camera_text);
-        cameraText.setText("Whats App");
+        cameraText.setText(getString(R.string.whats_app));
         TextView galleryText = chooseDialog.findViewById(R.id.dialog_photo_library_text);
-        galleryText.setText("Call");
+        galleryText.setText(getString(R.string.call));
 
         ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
         camera.setImageDrawable(getResources().getDrawable(R.drawable.whats_app_small));

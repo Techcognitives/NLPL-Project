@@ -503,5 +503,9 @@
     <string name="declaration_lp"><b>Truck Owner / Driver Declaration:</b>\nI hereby declare, will reach Pick-up location 15 minutes prior Pick-up.\n\nI hereby declare, will provide appropriate Truck matching Load Poster requirement.</string>
     //----------------------------------------------------------------------------------------------
 
+    //---------------------------- Find Truck ------------------------------------------------------
+    <string name="whats_app">What"'"s App</string>
+    <string name="call">Call</string>
+    //----------------------------------------------------------------------------------------------
 
 </resources>

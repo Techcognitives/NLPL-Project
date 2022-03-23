@@ -276,8 +276,13 @@ public class RegistrationActivity extends AppCompat {
     }
 
     public void onClickSkip(View view) {
-        ShowAlert.loadingDialog(RegistrationActivity.this);
-        JumpTo.goToServiceProviderDashboard(RegistrationActivity.this, mobile, true);
+        if (role.equals("Customer")){
+            ShowAlert.loadingDialog(RegistrationActivity.this);
+            JumpTo.goToFindTrucksActivity(RegistrationActivity.this, null, mobile);
+        }else{
+            ShowAlert.loadingDialog(RegistrationActivity.this);
+            JumpTo.goToServiceProviderDashboard(RegistrationActivity.this, mobile, true);
+        }
     }
 
     public void onClickGetCurrentLocation(View view) {
