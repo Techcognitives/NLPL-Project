@@ -195,12 +195,12 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
                 // When the task is over it will print 00:00:00 there
                 public void onFinish() {
                     UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadExpired");
-                    holder.timeLeft.setText("  Load Expired");
+                    holder.timeLeft.setText(activity.getString(R.string.Load_Expired));
                 }
             }.start();
         } else {
             UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadExpired");
-            holder.timeLeft.setText("  Load Expired");
+            holder.timeLeft.setText(activity.getString(R.string.Load_Expired));
         }
         //------------------------------------------------------------------------------------------
 

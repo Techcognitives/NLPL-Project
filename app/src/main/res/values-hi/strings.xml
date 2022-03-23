@@ -337,7 +337,8 @@
     <string name="body">बॉडी: </string>
     <string name="selectAndAssignTruck">इस लोड के लिए एक ट्रक और ड्राइवर असाइन करें </string>
     <string name="yourQuote">मेरा कोट </string>             //dot
-    <string name="negotiable">बातचीत योग्य </string>             //dot
+    <string name="negotiable">निगोशिएबल </string>             //dot
+    <string name="Non_negotiable">नॉन-निगोशिएबल </string>
     <string name="truck">ट्रक </string>
     <string name="Search_by_Truck_Number">ट्रक नंबर द्वारा खोजें </string>
     <string name="feet">फीट </string>
@@ -438,6 +439,9 @@
     <string name="No_Load_Available">कोई लोड उपलब्ध नहीं है </string>
     <string name="No_Load_Posted">कोई लोड पोस्ट नहीं</string>
     <string name="No_Load_Accepted">कोई लोड स्वीकार नहीं किया गया</string>
+    <string name="Accepted">स्वीकार </string>
+    <string name="You_Responded">आपको/nजवाब</string>
+    <string name="Accept_Final_Offer_newLine">स्वीकार\n अंतिम प्रस्ताव </string>
     <string name="Loads_for">के लिए लोड करता है </string>
     <string name="Load_ID">लोड आईडी : </string>
     <string name="Post_Bid">पोस्ट बिड </string>
