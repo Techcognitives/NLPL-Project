@@ -151,7 +151,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
     private RecyclerView driverListRecyclerView;
 
     View actionBar, loadNotificationUnderline, bidSubmittedUnderline;
-    TextView customerNumber, customerNumberHeading, customerName, customerNameHeading, customerFirstBudget, customerSecondBudget, cancel2, cancel, acceptAndBid, spQuote, selectDriver, selectTruck, selectedTruckModel, selectedTruckCapacity, actionBarTitle;
+    TextView customerNumber, startTrip, customerNumberHeading, customerName, customerNameHeading, customerFirstBudget, customerSecondBudget, cancel2, cancel, acceptAndBid, spQuote, selectDriver, selectTruck, selectedTruckModel, selectedTruckCapacity, actionBarTitle;
     EditText notesSp;
     CheckBox declaration;
     RadioButton negotiable_yes, negotiable_no;
@@ -2035,7 +2035,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
         selectedTruckCapacity = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_truck_capacity_textview);
         notesSp = (EditText) dialogViewConsignment.findViewById(R.id.dialog_bid_now_notes_editText);
         declaration = (CheckBox) dialogViewConsignment.findViewById(R.id.dialog_bid_now_declaration);
-        acceptAndBid = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_accept_and_bid_btn);
+        startTrip = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_accept_and_bid_btn);
         cancel = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_cancel_btn);
         negotiable_yes = dialogViewConsignment.findViewById(R.id.dialog_bid_now_radio_btn_yes);
         negotiable_no = dialogViewConsignment.findViewById(R.id.dialog_bid_now_radio_btn_no);
@@ -2158,11 +2158,11 @@ public class ServiceProviderDashboardActivity extends AppCompat {
             }
         });
 
-        acceptAndBid.setText(getString(R.string.Start_Trip));
-        acceptAndBid.setEnabled(false);
-        acceptAndBid.setBackgroundResource((R.drawable.button_de_active));
+        startTrip.setText(getString(R.string.Start_Trip));
+        startTrip.setEnabled(true);
+        startTrip.setBackgroundResource((R.drawable.button_active));
 
-        acceptAndBid.setOnClickListener(new View.OnClickListener() {
+        startTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

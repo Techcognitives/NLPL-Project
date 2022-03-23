@@ -24,9 +24,12 @@
         android:theme="@style/Theme.NLPL"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.activities.TrackForServiceProviderActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.LanguageActivity"
             android:exported="false"
-            android:theme="@style/Theme.Design.Light.NoActionBar"/>
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
             android:name=".ui.activities.CustomerSettingsAndPreferences"
             android:exported="true"
