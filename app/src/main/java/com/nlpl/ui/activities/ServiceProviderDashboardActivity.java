@@ -78,6 +78,7 @@ import com.nlpl.model.Responses.BidLadResponse;
 import com.nlpl.model.Responses.ImageResponse;
 import com.nlpl.model.Responses.UploadImageResponse;
 import com.nlpl.model.UpdateMethods.UpdateBidDetails;
+import com.nlpl.model.UpdateMethods.UpdatePostLoadDetails;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserDeviceId;
 import com.nlpl.ui.adapters.DriversListAdapterBid;
@@ -566,7 +567,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
                         emailIdAPI = obj.getString("email_id");
 
                         String deviceIdFromAPI = obj.getString("device_id");
-                        if (deviceIdFromAPI.equals("null") || deviceIdFromAPI == null){
+                        if (deviceIdFromAPI.equals("null") || deviceIdFromAPI == null) {
                             String deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
                             UpdateUserDetails.updateUserDeviceId(userId, deviceId);
                         }
@@ -617,7 +618,6 @@ public class ServiceProviderDashboardActivity extends AppCompat {
                         } else {
                             driverDetailsLogoImageView.setImageDrawable(getResources().getDrawable(R.drawable.driver));
                         }
-
 
 
                     }
@@ -980,7 +980,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
             });
             //------------------------------------------------------------------------------------------
         } else {
-            if (!isTruckDetailsDone.equals("1")){
+            if (!isTruckDetailsDone.equals("1")) {
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
                 alert.setContentView(R.layout.dialog_alert);
@@ -1018,7 +1018,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
                     JumpTo.goToVehicleDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, false, false, false, false, null, null);
                 });
                 //------------------------------------------------------------------------------------------
-            }else if (!isDriverDetailsDone.equals("1")){
+            } else if (!isDriverDetailsDone.equals("1")) {
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
                 alert.setContentView(R.layout.dialog_alert);
@@ -1057,7 +1057,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
 
                 });
                 //------------------------------------------------------------------------------------------
-            }else {
+            } else {
                 loadId = obj.getIdpost_load();
                 bidStatus = obj.getBid_status();
                 String pick_up_date = obj.getPick_up_date();
@@ -1186,12 +1186,12 @@ public class ServiceProviderDashboardActivity extends AppCompat {
                             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                        alertTitle.setText(getString(R.string.Post_Bid));
-                        alertMessage.setText(getString(R.string.Bid_Posted_Successfully));
-                        alertPositiveButton.setVisibility(View.GONE);
-                        alertNegativeButton.setText(getString(R.string.ok));
-                        alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+                            alertTitle.setText(getString(R.string.Post_Bid));
+                            alertMessage.setText(getString(R.string.Bid_Posted_Successfully));
+                            alertPositiveButton.setVisibility(View.GONE);
+                            alertNegativeButton.setText(getString(R.string.ok));
+                            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                             alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -2165,7 +2165,8 @@ public class ServiceProviderDashboardActivity extends AppCompat {
         startTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+//                UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "start");
+//                UpdateBidDetails.updateBidStatus(obj.getBidId(), "start");
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
                 alert.setContentView(R.layout.dialog_alert_single_button);
@@ -2443,7 +2444,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
     }
 
     public void onClickAssignTruckFromList(TruckModel obj) {
-        if (obj.getTruck_type().toLowerCase().equals(required_truck_body.toLowerCase()) && obj.getTruck_carrying_capacity().toLowerCase().equals(required_capacity.toLowerCase())){
+        if (obj.getTruck_type().toLowerCase().equals(required_truck_body.toLowerCase()) && obj.getTruck_carrying_capacity().toLowerCase().equals(required_capacity.toLowerCase())) {
             Log.i("Truck Type LP", required_truck_body);
             Log.i("Load Type LP", required_capacity);
             Log.i("Truck Type SP", obj.getTruck_type());
@@ -2456,7 +2457,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
             getDriverDetailsAssigned(obj.getDriver_id());
             selectedTruckModel.setText(obj.getTruck_type());
             selectedTruckCapacity.setText(obj.getTruck_carrying_capacity());
-        }else{
+        } else {
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog deleteLoad = new Dialog(ServiceProviderDashboardActivity.this);
             deleteLoad.setContentView(R.layout.dialog_alert);
@@ -2978,9 +2979,9 @@ public class ServiceProviderDashboardActivity extends AppCompat {
                 String message = "";
                 try {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse("http://api.whatsapp.com/send?phone="+"+91"+mobileNumber + "&text="+message));
+                    intent.setData(Uri.parse("http://api.whatsapp.com/send?phone=" + "+91" + mobileNumber + "&text=" + message));
                     startActivity(intent);
-                }catch (Exception e){
+                } catch (Exception e) {
                     Toast.makeText(ServiceProviderDashboardActivity.this, "Whats app not installed on your device", Toast.LENGTH_SHORT).show();
                 }
             }
