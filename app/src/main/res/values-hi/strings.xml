@@ -123,8 +123,8 @@
     <string name="bank_details">बैंक डिटेल्स </string>
     //new
     <string name="Edit_Bank_Details">बैंक डिटेल्स एडिट करें </string>             //dot
-    <string name="Cancelled_cheque_uploaded_successfully">रद्द किया गया चेक सुकसेस्सफुल्ली अपलोड किया गया </string>
-    <string name="Cancelled_cheque_not_uploaded_successfully">रद्द किया गया चेक सुकसेस्सफुल्ली अपलोड नहीं किया गया </string>
+    <string name="Cancelled_cheque_uploaded_successfully">कैन्सेलड किया गया चेक सुकसेस्सफुल्ली अपलोड किया गया </string>
+    <string name="Cancelled_cheque_not_uploaded_successfully">कैन्सेलड किया गया चेक सुकसेस्सफुल्ली अपलोड नहीं किया गया </string>
     <string name="Bank_Details_added_successfully">बैंक डिटेल्स सुकसेस्सफुल्ली एडेड </string>
     <string name="Account_number_does_not_match">अकाउंट नंबर मैच नहीं होरा है </string>
     <string name="Please_enter_correct_account_number_as_above.">कृपया ऊपर दिए गए अनुसार सही अकाउंट नंबर दर्ज करें. </string>
@@ -132,10 +132,10 @@
     <string name="Bank_Name"> बैंक का नाम: </string>
     <string name="Account_No"> अकाउंट नंबर: </string>
     <string name="IFSI_Code"> आईएफएससी कोड: </string>
-    <string name="Upload_a_cancelled_Cheque">रद्द किया गया चेक अपलोड करें </string>     //new
+    <string name="Upload_a_cancelled_Cheque">कैन्सेलड किया गया चेक अपलोड करें </string>     //new
     <string name="Enter_AC_Details">अकाउंट नंबर डिटेल्स दर्ज करें </string>     //new
-    <string name="Upload_a_photo_of_Canceled_Check">रद्द की गई चेक की फ़ोटो अपलोड करें </string>   //new
-    <string name="Cancelled_Cheque">रद्द किया गया चेक* </string>
+    <string name="Upload_a_photo_of_Canceled_Check">कैन्सेलड की गई चेक की फ़ोटो अपलोड करें </string>   //new
+    <string name="Cancelled_Cheque">कैन्सेलड किया गया चेक* </string>
     <string name="OR">--------------------- या ---------------------</string>   //new
 
     //--------------------------------------------Done--------------------------------------------------
@@ -148,8 +148,8 @@
     <string name="closed">क्लोज्ड </string>
     <string name="tarpaulin">तिरपाल </string>
     <string name="vehicle_number_edit">व्हीकल नंबर दर्ज करें </string>
-    <string name="rc_book">आर सी बुक अपलोड करें* </string>
-    <string name="rc_front">आर सी बुक </string>
+    <string name="rc_book">आरसी बुक अपलोड करें* </string>
+    <string name="rc_front">आरसी बुक </string>
     <string name="uploadInsurance">अपलोड इंश्योरेंस* </string>
     <string name="insurance">इंश्योरेंस </string>
     <string name="selectModel">बॉडी टाइप चुनें </string>
@@ -158,8 +158,8 @@
     //new
     <string name="Edit_Vehicle_Details">व्हीकल डिटेल्स एडिट करें </string>          //dot
     <string name="Truck_Details">ट्रक डिटेल्स </string>
-    <string name="RC_Uploaded_Successfully">आर सी सुकसेस्सफुल्ली अपलोड किया गया है </string>
-    <string name="RC_not_Uploaded">आर सी अपलोड नहीं किया गया है, कृपया पुन: प्रयास करें </string>
+    <string name="RC_Uploaded_Successfully">आरसी सुकसेस्सफुल्ली अपलोड किया गया है </string>
+    <string name="RC_not_Uploaded">आरसी अपलोड नहीं किया गया है, कृपया पुन: प्रयास करें </string>
     <string name="Insurance_Uploaded_Successfully">इंश्योरेंस सुकसेस्सफुल्ली अपलोड किया गया है </string>
     <string name="Insurance_not_uploaded">इंश्योरेंस अपलोड नहीं किया गया है, कृपया पुन: प्रयास करें </string>
     <string name="Vehicle_Details_added_successfully">व्हीकल डिटेल्स सुकसेस्सफुल्ली एडेड </string>
@@ -287,7 +287,7 @@
     <string name="dropLocationDetails">ड्रॉप एड्रेस* </string>
     <string name="km">किमी (लगभग) </string>                     //dot
     <string name="noteAndMaterial">नोट्स एंड मटेरियल की डिटेल्स (ऑप्शनल) </string>      //dot
-    <string name="postALoad">पोस्ट एक लोड </string>
+    <string name="postALoad">पोस्ट ऐ लोड </string>
     <string name="date">DD-Month-YY </string>
     <string name="time">hh:mm AM/PM </string>
     <string name="inrRs">₹ XXXX </string>
@@ -346,7 +346,7 @@
     <string name="Notes">नोट्स </string>
     <string name="NotesIfAny">टाइप करें या चुनें </string>
     <string name="acceptBid">स्वीकार करें और बिड लगाएं </string>
-    <string name="cancel">रद्द करना</string>
+    <string name="cancel">कैन्सेलड करना</string>
     <string name="declaration"><b>घोषणा: </b><em>मैं एतद्द्वारा घोषणा करता हूं, ड्राइवर पिकअप स्थान पर पिक-अप टाइम से 15 मिनट पहले पहुंच जाएगा. </em> </string>
     <string name="preferred_locations">पसंदीदा स्थान: </string>
     //new
@@ -411,7 +411,7 @@
     <string name="Continue_with_other_Service_Provider">अन्य सेवा प्रोवाइडर के साथ जारी रखें </string>
     <string name="Current_Bidder_have_withdrawn_Bid">वर्तमान बिड को वापस ले ली है, क्या आप अभी भी अन्य सेवा प्रोवाइडर के साथ जारी रखना चाहते हैं? </string>
     <string name="Continue">जारी रखना </string>
-    <string name="Cancel">रद्द </string>
+    <string name="Cancel">कैन्सेलड </string>
     <string name="visible_for_other_Service_Provider">वर्तमान सेवा प्रोवाइडर से वापस लिया गया और अन्य सेवा प्रोवाइडर के लिए खाई देगा लोड </string>
     <string name="Close">बंद </string>
     <string name="Bids_Received">बिड प्राप्त हुई </string>         //new
