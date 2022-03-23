@@ -583,7 +583,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="onClickPaymentMethod"
-                    android:text="Change"
+                    android:text="@string/Change"
                     android:textColor="@color/button_blue"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="@+id/post_a_load_payment_method_text"
