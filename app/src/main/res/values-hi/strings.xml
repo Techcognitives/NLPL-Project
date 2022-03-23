@@ -6,7 +6,7 @@
     <string name="mobile_prefix">+91 |</string>
     <string name="edit_number_hint">10 अंकों का मोबाइल नंबर दर्ज करें </string>
     <string name="edit_number_hint_optional">दूसरा मोबाइल नंबर (ऑप्शनल)</string>      //dot
-    <string name="get_otp">ओटीपी प्राप्त करें </string>
+    <string name="get_otp">गेट ओटीपी </string>
     <string name="tc_and_pp">ओटीपी प्राप्त पर क्लिक करके आप हमारे लिए सहमत हैं </string>
     <string name="tc">टर्म्स ऑफ़ सर्विस </string>
     <string name="and">एंड </string>
@@ -31,9 +31,9 @@
     //----------------------------------------------------------------------------------------------
 
     //---------------------------- Registration Screen Activity ------------------------------------
-    <string name="name">नाम* </string>
+    <string name="name">नाव* </string>
     <string name="name_hint">अपना नाम दर्ज करें </string>
-    <string name="email_id">अपना ईमेल आईडी दर्ज करें(ऑप्शनल)</string>         //dot
+    <string name="email_id">अपना ईमेल आईडी दर्ज करें (ऑप्शनल)</string>         //dot
     <string name="location">पता* </string>
     <string name="select_state">राज्य </string>
     <string name="Select_State">राज्य चुनें  </string>       //new
@@ -57,7 +57,7 @@
     <string name="Please_Register">कृपया रजिस्टर करें </string>
     <string name="You_cannot_bid_without_Registration">आप रजिस्ट्रेशन के बिना बिड नहीं लगा सकते </string>
     <string name="Register_Now">अभी रजिस्टर करें </string>
-    <string name="Explore_Now">अभी पता करें </string>         //new      //dot
+    <string name="Explore_Now">अभी एक्स्प्लोर करें </string>         //new      //dot
     <string name="Select_your_Role">अपनी भूमिका चुनें </string>       //new
 
     //----------------------------------------------------------------------------------------------
