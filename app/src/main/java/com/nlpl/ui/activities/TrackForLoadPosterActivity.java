@@ -120,13 +120,13 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
     private RecyclerView bidsAcceptedRecyclerView;
 
     private TrackLPBidsResponsesAdapter bidsResponsesAdapter;
-    boolean fabVisible = true, isBackPressed = false, bidsReceivedSelected = true, isbidsReceivedSelected;
+    boolean fabVisible = true, isBackPressed = false;
 
     private int CAMERA_PIC_REQUEST2 = 4;
     private int GET_FROM_GALLERY2 = 5;
 
     Dialog loadingDialog;
-    TextView spNumber, driverNumber, postALoadButton;
+    TextView spNumber, driverNumber;
     ImageView actionBarWhatsApp;
     Dialog previewDialogProfileOfSp;
     Boolean checkedReasonOne = false, checkedReasonTwo = false, checkedReasonThree = false, checkedReasonFour = false, checkedReasonFive = false, checkedReasonSix = false, checkedReasonSeven = false;
@@ -136,15 +136,14 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
     int count = 0;
     String img_type, paymentTypeFromAPI, numberOfBids, paymentMethod = "", paymentPercentage = "threePercent";
 
-    View actionBar, bidsReceivedUnderline, bidsAcceptedUnderline;
+    View actionBar;
     TextView actionBarTitle;
     ImageView actionBarBackButton, actionBarMenuButton;
     Dialog previewDialogAcceptANdBid, setBudget, acceptFinalBid, viewConsignmentCustomer;
     View bottomNav;
     ConstraintLayout spDashboard, customerDashboard;
 
-    ConstraintLayout loadAcceptedConstrain, bidsReceivedConstrain;
-    TextView quoteBySp1, timeLeftTextview, timeLeft00, loadAcceptedTextView, bidsReceivedTextView, customerQuote, submitResponseBtn, cancleBtn;
+    TextView quoteBySp1, timeLeftTextview, timeLeft00, customerQuote, submitResponseBtn, cancleBtn;
     RadioButton negotiable_yes, negotiable_no;
     EditText notesCustomer;
     String userId, phone, s1, customerEmail;
@@ -163,36 +162,8 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
         if (bundle != null) {
             phone = bundle.getString("mobile");
         }
-        isbidsReceivedSelected = bundle.getBoolean("bidsReceived");
+
         mQueue = Volley.newRequestQueue(TrackForLoadPosterActivity.this);
-
-        loadAcceptedConstrain = (ConstraintLayout) findViewById(R.id.customer_dashboard_loads_accepted_constrain);
-        bidsReceivedConstrain = (ConstraintLayout) findViewById(R.id.customer_dashboard_bids_received_constrain);
-        loadAcceptedTextView = (TextView) findViewById(R.id.customer_dashboard_loads_accepted_button);
-        bidsReceivedTextView = (TextView) findViewById(R.id.customer_dashboard_bids_received_button);
-        bidsReceivedUnderline = (View) findViewById(R.id.customer_dashboard_bids_received_view);
-        bidsAcceptedUnderline = (View) findViewById(R.id.customer_dashboard_bids_Accepted_view);
-        postALoadButton = (TextView) findViewById(R.id.customer_dashboard_post_a_load_button);
-
-        if (isbidsReceivedSelected) {
-            bidsReceivedSelected = true;
-            loadAcceptedConstrain.setVisibility(View.INVISIBLE);
-            bidsReceivedConstrain.setVisibility(View.VISIBLE);
-            bidsReceivedUnderline.setVisibility(View.VISIBLE);
-            bidsAcceptedUnderline.setVisibility(View.INVISIBLE);
-            bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
-            loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
-
-        } else {
-            bidsReceivedSelected = false;
-            loadAcceptedConstrain.setVisibility(View.VISIBLE);
-            bidsReceivedConstrain.setVisibility(View.INVISIBLE);
-            bidsReceivedUnderline.setVisibility(View.INVISIBLE);
-            bidsAcceptedUnderline.setVisibility(View.VISIBLE);
-            loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
-            bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
-        }
-
         getUserId(phone);
 
         loadingDialog = new Dialog(TrackForLoadPosterActivity.this);
@@ -206,10 +177,7 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
         lp2.gravity = Gravity.CENTER;
 
         ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
-        TextView noLoadTextView = (TextView) findViewById(R.id.customer_dashboard_no_load_text);
-        noLoadTextView.setVisibility(View.INVISIBLE);
-        TextView noAcceptedLoads = (TextView) findViewById(R.id.customer_dashboard_no_load_accepted_text);
-        noAcceptedLoads.setVisibility(View.INVISIBLE);
+
 
 //        loadingDialog.show();
         loadingDialog.setCancelable(false);
@@ -234,9 +202,10 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
         actionBarWhatsApp = (ImageView) actionBar.findViewById(R.id.action_bar_whats_app);
         actionBarWhatsApp.setVisibility(View.VISIBLE);
 
-        actionBarTitle.setText(getString(R.string.Load_Poster_Dashboard));
-        actionBarBackButton.setVisibility(View.GONE);
-        actionBarMenuButton.setVisibility(View.VISIBLE);
+        actionBarTitle.setText("Track Details");
+        actionBarBackButton.setVisibility(View.VISIBLE);
+        actionBarMenuButton.setVisibility(View.GONE);
+        actionBarBackButton.setOnClickListener(view -> this.finish());
         //------------------------------------------------------------------------------------------
 
         previewDialogProfileOfSp = new Dialog(TrackForLoadPosterActivity.this);
@@ -246,11 +215,16 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
         //------------------------------------------------------------------------------------------
         //------------------------------- bottom nav -----------------------------------------------
         bottomNav = (View) findViewById(R.id.customer_dashboard_bottom_nav_bar);
-        spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
-        customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
         TextView profileText = (TextView) bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
-
         profileText.setText(getString(R.string.Find_Trucks));
+        View dashboardView = findViewById(R.id.bottom_nav_bar_dashboard_underline);
+        dashboardView.setVisibility(View.INVISIBLE);
+        ConstraintLayout dashboardConstrain = findViewById(R.id.bottom_nav_sp_dashboard);
+        dashboardConstrain.setBackgroundTintList(getResources().getColorStateList(R.color.light_white));
+        ConstraintLayout trackConstrain =  findViewById(R.id.bottom_nav_track);
+        trackConstrain.setBackgroundTintList(getResources().getColorStateList(R.color.white));
+        View trackView = findViewById(R.id.bottom_nav_bar_track_underline);
+        trackView.setVisibility(View.VISIBLE);
 
         acceptedList = new ArrayList<>();
         arrayAssignedDriverId = new ArrayList<>();
@@ -395,16 +369,12 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
                     FooThread fooThread = new FooThread(handler);
                     fooThread.start();
 
-                    TextView noAcceptedLoads = (TextView) findViewById(R.id.customer_dashboard_no_load_accepted_text);
+
 //                    for (int i=0; i< acceptedList.size(); i++){
 //                        if (acceptedList.get(i).getBid_status().equals("FinalAccepted")){
                     if (acceptedList.size() > 0) {
 //                        bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
-                        noAcceptedLoads.setVisibility(View.GONE);
                         bidsAcceptedAdapter.updateData(acceptedList);
-                    } else {
-//                        bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
-                        noAcceptedLoads.setVisibility(View.VISIBLE);
                     }
 //                        }
 //                    }
@@ -421,30 +391,6 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
         });
         mQueue.add(request);
         //-------------------------------------------------------------------------------------------
-    }
-
-    public void onClickBidsAndLoads(View view) {
-        switch (view.getId()) {
-            case R.id.customer_dashboard_bids_received_button:
-                bidsReceivedSelected = true;
-                loadAcceptedConstrain.setVisibility(View.INVISIBLE);
-                bidsReceivedConstrain.setVisibility(View.VISIBLE);
-                bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
-                loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
-                bidsReceivedUnderline.setVisibility(View.VISIBLE);
-                bidsAcceptedUnderline.setVisibility(View.INVISIBLE);
-                break;
-
-            case R.id.customer_dashboard_loads_accepted_button:
-                bidsReceivedSelected = false;
-                loadAcceptedConstrain.setVisibility(View.VISIBLE);
-                bidsReceivedConstrain.setVisibility(View.INVISIBLE);
-                bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
-                loadAcceptedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
-                bidsReceivedUnderline.setVisibility(View.INVISIBLE);
-                bidsAcceptedUnderline.setVisibility(View.VISIBLE);
-                break;
-        }
     }
 
     public void onClickBottomNavigation(View view) {
