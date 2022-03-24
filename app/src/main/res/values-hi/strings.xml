@@ -188,7 +188,7 @@
     <string name="UploadDriverLicense">ड्राइवर लाइसेंस अपलोड करें </string>
     <string name="UploadDriverSelfie">फोटो - सेल्फी </string>
     <string name="DriverLicense">ड्राइवर लाइसेंस* </string>
-    <string name="TakePhoto">एक तस्वीर लें* </string>
+    <string name="TakePhoto">एक सेल्फी लें* </string>
     <string name="camera">कैमरा </string>
     <string name="driver_mobile_number_hint">ड्राइवर का मोबाइल नंबर दर्ज करें </string>
     <string name="AddAnotherDriver">एक और ड्राइवर जोड़ें </string>
@@ -353,7 +353,7 @@
     <string name="NotesIfAny">टाइप करें या चुनें </string>
     <string name="acceptBid">स्वीकार करें और बिड लगाएं </string>
     <string name="cancel">कैन्सेलड करना</string>
-    <string name="declaration"><b>घोषणा: </b><em>मैं एतद्द्वारा घोषणा करता हूं, ड्राइवर पिकअप स्थान पर पिक-अप टाइम से 15 मिनट पहले पहुंच जाएगा. </em> </string>
+    <string name="declaration"><b>घोषणा: </b><em>मैं एतद्द्वारा घोषणा करता हूं, ड्राइवर पिकअप स्थान पर पिक-अप टाइम से १५ मिनट पहले पहुंच जाएगा. </em> </string>
     <string name="preferred_locations">पसंदीदा स्थान: </string>
     //new
     <string name="Your_Budget_is_High">आपका बजट अधिक है </string>
@@ -507,7 +507,7 @@
 
 
     //---------------------------- Customer Accept Bid Dialog --------------------------------------
-    <string name="declaration_lp"><b>ट्रक मालिक / ड्राइवर घोषणा:</b>\nमैं इसके द्वारा घोषणा करता हूं, पिक-अप से 15 मिनट पहले पिक-अप स्थान पर पहुंच जाएगा.\n\nमैं इसके द्वारा घोषणा करता हूं, उपयुक्त ट्रक मिलान लोड पोस्टर आवश्यकता प्रोवाइडर करेगा.</string>        //dot
+    <string name="declaration_lp"><b>ट्रक मालिक / ड्राइवर घोषणा:</b>\nमैं इसके द्वारा घोषणा करता हूं, पिक-अप से १५ मिनट पहले पिक-अप स्थान पर पहुंच जाएगा.\n\nमैं इसके द्वारा घोषणा करता हूं, उपयुक्त ट्रक मिलान लोड पोस्टर आवश्यकता प्रोवाइडर करेगा.</string>        //dot
     //----------------------------------------------------------------------------------------------
 
     //---------------------------- Find Truck ------------------------------------------------------
