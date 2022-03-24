@@ -179,7 +179,7 @@
                 android:id="@+id/customer_dashboard_no_load_accepted_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="No Load Accepted"
+                android:text="@string/No_Load_Accepted"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="24sp"

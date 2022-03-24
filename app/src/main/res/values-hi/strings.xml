@@ -62,8 +62,8 @@
     <string name="Upload_PAN_and_AADHAR">पैन और आधार अपलोड करें.</string>
     <string name="Upload_Profile_Picture">प्रोफ़ाइल पिक्चर अपलोड करें</string>
     <string name="Please_complete_your_profile">कृपया अपनी प्रोफ़ाइल पूर्ण करें</string>
-
-
+    <string name="Profile_Photo">प्रोफ़ाइल फ़ोटो</string>
+    <string name="Upload_Profile">प्रोफ़ाइल अपलोड करें. </string>
 
 
     //----------------------------------------------------------------------------------------------
@@ -188,7 +188,7 @@
     <string name="UploadDriverLicense">ड्राइवर लाइसेंस अपलोड करें </string>
     <string name="UploadDriverSelfie">फोटो - सेल्फी </string>
     <string name="DriverLicense">ड्राइवर लाइसेंस* </string>
-    <string name="TakePhoto">एक तस्वीर लें* </string>
+    <string name="TakePhoto">एक सेल्फी लें* </string>
     <string name="camera">कैमरा </string>
     <string name="driver_mobile_number_hint">ड्राइवर का मोबाइल नंबर दर्ज करें </string>
     <string name="AddAnotherDriver">एक और ड्राइवर जोड़ें </string>
@@ -353,7 +353,7 @@
     <string name="NotesIfAny">टाइप करें या चुनें </string>
     <string name="acceptBid">स्वीकार करें और बिड लगाएं </string>
     <string name="cancel">कैन्सेलड करना</string>
-    <string name="declaration"><b>घोषणा: </b><em>मैं एतद्द्वारा घोषणा करता हूं, ड्राइवर पिकअप स्थान पर पिक-अप टाइम से 15 मिनट पहले पहुंच जाएगा. </em> </string>
+    <string name="declaration"><b>घोषणा: </b><em>मैं एतद्द्वारा घोषणा करता हूं, ड्राइवर पिकअप स्थान पर पिक-अप टाइम से १५ मिनट पहले पहुंच जाएगा. </em> </string>
     <string name="preferred_locations">पसंदीदा स्थान: </string>
     //new
     <string name="Your_Budget_is_High">आपका बजट अधिक है </string>
@@ -365,7 +365,7 @@
     <string name="My_Bid_Response">मेरी बिड का प्रतिसाद </string>
     <string name="Withdraw_Bid">बिड वापस लेना </string>
     <string name="Do_you_really_want_to_withdraw_bid">क्या आप वास्तव में बिड वापस लेना चाहते हैं? </string>
-    <string name="Bid_is_withdrawn_successfully">बिड सुकसेस्सफुल्ली वापस ले ली जाती है. ग्राहक अब आपकी बोली नहीं देखेगा. </string>
+    <string name="Bid_is_withdrawn_successfully">बिड सुकसेस्सफुल्ली वापस ले ली जाती है. ग्राहक अब आपकी बिड नहीं देखेगा. </string>
     <string name="Start_Trip">स्टार्ट ट्रिप करें </string>                          //dot
     <string name="Trip_Started_Successfully">ट्रिप स्टार्ट सुकसेस्सफुल्ली </string>        //dot
     <string name="You_can_track_your_trip_in_track_section">आप ट्रैक अनुभाग में अपनी ट्रिप को ट्रैक कर सकते हैं </string>
@@ -380,7 +380,8 @@
     <string name="Load">लोड: </string>                           //new
     <string name="SP_Withdrawn">एसपी वापस लिया गया है </string>
     <string name="View_Consignment">देखें भेजा गया मटेरियल </string>
-
+    <string name="Enter_Appropriate_Quote">उपयुक्त उद्धरण दर्ज करें </string>
+    <string name="You_cannot_bid_less_than_50_of_customer_Budget">आप ग्राहक बजट के ५0% से कम बोली नहीं लगा सकते</string>
 
 
     //----------------------------------------------------------------------------------------------
@@ -507,7 +508,7 @@
 
 
     //---------------------------- Customer Accept Bid Dialog --------------------------------------
-    <string name="declaration_lp"><b>ट्रक मालिक / ड्राइवर घोषणा:</b>\nमैं इसके द्वारा घोषणा करता हूं, पिक-अप से 15 मिनट पहले पिक-अप स्थान पर पहुंच जाएगा.\n\nमैं इसके द्वारा घोषणा करता हूं, उपयुक्त ट्रक मिलान लोड पोस्टर आवश्यकता प्रोवाइडर करेगा.</string>        //dot
+    <string name="declaration_lp"><b>ट्रक मालिक / ड्राइवर घोषणा:</b>\nमैं इसके द्वारा घोषणा करता हूं, पिक-अप से १५ मिनट पहले पिक-अप स्थान पर पहुंच जाएगा.\n\nमैं इसके द्वारा घोषणा करता हूं, उपयुक्त ट्रक मिलान लोड पोस्टर आवश्यकता प्रोवाइडर करेगा.</string>        //dot
     //----------------------------------------------------------------------------------------------
 
     //---------------------------- Find Truck ------------------------------------------------------

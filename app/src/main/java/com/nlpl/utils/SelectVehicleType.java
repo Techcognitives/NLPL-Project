@@ -25,7 +25,7 @@ public class SelectVehicleType {
 
         ListView bodyList = (ListView) selectTypeDialog.findViewById(R.id.list_state);
         TextView title = selectTypeDialog.findViewById(R.id.dialog_spinner_title);
-        title.setText("Select Body Type");
+        title.setText(context.getString(R.string.selectModel));
 
         selectStateArray = ArrayAdapter.createFromResource(context, R.array.array_body_type, R.layout.custom_list_row);
         bodyList.setAdapter(selectStateArray);
@@ -50,7 +50,7 @@ public class SelectVehicleType {
         selectLoadTypeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         selectLoadTypeDialog.show();
         TextView title = selectLoadTypeDialog.findViewById(R.id.dialog_spinner_title);
-        title.setText("Select Load Type");
+        title.setText(context.getString(R.string.Select_Load_Type));
         ListView loadTypeList = (ListView) selectLoadTypeDialog.findViewById(R.id.list_state);
 
         switch (selectedModel) {

@@ -62,8 +62,8 @@
     <string name="Upload_PAN_and_AADHAR">पॅन आणि आधार अपलोड करा.</string>
     <string name="Upload_Profile_Picture">प्रोफाइल पिक्चर अपलोड करा</string>
     <string name="Please_complete_your_profile">कृपया आपले प्रोफाइल पूर्ण करा</string>
-
-
+    <string name="Profile_Photo">प्रोफाइल फोटो</string>
+    <string name="Upload_Profile">प्रोफाइल अपलोड करा. </string>
 
 
     //----------------------------------------------------------------------------------------------
@@ -158,7 +158,7 @@
     <string name="rc_front">आरसी बुक </string>
     <string name="uploadInsurance">अपलोड इंश्योरेंस* </string>
     <string name="insurance">इंश्योरेंस </string>
-    <string name="selectModel">सिलेक्ट बोडी टाइप </string>
+    <string name="selectModel">बोडी टाइप निवडा</string>
     <string name="Ft">एफटी:</string>
     <string name="Capacity">कैपेसिटी </string>
     //new
@@ -309,7 +309,7 @@
     <string name="Do_you_really_want_to_delete_load">तुम्हाला खरच लोड हटवायचे आहे का?</string>
     <string name="Select_Material_Type">मटेरियल का टाइप निवडा. </string>
     <string name="Truck_Type">ट्रक टाइप</string>
-    <string name="Bid_Now">बोली अब</string>
+    <string name="Bid_Now">बिड अब</string>
     <string name="View_Load_History">लोड पहा\n हिस्ट्री</string>
     <string name="Load_Expired">लोड कालबाह्य</string>
     <string name="Bid_Submitted">बिड सबमिट</string>
@@ -351,7 +351,7 @@
     <string name="feet">फीट </string>
     <string name="Notes">नोट्स </string>
     <string name="NotesIfAny">टाइप करा किंवा निवडा</string>
-    <string name="acceptBid">स्वीकारा आणि बोली लावा. </string>
+    <string name="acceptBid">स्वीकारा आणि बिड लावा. </string>
     <string name="cancel">कैन्सेलड</string>
     <string name="declaration"><b>घोषणा: </b><em>मी याद्वारे जाहीर करतो की, ड्रायव्हर पिक-अप वेळेच्या 15 मिनिटे आधी पिक-अप ठिकाणी पोहोचेल.</em> </string>
     <string name="preferred_locations">पसंतीची ठिकाणे: </string>
@@ -380,7 +380,8 @@
     <string name="Load">लोड: </string>                           //new
     <string name="SP_Withdrawn">एसपींनी माघार घेतली</string>
     <string name="View_Consignment">मटेरियल पहा</string>
-
+    <string name="Enter_Appropriate_Quote">योग्य कोट प्रविष्ट करा</string>
+    <string name="You_cannot_bid_less_than_50_of_customer_Budget">आपण ग्राहक बजेटच्या ५0% पेक्षा कमी बोली लावू शकत नाही</string>
 
     //----------------------------------------------------------------------------------------------
 

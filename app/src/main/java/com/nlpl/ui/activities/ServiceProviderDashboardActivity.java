@@ -1755,7 +1755,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
                 int spBudget = Integer.valueOf(sb);
 
                 if (spBudget < customer50Budget) {
-                    ShowAlert.showAlert(ServiceProviderDashboardActivity.this, "Enter Appropriate Quote", "You cannot bid less than 50% of customer Budget", true, false, "Ok", "null");
+                    ShowAlert.showAlert(ServiceProviderDashboardActivity.this, getString(R.string.Enter_Appropriate_Quote), getString(R.string.You_cannot_bid_less_than_50_of_customer_Budget), true, false, getString(R.string.ok), "null");
                 } else {
                     if (isNegotiableSelected && isTruckSelectedToBid && !spQuote.getText().toString().isEmpty() && !selectDriver.getText().toString().isEmpty() && declaration.isChecked()) {
                         acceptAndBid.setEnabled(true);
