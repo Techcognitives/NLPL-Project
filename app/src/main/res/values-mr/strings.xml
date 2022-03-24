@@ -53,7 +53,7 @@
     <string name="Load_Poster">लोड पोस्टर </string>
     <string name="Registration_Successful">रजिस्ट्रेशन सुकसेस्सफुल्ली</string>
     <string name="Welcome_to">आपले स्वागत आहे </string>
-    <string name="Please_update_your_profile">\n\nकृपया तुमचे प्रोफाइल अपडेट करा आणि प्लॅटफॉर्मचे फायदे एक्सप्लोर करा.</string>
+    <string name="Please_update_your_profile">\n\nकृपया तुमचे प्रोफाइल अपडेट करा आणि प्लॅटफॉर्म एक्सप्लोर करा.</string>
     <string name="Dashboard">डॅशबोर्ड</string>
     <string name="Please_Register">कृपया रजिस्टर करा</string>
     <string name="You_cannot_bid_without_Registration">तुम्ही नोंदणीशिवाय बिड लावू शकत नाही </string>
@@ -321,7 +321,7 @@
     //--------------------------------------Bid_now dialog------------------------------------------
     <string name="load_id">लोड आयडी: शहर-शहर-000 </string>
     <string name="timeLeft"> <p>   </p> उरलेली वेळ </string>
-    <string name="timeinmin">00:00</string>
+    <!--<string name="timeinmin">00:00</string>-->
     <string name="pickUpDateWithColon">पिक-अप डेट: </string>
     <string name="pickUpLocationWithColon"><p>  </p>पिक-अप: </string>
     <string name="addressForPickUpLocation">शहर, राज्य, पिन कोड, पत्ता </string>

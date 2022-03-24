@@ -321,7 +321,7 @@
     //--------------------------------------Bid_now dialog------------------------------------------
     <string name="load_id">लोड आईडी : शहर-शहर-000 </string>
     <string name="timeLeft"> <p>   </p> टाइम बचा है </string>
-    <string name="timeinmin">00:00</string>
+    <!--<string name="timeinmin">00:00</string>-->
     <string name="pickUpDateWithColon">पिक-अप डेट: </string>
     <string name="pickUpLocationWithColon"><p>  </p>पिक-अप: </string>
     <string name="addressForPickUpLocation">शहर, राज्य, पिन कोड, पता </string>
