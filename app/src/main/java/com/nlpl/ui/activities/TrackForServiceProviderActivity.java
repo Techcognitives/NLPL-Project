@@ -171,7 +171,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
         actionBarWhatsApp = (ImageView) actionBar.findViewById(R.id.action_bar_whats_app);
         actionBarWhatsApp.setVisibility(View.VISIBLE);
 
-        actionBarTitle.setText("Trip Details");
+        actionBarTitle.setText(getString(R.string.Trip_Details));
         actionBarMenuButton.setVisibility(View.GONE);
         actionBarBackButton.setVisibility(View.VISIBLE);
         actionBarBackButton.setOnClickListener(view -> this.finish());

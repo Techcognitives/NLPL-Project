@@ -1097,6 +1097,7 @@
     <string name="select_state">State</string>
     <string name="Select_State">Select State</string>
     //new
+    <string name="Search_States">Search States</string>
     <string name="select_city">City</string>
     <string name="pin_code">PIN Code</string>
     <string name="address">Search or Type Address</string>
@@ -1453,6 +1454,8 @@
     <string name="Do_you_really_want_to_withdraw_bid">Do you really want to withdraw bid.</string>
     <string name="Bid_is_withdrawn_successfully">Bid is withdrawn successfully. Customer will no longer see your Bid.</string>
     <string name="Start_Trip">Start Trip</string>
+    <string name="View_Trip_Details">View Trip Details</string>
+    <string name="Trip_Details">Trip Details</string>
     <string name="Trip_Started_Successfully">Trip Started Successfully</string>
     <string name="You_can_track_your_trip_in_track_section">You can track your trip in track section</string>
     <string name="Call">Call</string>
@@ -1475,6 +1478,8 @@
     <string name="View_Consignment">View Consignment</string>
     <string name="Enter_Appropriate_Quote">Enter Appropriate Quote</string>
     <string name="You_cannot_bid_less_than_50_of_customer_Budget">You cannot bid less than 50% of customer Budget</string>
+    <string name="Edit_Load">Edit Load</string>
+    <string name="Would_you_like_to_edit_your_Load">Would you like to edit your Load?</string>
 
     //----------------------------------------------------------------------------------------------
 
