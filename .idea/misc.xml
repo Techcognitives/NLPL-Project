@@ -3,6 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_customer_dashboard.xml" value="0.16197916666666667" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_driver_details.xml" value="0.25" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_personal_details.xml" value="0.16197916666666667" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_personal_details_and_id_proof.xml" value="0.16197916666666667" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_registration.xml" value="0.16197916666666667" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_service_provider_dashboard.xml" value="0.16197916666666667" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_view_personal_details.xml" value="0.16197916666666667" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_view_truck_details.xml" value="0.16197916666666667" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/dialog_preview_profile.xml" value="0.16197916666666667" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/activity_bank_details.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/activity_driver_details.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/activity_personal_details.xml" value="0.20416666666666666" />

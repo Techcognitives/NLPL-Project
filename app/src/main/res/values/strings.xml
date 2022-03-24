@@ -1121,6 +1121,9 @@
     //new
     <string name="Select_your_Role">Select your Role</string>
     //new
+    <string name="Upload_PAN_and_AADHAR">Upload PAN and AADHAR</string>
+    <string name="Upload_Profile_Picture">Upload Profile Picture</string>
+    <string name="Please_complete_your_profile">Please complete your profile</string>
 
     //----------------------------------------------------------------------------------------------
 

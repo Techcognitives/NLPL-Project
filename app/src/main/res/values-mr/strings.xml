@@ -59,6 +59,12 @@
     <string name="Register_Now">आता रजिस्टर करा</string>
     <string name="Explore_Now">आता एक्स्प्लोर करा</string>         //new
     <string name="Select_your_Role">तुमची भूमिका निवडा</string>       //new
+    <string name="Upload_PAN_and_AADHAR">पॅन आणि आधार अपलोड करा.</string>
+    <string name="Upload_Profile_Picture">प्रोफाइल पिक्चर अपलोड करा</string>
+    <string name="Please_complete_your_profile">कृपया आपले प्रोफाइल पूर्ण करा</string>
+
+
+
 
     //----------------------------------------------------------------------------------------------
 
@@ -90,7 +96,7 @@
     <string name="acNo">अकाउंट नंबर: </string>
     <string name="addBank">+ ऐड बँक</string>
     <string name="addTruck">+ ऐड ट्रक</string>
-    <string name="addDriver">+ ऐड ड्राइवर</string>
+    <string name="addDriver">+ ऐड ड्रायव्हर</string>
     //new
     <string name="Personal_Details">पर्सनल डिटेल्स </string>
     <string name="Profile_Uploaded_Successfully">प्रोफाइल अपलोड सुकसेस्सफुल्ली </string>
@@ -184,12 +190,12 @@
     <string name="DriverLicense">ड्रायव्हर लायसन्स* </string>
     <string name="TakePhoto">फोटो काढा* </string>
     <string name="camera">कॅमेरा </string>
-    <string name="driver_mobile_number_hint">ड्राइवर मोबाइल नंबर एंटर करा </string>
-    <string name="AddAnotherDriver">आणखी एक ड्राइवर जोडा </string>
-    <string name="driver_mobile_number">ड्राइवर मोबाइल नंबर </string>
+    <string name="driver_mobile_number_hint">ड्रायव्हर मोबाइल नंबर एंटर करा </string>
+    <string name="AddAnotherDriver">आणखी एक ड्रायव्हर जोडा </string>
+    <string name="driver_mobile_number">ड्रायव्हर मोबाइल नंबर </string>
     //new
     <string name="Enter_10_digit_Driver_Number">१० अंकी ड्रायव्हर नंबर एंटर करा </string>
-    <string name="Enter_Driver_Email_Id">ड्राइवर इमेल आयडी एंटर करा </string>
+    <string name="Enter_Driver_Email_Id">ड्रायव्हर इमेल आयडी एंटर करा </string>
     <string name="Driver_Details">ड्रायव्हर डिटेल्स </string>
     <string name="Edit_Driver_Details">ड्रायव्हर डिटेल्स एडिट करा </string>
     <string name="Please_add_a_Driver">कृपया ड्रायव्हर जोडा </string>
@@ -215,10 +221,10 @@
     <string name="Current_Location">वर्तमान स्थान </string>
     <string name="Truck_Owner">ट्रक ओनर </string> //new
     <string name="Driver">ड्रायव्हर </string>           //new
-    <string name="Search_Driver_by_Number">नंबर द्वारा ड्राइवर शोधा </string>
+    <string name="Search_Driver_by_Number">नंबर द्वारा ड्रायव्हर शोधा </string>
     <string name="Broker">ब्रोकर </string>           //new
     <string name="Enter_Driving_License_Number">ड्राइविंग लायसन्स नंबर एंटर करा</string>       //new
-    <string name="Choose_any_of_the_following">खालीलपैकी काहीही निवडा </string>         //new
+    <string name="Choose_any_of_the_following">काहीही निवडा </string>         //new
     <string name="Photo_Library">फोटो लायब्ररी </string>             //new
     <string name="Drivers_Bank_Details">ड्रायव्हरची बँक डिटेल्स </string>      //new
     <string name="Add_Drivers_Bank">+ ड्रायव्हर्स बँक जोडा </string>           //new
@@ -231,7 +237,7 @@
 
     //-------------------------------------- Language Dialog----------------------------------------
     <string name="select_language">कृपया तुमची भाषा निवडा </string>
-    <string name="english">इंग्रजी </string>
+    <string name="english">English </string>
     <string name="marathi">मराठी</string>
     <string name="hindi">हिंदी</string>
     <string name="Language">भाषा</string>       //new
@@ -321,7 +327,7 @@
     <string name="dropLocationWithColon"><p>  </p>ड्रॉप : </string>
     <string name="no">नाही</string>
     <string name="selectTruck">ट्रक निवडा </string>
-    <string name="selectDriver">ड्राइवर निवडा </string>
+    <string name="selectDriver">ड्रायव्हर निवडा </string>
     <string name="yes_small">होय</string>
     <string name="noteAndMaterialWithColon">नोट्स एंड मटेरियल डिटेल्स: </string>
     <string name="timeOnly">टाइम: </string>

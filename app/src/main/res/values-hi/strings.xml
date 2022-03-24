@@ -59,6 +59,12 @@
     <string name="Register_Now">अभी रजिस्टर करें </string>
     <string name="Explore_Now">अभी एक्स्प्लोर करें </string>         //new      //dot
     <string name="Select_your_Role">अपनी भूमिका चुनें </string>       //new
+    <string name="Upload_PAN_and_AADHAR">पैन और आधार अपलोड करें.</string>
+    <string name="Upload_Profile_Picture">प्रोफ़ाइल पिक्चर अपलोड करें</string>
+    <string name="Please_complete_your_profile">कृपया अपनी प्रोफ़ाइल पूर्ण करें</string>
+
+
+
 
     //----------------------------------------------------------------------------------------------
 
@@ -218,7 +224,7 @@
     <string name="Search_Driver_by_Number">नंबर के आधार पर ड्राइवर खोजें</string>
     <string name="Broker">ब्रोकर </string>           //new
     <string name="Enter_Driving_License_Number">ड्राइविंग लाइसेंस नंबर दर्ज करें </string>       //new
-    <string name="Choose_any_of_the_following">नीचे में से कोई भी चुनें </string>         //new          //dot
+    <string name="Choose_any_of_the_following">कोई भी चुनें </string>         //new          //dot
     <string name="Photo_Library">फ़ोटो लाइब्रेरी </string>             //new
     <string name="Drivers_Bank_Details">ड्राइवर के बैंक डिटेल्स </string>      //new
     <string name="Add_Drivers_Bank">+ ड्राइवर का बैंक जोड़ें </string>           //new
@@ -232,7 +238,7 @@
 
     //-------------------------------------- Language Dialog----------------------------------------
     <string name="select_language">कृपया अपनी भाषा चुनें </string>
-    <string name="english">अंग्रेज़ी </string>
+    <string name="english">English </string>
     <string name="marathi">मराठी </string>
     <string name="hindi">हिंदी </string>
     <string name="Language">भाषा </string>       //new
@@ -257,7 +263,7 @@
     //---------------------------------------------Done-------------------------------------------------
 
     //--------------------------- Personal Details And Id Proof Activity ---------------------------
-    <string name="personal">पर्सनल कार्ड एड्रेस </string>
+    <string name="personal">पर्सनल एंड एड्रेस </string>
     <string name="pan_and_aadhar">पैन कार्ड एंड आधार कार्ड </string>
     <string name="phone">फ़ोन: </string>
     <string name="firm">फर्म का नाम: </string>       //dot
@@ -295,7 +301,7 @@
     <string name="note_to_post_load">1. इलेक्ट्रॉनिक उपकरणों, देखभाल के साथ संभाला जाना चाहिए.<br></br>2. बबल रैप आवश्यक.<br></br>3. दोपहर 12:00 बजे के बाद पिक-अप का बेहतर टाइम<br></br>4. कृपया कॉल करें और शुरू करने से पहले पुष्टि करें.</string>
     //new
     <string name="Loads_History">लोड हिस्ट्री </string>                //dot
-    <string name="Post_a_Load">लोड पोस्ट करें </string>
+    <string name="Post_a_Load">पोस्ट ए लोड </string>
     <string name="Edit_a_Load">लोड एडिट करें </string>                //dot
     <string name="Update_a_Load">लोड अपडेट करें </string>
     <string name="Load_Updated_Successfully">लोड सुकसेस्सफुल्ली अपडेट किया गया हैं </string>
