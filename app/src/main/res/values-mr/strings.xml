@@ -309,7 +309,7 @@
     <string name="Do_you_really_want_to_delete_load">तुम्हाला खरच लोड हटवायचे आहे का?</string>
     <string name="Select_Material_Type">मटेरियल का टाइप निवडा. </string>
     <string name="Truck_Type">ट्रक टाइप</string>
-    <string name="Bid_Now">बोली अब</string>
+    <string name="Bid_Now">बिड अब</string>
     <string name="View_Load_History">लोड पहा\n हिस्ट्री</string>
     <string name="Load_Expired">लोड कालबाह्य</string>
     <string name="Bid_Submitted">बिड सबमिट</string>
@@ -351,7 +351,7 @@
     <string name="feet">फीट </string>
     <string name="Notes">नोट्स </string>
     <string name="NotesIfAny">टाइप करा किंवा निवडा</string>
-    <string name="acceptBid">स्वीकारा आणि बोली लावा. </string>
+    <string name="acceptBid">स्वीकारा आणि बिड लावा. </string>
     <string name="cancel">कैन्सेलड</string>
     <string name="declaration"><b>घोषणा: </b><em>मी याद्वारे जाहीर करतो की, ड्रायव्हर पिक-अप वेळेच्या 15 मिनिटे आधी पिक-अप ठिकाणी पोहोचेल.</em> </string>
     <string name="preferred_locations">पसंतीची ठिकाणे: </string>

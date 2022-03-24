@@ -365,7 +365,7 @@
     <string name="My_Bid_Response">मेरी बिड का प्रतिसाद </string>
     <string name="Withdraw_Bid">बिड वापस लेना </string>
     <string name="Do_you_really_want_to_withdraw_bid">क्या आप वास्तव में बिड वापस लेना चाहते हैं? </string>
-    <string name="Bid_is_withdrawn_successfully">बिड सुकसेस्सफुल्ली वापस ले ली जाती है. ग्राहक अब आपकी बोली नहीं देखेगा. </string>
+    <string name="Bid_is_withdrawn_successfully">बिड सुकसेस्सफुल्ली वापस ले ली जाती है. ग्राहक अब आपकी बिड नहीं देखेगा. </string>
     <string name="Start_Trip">स्टार्ट ट्रिप करें </string>                          //dot
     <string name="Trip_Started_Successfully">ट्रिप स्टार्ट सुकसेस्सफुल्ली </string>        //dot
     <string name="You_can_track_your_trip_in_track_section">आप ट्रैक अनुभाग में अपनी ट्रिप को ट्रैक कर सकते हैं </string>
