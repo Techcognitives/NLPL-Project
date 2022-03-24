@@ -512,7 +512,6 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                 break;
 
             case R.id.bottom_nav_track:
-                ShowAlert.loadingDialog(CustomerDashboardActivity.this);
                 JumpTo.goToLPTrackActivity(CustomerDashboardActivity.this, phone, false);
                 break;
         }

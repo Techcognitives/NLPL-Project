@@ -27,12 +27,15 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.icu.text.DecimalFormat;
+import android.icu.text.NumberFormat;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
@@ -62,11 +65,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.chaos.view.PinView;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BidSubmittedModel;
@@ -99,6 +107,7 @@ import com.nlpl.utils.ShowAlert;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -107,6 +116,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -119,6 +129,8 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeRefreshLayout;
     FusedLocationProviderClient fusedLocationProviderClient;
     private RequestQueue mQueue;
+    PinView otpCode;
+    FirebaseAuth mAuth;
 
     private ArrayList<BidSubmittedModel> loadSubmittedList = new ArrayList<>();
     private ArrayList<BidSubmittedModel> updatedLoadSubmittedList = new ArrayList<>();
@@ -127,10 +139,10 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
     private RecyclerView loadSubmittedRecyclerView;
 
     Dialog loadingDialog, dialogViewConsignment;
-    String updateAssignedDriverId, s1, bidStatus, truckId, updateAssignedTruckId;
+    String updateAssignedDriverId, mobileNumberCustomer, s1, bidStatus, truckId, updateAssignedTruckId;
 
     View actionBar;
-    TextView customerNumber, startTrip, customerNumberHeading, customerName, customerNameHeading, customerSecondBudget, cancel2, cancel, spQuote, selectDriver, selectTruck, selectedTruckModel, selectedTruckCapacity, actionBarTitle;
+    TextView customerNumber, reSendOtp, countdown, endTrip, customerNumberHeading, customerName, customerNameHeading, customerSecondBudget, cancel2, cancel, spQuote, selectDriver, selectTruck, selectedTruckModel, selectedTruckCapacity, actionBarTitle;
     EditText notesSp;
     CheckBox declaration;
     RadioButton negotiable_yes, negotiable_no;
@@ -143,7 +155,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
 
     View bottomNav;
 
-    String loadId, selectedDriverId, selectedDriverName, userId, userIdAPI, phone, mobileNoAPI, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI;
+    String loadId, otpId, selectedDriverId, selectedDriverName, userId, userIdAPI, phone, mobileNoAPI, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI;
     ArrayList<String> arrayUserId, arrayMobileNo, arrayDriverMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
 
     String mobile, name, address, pinCode, city, role, emailIdAPI;
@@ -159,6 +171,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
             Log.i("Mobile No Registration", phone);
         }
 
+        mAuth = FirebaseAuth.getInstance();
         bidsSubmittedConstrain = (ConstraintLayout) findViewById(R.id.dashboard_bids_submitted_constrain);
 
         mQueue = Volley.newRequestQueue(TrackForServiceProviderActivity.this);
@@ -183,7 +196,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
         dashboardView.setVisibility(View.INVISIBLE);
         ConstraintLayout dashboardConstrain = findViewById(R.id.bottom_nav_sp_dashboard);
         dashboardConstrain.setBackgroundTintList(getResources().getColorStateList(R.color.light_white));
-        ConstraintLayout trackConstrain =  findViewById(R.id.bottom_nav_track);
+        ConstraintLayout trackConstrain = findViewById(R.id.bottom_nav_track);
         trackConstrain.setBackgroundTintList(getResources().getColorStateList(R.color.white));
         View trackView = findViewById(R.id.bottom_nav_bar_track_underline);
         trackView.setVisibility(View.VISIBLE);
@@ -640,7 +653,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
         selectedTruckCapacity = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_truck_capacity_textview);
         notesSp = (EditText) dialogViewConsignment.findViewById(R.id.dialog_bid_now_notes_editText);
         declaration = (CheckBox) dialogViewConsignment.findViewById(R.id.dialog_bid_now_declaration);
-        startTrip = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_accept_and_bid_btn);
+        endTrip = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_accept_and_bid_btn);
         cancel = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_cancel_btn);
         negotiable_yes = dialogViewConsignment.findViewById(R.id.dialog_bid_now_radio_btn_yes);
         negotiable_no = dialogViewConsignment.findViewById(R.id.dialog_bid_now_radio_btn_no);
@@ -675,15 +688,104 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
             }
         });
 
-        startTrip.setText("End Trip");
-        startTrip.setEnabled(true);
-        startTrip.setBackgroundResource((R.drawable.button_active));
+        endTrip.setText("End Trip");
+        endTrip.setEnabled(true);
+        endTrip.setBackgroundResource((R.drawable.button_active));
 
-        startTrip.setOnClickListener(new View.OnClickListener() {
+        endTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "start");
-//                UpdateBidDetails.updateBidStatus(obj.getBidId(), "start");
+                setCountdown();
+//                initiateOtp("+"+mobileNumberCustomer, obj);
+                Dialog otpRequest = new Dialog(TrackForServiceProviderActivity.this);
+                otpRequest.setContentView(R.layout.activity_otp_code);
+                otpRequest.getWindow().setBackgroundDrawable(getDrawable(R.drawable.all_rounded_small));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(otpRequest.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                lp.gravity = Gravity.TOP;
+
+                otpRequest.show();
+                otpRequest.getWindow().setAttributes(lp);
+                otpRequest.setCancelable(true);
+
+                otpCode = (PinView) otpRequest.findViewById(R.id.pin_view);
+                TextView changeNumber = otpRequest.findViewById(R.id.otp_change_number);
+                changeNumber.setVisibility(View.INVISIBLE);
+                TextView otpCodeText = otpRequest.findViewById(R.id.otp_code_text);
+                otpCodeText.setText("Trip Code");
+                TextView otpSentText = otpRequest.findViewById(R.id.otp_text);
+
+                String mobileNo = mobileNumberCustomer.substring(2, 12);
+                otpSentText.setText("Please enter Trip Code sent to Load Poster's mobile (+91 " + mobileNo + ")");
+
+                countdown = otpRequest.findViewById(R.id.countdown);
+                reSendOtp = otpRequest.findViewById(R.id.resend_otp);
+                reSendOtp.setText("Resend Trip Code");
+
+                reSendOtp.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+//                        initiateOtp("+"+mobileNumberCustomer, obj);
+                        setCountdown();
+                        reSendOtp.setVisibility(View.INVISIBLE);
+                    }
+                });
+
+                Button verifyOtp = otpRequest.findViewById(R.id.otp_button);
+                verifyOtp.setText("Verify Trip Code");
+                verifyOtp.setOnClickListener(view1 -> {
+                    String otp = otpCode.getText().toString();
+                    if (otp.length() == 6) {
+                        //----------------------- With OTP -------------------------------------------------
+                        try {
+                            if (otpCode.getText().toString().isEmpty()) {
+                                Toast.makeText(getApplicationContext(), "Field is blank", Toast.LENGTH_LONG).show();
+                            } else {
+                                PhoneAuthCredential credential = PhoneAuthProvider.getCredential(otpId, otp);
+                                signInWithPhoneAuthCredential(credential, obj);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        //----------------------------------------------------------------------------------
+                    } else {
+                        //----------------------- Alert Dialog -------------------------------------------------
+                        Dialog alert = new Dialog(TrackForServiceProviderActivity.this);
+                        alert.setContentView(R.layout.dialog_alert_single_button);
+                        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        WindowManager.LayoutParams lp1 = new WindowManager.LayoutParams();
+                        lp1.copyFrom(alert.getWindow().getAttributes());
+                        lp1.width = WindowManager.LayoutParams.MATCH_PARENT;
+                        lp1.height = WindowManager.LayoutParams.MATCH_PARENT;
+                        lp1.gravity = Gravity.CENTER;
+
+                        alert.show();
+                        alert.getWindow().setAttributes(lp1);
+                        alert.setCancelable(true);
+
+                        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                        alertTitle.setText(getString(R.string.Invalid_OTP));
+                        alertMessage.setText(getString(R.string.six_digit_OTP));
+                        alertPositiveButton.setVisibility(View.GONE);
+                        alertNegativeButton.setText(getString(R.string.ok));
+                        alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+
+                        alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                alert.dismiss();
+                                otpCode.getText().clear();
+                            }
+                        });
+                    }
+                });
                 //----------------------- Alert Dialog -------------------------------------------------
 //                Dialog alert = new Dialog(TrackForServiceProviderActivity.this);
 //                alert.setContentView(R.layout.dialog_alert_single_button);
@@ -715,13 +817,154 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
 //                    public void onClick(View view) {
 //                        alert.dismiss();
 //                        RearrangeItems();
-                        dialogViewConsignment.dismiss();
 //                    }
 //                });
                 //------------------------------------------------------------------------------------------
             }
         });
     }
+
+    private void updateAfterEnd(BidSubmittedModel obj) {
+        UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "end");
+        UpdateBidDetails.updateBidStatus(obj.getBidId(), "end");
+    }
+
+    //----------------------------------------------------------------------------------------------
+    private void setCountdown() {
+        // Time is in millisecond so 50sec = 50000 I have used
+        // countdown Interval is 1sec = 1000 I have used
+        new CountDownTimer(60000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                // Used for formatting digit to be in 2 digits only
+                NumberFormat f = null;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    f = new DecimalFormat("00");
+                }
+                long hour = (millisUntilFinished / 3600000) % 24;
+                long min = (millisUntilFinished / 60000) % 60;
+                long sec = (millisUntilFinished / 1000) % 60;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    countdown.setText(f.format(min) + " : " + f.format(sec));
+                }
+            }
+
+            // When the task is over it will print 00:00:00 there
+            public void onFinish() {
+                countdown.setText("00:00");
+                reSendOtp.setVisibility(View.VISIBLE);
+//                otpEdit.setEnabled(false);
+            }
+        }.start();
+    }
+
+    private void initiateOtp(String mobile, BidSubmittedModel obj) {
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                mobile,        // Phone number to verify
+                60,                 // Timeout duration
+                TimeUnit.SECONDS,   // Unit of timeout
+                this,               // Activity (for callback binding)
+                new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+                    @Override
+                    public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                        otpId = s;
+                        Log.i("OTP Id", s);
+                    }
+
+                    @Override
+                    public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+                        signInWithPhoneAuthCredential(phoneAuthCredential, obj);
+                    }
+
+                    @Override
+                    public void onVerificationFailed(@NonNull FirebaseException e) {
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });        // OnVerificationStateChangedCallbacks
+    }
+
+    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential, BidSubmittedModel obj) {
+        mAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    dialogViewConsignment.dismiss();
+                    //----------------------- Alert Dialog -------------------------------------------------
+                    Dialog alert = new Dialog(TrackForServiceProviderActivity.this);
+                    alert.setContentView(R.layout.dialog_alert_single_button);
+                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(alert.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.gravity = Gravity.CENTER;
+
+                    alert.show();
+                    alert.getWindow().setAttributes(lp);
+                    alert.setCancelable(true);
+
+                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                    alertTitle.setText("Thank You");
+                    alertMessage.setText("Your has ended Thank you for using FYT");
+                    alertPositiveButton.setVisibility(View.GONE);
+                    alertNegativeButton.setText(getString(R.string.ok));
+                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+
+                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alert.dismiss();
+                            ShowAlert.loadingDialog(TrackForServiceProviderActivity.this);
+                            JumpTo.goToServiceProviderDashboard(TrackForServiceProviderActivity.this, phone, true);
+                        }
+                    });
+                    //------------------------------------------------------------------------------------------
+                    updateAfterEnd(obj);
+                    Toast.makeText(TrackForServiceProviderActivity.this, "Validation Successful", Toast.LENGTH_SHORT).show();
+                } else {
+                    //----------------------- Alert Dialog -------------------------------------------------
+                    Dialog alert = new Dialog(TrackForServiceProviderActivity.this);
+                    alert.setContentView(R.layout.dialog_alert_single_button);
+                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(alert.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.gravity = Gravity.CENTER;
+
+                    alert.show();
+                    alert.getWindow().setAttributes(lp);
+                    alert.setCancelable(true);
+
+                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                    alertTitle.setText(getString(R.string.Invalid_OTP));
+                    alertMessage.setText(getString(R.string.six_digit_OTP));
+                    alertPositiveButton.setVisibility(View.GONE);
+                    alertNegativeButton.setText(getString(R.string.ok));
+                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+
+                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alert.dismiss();
+                            otpCode.getText().clear();
+                        }
+                    });
+                    //------------------------------------------------------------------------------------------
+                }
+            }
+        });
+    }
+    //----------------------------------------------------------------------------------------------
 
     private void getCustomerNameAndNumber(String user_id) {
         //-------------------------------------------------------------------------------------------
@@ -734,7 +977,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
                     for (int i = 0; i < truckLists.length(); i++) {
                         JSONObject obj1 = truckLists.getJSONObject(i);
                         customerName.setText(obj1.getString("name"));
-                        String mobileNumberCustomer = obj1.getString("phone_number");
+                        mobileNumberCustomer = obj1.getString("phone_number");
                         String s = mobileNumberCustomer.substring(2, 12);
                         customerNumber.setText("+91 " + s);
                     }
