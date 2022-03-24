@@ -62,8 +62,8 @@
     <string name="Upload_PAN_and_AADHAR">पैन और आधार अपलोड करें.</string>
     <string name="Upload_Profile_Picture">प्रोफ़ाइल पिक्चर अपलोड करें</string>
     <string name="Please_complete_your_profile">कृपया अपनी प्रोफ़ाइल पूर्ण करें</string>
-
-
+    <string name="Profile_Photo">प्रोफ़ाइल फ़ोटो</string>
+    <string name="Upload_Profile">प्रोफ़ाइल अपलोड करें. </string>
 
 
     //----------------------------------------------------------------------------------------------
@@ -380,7 +380,8 @@
     <string name="Load">लोड: </string>                           //new
     <string name="SP_Withdrawn">एसपी वापस लिया गया है </string>
     <string name="View_Consignment">देखें भेजा गया मटेरियल </string>
-
+    <string name="Enter_Appropriate_Quote">उपयुक्त उद्धरण दर्ज करें </string>
+    <string name="You_cannot_bid_less_than_50_of_customer_Budget">आप ग्राहक बजट के ५0% से कम बोली नहीं लगा सकते</string>
 
 
     //----------------------------------------------------------------------------------------------

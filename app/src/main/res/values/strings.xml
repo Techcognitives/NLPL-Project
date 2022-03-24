@@ -1124,6 +1124,8 @@
     <string name="Upload_PAN_and_AADHAR">Upload PAN and AADHAR</string>
     <string name="Upload_Profile_Picture">Upload Profile Picture</string>
     <string name="Please_complete_your_profile">Please complete your profile</string>
+    <string name="Profile_Photo">Profile Photo</string>
+    <string name="Upload_Profile">Upload Profile </string>
 
     //----------------------------------------------------------------------------------------------
 
@@ -1471,6 +1473,8 @@
     //new
     <string name="SP_Withdrawn">SP Withdrawn</string>
     <string name="View_Consignment">View Consignment</string>
+    <string name="Enter_Appropriate_Quote">Enter Appropriate Quote</string>
+    <string name="You_cannot_bid_less_than_50_of_customer_Budget">You cannot bid less than 50% of customer Budget</string>
 
     //----------------------------------------------------------------------------------------------
 
