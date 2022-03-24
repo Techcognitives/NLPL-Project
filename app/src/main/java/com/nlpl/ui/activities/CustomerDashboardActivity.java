@@ -510,6 +510,11 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                 ShowAlert.loadingDialog(CustomerDashboardActivity.this);
                 JumpTo.goToFindTrucksActivity(CustomerDashboardActivity.this, userId, phone);
                 break;
+
+            case R.id.bottom_nav_track:
+                ShowAlert.loadingDialog(CustomerDashboardActivity.this);
+                JumpTo.goToLPTrackActivity(CustomerDashboardActivity.this, phone, false);
+                break;
         }
     }
 
@@ -2321,6 +2326,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                     Toast.makeText(this, "Please select a reason", Toast.LENGTH_SHORT).show();
                 }
             }
+            RearrangeItems();
         });
 
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {

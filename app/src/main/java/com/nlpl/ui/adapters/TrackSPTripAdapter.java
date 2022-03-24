@@ -36,8 +36,7 @@ public class TrackSPTripAdapter extends RecyclerView.Adapter<TrackSPTripAdapter.
     private ArrayList<BidSubmittedModel> loadSubmittedList;
     private TrackForServiceProviderActivity activity;
     private RequestQueue mQueue;
-    String bidEndsAt, currentTimeToCompare, bidEndsAtStringTime, finalBidEndsAt, finalDate;
-    int timeLeftToExpire, timeInMillisec, minLeftToExpire, months;
+    String bidEndsAt;
 
     public TrackSPTripAdapter(TrackForServiceProviderActivity activity, ArrayList<BidSubmittedModel> loadSubmittedList) {
         this.loadSubmittedList = loadSubmittedList;
