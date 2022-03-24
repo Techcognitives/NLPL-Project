@@ -37,6 +37,7 @@
     <string name="location">पता* </string>
     <string name="select_state">राज्य </string>
     <string name="Select_State">राज्य चुनें  </string>       //new
+    <string name="Search_States">खोज राज्य</string>
     <string name="select_city">शहर </string>
     <string name="pin_code">पिन कोड </string>
     <string name="address">पता खोजें या टाइप करें </string>
@@ -264,7 +265,7 @@
 
     //--------------------------- Personal Details And Id Proof Activity ---------------------------
     <string name="personal">पर्सनल एंड एड्रेस </string>
-    <string name="pan_and_aadhar">पैन कार्ड एंड आधार कार्ड </string>
+    <string name="pan_and_aadhar">पैन एंड आधार </string>
     <string name="phone">फ़ोन: </string>
     <string name="firm">फर्म का नाम: </string>       //dot
     <string name="addressColon">पता: </string>
@@ -310,7 +311,7 @@
     <string name="Do_you_really_want_to_delete_load">क्या आप वास्तव में लोड हटाना चाहते हैं </string>        //dot
     <string name="Select_Material_Type">मटेरियल का टाइप चुनें </string>             //dot
     <string name="Truck_Type">ट्रक टाइप </string>
-    <string name="Bid_Now">अभी बिड लगाएं </string>
+    <string name="Bid_Now">बिड लागाओ </string>
     <string name="View_Load_History">लोड देखें\n हिस्ट्री </string>                //dot
     <string name="Load_Expired">लोड की टाइम सीमा समाप्त हो गई</string>
     <string name="Bid_Submitted">बिड सबमिट</string>
@@ -367,6 +368,8 @@
     <string name="Do_you_really_want_to_withdraw_bid">क्या आप वास्तव में बिड वापस लेना चाहते हैं? </string>
     <string name="Bid_is_withdrawn_successfully">बिड सुकसेस्सफुल्ली वापस ले ली जाती है. ग्राहक अब आपकी बिड नहीं देखेगा. </string>
     <string name="Start_Trip">स्टार्ट ट्रिप करें </string>                          //dot
+    <string name="View_Trip_Details">ट्रिप डिटेल्स देखें</string>
+    <string name="Trip_Details">ट्रिप डिटेल्स</string>
     <string name="Trip_Started_Successfully">ट्रिप स्टार्ट सुकसेस्सफुल्ली </string>        //dot
     <string name="You_can_track_your_trip_in_track_section">आप ट्रैक अनुभाग में अपनी ट्रिप को ट्रैक कर सकते हैं </string>
     <string name="Call">कॉल </string>
@@ -382,7 +385,8 @@
     <string name="View_Consignment">देखें भेजा गया मटेरियल </string>
     <string name="Enter_Appropriate_Quote">उपयुक्त उद्धरण दर्ज करें </string>
     <string name="You_cannot_bid_less_than_50_of_customer_Budget">आप ग्राहक बजट के ५0% से कम बोली नहीं लगा सकते</string>
-
+    <string name="Edit_Load">एडिट लोड</string>
+    <string name="Would_you_like_to_edit_your_Load">क्या आप अपना लोड एडिट करना चाहेंगे?</string>
 
     //----------------------------------------------------------------------------------------------
 
@@ -425,8 +429,8 @@
     <string name="Loads_Accepted">लोड स्वीकार किए गए </string>       //new       //dot
     <string name="Profile">प्रोफ़ाइल </string>                     //new
     <string name="Track">ट्रैक </string>                         //new
-    <string name="Loads_Expired">लोड की टाइम सीमा समाप्त हो गई </string>         //new        //dot
-    <string name="Loads_Completed">लोड पूरा हुए </string>     //new
+    <string name="Loads_Expired">लोड एक्सपिरेड </string>         //new        //dot
+    <string name="Loads_Completed">लोड कंपलेटेड </string>     //new
     <string name="Payments">पेमेंट </string>                   //new
 
     //----------------------------------------------------------------------------------------------

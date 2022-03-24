@@ -951,10 +951,10 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
         TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-        alertTitle.setText("Edit Load");
-        alertMessage.setText("Would you like to edit your Load?");
-        alertPositiveButton.setText("Edit");
-        alertNegativeButton.setText("Cancel");
+        alertTitle.setText(getString(R.string.Edit_Load));
+        alertMessage.setText(getString(R.string.Would_you_like_to_edit_your_Load));
+        alertPositiveButton.setText(getString(R.string.edit));
+        alertNegativeButton.setText(getString(R.string.cancel));
 
         alertNegativeButton.setOnClickListener(new View.OnClickListener() {
             @Override
