@@ -107,9 +107,9 @@ public class PersonalDetailsActivity extends AppCompat {
         });
 
         if (profilePic) {
-            actionBarTitle.setText("Personal Details");
+            actionBarTitle.setText(getString(R.string.Personal_Details));
         } else {
-            actionBarTitle.setText("KYC - PAN & Aadhar");
+            actionBarTitle.setText(getString(R.string.kyc_verification));
         }
 //--------------------------------------------------------------------------------------------------
         panAndAadharView = (View) findViewById(R.id.personal_details_pan_and_aadhar);
