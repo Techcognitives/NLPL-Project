@@ -4,7 +4,7 @@
     //---------------------------- LogIn Activity --------------------------------------------------
     <string name="login">लॉगिन </string>
     <string name="mobile_prefix">+91 |</string>
-    <string name="edit_number_hint">10 अंकों का मोबाइल नंबर दर्ज करें </string>
+    <string name="edit_number_hint">१० अंकों का मोबाइल नंबर दर्ज करें </string>
     <string name="edit_number_hint_optional">दूसरा मोबाइल नंबर (ऑप्शनल)</string>      //dot
     <string name="get_otp">गेट ओटीपी </string>
     <string name="tc_and_pp">ओटीपी प्राप्त पर क्लिक करके आप हमारे लिए सहमत हैं </string>
@@ -22,7 +22,7 @@
     <string name="resend_otp">रीसेंड ओटीपी </string>
     //new
     <string name="Invalid_OTP">इनवैलिड ओटीपी </string>
-    <string name="six_digit_OTP">कृपया अपने मोबाइल नंबर पर भेजा गया 6 अंकों का ओटीपी दर्ज करें. </string>
+    <string name="six_digit_OTP">कृपया अपने मोबाइल नंबर पर भेजा गया ६ अंकों का ओटीपी दर्ज करें. </string>
     <string name="OTP_sent_successfully">ओटीपी सेंड सुकसेस्सफुल्ली </string>
     <string name="OTP_sent_to">ओटीपी सेंड टू </string>
     <string name="Change_Number">चेंज नंबर </string>     //new
@@ -188,7 +188,7 @@
     <string name="AddAnotherDriver">एक और ड्राइवर जोड़ें </string>
     <string name="driver_mobile_number">ड्राइवर का मोबाइल नंबर </string>
     //new
-    <string name="Enter_10_digit_Driver_Number">10 अंकों की ड्राइवर नंबर दर्ज करें </string>       //dot
+    <string name="Enter_10_digit_Driver_Number">१० अंकों की ड्राइवर नंबर दर्ज करें </string>       //dot
     <string name="Enter_Driver_Email_Id">ड्राइवर ईमेल आईडी दर्ज करें </string>
     <string name="Driver_Details">ड्राइवर डिटेल्स </string>
     <string name="Edit_Driver_Details">ड्राइवर डिटेल्स एडिट करें </string>                    //dot
@@ -200,7 +200,7 @@
     <string name="Driver_Selfie_not_uploaded">ड्राइवर सेल्फी अपलोड नहीं की गई है, कृपया पुन: प्रयास करें </string>
     <string name="Take_a_Photo">एक तस्वीर लो </string>
     <string name="Invalid_Mobile_Number">इनवैलिड मोबाइल नंबर </string>                        //dot
-    <string name="Please_enter_a_10_digit_valid_mobile_number">कृपया एक 10 अंकों का मान्य मोबाइल नंबर दर्ज करें. </string>       //dot
+    <string name="Please_enter_a_10_digit_valid_mobile_number">कृपया एक १० अंकों का वैलिड मोबाइल नंबर दर्ज करें. </string>       //dot
     <string name="Driver_Details_added_successfully">ड्राइवर डिटेल्स सुकसेस्सफुल्ली एडेड </string>
     <string name="Would_you_like_to_add_Drivers_Bank_Details">क्या आप ड्राइवर्स बैंक डिटेल्स जोड़ना चाहेंगे? </string>
     <string name="Later">बाद में </string>
@@ -210,7 +210,7 @@
     <string name="Add_Truck">+ ऐड ट्रक </string>
     <string name="Assign_Driver">ड्राइवर असाइन करें </string>
     <string name="ReAssign_Driver">ड्राइवर को पुन: असाइन करें </string>
-    <string name="Self">स्वयं </string>               //new          //dot
+    <string name="Self">खुद </string>               //new          //dot
     <string name="Search">ढूँढ </string>           //new             //dot
     <string name="Current_Location">वर्तमान स्थान</string>
     <string name="Truck_Owner">ट्रक मालिक </string> //new
@@ -279,8 +279,8 @@
     <string name="enterYourBudget">अपना बजट दर्ज करें </string>
     <string name="budget">बजट </string>
     <string name="budgetRs">बजट ₹ </string>
-    <string name="truckTypeAndCapacity">ट्रक टाइप एंड कैपेसिटी* </string>
-    <string name="SelectVehicleModel">व्हीकल टाइप चुनें </string>
+    <string name="truckTypeAndCapacity">ट्रक टाइप एंड लोड टाइप* </string>
+    <string name="SelectVehicleModel">व्हीकल मॉडेल चुनें </string>
     <string name="bodyType">बॉडी टाइप: </string>
     <string name="Load_Type">लोड टाइप: </string>                     //new
     <string name="pickUpLocationDetails">पिक-अप एड्रेस* </string>
@@ -427,9 +427,9 @@
     //--------------------------------Customer Settings And Preferences-----------------------------------
     //new
     <string name="Settings_and_Preferences">सेटिंग्स और प्राथमिकताएँ </string>
-    <string name="Preferred_Location_1">पसंदीदा स्थान 1 +</string>     //new               //dot
-    <string name="Preferred_Location_2">पसंदीदा स्थान 2 +</string>     //new
-    <string name="Preferred_Location_3">पसंदीदा स्थान 3 +</string>     //new
+    <string name="Preferred_Location_1">पसंदीदा स्थान १ +</string>     //new               //dot
+    <string name="Preferred_Location_2">पसंदीदा स्थान २ +</string>     //new
+    <string name="Preferred_Location_3">पसंदीदा स्थान ३ +</string>     //new
 
 
     //----------------------------------------------------------------------------------------------
@@ -506,7 +506,7 @@
 
     //---------------------------- Find Truck ------------------------------------------------------
     <string name="whats_app">What"'"s App</string>
-    <string name="call">Call</string>
+    <string name="call">कॉल</string>
     //----------------------------------------------------------------------------------------------
 
 </resources>

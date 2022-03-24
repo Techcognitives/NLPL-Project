@@ -22,7 +22,7 @@
     <string name="resend_otp">रीसेंड ओटीपी </string>
     //new
     <string name="Invalid_OTP">इनवैलिड ओटीपी </string>
-    <string name="six_digit_OTP">कृपया आपल्या मोबाइल नंबरवर पाठविलेला 6 अंकी ओटीपी एंटर करा.</string>
+    <string name="six_digit_OTP">कृपया आपल्या मोबाइल नंबरवर पाठविलेला ६ अंकी ओटीपी एंटर करा.</string>
     <string name="OTP_sent_successfully">ओटीपी सेंड सुकसेस्सफुल्ली </string>
     <string name="OTP_sent_to">ओटीपी सेंड टू </string>
     <string name="Change_Number">चेंज नंबर </string>     //new
@@ -177,335 +177,335 @@
     //----------------------------------------------------------------------------------------------
 
     //---------------------------------------Driver Details Activity--------------------------------
-    <string name="DriverName">Driver Name, Number &amp; Email</string>
-    <string name="EnterDriverName">Enter Driver Name</string>
-    <string name="UploadDriverLicense">Upload Driver License</string>
-    <string name="UploadDriverSelfie">Photo - Selfie</string>
-    <string name="DriverLicense">Driver License*</string>
-    <string name="TakePhoto">Take a Photo*</string>
-    <string name="camera">Camera</string>
-    <string name="driver_mobile_number_hint">Enter Driver Mobile Number</string>
-    <string name="AddAnotherDriver">ADD ANOTHER DRIVER</string>
-    <string name="driver_mobile_number">Driver Mobile Number</string>
+    <string name="DriverName">ड्रायव्हर नाव, नंबर आणि ईमेल </string>
+    <string name="EnterDriverName">ड्रायव्हर चे नाव एंटर करा </string>
+    <string name="UploadDriverLicense">ड्रायव्हर लायसन्स अपलोड करा </string>
+    <string name="UploadDriverSelfie">फोटो - सेल्फी</string>
+    <string name="DriverLicense">ड्रायव्हर लायसन्स* </string>
+    <string name="TakePhoto">फोटो काढा* </string>
+    <string name="camera">कॅमेरा </string>
+    <string name="driver_mobile_number_hint">ड्राइवर मोबाइल नंबर एंटर करा </string>
+    <string name="AddAnotherDriver">आणखी एक ड्राइवर जोडा </string>
+    <string name="driver_mobile_number">ड्राइवर मोबाइल नंबर </string>
     //new
-    <string name="Enter_10_digit_Driver_Number">Enter 10 digit Driver Number</string>
-    <string name="Enter_Driver_Email_Id">Enter Driver Email Id</string>
-    <string name="Driver_Details">Driver Details</string>
-    <string name="Edit_Driver_Details">Edit Driver Details</string>
-    <string name="Please_add_a_Driver">Please add a Driver</string>
-    <string name="Add">+ Add</string>
-    <string name="Driving_License_uploaded_successfully">Driving License uploaded successfully</string>
-    <string name="Driving_License_not_uploaded_please_try_again">Driving License not uploaded, please try again</string>
-    <string name="Driver_Selfie_uploaded_successfully">Driver Selfie uploaded successfully</string>
-    <string name="Driver_Selfie_not_uploaded">Driver Selfie not uploaded, please try again</string>
-    <string name="Take_a_Photo">Take a Photo</string>
-    <string name="Invalid_Mobile_Number">Invalid Mobile Number</string>
-    <string name="Please_enter_a_10_digit_valid_mobile_number">Please enter a 10 digit valid mobile number.</string>
-    <string name="Driver_Details_added_successfully">Driver Details added successfully</string>
-    <string name="Would_you_like_to_add_Drivers_Bank_Details">Would you like to add Drivers Bank Details?</string>
-    <string name="Later">Later</string>
-    <string name="Please_Upload_From_Gallery">Please Upload From Gallery</string>
-    <string name="Choose_from_Gallery">Choose from Gallery</string>
-    <string name="My_Drivers">My Drivers</string>
-    <string name="Add_Truck">+ Add Truck</string>
-    <string name="Assign_Driver">Assign Driver</string>
-    <string name="ReAssign_Driver">Re-Assign Driver</string>
-    <string name="Self">Self</string>               //new
-    <string name="Search">Search</string>           //new
-    <string name="Current_Location">Current Location</string>
-    <string name="Truck_Owner">Truck Owner</string> //new
-    <string name="Driver">Driver</string>           //new
-    <string name="Search_Driver_by_Number">Search Driver by Number</string>
-    <string name="Broker">Broker</string>           //new
-    <string name="Enter_Driving_License_Number">Enter Driving License Number</string>       //new
-    <string name="Choose_any_of_the_following">Choose any of the following</string>         //new
-    <string name="Photo_Library">Photo Library</string>             //new
-    <string name="Drivers_Bank_Details">Driver\'s Bank Details</string>      //new
-    <string name="Add_Drivers_Bank">+ Add Driver\'s Bank</string>           //new
-    <string name="Truck_doesnt_match">Truck doesn\'t match</string>
-    <string name="Truck_doesnt_match_message1">The Truck assigned doesn\'t match Load Poster requirements.</string>
-    <string name="Truck_doesnt_match_message2">\n\nI hereby declare, will provide appropriate Truck matching Load Poster requirement.</string>
+    <string name="Enter_10_digit_Driver_Number">१० अंकी ड्रायव्हर नंबर एंटर करा </string>
+    <string name="Enter_Driver_Email_Id">ड्राइवर इमेल आयडी एंटर करा </string>
+    <string name="Driver_Details">ड्रायव्हर डिटेल्स </string>
+    <string name="Edit_Driver_Details">ड्रायव्हर डिटेल्स एडिट करा </string>
+    <string name="Please_add_a_Driver">कृपया ड्रायव्हर जोडा </string>
+    <string name="Add">+ ऐड</string>
+    <string name="Driving_License_uploaded_successfully">ड्रायव्हिंग लायसन्स सुकसेस्सफुल्ली अपलोड केले </string>
+    <string name="Driving_License_not_uploaded_please_try_again">ड्रायव्हिंग लायसन्स अपलोड केला नाही, कृपया पुन्हा प्रयत्न करा</string>
+    <string name="Driver_Selfie_uploaded_successfully">ड्रायव्हर सेल्फी सुकसेस्सफुल्ली अपलोड केला </string>
+    <string name="Driver_Selfie_not_uploaded">ड्रायव्हर सेल्फी अपलोड केला नाही, कृपया पुन्हा प्रयत्न करा</string>
+    <string name="Take_a_Photo">फोटो काढा</string>
+    <string name="Invalid_Mobile_Number">इनवैलिड मोबाईल नंबर</string>
+    <string name="Please_enter_a_10_digit_valid_mobile_number">कृपया १० अंकी वैलिड मोबाइल नंबर एंटर करा. </string>
+    <string name="Driver_Details_added_successfully">ड्रायव्हर डिटेल्स सुकसेस्सफुल्ली जोडले गेले. </string>
+    <string name="Would_you_like_to_add_Drivers_Bank_Details">आपण ड्रायव्हर्स बँक डिटेल्स जोडू इच्छिता? </string>
+    <string name="Later">नंतर </string>
+    <string name="Please_Upload_From_Gallery">कृपया गॅलरी येथून अपलोड करा. </string>
+    <string name="Choose_from_Gallery">गॅलरीतून निवडा</string>
+    <string name="My_Drivers">माझे ड्रायव्हर </string>
+    <string name="Add_Truck">+ ऐड ट्रक</string>
+    <string name="Assign_Driver">असाइन ड्रायव्हर </string>
+    <string name="ReAssign_Driver">ड्रायव्हर पुन्हा नियुक्त करा </string>
+    <string name="Self">मी स्वता. </string>               //new
+    <string name="Search">शोध </string>           //new
+    <string name="Current_Location">वर्तमान स्थान </string>
+    <string name="Truck_Owner">ट्रक ओनर </string> //new
+    <string name="Driver">ड्रायव्हर </string>           //new
+    <string name="Search_Driver_by_Number">नंबर द्वारा ड्राइवर शोधा </string>
+    <string name="Broker">ब्रोकर </string>           //new
+    <string name="Enter_Driving_License_Number">ड्राइविंग लायसन्स नंबर एंटर करा</string>       //new
+    <string name="Choose_any_of_the_following">खालीलपैकी काहीही निवडा </string>         //new
+    <string name="Photo_Library">फोटो लायब्ररी </string>             //new
+    <string name="Drivers_Bank_Details">ड्रायव्हरची बँक डिटेल्स </string>      //new
+    <string name="Add_Drivers_Bank">+ ड्रायव्हर्स बँक जोडा </string>           //new
+    <string name="Truck_doesnt_match">ट्रक जुळत नाही. </string>
+    <string name="Truck_doesnt_match_message1">नियुक्त केलेला ट्रक लोड पोस्टरच्या आवश्यकतांशी जुळत नाही. </string>
+    <string name="Truck_doesnt_match_message2">\n\nमी याद्वारे घोषित करतो की, योग्य ट्रक मॅचिंग लोड पोस्टर आवश्यकता प्रदान करेल. </string>
 
 
     //----------------------------------------------------------------------------------------------
 
     //-------------------------------------- Language Dialog----------------------------------------
-    <string name="select_language">Please select your language</string>
-    <string name="english">English</string>
+    <string name="select_language">कृपया तुमची भाषा निवडा </string>
+    <string name="english">इंग्रजी </string>
     <string name="marathi">मराठी</string>
     <string name="hindi">हिंदी</string>
-    <string name="Language">Language</string>       //new
+    <string name="Language">भाषा</string>       //new
 
     //----------------------------------------------------------------------------------------------
 
     //-------------------------------------- Company Details ---------------------------------------
-    <string name="company_name">Company Name*</string>
-    <string name="company_address">Company Address*</string>
-    <string name="company_name_hint">Enter Company Name</string>
-    <string name="gst_number_hint">GST Number*</string>
-    <string name="pan_number">PAN Number*</string>
+    <string name="company_name">कंपनी नाव* </string>
+    <string name="company_address">कंपनी पत्ता* </string>
+    <string name="company_name_hint">कंपनीचे नाव एंटर करा</string>
+    <string name="gst_number_hint">जीएसटी नंबर* </string>
+    <string name="pan_number">पॅन नंबर*</string>
     //new
-    <string name="Company_Details">Company Details</string>
-    <string name="Company_Details_added_Successfully">Company Details added Successfully</string>
-    <string name="Company_Type">Company Type*</string>      //new
-    <string name="Proprietary">Proprietary</string>         //new
-    <string name="Partnership">Partnership</string>         //new
-    <string name="Pvt_Ltd">Pvt. Ltd.</string>               //New
-    <string name="Set_Address">Set Address</string>         //new
+    <string name="Company_Details">कंपनी डिटेल्स </string>
+    <string name="Company_Details_added_Successfully">कंपनी डिटेल्स अडडेड सुकसेस्सफुल्ली</string>
+    <string name="Company_Type">कंपनी टाइप* </string>      //new
+    <string name="Proprietary">प्रोप्राइटरी </string>         //new
+    <string name="Partnership">पार्टनरशिप </string>         //new
+    <string name="Pvt_Ltd">प्राइवेट लिमिटेड. </string>               //New
+    <string name="Set_Address">पत्ता सेट करा. </string>         //new
 
     //---------------------------------------------Done-------------------------------------------------
 
     //--------------------------- Personal Details And Id Proof Activity ---------------------------
-    <string name="personal">Personal &amp; Address</string>
-    <string name="pan_and_aadhar">PAN &amp; Aadhar</string>
-    <string name="phone">Phone:</string>
-    <string name="firm">Firm Name:</string>
-    <string name="addressColon">Address:</string>
-    <string name="add_company">+ Add Company</string>
-    <string name="Enter_PAN_Number">Enter PAN Number</string>
-    <string name="Enter_Aadhar_Number">Enter Aadhar Number</string>
+    <string name="personal">पर्सनल आणि पत्ता</string>
+    <string name="pan_and_aadhar">पॅन आणि आधार</string>
+    <string name="phone">फोन: </string>
+    <string name="firm">फर्मचे नाव: </string>
+    <string name="addressColon">पत्ता: </string>
+    <string name="add_company">+ ऐड कंपनी</string>
+    <string name="Enter_PAN_Number">पॅन नंबर एंटर करा. </string>
+    <string name="Enter_Aadhar_Number">आधार नंबर प्रविष्ट करा. </string>
     //----------------------------------------------------------------------------------------------
 
     //------------------------------------BASE URL--------------------------------------------------
     <string name="baseURL">http://13.234.163.179:3000</string>
-    <string name="internal_storage">internal storage</string>
+    <string name="internal_storage">अंतर्गत साठवण</string>
     //----------------------------------------------------------------------------------------------
 
     //-----------------------------------Post A Load------------------------------------------------
-    <string name="pick_up_date">Pick-up Date*</string>
-    <string name="pick_up_date_colon">Pick-up Date: </string>
-    <string name="pick_up_time">Pick-up Time*</string>
-    <string name="enterYourBudget">Enter Your Budget</string>
-    <string name="budget">Budget</string>
-    <string name="budgetRs">Budget ₹</string>
-    <string name="truckTypeAndCapacity">Truck Body &amp; Load Type*</string>
-    <string name="SelectVehicleModel">Vehicle Model</string>
-    <string name="bodyType">Body Type: </string>
-    <string name="Load_Type">Load Type: </string>                     //new
-    <string name="pickUpLocationDetails">Pick-up Address*</string>
-    <string name="dropLocationDetails">Drop Address*</string>
-    <string name="km">KM (approx)</string>
-    <string name="noteAndMaterial">Notes &amp; Material Description (Optional)</string>
-    <string name="postALoad">POST A LOAD</string>
+    <string name="pick_up_date">पिकअप डेट* </string>
+    <string name="pick_up_date_colon">पिकअप डेट: </string>
+    <string name="pick_up_time">पिकअप टाइम* </string>
+    <string name="enterYourBudget">आपले बजेट एंटर करा</string>
+    <string name="budget">बजेट </string>
+    <string name="budgetRs">बजेट ₹ </string>
+    <string name="truckTypeAndCapacity">ट्रक टाइप एंड लोड टाइप* </string>
+    <string name="SelectVehicleModel">व्हीकल मॉडेल निवडा.</string>
+    <string name="bodyType">बॉडी टाइप: </string>
+    <string name="Load_Type">लोड टाइप: </string>                     //new
+    <string name="pickUpLocationDetails">पिक-अप एड्रेस* </string>
+    <string name="dropLocationDetails">ड्रॉप एड्रेस* </string>
+    <string name="km">किमी (अंदाजे)</string>
+    <string name="noteAndMaterial">नोट्स एंड मटेरियल डिटेल्स (ऑप्शनल)</string>
+    <string name="postALoad">पोस्ट ए लोड</string>
     <string name="date">DD-Month-YY</string>
     <string name="time">hh:mm AM/PM</string>
     <string name="inrRs">₹ XXXX</string>
-    <string name="KMAutoCal">KM auto calculated</string>
-    <string name="note_to_post_load">1. Electronic appliances, must handled with care.<br></br>2. Bubble wrap required.<br></br>3. Preferable pick-up time after 12:00pm<br></br>4. Please call and confirm before starting.</string>
+    <string name="KMAutoCal">किमी ऑटो कैलकुलेटेड </string>
+    <string name="note_to_post_load">1. इलेक्ट्रॉनिक उपकरणे, काळजीपूर्वक हाताळली पाहिजेत.<br></br>2. बबल रॅप आवश्यक.<br></br>3. दुपारी 12:00 नंतर पिक-अप वेळ पसंत करा.<br></br>4. कृपया प्रारंभ करण्यापूर्वी कॉल करा आणि पुष्टी करा.</string>
     //new
-    <string name="Loads_History">Loads History</string>
-    <string name="Post_a_Load">Post a Load</string>
-    <string name="Edit_a_Load">Edit a Load</string>
-    <string name="Update_a_Load">Update a Load</string>
-    <string name="Load_Updated_Successfully">Load Updated Successfully</string>
-    <string name="Load_Posted_Successfully">Load Posted Successfully</string>
-    <string name="Delete_Load">Delete Load</string>
-    <string name="Do_you_really_want_to_delete_load">Do you really want to delete load</string>
-    <string name="Select_Material_Type">Select Material Type</string>
-    <string name="Truck_Type">Truck Type</string>
-    <string name="Bid_Now">Bid Now</string>
-    <string name="View_Load_History">View Load\n History</string>
-    <string name="Load_Expired">Load Expired</string>
-    <string name="Bid_Submitted">Bid Submitted</string>
+    <string name="Loads_History">लोड हिस्ट्री </string>
+    <string name="Post_a_Load">पोस्ट ए लोड</string>
+    <string name="Edit_a_Load">एडिट ए लोड </string>
+    <string name="Update_a_Load">अपडेट ए लोड</string>
+    <string name="Load_Updated_Successfully">लोड सुकसेस्सफुल्ली अपडेटेड</string>
+    <string name="Load_Posted_Successfully">लोड पोस्ट सुकसेस्सफुल्ली </string>
+    <string name="Delete_Load">डिलीट लोड </string>
+    <string name="Do_you_really_want_to_delete_load">तुम्हाला खरच लोड हटवायचे आहे का?</string>
+    <string name="Select_Material_Type">मटेरियल का टाइप निवडा. </string>
+    <string name="Truck_Type">ट्रक टाइप</string>
+    <string name="Bid_Now">बोली अब</string>
+    <string name="View_Load_History">लोड पहा\n हिस्ट्री</string>
+    <string name="Load_Expired">लोड कालबाह्य</string>
+    <string name="Bid_Submitted">बिड सबमिट</string>
 
 
     //----------------------------------------------------------------------------------------------
 
     //--------------------------------------Bid_now dialog------------------------------------------
-    <string name="load_id">Load ID: city-city-000 </string>
-    <string name="timeLeft"> <p>   </p> Time left</string>
+    <string name="load_id">लोड आयडी: शहर-शहर-000 </string>
+    <string name="timeLeft"> <p>   </p> उरलेली वेळ </string>
     <string name="timeinmin">00:00</string>
-    <string name="pickUpDateWithColon">Pick-up Date:</string>
-    <string name="pickUpLocationWithColon"><p>  </p>Pick-up:</string>
-    <string name="addressForPickUpLocation">City, State, PIN Code, Address</string>
-    <string name="dropLocationWithColon"><p>  </p>Drop:</string>
-    <string name="no">No</string>
-    <string name="selectTruck">Select Truck</string>
-    <string name="selectDriver">Select Driver</string>
-    <string name="yes_small">Yes</string>
-    <string name="noteAndMaterialWithColon">Notes &amp; Material Description:</string>
-    <string name="timeOnly">Time:</string>
-    <string name="budgetWithColon">Budget:</string>
-    <string name="capacityWithColon">Capacity:</string>
-    <string name="distanceWithColon">Distance:</string>
-    <string name="xx_km">XXX km</string>
-    <string name="xx_capacity">XXX kgs</string>
-    <string name="xx_feet">XX ft</string>
+    <string name="pickUpDateWithColon">पिक-अप डेट: </string>
+    <string name="pickUpLocationWithColon"><p>  </p>पिक-अप: </string>
+    <string name="addressForPickUpLocation">शहर, राज्य, पिन कोड, पत्ता </string>
+    <string name="dropLocationWithColon"><p>  </p>ड्रॉप : </string>
+    <string name="no">नाही</string>
+    <string name="selectTruck">ट्रक निवडा </string>
+    <string name="selectDriver">ड्राइवर निवडा </string>
+    <string name="yes_small">होय</string>
+    <string name="noteAndMaterialWithColon">नोट्स एंड मटेरियल डिटेल्स: </string>
+    <string name="timeOnly">टाइम: </string>
+    <string name="budgetWithColon">बजट: </string>
+    <string name="capacityWithColon">कैपेसिटी: </string>
+    <string name="distanceWithColon">दूरी: </string>
+    <string name="xx_km">XXX किमी</string>
+    <string name="xx_capacity">XXX किग्रा</string>
+    <string name="xx_feet">XX एफटी</string>
     <string name="timewithoutAMPM">hh:mm </string>
-    <string name="distance">Distance</string>
-    <string name="modelwithColon">Model:</string>
-    <string name="model">Model:</string>
-    <string name="body">Body: </string>
-    <string name="selectAndAssignTruck">Assign a Truck &amp; Driver for this load</string>
-    <string name="yourQuote">My Quote</string>
-    <string name="negotiable">Negotiable</string>
-    <string name="Non_negotiable">Non-negotiable</string>
-    <string name="truck">Truck</string>
-    <string name="Search_by_Truck_Number">Search by Truck Number</string>
-    <string name="feet">Feet</string>
-    <string name="Notes">Notes</string>
-    <string name="NotesIfAny">Type or select</string>
-    <string name="acceptBid">Accept &amp; Bid</string>
-    <string name="cancel">Cancel</string>
-    <string name="declaration"><b>Declaration: </b><em>I hereby declare, driver will reach Pick-up location 15 minutes prior Pick-up Time.</em> </string>
-    <string name="preferred_locations">Preferred Locations: </string>
+    <string name="distance">अंतर </string>
+    <string name="modelwithColon">मॉडल: </string>
+    <string name="model">मॉडल: </string>
+    <string name="body">बॉडी: </string>
+    <string name="selectAndAssignTruck">या लोडसाठी ट्रक आणि ड्रायव्हर नियुक्त करा.</string>
+    <string name="yourQuote">माझे कोट </string>
+    <string name="negotiable">निगोशिएबल </string>
+    <string name="Non_negotiable">नॉन-निगोशिएबल </string>
+    <string name="truck">्रक </string>
+    <string name="Search_by_Truck_Number">ट्रक नंबर द्वारे शोधा </string>
+    <string name="feet">फीट </string>
+    <string name="Notes">नोट्स </string>
+    <string name="NotesIfAny">टाइप करा किंवा निवडा</string>
+    <string name="acceptBid">स्वीकारा आणि बोली लावा. </string>
+    <string name="cancel">कैन्सेलड</string>
+    <string name="declaration"><b>घोषणा: </b><em>मी याद्वारे जाहीर करतो की, ड्रायव्हर पिक-अप वेळेच्या 15 मिनिटे आधी पिक-अप ठिकाणी पोहोचेल.</em> </string>
+    <string name="preferred_locations">पसंतीची ठिकाणे: </string>
     //new
-    <string name="Your_Budget_is_High">Your Budget is High</string>
-    <string name="Your_Budget_is_Higher_than_the_Load_Poster">Your Budget is Higher than the Load Poster</string>
-    <string name="Your_Budget_is_Low">Your Budget is Low</string>
-    <string name="Your_Budget_is_Lower_than_the_Load_Poster">Your Budget is Lower than the Load Poster</string>
-    <string name="Bid_Revised_and_Responded">Bid Revised and Responded</string>
-    <string name="Bid_Revised_and_Responded_Successfully">Bid Revised and Responded Successfully</string>
-    <string name="My_Bid_Response">My Bid Response</string>
-    <string name="Withdraw_Bid">Withdraw Bid</string>
-    <string name="Do_you_really_want_to_withdraw_bid">Do you really want to withdraw bid.</string>
-    <string name="Bid_is_withdrawn_successfully">Bid is withdrawn successfully. Customer will no longer see your Bid.</string>
-    <string name="Start_Trip">Start Trip</string>
-    <string name="Trip_Started_Successfully">Trip Started Successfully</string>
-    <string name="You_can_track_your_trip_in_track_section">You can track your trip in track section</string>
-    <string name="Call">Call</string>
+    <string name="Your_Budget_is_High">तुमचे बजेट जास्त आहे. </string>
+    <string name="Your_Budget_is_Higher_than_the_Load_Poster">आपले बजेट लोड पोस्टरपेक्षा जास्त आहे. </string>
+    <string name="Your_Budget_is_Low">तुमचे बजेट कमी आहे. </string>
+    <string name="Your_Budget_is_Lower_than_the_Load_Poster">आपले बजेट लोड पोस्टरपेक्षा कमी आहे</string>
+    <string name="Bid_Revised_and_Responded">बिड सुधारित आणि प्रतिसाद</string>
+    <string name="Bid_Revised_and_Responded_Successfully">बिड सुधारित केली आणि सुकसेस्सफुल्ली प्रतिसाद दिला</string>
+    <string name="My_Bid_Response">माझा बिड प्रतिसाद</string>
+    <string name="Withdraw_Bid">बिड मागे घ्या</string>
+    <string name="Do_you_really_want_to_withdraw_bid">तुम्हाला खरंच बिड मागे घ्यायची आहे का?</string>
+    <string name="Bid_is_withdrawn_successfully">निविदा सुकसेस्सफुल्ली मागे घेतली जाते. ग्राहक यापुढे तुमची बिड पाहणार नाही.</string>
+    <string name="Start_Trip">ट्रिप सुरू करा</string>
+    <string name="Trip_Started_Successfully">ट्रिपची सुरुवात सुकसेस्सफुल्ली झाली</string>
+    <string name="You_can_track_your_trip_in_track_section">आपण ट्रॅक विभागात आपल्या ट्रिपचा मागोवा घेऊ शकता. </string>
+    <string name="Call">कॉल </string>
     <string name="Whats_App">Whats App</string>
-    <string name="Bids_Submitted">Bids Submitted</string>       //new
-    <string name="No_Bids_Submitted">No Bids Submitted</string> //new
-    <string name="View_and_Accept_Bid">View and\nAccept Bid</string>       //new
-    <string name="Bidder_Quote">Bidder Quote:</string>          //new
-    <string name="My_Final_Quote">My Final Quote</string>       //new
-    <string name="Submit">Submit</string>                       //new
-    <string name="Load">Load</string>                           //new
-    <string name="SP_Withdrawn">SP Withdrawn</string>
-    <string name="View_Consignment">View Consignment</string>
+    <string name="Bids_Submitted">बिड सबमिट </string>       //new
+    <string name="No_Bids_Submitted">बिड सबमिट केल्या नाहीत. </string> //new
+    <string name="View_and_Accept_Bid">पहा आणि\nबिड स्वीकारा</string>       //new
+    <string name="Bidder_Quote">बिडर कोट: </string>          //new
+    <string name="My_Final_Quote">माझे अंतिम कोट </string>       //new
+    <string name="Submit">सबमिट </string>                       //new
+    <string name="Load">लोड: </string>                           //new
+    <string name="SP_Withdrawn">एसपींनी माघार घेतली</string>
+    <string name="View_Consignment">मटेरियल पहा</string>
 
 
     //----------------------------------------------------------------------------------------------
 
     //--------------------------------Customer Dashboard Activity-----------------------------------
     //new
-    <string name="Load_Poster_Dashboard">Load Poster Dashboard</string>
-    <string name="Find_Trucks">Find Trucks</string>
-    <string name="Load_Response">Load Response</string>
-    <string name="Response_submitted_Successfully">Response submitted Successfully</string>
-    <string name="Successfully_selected_three_Bidders">Successfully selected three Bidders</string>
-    <string name="Please_Review_and_Accept_any_one_offer.">Please Review and Accept any one offer.</string>
-    <string name="Accept_Final_Offer">Accept Final Offer</string>
-    <string name="Amount_To_Be_Billed_1">Amount | To Be Billed 1%</string>
-    <string name="Amount_Pay_Now_3">Amount | Pay Now 3%</string>
-    <string name="Payment_Successful">Payment Successful</string>
-    <string name="Payment_Id">Payment Id: </string>
-    <string name="Payment_Failed">Payment Failed</string>
-    <string name="Your_transaction_has_failed._Please_try_again">Your transaction has failed. Please try again</string>
-    <string name="Load_Details">Load Details: </string>
-    <string name="CONSIGNMENT">CONSIGNMENT</string>
-    <string name="Withdraw">Withdraw</string>
-    <string name="Withdraw_Load">Withdraw Load</string>
-    <string name="Do_you_want_to_withdraw_your_load_posting_or_withdraw_from_the_current_bidder.">Do you want to withdraw your load posting or withdraw from the current bidder.</string>
-    <string name="Withdraw_Bidder">Withdraw Bidder</string>
-    <string name="Load_withdrawn_successfully_and_no_longer_visible_for_anyone">Load withdrawn successfully and no longer visible for anyone</string>
-    <string name="Withdraw_from_current_Service_Provider">Withdraw from current Service Provider</string>
-    <string name="Load_withdrawn_from_current_Service_Provider_and_visible_for_other_Service_Provider">Load withdrawn from current Service Provider and visible for other Service Provider</string>
-    <string name="Back">Back</string>
-    <string name="Log_Out">Log Out</string>
-    <string name="Log_Out_message">Are you sure you want to logout?</string>
-    <string name="ReActivate_Load">Re-activate Load</string>
-    <string name="Do_you_want_to_ReActivate_Load">Do you want to re-activate load</string>
-    <string name="Continue_with_other_Service_Provider">Continue with other Service Provider</string>
-    <string name="Current_Bidder_have_withdrawn_Bid">Current Bidder have withdrawn Bid, do you still want to continue with other Service Provider?</string>
-    <string name="Continue">Continue</string>
-    <string name="Cancel">Cancel</string>
-    <string name="visible_for_other_Service_Provider">Load withdrawn from current Service Provider and visible for other Service Provider</string>
-    <string name="Close">Close</string>
-    <string name="Bids_Received">Bids Received</string>         //new
-    <string name="Loads_Accepted">Loads Accepted</string>       //new
-    <string name="Profile">Profile</string>                     //new
-    <string name="Track">Track</string>                         //new
-    <string name="Loads_Expired">Loads Expired</string>         //new
-    <string name="Loads_Completed">Loads Completed</string>     //new
-    <string name="Payments">Payments</string>                   //new
+    <string name="Load_Poster_Dashboard">लोड पोस्टर  डॅशबोर्ड </string>
+    <string name="Find_Trucks">फाइंड ट्रकों </string>
+    <string name="Load_Response">लोड प्रतिसाद </string>
+    <string name="Response_submitted_Successfully">प्रतिसाद सुकसेस्सफुल्ली सादर केला</string>
+    <string name="Successfully_selected_three_Bidders">सुकसेस्सफुल्ली निवडलेले तीन बिडर्स</string>
+    <string name="Please_Review_and_Accept_any_one_offer.">कृपया पुनरावलोकन करा आणि कोणत्याही एका ऑफरचा स्वीकार करा.</string>
+    <string name="Accept_Final_Offer">अंतिम ऑफर स्वीकारा </string>
+    <string name="Amount_To_Be_Billed_1">अमाउंट | अंतिम बिल १% </string>
+    <string name="Amount_Pay_Now_3">अमाउंट | पेमेंट करा ३% </string>
+    <string name="Payment_Successful">पेमेंट सुकसेस्सफुल्ली </string>
+    <string name="Payment_Id">पेमेंट आयडी: </string>
+    <string name="Payment_Failed">पेमेंट अयशस्वी</string>
+    <string name="Your_transaction_has_failed._Please_try_again">आपला व्यवहार फसला आहे. कृपया पुन्हा प्रयत्न करा. </string>
+    <string name="Load_Details">लोड डिटेल्स : </string>
+    <string name="CONSIGNMENT">मटेरियल </string>
+    <string name="Withdraw">मागे घ्या </string>
+    <string name="Withdraw_Load">लोड मागे घ्या </string>
+    <string name="Do_you_want_to_withdraw_your_load_posting_or_withdraw_from_the_current_bidder.">आपण आपले लोड पोस्टिंग मागे घेऊ इच्छिता किंवा सध्याच्या निविदाकारातून माघार घेऊ इच्छिता.</string>
+    <string name="Withdraw_Bidder">बिडर मागे घ्या </string>
+    <string name="Load_withdrawn_successfully_and_no_longer_visible_for_anyone">लोड सुकसेस्सफुल्ली मागे घेतला आणि यापुढे कोणासाठीही दिसणार नाही</string>
+    <string name="Withdraw_from_current_Service_Provider">वर्तमान सेवा प्रोवाइडर पासून माघार घ्या</string>
+    <string name="Load_withdrawn_from_current_Service_Provider_and_visible_for_other_Service_Provider">सध्याच्या प्रोवाइडर कडून लोड काढलेला आणि इतर प्रोवाइडर साठी लोड दृश्य.</string>
+    <string name="Back">मागे </string>
+    <string name="Log_Out">लॉगआउट</string>
+    <string name="Log_Out_message">आपल्याला खात्री आहे की आपण लॉगआउट करू इच्छिता?</string>
+    <string name="ReActivate_Load">लोड पुन्हा सक्रिय करा</string>
+    <string name="Do_you_want_to_ReActivate_Load">तुम्हाला लोड पुन्हा सक्रीय करायचे आहे का? </string>
+    <string name="Continue_with_other_Service_Provider">इतर सेवा प्रदात्यासह सुरू ठेवा </string>
+    <string name="Current_Bidder_have_withdrawn_Bid">सध्याच्या निविदाकाराने बिड मागे घेतली आहे, आपण अद्याप इतर सेवा प्रदात्यासह चालू ठेवू इच्छिता?</string>
+    <string name="Continue">पुढे चालू ठेवा</string>
+    <string name="Cancel">कैन्सेलड</string>
+    <string name="visible_for_other_Service_Provider">सध्याच्या सेवा प्रदात्याकडून काढलेला लोड आणि इतर सेवा प्रदात्यासाठी दृश्यमान</string>
+    <string name="Close">मिटणे </string>
+    <string name="Bids_Received">बिड प्राप्त झाल्या</string>         //new
+    <string name="Loads_Accepted">लोड स्वीकारले </string>       //new
+    <string name="Profile">प्रोफाइल </string>                     //new
+    <string name="Track">ट्रॅक </string>                         //new
+    <string name="Loads_Expired">लोड कालबाह्य झाले</string>         //new
+    <string name="Loads_Completed">लोड पूर्ण झाले</string>     //new
+    <string name="Payments">पेमेंट </string>                   //new
 
     //----------------------------------------------------------------------------------------------
 
     //--------------------------------Customer Settings And Preferences-----------------------------------
     //new
-    <string name="Settings_and_Preferences">Settings and Preferences</string>
-    <string name="Preferred_Location_1">Preferred Location 1 +</string>     //new
-    <string name="Preferred_Location_2">Preferred Location 2 +</string>     //new
-    <string name="Preferred_Location_3">Preferred Location 3 +</string>     //new
+    <string name="Settings_and_Preferences">सेटिंग्ज आणि प्राधान्ये</string>
+    <string name="Preferred_Location_1">पसंतीचे स्थान १ +</string>     //new
+    <string name="Preferred_Location_2">पसंतीचे स्थान २ +</string>     //new
+    <string name="Preferred_Location_3">पसंतीचे स्थान ३ +</string>     //new
 
 
     //----------------------------------------------------------------------------------------------
 
     //--------------------------------Find Loads Activity-----------------------------------
     //new
-    <string name="Find_Loads">Find Loads</string>
-    <string name="Load_Notifications">Load Notifications</string>
-    <string name="No_loads_available_for_the_state">No loads available for the state\n</string>
-    <string name="No_Load_Available">No Load Available</string>
-    <string name="No_Load_Posted">No Load Posted</string>
-    <string name="No_Load_Accepted">No Load Accepted</string>
-    <string name="Accepted">Accepted</string>
-    <string name="You_Responded">You Responded</string>
-    <string name="You_Withdrawn">You/n Withdrawn</string>
-    <string name="You_Responded_singleLine">You Responded</string>
-    <string name="Accept_Revised">Accept Revised</string>
-    <string name="Customer_Withdrawn">Customer Withdrawn</string>
-    <string name="Accept_Final_Offer_newLine">Accept\n Final Offer </string>
-    <string name="Loads_for">Loads for </string>
-    <string name="Load_ID">Load ID: </string>
-    <string name="Post_Bid">Post Bid</string>
-    <string name="Bid_Posted_Successfully">Bid Posted Successfully</string>
-    <string name="Select_Truck_to_Bid">Select Truck to Bid</string>
-    <string name="Add_a_Truck">Add a Truck</string>
-    <string name="Please_add_a_Truck_to_submit_your_response">Please add a Truck to submit your response</string>
-    <string name="Add_a_Driver">Add a Driver</string>
-    <string name="Please_add_a_Driver_to_submit_your_response">Please add a Driver to submit your response</string>
-    <string name="Select_Driver_to_Bid">Select Driver to Bid</string>
-    <string name="Loads_and_Trips">Loads and Trips</string>             //new
-    <string name="Trip_History">Trip History</string>                   //new
+    <string name="Find_Loads">फाइंड लोड </string>
+    <string name="Load_Notifications">लोड नोटिफिकेशन </string>
+    <string name="No_loads_available_for_the_state">राज्यासाठी कोणताही लोड उपलब्ध नाही\n</string>
+    <string name="No_Load_Available">लोड उपलब्ध नाही</string>
+    <string name="No_Load_Posted">लोड पोस्ट केलेले नाही</string>
+    <string name="No_Load_Accepted">कोणताही लोड स्वीकारला नाही</string>
+    <string name="Accepted">स्वीकारले</string>
+    <string name="You_Responded">तुम्ही प्रतिसाद दिलात</string>
+    <string name="You_Withdrawn">तुम्ही/n मागे घेण्यात आले </string>
+    <string name="You_Responded_singleLine">तुम्ही प्रतिसाद दिलात</string>
+    <string name="Accept_Revised">संशोधित स्वीकारा</string>
+    <string name="Customer_Withdrawn">ग्राहक मागे घेतला</string>
+    <string name="Accept_Final_Offer_newLine">स्वीकारणे\n अंतिम ऑफर </string>
+    <string name="Loads_for">लोड करीता </string>
+    <string name="Load_ID">लोड आईडी: </string>
+    <string name="Post_Bid">पोस्ट बिड </string>
+    <string name="Bid_Posted_Successfully">बिड पोस्ट सुकसेस्सफुल्ली </string>
+    <string name="Select_Truck_to_Bid">बिड करीता ट्रक निवडा </string>
+    <string name="Add_a_Truck">एक ट्रक जोडा</string>
+    <string name="Please_add_a_Truck_to_submit_your_response">कृपया आपला प्रतिसाद सबमिट करण्याकरीता ट्रक जोडा.</string>
+    <string name="Add_a_Driver">एक ड्रायव्हर जोडा</string>
+    <string name="Please_add_a_Driver_to_submit_your_response">कृपया आपला प्रतिसाद सबमिट करण्याकरीता ड्रायव्हर जोडा. </string>
+    <string name="Select_Driver_to_Bid">बिड करीता ड्रायव्हर निवडा</string>
+    <string name="Loads_and_Trips">लोड एंड ट्रिप </string>             //new
+    <string name="Trip_History">ट्रिप हिस्ट्री </string>                   //new
 
 
     //----------------------------------------------------------------------------------------------
 
     //-------------------------------------------Payment--------------------------------------------
     //new
-    <string name="Pay_and_Accept_Final_Offer">Pay and Accept Final Offer</string>
-    <string name="Select_Payment_Method">Select Payment Method</string>
-    <string name="Payment_Method">Payment Method : </string>
-    <string name="To_Pay">To Pay (Pay while Unloading)</string>
-    <string name="Pay_Now">Pay Now (Pay in Advance)</string>
-    <string name="To_be_billed">To be billed (Pay to Truck Owner / Broker / Driver)</string>
-    <string name="Select_Platform_Charges">Select Platform Charges</string>
-    <string name="NLPL_will_take_ownership_of_delivery">3% NLPL will take end-to-end ownership of delivery</string>
-    <string name="Connect_with_Driver_Truck_Owner_Broker">1% Connect with Driver / Truck Owner / Broker</string>
-    <string name="Pay">Pay</string>
-    <string name="Please_add_Driver_Bank_Details">Please add Driver Bank Details</string>
-    <string name="in_Advance">% in Advance</string>         //new
+    <string name="Pay_and_Accept_Final_Offer">अंतिम ऑफर स्वीकारा आणि पेमेंट करा.</string>
+    <string name="Select_Payment_Method">पेमेंट पद्धत निवडा</string>
+    <string name="Payment_Method">पेमेंट पद्धत: </string>
+    <string name="To_Pay">पैसे देण्यासाठी (उतरवताना पैसे द्या)</string>
+    <string name="Pay_Now">आता पैसे द्या (एडवांस पैसे द्या)</string>
+    <string name="To_be_billed">बिल देण्यात येणार (पैसे द्या ट्रक मालकाला / ब्रोकर / ड्रायव्हर)</string>
+    <string name="Select_Platform_Charges">प्लॅटफॉर्म शुल्क निवडा. </string>
+    <string name="NLPL_will_take_ownership_of_delivery">3% एनएलपीएल डिलिव्हरीची एंड-टू-एंड मालकी घेईल </string>
+    <string name="Connect_with_Driver_Truck_Owner_Broker">1% सह कनेक्ट करा ड्रायव्हर / ट्रक ओनर / ब्रोकर</string>
+    <string name="Pay">पेमेंट करा</string>
+    <string name="Please_add_Driver_Bank_Details">कृपया ड्रायव्हर बँक डिटेल्स जोडा. </string>
+    <string name="in_Advance">% आधी </string>         //new
 
 
     //----------------------------------------------------------------------------------------------
 
     //---------------------------- Rating --------------------------------------
     //new
-    <string name="Service_Provider_Name">Service Provider Name</string>
-    <string name="Select_an_Issue">Select an Issue</string>
-    <string name="Select_one_or_more_issues_to_submit_your_rating">Select one or more issues to submit your rating.</string>
-    <string name="Hard_to_reach_on_phone">Hard to reach on phone</string>
-    <string name="Professionalism">Professionalism</string>
-    <string name="Vehicle_Condition">Vehicle Condition</string>
-    <string name="Did_not_reach_on_time">Did not reach on time</string>
-    <string name="Did_not_deliver_on_time">Did not deliver on time</string>
-    <string name="Goods_Damaged">Goods Damaged</string>
-    <string name="Other">Other</string>
+    <string name="Service_Provider_Name">सेवा प्रोवाइडर चे नाव </string>
+    <string name="Select_an_Issue">एक मुद्दा निवडा </string>
+    <string name="Select_one_or_more_issues_to_submit_your_rating">आपले रेटिंग सबमिट करण्यासाठी एक किंवा अधिक समस्या निवडा. </string>
+    <string name="Hard_to_reach_on_phone">फोनवर पोहोचणे कठीण. </string>
+    <string name="Professionalism">व्यावसायिकता </string>
+    <string name="Vehicle_Condition">व्हीकल ची स्थिती</string>
+    <string name="Did_not_reach_on_time">वेळेवर पोहोचला नाही. </string>
+    <string name="Did_not_deliver_on_time">वेळेवर डिलिव्हरी दिली नाही. </string>
+    <string name="Goods_Damaged">मालाचे नुकसान झाले. </string>
+    <string name="Other">इतर </string>
 
 
     //----------------------------------------------------------------------------------------------
 
 
     //---------------------------- Customer Accept Bid Dialog --------------------------------------
-    <string name="declaration_lp"><b>Truck Owner / Driver Declaration:</b>\nI hereby declare, will reach Pick-up location 15 minutes prior Pick-up.\n\nI hereby declare, will provide appropriate Truck matching Load Poster requirement.</string>
+    <string name="declaration_lp"><b>ट्रक ओनर / ड्रायव्हर घोषणा:</b>\nमी याद्वारे जाहीर करतो की, पिक-अपच्या 15 मिनिटे आधी पिक-अप ठिकाणी पोहोचेल.\n\nमी याद्वारे जाहीर करतो की, योग्य ट्रक मॅचिंग लोड पोस्टर आवश्यकता प्रदान करेल.</string>
     //----------------------------------------------------------------------------------------------
 
     //---------------------------- Find Truck ------------------------------------------------------
     <string name="whats_app">What"'"s App</string>
-    <string name="call">Call</string>
+    <string name="call">कॉल</string>
     //----------------------------------------------------------------------------------------------
 
 </resources>

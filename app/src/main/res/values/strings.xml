@@ -1400,7 +1400,7 @@
 
     //--------------------------------------Bid_now dialog------------------------------------------
     <string name="load_id">Load ID: city-city-000 </string>
-    <string name="timeLeft"> <p>   </p> Time left</string>
+    <string name="timeLeft"> <p>   </p> Time left </string>
     <string name="timeinmin">00:00</string>
     <string name="pickUpDateWithColon">Pick-up Date:</string>
     <string name="pickUpLocationWithColon"><p>  </p>Pick-up:</string>
