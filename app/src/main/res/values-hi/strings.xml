@@ -129,10 +129,10 @@
     <string name="bank_details">बैंक डिटेल्स </string>
     //new
     <string name="Edit_Bank_Details">बैंक डिटेल्स एडिट करें </string>             //dot
-    <string name="Cancelled_cheque_uploaded_successfully">कैन्सेलड किया गया चेक सुकसेस्सफुल्ली अपलोड किया गया </string>
-    <string name="Cancelled_cheque_not_uploaded_successfully">कैन्सेलड किया गया चेक सुकसेस्सफुल्ली अपलोड नहीं किया गया </string>
+    <string name="Cancelled_cheque_uploaded_successfully">कैन्सेलड किया गया चेक सुकसेस्सफुल्ली अपलोड किया गया है </string>
+    <string name="Cancelled_cheque_not_uploaded_successfully">कैन्सेलड किया गया चेक सुकसेस्सफुल्ली अपलोड नहीं किया गया है </string>
     <string name="Bank_Details_added_successfully">बैंक डिटेल्स सुकसेस्सफुल्ली एडेड </string>
-    <string name="Account_number_does_not_match">अकाउंट नंबर मैच नहीं होरा है </string>
+    <string name="Account_number_does_not_match">अकाउंट नंबर मैच नहीं हो राहा है </string>
     <string name="Please_enter_correct_account_number_as_above.">कृपया ऊपर दिए गए अनुसार सही अकाउंट नंबर दर्ज करें. </string>
     <string name="My_Bank">मेरा बैंक </string>
     <string name="Bank_Name"> बैंक का नाम: </string>
@@ -200,7 +200,7 @@
     <string name="Edit_Driver_Details">ड्राइवर डिटेल्स एडिट करें </string>                    //dot
     <string name="Please_add_a_Driver">कृपया कोई ड्राइवर जोड़ें </string>
     <string name="Add">+ ऐड </string>
-    <string name="Driving_License_uploaded_successfully">ड्राइविंग लाइसेंस सुकसेस्सफुल्ली अपलोड किया गया </string>
+    <string name="Driving_License_uploaded_successfully">ड्राइविंग लाइसेंस सुकसेस्सफुल्ली अपलोड किया गया है </string>
     <string name="Driving_License_not_uploaded_please_try_again">ड्राइविंग लाइसेंस अपलोड नहीं किया गया है, कृपया पुन: प्रयास करें </string>
     <string name="Driver_Selfie_uploaded_successfully">ड्राइवर सेल्फी सुकसेस्सफुल्ली अपलोड की गई है </string>
     <string name="Driver_Selfie_not_uploaded">ड्राइवर सेल्फी अपलोड नहीं की गई है, कृपया पुन: प्रयास करें </string>
@@ -228,8 +228,8 @@
     <string name="Photo_Library">फ़ोटो लाइब्रेरी </string>             //new
     <string name="Drivers_Bank_Details">ड्राइवर के बैंक डिटेल्स </string>      //new
     <string name="Add_Drivers_Bank">+ ड्राइवर का बैंक जोड़ें </string>           //new
-    <string name="Truck_doesnt_match">ट्रक मैच नहीं होरा है </string>
-    <string name="Truck_doesnt_match_message1">असाइन किया गया ट्रक लोड पोस्टर आवश्यकताओं से मैच नहीं होरा है </string>
+    <string name="Truck_doesnt_match">ट्रक मैच नहीं हो राहा है </string>
+    <string name="Truck_doesnt_match_message1">असाइन किया गया ट्रक लोड पोस्टर आवश्यकताओं से मैच नहीं हो राहा है </string>
     <string name="Truck_doesnt_match_message2">\n\nमैं इसके द्वारा घोषणा करता हूं, उपयुक्त ट्रक मिलान लोड पोस्टर आवश्यकता प्रदान करेगा.</string>
 
 
@@ -356,7 +356,7 @@
     <string name="declaration"><b>घोषणा: </b><em>मैं एतद्द्वारा घोषणा करता हूं, ड्राइवर पिकअप स्थान पर पिक-अप टाइम से 15 मिनट पहले पहुंच जाएगा. </em> </string>
     <string name="preferred_locations">पसंदीदा स्थान: </string>
     //new
-    <string name="Your_Budget_is_High">आपका बजट उच्च है </string>
+    <string name="Your_Budget_is_High">आपका बजट अधिक है </string>
     <string name="Your_Budget_is_Higher_than_the_Load_Poster">आपका बजट लोड पोस्टर से अधिक है </string>
     <string name="Your_Budget_is_Low">आपका बजट कम है </string>
     <string name="Your_Budget_is_Lower_than_the_Load_Poster">आपका बजट लोड पोस्टर से कम है </string>
@@ -378,7 +378,7 @@
     <string name="My_Final_Quote">मेरा अंतिम कोट </string>       //new
     <string name="Submit">सबमिट </string>                       //new
     <string name="Load">लोड: </string>                           //new
-    <string name="SP_Withdrawn">एसपी वापस लिया गया </string>
+    <string name="SP_Withdrawn">एसपी वापस लिया गया है </string>
     <string name="View_Consignment">देखें भेजा गया मटेरियल </string>
 
 
@@ -390,7 +390,7 @@
     <string name="Load_Poster_Dashboard">लोड पोस्टर डैशबोर्ड </string>
     <string name="Find_Trucks">फाइंड ट्रकों </string>             //dot
     <string name="Load_Response">लोड प्रतिसाद </string>                 //dot
-    <string name="Response_submitted_Successfully">प्रतिसाद सुकसेस्सफुल्ली सबमिट किया गया </string>     //dot
+    <string name="Response_submitted_Successfully">प्रतिसाद सुकसेस्सफुल्ली सबमिट किया गया है </string>     //dot
     <string name="Successfully_selected_three_Bidders">सुकसेस्सफुल्ली तीन बिड को चुनें </string>       //dot
     <string name="Please_Review_and_Accept_any_one_offer.">कृपया किसी भी एक प्रस्ताव की समीक्षा करें और स्वीकार करें </string>      //dot
     <string name="Accept_Final_Offer">अंतिम प्रस्ताव स्वीकार करें </string>      //dot
@@ -408,7 +408,7 @@
     <string name="Withdraw_Bidder">बिड को वापस लेना </string>
     <string name="Load_withdrawn_successfully_and_no_longer_visible_for_anyone">लोड सुकसेस्सफुल्ली वापस ले लिया गया है और अब किसी के लिए दिखाई नहीं दे रहा है </string>
     <string name="Withdraw_from_current_Service_Provider">वर्तमान सेवा प्रोवाइडर से वापस लेना </string>
-    <string name="Load_withdrawn_from_current_Service_Provider_and_visible_for_other_Service_Provider">वर्तमान सेवा प्रोवाइडर से वापस लिया गया और अन्य सेवा प्रोवाइडर के लिए दिखाई देगा लोड </string>
+    <string name="Load_withdrawn_from_current_Service_Provider_and_visible_for_other_Service_Provider">वर्तमान सेवा प्रोवाइडर से वापस लिया गया है और अन्य सेवा प्रोवाइडर के लिए दिखाई देगा लोड </string>
     <string name="Back">बेक </string>              //dot
     <string name="Log_Out">लॉग आउट </string>
     <string name="Log_Out_message">क्या आप वाकई लॉगआउट करना चाहते हैं? </string>
@@ -418,7 +418,7 @@
     <string name="Current_Bidder_have_withdrawn_Bid">वर्तमान बिड को वापस ले ली है, क्या आप अभी भी अन्य सेवा प्रोवाइडर के साथ जारी रखना चाहते हैं? </string>
     <string name="Continue">जारी रखना </string>
     <string name="Cancel">कैन्सेलड </string>
-    <string name="visible_for_other_Service_Provider">वर्तमान सेवा प्रोवाइडर से वापस लिया गया और अन्य सेवा प्रोवाइडर के लिए खाई देगा लोड </string>
+    <string name="visible_for_other_Service_Provider">वर्तमान सेवा प्रोवाइडर से वापस लिया गया है और अन्य सेवा प्रोवाइडर के लिए खाई देगा लोड </string>
     <string name="Close">बंद </string>
     <string name="Bids_Received">बिड प्राप्त हुई </string>         //new
     <string name="Loads_Accepted">लोड स्वीकार किए गए </string>       //new       //dot
@@ -447,7 +447,7 @@
     <string name="No_loads_available_for_the_state">राज्य के लिए कोई लोड उपलब्ध नहीं है\n</string>
     <string name="No_Load_Available">कोई लोड उपलब्ध नहीं है </string>
     <string name="No_Load_Posted">कोई लोड पोस्ट नहीं</string>
-    <string name="No_Load_Accepted">कोई लोड स्वीकार नहीं किया गया</string>
+    <string name="No_Load_Accepted">कोई लोड स्वीकार नहीं किया गया है </string>
     <string name="Accepted">स्वीकार </string>
     <string name="You_Responded">आपको जवाब</string>
     <string name="You_Withdrawn">आपको/n वापस ले लिया </string>
