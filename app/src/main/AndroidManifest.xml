@@ -25,6 +25,7 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".ui.activities.TrackForServiceProviderActivity"
+            android:theme="@style/Theme.Design.Light.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".ui.activities.LanguageActivity"

@@ -70,7 +70,7 @@
         android:backgroundTint="@color/light_white"
         android:onClick="onClickBottomNavigation"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/constraintLayout17"
+        app:layout_constraintEnd_toStartOf="@+id/bottom_nav_track"
         app:layout_constraintStart_toEndOf="@+id/bottom_nav_sp_dashboard"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -115,11 +115,12 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout17"
+        android:id="@+id/bottom_nav_track"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/personal_details_buttons_active"
         android:backgroundTint="@color/light_white"
+        android:onClick="onClickBottomNavigation"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/bottom_nav_customer_dashboard"
@@ -128,10 +129,10 @@
         <View
             android:id="@+id/bottom_nav_bar_track_underline"
             android:layout_width="0dp"
-            android:layout_height="2dp"
+            android:layout_height="4dp"
             android:background="@drawable/personal_details_buttons_active"
-            android:backgroundTint="@color/white"
-            android:visibility="visible"
+            android:backgroundTint="@color/light_black"
+            android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@+id/imageView22"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -143,10 +144,10 @@
             android:layout_height="wrap_content"
             android:paddingBottom="5dp"
             android:text="@string/Track"
-            android:textStyle="bold"
             android:textAlignment="center"
             android:textColor="@color/light_black"
             android:textSize="12sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -172,7 +173,7 @@
         android:background="@color/nav_unselected_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout17"
+        app:layout_constraintStart_toEndOf="@+id/bottom_nav_track"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView

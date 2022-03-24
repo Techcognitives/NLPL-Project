@@ -20,6 +20,7 @@ import com.nlpl.ui.activities.PostALoadActivity;
 import com.nlpl.ui.activities.RegistrationActivity;
 import com.nlpl.ui.activities.ServiceProviderDashboardActivity;
 import com.nlpl.ui.activities.SliderActivity;
+import com.nlpl.ui.activities.TrackForServiceProviderActivity;
 import com.nlpl.ui.activities.VehicleDetailsActivity;
 import com.nlpl.ui.activities.ViewBankDetailsActivity;
 import com.nlpl.ui.activities.ViewDriverDetailsActivity;
@@ -260,6 +261,17 @@ public class JumpTo {
         intent.putExtra("isEdit", isEdit);
         activity.startActivity(intent);
         if (isFinish) {
+            activity.finish();
+        }
+        activity.overridePendingTransition(0, 0);
+    }
+
+    public static void goToSPTrackActivity(Activity activity, String mobileNumber, Boolean isFinish) {
+        Intent intent = new Intent(activity, TrackForServiceProviderActivity.class);
+        intent.putExtra("mobile2", mobileNumber);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        activity.startActivity(intent);
+        if (isFinish){
             activity.finish();
         }
         activity.overridePendingTransition(0, 0);
