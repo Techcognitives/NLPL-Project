@@ -280,7 +280,6 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
                     ShowAlert.loadingDialog(FindTrucksActivity.this);
                     JumpTo.goToCustomerDashboard(FindTrucksActivity.this, phone, true);
                 }
-
                 break;
 
             case R.id.bottom_nav_customer_dashboard:

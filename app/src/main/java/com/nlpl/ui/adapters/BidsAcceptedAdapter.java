@@ -179,32 +179,32 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
         timeInMillisec = (timeLeftToExpire * 60 * 60 * 1000) + (minLeftToExpire * 60 * 1000);
 
         //------------------------------------------------------------------------------------------
-        if (dateEndsAt.equals(finalDate)) {
-            new CountDownTimer(timeInMillisec, 1000) {
-                public void onTick(long millisUntilFinished) {
-                    // Used for formatting digit to be in 2 digits only
-                    NumberFormat f = null;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        f = new DecimalFormat("00");
-                    }
-                    long hour = (millisUntilFinished / 3600000) % 24;
-                    long min = (millisUntilFinished / 60000) % 60;
-                    long sec = (millisUntilFinished / 1000) % 60;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        holder.timeLeft.setText("  " + f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
-                    }
-                }
-
-                // When the task is over it will print 00:00:00 there
-                public void onFinish() {
-                    UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadExpired");
-                    holder.timeLeft.setText(activity.getString(R.string.Load_Expired));
-                }
-            }.start();
-        } else {
-            UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadExpired");
-            holder.timeLeft.setText(activity.getString(R.string.Load_Expired));
-        }
+//        if (dateEndsAt.equals(finalDate)) {
+//            new CountDownTimer(timeInMillisec, 1000) {
+//                public void onTick(long millisUntilFinished) {
+//                    // Used for formatting digit to be in 2 digits only
+//                    NumberFormat f = null;
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                        f = new DecimalFormat("00");
+//                    }
+//                    long hour = (millisUntilFinished / 3600000) % 24;
+//                    long min = (millisUntilFinished / 60000) % 60;
+//                    long sec = (millisUntilFinished / 1000) % 60;
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                        holder.timeLeft.setText("  " + f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
+//                    }
+//                }
+//
+//                // When the task is over it will print 00:00:00 there
+//                public void onFinish() {
+//                    UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadExpired");
+//                    holder.timeLeft.setText(activity.getString(R.string.Load_Expired));
+//                }
+//            }.start();
+//        } else {
+//            UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadExpired");
+//            holder.timeLeft.setText(activity.getString(R.string.Load_Expired));
+//        }
         //------------------------------------------------------------------------------------------
 
         String pickUpCity = obj.getPick_city();
@@ -248,6 +248,9 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
                     }
 
                     for (int j = 0; j < arrayBidStatus.size(); j++) {
+                        if (arrayBidStatus.get(j).equals("FinalAccepted") || arrayBidStatus.get(j).equals("start")){
+                            holder.timeLeft.setVisibility(View.INVISIBLE);
+                        }
                         if (arrayBidStatus.get(j).equals("withdrawnBySp") || arrayBidStatus.get(j).equals("FinalAccepted")) {
                             fianlBidId = arrayBidId.get(j);
 

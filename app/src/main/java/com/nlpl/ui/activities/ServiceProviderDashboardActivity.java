@@ -168,7 +168,6 @@ public class ServiceProviderDashboardActivity extends AppCompat {
     TextView loadNotificationTextView, bidsSubmittedTextView, currentLocationText;
 
     View bottomNav;
-    ConstraintLayout spDashboard, customerDashboard;
 
     String loadId, selectedDriverId, selectedDriverName, userId, userIdAPI, phone, mobileNoAPI, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI;
     ArrayList<String> arrayUserId, arrayMobileNo, arrayDriverMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
@@ -235,14 +234,9 @@ public class ServiceProviderDashboardActivity extends AppCompat {
         actionBarBackButton.setVisibility(View.GONE);
 
         bottomNav = (View) findViewById(R.id.profile_registration_bottom_nav_bar);
-        spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
-        customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
-        customerDashboard.setBackgroundColor(getResources().getColor(R.color.nav_unselected_blue));
-        spDashboard.setBackgroundColor(getResources().getColor(R.color.nav_selected_blue));
         TextView profileText = (TextView) bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
         ImageView profileImageView = (ImageView) bottomNav.findViewById(R.id.bottom_nav_profile_image_view);
         profileText.setText(getString(R.string.Find_Loads));
-        profileImageView.setImageDrawable(getDrawable(R.drawable.bottom_nav_search_small));
 
         arrayUserId = new ArrayList<>();
         arrayMobileNo = new ArrayList<>();
@@ -841,6 +835,49 @@ public class ServiceProviderDashboardActivity extends AppCompat {
                     JumpTo.goToFindLoadsActivity(ServiceProviderDashboardActivity.this, userId, phone);
                 }
                 break;
+
+            case R.id.bottom_nav_track:
+                if (userId == null) {
+                    //----------------------- Alert Dialog -------------------------------------------------
+                    Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
+                    alert.setContentView(R.layout.dialog_alert);
+                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(alert.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.gravity = Gravity.CENTER;
+
+                    alert.show();
+                    alert.getWindow().setAttributes(lp);
+                    alert.setCancelable(false);
+
+                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                    alertTitle.setText(getString(R.string.Please_Register));
+                    alertMessage.setText(getString(R.string.You_cannot_bid_without_Registration));
+                    alertPositiveButton.setText(getString(R.string.Register_Now));
+                    alertNegativeButton.setText(getString(R.string.cancel));
+
+                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alert.dismiss();
+                        }
+                    });
+
+                    alertPositiveButton.setOnClickListener(view1 -> {
+                        alert.dismiss();
+                        JumpTo.goToRegistrationActivity(ServiceProviderDashboardActivity.this, phone, true);
+                    });
+                    //------------------------------------------------------------------------------------------
+                } else {
+                    JumpTo.goToSPTrackActivity(ServiceProviderDashboardActivity.this, phone, false);
+                }
+                break;
         }
     }
 
@@ -1436,7 +1473,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
                         bidSubmittedModel.setBid_ends_at(obj.getString("bid_ends_at"));
                         bidSubmittedModel.setBidId(bidId);
 
-                        if (!obj.getString("bid_status").equals("delete") && !obj.getString("bid_status").equals("loadExpired")) {
+                        if (!obj.getString("bid_status").equals("delete") && !obj.getString("bid_status").equals("loadExpired") && !obj.getString("bid_status").equals("start")) {
                             loadSubmittedList.add(bidSubmittedModel);
                         }
                     }
@@ -2165,8 +2202,8 @@ public class ServiceProviderDashboardActivity extends AppCompat {
         startTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "start");
-//                UpdateBidDetails.updateBidStatus(obj.getBidId(), "start");
+                UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "start");
+                UpdateBidDetails.updateBidStatus(obj.getBidId(), "start");
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
                 alert.setContentView(R.layout.dialog_alert_single_button);

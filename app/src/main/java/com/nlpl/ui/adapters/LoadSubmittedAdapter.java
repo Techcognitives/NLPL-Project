@@ -173,32 +173,36 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
         timeInMillisec = (timeLeftToExpire * 60 * 60 * 1000) + (minLeftToExpire * 60 * 1000);
 
         //------------------------------------------------------------------------------------------
-        if (dateEndsAt.equals(finalDate)) {
-            new CountDownTimer(timeInMillisec, 1000) {
-                public void onTick(long millisUntilFinished) {
-                    // Used for formatting digit to be in 2 digits only
-                    NumberFormat f = null;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        f = new DecimalFormat("00");
-                    }
-                    long hour = (millisUntilFinished / 3600000) % 24;
-                    long min = (millisUntilFinished / 60000) % 60;
-                    long sec = (millisUntilFinished / 1000) % 60;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        holder.timeLeft.setText("  " + f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
-                    }
-                }
+        if (!obj.getBid_status().equals("FinalAccepted") || !obj.getBid_status().equals("start") ) {
 
-                // When the task is over it will print 00:00:00 there
-                public void onFinish() {
-                    UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadExpired");
-                    holder.timeLeft.setText(activity.getString(R.string.Load_Expired));
-                }
-            }.start();
-        } else {
-            UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadExpired");
-            holder.timeLeft.setText(activity.getString(R.string.Load_Expired));
+            if (dateEndsAt.equals(finalDate)) {
+                new CountDownTimer(timeInMillisec, 1000) {
+                    public void onTick(long millisUntilFinished) {
+                        // Used for formatting digit to be in 2 digits only
+                        NumberFormat f = null;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            f = new DecimalFormat("00");
+                        }
+                        long hour = (millisUntilFinished / 3600000) % 24;
+                        long min = (millisUntilFinished / 60000) % 60;
+                        long sec = (millisUntilFinished / 1000) % 60;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            holder.timeLeft.setText("  " + f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
+                        }
+                    }
+
+                    // When the task is over it will print 00:00:00 there
+                    public void onFinish() {
+                        UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadExpired");
+                        holder.timeLeft.setText(activity.getString(R.string.Load_Expired));
+                    }
+                }.start();
+            } else {
+                UpdatePostLoadDetails.updateStatus(obj.getIdpost_load(), "loadExpired");
+                holder.timeLeft.setText(activity.getString(R.string.Load_Expired));
+            }
         }
+
         //------------------------------------------------------------------------------------------
 
         String pickUpCity = obj.getPick_city();
@@ -276,6 +280,7 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
                         if (bid_status.equals("FinalAccepted")) {
                             holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
                             holder.bidNowButton.setText(activity.getString(R.string.View_Consignment));
+                            holder.timeLeft.setVisibility(View.INVISIBLE);
                             holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.green));
                             holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -285,13 +290,13 @@ public class LoadSubmittedAdapter extends RecyclerView.Adapter<LoadSubmittedAdap
                             });
                         }
 
-                        if (bid_status.equals("withdrawnByLp")){
+                        if (bid_status.equals("withdrawnByLp")) {
                             holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
                             holder.bidNowButton.setText(activity.getString(R.string.Customer_Withdrawn));
                             holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.dark_grey));
                         }
 
-                        if (bid_status.equals("withdrawnBySp")){
+                        if (bid_status.equals("withdrawnBySp")) {
                             holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
                             holder.bidNowButton.setText(activity.getString(R.string.You_Withdrawn));
                             holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.dark_grey));

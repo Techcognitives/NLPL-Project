@@ -273,6 +273,11 @@ public class FindLoadsActivity extends AppCompat {
             case R.id.bottom_nav_customer_dashboard:
                 stateConstrain.setVisibility(View.INVISIBLE);
                 break;
+
+            case R.id.bottom_nav_track:
+                ShowAlert.loadingDialog(FindLoadsActivity.this);
+                JumpTo.goToSPTrackActivity(FindLoadsActivity.this, phone, false);
+                break;
         }
     }
 

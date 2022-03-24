@@ -550,7 +550,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                         bidsReceivedModel.setNotes_meterial_des(obj.getString("notes_meterial_des"));
                         bidsReceivedModel.setBid_ends_at(obj.getString("bid_ends_at"));
 
-                        if (!obj.getString("bid_status").equals("loadSubmitted") && !obj.getString("bid_status").equals("delete") && !obj.getString("bid_status").equals("loadExpired")) {
+                        if (!obj.getString("bid_status").equals("loadSubmitted") && !obj.getString("bid_status").equals("delete") && !obj.getString("bid_status").equals("loadExpired") && !obj.getString("bid_status").equals("start")) {
                             bidsList.add(bidsReceivedModel);
                         }
                     }
