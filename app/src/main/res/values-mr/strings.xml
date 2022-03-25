@@ -154,7 +154,7 @@
     <string name="open">ओपन </string>
     <string name="closed">क्लोज्ड </string>
     <string name="tarpaulin">तिरपाल </string>
-    <string name="vehicle_number_edit">व्हीकल नंबर एडिट करा. </string>
+    <string name="vehicle_number_edit">व्हीकल नंबर एंटर करा. </string>
     <string name="rc_book">आरसी बुक अपलोड करा* </string>
     <string name="rc_front">आरसी बुक </string>
     <string name="uploadInsurance">अपलोड इंश्योरेंस* </string>
@@ -347,7 +347,7 @@
     <string name="yourQuote">माझे कोट </string>
     <string name="negotiable">निगोशिएबल </string>
     <string name="Non_negotiable">नॉन-निगोशिएबल </string>
-    <string name="truck">्रक </string>
+    <string name="truck">ट्रक </string>
     <string name="Search_by_Truck_Number">ट्रक नंबर द्वारे शोधा </string>
     <string name="feet">फीट </string>
     <string name="Notes">नोट्स </string>
