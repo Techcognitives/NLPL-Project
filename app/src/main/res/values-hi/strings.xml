@@ -479,7 +479,7 @@
     //-------------------------------------------Payment--------------------------------------------
     //new
     <string name="Pay_and_Accept_Final_Offer">पेमेंट करें और अंतिम प्रस्ताव स्वीकार करें </string>       //dot
-    <string name="Select_Payment_Method">पेमेंट का तरीका चुनें </string>
+    <string name="Select_Payment_Method">Select Payment Method</string>
     <string name="Payment_Method">पेमेंट का तरीका : </string>
     <string name="To_Pay">To Pay (Pay while Unloading)</string>
     <string name="Pay_Now">Pay Now (Pay in Advance)</string>
