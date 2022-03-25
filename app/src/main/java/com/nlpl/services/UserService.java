@@ -1,6 +1,7 @@
 package com.nlpl.services;
 
 import com.nlpl.model.Requests.UserRequest;
+import com.nlpl.model.Responses.AdminResponse;
 import com.nlpl.model.Responses.RatingResponse;
 import com.nlpl.model.Responses.UserResponse;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserAddress;
@@ -98,4 +99,7 @@ public interface UserService {
 
     @GET("/user/get")
     Call<UserResponse> getAllUserDetails();
+
+    @GET("/admin/getFees")
+    Call<AdminResponse> GetFees();
 }
