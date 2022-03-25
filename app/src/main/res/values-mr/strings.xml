@@ -9,7 +9,7 @@
     <string name="get_otp">गेट ओटीपी </string>
     <string name="tc_and_pp">गेट ओटीपी वर क्लिक करून तुम्ही आमच्याशी सहमत आहात. </string>
     <string name="tc">टर्म्स ऑफ़ सर्विस</string>
-    <string name="and">एंड</string>
+    <string name="and">आणि</string>
     <string name="pp">प्राइवेसी पालिसी </string>
     <string name="selectYourCountry">तुमचा देश निवडा </string>
     //----------------------------------------------------------------------------------------------
@@ -73,11 +73,11 @@
     <string name="hello">नमस्कार,</string>
     <string name="mobNo">+९१ </string>
     <string name="personalDetails"><p>   </p>पर्सनल डिटेल्स </string>
-    <string name="personal_and_company"><p>   </p>पर्सनल एंड कम्पनी </string>
+    <string name="personal_and_company"><p>   </p>पर्सनल आणि कम्पनी </string>
     <string name="BankDetails"><p>   </p>माझी बँक</string>
     <string name="AddTrucks"><p>   </p>माझे ट्रक्स</string>
     <string name="AddDrivers"><p>   </p>माझे ड्रायव्हर्स</string>
-    <string name="kyc_verification"><p>   </p>केवाईसी - पैन कार्ड एंड आधार कार्ड </string>
+    <string name="kyc_verification"><p>   </p>केवाईसी - पैन कार्ड आणि आधार कार्ड </string>
     //----------------------------------------------------------------------------------------------
 
     //---------------------------------------Personal Details Activity------------------------------
@@ -109,7 +109,7 @@
     <string name="Aadhar_Card_Uploaded_Successfully">आधार कार्ड अपलोड सक्सेस्फली </string>
     <string name="PAN_Card_not_Uploaded">पॅन कार्ड अपलोड केले नाही, कृपया पुन्हा प्रयत्न करा. </string>
     <string name="Aadhar_Card_not_Uploaded">आधार कार्ड अपलोड केले नाही, कृपया पुन्हा प्रयत्न करा. </string>
-    <string name="Personal_Details_added_successfully">पर्सनल डिटेल्स सक्सेस्फली अडडेड </string>
+    <string name="Personal_Details_added_successfully">पर्सनल डिटेल्स सक्सेस्फली एडेड </string>
     <string name="update_your_phone_number">तुम्हाला खरंच तुमचा फोन नंबर अपडेट करायचा आहे का? </string>
     <string name="Firm_Details">फर्म डिटेल्स </string>
     <string name="GST_No">जीएसटी नंबर: </string>
@@ -119,7 +119,7 @@
     //----------------------------------------------------------------------------------------------
 
     //---------------------------------------Bank Details Activity----------------------------------
-    <string name="NameWithStar">बँक नाम* </string>
+    <string name="NameWithStar">बँक नाव* </string>
     <string name="Bank_name_hint">बॅंकेचे नाव एंटर करा</string>
     <string name="AccountNumber">अकाउंट नंबर* </string>
     <string name="ReEnterAcc">अकाउंट नंबर पुन्हा एंटर करा*</string>
@@ -132,7 +132,7 @@
     <string name="Edit_Bank_Details">बँक डिटेल्स एडिट करा </string>
     <string name="Cancelled_cheque_uploaded_successfully">कैंसिल चेक सक्सेस्फली अपलोड केला आहेे. </string>
     <string name="Cancelled_cheque_not_uploaded_successfully">कैंसिल चेक सक्सेस्फली अपलोड झाला नाही </string>
-    <string name="Bank_Details_added_successfully">बँक डिटेल्स अडडेड सक्सेस्फली </string>
+    <string name="Bank_Details_added_successfully">बँक डिटेल्स एडेड सक्सेस्फली </string>
     <string name="Account_number_does_not_match">अकाउंट नंबर जुळत नाही</string>
     <string name="Please_enter_correct_account_number_as_above.">कृपया वरीलप्रमाणे योग्य अकाउंट नंबर एंटर करा.</string>
     <string name="My_Bank">माझी बँक</string>
@@ -169,7 +169,7 @@
     <string name="RC_not_Uploaded">आरसी अपलोड केलेले नाही, कृपया पुन्हा प्रयत्न करा. </string>
     <string name="Insurance_Uploaded_Successfully">इंश्योरेंस अपलोड सक्सेस्फली </string>
     <string name="Insurance_not_uploaded">इंश्योरेंस अपलोड केला नाही, कृपया पुन्हा प्रयत्न करा</string>
-    <string name="Vehicle_Details_added_successfully">व्हीकल डिटेल्स अडडेड सक्सेस्फली </string>
+    <string name="Vehicle_Details_added_successfully">व्हीकल डिटेल्स एडेड सक्सेस्फली </string>
     <string name="Add_Driver">+ ऐड ड्रायव्हर</string>
     <string name="Skip">स्किप</string>
     <string name="You_cannot_bid_unless_you_have_a_Driver">तुमच्याकडे ड्रायव्हर असल्याशिवाय तुम्ही बिड लावू शकत नाही. </string>
@@ -253,7 +253,7 @@
     <string name="pan_number">पॅन नंबर*</string>
     //new
     <string name="Company_Details">कंपनी डिटेल्स </string>
-    <string name="Company_Details_added_Successfully">कंपनी डिटेल्स अडडेड सक्सेस्फली</string>
+    <string name="Company_Details_added_Successfully">कंपनी डिटेल्स एडेड सक्सेस्फली</string>
     <string name="Company_Type">कंपनी टाइप* </string>      //new
     <string name="Proprietary">मलाकी </string>         //new
     <string name="Partnership">पार्टनरशिप </string>         //new
@@ -270,7 +270,7 @@
     <string name="addressColon">एड्रेस: </string>
     <string name="add_company">+ ऐड कंपनी</string>
     <string name="Enter_PAN_Number">पॅन नंबर एंटर करा. </string>
-    <string name="Enter_Aadhar_Number">आधार नंबर प्रविष्ट करा. </string>
+    <string name="Enter_Aadhar_Number">आधार नंबर एंटर करा. </string>
     //----------------------------------------------------------------------------------------------
 
     //------------------------------------BASE URL--------------------------------------------------
@@ -282,23 +282,23 @@
     <string name="pick_up_date">पिकअप डेट* </string>
     <string name="pick_up_date_colon">पिकअप डेट: </string>
     <string name="pick_up_time">पिकअप टाइम* </string>
-    <string name="enterYourBudget">आपले बजेट एंटर करा</string>
+    <string name="enterYourBudget">बजेट एंटर करा</string>
     <string name="budget">बजेट </string>
     <string name="budgetRs">बजेट ₹ </string>
-    <string name="truckTypeAndCapacity">ट्रक टाइप एंड लोड टाइप* </string>
+    <string name="truckTypeAndCapacity">ट्रक टाइप आणि लोड टाइप* </string>
     <string name="SelectVehicleModel">व्हीकल मॉडेल निवडा.</string>
     <string name="bodyType">बॉडी टाइप: </string>
     <string name="Load_Type">लोड टाइप: </string>                     //new
     <string name="pickUpLocationDetails">पिक-अप एड्रेस* </string>
     <string name="dropLocationDetails">ड्रॉप एड्रेस* </string>
     <string name="km">किमी (अंदाजे)</string>
-    <string name="noteAndMaterial">नोट्स एंड मटेरियल डिटेल्स (ऑप्शनल)</string>
+    <string name="noteAndMaterial">नोट्स आणि मटेरियल डिटेल्स (ऑप्शनल)</string>
     <string name="postALoad">पोस्ट ए लोड</string>
     <string name="date">DD-Month-YY</string>
     <string name="time">hh:mm AM/PM</string>
     <string name="inrRs">₹ XXXX</string>
     <string name="KMAutoCal">किमी ऑटो कैलकुलेटेड </string>
-    <string name="note_to_post_load">1. इलेक्ट्रॉनिक उपकरणे, काळजीपूर्वक हाताळली पाहिजेत.<br></br>2. बबल रॅप आवश्यक.<br></br>3. दुपारी 12:00 नंतर पिक-अप वेळ पसंत करा.<br></br>4. कृपया प्रारंभ करण्यापूर्वी कॉल करा आणि पुष्टी करा.</string>
+    <string name="note_to_post_load">1. इलेक्ट्रॉनिक उपकरणे, काळजीपूर्वक हाताळली पाहिजेत.<br></br>2. बबल रॅप आवश्यक.<br></br>3. दुपारी 12:00 नंतर पिक-अप वेळ पसंत करा.<br></br>4. कृपया प्रारंभ करण्यापूर्वी कॉल करा आणि खात्री करा.</string>
     //new
     <string name="Loads_History">लोड हिस्ट्री </string>
     <string name="Post_a_Load">पोस्ट ए लोड</string>
@@ -308,7 +308,7 @@
     <string name="Load_Posted_Successfully">लोड पोस्ट सक्सेस्फली </string>
     <string name="Delete_Load">डिलीट लोड </string>
     <string name="Do_you_really_want_to_delete_load">तुम्हाला खरच लोड हटवायचे आहे का?</string>
-    <string name="Select_Material_Type">मटेरियल का टाइप निवडा. </string>
+    <string name="Select_Material_Type">मटेरियल टाइप निवडा. </string>
     <string name="Truck_Type">ट्रक टाइप</string>
     <string name="Bid_Now">बिड लावा</string>
     <string name="View_Load_History">लोड पहा\n हिस्ट्री</string>
@@ -330,14 +330,14 @@
     <string name="selectTruck">ट्रक निवडा </string>
     <string name="selectDriver">ड्रायव्हर निवडा </string>
     <string name="yes_small">होय</string>
-    <string name="noteAndMaterialWithColon">नोट्स एंड मटेरियल डिटेल्स: </string>
+    <string name="noteAndMaterialWithColon">नोट्स आणि मटेरियल डिटेल्स: </string>
     <string name="timeOnly">टाइम: </string>
     <string name="budgetWithColon">बजट: </string>
     <string name="capacityWithColon">कैपेसिटी: </string>
     <string name="distanceWithColon">दूरी: </string>
     <string name="xx_km">XXX किमी</string>
     <string name="xx_capacity">XXX किग्रा</string>
-    <string name="xx_feet">XX एफटी</string>
+    <string name="xx_feet">XX फ़ीट</string>
     <string name="timewithoutAMPM">hh:mm </string>
     <string name="distance">अंतर </string>
     <string name="modelwithColon">मॉडल: </string>
@@ -353,7 +353,7 @@
     <string name="Notes">नोट्स </string>
     <string name="NotesIfAny">टाइप करा किंवा निवडा</string>
     <string name="acceptBid">स्वीकारा आणि बिड लावा. </string>
-    <string name="cancel">कैन्सेलड</string>
+    <string name="cancel">कैंसल</string>
     <string name="declaration"><b>घोषणा: </b><em>मी याद्वारे जाहीर करतो की, ड्रायव्हर पिक-अप वेळेच्या 15 मिनिटे आधी पिक-अप ठिकाणी पोहोचेल.</em> </string>
     <string name="preferred_locations">पसंतीची ठिकाणे: </string>
     //new
@@ -383,7 +383,7 @@
     <string name="Load">लोड: </string>                           //new
     <string name="SP_Withdrawn">एसपींनी माघार घेतली</string>
     <string name="View_Consignment">मटेरियल पहा</string>
-    <string name="Enter_Appropriate_Quote">योग्य कोट प्रविष्ट करा</string>
+    <string name="Enter_Appropriate_Quote">योग्य कोट एंटर करा</string>
     <string name="You_cannot_bid_less_than_50_of_customer_Budget">आपण ग्राहक बजेटच्या ५0% पेक्षा कमी बोली लावू शकत नाही</string>
     <string name="Edit_Load">एडिट लोड</string>
     <string name="Would_you_like_to_edit_your_Load">तुम्हाला तुमचा लोड एडिट करायचा आहे का?</string>
@@ -399,8 +399,8 @@
     <string name="Successfully_selected_three_Bidders">सक्सेस्फली निवडलेले तीन बिडर्स</string>
     <string name="Please_Review_and_Accept_any_one_offer.">कृपया पुनरावलोकन करा आणि कोणत्याही एका ऑफरचा स्वीकार करा.</string>
     <string name="Accept_Final_Offer">अंतिम ऑफर स्वीकारा </string>
-    <string name="Amount_To_Be_Billed_1">अमाउंट | अंतिम बिल १% </string>
-    <string name="Amount_Pay_Now_3">अमाउंट | पेमेंट करा ३% </string>
+    <string name="Amount_To_Be_Billed_1">Amount | To Be Billed 1%</string>
+    <string name="Amount_Pay_Now_3">Amount | Pay Now 3%</string>
     <string name="Payment_Successful">पेमेंट सक्सेस्फली </string>
     <string name="Payment_Id">पेमेंट आयडी: </string>
     <string name="Payment_Failed">पेमेंट अयशस्वी</string>
@@ -422,7 +422,7 @@
     <string name="Continue_with_other_Service_Provider">इतर सेवा प्रदात्यासह सुरू ठेवा </string>
     <string name="Current_Bidder_have_withdrawn_Bid">सध्याच्या निविदाकाराने बिड मागे घेतली आहे, आपण अद्याप इतर सेवा प्रदात्यासह चालू ठेवू इच्छिता?</string>
     <string name="Continue">पुढे चालू ठेवा</string>
-    <string name="Cancel">कैन्सेलड</string>
+    <string name="Cancel">कैंसल</string>
     <string name="visible_for_other_Service_Provider">सध्याच्या सेवा प्रदात्याकडून काढलेला लोड आणि इतर सेवा प्रदात्यासाठी दृश्यमान</string>
     <string name="Close">मिटणे </string>
     <string name="Bids_Received">बिड प्राप्त झाल्या</string>         //new
@@ -470,7 +470,7 @@
     <string name="Add_a_Driver">एक ड्रायव्हर जोडा</string>
     <string name="Please_add_a_Driver_to_submit_your_response">कृपया आपला प्रतिसाद सबमिट करण्याकरीता ड्रायव्हर जोडा. </string>
     <string name="Select_Driver_to_Bid">बिड करीता ड्रायव्हर निवडा</string>
-    <string name="Loads_and_Trips">लोड एंड ट्रिप </string>             //new
+    <string name="Loads_and_Trips">लोड आणि ट्रिप </string>             //new
     <string name="Trip_History">ट्रिप हिस्ट्री </string>                   //new
 
 
