@@ -8,6 +8,7 @@ import com.nlpl.services.CompanyService;
 import com.nlpl.services.ImageService;
 import com.nlpl.services.ImageUploadService;
 import com.nlpl.services.PostLoadService;
+import com.nlpl.services.PreferedLocationService;
 import com.nlpl.services.RatingService;
 import com.nlpl.services.UploadChequeService;
 import com.nlpl.services.UploadDriverLicenseService;
@@ -15,6 +16,7 @@ import com.nlpl.services.UploadDriverSelfieService;
 import com.nlpl.services.UploadTruckInsuranceService;
 import com.nlpl.services.UploadTruckRCBookService;
 import com.nlpl.services.UserService;
+import com.nlpl.services.VerificationService;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -109,5 +111,13 @@ public class ApiClient {
     public static RatingService getRatingService() {
         RatingService ratingService = getRetrofit().create(RatingService.class);
         return ratingService;
+    }
+    public static PreferedLocationService getPreferredLocationService() {
+        PreferedLocationService preferedLocationService = getRetrofit().create(PreferedLocationService.class);
+        return preferedLocationService;
+    }
+    public static VerificationService getVerification() {
+        VerificationService verificationService = getRetrofit().create(VerificationService.class);
+        return verificationService;
     }
 }

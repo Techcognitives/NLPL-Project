@@ -1,9 +1,12 @@
 package com.nlpl.utils;
 
+import android.system.StructTimespec;
 import android.util.Log;
 
+import com.nlpl.model.Requests.PreferredLocationRequest;
 import com.nlpl.model.Requests.RatingRequest;
 import com.nlpl.model.Requests.UserRequest;
+import com.nlpl.model.Responses.PreferedLocationResponse;
 import com.nlpl.model.Responses.RatingResponse;
 import com.nlpl.model.Responses.UserResponse;
 
@@ -60,7 +63,7 @@ public class CreateUser {
     //----------------------------------------------------------------------------------------------
 
 
-    //------------------------------------- Create User in API -------------------------------------
+    //------------------------------------- Create Rating in API -------------------------------------
     public static RatingRequest createRatings(String transactionId, String ratingsNumber, String ratingCommets, String toWhoUserID, String givenByUserID) {
         RatingRequest ratingRequest = new RatingRequest();
         ratingRequest.setTransection_id(transactionId);
@@ -83,6 +86,34 @@ public class CreateUser {
 
             @Override
             public void onFailure(Call<RatingResponse> call, Throwable t) {
+
+            }
+        });
+    }
+    //----------------------------------------------------------------------------------------------
+
+    //------------------------------- Create Preferred Location in API -----------------------------
+    public static PreferredLocationRequest createPreferredLocation(String userId, String state, String city, String pinCode, String latitude, String longitude) {
+        PreferredLocationRequest preferredLocationRequest = new PreferredLocationRequest();
+        preferredLocationRequest.setUser_id(userId);
+        preferredLocationRequest.setPref_state(state);
+        preferredLocationRequest.setPref_city(city);
+        preferredLocationRequest.setPref_pin_code(pinCode);
+        preferredLocationRequest.setLatitude(latitude);
+        preferredLocationRequest.setLongitude(longitude);
+        return preferredLocationRequest;
+    }
+
+    public static void savePreferredLocation(PreferredLocationRequest preferredLocationRequest) {
+        Call<PreferedLocationResponse> preferredLocationResponseCall = ApiClient.getPreferredLocationService().savePreferredLocation(preferredLocationRequest);
+        preferredLocationResponseCall.enqueue(new Callback<PreferedLocationResponse>() {
+            @Override
+            public void onResponse(Call<PreferedLocationResponse> call, Response<PreferedLocationResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<PreferedLocationResponse> call, Throwable t) {
 
             }
         });

@@ -46,11 +46,15 @@ public class JumpTo {
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void getToSettingAndPreferences(Activity activity, String mobileNumber, String userId) {
+    public static void getToSettingAndPreferences(Activity activity, String mobileNumber, String userId, String role, Boolean isFinish) {
         Intent intent = new Intent(activity, CustomerSettingsAndPreferences.class);
         intent.putExtra("mobile", mobileNumber);
         intent.putExtra("userId", userId);
+        intent.putExtra("role", role);
         activity.startActivity(intent);
+        if (isFinish){
+            activity.finish();
+        }
         activity.overridePendingTransition(0, 0);
     }
 

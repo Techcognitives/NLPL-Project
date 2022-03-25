@@ -224,7 +224,6 @@ public class RegistrationActivity extends AppCompat {
                 address.setCursorVisible(false);
                 if (!selectStateText.getText().toString().isEmpty()) {
                     selectedState = selectStateText.getText().toString();
-
                     SelectCity.selectCity(RegistrationActivity.this, selectedState, selectDistrictText);
                 }
             }

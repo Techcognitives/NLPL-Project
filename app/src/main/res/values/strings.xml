@@ -1586,7 +1586,7 @@
     //new
     <string name="Pay_and_Accept_Final_Offer">Pay and Accept Final Offer</string>
     <string name="Select_Payment_Method">Select Payment Method</string>
-    <string name="Payment_Method">Payment Method : </string>
+    <string name="Payment_Method">Payment Method:</string>
     <string name="To_Pay">To Pay (Pay while Unloading)</string>
     <string name="Pay_Now">Pay Now (Pay in Advance)</string>
     <string name="To_be_billed">To be billed (Pay to Truck Owner / Broker / Driver)</string>
