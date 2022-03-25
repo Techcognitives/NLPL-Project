@@ -202,7 +202,7 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
         actionBarWhatsApp = (ImageView) actionBar.findViewById(R.id.action_bar_whats_app);
         actionBarWhatsApp.setVisibility(View.VISIBLE);
 
-        actionBarTitle.setText("Track Details");
+        actionBarTitle.setText(getString(R.string.Trip_Details));
         actionBarBackButton.setVisibility(View.VISIBLE);
         actionBarMenuButton.setVisibility(View.GONE);
         actionBarBackButton.setOnClickListener(view -> this.finish());
