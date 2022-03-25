@@ -381,7 +381,7 @@
     <string name="My_Final_Quote">मेरा अंतिम कोट </string>       //new
     <string name="Submit">सबमिट </string>                       //new
     <string name="Load">लोड: </string>                           //new
-    <string name="SP_Withdrawn">एसपी वापस लिया गया है </string>
+    <string name="SP_Withdrawn">एस.पी. वापस लिया गया है </string>
     <string name="View_Consignment">देखें भेजा गया मटेरियल </string>
     <string name="Enter_Appropriate_Quote">उपयुक्त उद्धरण दर्ज करें </string>
     <string name="You_cannot_bid_less_than_50_of_customer_Budget">आप ग्राहक बजट के ५0% से कम बोली नहीं लगा सकते</string>
@@ -393,7 +393,7 @@
     //--------------------------------Customer Dashboard Activity-----------------------------------
     //new
     <string name="Load_Poster_Dashboard">लोड पोस्टर डैशबोर्ड </string>
-    <string name="Find_Trucks">फाइंड ट्रकों </string>             //dot
+    <string name="Find_Trucks">फाइंड ट्रक </string>             //dot
     <string name="Load_Response">लोड प्रतिसाद </string>                 //dot
     <string name="Response_submitted_Successfully">प्रतिसाद सक्सेस्फली सबमिट किया गया है </string>     //dot
     <string name="Successfully_selected_three_Bidders">सक्सेस्फली तीन बिड को चुनें </string>       //dot

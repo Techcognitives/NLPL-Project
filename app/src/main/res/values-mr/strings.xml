@@ -320,7 +320,7 @@
 
     //--------------------------------------Bid_now dialog------------------------------------------
     <string name="load_id">लोड आयडी: शहर-शहर-000 </string>
-    <string name="timeLeft"> <p>   </p> उरलेली वेळ </string>
+    <string name="timeLeft"> <p>   </p> वेळ बाकी </string>
     <!--<string name="timeinmin">00:00</string>-->
     <string name="pickUpDateWithColon">पिक-अप डेट: </string>
     <string name="pickUpLocationWithColon"><p>  </p>पिक-अप: </string>
@@ -381,7 +381,7 @@
     <string name="My_Final_Quote">माझे अंतिम कोट </string>       //new
     <string name="Submit">सबमिट </string>                       //new
     <string name="Load">लोड: </string>                           //new
-    <string name="SP_Withdrawn">एसपींनी माघार घेतली</string>
+    <string name="SP_Withdrawn">एस.पीं. नी माघार घेतली</string>
     <string name="View_Consignment">मटेरियल पहा</string>
     <string name="Enter_Appropriate_Quote">योग्य कोट एंटर करा</string>
     <string name="You_cannot_bid_less_than_50_of_customer_Budget">आपण ग्राहक बजेटच्या ५0% पेक्षा कमी बोली लावू शकत नाही</string>
@@ -393,7 +393,7 @@
     //--------------------------------Customer Dashboard Activity-----------------------------------
     //new
     <string name="Load_Poster_Dashboard">लोड पोस्टर  डॅशबोर्ड </string>
-    <string name="Find_Trucks">फाइंड ट्रकों </string>
+    <string name="Find_Trucks">फाइंड ट्रक </string>
     <string name="Load_Response">लोड प्रतिसाद </string>
     <string name="Response_submitted_Successfully">प्रतिसाद सक्सेस्फली सादर केला आहेे</string>
     <string name="Successfully_selected_three_Bidders">सक्सेस्फली निवडलेले तीन बिडर्स</string>
