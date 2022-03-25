@@ -172,7 +172,7 @@
     <string name="Vehicle_Details_added_successfully">व्हीकल डिटेल्स अडडेड सुकसेस्सफुल्ली </string>
     <string name="Add_Driver">+ ऐड ड्रायव्हर</string>
     <string name="Skip">स्केप</string>
-    <string name="You_cannot_bid_unless_you_have_a_Driver">तुमच्याकडे ड्रायव्हर असल्याशिवाय तुम्ही बिड लावू शकत नाही </string>
+    <string name="You_cannot_bid_unless_you_have_a_Driver">तुमच्याकडे ड्रायव्हर असल्याशिवाय तुम्ही बिड लावू शकत नाही. </string>
     <string name="Assign_Truck">असाइन ट्रक </string>
     <string name="ReAssign_Truck">री-असाइन  ट्रक </string>
     <string name="My_Trucks">माझे ट्रक्स </string>
@@ -201,7 +201,7 @@
     <string name="Edit_Driver_Details">ड्रायव्हर डिटेल्स एडिट करा </string>
     <string name="Please_add_a_Driver">कृपया ड्रायव्हर जोडा </string>
     <string name="Add">+ ऐड</string>
-    <string name="Driving_License_uploaded_successfully">ड्रायव्हिंग लायसन्स सुकसेस्सफुल्ली अपलोड केले </string>
+    <string name="Driving_License_uploaded_successfully">ड्रायव्हिंग लायसन्स सुकसेस्सफुल्ली अपलोड केले आहेे. </string>
     <string name="Driving_License_not_uploaded_please_try_again">ड्रायव्हिंग लायसन्स अपलोड केला नाही, कृपया पुन्हा प्रयत्न करा</string>
     <string name="Driver_Selfie_uploaded_successfully">ड्रायव्हर सेल्फी सुकसेस्सफुल्ली अपलोड केला आहेे. </string>
     <string name="Driver_Selfie_not_uploaded">ड्रायव्हर सेल्फी अपलोड केला नाही, कृपया पुन्हा प्रयत्न करा</string>
@@ -312,7 +312,7 @@
     <string name="Truck_Type">ट्रक टाइप</string>
     <string name="Bid_Now">बिड लावा</string>
     <string name="View_Load_History">लोड पहा\n हिस्ट्री</string>
-    <string name="Load_Expired">लोड कालबाह्य</string>
+    <string name="Load_Expired">लोड एक्सपिरेड</string>
     <string name="Bid_Submitted">बिड सबमिट</string>
 
 

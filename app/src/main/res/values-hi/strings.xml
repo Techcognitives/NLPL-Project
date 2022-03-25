@@ -313,7 +313,7 @@
     <string name="Truck_Type">ट्रक टाइप </string>
     <string name="Bid_Now">बिड लागाओ </string>
     <string name="View_Load_History">लोड देखें\n हिस्ट्री </string>                //dot
-    <string name="Load_Expired">लोड की टाइम सीमा समाप्त हो गई</string>
+    <string name="Load_Expired">लोड एक्सपिरेड </string>
     <string name="Bid_Submitted">बिड सबमिट</string>
 
     //----------------------------------------------------------------------------------------------
