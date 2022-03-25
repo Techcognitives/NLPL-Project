@@ -95,6 +95,7 @@ import com.nlpl.ui.adapters.LoadSubmittedAdapter;
 import com.nlpl.ui.adapters.TrackSPTripAdapter;
 import com.nlpl.ui.adapters.TrucksListAdapterBid;
 import com.nlpl.utils.ApiClient;
+import com.nlpl.utils.DisplayTrack;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.EnglishNumberToWords;
 import com.nlpl.utils.FileUtils;
@@ -997,24 +998,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
 
     public void openMaps(BidSubmittedModel obj) {
         String sDestination = obj.getPick_add() + obj.getPick_city();
-        DisplayTrack("", sDestination);
-    }
-
-    private void DisplayTrack(String sSource, String sDestination) {
-        try {
-            Uri uri = Uri.parse("https://www.google.co.in/maps/dir/" + sSource + "/" + sDestination);
-
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            intent.setPackage("com.google.android.apps.maps");
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        } catch (Exception e) {
-            Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.apps.maps");
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-
-        }
+        DisplayTrack.DisplayTrack(TrackForServiceProviderActivity.this,"", sDestination);
     }
 
     public void onClickOpenPhone(View view) {

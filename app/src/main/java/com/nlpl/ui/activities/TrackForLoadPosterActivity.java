@@ -79,6 +79,7 @@ import com.nlpl.ui.adapters.TrackLPBidsResponsesAdapter;
 import com.nlpl.ui.adapters.TrackLPTripAdapter;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.CreateUser;
+import com.nlpl.utils.DisplayTrack;
 import com.nlpl.utils.DownloadImageTask;
 
 import com.nlpl.utils.EnglishNumberToWords;
@@ -633,7 +634,7 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
                     submitResponseBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
+                            DisplayTrack.DisplayTrack(TrackForLoadPosterActivity.this, obj.getPick_add()+" "+obj.getPick_city()+" "+obj.getPick_pin_code(), obj.getDrop_add()+" "+obj.getDrop_city()+" "+obj.getDrop_pin_code());
                         }
                     });
 

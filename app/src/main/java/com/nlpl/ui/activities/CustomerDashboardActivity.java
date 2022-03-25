@@ -3181,7 +3181,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
 
     public void CustomerSettingsAndPreferences(View view) {
         ShowAlert.loadingDialog(CustomerDashboardActivity.this);
-        JumpTo.getToSettingAndPreferences(CustomerDashboardActivity.this, phone, userId);
+        JumpTo.getToSettingAndPreferences(CustomerDashboardActivity.this, phone, userId,  "Customer", false);
     }
 
     public void onClickOpenPostALoad(View view) {

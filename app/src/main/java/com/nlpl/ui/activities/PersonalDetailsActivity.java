@@ -21,17 +21,21 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.nlpl.R;
+import com.nlpl.model.Responses.PANVerificationResponse;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
 
 import com.nlpl.model.Requests.ImageRequest;
@@ -80,6 +84,7 @@ public class PersonalDetailsActivity extends AppCompat {
     String userId, mobile;
     Boolean profilePic, isPanUploaded = false, isFrontUploaded = false, isProfileUploaded = false;
     String img_type;
+    EditText panNumber;
 
     Dialog previewDialogPan, previewDialogAadhar, previewDialogProfile;
 
@@ -129,6 +134,8 @@ public class PersonalDetailsActivity extends AppCompat {
         uploadProfile = panAndAadharView.findViewById(R.id.uploadProfile);
         profileText = panAndAadharView.findViewById(R.id.ProfileText);
         imgProfile = panAndAadharView.findViewById(R.id.imageProfile);
+        panNumber = panAndAadharView.findViewById(R.id.pan_aadhar_pan_number);
+        panNumber.addTextChangedListener(panNumberCheck);
 
         aadharConstrain = panAndAadharView.findViewById(R.id.aadhar_constrain);
         panConstrain = panAndAadharView.findViewById(R.id.pan_card_constrain);
@@ -417,7 +424,7 @@ public class PersonalDetailsActivity extends AppCompat {
                     }
                 });
                 //------------------------------------------------------------------------------------------
-            }catch (Exception e){
+            } catch (Exception e) {
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(PersonalDetailsActivity.this);
                 alert.setContentView(R.layout.dialog_alert_single_button);
@@ -507,7 +514,7 @@ public class PersonalDetailsActivity extends AppCompat {
                     }
                 });
                 //------------------------------------------------------------------------------------------
-            }catch (Exception e){
+            } catch (Exception e) {
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(PersonalDetailsActivity.this);
                 alert.setContentView(R.layout.dialog_alert_single_button);
@@ -654,9 +661,9 @@ public class PersonalDetailsActivity extends AppCompat {
     //-------------------------------------------------------------------------------------------------------------------
 
     public void onClickOKPersonal(View view) {
-        if (profilePic){
-            if (isProfileUploaded){
-                UpdateUserDetails.updateUserIsProfileAdded(userId,"1");
+        if (profilePic) {
+            if (isProfileUploaded) {
+                UpdateUserDetails.updateUserIsProfileAdded(userId, "1");
 
                 Dialog alert = new Dialog(PersonalDetailsActivity.this);
                 alert.setContentView(R.layout.dialog_alert_single_button);
@@ -691,7 +698,7 @@ public class PersonalDetailsActivity extends AppCompat {
                         JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, false);
                     }
                 });
-            }else{
+            } else {
                 Toast.makeText(this, "Please Upload Profile Picture", Toast.LENGTH_SHORT).show();
             }
         } else {
@@ -731,12 +738,12 @@ public class PersonalDetailsActivity extends AppCompat {
                         JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, true);
                     }
                 });
-            }else {
-                if (!isPanUploaded){
+            } else {
+                if (!isPanUploaded) {
                     Toast.makeText(this, "Please Upload PAN Card", Toast.LENGTH_SHORT).show();
-                }else if (!isFrontUploaded){
+                } else if (!isFrontUploaded) {
                     Toast.makeText(this, "Please Upload Aadhar Card", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     Toast.makeText(this, "Please Upload PAN & Aadhar Card", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -755,7 +762,8 @@ public class PersonalDetailsActivity extends AppCompat {
         Call<ImageResponse> imageResponseCall = ApiClient.getImageService().saveImage(imageRequest);
         imageResponseCall.enqueue(new Callback<ImageResponse>() {
             @Override
-            public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {}
+            public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
+            }
 
             @Override
             public void onFailure(Call<ImageResponse> call, Throwable t) {
@@ -984,5 +992,61 @@ public class PersonalDetailsActivity extends AppCompat {
     protected void onStop() {
         super.onStop();
         InAppNotification.SendNotificationJumpToPersonalDetailsActivity(PersonalDetailsActivity.this, "Complete Your Profile", "Upload PAN and Aadhar in the Personal Details Section", userId, mobile, false);
+    }
+
+    private TextWatcher panNumberCheck = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String panWatcher = panNumber.getText().toString().trim();
+
+            if (panWatcher.length() != 10) {
+
+            } else {
+                checkPAN(panWatcher);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+
+    //Check Pan number /***************************************************************************************/
+    public void checkPAN(String panNumberCheck) {
+        Call<PANVerificationResponse> responseCall = ApiClient.getVerification().checkPAN(userId, panNumberCheck);
+        responseCall.enqueue(new Callback<PANVerificationResponse>() {
+            @Override
+            public void onResponse(Call<PANVerificationResponse> call, retrofit2.Response<PANVerificationResponse> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        PANVerificationResponse response1 = response.body();
+                        PANVerificationResponse.UserList list = response1.getData().get(0);
+                        Log.i("Success Message", list.getSuccess());
+                        if (list.getSuccess().equals("1")) {
+                            panNumber.setEnabled(false);
+                            panNumber.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success_small, 0);
+                        } else {
+                            Toast.makeText(PersonalDetailsActivity.this, "Please enter a valid PAN number", Toast.LENGTH_SHORT).show();
+                        }
+                    }catch (Exception e){
+                        Toast.makeText(PersonalDetailsActivity.this, "Please enter a valid PAN number", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(PersonalDetailsActivity.this, "Please enter a valid PAN number", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PANVerificationResponse> call, Throwable t) {
+                Toast.makeText(PersonalDetailsActivity.this, "Please enter a valid PAN number", Toast.LENGTH_SHORT).show();
+            }
+        });
+        //****************************************************************************************//
     }
 }
