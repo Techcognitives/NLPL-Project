@@ -417,7 +417,6 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
 
             @Override
             public void onFailure(Call<AdminResponse> call, Throwable t) {
-                Toast.makeText(CustomerDashboardActivity.this, "Error : Unsuccessful", Toast.LENGTH_SHORT).show();
             }
         });
     }
