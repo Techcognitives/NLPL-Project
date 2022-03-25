@@ -108,7 +108,7 @@
     <string name="PAN_Card_Uploaded_Successfully">पॅन कार्ड अपलोड सुकसेस्सफुल्ली </string>
     <string name="Aadhar_Card_Uploaded_Successfully">आधार कार्ड अपलोड सुकसेस्सफुल्ली </string>
     <string name="PAN_Card_not_Uploaded">पॅन कार्ड अपलोड केले नाही, कृपया पुन्हा प्रयत्न करा. </string>
-    <string name="Aadhar_Card_not_Uploaded">आधार कार्ड अपलोड केले नाही, कृपया पुन्हा प्रयत्न करा </string>
+    <string name="Aadhar_Card_not_Uploaded">आधार कार्ड अपलोड केले नाही, कृपया पुन्हा प्रयत्न करा. </string>
     <string name="Personal_Details_added_successfully">परसोनल डिटेल्स सुकसेस्सफुल्ली अडडेड </string>
     <string name="update_your_phone_number">तुम्हाला खरंच तुमचा फोन नंबर अपडेट करायचा आहे का? </string>
     <string name="Firm_Details">फर्म डिटेल्स </string>
@@ -130,7 +130,7 @@
     <string name="bank_details">बँक डिटेल्स </string>
     //new
     <string name="Edit_Bank_Details">बँक डिटेल्स एडिट करा </string>
-    <string name="Cancelled_cheque_uploaded_successfully">कैंसिल चेक सुकसेस्सफुल्ली अपलोड केला. </string>
+    <string name="Cancelled_cheque_uploaded_successfully">कैंसिल चेक सुकसेस्सफुल्ली अपलोड केला आहेे. </string>
     <string name="Cancelled_cheque_not_uploaded_successfully">कैंसिल चेक सुकसेस्सफुल्ली अपलोड झाला नाही </string>
     <string name="Bank_Details_added_successfully">बँक डिटेल्स अडडेड सुकसेस्सफुल्ली </string>
     <string name="Account_number_does_not_match">अकाउंट नंबर जुळत नाही</string>
@@ -203,7 +203,7 @@
     <string name="Add">+ ऐड</string>
     <string name="Driving_License_uploaded_successfully">ड्रायव्हिंग लायसन्स सुकसेस्सफुल्ली अपलोड केले </string>
     <string name="Driving_License_not_uploaded_please_try_again">ड्रायव्हिंग लायसन्स अपलोड केला नाही, कृपया पुन्हा प्रयत्न करा</string>
-    <string name="Driver_Selfie_uploaded_successfully">ड्रायव्हर सेल्फी सुकसेस्सफुल्ली अपलोड केला </string>
+    <string name="Driver_Selfie_uploaded_successfully">ड्रायव्हर सेल्फी सुकसेस्सफुल्ली अपलोड केला आहेे. </string>
     <string name="Driver_Selfie_not_uploaded">ड्रायव्हर सेल्फी अपलोड केला नाही, कृपया पुन्हा प्रयत्न करा</string>
     <string name="Take_a_Photo">फोटो काढा</string>
     <string name="Invalid_Mobile_Number">इनवैलिड मोबाईल नंबर</string>
@@ -395,7 +395,7 @@
     <string name="Load_Poster_Dashboard">लोड पोस्टर  डॅशबोर्ड </string>
     <string name="Find_Trucks">फाइंड ट्रकों </string>
     <string name="Load_Response">लोड प्रतिसाद </string>
-    <string name="Response_submitted_Successfully">प्रतिसाद सुकसेस्सफुल्ली सादर केला</string>
+    <string name="Response_submitted_Successfully">प्रतिसाद सुकसेस्सफुल्ली सादर केला आहेे</string>
     <string name="Successfully_selected_three_Bidders">सुकसेस्सफुल्ली निवडलेले तीन बिडर्स</string>
     <string name="Please_Review_and_Accept_any_one_offer.">कृपया पुनरावलोकन करा आणि कोणत्याही एका ऑफरचा स्वीकार करा.</string>
     <string name="Accept_Final_Offer">अंतिम ऑफर स्वीकारा </string>
