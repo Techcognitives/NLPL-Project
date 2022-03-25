@@ -321,7 +321,7 @@ public class PostALoadActivity extends AppCompat {
                     Toast.makeText(PostALoadActivity.this, "Please select Drop State", Toast.LENGTH_SHORT).show();
                 } else if (dropCityText.getText().toString().isEmpty()) {
                     Toast.makeText(PostALoadActivity.this, "Please select Drop City", Toast.LENGTH_SHORT).show();
-                } else if (paymentMethodText.getText().toString().equals("Payment Method:")) {
+                } else if (paymentMethodText.getText().toString().equals("Payment Method:") || paymentMethodText.getText().toString().equals("")) {
                     Toast.makeText(PostALoadActivity.this, "Please select Payment Method", Toast.LENGTH_SHORT).show();
                 } else if (setApproxDistance.getText().toString().isEmpty()) {
                     Toast.makeText(PostALoadActivity.this, "Please wait until approx KM calculation", Toast.LENGTH_SHORT).show();
@@ -374,12 +374,12 @@ public class PostALoadActivity extends AppCompat {
                         TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                         TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                    alertTitle.setText(getString(R.string.Post_a_Load));
-                    alertMessage.setText(getString(R.string.Load_Updated_Successfully));
-                    alertPositiveButton.setVisibility(View.GONE);
-                    alertNegativeButton.setText(getString(R.string.ok));
-                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+                        alertTitle.setText(getString(R.string.Post_a_Load));
+                        alertMessage.setText(getString(R.string.Load_Updated_Successfully));
+                        alertPositiveButton.setVisibility(View.GONE);
+                        alertNegativeButton.setText(getString(R.string.ok));
+                        alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                         alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -410,12 +410,12 @@ public class PostALoadActivity extends AppCompat {
                         TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                         TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                    alertTitle.setText(getString(R.string.Post_a_Load));
-                    alertMessage.setText(getString(R.string.Load_Posted_Successfully));
-                    alertPositiveButton.setVisibility(View.GONE);
-                    alertNegativeButton.setText(getString(R.string.ok));
-                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+                        alertTitle.setText(getString(R.string.Post_a_Load));
+                        alertMessage.setText(getString(R.string.Load_Posted_Successfully));
+                        alertPositiveButton.setVisibility(View.GONE);
+                        alertNegativeButton.setText(getString(R.string.ok));
+                        alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
                         alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                             @Override
