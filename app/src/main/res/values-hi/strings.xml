@@ -34,13 +34,13 @@
     <string name="name">नाव* </string>
     <string name="name_hint">अपना नाम दर्ज करें </string>
     <string name="email_id">अपना ईमेल आईडी दर्ज करें (ऑप्शनल)</string>         //dot
-    <string name="location">पता* </string>
+    <string name="location">एड्रेस* </string>
     <string name="select_state">राज्य </string>
     <string name="Select_State">राज्य चुनें  </string>       //new
     <string name="Search_States">खोज राज्य</string>
     <string name="select_city">शहर </string>
     <string name="pin_code">पिन कोड </string>
-    <string name="address">पता खोजें या टाइप करें </string>
+    <string name="address">एड्रेस खोजें या टाइप करें </string>
     <string name="are_u_sp">ट्रक मालिक / ड्राइवर / ब्रोकर? </string>
     <string name="truck_owner">मैं एक ट्रक मालिक हूँ </string>
     <string name="driver">मैं एक ड्राइवर हूँ </string>
@@ -53,7 +53,7 @@
     <string name="Load_Poster">लोड पोस्टर </string>
     <string name="Registration_Successful">रजिस्ट्रेशन सक्सेस्फली </string>
     <string name="Welcome_to">आपका स्वागत है </string>
-    <string name="Please_update_your_profile">\n\nकृपया अपनी प्रोफ़ाइल अपडेट करें और प्लेटफ़ॉर्म लाभों का पता लगाएं. </string>       //dot
+    <string name="Please_update_your_profile">\n\nकृपया अपनी प्रोफ़ाइल अपडेट करें और प्लेटफ़ॉर्म लाभों का एड्रेस लगाएं. </string>       //dot
     <string name="Dashboard">डैशबोर्ड </string>
     <string name="Please_Register">कृपया रजिस्टर करें </string>
     <string name="You_cannot_bid_without_Registration">आप रजिस्ट्रेशन के बिना बिड नहीं लगा सकते </string>
@@ -83,7 +83,7 @@
     //---------------------------------------Personal Details Activity------------------------------
     <string name="Name">नाम: </string>       //new
     <string name="Email">ईमेल: </string>       //new
-    <string name="Address">पता: </string>    //new
+    <string name="Address">एड्रेस: </string>    //new
     <string name="PANCard">पैन कार्ड </string>
     <string name="Upload">अपलोड </string>
     <string name="UploadAny">नीचे में से कोई भी अपलोड करें </string>
@@ -219,7 +219,7 @@
     <string name="ReAssign_Driver">ड्राइवर को पुन: असाइन करें </string>
     <string name="Self">खुद </string>               //new          //dot
     <string name="Search">ढूँढ </string>           //new             //dot
-    <string name="Current_Location">वर्तमान स्थान</string>
+    <string name="Current_Location">करंट लोकेशन </string>
     <string name="Truck_Owner">ट्रक मालिक </string> //new
     <string name="Driver">ड्राइवर </string>           //new
     <string name="Search_Driver_by_Number">नंबर के आधार पर ड्राइवर खोजें</string>
@@ -248,7 +248,7 @@
 
     //-------------------------------------- Company Details ---------------------------------------
     <string name="company_name">कम्पनी का नाम* </string>
-    <string name="company_address">कम्पनी का पता* </string>
+    <string name="company_address">कम्पनी का एड्रेस* </string>
     <string name="company_name_hint">कम्पनी का नाम दर्ज करें </string>
     <string name="gst_number_hint">जीएसटी नंबर* </string>
     <string name="pan_number">पैन नंबर* </string>
@@ -259,7 +259,7 @@
     <string name="Proprietary">प्रोप्राइटरी </string>         //new
     <string name="Partnership">पार्टनरशिप </string>         //new          //dot
     <string name="Pvt_Ltd">प्राइवेट लिमिटेड. </string>               //New
-    <string name="Set_Address">पता सेट करें </string>         //new          //dot
+    <string name="Set_Address">एड्रेस सेट करें </string>         //new          //dot
 
     //---------------------------------------------Done-------------------------------------------------
 
@@ -268,7 +268,7 @@
     <string name="pan_and_aadhar">पैन एंड आधार </string>
     <string name="phone">फ़ोन: </string>
     <string name="firm">फर्म का नाम: </string>       //dot
-    <string name="addressColon">पता: </string>
+    <string name="addressColon">एड्रेस: </string>
     <string name="add_company">+ ऐड कम्पनी </string>
     <string name="Enter_PAN_Number">पैन नंबर दर्ज करें</string>
     <string name="Enter_Aadhar_Number">आधार नंबर दर्ज करें</string>
@@ -324,7 +324,7 @@
     <!--<string name="timeinmin">00:00</string>-->
     <string name="pickUpDateWithColon">पिक-अप डेट: </string>
     <string name="pickUpLocationWithColon"><p>  </p>पिक-अप: </string>
-    <string name="addressForPickUpLocation">शहर, राज्य, पिन कोड, पता </string>
+    <string name="addressForPickUpLocation">शहर, राज्य, पिन कोड, एड्रेस </string>
     <string name="dropLocationWithColon"><p>  </p>ड्रॉप : </string>
     <string name="no">नहीं </string>
     <string name="selectTruck">ट्रक चुनें </string>

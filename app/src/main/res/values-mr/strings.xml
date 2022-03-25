@@ -34,13 +34,13 @@
     <string name="name">Name*</string>
     <string name="name_hint">आपले नाव एंटर करा</string>
     <string name="email_id">तुमचा email ID एंटर करा (ऑप्शनल)</string>
-    <string name="location">पत्ता*</string>
+    <string name="location">एड्रेस*</string>
     <string name="select_state">राज्य</string>
     <string name="Select_State">राज्य निवडा</string>       //new
     <string name="Search_States">शोध राज्ये</string>
     <string name="select_city">शहर</string>
     <string name="pin_code">पिन कोड </string>
-    <string name="address">पत्ता शोधा किंवा टाइप करा</string>
+    <string name="address">एड्रेस शोधा किंवा टाइप करा</string>
     <string name="are_u_sp">ट्रक मालक / ड्रायव्हर / ब्रोकर? </string>
     <string name="truck_owner">मी एक ट्रक ओनर आहे </string>
     <string name="driver">मी एक ड्रायव्हर आहे</string>
@@ -83,7 +83,7 @@
     //---------------------------------------Personal Details Activity------------------------------
     <string name="Name">नाव: </string>       //new
     <string name="Email">ईमेल: </string>       //new
-    <string name="Address">पत्ता: </string>    //new
+    <string name="Address">एड्रेस: </string>    //new
     <string name="PANCard">पॅन कार्ड</string>
     <string name="Upload">अपलोड </string>
     <string name="UploadAny">खालीलपैकी कोणतेही अपलोड करा</string>
@@ -109,7 +109,7 @@
     <string name="Aadhar_Card_Uploaded_Successfully">आधार कार्ड अपलोड सक्सेस्फली </string>
     <string name="PAN_Card_not_Uploaded">पॅन कार्ड अपलोड केले नाही, कृपया पुन्हा प्रयत्न करा. </string>
     <string name="Aadhar_Card_not_Uploaded">आधार कार्ड अपलोड केले नाही, कृपया पुन्हा प्रयत्न करा. </string>
-    <string name="Personal_Details_added_successfully">परसोनल डिटेल्स सक्सेस्फली अडडेड </string>
+    <string name="Personal_Details_added_successfully">पर्सनल डिटेल्स सक्सेस्फली अडडेड </string>
     <string name="update_your_phone_number">तुम्हाला खरंच तुमचा फोन नंबर अपडेट करायचा आहे का? </string>
     <string name="Firm_Details">फर्म डिटेल्स </string>
     <string name="GST_No">जीएसटी नंबर: </string>
@@ -171,7 +171,7 @@
     <string name="Insurance_not_uploaded">इंश्योरेंस अपलोड केला नाही, कृपया पुन्हा प्रयत्न करा</string>
     <string name="Vehicle_Details_added_successfully">व्हीकल डिटेल्स अडडेड सक्सेस्फली </string>
     <string name="Add_Driver">+ ऐड ड्रायव्हर</string>
-    <string name="Skip">स्केप</string>
+    <string name="Skip">स्किप</string>
     <string name="You_cannot_bid_unless_you_have_a_Driver">तुमच्याकडे ड्रायव्हर असल्याशिवाय तुम्ही बिड लावू शकत नाही. </string>
     <string name="Assign_Truck">असाइन ट्रक </string>
     <string name="ReAssign_Truck">री-असाइन  ट्रक </string>
@@ -179,7 +179,7 @@
     <string name="Driver_Licence">ड्रायव्हर लायसन्स </string>
     <string name="Driver_Selfie">ड्रायव्हर सेल्फी </string>
     <string name="Select_Load_Type">लोड चा टाइप निवडा </string>       //new
-    <string name="Selected_Body_Type_Load_Type">निवडा बॉडी टाइप और लोड टाइप </string>     //new
+    <string name="Selected_Body_Type_Load_Type">निवडा बॉडी टाइप आणि लोड टाइप </string>     //new
 
     //----------------------------------------------------------------------------------------------
 
@@ -219,7 +219,7 @@
     <string name="ReAssign_Driver">ड्रायव्हर पुन्हा नियुक्त करा </string>
     <string name="Self">मी स्वता. </string>               //new
     <string name="Search">शोध </string>           //new
-    <string name="Current_Location">वर्तमान स्थान </string>
+    <string name="Current_Location">करंट लोकेशन </string>
     <string name="Truck_Owner">ट्रक ओनर </string> //new
     <string name="Driver">ड्रायव्हर </string>           //new
     <string name="Search_Driver_by_Number">नंबर द्वारा ड्रायव्हर शोधा </string>
@@ -247,7 +247,7 @@
 
     //-------------------------------------- Company Details ---------------------------------------
     <string name="company_name">कंपनी नाव* </string>
-    <string name="company_address">कंपनी पत्ता* </string>
+    <string name="company_address">कंपनी एड्रेस* </string>
     <string name="company_name_hint">कंपनीचे नाव एंटर करा</string>
     <string name="gst_number_hint">जीएसटी नंबर* </string>
     <string name="pan_number">पॅन नंबर*</string>
@@ -255,19 +255,19 @@
     <string name="Company_Details">कंपनी डिटेल्स </string>
     <string name="Company_Details_added_Successfully">कंपनी डिटेल्स अडडेड सक्सेस्फली</string>
     <string name="Company_Type">कंपनी टाइप* </string>      //new
-    <string name="Proprietary">प्रोप्राइटरी </string>         //new
+    <string name="Proprietary">मलाकी </string>         //new
     <string name="Partnership">पार्टनरशिप </string>         //new
     <string name="Pvt_Ltd">प्राइवेट लिमिटेड. </string>               //New
-    <string name="Set_Address">पत्ता सेट करा. </string>         //new
+    <string name="Set_Address">एड्रेस सेट करा. </string>         //new
 
     //---------------------------------------------Done-------------------------------------------------
 
     //--------------------------- Personal Details And Id Proof Activity ---------------------------
-    <string name="personal">पर्सनल आणि पत्ता</string>
+    <string name="personal">पर्सनल आणि एड्रेस</string>
     <string name="pan_and_aadhar">पॅन आणि आधार</string>
     <string name="phone">फोन: </string>
     <string name="firm">फर्मचे नाव: </string>
-    <string name="addressColon">पत्ता: </string>
+    <string name="addressColon">एड्रेस: </string>
     <string name="add_company">+ ऐड कंपनी</string>
     <string name="Enter_PAN_Number">पॅन नंबर एंटर करा. </string>
     <string name="Enter_Aadhar_Number">आधार नंबर प्रविष्ट करा. </string>
@@ -324,7 +324,7 @@
     <!--<string name="timeinmin">00:00</string>-->
     <string name="pickUpDateWithColon">पिक-अप डेट: </string>
     <string name="pickUpLocationWithColon"><p>  </p>पिक-अप: </string>
-    <string name="addressForPickUpLocation">शहर, राज्य, पिन कोड, पत्ता </string>
+    <string name="addressForPickUpLocation">शहर, राज्य, पिन कोड, एड्रेस </string>
     <string name="dropLocationWithColon"><p>  </p>ड्रॉप : </string>
     <string name="no">नाही</string>
     <string name="selectTruck">ट्रक निवडा </string>
