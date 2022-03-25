@@ -481,9 +481,9 @@
     <string name="Pay_and_Accept_Final_Offer">अंतिम ऑफर स्वीकारा आणि पेमेंट करा.</string>
     <string name="Select_Payment_Method">पेमेंट पद्धत निवडा</string>
     <string name="Payment_Method">पेमेंट पद्धत: </string>
-    <string name="To_Pay">पैसे देण्यासाठी (उतरवताना पैसे द्या)</string>
-    <string name="Pay_Now">आता पैसे द्या (एडवांस पैसे द्या)</string>
-    <string name="To_be_billed">बिल देण्यात येणार (पैसे द्या ट्रक मालकाला / ब्रोकर / ड्रायव्हर)</string>
+    <string name="To_Pay">To Pay (Pay while Unloading)</string>
+    <string name="Pay_Now">Pay Now (Pay in Advance)</string>
+    <string name="To_be_billed">To be billed (Pay to Truck Owner / Broker / Driver)</string>
     <string name="Select_Platform_Charges">प्लॅटफॉर्म शुल्क निवडा. </string>
     <string name="NLPL_will_take_ownership_of_delivery">3% एनएलपीएल डिलिव्हरीची एंड-टू-एंड मालकी घेईल </string>
     <string name="Connect_with_Driver_Truck_Owner_Broker">1% सह कनेक्ट करा ड्रायव्हर / ट्रक ओनर / ब्रोकर</string>
