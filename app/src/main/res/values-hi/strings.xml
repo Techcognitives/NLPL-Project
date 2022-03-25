@@ -23,7 +23,7 @@
     //new
     <string name="Invalid_OTP">इनवैलिड ओटीपी </string>
     <string name="six_digit_OTP">कृपया अपने मोबाइल नंबर पर भेजा गया ६ अंकों का ओटीपी दर्ज करें. </string>
-    <string name="OTP_sent_successfully">ओटीपी सेंड सुकसेस्सफुल्ली </string>
+    <string name="OTP_sent_successfully">ओटीपी सेंड सक्सेस्फली </string>
     <string name="OTP_sent_to">ओटीपी सेंड टू </string>
     <string name="Change_Number">चेंज नंबर </string>     //new
     <string name="Change">चेंज </string>
@@ -51,7 +51,7 @@
     //new
     <string name="Registration_as">रजिस्ट्रेशन जैसा </string>
     <string name="Load_Poster">लोड पोस्टर </string>
-    <string name="Registration_Successful">रजिस्ट्रेशन सुकसेस्सफुल्ली </string>
+    <string name="Registration_Successful">रजिस्ट्रेशन सक्सेस्फली </string>
     <string name="Welcome_to">आपका स्वागत है </string>
     <string name="Please_update_your_profile">\n\nकृपया अपनी प्रोफ़ाइल अपडेट करें और प्लेटफ़ॉर्म लाभों का पता लगाएं. </string>       //dot
     <string name="Dashboard">डैशबोर्ड </string>
@@ -100,16 +100,16 @@
     <string name="addDriver">+ ऐड ड्राइवर </string>
     //new
     <string name="Personal_Details">पर्सनल डिटेल्स </string>
-    <string name="Profile_Uploaded_Successfully">प्रोफ़ाइल सुकसेस्सफुल्ली अपलोड की गई है </string>         //dot
+    <string name="Profile_Uploaded_Successfully">प्रोफ़ाइल सक्सेस्फली अपलोड की गई है </string>         //dot
     <string name="Profile_not_Uploaded_please_try_again">प्रोफ़ाइल अपलोड नहीं की गई है, कृपया पुन: प्रयास करें </string>
     <string name="Profile_Picture">प्रोफ़ाइल पिक्चर </string>                                         //dot
-    <string name="Profile_Picture_added_successfully">प्रोफ़ाइल पिक्चर सुकसेस्सफुल्ली एडेड </string>
+    <string name="Profile_Picture_added_successfully">प्रोफ़ाइल पिक्चर सक्सेस्फली एडेड </string>
     <string name="Selfie_Uploaded">सेल्फी अपलोड की गई है </string>                                  //dot
-    <string name="PAN_Card_Uploaded_Successfully">पैन कार्ड सुकसेस्सफुल्ली अपलोड किया गया है </string>
-    <string name="Aadhar_Card_Uploaded_Successfully">आधार कार्ड सुकसेस्सफुल्ली अपलोड किया गया है </string>
+    <string name="PAN_Card_Uploaded_Successfully">पैन कार्ड सक्सेस्फली अपलोड किया गया है </string>
+    <string name="Aadhar_Card_Uploaded_Successfully">आधार कार्ड सक्सेस्फली अपलोड किया गया है </string>
     <string name="PAN_Card_not_Uploaded">पैन कार्ड अपलोड नहीं किया गया है, कृपया पुन: प्रयास करें </string>
     <string name="Aadhar_Card_not_Uploaded">आधार कार्ड अपलोड नहीं किया गया है, कृपया पुन: प्रयास करें </string>
-    <string name="Personal_Details_added_successfully">पर्सनल डिटेल्स सुकसेस्सफुल्ली एडेड </string>
+    <string name="Personal_Details_added_successfully">पर्सनल डिटेल्स सक्सेस्फली एडेड </string>
     <string name="update_your_phone_number">क्या आप वास्तव में अपना फ़ोन नंबर अपडेट करना चाहते हैं? </string>
     <string name="Firm_Details">फर्म डिटेल्स </string>
     <string name="GST_No">जीएसटी नंबर: </string>
@@ -130,9 +130,9 @@
     <string name="bank_details">बैंक डिटेल्स </string>
     //new
     <string name="Edit_Bank_Details">बैंक डिटेल्स एडिट करें </string>             //dot
-    <string name="Cancelled_cheque_uploaded_successfully">कैन्सेलड किया गया चेक सुकसेस्सफुल्ली अपलोड किया गया है </string>
-    <string name="Cancelled_cheque_not_uploaded_successfully">कैन्सेलड किया गया चेक सुकसेस्सफुल्ली अपलोड नहीं किया गया है </string>
-    <string name="Bank_Details_added_successfully">बैंक डिटेल्स सुकसेस्सफुल्ली एडेड </string>
+    <string name="Cancelled_cheque_uploaded_successfully">कैन्सेलड किया गया चेक सक्सेस्फली अपलोड किया गया है </string>
+    <string name="Cancelled_cheque_not_uploaded_successfully">कैन्सेलड किया गया चेक सक्सेस्फली अपलोड नहीं किया गया है </string>
+    <string name="Bank_Details_added_successfully">बैंक डिटेल्स सक्सेस्फली एडेड </string>
     <string name="Account_number_does_not_match">अकाउंट नंबर मैच नहीं हो राहा है </string>
     <string name="Please_enter_correct_account_number_as_above.">कृपया ऊपर दिए गए अनुसार सही अकाउंट नंबर दर्ज करें. </string>
     <string name="My_Bank">मेरा बैंक </string>
@@ -165,11 +165,11 @@
     //new
     <string name="Edit_Vehicle_Details">व्हीकल डिटेल्स एडिट करें </string>          //dot
     <string name="Truck_Details">ट्रक डिटेल्स </string>
-    <string name="RC_Uploaded_Successfully">आरसी सुकसेस्सफुल्ली अपलोड किया गया है </string>
+    <string name="RC_Uploaded_Successfully">आरसी सक्सेस्फली अपलोड किया गया है </string>
     <string name="RC_not_Uploaded">आरसी अपलोड नहीं किया गया है, कृपया पुन: प्रयास करें </string>
-    <string name="Insurance_Uploaded_Successfully">इंश्योरेंस सुकसेस्सफुल्ली अपलोड किया गया है </string>
+    <string name="Insurance_Uploaded_Successfully">इंश्योरेंस सक्सेस्फली अपलोड किया गया है </string>
     <string name="Insurance_not_uploaded">इंश्योरेंस अपलोड नहीं किया गया है, कृपया पुन: प्रयास करें </string>
-    <string name="Vehicle_Details_added_successfully">व्हीकल डिटेल्स सुकसेस्सफुल्ली एडेड </string>
+    <string name="Vehicle_Details_added_successfully">व्हीकल डिटेल्स सक्सेस्फली एडेड </string>
     <string name="Add_Driver">+ ऐड ड्राइवर </string>
     <string name="Skip">स्किप </string>
     <string name="You_cannot_bid_unless_you_have_a_Driver">आप तब तक बिड नहीं लगा सकते जब तक कि आपके पास कोई ड्राइवर न हो </string>
@@ -201,14 +201,14 @@
     <string name="Edit_Driver_Details">ड्राइवर डिटेल्स एडिट करें </string>                    //dot
     <string name="Please_add_a_Driver">कृपया कोई ड्राइवर जोड़ें </string>
     <string name="Add">+ ऐड </string>
-    <string name="Driving_License_uploaded_successfully">ड्राइविंग लाइसेंस सुकसेस्सफुल्ली अपलोड किया गया है </string>
+    <string name="Driving_License_uploaded_successfully">ड्राइविंग लाइसेंस सक्सेस्फली अपलोड किया गया है </string>
     <string name="Driving_License_not_uploaded_please_try_again">ड्राइविंग लाइसेंस अपलोड नहीं किया गया है, कृपया पुन: प्रयास करें </string>
-    <string name="Driver_Selfie_uploaded_successfully">ड्राइवर सेल्फी सुकसेस्सफुल्ली अपलोड की गई है </string>
+    <string name="Driver_Selfie_uploaded_successfully">ड्राइवर सेल्फी सक्सेस्फली अपलोड की गई है </string>
     <string name="Driver_Selfie_not_uploaded">ड्राइवर सेल्फी अपलोड नहीं की गई है, कृपया पुन: प्रयास करें </string>
     <string name="Take_a_Photo">एक तस्वीर लो </string>
     <string name="Invalid_Mobile_Number">इनवैलिड मोबाइल नंबर </string>                        //dot
     <string name="Please_enter_a_10_digit_valid_mobile_number">कृपया एक १० अंकों का वैलिड मोबाइल नंबर दर्ज करें. </string>       //dot
-    <string name="Driver_Details_added_successfully">ड्राइवर डिटेल्स सुकसेस्सफुल्ली एडेड </string>
+    <string name="Driver_Details_added_successfully">ड्राइवर डिटेल्स सक्सेस्फली एडेड </string>
     <string name="Would_you_like_to_add_Drivers_Bank_Details">क्या आप ड्राइवर्स बैंक डिटेल्स जोड़ना चाहेंगे? </string>
     <string name="Later">बाद में </string>
     <string name="Please_Upload_From_Gallery">कृपया गैलरी से अपलोड करें </string>
@@ -254,7 +254,7 @@
     <string name="pan_number">पैन नंबर* </string>
     //new
     <string name="Company_Details">कम्पनी डिटेल्स </string>
-    <string name="Company_Details_added_Successfully">कम्पनी डिटेल्स सुकसेस्सफुल्ली एडेड </string>
+    <string name="Company_Details_added_Successfully">कम्पनी डिटेल्स सक्सेस्फली एडेड </string>
     <string name="Company_Type">कम्पनी टाइप* </string>      //new
     <string name="Proprietary">प्रोप्राइटरी </string>         //new
     <string name="Partnership">पार्टनरशिप </string>         //new          //dot
@@ -305,8 +305,8 @@
     <string name="Post_a_Load">पोस्ट ए लोड </string>
     <string name="Edit_a_Load">लोड एडिट करें </string>                //dot
     <string name="Update_a_Load">लोड अपडेट करें </string>
-    <string name="Load_Updated_Successfully">लोड सुकसेस्सफुल्ली अपडेट किया गया हैं </string>
-    <string name="Load_Posted_Successfully">लोड पोस्ट सुकसेस्सफुल्ली </string>
+    <string name="Load_Updated_Successfully">लोड सक्सेस्फली अपडेट किया गया हैं </string>
+    <string name="Load_Posted_Successfully">लोड पोस्ट सक्सेस्फली </string>
     <string name="Delete_Load">डिलीट लोड </string>                       //dot
     <string name="Do_you_really_want_to_delete_load">क्या आप वास्तव में लोड हटाना चाहते हैं </string>        //dot
     <string name="Select_Material_Type">मटेरियल का टाइप चुनें </string>             //dot
@@ -362,15 +362,15 @@
     <string name="Your_Budget_is_Low">आपका बजट कम है </string>
     <string name="Your_Budget_is_Lower_than_the_Load_Poster">आपका बजट लोड पोस्टर से कम है </string>
     <string name="Bid_Revised_and_Responded">बिड संशोधित और जवाब दिया </string>             //dot
-    <string name="Bid_Revised_and_Responded_Successfully">बिड संशोधित और सुकसेस्सफुल्ली प्रतिसाद दिया </string>     //dot
+    <string name="Bid_Revised_and_Responded_Successfully">बिड संशोधित और सक्सेस्फली प्रतिसाद दिया </string>     //dot
     <string name="My_Bid_Response">मेरी बिड का प्रतिसाद </string>
     <string name="Withdraw_Bid">बिड वापस लेना </string>
     <string name="Do_you_really_want_to_withdraw_bid">क्या आप वास्तव में बिड वापस लेना चाहते हैं? </string>
-    <string name="Bid_is_withdrawn_successfully">बिड सुकसेस्सफुल्ली वापस ले ली जाती है. ग्राहक अब आपकी बिड नहीं देखेगा. </string>
+    <string name="Bid_is_withdrawn_successfully">बिड सक्सेस्फली वापस ले ली जाती है. ग्राहक अब आपकी बिड नहीं देखेगा. </string>
     <string name="Start_Trip">स्टार्ट ट्रिप करें </string>                          //dot
     <string name="View_Trip_Details">ट्रिप डिटेल्स देखें</string>
     <string name="Trip_Details">ट्रिप डिटेल्स</string>
-    <string name="Trip_Started_Successfully">ट्रिप स्टार्ट सुकसेस्सफुल्ली </string>        //dot
+    <string name="Trip_Started_Successfully">ट्रिप स्टार्ट सक्सेस्फली </string>        //dot
     <string name="You_can_track_your_trip_in_track_section">आप ट्रैक अनुभाग में अपनी ट्रिप को ट्रैक कर सकते हैं </string>
     <string name="Call">कॉल </string>
     <string name="Whats_App">Whats App </string>                         //dot
@@ -395,13 +395,13 @@
     <string name="Load_Poster_Dashboard">लोड पोस्टर डैशबोर्ड </string>
     <string name="Find_Trucks">फाइंड ट्रकों </string>             //dot
     <string name="Load_Response">लोड प्रतिसाद </string>                 //dot
-    <string name="Response_submitted_Successfully">प्रतिसाद सुकसेस्सफुल्ली सबमिट किया गया है </string>     //dot
-    <string name="Successfully_selected_three_Bidders">सुकसेस्सफुल्ली तीन बिड को चुनें </string>       //dot
+    <string name="Response_submitted_Successfully">प्रतिसाद सक्सेस्फली सबमिट किया गया है </string>     //dot
+    <string name="Successfully_selected_three_Bidders">सक्सेस्फली तीन बिड को चुनें </string>       //dot
     <string name="Please_Review_and_Accept_any_one_offer.">कृपया किसी भी एक प्रस्ताव की समीक्षा करें और स्वीकार करें </string>      //dot
     <string name="Accept_Final_Offer">अंतिम प्रस्ताव स्वीकार करें </string>      //dot
     <string name="Amount_To_Be_Billed_1">रकम | 1% बिल किया जाना है </string>
     <string name="Amount_Pay_Now_3">रकम | अब पेमेंट करें 3% </string>        //dot
-    <string name="Payment_Successful">पेमेंट सुकसेस्सफुल्ली </string>
+    <string name="Payment_Successful">पेमेंट सक्सेस्फली </string>
     <string name="Payment_Id">पेमेंट आईडी: </string>
     <string name="Payment_Failed">पेमेंट असफल </string>
     <string name="Your_transaction_has_failed._Please_try_again">आपका लेन-देन विफल हो गया है. कृपया पुन: प्रयास करें </string>
@@ -411,7 +411,7 @@
     <string name="Withdraw_Load">लोड निकालना </string>
     <string name="Do_you_want_to_withdraw_your_load_posting_or_withdraw_from_the_current_bidder.">क्या आप अपनी लोड पोस्टिंग वापस लेना चाहते हैं या वर्तमान बिड से वापस लेना चाहते हैं? </string>   //dot
     <string name="Withdraw_Bidder">बिड को वापस लेना </string>
-    <string name="Load_withdrawn_successfully_and_no_longer_visible_for_anyone">लोड सुकसेस्सफुल्ली वापस ले लिया गया है और अब किसी के लिए दिखाई नहीं दे रहा है </string>
+    <string name="Load_withdrawn_successfully_and_no_longer_visible_for_anyone">लोड सक्सेस्फली वापस ले लिया गया है और अब किसी के लिए दिखाई नहीं दे रहा है </string>
     <string name="Withdraw_from_current_Service_Provider">वर्तमान सेवा प्रोवाइडर से वापस लेना </string>
     <string name="Load_withdrawn_from_current_Service_Provider_and_visible_for_other_Service_Provider">वर्तमान सेवा प्रोवाइडर से वापस लिया गया है और अन्य सेवा प्रोवाइडर के लिए दिखाई देगा लोड </string>
     <string name="Back">बेक </string>              //dot
@@ -463,7 +463,7 @@
     <string name="Loads_for">के लिए लोड करता है </string>
     <string name="Load_ID">लोड आईडी : </string>
     <string name="Post_Bid">पोस्ट बिड </string>
-    <string name="Bid_Posted_Successfully">बिड पोस्ट सुकसेस्सफुल्ली </string>
+    <string name="Bid_Posted_Successfully">बिड पोस्ट सक्सेस्फली </string>
     <string name="Select_Truck_to_Bid">बिड लगाने के लिए ट्रक को चुनें </string>
     <string name="Add_a_Truck">एक ट्रक जोड़ें </string>
     <string name="Please_add_a_Truck_to_submit_your_response">कृपया अपनी प्रतिसाद सबमिट करने के लिए एक ट्रक जोड़ें </string>     //dot
