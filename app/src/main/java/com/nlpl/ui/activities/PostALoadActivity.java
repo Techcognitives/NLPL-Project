@@ -348,7 +348,7 @@ public class PostALoadActivity extends AppCompat {
                             if (paymentMethod.equals("PayNow")) {
                                 UpdatePostLoadDetails.updatePaymentMethod(loadId, advancePercentageInt);
                             } else {
-                                UpdatePostLoadDetails.updatePaymentMethod(loadId, paymentMethodText.getText().toString());
+                                UpdatePostLoadDetails.updatePaymentMethod(loadId, paymentMethod);
                             }
                         }
                         if (reActivate) {
@@ -749,7 +749,7 @@ public class PostALoadActivity extends AppCompat {
         if (paymentMethod.equals("PayNow")) {
             postLoadRequest.setPayment_type(advancePercentageInt);
         } else {
-            postLoadRequest.setPayment_type(paymentMethodText.getText().toString());
+            postLoadRequest.setPayment_type(paymentMethod);
         }
 
         if (reActivate) {
@@ -827,7 +827,16 @@ public class PostALoadActivity extends AppCompat {
                         dropPinCode = dropPinCodes;
                         dropPinCodeEdit.setText(dropPinCodes);
                         note_to_post_load.setText(notesFromLP);
-                        paymentMethodText.setText(paymentMethodAPI);
+                        paymentMethod= paymentMethodAPI;
+
+                        if (paymentMethodAPI.equals("ToPay")){
+                            paymentMethodText.setText(getString(R.string.Payment_Method) + getString(R.string.To_Pay));
+                        }else if(paymentMethodAPI.equals("ToBeBilled")){
+                            paymentMethodText.setText(getString(R.string.Payment_Method) + getString(R.string.To_be_billed));
+                        }else{
+                            paymentMethodText.setText(getString(R.string.Payment_Method) + getString(R.string.Pay) + paymentMethodAPI + getString(R.string.in_Advance));
+                        }
+
                     }
 
                 } catch (JSONException e) {

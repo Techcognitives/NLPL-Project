@@ -1236,14 +1236,8 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                         String dropCity = obj.getString("drop_city");
 
                         paymentTypeFromAPI = obj.getString("payment_type");
-                        Log.i("Payment Method:", paymentTypeFromAPI);
-                        if (paymentTypeFromAPI.equals("Payment Method:To Pay (Pay while Unloading)")) {
-                            paymentMethod = "ToPay";
-                        } else if (paymentTypeFromAPI.equals("Payment Method:To be billed (Pay to Truck Own") || paymentTypeFromAPI.equals("Payment Method:To be Billed (Pay to Truck Ow")) {
-                            paymentMethod = "ToBeBilled";
-                        } else {
-                            paymentMethod = "PayNow";
-                        }
+                        paymentMethod = paymentTypeFromAPI;
+
                         headingLoad.setText("Load Details: " + pickupCity + "-" + dropCity + "-000");
                     }
                 } catch (JSONException e) {
@@ -1299,8 +1293,8 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                 threePercentage = alert.findViewById(R.id.dialog_payment_three_percent_radio_button);
                 onePercentage = alert.findViewById(R.id.dialog_payment_one_percent_radio_button);
 
-                threePercentage.setText(platformFeesMain+"% NLPL will take end-to-end ownership of delivery");
-                onePercentage.setText(platformFeesBasic+"% Connect with Driver / Truck Owner / Broker");
+                threePercentage.setText(platformFeesMain + "% NLPL will take end-to-end ownership of delivery");
+                onePercentage.setText(platformFeesBasic + "% Connect with Driver / Truck Owner / Broker");
 
                 View stepOne, stepTwo;
                 stepOne = alert.findViewById(R.id.dialog_payment_step_one_view);
@@ -1345,7 +1339,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
 
                                 String valueInString = totalQuote;
                                 float num = parseFloat(valueInString);
-                                float val = (float) (num - (num * platformChargesMainInt/100));
+                                float val = (float) (num - (num * platformChargesMainInt / 100));
 
                                 float finalQuote = num - val;
                                 Log.i("Amount 3%", String.valueOf(finalQuote));
@@ -1384,8 +1378,8 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                                 alertMessage.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
                                 alertTitle.setText("Make Payment");
                                 alertMessage.setText("Payment Details\n\n" +
-                                        "FYT Platform Charges "+platformFeesMain+"%.              ₹     " + finalQuote + "\n" +
-                                        "(-) FYT Promotional Discount "+platformFeesMain+"%.  ₹   - " + finalQuote + "\n\n" +
+                                        "FYT Platform Charges " + platformFeesMain + "%.              ₹     " + finalQuote + "\n" +
+                                        "(-) FYT Promotional Discount " + platformFeesMain + "%.  ₹   - " + finalQuote + "\n\n" +
                                         "Your Final Payment                        ₹       0.00");
                                 alertPositiveButton.setText("Pay");
                                 alertNegativeButton.setText("Cancel");
@@ -1408,10 +1402,10 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
 
                                 String valueInString = totalQuote;
                                 float num = parseFloat(valueInString);
-                                float val = (float) (num - (num * platformChargesBasicInt/100));
+                                float val = (float) (num - (num * platformChargesBasicInt / 100));
 
                                 float finalQuote = num - val;
-                                Log.i("Amount "+ platformFeesBasic+"%", String.valueOf(finalQuote));
+                                Log.i("Amount " + platformFeesBasic + "%", String.valueOf(finalQuote));
 
 //                                makePayment(customerNameAPI, String.valueOf(finalQuote), customerEmail, s1);
 //                                AlertDialog.Builder builder = new AlertDialog.Builder(CustomerDashboardActivity.this);
@@ -1446,8 +1440,8 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                                 alertMessage.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
                                 alertTitle.setText("Make Payment");
                                 alertMessage.setText("Payment Details\n\n" +
-                                        "FYT Platform Charges "+platformFeesBasic+"%.              ₹     " + finalQuote + "\n" +
-                                        "(-) FYT Promotional Discount "+platformFeesBasic+"%.  ₹   - " + finalQuote + "\n\n" +
+                                        "FYT Platform Charges " + platformFeesBasic + "%.              ₹     " + finalQuote + "\n" +
+                                        "(-) FYT Promotional Discount " + platformFeesBasic + "%.  ₹   - " + finalQuote + "\n\n" +
                                         "Your Final Payment                       ₹       0.00");
                                 alertPositiveButton.setText("Pay");
                                 alertNegativeButton.setText("Cancel");
@@ -1469,7 +1463,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
 
                                 String valueInString = totalQuote;
                                 float num = parseFloat(valueInString);
-                                float val = (float) (num - (num * platformChargesMainInt/100));
+                                float val = (float) (num - (num * platformChargesMainInt / 100));
 
                                 float finalQuote = num - val;
                                 Log.i("Amount 3%", String.valueOf(finalQuote));
@@ -1507,8 +1501,8 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                                 alertMessage.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
                                 alertTitle.setText("Make Payment");
                                 alertMessage.setText("Payment Details\n\n" +
-                                        "FYT Platform Charges "+platformFeesMain+"%.              ₹     " + finalQuote + "\n" +
-                                        "(-) FYT Promotional Discount "+platformFeesMain+"%.  ₹   - " + finalQuote + "\n\n" +
+                                        "FYT Platform Charges " + platformFeesMain + "%.              ₹     " + finalQuote + "\n" +
+                                        "(-) FYT Promotional Discount " + platformFeesMain + "%.  ₹   - " + finalQuote + "\n\n" +
                                         "Your Final Payment                        ₹       0.00");
                                 alertPositiveButton.setText("Pay");
                                 alertNegativeButton.setText("Cancel");
@@ -1530,7 +1524,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
 
                                 String valueInString = totalQuote;
                                 float num = parseFloat(valueInString);
-                                float val = (float) (num - (num * platformChargesBasicInt/100));
+                                float val = (float) (num - (num * platformChargesBasicInt / 100));
 
                                 float finalQuote = num - val;
                                 Log.i("Amount 1%", String.valueOf(finalQuote));
@@ -1568,8 +1562,8 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                                 alertMessage.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
                                 alertTitle.setText("Make Payment");
                                 alertMessage.setText("Payment Details\n\n" +
-                                        "FYT Platform Charges "+platformFeesBasic+"%.              ₹     " + finalQuote + "\n" +
-                                        "(-) FYT Promotional Discount "+platformFeesBasic+"%.  ₹   - " + finalQuote + "\n\n" +
+                                        "FYT Platform Charges " + platformFeesBasic + "%.              ₹     " + finalQuote + "\n" +
+                                        "(-) FYT Promotional Discount " + platformFeesBasic + "%.  ₹   - " + finalQuote + "\n\n" +
                                         "Your Final Payment                       ₹       0.00");
                                 alertPositiveButton.setText("Pay");
                                 alertNegativeButton.setText("Cancel");
@@ -1587,11 +1581,13 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                                     RearrangeItems();
                                 });
                                 //------------------------------------------------------------------
-                            } else if (paymentMethod.equals("PayNow") && paymentPercentage.equals("threePercent")) {
+                            }
+                        } else {
+                            if (paymentPercentage.equals("threePercent")) {
                                 String valueInString = totalQuote;
                                 float percentInFloat = Float.parseFloat(paymentTypeFromAPI);
                                 float num = parseFloat(valueInString);
-                                float val = (float) (num - (num * platformChargesMainInt/100));
+                                float val = (float) (num - (num * platformChargesMainInt / 100));
                                 float percentVal = (float) (num - (num * percentInFloat / 100));
 
                                 float semiFinalQuote = num - val;
@@ -1632,8 +1628,8 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                                 alertTitle.setText("Make Payment");
                                 alertMessage.setText("Payment Details\n\n" +
                                         "Advance Payment " + paymentTypeFromAPI + "%                  ₹     " + percentVal + "\n" +
-                                        "FYT Platform Charges "+platformFeesMain+"%.              ₹     " + semiFinalQuote + "\n" +
-                                        "(-) FYT Promotional Discount "+platformFeesMain+"%.  ₹   - " + semiFinalQuote + "\n\n" +
+                                        "FYT Platform Charges " + platformFeesMain + "%.              ₹     " + semiFinalQuote + "\n" +
+                                        "(-) FYT Promotional Discount " + platformFeesMain + "%.  ₹   - " + semiFinalQuote + "\n\n" +
                                         "Your Final Payment                        ₹       0.00");
                                 alertPositiveButton.setText("Pay");
                                 alertNegativeButton.setText("Cancel");
@@ -1650,11 +1646,11 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                                     makePayment(customerNameAPI, String.valueOf(percentVal), customerEmail, s1);
                                 });
                                 //------------------------------------------------------------------
-                            } else if (paymentMethod.equals("PayNow") && paymentPercentage.equals("onePercent")) {
+                            } else if (paymentPercentage.equals("onePercent")) {
                                 String valueInString = totalQuote;
                                 float percentInFloat = Float.parseFloat(paymentTypeFromAPI);
                                 float num = parseFloat(valueInString);
-                                float val = (float) (num - (num * platformChargesBasicInt/100));
+                                float val = (float) (num - (num * platformChargesBasicInt / 100));
                                 float percentVal = (float) (num - (num * percentInFloat / 100));
 
                                 float semiFinalQuote = num - val;
@@ -1695,8 +1691,8 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                                 alertTitle.setText("Make Payment");
                                 alertMessage.setText("Payment Details\n\n" +
                                         "Advance Payment " + paymentTypeFromAPI + "%                  ₹     " + percentVal + "\n" +
-                                        "FYT Platform Charges "+platformFeesBasic+"%.              ₹     " + semiFinalQuote + "\n" +
-                                        "(-) FYT Promotional Discount "+platformFeesBasic+"%.  ₹   - " + semiFinalQuote + "\n\n" +
+                                        "FYT Platform Charges " + platformFeesBasic + "%.              ₹     " + semiFinalQuote + "\n" +
+                                        "(-) FYT Promotional Discount " + platformFeesBasic + "%.  ₹   - " + semiFinalQuote + "\n\n" +
                                         "Your Final Payment                       ₹       0.00");
                                 alertPositiveButton.setText("Pay");
                                 alertNegativeButton.setText("Cancel");
