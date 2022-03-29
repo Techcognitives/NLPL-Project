@@ -49,7 +49,7 @@
     <string name="customer">मी एक लोड पोस्टर आहे </string>
     <string name="yes">होय </string>
     //new
-    <string name="Registration_as">नोंदणी म्हणून </string>
+    <string name="Registration_as">म्हणून नोंदणी करा<p> </p></string>
     <string name="Load_Poster">लोड पोस्टर </string>
     <string name="Registration_Successful">नोंदणी यशस्वी</string>
     <string name="Welcome_to">आपले स्वागत आहे. </string>
