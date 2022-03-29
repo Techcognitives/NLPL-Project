@@ -454,9 +454,9 @@
     <string name="No_Load_Posted">कोई लोड पोस्ट नहीं</string>
     <string name="No_Load_Accepted">कोई लोड स्वीकार नहीं किया गया है </string>
     <string name="Accepted">स्वीकार </string>
-    <string name="You_Responded">आपको जवाब</string>
-    <string name="You_Withdrawn">आपको/n वापस ले लिया </string>
-    <string name="You_Responded_singleLine">आपको जवाब</string>
+    <string name="You_Responded">आपने जवाब दिया</string>
+    <string name="You_Withdrawn">आपने/n वापस ले लिया </string>
+    <string name="You_Responded_singleLine">आपने जवाब दिया</string>
     <string name="Accept_Revised">संशोधित स्वीकार करें</string>
     <string name="Customer_Withdrawn">ग्राहक ने लोड वापस लिया </string>
     <string name="Accept_Final_Offer_newLine">स्वीकार\n अंतिम प्रस्ताव </string>
