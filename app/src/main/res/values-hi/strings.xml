@@ -384,7 +384,7 @@
     <string name="SP_Withdrawn">एस.पी. वापस लिया गया है </string>
     <string name="View_Consignment">देखें भेजा गया मटेरियल </string>
     <string name="Enter_Appropriate_Quote">उपयुक्त उद्धरण दर्ज करें </string>
-    <string name="You_cannot_bid_less_than_50_of_customer_Budget">आप ग्राहक बजट के ५0% से कम बोली नहीं लगा सकते</string>
+    <string name="You_cannot_bid_less_than_50_of_customer_Budget">आप ग्राहक बजट के ५0% से कम बिड नहीं लगा सकते</string>
     <string name="Edit_Load">एडिट लोड</string>
     <string name="Would_you_like_to_edit_your_Load">क्या आप अपना लोड एडिट करना चाहेंगे?</string>
 

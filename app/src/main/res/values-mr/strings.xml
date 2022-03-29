@@ -384,7 +384,7 @@
     <string name="SP_Withdrawn">एस.पीं. नी माघार घेतली</string>
     <string name="View_Consignment">मटेरियल पहा</string>
     <string name="Enter_Appropriate_Quote">योग्य कोट एंटर करा</string>
-    <string name="You_cannot_bid_less_than_50_of_customer_Budget">आपण ग्राहक बजेटच्या ५0% पेक्षा कमी बोली लावू शकत नाही</string>
+    <string name="You_cannot_bid_less_than_50_of_customer_Budget">आपण ग्राहक बजेटच्या ५0% पेक्षा कमी बिड लावू शकत नाही</string>
     <string name="Edit_Load">एडिट लोड</string>
     <string name="Would_you_like_to_edit_your_Load">तुम्हाला तुमचा लोड एडिट करायचा आहे का?</string>
 
