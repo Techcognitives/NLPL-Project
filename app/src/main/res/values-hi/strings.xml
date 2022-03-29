@@ -109,7 +109,7 @@
     <string name="Aadhar_Card_Uploaded_Successfully">आधार कार्ड सफलतापूर्वक अपलोड किया गया है </string>
     <string name="PAN_Card_not_Uploaded">पैन कार्ड अपलोड नहीं किया गया है, कृपया पुन: प्रयास करें </string>
     <string name="Aadhar_Card_not_Uploaded">आधार कार्ड अपलोड नहीं किया गया है, कृपया पुन: प्रयास करें </string>
-    <string name="Personal_Details_added_successfully">पर्सनल जानकारी सफलतापूर्वक एडेड </string>
+    <string name="Personal_Details_added_successfully">पर्सनल जानकारी एडिट सफलतापूर्वक </string>
     <string name="update_your_phone_number">अपना फ़ोन नंबर अपडेट करें. </string>
     <string name="Firm_Details">फर्म जानकारी </string>
     <string name="GST_No">जीएसटी नंबर: </string>
@@ -169,7 +169,7 @@
     <string name="RC_not_Uploaded">आरसी अपलोड नहीं किया गया है, कृपया पुन: प्रयास करें </string>
     <string name="Insurance_Uploaded_Successfully">इंश्योरेंस सफलतापूर्वक अपलोड किया गया है </string>
     <string name="Insurance_not_uploaded">इंश्योरेंस अपलोड नहीं किया गया है, कृपया पुन: प्रयास करें </string>
-    <string name="Vehicle_Details_added_successfully">वाहन जानकारी सफलतापूर्वक एडेड </string>
+    <string name="Vehicle_Details_added_successfully">वाहन जानकारी एडिट सफलतापूर्वक </string>
     <string name="Add_Driver">+ ड्राइवर जोड़ें </string>
     <string name="Skip">स्किप </string>
     <string name="You_cannot_bid_unless_you_have_a_Driver">आप तब तक बिड नहीं लगा सकते जब तक कि आपके पास कोई ड्राइवर न हो </string>
@@ -208,7 +208,7 @@
     <string name="Take_a_Photo">एक तस्वीर लो </string>
     <string name="Invalid_Mobile_Number">अमान्य मोबाइल नंबर </string>                        //dot
     <string name="Please_enter_a_10_digit_valid_mobile_number">कृपया एक १० अंकों का मान्य मोबाइल नंबर दर्ज करें. </string>       //dot
-    <string name="Driver_Details_added_successfully">ड्राइवर जानकारी सफलतापूर्वक एडेड </string>
+    <string name="Driver_Details_added_successfully">ड्राइवर जानकारी एडिट सफलतापूर्वक </string>
     <string name="Would_you_like_to_add_Drivers_Bank_Details">क्या आप ड्राइवर्स बैंक जानकारी जोड़ना चाहेंगे? </string>
     <string name="Later">बाद में </string>
     <string name="Please_Upload_From_Gallery">कृपया गैलरी से अपलोड करें </string>
@@ -254,7 +254,7 @@
     <string name="pan_number">पैन नंबर* </string>
     //new
     <string name="Company_Details">कम्पनी जानकारी </string>
-    <string name="Company_Details_added_Successfully">कम्पनी जानकारी सफलतापूर्वक एडेड </string>
+    <string name="Company_Details_added_Successfully">कम्पनी जानकारी एडिट सफलतापूर्वक </string>
     <string name="Company_Type">कम्पनी टाइप* </string>      //new
     <string name="Proprietary">प्रोप्राइटरी </string>         //new
     <string name="Partnership">पार्टनरशिप </string>         //new          //dot
