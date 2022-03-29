@@ -52,10 +52,28 @@
         android:textColor="@color/light_black"
         android:textColorHint="@color/hint"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/vehicle_details_select_model"
+        app:layout_constraintBottom_toTopOf="@+id/bsjdufcsdkcs"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vehicle_details_vehicle_number_text" />
+
+
+    <TextView
+        android:id="@+id/bsjdufcsdkcs"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/OR"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/vehicle_details_rc_book_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vehicle_details_vehicle_number_edit2" />
 
     <include
         android:id="@+id/vehicle_details_action_bar"
@@ -88,7 +106,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"
         android:background="@drawable/edit_text_border_small_black"
         android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
@@ -108,7 +126,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vehicle_details_vehicle_number_edit2" />
+        app:layout_constraintTop_toBottomOf="@+id/vehicle_details_rc_book_constrain" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/vehicle_details_rc_book_constrain"
@@ -118,7 +136,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:background="@drawable/shadow_file"
-        app:layout_constraintBottom_toTopOf="@+id/vehicle_details_insurance_text_view"
+        app:layout_constraintBottom_toTopOf="@+id/vehicle_details_select_model"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -227,7 +245,6 @@
         android:id="@+id/vehicle_details_rc_book_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:paddingStart="5dp"
         android:paddingEnd="0dp"
         android:text="@string/rc_book"
@@ -238,7 +255,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vehicle_details_vehicle_details" />
+        app:layout_constraintTop_toBottomOf="@+id/bsjdufcsdkcs" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/vehicle_details_insurance_constrain"
@@ -336,7 +353,6 @@
         android:id="@+id/vehicle_details_insurance_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:paddingStart="5dp"
         android:paddingEnd="0dp"
         android:text="@string/uploadInsurance"
@@ -347,7 +363,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vehicle_details_rc_book_constrain" />
+        app:layout_constraintTop_toBottomOf="@+id/vehicle_details_vehicle_details" />
 
     <TextView
         android:id="@+id/vehicle_details_vehicle_details"
@@ -356,13 +372,12 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
-        android:textColor="@color/light_black"
         android:hint="@string/Selected_Body_Type_Load_Type"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
         android:paddingStart="5dp"
+        android:paddingTop="5dp"
         android:paddingEnd="2dp"
-        app:layout_constraintBottom_toTopOf="@+id/vehicle_details_rc_book_text"
+        android:paddingBottom="5dp"
+        android:textColor="@color/light_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vehicle_details_select_feet" />

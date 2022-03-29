@@ -5,6 +5,7 @@ import com.nlpl.model.Responses.AadharInfoResponse;
 import com.nlpl.model.Responses.BankVerificationResponse;
 import com.nlpl.model.Responses.DLVerificationResponse;
 import com.nlpl.model.Responses.PANVerificationResponse;
+import com.nlpl.model.Responses.VehicleVerificationResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -19,6 +20,9 @@ public interface VerificationService {
 
     @GET("/userDl/dlDt/{userId}/{dlNumber}/{dob}")
     Call<DLVerificationResponse> checkDL(@Path("userId") String userId, @Path("dlNumber") String dlNumber, @Path("dob") String dob);
+
+    @GET("/userRc/vehicleRC/{userId}/{vehicleRc}")
+    Call<VehicleVerificationResponse> checkVehicle(@Path("userId") String userid, @Path("vehicleRc") String vehicleRc);
 
     @GET("/userAadhaar/aadhaarDetails/{userId}/{userAadhaar}")
     Call<AadharIdResponse> checkAadhar(@Path("userId") String userId, @Path("userAadhaar") String userAadhaar);

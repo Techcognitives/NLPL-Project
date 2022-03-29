@@ -88,7 +88,7 @@ public class BankDetailsActivity extends AppCompat {
     int GET_FROM_GALLERY = 0;
     int CAMERA_PIC_REQUEST1 = 1;
     ImageView cancelledCheckImage, previewCancelledCheque, previewDialogCancelledChequeImageView, canceledCheckBlurImage, accountDetailsBlurImage;
-    Boolean isEdit, isImgUploaded = false;
+    Boolean isEdit, isImgUploaded = false, bankVerified = false;
 
     RadioButton canceledCheckRadioButton, acDetailsRadioButton;
     String bankId, mobile, userRoleAPI, ccUploadedAPI;
@@ -468,42 +468,46 @@ public class BankDetailsActivity extends AppCompat {
                     UpdateBankDetails.updateBankIFSICode(bankId, ifscCode.getText().toString());
                     JumpTo.goToViewBankDetailsActivity(BankDetailsActivity.this, userId, mobile, true);
                 } else {
-                    saveBank(createBankAcc());
-                    //----------------------- Alert Dialog -------------------------------------------------
-                    Dialog alert = new Dialog(BankDetailsActivity.this);
-                    alert.setContentView(R.layout.dialog_alert_single_button);
-                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                    lp.copyFrom(alert.getWindow().getAttributes());
-                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-                    lp.gravity = Gravity.CENTER;
+                    if (bankVerified) {
+                        saveBank(createBankAcc());
+                        //----------------------- Alert Dialog -------------------------------------------------
+                        Dialog alert = new Dialog(BankDetailsActivity.this);
+                        alert.setContentView(R.layout.dialog_alert_single_button);
+                        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                        lp.copyFrom(alert.getWindow().getAttributes());
+                        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                        lp.gravity = Gravity.CENTER;
 
-                    alert.show();
-                    alert.getWindow().setAttributes(lp);
-                    alert.setCancelable(true);
+                        alert.show();
+                        alert.getWindow().setAttributes(lp);
+                        alert.setCancelable(true);
 
-                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+                        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                    alertTitle.setText(getString(R.string.bank_details));
-                    alertMessage.setText(getString(R.string.Bank_Details_added_successfully));
-                    alertPositiveButton.setVisibility(View.GONE);
-                    alertNegativeButton.setText(getString(R.string.ok));
-                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+                        alertTitle.setText(getString(R.string.bank_details));
+                        alertMessage.setText(getString(R.string.Bank_Details_added_successfully));
+                        alertPositiveButton.setVisibility(View.GONE);
+                        alertNegativeButton.setText(getString(R.string.ok));
+                        alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
 
-                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            alert.dismiss();
-                            //Update User Bank (IsBankAdded)
-                            UpdateUserDetails.updateUserIsBankDetailsGiven(userId, "1");
-                            JumpTo.goToViewBankDetailsActivity(BankDetailsActivity.this, userId, mobile, true);
-                        }
-                    });
+                        alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                alert.dismiss();
+                                //Update User Bank (IsBankAdded)
+                                UpdateUserDetails.updateUserIsBankDetailsGiven(userId, "1");
+                                JumpTo.goToViewBankDetailsActivity(BankDetailsActivity.this, userId, mobile, true);
+                            }
+                        });
+                    } else {
+                        Toast.makeText(this, "Please enter correct Bank Details", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
             }
@@ -553,7 +557,9 @@ public class BankDetailsActivity extends AppCompat {
             if (accNo1.equals(reAccNo1)) {
                 reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
                 if (ifscCode1.length() == 11 && !accNo1.isEmpty() && !reAccNo1.isEmpty()) {
-                    checkBankDetail(accNo1, ifscCode1);
+                    if (!bankName1.isEmpty()) {
+                        checkBankDetail(accNo1, ifscCode1);
+                    }
                 }
             } else {
                 reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border_red));
@@ -585,6 +591,7 @@ public class BankDetailsActivity extends AppCompat {
                             reAccount.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success_small, 0);
                             ifscCode.setEnabled(false);
                             ifscCode.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success_small, 0);
+                            bankVerified = true;
                         } else {
                             Toast.makeText(BankDetailsActivity.this, "Please enter a valid Bank Details", Toast.LENGTH_SHORT).show();
                         }
@@ -706,9 +713,13 @@ public class BankDetailsActivity extends AppCompat {
 
                 if (!isEdit) {
                     bankName.getText().clear();
+                    bankName.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                     accountNo.getText().clear();
+                    accountNo.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                     reAccount.getText().clear();
+                    reAccount.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                     ifscCode.getText().clear();
+                    ifscCode.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 }
 
                 String bankName2 = bankName.getText().toString().trim();
@@ -981,7 +992,6 @@ public class BankDetailsActivity extends AppCompat {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
         if (userRoleAPI.equals("Customer")) {
             JumpTo.goToCustomerDashboard(BankDetailsActivity.this, mobile, true);
 

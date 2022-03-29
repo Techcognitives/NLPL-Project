@@ -17,6 +17,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -261,7 +262,6 @@ public class RegistrationActivity extends AppCompat {
                 brokerButton.setChecked(true);
                 customerButton.setChecked(false);
                 role = "Broker";
-
                 break;
 
             case R.id.role_dialog_customer:
@@ -285,6 +285,47 @@ public class RegistrationActivity extends AppCompat {
             }
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+            Dialog alert = new Dialog(this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(false);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText("Provide Access");
+            alertMessage.setText("Please provide location access");
+
+            alertPositiveButton.setText("Go to settings");
+            alertPositiveButton.setVisibility(View.VISIBLE);
+
+            alertNegativeButton.setText("OK");
+            alertNegativeButton.setVisibility(View.VISIBLE);
+
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.button_blue)));
+
+            alertNegativeButton.setOnClickListener(view1 -> {
+                alert.dismiss();
+
+            });
+            alertPositiveButton.setOnClickListener(View2 -> {
+                alert.dismiss();
+                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                intent.setData(uri);
+                startActivity(intent);
+            });
         }
     }
 

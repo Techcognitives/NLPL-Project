@@ -847,14 +847,12 @@ public class DriverDetailsActivity extends AppCompat {
                 });
                 //------------------------------------------------------------------------------------------
             }
-
         }
         return "";
     }
 
 
     private String selfieImagePicker() {
-
         if (requestCode == CAMERA_PIC_REQUEST) {
             isSelfieUploded = true;
 
@@ -903,7 +901,6 @@ public class DriverDetailsActivity extends AppCompat {
                     }
                 });
                 //------------------------------------------------------------------------------------------
-
                 return path;
             } catch (Exception e) {
                 //----------------------- Alert Dialog -------------------------------------------------
@@ -950,8 +947,6 @@ public class DriverDetailsActivity extends AppCompat {
                 });
                 //------------------------------------------------------------------------------------------
             }
-
-
         } else if (requestCode == GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
 //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(DriverDetailsActivity.this);

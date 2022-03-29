@@ -1224,7 +1224,7 @@
     <string name="closed">Closed</string>
     <string name="tarpaulin">Tarpaulin</string>
     <string name="vehicle_number_edit">Enter Vehicle Number"</string>
-    <string name="rc_book">Upload RC Book*</string>
+    <string name="rc_book">Upload RC Book</string>
     <string name="rc_front">RC Book</string>
     <string name="uploadInsurance">Upload Insurance*</string>
     <string name="insurance">Insurance</string>

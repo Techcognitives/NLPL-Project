@@ -1085,20 +1085,22 @@ public class PersonalDetailsActivity extends AppCompat {
     }
 
     private void checkAadhar(String aadharNumber) {
-        Call<AadharIdResponse> aadharModelCall = ApiClient.getVerification().checkAadhar(userId, aadharNumber);
-        aadharModelCall.enqueue(new Callback<AadharIdResponse>() {
+        Call<AadharIdResponse> aadharIdResponseCall = ApiClient.getVerification().checkAadhar(userId, aadharNumber);
+        aadharIdResponseCall.enqueue(new Callback<AadharIdResponse>() {
             @Override
             public void onResponse(Call<AadharIdResponse> call, Response<AadharIdResponse> response) {
                 try {
-                    if (response.isSuccessful()){
-                        AadharIdResponse aadharModel = response.body();
-                        AadharIdResponse.UserList list = aadharModel.getData().get(0);
+                    if (response.isSuccessful()) {
+                        AadharIdResponse aadharIdResponse = response.body();
+                        Log.i("response", String.valueOf(response.body()));
+                        AadharIdResponse.UserList list = aadharIdResponse.getData().get(0);
                         requestIdForAadhar = list.getRequest_id();
-                    }else{
+                        Log.i("requestId", list.getRequest_id());
+                        Log.i("requestId1", requestIdForAadhar);
+                    } else {
                         Toast.makeText(PersonalDetailsActivity.this, "Please enter a valid Aadhar Number", Toast.LENGTH_SHORT).show();
                     }
-
-                }catch (Exception e){
+                } catch (Exception e) {
                     Toast.makeText(PersonalDetailsActivity.this, "Please enter a valid Aadhar Number", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -1110,7 +1112,7 @@ public class PersonalDetailsActivity extends AppCompat {
         });
     }
 
-    public void openDialogForOTPValidation(String requestIdForAadhar){
+    public void openDialogForOTPValidation(String requestIdForAadhar) {
         Dialog otpRequest = new Dialog(PersonalDetailsActivity.this);
         otpRequest.setContentView(R.layout.activity_otp_code);
         otpRequest.getWindow().setBackgroundDrawable(getDrawable(R.drawable.all_rounded_small));
@@ -1141,7 +1143,7 @@ public class PersonalDetailsActivity extends AppCompat {
     }
 
     public void checkAadharWithOTP(String requestIdForAadhar, String otp) {
-        Log.i("AADHAR", userId+"/"+aadharNumber.getText().toString()+"/"+requestIdForAadhar+"/"+otp);
+        Log.i("AADHAR", userId + "/" + aadharNumber.getText().toString() + "/" + requestIdForAadhar + "/" + otp);
         Call<AadharInfoResponse> responseCall = ApiClient.getVerification().checkAadharWithOTP(userId, aadharNumber.getText().toString(), requestIdForAadhar, otp);
         responseCall.enqueue(new Callback<AadharInfoResponse>() {
             @Override

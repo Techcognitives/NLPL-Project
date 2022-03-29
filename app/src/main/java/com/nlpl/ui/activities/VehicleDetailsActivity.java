@@ -42,8 +42,10 @@ import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.Requests.AddTruckRequest;
 import com.nlpl.model.Responses.AddTruckResponse;
+import com.nlpl.model.Responses.BankVerificationResponse;
 import com.nlpl.model.Responses.UploadTruckInsuranceResponse;
 import com.nlpl.model.Responses.UploadTruckRCResponse;
+import com.nlpl.model.Responses.VehicleVerificationResponse;
 import com.nlpl.model.UpdateMethods.UpdateTruckDetails;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
 import com.nlpl.utils.ApiClient;
@@ -92,7 +94,7 @@ public class VehicleDetailsActivity extends AppCompat {
     int CAMERA_PIC_REQUEST2 = 12;
 
     String userId, truckId, vehicleNumberAPI, truckModelAPI, truckCapacityAPI;
-    Boolean isRcEdited = false, isInsuranceEdited = false, fromBidNow = true, isEdit, isRcUploaded = false, isInsurance = false, isAssignTruck = false;
+    Boolean isRcEdited = false, isInsuranceEdited = false, fromBidNow = true, isEdit, isRcUploaded = false, isInsurance = false, isAssignTruck = false, vehicleVerified = false;
 
     private RequestQueue mQueue;
 
@@ -164,6 +166,8 @@ public class VehicleDetailsActivity extends AppCompat {
         vehicleNumberEdit.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         vehicleNumberEdit.setFilters(new InputFilter[]{filter, new InputFilter.LengthFilter(maxLength)});
+
+        vehicleNumberEdit.addTextChangedListener(vehicleTypeTextWatcher);
 
         if (isEdit) {
             actionBarTitle.setText(getString(R.string.Edit_Vehicle_Details));
@@ -725,17 +729,15 @@ public class VehicleDetailsActivity extends AppCompat {
 
 
     public void onClickVehicleDetailsOk(View view) {
-        if (vehicleNumberEdit.getText().toString().isEmpty()){
-            Toast.makeText(this, "Please Enter Vehicle Number", Toast.LENGTH_SHORT).show();
-        }else if (selectModel.getText().toString().isEmpty()){
+        if (vehicleNumberEdit.getText().toString().isEmpty() || isRcUploaded) {
+            Toast.makeText(this, "Enter Vehicle Number or Upload RC Book", Toast.LENGTH_SHORT).show();
+        } else if (selectModel.getText().toString().isEmpty()) {
             Toast.makeText(this, "Please Enter Body type", Toast.LENGTH_SHORT).show();
-        }else if (selectLoadType.getText().toString().isEmpty()){
+        } else if (selectLoadType.getText().toString().isEmpty()) {
             Toast.makeText(this, "Please Enter Load Type", Toast.LENGTH_SHORT).show();
-        } else if (!isRcUploaded){
-            Toast.makeText(this, "Please Upload RC Book", Toast.LENGTH_SHORT).show();
-        } else if (!isInsurance){
+        } else if (!isInsurance) {
             Toast.makeText(this, "Please Upload Insurance", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             if (isEdit) {
                 if (isRcEdited) {
                     uploadTruckRC(truckId, pathForRC);
@@ -753,118 +755,133 @@ public class VehicleDetailsActivity extends AppCompat {
                     UpdateTruckDetails.updateTruckCarryingCapacity(truckId, selectLoadType.getText().toString());
                 }
                 JumpTo.goToViewVehicleDetailsActivity(VehicleDetailsActivity.this, userId, mobile, true);
-
             } else {
-                saveTruck(createTruck());
-                //Update User Truck (IsTruckAdded)
-                UpdateUserDetails.updateUserIsTruckAdded(userId, "1");
-                //----------------------- Alert Dialog -------------------------------------------------
-                Dialog alert = new Dialog(VehicleDetailsActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
-                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                lp.copyFrom(alert.getWindow().getAttributes());
-                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.gravity = Gravity.CENTER;
-
-                alert.show();
-                alert.getWindow().setAttributes(lp);
-                alert.setCancelable(false);
-
-                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-                alertTitle.setText(getString(R.string.Truck_Details));
-                alertMessage.setText(getString(R.string.Vehicle_Details_added_successfully));
-                alertPositiveButton.setText(getString(R.string.Add_Driver));
-                alertPositiveButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        ShowAlert.loadingDialog(VehicleDetailsActivity.this);
-                        if (fromBidNow) {
-                            JumpTo.goToDriverDetailsActivity(VehicleDetailsActivity.this, userId, mobile, false, true, true, truckIdPass, null);
-                        }
-                        alert.dismiss();
-                        JumpTo.goToDriverDetailsActivity(VehicleDetailsActivity.this, userId, mobile, false, false, true, truckIdPass, null);
+                if (vehicleNumberEdit.getText().toString().isEmpty()) {
+                    if (vehicleVerified) {
+                        saveTruckDetails();
+                    } else {
+                        Toast.makeText(this, "Please Enter valid Vehicle Number or Upload RC Book", Toast.LENGTH_SHORT).show();
                     }
-                });
+                } else {
+                    if (isRcUploaded) {
+                        saveTruckDetails();
+                    } else {
+                        Toast.makeText(this, "Please Enter Vehicle Number or Upload RC Book", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }
+    }
 
-                alertNegativeButton.setText(getString(R.string.Skip));
-                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+    public void saveTruckDetails() {
+        saveTruck(createTruck());
+        //Update User Truck (IsTruckAdded)
+        UpdateUserDetails.updateUserIsTruckAdded(userId, "1");
+        //----------------------- Alert Dialog -------------------------------------------------
+        Dialog alert = new Dialog(VehicleDetailsActivity.this);
+        alert.setContentView(R.layout.dialog_alert);
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(alert.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
 
-                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        alert.dismiss();
-                        if (isDriverDetailsDoneAPI.equals("1")) {
+        alert.show();
+        alert.getWindow().setAttributes(lp);
+        alert.setCancelable(false);
+
+        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+        alertTitle.setText(getString(R.string.Truck_Details));
+        alertMessage.setText(getString(R.string.Vehicle_Details_added_successfully));
+        alertPositiveButton.setText(getString(R.string.Add_Driver));
+        alertPositiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShowAlert.loadingDialog(VehicleDetailsActivity.this);
+                if (fromBidNow) {
+                    JumpTo.goToDriverDetailsActivity(VehicleDetailsActivity.this, userId, mobile, false, true, true, truckIdPass, null);
+                }
+                alert.dismiss();
+                JumpTo.goToDriverDetailsActivity(VehicleDetailsActivity.this, userId, mobile, false, false, true, truckIdPass, null);
+            }
+        });
+
+        alertNegativeButton.setText(getString(R.string.Skip));
+        alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+
+        alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+                if (isDriverDetailsDoneAPI.equals("1")) {
+                    if (fromBidNow) {
+                        JumpTo.goToViewVehicleDetailsActivity(VehicleDetailsActivity.this, userId, mobile, true);
+                    } else {
+                        ShowAlert.loadingDialog(VehicleDetailsActivity.this);
+                        JumpTo.goToViewVehicleDetailsActivity(VehicleDetailsActivity.this, userId, mobile, true);
+                    }
+                } else {
+                    //----------------------- Alert Dialog -------------------------------------------------
+                    Dialog alert = new Dialog(VehicleDetailsActivity.this);
+                    alert.setContentView(R.layout.dialog_alert);
+                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(alert.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.gravity = Gravity.CENTER;
+
+                    alert.show();
+                    alert.getWindow().setAttributes(lp);
+                    alert.setCancelable(false);
+
+                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                    alertTitle.setText(getString(R.string.Driver_Details));
+                    alertMessage.setText(getString(R.string.You_cannot_bid_unless_you_have_a_Driver));
+                    alertPositiveButton.setText(getString(R.string.Add));
+                    alertPositiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            ShowAlert.loadingDialog(VehicleDetailsActivity.this);
+                            if (fromBidNow) {
+                                JumpTo.goToDriverDetailsActivity(VehicleDetailsActivity.this, userId, mobile, false, true, false, truckIdPass, null);
+                            }
+                            alert.dismiss();
+                            JumpTo.goToDriverDetailsActivity(VehicleDetailsActivity.this, userId, mobile, false, false, true, truckIdPass, null);
+                        }
+                    });
+
+                    alertNegativeButton.setText(getString(R.string.ok));
+                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+
+                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alert.dismiss();
+                            ShowAlert.loadingDialog(VehicleDetailsActivity.this);
                             if (fromBidNow) {
                                 JumpTo.goToViewVehicleDetailsActivity(VehicleDetailsActivity.this, userId, mobile, true);
                             } else {
-                                ShowAlert.loadingDialog(VehicleDetailsActivity.this);
                                 JumpTo.goToViewVehicleDetailsActivity(VehicleDetailsActivity.this, userId, mobile, true);
                             }
-                        } else {
-                            //----------------------- Alert Dialog -------------------------------------------------
-                            Dialog alert = new Dialog(VehicleDetailsActivity.this);
-                            alert.setContentView(R.layout.dialog_alert);
-                            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                            lp.copyFrom(alert.getWindow().getAttributes());
-                            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-                            lp.gravity = Gravity.CENTER;
-
-                            alert.show();
-                            alert.getWindow().setAttributes(lp);
-                            alert.setCancelable(false);
-
-                            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-                            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-                            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-                            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-                            alertTitle.setText(getString(R.string.Driver_Details));
-                            alertMessage.setText(getString(R.string.You_cannot_bid_unless_you_have_a_Driver));
-                            alertPositiveButton.setText(getString(R.string.Add));
-                            alertPositiveButton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    ShowAlert.loadingDialog(VehicleDetailsActivity.this);
-                                    if (fromBidNow) {
-                                        JumpTo.goToDriverDetailsActivity(VehicleDetailsActivity.this, userId, mobile, false, true, false, truckIdPass, null);
-                                    }
-                                    alert.dismiss();
-                                    JumpTo.goToDriverDetailsActivity(VehicleDetailsActivity.this, userId, mobile, false, false, true, truckIdPass, null);
-                                }
-                            });
-
-                            alertNegativeButton.setText(getString(R.string.ok));
-                            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
-
-                            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    alert.dismiss();
-                                    ShowAlert.loadingDialog(VehicleDetailsActivity.this);
-                                    if (fromBidNow) {
-                                        JumpTo.goToViewVehicleDetailsActivity(VehicleDetailsActivity.this, userId, mobile, true);
-                                    } else {
-                                        JumpTo.goToViewVehicleDetailsActivity(VehicleDetailsActivity.this, userId, mobile, true);
-                                    }
-                                }
-                            });
-                            //------------------------------------------------------------------------------------------
                         }
-                    }
-                });
-                //------------------------------------------------------------------------------------------
+                    });
+                    //------------------------------------------------------------------------------------------
+                }
             }
-        }
+        });
+        //------------------------------------------------------------------------------------------
     }
 
     //--------------------------------------create vehicle Details in API -------------------------------------
@@ -1149,12 +1166,63 @@ public class VehicleDetailsActivity extends AppCompat {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            vehicleDetails.setText(selectModel.getText().toString()+" - "+ selectLoadType.getText().toString());
+            vehicleDetails.setText(selectModel.getText().toString() + " - " + selectLoadType.getText().toString());
         }
 
         @Override
         public void afterTextChanged(Editable s) {
         }
     };
+
+    private TextWatcher vehicleTypeTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String truckNumber = vehicleNumberEdit.getText().toString().trim();
+            if (truckNumber.length() == 10) {
+                checkVehicle(truckNumber);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+    };
+
+    private void checkVehicle(String vehicleNumbers) {
+        Call<VehicleVerificationResponse> vehicleModelCall = ApiClient.getVerification().checkVehicle(userId, vehicleNumbers);
+        vehicleModelCall.enqueue(new Callback<VehicleVerificationResponse>() {
+            @Override
+            public void onResponse(Call<VehicleVerificationResponse> call, Response<VehicleVerificationResponse> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        VehicleVerificationResponse vehicleModel = response.body();
+                        VehicleVerificationResponse.UserList list = vehicleModel.getData().get(0);
+                        Log.i("Success Message", list.getSuccess());
+                        if (list.getSuccess().equals("1")) {
+                            vehicleNumberEdit.setEnabled(false);
+                            vehicleNumberEdit.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success_small, 0);
+                            vehicleVerified = true;
+                        } else {
+                            Toast.makeText(VehicleDetailsActivity.this, "Please enter valid Truck Details", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(VehicleDetailsActivity.this, "Please enter valid Truck Details", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(VehicleDetailsActivity.this, "Please enter valid Truck Details", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<VehicleVerificationResponse> call, Throwable t) {
+
+            }
+        });
+    }
 
 }
