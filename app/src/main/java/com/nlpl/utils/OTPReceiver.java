@@ -29,17 +29,21 @@ public class OTPReceiver extends BroadcastReceiver {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onReceive(Context context, Intent intent) {
-        SmsMessage[] smsMessages = Telephony.Sms.Intents.getMessagesFromIntent(intent);
-        for (SmsMessage smsMessage : smsMessages) {
-            String message_body = smsMessage.getMessageBody();
-            try {
-                String otp = message_body.substring(0, 6);
-                otpCode.setText(otp);
-                otpButton.performClick();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            SmsMessage[] smsMessages = Telephony.Sms.Intents.getMessagesFromIntent(intent);
+            for (SmsMessage smsMessage : smsMessages) {
+                String message_body = smsMessage.getMessageBody();
+                try {
+                    String otp = message_body.substring(0, 6);
+                    otpCode.setText(otp);
+                    otpButton.performClick();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 }

@@ -198,7 +198,7 @@ public class RegistrationActivity extends AppCompat {
             public void onClick(View view) {
                 roleDialog.dismiss();
                 Log.i("Role Selected", role);
-                if (role!=null) {
+                if (role != null) {
                     if (role.equals("Customer")) {
                         actionBarTitle.setText(getString(R.string.Registration_as) + getString(R.string.Load_Poster));
                     } else {
@@ -275,12 +275,16 @@ public class RegistrationActivity extends AppCompat {
     }
 
     public void onClickSkip(View view) {
-        if (role.equals("Customer")){
-            ShowAlert.loadingDialog(RegistrationActivity.this);
-            JumpTo.goToFindTrucksActivity(RegistrationActivity.this, null, mobile);
-        }else{
-            ShowAlert.loadingDialog(RegistrationActivity.this);
-            JumpTo.goToServiceProviderDashboard(RegistrationActivity.this, mobile, true);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (role.equals("Customer")) {
+                ShowAlert.loadingDialog(RegistrationActivity.this);
+                JumpTo.goToFindTrucksActivity(RegistrationActivity.this, null, mobile);
+            } else {
+                ShowAlert.loadingDialog(RegistrationActivity.this);
+                JumpTo.goToServiceProviderDashboard(RegistrationActivity.this, mobile, true);
+            }
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
     }
 
@@ -368,17 +372,17 @@ public class RegistrationActivity extends AppCompat {
     }
 
     public void onClickRegistration(View view) {
-        if (name.getText().toString().isEmpty()){
+        if (name.getText().toString().isEmpty()) {
             Toast.makeText(this, "Please Enter Your Name", Toast.LENGTH_SHORT).show();
-        }else if (address.getText().toString().isEmpty()){
+        } else if (address.getText().toString().isEmpty()) {
             Toast.makeText(this, "Please Enter Address", Toast.LENGTH_SHORT).show();
-        }else if (pinCode.getText().toString().isEmpty()){
+        } else if (pinCode.getText().toString().isEmpty()) {
             Toast.makeText(this, "Please Enter PIN Code", Toast.LENGTH_SHORT).show();
-        }else if (selectStateText.getText().toString().isEmpty()){
+        } else if (selectStateText.getText().toString().isEmpty()) {
             Toast.makeText(this, "Please Select State", Toast.LENGTH_SHORT).show();
-        }else if (selectDistrictText.getText().toString().isEmpty()){
+        } else if (selectDistrictText.getText().toString().isEmpty()) {
             Toast.makeText(this, "Please Select City", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             CreateUser.saveUser(CreateUser.createUser(name.getText().toString(), mobile, "91" + alternateMobile.getText().toString(), address.getText().toString(), role, email_id.getText().toString(), pinCode.getText().toString(), selectDistrictText.getText().toString(), selectStateText.getText().toString(), deviceId, latForAddress, longForAddress));
             //----------------------- Alert Dialog -------------------------------------------------
             Dialog alert = new Dialog(RegistrationActivity.this);
@@ -467,7 +471,7 @@ public class RegistrationActivity extends AppCompat {
                 selectDistrictText.setEnabled(false);
 
                 GetLocationPickUp geoLocation = new GetLocationPickUp();
-                String addressFull = address.getText().toString()+" "+pinCode.getText().toString();
+                String addressFull = address.getText().toString() + " " + pinCode.getText().toString();
                 geoLocation.geLatLongPickUp(addressFull, getApplicationContext(), new GeoHandlerLatitude());
             }
         }
