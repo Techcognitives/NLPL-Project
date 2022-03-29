@@ -63,6 +63,8 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.nlpl.R;
 import com.nlpl.model.Requests.AddDriverRequest;
 import com.nlpl.model.Responses.AddDriverResponse;
+import com.nlpl.model.Responses.DLVerificationResponse;
+import com.nlpl.model.Responses.PANVerificationResponse;
 import com.nlpl.model.Responses.UploadDriverSelfieResponse;
 import com.nlpl.model.Responses.UploadDriverLicenseResponse;
 import com.nlpl.model.UpdateMethods.UpdateDriverDetails;
@@ -134,7 +136,7 @@ public class DriverDetailsActivity extends AppCompat {
 
     TextView selectStateText, selectDistrictText, setCurrentLocation;
     String selectedState;
-    EditText pinCode, address;
+    EditText pinCode, address, dlNumber, dDOB;
 
     String userIdAPI, nameAPI, stateAPI, pinCodeAPI, addressAPI, mobileNoAPI, cityAPI, roleAPI;
     ArrayList<String> arrayUserId, arrayMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayState;
@@ -183,6 +185,11 @@ public class DriverDetailsActivity extends AppCompat {
         address = (EditText) personalAndAddress.findViewById(R.id.registration_address_edit);
         selectStateText = (TextView) personalAndAddress.findViewById(R.id.registration_select_state);
         selectDistrictText = (TextView) personalAndAddress.findViewById(R.id.registration_select_city);
+
+        dlNumber = findViewById(R.id.driver_details_driver_license_number);
+        dDOB = findViewById(R.id.driver_details_dob);
+        dlNumber.addTextChangedListener(dlverificationWatcher);
+        dDOB.addTextChangedListener(dlverificationWatcher);
 
         driverName.setHint(getString(R.string.EnterDriverName));
         driverMobile.setHint(getString(R.string.Enter_10_digit_Driver_Number));
@@ -1189,6 +1196,71 @@ public class DriverDetailsActivity extends AppCompat {
             }
         }
     };
+
+    private TextWatcher dlverificationWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String dlNumberWatcher = dlNumber.getText().toString().trim();
+            String dob= dDOB.getText().toString().trim();
+
+            if (dlNumberWatcher.length()!=15){
+                dDOB.setVisibility(View.GONE);
+            }else{
+                dDOB.setVisibility(View.VISIBLE);
+                if (dob.length()==10){
+                    checkDl(dlNumberWatcher, dob);
+                }else if(dob.length()>1){
+                    dlNumber.setEnabled(false);
+                }else{
+                    dlNumber.setEnabled(true);
+                }
+            }
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+
+    public void checkDl(String dlNumbers, String dob) {
+        Call<DLVerificationResponse> responseCall = ApiClient.getVerification().checkDL(userId, dlNumbers, dob);
+        responseCall.enqueue(new Callback<DLVerificationResponse>() {
+            @Override
+            public void onResponse(Call<DLVerificationResponse> call, retrofit2.Response<DLVerificationResponse> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        DLVerificationResponse response1 = response.body();
+                        DLVerificationResponse.UserList list = response1.getData().get(0);
+                        Log.i("Success Message", list.getSuccess());
+                        if (list.getSuccess().equals("1")) {
+                            dlNumber.setEnabled(false);
+                            dlNumber.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success_small, 0);
+                            dDOB.setEnabled(false);
+                            dDOB.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success_small, 0);
+                        } else {
+                            Toast.makeText(DriverDetailsActivity.this, "Please enter a valid DL number", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(DriverDetailsActivity.this, "Please enter a valid DL number", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(DriverDetailsActivity.this, "Please enter a valid DL number", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DLVerificationResponse> call, Throwable t) {
+                Toast.makeText(DriverDetailsActivity.this, "Please enter a valid DL number", Toast.LENGTH_SHORT).show();
+            }
+        });
+        //****************************************************************************************//
+    }
 
 
     private TextWatcher driverMobileWatcher = new TextWatcher() {

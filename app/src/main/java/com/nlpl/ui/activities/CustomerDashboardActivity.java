@@ -150,6 +150,8 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
     String fianlBidId, noteBySPToCustomer, assignedDriverId, assignedDriverIdAPI, assignedUserId, assignedUserIdAPI, bidStatusAPI, customerNameAPI;
     String loadIdForUpdate, spBidIdForUpdate, noteForUpdate, quoteForUpdate;
 
+    FirebaseAuth auth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

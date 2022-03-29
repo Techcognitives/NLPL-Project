@@ -89,12 +89,11 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
                     android:background="@drawable/edit_text_border"
                     android:ems="10"
                     android:hint="@string/Enter_Driving_License_Number"
                     android:inputType="textPersonName"
-                    android:maxLength="10"
+                    android:maxLength="15"
                     android:paddingStart="5dp"
                     android:paddingTop="10dp"
                     android:paddingEnd="5dp"
@@ -104,12 +103,33 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <EditText
+                    android:id="@+id/driver_details_dob"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/edit_text_border"
+                    android:ems="10"
+                    android:hint="Enter Driver Date of Birth (Ex. 16-11-1970)"
+                    android:inputType="textPersonName"
+                    android:maxLength="10"
+                    android:visibility="gone"
+                    android:paddingStart="5dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="5dp"
+                    android:paddingBottom="10dp"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/driver_details_driver_license_number" />
+
                 <ImageView
                     android:id="@+id/driver_details_driver_license_image"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
                     android:background="@drawable/image_view_border"
                     android:padding="2dp"
@@ -117,7 +137,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/driver_details_driver_license_text_image"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/driver_details_driver_license_number"
+                    app:layout_constraintTop_toBottomOf="@+id/driver_details_dob"
                     app:layout_constraintVertical_bias="0.0" />
 
                 <TextView

@@ -1,6 +1,8 @@
 package com.nlpl.ui.adapters;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +53,7 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
     @Override
     public void onBindViewHolder(BidsResponsesViewHolder holder, @SuppressLint("RecyclerView") int position) {
         BidsResponsesModel obj = bidsResponsesList.get(position);
+        holder.spNumber.setVisibility(View.VISIBLE);
         //----------------------------------------------------------
         String url = activity.getString(R.string.baseURL) + "/user/" + obj.getUser_id();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -63,6 +66,13 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
                         name = obj.getString("name");
                         String spName = name;
                         holder.spName.setText(spName);
+                        String phone = obj.getString("phone_number");
+                        String splits = phone.substring(2, 12);
+                        holder.spNumber.setText("Call");
+                        holder.spNumber.setOnClickListener(view -> {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + "+91 "+splits));
+                            activity.startActivity(intent);
+                        });
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -191,7 +201,7 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
     }
 
     public class BidsResponsesViewHolder extends RecyclerView.ViewHolder {
-        private TextView spName, ratingFloat, negotiable, budget, acceptViewBidButton;
+        private TextView spName, ratingFloat, negotiable, budget, acceptViewBidButton, spNumber;
         private ImageView profilePictureSP;
         private RatingBar starRatings;
 
@@ -205,6 +215,7 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
             acceptViewBidButton = itemView.findViewById(R.id.bids_responses_view_accept_bids);
             starRatings = itemView.findViewById(R.id.bids_responses_star_rating);
             profilePictureSP = itemView.findViewById(R.id.bids_responses_sp_profilePhto);
+            spNumber = itemView.findViewById(R.id.bids_responses_sp_number);
 
         }
 

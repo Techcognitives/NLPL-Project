@@ -16,6 +16,8 @@
         android:id="@+id/bids_responses_sp_profilePhto"
         android:layout_width="35dp"
         android:layout_height="35dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:src="@drawable/blue_profile_small"
         app:civ_border_color="#FF000000"
         app:civ_border_width="0.5dp"
@@ -37,7 +39,7 @@
         app:layout_constraintBottom_toTopOf="@+id/bids_responses_sp_rating_number"
         app:layout_constraintEnd_toStartOf="@+id/bids_responses_nego"
         app:layout_constraintStart_toEndOf="@+id/bids_responses_sp_profilePhto"
-        app:layout_constraintTop_toTopOf="@+id/bids_responses_sp_profilePhto" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/bids_responses_sp_rating_number"
@@ -46,7 +48,7 @@
         android:text="4.0"
         android:textColor="@color/black"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/bids_responses_sp_profilePhto"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/bids_responses_star_rating"
         app:layout_constraintStart_toStartOf="@+id/bids_responses_sp_name"
         app:layout_constraintTop_toBottomOf="@+id/bids_responses_sp_name" />
@@ -55,14 +57,15 @@
         android:id="@+id/bids_responses_star_rating"
         style="@style/Widget.AppCompat.RatingBar.Small"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:foregroundGravity="center"
         android:isIndicator="true"
-        android:numStars="4"
+        android:numStars="1"
         android:rating="4"
         android:stepSize="0.1"
         android:theme="@style/RatingBar"
         app:layout_constraintBottom_toBottomOf="@+id/bids_responses_sp_rating_number"
+        app:layout_constraintEnd_toStartOf="@+id/bids_responses_sp_number"
         app:layout_constraintStart_toEndOf="@+id/bids_responses_sp_rating_number"
         app:layout_constraintTop_toTopOf="@+id/bids_responses_sp_rating_number" />
 
@@ -91,7 +94,7 @@
         android:textColor="@color/black"
         android:textSize="12sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/bids_responses_star_rating"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/bids_responses_nego"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/bids_responses_sp_name"
@@ -118,5 +121,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/bids_responses_nego"
         app:layout_constraintTop_toTopOf="@+id/bids_responses_nego" />
+
+    <TextView
+        android:id="@+id/bids_responses_sp_number"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="Mobile Number"
+        android:textColor="@color/button_blue"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/bids_responses_budget_sp"
+        app:layout_constraintStart_toEndOf="@+id/bids_responses_star_rating"
+        app:layout_constraintTop_toBottomOf="@+id/bids_responses_sp_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

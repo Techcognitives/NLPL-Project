@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -34,7 +35,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.chaos.view.PinView;
 import com.nlpl.R;
+import com.nlpl.model.Responses.AadharIdResponse;
+import com.nlpl.model.Responses.AadharInfoResponse;
 import com.nlpl.model.Responses.PANVerificationResponse;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
 
@@ -47,6 +51,7 @@ import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.FileUtils;
 import com.nlpl.utils.InAppNotification;
 import com.nlpl.utils.JumpTo;
+import com.nlpl.utils.OTPReceiver;
 import com.nlpl.utils.ShowAlert;
 
 import java.io.ByteArrayOutputStream;
@@ -81,10 +86,10 @@ public class PersonalDetailsActivity extends AppCompat {
     ConstraintLayout aadharConstrain, panConstrain, profileConstrain;
     TextView uploadAadharTitle, uploadPanTitle, uploadProfileTitle;
 
-    String userId, mobile;
+    String userId, mobile, requestIdForAadhar;
     Boolean profilePic, isPanUploaded = false, isFrontUploaded = false, isProfileUploaded = false;
     String img_type;
-    EditText panNumber;
+    EditText panNumber, aadharNumber;
 
     Dialog previewDialogPan, previewDialogAadhar, previewDialogProfile;
 
@@ -116,6 +121,10 @@ public class PersonalDetailsActivity extends AppCompat {
         } else {
             actionBarTitle.setText(getString(R.string.kyc_verification));
         }
+
+        PackageManager pm = getPackageManager();
+        pm.setComponentEnabledSetting(new ComponentName(this, com.nlpl.utils.OTPReceiver.class),
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
 //--------------------------------------------------------------------------------------------------
         panAndAadharView = (View) findViewById(R.id.personal_details_pan_and_aadhar);
         panCardText = panAndAadharView.findViewById(R.id.pancard1);
@@ -136,6 +145,8 @@ public class PersonalDetailsActivity extends AppCompat {
         imgProfile = panAndAadharView.findViewById(R.id.imageProfile);
         panNumber = panAndAadharView.findViewById(R.id.pan_aadhar_pan_number);
         panNumber.addTextChangedListener(panNumberCheck);
+        aadharNumber = panAndAadharView.findViewById(R.id.pan_aadhar_aadhar_number);
+        aadharNumber.addTextChangedListener(aadharTextCheck);
 
         aadharConstrain = panAndAadharView.findViewById(R.id.aadhar_constrain);
         panConstrain = panAndAadharView.findViewById(R.id.pan_card_constrain);
@@ -1017,6 +1028,29 @@ public class PersonalDetailsActivity extends AppCompat {
         }
     };
 
+    private TextWatcher aadharTextCheck = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String aadharWatcher = aadharNumber.getText().toString().trim();
+
+            if (aadharWatcher.length() != 12) {
+
+            } else {
+                checkAadhar(aadharWatcher);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+
     //Check Pan number /***************************************************************************************/
     public void checkPAN(String panNumberCheck) {
         Call<PANVerificationResponse> responseCall = ApiClient.getVerification().checkPAN(userId, panNumberCheck);
@@ -1034,7 +1068,7 @@ public class PersonalDetailsActivity extends AppCompat {
                         } else {
                             Toast.makeText(PersonalDetailsActivity.this, "Please enter a valid PAN number", Toast.LENGTH_SHORT).show();
                         }
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         Toast.makeText(PersonalDetailsActivity.this, "Please enter a valid PAN number", Toast.LENGTH_SHORT).show();
                     }
                 } else {
@@ -1045,6 +1079,95 @@ public class PersonalDetailsActivity extends AppCompat {
             @Override
             public void onFailure(Call<PANVerificationResponse> call, Throwable t) {
                 Toast.makeText(PersonalDetailsActivity.this, "Please enter a valid PAN number", Toast.LENGTH_SHORT).show();
+            }
+        });
+        //****************************************************************************************//
+    }
+
+    private void checkAadhar(String aadharNumber) {
+        Call<AadharIdResponse> aadharModelCall = ApiClient.getVerification().checkAadhar(userId, aadharNumber);
+        aadharModelCall.enqueue(new Callback<AadharIdResponse>() {
+            @Override
+            public void onResponse(Call<AadharIdResponse> call, Response<AadharIdResponse> response) {
+                try {
+                    if (response.isSuccessful()){
+                        AadharIdResponse aadharModel = response.body();
+                        AadharIdResponse.UserList list = aadharModel.getData().get(0);
+                        requestIdForAadhar = list.getRequest_id();
+                    }else{
+                        Toast.makeText(PersonalDetailsActivity.this, "Please enter a valid Aadhar Number", Toast.LENGTH_SHORT).show();
+                    }
+
+                }catch (Exception e){
+                    Toast.makeText(PersonalDetailsActivity.this, "Please enter a valid Aadhar Number", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AadharIdResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void openDialogForOTPValidation(String requestIdForAadhar){
+        Dialog otpRequest = new Dialog(PersonalDetailsActivity.this);
+        otpRequest.setContentView(R.layout.activity_otp_code);
+        otpRequest.getWindow().setBackgroundDrawable(getDrawable(R.drawable.all_rounded_small));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(otpRequest.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.gravity = Gravity.TOP;
+
+        otpRequest.show();
+        otpRequest.getWindow().setAttributes(lp);
+        otpRequest.setCancelable(false);
+
+        PinView otpCode = (PinView) otpRequest.findViewById(R.id.pin_view);
+        TextView changeNumber = otpRequest.findViewById(R.id.otp_change_number);
+        changeNumber.setVisibility(View.INVISIBLE);
+        TextView otpCodeText = otpRequest.findViewById(R.id.otp_code_text);
+        TextView otpSentText = otpRequest.findViewById(R.id.otp_text);
+        otpSentText.setText("Enter OTP Code sent on Aadhar linked mobile number");
+        Button verifyOtp = otpRequest.findViewById(R.id.otp_button);
+        TextView countdown = otpRequest.findViewById(R.id.countdown);
+        countdown.setVisibility(View.INVISIBLE);
+
+        verifyOtp.setOnClickListener(view -> {
+            Log.i("reqID", requestIdForAadhar);
+            checkAadharWithOTP(requestIdForAadhar, otpCode.getText().toString());
+        });
+    }
+
+    public void checkAadharWithOTP(String requestIdForAadhar, String otp) {
+        Log.i("AADHAR", userId+"/"+aadharNumber.getText().toString()+"/"+requestIdForAadhar+"/"+otp);
+        Call<AadharInfoResponse> responseCall = ApiClient.getVerification().checkAadharWithOTP(userId, aadharNumber.getText().toString(), requestIdForAadhar, otp);
+        responseCall.enqueue(new Callback<AadharInfoResponse>() {
+            @Override
+            public void onResponse(Call<AadharInfoResponse> call, retrofit2.Response<AadharInfoResponse> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        AadharInfoResponse response1 = response.body();
+                        AadharInfoResponse.UserList list = response1.getData().get(0);
+                        Log.i("Success Message", list.getSuccess());
+                        if (list.getSuccess().equals("1")) {
+                            aadharNumber.setEnabled(false);
+                            aadharNumber.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success_small, 0);
+                        } else {
+                            Toast.makeText(PersonalDetailsActivity.this, "Please enter a valid Aadhar number", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(PersonalDetailsActivity.this, "Please enter a valid Aadhar number", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(PersonalDetailsActivity.this, "Please enter a valid Aadhar number", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AadharInfoResponse> call, Throwable t) {
+                Toast.makeText(PersonalDetailsActivity.this, "Please enter a valid Aadhar number", Toast.LENGTH_SHORT).show();
             }
         });
         //****************************************************************************************//
