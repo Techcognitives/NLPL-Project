@@ -52,7 +52,7 @@
     <string name="Registration_as">रजिस्ट्रेशन जैसा </string>
     <string name="Load_Poster">लोड पोस्टर </string>
     <string name="Registration_Successful">रजिस्ट्रेशन सफल </string>
-    <string name="Welcome_to">आपका स्वागत है </string>
+    <string name="Welcome_to">आपका स्वागत है. </string>
     <string name="Please_update_your_profile">\n\nकृपया अपनी प्रोफ़ाइल अपडेट करें और प्लेटफ़ॉर्म उपभोग लीजिये. </string>       //dot
     <string name="Dashboard">डैशबोर्ड </string>
     <string name="Please_Register">कृपया रजिस्टर करें </string>
@@ -109,7 +109,7 @@
     <string name="Aadhar_Card_Uploaded_Successfully">आधार कार्ड सफलतापूर्वक अपलोड किया गया है </string>
     <string name="PAN_Card_not_Uploaded">पैन कार्ड अपलोड नहीं किया गया है, कृपया पुन: प्रयास करें </string>
     <string name="Aadhar_Card_not_Uploaded">आधार कार्ड अपलोड नहीं किया गया है, कृपया पुन: प्रयास करें </string>
-    <string name="Personal_Details_added_successfully">पर्सनल जानकारी सफलतापूर्वक एडेड </string>
+    <string name="Personal_Details_added_successfully">पर्सनल जानकारी एडिट सफलतापूर्वक </string>
     <string name="update_your_phone_number">अपना फ़ोन नंबर अपडेट करें. </string>
     <string name="Firm_Details">फर्म जानकारी </string>
     <string name="GST_No">जीएसटी नंबर: </string>
@@ -169,7 +169,7 @@
     <string name="RC_not_Uploaded">आरसी अपलोड नहीं किया गया है, कृपया पुन: प्रयास करें </string>
     <string name="Insurance_Uploaded_Successfully">इंश्योरेंस सफलतापूर्वक अपलोड किया गया है </string>
     <string name="Insurance_not_uploaded">इंश्योरेंस अपलोड नहीं किया गया है, कृपया पुन: प्रयास करें </string>
-    <string name="Vehicle_Details_added_successfully">वाहन जानकारी सफलतापूर्वक एडेड </string>
+    <string name="Vehicle_Details_added_successfully">वाहन जानकारी एडिट सफलतापूर्वक </string>
     <string name="Add_Driver">+ ड्राइवर जोड़ें </string>
     <string name="Skip">स्किप </string>
     <string name="You_cannot_bid_unless_you_have_a_Driver">आप तब तक बिड नहीं लगा सकते जब तक कि आपके पास कोई ड्राइवर न हो </string>
@@ -208,7 +208,7 @@
     <string name="Take_a_Photo">एक तस्वीर लो </string>
     <string name="Invalid_Mobile_Number">अमान्य मोबाइल नंबर </string>                        //dot
     <string name="Please_enter_a_10_digit_valid_mobile_number">कृपया एक १० अंकों का मान्य मोबाइल नंबर दर्ज करें. </string>       //dot
-    <string name="Driver_Details_added_successfully">ड्राइवर जानकारी सफलतापूर्वक एडेड </string>
+    <string name="Driver_Details_added_successfully">ड्राइवर जानकारी एडिट सफलतापूर्वक </string>
     <string name="Would_you_like_to_add_Drivers_Bank_Details">क्या आप ड्राइवर्स बैंक जानकारी जोड़ना चाहेंगे? </string>
     <string name="Later">बाद में </string>
     <string name="Please_Upload_From_Gallery">कृपया गैलरी से अपलोड करें </string>
@@ -254,7 +254,7 @@
     <string name="pan_number">पैन नंबर* </string>
     //new
     <string name="Company_Details">कम्पनी जानकारी </string>
-    <string name="Company_Details_added_Successfully">कम्पनी जानकारी सफलतापूर्वक एडेड </string>
+    <string name="Company_Details_added_Successfully">कम्पनी जानकारी एडिट सफलतापूर्वक </string>
     <string name="Company_Type">कम्पनी टाइप* </string>      //new
     <string name="Proprietary">प्रोप्राइटरी </string>         //new
     <string name="Partnership">पार्टनरशिप </string>         //new          //dot
@@ -384,7 +384,7 @@
     <string name="SP_Withdrawn">एस.पी. वापस लिया गया है </string>
     <string name="View_Consignment">देखें भेजा गया मटेरियल </string>
     <string name="Enter_Appropriate_Quote">उपयुक्त उद्धरण दर्ज करें </string>
-    <string name="You_cannot_bid_less_than_50_of_customer_Budget">आप ग्राहक बजट के ५0% से कम बोली नहीं लगा सकते</string>
+    <string name="You_cannot_bid_less_than_50_of_customer_Budget">आप ग्राहक बजट के ५0% से कम बिड नहीं लगा सकते</string>
     <string name="Edit_Load">एडिट लोड</string>
     <string name="Would_you_like_to_edit_your_Load">क्या आप अपना लोड एडिट करना चाहेंगे?</string>
 
@@ -454,9 +454,9 @@
     <string name="No_Load_Posted">कोई लोड पोस्ट नहीं</string>
     <string name="No_Load_Accepted">कोई लोड स्वीकार नहीं किया गया है </string>
     <string name="Accepted">स्वीकार </string>
-    <string name="You_Responded">आपको जवाब</string>
-    <string name="You_Withdrawn">आपको/n वापस ले लिया </string>
-    <string name="You_Responded_singleLine">आपको जवाब</string>
+    <string name="You_Responded">आपने जवाब दिया</string>
+    <string name="You_Withdrawn">आपने/n वापस ले लिया </string>
+    <string name="You_Responded_singleLine">आपने जवाब दिया</string>
     <string name="Accept_Revised">संशोधित स्वीकार करें</string>
     <string name="Customer_Withdrawn">ग्राहक ने लोड वापस लिया </string>
     <string name="Accept_Final_Offer_newLine">स्वीकार\n अंतिम प्रस्ताव </string>

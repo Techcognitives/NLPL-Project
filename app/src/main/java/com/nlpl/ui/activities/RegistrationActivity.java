@@ -202,8 +202,12 @@ public class RegistrationActivity extends AppCompat {
                 if (role != null) {
                     if (role.equals("Customer")) {
                         actionBarTitle.setText(getString(R.string.Registration_as) + getString(R.string.Load_Poster));
+                    } else if(role.equals("Owner")) {
+                        actionBarTitle.setText(getString(R.string.Registration_as) + getString(R.string.Truck_Owner));
+                    } else if(role.equals("Driver")) {
+                        actionBarTitle.setText(getString(R.string.Registration_as) + getString(R.string.Driver));
                     } else {
-                        actionBarTitle.setText(getString(R.string.Registration_as) + role);
+                        actionBarTitle.setText(getString(R.string.Registration_as) + getString(R.string.Broker));
                     }
                 }
             }
@@ -444,7 +448,7 @@ public class RegistrationActivity extends AppCompat {
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
             alertTitle.setText(getString(R.string.Registration_Successful));
-            alertMessage.setText(getString(R.string.Welcome_to) + getString(R.string.app_name) + getString(R.string.Please_update_your_profile));
+            alertMessage.setText(getString(R.string.Welcome_to) + " FindYourTruck" + getString(R.string.Please_update_your_profile));
             alertPositiveButton.setVisibility(View.GONE);
             alertNegativeButton.setText(getString(R.string.ok));
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));

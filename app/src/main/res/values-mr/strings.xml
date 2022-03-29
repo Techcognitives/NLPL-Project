@@ -52,7 +52,7 @@
     <string name="Registration_as">नोंदणी म्हणून </string>
     <string name="Load_Poster">लोड पोस्टर </string>
     <string name="Registration_Successful">नोंदणी यशस्वी</string>
-    <string name="Welcome_to">आपले स्वागत आहे </string>
+    <string name="Welcome_to">आपले स्वागत आहे. </string>
     <string name="Please_update_your_profile">\n\nकृपया तुमचे प्रोफाइल अपडेट करा आणि प्लॅटफॉर्म एक्सप्लोर करा.</string>
     <string name="Dashboard">डॅशबोर्ड</string>
     <string name="Please_Register">कृपया नोंदणी करा</string>
@@ -109,7 +109,7 @@
     <string name="Aadhar_Card_Uploaded_Successfully">आधार कार्ड अपलोड यशस्वीरित्या </string>
     <string name="PAN_Card_not_Uploaded">पॅन कार्ड अपलोड केले नाही, कृपया पुन्हा प्रयत्न करा. </string>
     <string name="Aadhar_Card_not_Uploaded">आधार कार्ड अपलोड केले नाही, कृपया पुन्हा प्रयत्न करा. </string>
-    <string name="Personal_Details_added_successfully">वैयक्तिक डिटेल्स यशस्वीरित्या एडेड </string>
+    <string name="Personal_Details_added_successfully">वैयक्तिक डिटेल्स यशस्वीरित्या एडिट </string>
     <string name="update_your_phone_number">तुमचा फोन नंबर अपडेट करा </string>
     <string name="Firm_Details">फर्म डिटेल्स </string>
     <string name="GST_No">जीएसटी नंबर: </string>
@@ -169,7 +169,7 @@
     <string name="RC_not_Uploaded">आरसी अपलोड केलेले नाही, कृपया पुन्हा प्रयत्न करा. </string>
     <string name="Insurance_Uploaded_Successfully">इंश्योरेंस अपलोड यशस्वीरित्या </string>
     <string name="Insurance_not_uploaded">इंश्योरेंस अपलोड केला नाही, कृपया पुन्हा प्रयत्न करा</string>
-    <string name="Vehicle_Details_added_successfully">वाहन डिटेल्स एडेड यशस्वीरित्या </string>
+    <string name="Vehicle_Details_added_successfully">वाहन डिटेल्स एडिट यशस्वीरित्या </string>
     <string name="Add_Driver">+ ऐड ड्रायव्हर</string>
     <string name="Skip">स्किप</string>
     <string name="You_cannot_bid_unless_you_have_a_Driver">तुमच्याकडे ड्रायव्हर असल्याशिवाय तुम्ही बिड लावू शकत नाही. </string>
@@ -253,7 +253,7 @@
     <string name="pan_number">पॅन नंबर*</string>
     //new
     <string name="Company_Details">कंपनी डिटेल्स </string>
-    <string name="Company_Details_added_Successfully">कंपनी डिटेल्स एडेड यशस्वीरित्या</string>
+    <string name="Company_Details_added_Successfully">कंपनी डिटेल्स एडिट यशस्वीरित्या</string>
     <string name="Company_Type">कंपनी टाइप* </string>      //new
     <string name="Proprietary">मलाकी </string>         //new
     <string name="Partnership">पार्टनरशिप </string>         //new
@@ -384,7 +384,7 @@
     <string name="SP_Withdrawn">एस.पीं. नी माघार घेतली</string>
     <string name="View_Consignment">मटेरियल पहा</string>
     <string name="Enter_Appropriate_Quote">योग्य कोट एंटर करा</string>
-    <string name="You_cannot_bid_less_than_50_of_customer_Budget">आपण ग्राहक बजेटच्या ५0% पेक्षा कमी बोली लावू शकत नाही</string>
+    <string name="You_cannot_bid_less_than_50_of_customer_Budget">आपण ग्राहक बजेटच्या ५0% पेक्षा कमी बिड लावू शकत नाही</string>
     <string name="Edit_Load">एडिट लोड</string>
     <string name="Would_you_like_to_edit_your_Load">तुम्हाला तुमचा लोड एडिट करायचा आहे का?</string>
 
