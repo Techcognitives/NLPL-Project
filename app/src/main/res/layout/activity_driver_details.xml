@@ -99,9 +99,25 @@
                     android:paddingEnd="5dp"
                     android:paddingBottom="10dp"
                     android:textSize="15sp"
+                    app:layout_constraintBottom_toTopOf="@+id/bsjdufcsdkcs"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/bsjdufcsdkcs"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/OR"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toTopOf="@+id/driver_details_driver_license_image"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/driver_details_driver_license_number" />
 
                 <EditText
                     android:id="@+id/driver_details_dob"
@@ -137,8 +153,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/driver_details_driver_license_text_image"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/driver_details_dob"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintTop_toBottomOf="@+id/bsjdufcsdkcs" />
 
                 <TextView
                     android:id="@+id/driver_details_driver_license_text_image"

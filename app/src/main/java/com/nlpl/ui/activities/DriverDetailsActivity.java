@@ -140,7 +140,7 @@ public class DriverDetailsActivity extends AppCompat {
 
     String userIdAPI, nameAPI, stateAPI, pinCodeAPI, addressAPI, mobileNoAPI, cityAPI, roleAPI;
     ArrayList<String> arrayUserId, arrayMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayState;
-    Boolean alreadyDriver = true, isSelfieEdited = false;
+    Boolean alreadyDriver = true, isSelfieEdited = false, dlValid = false;
     String truckIdPass, driverIdPass;
 
     @Override
@@ -464,7 +464,7 @@ public class DriverDetailsActivity extends AppCompat {
                 selectDistrictText.setEnabled(false);
 
                 GetLocationPickUp geoLocation = new GetLocationPickUp();
-                String addressFull = address.getText().toString()+" "+pinCode.getText().toString();
+                String addressFull = address.getText().toString() + " " + pinCode.getText().toString();
                 geoLocation.geLatLongPickUp(addressFull, getApplicationContext(), new GeoHandlerLatitude());
             }
         }
@@ -1011,130 +1011,151 @@ public class DriverDetailsActivity extends AppCompat {
             Toast.makeText(this, "Please enter driver name", Toast.LENGTH_SHORT).show();
         } else if (driverMobile.getText().toString().isEmpty()) {
             Toast.makeText(this, "Please enter mobile number", Toast.LENGTH_SHORT).show();
-        } else if (driverMobile.getText().toString().length()!=10) {
+        } else if (driverMobile.getText().toString().length() != 10) {
             Toast.makeText(this, "Please enter valid 10 digit mobile number", Toast.LENGTH_SHORT).show();
         } else if (address.getText().toString().isEmpty()) {
             Toast.makeText(this, "Please enter driver Address", Toast.LENGTH_SHORT).show();
         } else if (pinCode.getText().toString().isEmpty()) {
             Toast.makeText(this, "Please enter PIN Code", Toast.LENGTH_SHORT).show();
-        } else if (pinCode.getText().toString().length()!=6) {
+        } else if (pinCode.getText().toString().length() != 6) {
             Toast.makeText(this, "Please enter 6 digit PIN Code", Toast.LENGTH_SHORT).show();
         } else if (selectStateText.getText().toString().isEmpty()) {
             Toast.makeText(this, "Please select State", Toast.LENGTH_SHORT).show();
         } else if (selectDistrictText.getText().toString().isEmpty()) {
             Toast.makeText(this, "Please select City", Toast.LENGTH_SHORT).show();
-        } else if (!isDLUploaded) {
-            Toast.makeText(this, "Please upload Driving License", Toast.LENGTH_SHORT).show();
+        } else if (!isDLUploaded || dlNumber.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Please enter Driving License Number or upload Driving License", Toast.LENGTH_SHORT).show();
         } else if (!isSelfieUploded) {
             Toast.makeText(this, "Please upload Driver Selfie", Toast.LENGTH_SHORT).show();
         } else {
-            //update Driver as a user (IsDriverAdded)
-            UpdateUserDetails.updateUserIsDriverAdded(userId, "1");
-            if (isEdit) {
-                if (idDLEdited) {
-                    uploadDriverLicense(driverId, pathForDL);
-                }
-                if (isSelfieEdited) {
-                    uploadDriverSelfie(driverId, pathForSelfie);
-                }
-                if (driverName.getText().toString() != null) {
-                    UpdateDriverDetails.updateDriverName(driverId, driverName.getText().toString());
-                    //update Driver as a user (Name)
-                    UpdateUserDetails.updateUserName(driverUserIdGet, driverName.getText().toString());
-                }
-                if (driverEmailId.getText().toString() != null) {
-                    UpdateDriverDetails.updateDriverEmailId(driverId, driverEmailId.getText().toString());
-                    //update Driver as a user (Email)
-                    UpdateUserDetails.updateUserEmailId(driverUserIdGet, driverEmailId.getText().toString());
-                }
-                if (driverMobile.getText().toString() != null && !driverNumberAPI.equals("91" + driverMobile.getText().toString())) {
-                    UpdateDriverDetails.updateDriverNumber(driverId, "91" + driverMobile.getText().toString());
-                    //update Driver as a user (Phone)
-                    UpdateUserDetails.updateUserPhoneNumber(driverUserIdGet, "91" + driverMobile.getText().toString());
-                }
-                if (driverAlternateMobile.getText().toString() != null) {
-                    UpdateDriverDetails.updateDriverAlternateNumber(driverId, "91" + driverAlternateMobile.getText().toString());
-                    //update Driver as a user (Alternate Phone)
-                    UpdateUserDetails.updateUserAlternatePhoneNumber(driverUserIdGet, "91" + driverAlternateMobile.getText().toString());
-                }
-                if (address.getText().toString() != null) {
-                    //update Driver as a user (Address)
-                    UpdateUserDetails.updateUserAddress(driverUserIdGet, address.getText().toString());
-                }
-                if (pinCode.getText().toString() != null) {
-                    //update Driver as a user (PinCode)
-                    UpdateUserDetails.updateUserPinCode(driverUserIdGet, pinCode.getText().toString());
-                }
-                if (selectStateText.getText().toString() != null) {
-                    //update Driver as a user (PinCode)
-                    UpdateUserDetails.updateUserState(driverUserIdGet, selectStateText.getText().toString());
-                }
-                if (selectDistrictText.getText().toString() != null) {
-                    //update Driver as a user (City)
-                    UpdateUserDetails.updateUserCity(driverUserIdGet, selectDistrictText.getText().toString());
-                }
-                ShowAlert.loadingDialog(DriverDetailsActivity.this);
-                JumpTo.goToViewDriverDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
-            } else {
-                if (alreadyDriver) {
-                    saveDriver(createDriver());
+            if (!dlNumber.getText().toString().isEmpty()) {
+                if (dlValid) {
+                    createDriverDetails();
                 } else {
-                    saveDriver(createDriver());
-                    CreateUser.saveUser(CreateUser.createUser(driverName.getText().toString(), "91" + driverMobile.getText().toString(), "91" + driverAlternateMobile.getText().toString(), address.getText().toString(), "Driver", driverEmailId.getText().toString(), pinCode.getText().toString(), selectDistrictText.getText().toString(), selectStateText.getText().toString(), "null", latForAddress, longForAddress));
+                    Toast.makeText(this, "Please enter valid Driving License Number or upload Driving License", Toast.LENGTH_SHORT).show();
                 }
-                //----------------------- Alert Dialog -------------------------------------------------
-                Dialog alert = new Dialog(DriverDetailsActivity.this);
-                alert.setContentView(R.layout.dialog_alert);
-                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                lp.copyFrom(alert.getWindow().getAttributes());
-                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.gravity = Gravity.CENTER;
-
-                alert.show();
-                alert.getWindow().setAttributes(lp);
-                alert.setCancelable(false);
-
-                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-                alertTitle.setText(getString(R.string.Driver_Details_added_successfully));
-                alertMessage.setText(getString(R.string.Would_you_like_to_add_Drivers_Bank_Details));
-
-                alertPositiveButton.setText(getString(R.string.Add));
-                alertPositiveButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        alert.dismiss();
-                        ShowAlert.loadingDialog(DriverDetailsActivity.this);
-                        if (alreadyDriver) {
-                            JumpTo.goToBankDetailsActivity(DriverDetailsActivity.this, userId, mobile, false, true, null);
-                        } else {
-                            JumpTo.goToBankDetailsActivity(DriverDetailsActivity.this, driverUserId, mobile, false, true, null);
-                        }
-                    }
-                });
-
-                alertNegativeButton.setText(getString(R.string.Later));
-                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
-                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        alert.dismiss();
-                        ShowAlert.loadingDialog(DriverDetailsActivity.this);
-                        if (fromBidNow) {
-                            DriverDetailsActivity.this.finish();
-                        } else {
-                            JumpTo.goToViewDriverDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
-                        }
-                    }
-                });
-                //------------------------------------------------------------------------------------------
+            } else {
+                if (isDLUploaded) {
+                    createDriverDetails();
+                } else {
+                    Toast.makeText(this, "Please enter valid Driving License Number or upload Driving License", Toast.LENGTH_SHORT).show();
+                }
             }
+        }
+    }
+
+    public void createDriverDetails() {
+        //update Driver as a user (IsDriverAdded)
+        UpdateUserDetails.updateUserIsDriverAdded(userId, "1");
+        if (isEdit) {
+            if (idDLEdited) {
+                uploadDriverLicense(driverId, pathForDL);
+            }
+            if (isSelfieEdited) {
+                uploadDriverSelfie(driverId, pathForSelfie);
+            }
+            if (driverName.getText().toString() != null) {
+                UpdateDriverDetails.updateDriverName(driverId, driverName.getText().toString());
+                //update Driver as a user (Name)
+                UpdateUserDetails.updateUserName(driverUserIdGet, driverName.getText().toString());
+            }
+            if (driverEmailId.getText().toString() != null) {
+                UpdateDriverDetails.updateDriverEmailId(driverId, driverEmailId.getText().toString());
+                //update Driver as a user (Email)
+                UpdateUserDetails.updateUserEmailId(driverUserIdGet, driverEmailId.getText().toString());
+            }
+            if (driverMobile.getText().toString() != null && !driverNumberAPI.equals("91" + driverMobile.getText().toString())) {
+                UpdateDriverDetails.updateDriverNumber(driverId, "91" + driverMobile.getText().toString());
+                //update Driver as a user (Phone)
+                UpdateUserDetails.updateUserPhoneNumber(driverUserIdGet, "91" + driverMobile.getText().toString());
+            }
+            if (driverAlternateMobile.getText().toString() != null) {
+                UpdateDriverDetails.updateDriverAlternateNumber(driverId, "91" + driverAlternateMobile.getText().toString());
+                //update Driver as a user (Alternate Phone)
+                UpdateUserDetails.updateUserAlternatePhoneNumber(driverUserIdGet, "91" + driverAlternateMobile.getText().toString());
+            }
+            if (address.getText().toString() != null) {
+                //update Driver as a user (Address)
+                UpdateUserDetails.updateUserAddress(driverUserIdGet, address.getText().toString());
+            }
+            if (pinCode.getText().toString() != null) {
+                //update Driver as a user (PinCode)
+                UpdateUserDetails.updateUserPinCode(driverUserIdGet, pinCode.getText().toString());
+            }
+            if (selectStateText.getText().toString() != null) {
+                //update Driver as a user (PinCode)
+                UpdateUserDetails.updateUserState(driverUserIdGet, selectStateText.getText().toString());
+            }
+            if (selectDistrictText.getText().toString() != null) {
+                //update Driver as a user (City)
+                UpdateUserDetails.updateUserCity(driverUserIdGet, selectDistrictText.getText().toString());
+            }
+
+            if (dlNumber.getText().toString() != null) {
+                UpdateDriverDetails.updateDriverDlNumber(driverId, dlNumber.getText().toString());
+            }
+            ShowAlert.loadingDialog(DriverDetailsActivity.this);
+            JumpTo.goToViewDriverDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
+
+        } else {
+            if (alreadyDriver) {
+                saveDriver(createDriver());
+            } else {
+                saveDriver(createDriver());
+                CreateUser.saveUser(CreateUser.createUser(driverName.getText().toString(), "91" + driverMobile.getText().toString(), "91" + driverAlternateMobile.getText().toString(), address.getText().toString(), "Driver", driverEmailId.getText().toString(), pinCode.getText().toString(), selectDistrictText.getText().toString(), selectStateText.getText().toString(), "null", latForAddress, longForAddress));
+            }
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(DriverDetailsActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(false);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText(getString(R.string.Driver_Details_added_successfully));
+            alertMessage.setText(getString(R.string.Would_you_like_to_add_Drivers_Bank_Details));
+
+            alertPositiveButton.setText(getString(R.string.Add));
+            alertPositiveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.dismiss();
+                    ShowAlert.loadingDialog(DriverDetailsActivity.this);
+                    if (alreadyDriver) {
+                        JumpTo.goToBankDetailsActivity(DriverDetailsActivity.this, userId, mobile, false, true, null);
+                    } else {
+                        JumpTo.goToBankDetailsActivity(DriverDetailsActivity.this, driverUserId, mobile, false, true, null);
+                    }
+                }
+            });
+
+            alertNegativeButton.setText(getString(R.string.Later));
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.dismiss();
+                    ShowAlert.loadingDialog(DriverDetailsActivity.this);
+                    if (fromBidNow) {
+                        DriverDetailsActivity.this.finish();
+                    } else {
+                        JumpTo.goToViewDriverDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
+                    }
+                }
+            });
+            //------------------------------------------------------------------------------------------
         }
     }
 
@@ -1147,6 +1168,7 @@ public class DriverDetailsActivity extends AppCompat {
         addDriverRequest.setDriver_emailId(driverEmailId.getText().toString());
         addDriverRequest.setTruck_id(truckIdPass);
         addDriverRequest.setAlternate_ph_no("91" + driverAlternateMobile.getText().toString());
+        addDriverRequest.setDl_number(dlNumber.getText().toString());
         return addDriverRequest;
     }
 
@@ -1200,26 +1222,24 @@ public class DriverDetailsActivity extends AppCompat {
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             String dlNumberWatcher = dlNumber.getText().toString().trim();
-            String dob= dDOB.getText().toString().trim();
+            String dob = dDOB.getText().toString().trim();
 
-            if (dlNumberWatcher.length()!=15){
+            if (dlNumberWatcher.length() != 15) {
                 dDOB.setVisibility(View.GONE);
-            }else{
+            } else {
                 dDOB.setVisibility(View.VISIBLE);
-                if (dob.length()==10){
+                if (dob.length() == 10) {
                     checkDl(dlNumberWatcher, dob);
-                }else if(dob.length()>1){
+                } else if (dob.length() > 1) {
                     dlNumber.setEnabled(false);
-                }else{
+                } else {
                     dlNumber.setEnabled(true);
                 }
             }
-
         }
 
         @Override
         public void afterTextChanged(Editable s) {
-
         }
     };
 
@@ -1238,6 +1258,7 @@ public class DriverDetailsActivity extends AppCompat {
                             dlNumber.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success_small, 0);
                             dDOB.setEnabled(false);
                             dDOB.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success_small, 0);
+                            dlValid = true;
                         } else {
                             Toast.makeText(DriverDetailsActivity.this, "Please enter a valid DL number", Toast.LENGTH_SHORT).show();
                         }

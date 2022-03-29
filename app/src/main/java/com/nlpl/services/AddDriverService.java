@@ -3,6 +3,7 @@ package com.nlpl.services;
 import com.nlpl.model.Requests.AddDriverRequest;
 import com.nlpl.model.Responses.AddDriverResponse;
 import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverAlternateNumber;
+import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverDlNumber;
 import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverEmailId;
 import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverName;
 import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverNumber;
@@ -32,4 +33,7 @@ public interface AddDriverService {
 
     @PUT("/driver/udateDr/{driverId}")
     Call<UpdateDriverTruckId> updateDriverTruckId(@Path("driverId") String driverId, @Body UpdateDriverTruckId updateDriverTruckId);
+
+    @PUT("/driver/udateDr/{driverId}")
+    Call<UpdateDriverDlNumber> updateDriverDlNumber(@Path("driverId") String driverId, @Body UpdateDriverDlNumber updateDriverDlNumber);
 }
