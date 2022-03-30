@@ -48,9 +48,9 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="10dp"
+            android:onClick="ViewSPProfile"
             android:src="@drawable/blue_profile_small"
             android:visibility="visible"
-            android:onClick="ViewSPProfile"
             app:civ_border_color="#FF000000"
             app:civ_border_width="0.5dp"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout16"
@@ -155,9 +155,9 @@
                 android:textColor="@color/light_black"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toTopOf="@+id/menu_driver_details"
-                app:layout_constraintEnd_toEndOf="@+id/textView23"
+                app:layout_constraintEnd_toEndOf="@+id/menu_kyc"
                 app:layout_constraintStart_toEndOf="@+id/menu_truck_details_logo_image_view"
-                app:layout_constraintTop_toBottomOf="@+id/textView23" />
+                app:layout_constraintTop_toBottomOf="@+id/menu_kyc" />
 
             <ImageView
                 android:id="@+id/menu_bank_details_logo_image_view"
@@ -194,7 +194,7 @@
                 android:text="@string/personal_and_company"
                 android:textColor="@color/light_black"
                 android:textSize="15sp"
-                app:layout_constraintBottom_toTopOf="@+id/textView23"
+                app:layout_constraintBottom_toTopOf="@+id/menu_kyc"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/menu_personal_details_logo_image_view"
                 app:layout_constraintTop_toBottomOf="@+id/view" />
@@ -397,6 +397,7 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="20dp"
                 android:gravity="center|start"
+                android:onClick="onClickProfileAndRegister"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:text="@string/Settings_and_Preferences"
@@ -430,7 +431,7 @@
                 app:srcCompat="@drawable/languages_small" />
 
             <TextView
-                android:id="@+id/textView23"
+                android:id="@+id/menu_kyc"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
@@ -438,6 +439,7 @@
                 android:gravity="center|start"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
+                android:onClick="onClickProfileAndRegister"
                 android:text="@string/kyc_verification"
                 android:textColor="@color/light_black"
                 android:textSize="15sp"
@@ -451,10 +453,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:foregroundGravity="center"
-                app:layout_constraintBottom_toBottomOf="@+id/textView23"
-                app:layout_constraintEnd_toStartOf="@+id/textView23"
+                app:layout_constraintBottom_toBottomOf="@+id/menu_kyc"
+                app:layout_constraintEnd_toStartOf="@+id/menu_kyc"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textView23"
+                app:layout_constraintTop_toTopOf="@+id/menu_kyc"
                 app:srcCompat="@drawable/kyc_small" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

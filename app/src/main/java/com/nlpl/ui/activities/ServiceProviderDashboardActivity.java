@@ -658,7 +658,14 @@ public class ServiceProviderDashboardActivity extends AppCompat {
                 } else {
                     JumpTo.goToDriverDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, false, false, false, null, null);
                 }
+                break;
 
+            case R.id.menu_settings_button:
+                JumpTo.getToSettingAndPreferences(ServiceProviderDashboardActivity.this, phone, userId, role, false);
+                break;
+
+            case R.id.menu_kyc:
+                JumpTo.goToPersonalDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, false, false);
                 break;
         }
     }
