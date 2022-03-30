@@ -31,9 +31,26 @@
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/my_truck_list_edit_text_view"
+            app:layout_constraintEnd_toStartOf="@+id/my_truck_list_delete_text_view"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/my_truck_list_delete_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_delete"
+            android:drawableTint="@color/white"
+            android:gravity="center"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="Delete"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/my_truck_list_edit_text_view"
+            app:layout_constraintStart_toEndOf="@+id/my_truck_list_vehicle_number_text_view"
+            app:layout_constraintTop_toTopOf="@+id/my_truck_list_vehicle_number_text_view" />
 
         <TextView
             android:id="@+id/my_truck_list_edit_text_view"
@@ -48,7 +65,7 @@
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/my_truck_list_vehicle_number_text_view"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/my_truck_list_vehicle_number_text_view"
+            app:layout_constraintStart_toEndOf="@+id/my_truck_list_delete_text_view"
             app:layout_constraintTop_toTopOf="@+id/my_truck_list_vehicle_number_text_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

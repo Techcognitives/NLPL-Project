@@ -24,7 +24,10 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BankModel;
+import com.nlpl.model.Responses.BankResponse;
+import com.nlpl.model.Responses.PreferedLocationResponse;
 import com.nlpl.ui.adapters.BanksAdapter;
+import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.JumpTo;
@@ -35,6 +38,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class ViewBankDetailsActivity extends AppCompat {
 
@@ -282,4 +288,51 @@ public class ViewBankDetailsActivity extends AppCompat {
         }
     }
 
+    public void deleteBankDetails(BankModel obj) {
+        //----------------------- Alert Dialog -------------------------------------------------
+        Dialog alert = new Dialog(ViewBankDetailsActivity.this);
+        alert.setContentView(R.layout.dialog_alert);
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(alert.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        alert.show();
+        alert.getWindow().setAttributes(lp);
+        alert.setCancelable(true);
+
+        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+        alertTitle.setText("Delete Bank Details");
+        alertMessage.setText("Are you sure?\nYou want to delete Bank Details?");
+        alertPositiveButton.setText(getString(R.string.yes));
+        alertNegativeButton.setText(getString(R.string.no));
+
+        alertPositiveButton.setOnClickListener(view -> {
+            alert.dismiss();
+            deleteBankDetails(obj.getBank_id());
+            RearrangeItems();
+        });
+
+        alertNegativeButton.setOnClickListener(view -> alert.dismiss());
+    }
+
+    private void deleteBankDetails(String bankId) {
+        Call<BankResponse> call = ApiClient.getBankService().deleteBankDetails(bankId);
+        call.enqueue(new Callback<BankResponse>() {
+            @Override
+            public void onResponse(Call<BankResponse> call, retrofit2.Response<BankResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<BankResponse> call, Throwable t) {
+            }
+        });
+    }
 }

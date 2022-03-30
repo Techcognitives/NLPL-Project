@@ -1332,6 +1332,13 @@ public class DriverDetailsActivity extends AppCompat {
                         driverNameAPI = obj.getString("driver_name");
                         driverNumberAPI = obj.getString("driver_number");
                         driverEmailAPI = obj.getString("driver_emailId");
+                        String driverDlNumberAPI = obj.getString("dl_number");
+
+                        try {
+                            dlNumber.setText(driverDlNumberAPI);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
 
                         driverName.setText(driverNameAPI);
 

@@ -71,6 +71,8 @@ public class TrucksAdapter extends RecyclerView.Adapter<TrucksAdapter.TruckViewH
 
         holder.list_truck_type.setText(activity.getString(R.string.bodyType) + obj.getTruck_type());
         holder.list_capacity.setText(activity.getString(R.string.Load_Type) + obj.getTruck_carrying_capacity());
+
+        holder.list_delete.setOnClickListener(view -> activity.deleteTruckDetails(obj));
     }
 
     @Override
@@ -84,7 +86,7 @@ public class TrucksAdapter extends RecyclerView.Adapter<TrucksAdapter.TruckViewH
     }
 
     public class TruckViewHolder extends RecyclerView.ViewHolder {
-        private TextView list_view_driver_details,  list_title, list_edit, list_truck_type, list_capacity, list_preview_rc_book, list_preview_insurance;
+        private TextView list_view_driver_details,  list_title, list_edit, list_truck_type, list_capacity, list_preview_rc_book, list_preview_insurance, list_delete;
 
         public TruckViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -96,6 +98,7 @@ public class TrucksAdapter extends RecyclerView.Adapter<TrucksAdapter.TruckViewH
             list_truck_type = itemView.findViewById(R.id.my_truck_list_truck_type);
             list_capacity = itemView.findViewById(R.id.my_truck_list_capacity);
             list_view_driver_details = itemView.findViewById(R.id.my_truck_list_driver_details);
+            list_delete = itemView.findViewById(R.id.my_truck_list_delete_text_view);
 
         }
 

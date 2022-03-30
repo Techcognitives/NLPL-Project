@@ -68,6 +68,8 @@ public class BanksAdapter extends RecyclerView.Adapter<BanksAdapter.BankViewHold
                 activity.onClickPreviewBankDetails(obj);
             }
         });
+
+        holder.list_delete.setOnClickListener(view -> activity.deleteBankDetails(obj));
     }
 
     @Override
@@ -81,7 +83,7 @@ public class BanksAdapter extends RecyclerView.Adapter<BanksAdapter.BankViewHold
     }
 
     public class BankViewHolder extends RecyclerView.ViewHolder {
-        private TextView list_acc_no, list_edit, list_bank_name, list_ifsi, list_preview_bank_details;
+        private TextView list_acc_no, list_edit, list_bank_name, list_ifsi, list_preview_bank_details, list_delete;
 
         public BankViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -90,6 +92,7 @@ public class BanksAdapter extends RecyclerView.Adapter<BanksAdapter.BankViewHold
             list_bank_name = itemView.findViewById(R.id.bank_list_bank_name);
             list_ifsi = itemView.findViewById(R.id.bank_list_ifsi_text);
             list_preview_bank_details = itemView.findViewById(R.id.bank_list_preview_bank_details);
+            list_delete = itemView.findViewById(R.id.bank_list_delete_bank_details_text);
         }
 
     }

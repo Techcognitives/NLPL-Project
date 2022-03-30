@@ -28,9 +28,12 @@ import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.DriverModel;
 import com.nlpl.model.ModelForRecyclerView.TruckModel;
+import com.nlpl.model.Responses.AddTruckResponse;
+import com.nlpl.model.Responses.BankResponse;
 import com.nlpl.model.UpdateMethods.UpdateTruckDetails;
 import com.nlpl.ui.adapters.DriversListAdapter;
 import com.nlpl.ui.adapters.TrucksAdapter;
+import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.JumpTo;
@@ -41,6 +44,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class ViewTruckDetailsActivity extends AppCompat {
 
@@ -540,5 +546,53 @@ public class ViewTruckDetailsActivity extends AppCompat {
             }
         }
         truckListAdapter.updateData(searchVehicleList);
+    }
+
+    public void deleteTruckDetails(TruckModel obj) {
+        //----------------------- Alert Dialog -------------------------------------------------
+        Dialog alert = new Dialog(ViewTruckDetailsActivity.this);
+        alert.setContentView(R.layout.dialog_alert);
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(alert.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        alert.show();
+        alert.getWindow().setAttributes(lp);
+        alert.setCancelable(true);
+
+        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+        alertTitle.setText("Delete Truck Details");
+        alertMessage.setText("Are you sure?\nYou want to delete Truck Details?");
+        alertPositiveButton.setText(getString(R.string.yes));
+        alertNegativeButton.setText(getString(R.string.no));
+
+        alertPositiveButton.setOnClickListener(view -> {
+            alert.dismiss();
+            deleteTruckDetails(obj.getTruck_id());
+            RearrangeItems();
+        });
+
+        alertNegativeButton.setOnClickListener(view -> alert.dismiss());
+    }
+
+    private void deleteTruckDetails(String truckId) {
+        Call<AddTruckResponse> call = ApiClient.addTruckService().deleteTruckDetails(truckId);
+        call.enqueue(new Callback<AddTruckResponse>() {
+            @Override
+            public void onResponse(Call<AddTruckResponse> call, retrofit2.Response<AddTruckResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<AddTruckResponse> call, Throwable t) {
+            }
+        });
     }
 }

@@ -9,6 +9,7 @@ import com.nlpl.model.UpdateModel.Models.UpdateTruckDetails.UpdateTruckVehicleNu
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -28,6 +29,9 @@ public interface AddTruckService {
 
     @PUT("/truck/{truckId}")
     Call<UpdateTruckDriverId> updateTruckDriverId(@Path("truckId") String truckId, @Body UpdateTruckDriverId updateTruckDriverId);
+
+    @DELETE("/truck/deleteTruck/{truckId}")
+    Call<AddTruckResponse> deleteTruckDetails(@Path("truckId") String truckId);
 }
 
 

@@ -10,6 +10,7 @@ import com.nlpl.model.UpdateModel.Models.UpdateBankDetails.UpdateBankReEnterAcco
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -32,4 +33,7 @@ public interface BankService {
 
     @PUT("/bank/updateBkByBkId/{bankId}")
     Call<UpdateBankName> updateBankName(@Path("bankId") String bankId, @Body UpdateBankName updateBankName);
+
+    @DELETE("/bank/deleteBank/{bankId}")
+    Call<BankResponse> deleteBankDetails(@Path("bankId") String bankId);
 }
