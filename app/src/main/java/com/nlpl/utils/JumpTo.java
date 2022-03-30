@@ -7,7 +7,7 @@ import com.nlpl.ui.activities.BankDetailsActivity;
 import com.nlpl.ui.activities.CompanyDetailsActivity;
 import com.nlpl.ui.activities.CustomerDashboardActivity;
 import com.nlpl.ui.activities.CustomerLoadsHistoryActivity;
-import com.nlpl.ui.activities.CustomerSettingsAndPreferences;
+import com.nlpl.ui.activities.SettingsAndPreferences;
 import com.nlpl.ui.activities.DriverDetailsActivity;
 import com.nlpl.ui.activities.FindLoadsActivity;
 import com.nlpl.ui.activities.FindTrucksActivity;
@@ -47,7 +47,7 @@ public class JumpTo {
     }
 
     public static void getToSettingAndPreferences(Activity activity, String mobileNumber, String userId, String role, Boolean isFinish) {
-        Intent intent = new Intent(activity, CustomerSettingsAndPreferences.class);
+        Intent intent = new Intent(activity, SettingsAndPreferences.class);
         intent.putExtra("mobile", mobileNumber);
         intent.putExtra("userId", userId);
         intent.putExtra("role", role);

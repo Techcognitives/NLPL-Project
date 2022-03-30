@@ -36,7 +36,7 @@
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.activities.CustomerSettingsAndPreferences"
+            android:name=".ui.activities.SettingsAndPreferences"
             android:exported="true"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity

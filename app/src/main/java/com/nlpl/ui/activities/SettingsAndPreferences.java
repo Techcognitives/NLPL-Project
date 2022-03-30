@@ -1,26 +1,16 @@
 package com.nlpl.ui.activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.Dialog;
-import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Html;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -29,11 +19,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.nlpl.R;
 import com.nlpl.model.Responses.PreferedLocationResponse;
-import com.nlpl.model.Responses.UserResponse;
 import com.nlpl.ui.adapters.PreferredLocationAdapter;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.AppCompat;
@@ -44,16 +31,13 @@ import com.nlpl.utils.SelectCity;
 import com.nlpl.utils.SelectState;
 import com.nlpl.utils.ShowAlert;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CustomerSettingsAndPreferences extends AppCompat {
+public class SettingsAndPreferences extends AppCompat {
 
     RecyclerView recyclerView;
     ProgressBar progressBar;
@@ -69,7 +53,7 @@ public class CustomerSettingsAndPreferences extends AppCompat {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customer_setings_and_preferences);
+        setContentView(R.layout.activity_setings_and_preferences);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -92,11 +76,11 @@ public class CustomerSettingsAndPreferences extends AppCompat {
             @Override
             public void onClick(View view) {
                 if (role.equals("Customer")) {
-                    ShowAlert.loadingDialog(CustomerSettingsAndPreferences.this);
-                    JumpTo.goToCustomerDashboard(CustomerSettingsAndPreferences.this, phone, true);
+                    ShowAlert.loadingDialog(SettingsAndPreferences.this);
+                    JumpTo.goToCustomerDashboard(SettingsAndPreferences.this, phone, true);
                 } else {
-                    ShowAlert.loadingDialog(CustomerSettingsAndPreferences.this);
-                    JumpTo.goToServiceProviderDashboard(CustomerSettingsAndPreferences.this, phone, true);
+                    ShowAlert.loadingDialog(SettingsAndPreferences.this);
+                    JumpTo.goToServiceProviderDashboard(SettingsAndPreferences.this, phone, true);
                 }
             }
         });
@@ -106,15 +90,15 @@ public class CustomerSettingsAndPreferences extends AppCompat {
         progressBar = findViewById(R.id.settings_progressBar);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new PreferredLocationAdapter(CustomerSettingsAndPreferences.this, userList);
+        adapter = new PreferredLocationAdapter(SettingsAndPreferences.this, userList);
         recyclerView.setAdapter(adapter);
 
         fetchPreferredLocations();
     }
 
     public void RearrangeItems() {
-        ShowAlert.loadingDialog(CustomerSettingsAndPreferences.this);
-        JumpTo.getToSettingAndPreferences(CustomerSettingsAndPreferences.this, phone, userId, role, true);
+        ShowAlert.loadingDialog(SettingsAndPreferences.this);
+        JumpTo.getToSettingAndPreferences(SettingsAndPreferences.this, phone, userId, role, true);
     }
 
     private void fetchPreferredLocations() {
@@ -135,7 +119,7 @@ public class CustomerSettingsAndPreferences extends AppCompat {
             @Override
             public void onFailure(Call<PreferedLocationResponse> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(CustomerSettingsAndPreferences.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SettingsAndPreferences.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -143,18 +127,18 @@ public class CustomerSettingsAndPreferences extends AppCompat {
     @Override
     public void onBackPressed() {
         if (role.equals("Customer")) {
-            ShowAlert.loadingDialog(CustomerSettingsAndPreferences.this);
-            JumpTo.goToCustomerDashboard(CustomerSettingsAndPreferences.this, phone, true);
+            ShowAlert.loadingDialog(SettingsAndPreferences.this);
+            JumpTo.goToCustomerDashboard(SettingsAndPreferences.this, phone, true);
         } else {
-            ShowAlert.loadingDialog(CustomerSettingsAndPreferences.this);
-            JumpTo.goToServiceProviderDashboard(CustomerSettingsAndPreferences.this, phone, true);
+            ShowAlert.loadingDialog(SettingsAndPreferences.this);
+            JumpTo.goToServiceProviderDashboard(SettingsAndPreferences.this, phone, true);
         }
 
     }
 
     public void deleteLocation(PreferedLocationResponse.UserList obj) {
         //----------------------- Alert Dialog -------------------------------------------------
-        Dialog alert = new Dialog(CustomerSettingsAndPreferences.this);
+        Dialog alert = new Dialog(SettingsAndPreferences.this);
         alert.setContentView(R.layout.dialog_alert);
         alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -199,7 +183,7 @@ public class CustomerSettingsAndPreferences extends AppCompat {
     }
 
     public void onClickAddPreferredLocation(View view) {
-        Dialog dialogSelectSC = new Dialog(CustomerSettingsAndPreferences.this);
+        Dialog dialogSelectSC = new Dialog(SettingsAndPreferences.this);
         dialogSelectSC.setContentView(R.layout.dialog_state_city);
         dialogSelectSC.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -216,10 +200,10 @@ public class CustomerSettingsAndPreferences extends AppCompat {
         TextView selectCity = dialogSelectSC.findViewById(R.id.registration_select_city);
         TextView okButton = dialogSelectSC.findViewById(R.id.dialog_alert_negative_button);
 
-        selectState.setOnClickListener(view1 -> SelectState.selectState(CustomerSettingsAndPreferences.this, selectState, selectCity));
+        selectState.setOnClickListener(view1 -> SelectState.selectState(SettingsAndPreferences.this, selectState, selectCity));
         selectCity.setOnClickListener(view1 -> {
             if (!selectState.getText().toString().isEmpty()) {
-                SelectCity.selectCity(CustomerSettingsAndPreferences.this, selectState.getText().toString(), selectCity);
+                SelectCity.selectCity(SettingsAndPreferences.this, selectState.getText().toString(), selectCity);
             } else {
                 Toast.makeText(this, "Please select State first", Toast.LENGTH_SHORT).show();
             }
@@ -236,7 +220,7 @@ public class CustomerSettingsAndPreferences extends AppCompat {
 
                 CreateUser.savePreferredLocation(CreateUser.createPreferredLocation(userId, selectState.getText().toString(), selectCity.getText().toString(), "", latForAddress, longForAddress));
                 //----------------------- Alert Dialog -------------------------------------------------
-                Dialog alert = new Dialog(CustomerSettingsAndPreferences.this);
+                Dialog alert = new Dialog(SettingsAndPreferences.this);
                 alert.setContentView(R.layout.dialog_alert_single_button);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 WindowManager.LayoutParams lp1 = new WindowManager.LayoutParams();

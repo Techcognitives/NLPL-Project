@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.CustomerSettingsAndPreferences">
+    tools:context=".ui.activities.SettingsAndPreferences">
 
     <include
         android:id="@+id/customer_setting_and_preferences_action_bar"
