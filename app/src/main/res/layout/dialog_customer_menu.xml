@@ -135,9 +135,9 @@
                 android:textColor="@color/light_black"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toTopOf="@+id/menu_loads_history_button"
-                app:layout_constraintEnd_toEndOf="@+id/textView24"
+                app:layout_constraintEnd_toEndOf="@+id/customer_menu_kyc"
                 app:layout_constraintStart_toEndOf="@+id/customer_menu_bank_details_logo_image_view"
-                app:layout_constraintTop_toBottomOf="@+id/textView24" />
+                app:layout_constraintTop_toBottomOf="@+id/customer_menu_kyc" />
 
             <ImageView
                 android:id="@+id/customer_menu_bank_details_logo_image_view"
@@ -161,7 +161,7 @@
                 android:text="@string/personalDetails"
                 android:textColor="@color/light_black"
                 android:textSize="15sp"
-                app:layout_constraintBottom_toTopOf="@+id/textView24"
+                app:layout_constraintBottom_toTopOf="@+id/customer_menu_kyc"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/customer_menu_personal_details_logo_image_view"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -184,7 +184,7 @@
                 android:layout_marginStart="7dp"
                 android:layout_marginTop="5dp"
                 android:gravity="center|start"
-                android:onClick="CustomerLoadHistory"
+                android:onClick="onClickProfileAndRegisterCustomer"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:text="@string/Loads_History"
@@ -257,7 +257,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="150dp"
                 android:gravity="center|start"
-                android:onClick="CustomerSettingsAndPreferences"
+                android:onClick="onClickProfileAndRegisterCustomer"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:text="@string/Settings_and_Preferences"
@@ -289,7 +289,7 @@
                 app:srcCompat="@drawable/languages_small" />
 
             <TextView
-                android:id="@+id/textView24"
+                android:id="@+id/customer_menu_kyc"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
@@ -297,6 +297,7 @@
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:text="@string/kyc_verification"
+                android:onClick="onClickProfileAndRegisterCustomer"
                 android:textColor="@color/light_black"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toTopOf="@+id/customer_menu_bank_details_button"
@@ -308,10 +309,10 @@
                 android:id="@+id/imageView15"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="@+id/textView24"
-                app:layout_constraintEnd_toStartOf="@+id/textView24"
+                app:layout_constraintBottom_toBottomOf="@+id/customer_menu_kyc"
+                app:layout_constraintEnd_toStartOf="@+id/customer_menu_kyc"
                 app:layout_constraintStart_toStartOf="@+id/customer_menu_personal_details_logo_image_view"
-                app:layout_constraintTop_toTopOf="@+id/textView24"
+                app:layout_constraintTop_toTopOf="@+id/customer_menu_kyc"
                 app:srcCompat="@drawable/kyc_small" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

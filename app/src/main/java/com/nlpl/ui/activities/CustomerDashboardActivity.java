@@ -2573,6 +2573,21 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                     JumpTo.goToBankDetailsActivity(CustomerDashboardActivity.this, userId, phone, false, false, null);
                 }
                 break;
+
+            case R.id.menu_settings_button:
+                ShowAlert.loadingDialog(CustomerDashboardActivity.this);
+                JumpTo.getToSettingAndPreferences(CustomerDashboardActivity.this, phone, userId, "Customer", false);
+                break;
+
+            case R.id.menu_loads_history_button:
+                ShowAlert.loadingDialog(CustomerDashboardActivity.this);
+                JumpTo.goToCustomerLoadHistoryActivity(CustomerDashboardActivity.this, userId, phone, false);
+                break;
+
+            case R.id.customer_menu_kyc:
+                ShowAlert.loadingDialog(CustomerDashboardActivity.this);
+                JumpTo.goToPersonalDetailsActivity(CustomerDashboardActivity.this, userId, phone, false, false);
+                break;
         }
     }
     //----------------------------------------------------------------------------------------------
@@ -3094,11 +3109,6 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         //------------------------------------------------------------------------------------------
     }
 
-    public void CustomerLoadHistory(View view) {
-        ShowAlert.loadingDialog(CustomerDashboardActivity.this);
-        JumpTo.goToCustomerLoadHistoryActivity(CustomerDashboardActivity.this, userId, phone, false);
-    }
-
     public void continueWithOtherSp(BidsAcceptedModel obj) {
 
         //----------------------- Alert Dialog -------------------------------------------------
@@ -3209,11 +3219,6 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
             }
         }
     };
-
-    public void CustomerSettingsAndPreferences(View view) {
-        ShowAlert.loadingDialog(CustomerDashboardActivity.this);
-        JumpTo.getToSettingAndPreferences(CustomerDashboardActivity.this, phone, userId, "Customer", false);
-    }
 
     public void onClickOpenPostALoad(View view) {
         ShowAlert.loadingDialog(CustomerDashboardActivity.this);

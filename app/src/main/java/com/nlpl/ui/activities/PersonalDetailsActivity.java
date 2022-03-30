@@ -19,8 +19,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.icu.text.DecimalFormat;
+import android.icu.text.NumberFormat;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -40,12 +44,14 @@ import com.nlpl.R;
 import com.nlpl.model.Responses.AadharIdResponse;
 import com.nlpl.model.Responses.AadharInfoResponse;
 import com.nlpl.model.Responses.PANVerificationResponse;
+import com.nlpl.model.Responses.UserResponse;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
 
 import com.nlpl.model.Requests.ImageRequest;
 import com.nlpl.model.Responses.ImageResponse;
 import com.nlpl.model.Responses.UploadImageResponse;
 
+import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserPANNumber;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.FileUtils;
@@ -73,7 +79,7 @@ public class PersonalDetailsActivity extends AppCompat {
     Dialog chooseDialog;
 
     TextView panCardText, editPAN, editFront, frontText, profileText, editProfile;
-    Button uploadPAN, uploadF, uploadProfile, okPersonalDetails;
+    Button uploadPAN, uploadF, uploadProfile, okButton;
     ImageView imgPAN, imgF, imgProfile, previewProfile, previewPan, previewAadhar;
     private int GET_FROM_GALLERY = 0;
     private int GET_FROM_GALLERY1 = 1;
@@ -84,14 +90,14 @@ public class PersonalDetailsActivity extends AppCompat {
 
     View panAndAadharView;
     ConstraintLayout aadharConstrain, panConstrain, profileConstrain;
-    TextView uploadAadharTitle, uploadPanTitle, uploadProfileTitle;
+    TextView uploadAadharTitle, uploadPanTitle, uploadProfileTitle, countdown;
 
     String userId, mobile, requestIdForAadhar;
-    Boolean profilePic, isPanUploaded = false, isFrontUploaded = false, isProfileUploaded = false;
+    Boolean profilePic, isPanUploaded = false, isFrontUploaded = false, isProfileUploaded = false, panVerified = false, aadharVerified = false;
     String img_type;
     EditText panNumber, aadharNumber;
 
-    Dialog previewDialogPan, previewDialogAadhar, previewDialogProfile;
+    Dialog previewDialogPan, previewDialogAadhar, previewDialogProfile, otpRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,7 +141,6 @@ public class PersonalDetailsActivity extends AppCompat {
         imgF = panAndAadharView.findViewById(R.id.imageF);
         editPAN = panAndAadharView.findViewById(R.id.edit1);
         editFront = panAndAadharView.findViewById(R.id.editFront);
-        okPersonalDetails = findViewById(R.id.okPersonalDetails);
         previewPan = (ImageView) panAndAadharView.findViewById(R.id.pan_aadhar_preview_pan);
         previewAadhar = (ImageView) panAndAadharView.findViewById(R.id.pan_aadhar_preview_aadhar);
         previewProfile = (ImageView) panAndAadharView.findViewById(R.id.preview_profile);
@@ -147,6 +152,8 @@ public class PersonalDetailsActivity extends AppCompat {
         panNumber.addTextChangedListener(panNumberCheck);
         aadharNumber = panAndAadharView.findViewById(R.id.pan_aadhar_aadhar_number);
         aadharNumber.addTextChangedListener(aadharTextCheck);
+
+        okButton = findViewById(R.id.okPersonalDetails);
 
         aadharConstrain = panAndAadharView.findViewById(R.id.aadhar_constrain);
         panConstrain = panAndAadharView.findViewById(R.id.pan_card_constrain);
@@ -182,6 +189,10 @@ public class PersonalDetailsActivity extends AppCompat {
         previewDialogProfile = new Dialog(PersonalDetailsActivity.this);
         previewDialogProfile.setContentView(R.layout.dialog_preview_images);
         previewDialogProfile.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.black)));
+
+        otpRequest = new Dialog(PersonalDetailsActivity.this);
+        otpRequest.setContentView(R.layout.activity_otp_code);
+        otpRequest.getWindow().setBackgroundDrawable(getDrawable(R.drawable.all_rounded_small));
 
         previewPan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -269,7 +280,7 @@ public class PersonalDetailsActivity extends AppCompat {
                 uploadProfileDialogChoose();
             }
         });
-
+        getUserDetails(userId);
     }
 
     //-----------------------------------------------upload Image------------------------------------------------------------
@@ -671,6 +682,36 @@ public class PersonalDetailsActivity extends AppCompat {
     }
     //-------------------------------------------------------------------------------------------------------------------
 
+    public void getUserDetails(String userId) {
+        Call<UserResponse> call = ApiClient.getUserService().getUserDetailsParticular(userId);
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                UserResponse nameResponse = response.body();
+                UserResponse.UserList listObj = nameResponse.getData().get(0);
+                int userVerified = listObj.getIs_user_verfied();
+                Log.i("userVerified", String.valueOf(userVerified));
+                if (userVerified==0){
+                    panConstrain.setVisibility(View.GONE);
+                    aadharConstrain.setVisibility(View.GONE);
+                    okButton.setVisibility(View.GONE);
+                    uploadPanTitle.setText("Your profile is under verification");
+                    uploadAadharTitle.setVisibility(View.GONE);
+                }else{
+                    panConstrain.setVisibility(View.VISIBLE);
+                    aadharConstrain.setVisibility(View.VISIBLE);
+                    okButton.setVisibility(View.VISIBLE);
+                    uploadAadharTitle.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
     public void onClickOKPersonal(View view) {
         if (profilePic) {
             if (isProfileUploaded) {
@@ -713,52 +754,54 @@ public class PersonalDetailsActivity extends AppCompat {
                 Toast.makeText(this, "Please Upload Profile Picture", Toast.LENGTH_SHORT).show();
             }
         } else {
-            if (isPanUploaded && isFrontUploaded) {
-                UpdateUserDetails.updateUserIsPersonalDetailsAdded(userId, "1");
-                //----------------------- Alert Dialog -------------------------------------------------
-                Dialog alert = new Dialog(PersonalDetailsActivity.this);
-                alert.setContentView(R.layout.dialog_alert_single_button);
-                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                lp.copyFrom(alert.getWindow().getAttributes());
-                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.gravity = Gravity.CENTER;
-
-                alert.show();
-                alert.getWindow().setAttributes(lp);
-                alert.setCancelable(false);
-
-                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-                alertTitle.setText(getString(R.string.Personal_Details));
-                alertMessage.setText(getString(R.string.Personal_Details_added_successfully));
-                alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText(getString(R.string.ok));
-                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
-
-                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        alert.dismiss();
-                        ShowAlert.loadingDialog(PersonalDetailsActivity.this);
-                        JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, true);
-                    }
-                });
-            } else {
-                if (!isPanUploaded) {
-                    Toast.makeText(this, "Please Upload PAN Card", Toast.LENGTH_SHORT).show();
-                } else if (!isFrontUploaded) {
-                    Toast.makeText(this, "Please Upload Aadhar Card", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "Please Upload PAN & Aadhar Card", Toast.LENGTH_SHORT).show();
-                }
+            if (!isPanUploaded && !panVerified){
+                Toast.makeText(this, "Please enter valid PAN Number or upload PAN Card", Toast.LENGTH_SHORT).show();
+            } else if (!isFrontUploaded && !aadharVerified){
+                Toast.makeText(this, "Please enter valid Aadhar Number or upload Aadhar Card", Toast.LENGTH_SHORT).show();
+            }else if (isPanUploaded || panVerified && isFrontUploaded || aadharVerified){
+                createPanAadhar();
             }
         }
+    }
+
+    public void createPanAadhar() {
+        UpdateUserDetails.updateUserIsPersonalDetailsAdded(userId, "1");
+        UpdateUserDetails.updateUserAadhar(userId, aadharNumber.getText().toString());
+        UpdateUserDetails.updateUserPAN(userId, panNumber.getText().toString());
+        //----------------------- Alert Dialog -------------------------------------------------
+        Dialog alert = new Dialog(PersonalDetailsActivity.this);
+        alert.setContentView(R.layout.dialog_alert_single_button);
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(alert.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        alert.show();
+        alert.getWindow().setAttributes(lp);
+        alert.setCancelable(false);
+
+        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+        alertTitle.setText(getString(R.string.Personal_Details));
+        alertMessage.setText(getString(R.string.Personal_Details_added_successfully));
+        alertPositiveButton.setVisibility(View.GONE);
+        alertNegativeButton.setText(getString(R.string.ok));
+        alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+
+        alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+                ShowAlert.loadingDialog(PersonalDetailsActivity.this);
+                JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, true);
+            }
+        });
     }
 
     //--------------------------------------create image in API -------------------------------------
@@ -1065,6 +1108,7 @@ public class PersonalDetailsActivity extends AppCompat {
                         if (list.getSuccess().equals("1")) {
                             panNumber.setEnabled(false);
                             panNumber.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success_small, 0);
+                            panVerified = true;
                         } else {
                             Toast.makeText(PersonalDetailsActivity.this, "Please enter a valid PAN number", Toast.LENGTH_SHORT).show();
                         }
@@ -1091,12 +1135,10 @@ public class PersonalDetailsActivity extends AppCompat {
             public void onResponse(Call<AadharIdResponse> call, Response<AadharIdResponse> response) {
                 try {
                     if (response.isSuccessful()) {
-                        AadharIdResponse aadharIdResponse = response.body();
-                        Log.i("response", String.valueOf(response.body()));
-                        AadharIdResponse.UserList list = aadharIdResponse.getData().get(0);
+                        AadharIdResponse response1 = response.body();
+                        AadharIdResponse.aadharDetailList list = response1.getData().get(0);
                         requestIdForAadhar = list.getRequest_id();
-                        Log.i("requestId", list.getRequest_id());
-                        Log.i("requestId1", requestIdForAadhar);
+                        openDialogForOTPValidation(requestIdForAadhar);
                     } else {
                         Toast.makeText(PersonalDetailsActivity.this, "Please enter a valid Aadhar Number", Toast.LENGTH_SHORT).show();
                     }
@@ -1113,9 +1155,6 @@ public class PersonalDetailsActivity extends AppCompat {
     }
 
     public void openDialogForOTPValidation(String requestIdForAadhar) {
-        Dialog otpRequest = new Dialog(PersonalDetailsActivity.this);
-        otpRequest.setContentView(R.layout.activity_otp_code);
-        otpRequest.getWindow().setBackgroundDrawable(getDrawable(R.drawable.all_rounded_small));
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(otpRequest.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -1128,21 +1167,52 @@ public class PersonalDetailsActivity extends AppCompat {
 
         PinView otpCode = (PinView) otpRequest.findViewById(R.id.pin_view);
         TextView changeNumber = otpRequest.findViewById(R.id.otp_change_number);
-        changeNumber.setVisibility(View.INVISIBLE);
+        changeNumber.setText("Cancel");
+        changeNumber.setOnClickListener(view -> {
+            otpRequest.dismiss();
+        });
         TextView otpCodeText = otpRequest.findViewById(R.id.otp_code_text);
         TextView otpSentText = otpRequest.findViewById(R.id.otp_text);
         otpSentText.setText("Enter OTP Code sent on Aadhar linked mobile number");
         Button verifyOtp = otpRequest.findViewById(R.id.otp_button);
-        TextView countdown = otpRequest.findViewById(R.id.countdown);
-        countdown.setVisibility(View.INVISIBLE);
-
+        countdown = otpRequest.findViewById(R.id.countdown);
+        setCountdown();
         verifyOtp.setOnClickListener(view -> {
             Log.i("reqID", requestIdForAadhar);
             checkAadharWithOTP(requestIdForAadhar, otpCode.getText().toString());
         });
     }
 
+    private void setCountdown() {
+        // Time is in millisecond so 50sec = 50000 I have used
+        // countdown Interval is 1sec = 1000 I have used
+        new CountDownTimer(1000000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                // Used for formatting digit to be in 2 digits only
+                NumberFormat f = null;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    f = new DecimalFormat("00");
+                }
+                long hour = (millisUntilFinished / 3600000) % 24;
+                long min = (millisUntilFinished / 60000) % 60;
+                long sec = (millisUntilFinished / 1000) % 60;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    countdown.setText(f.format(min) + " : " + f.format(sec));
+                }
+            }
+
+            // When the task is over it will print 00:00:00 there
+            public void onFinish() {
+                countdown.setText("00:00");
+                otpRequest.dismiss();
+                Toast.makeText(PersonalDetailsActivity.this, "Validation failed please try again", Toast.LENGTH_SHORT).show();
+//                otpEdit.setEnabled(false);
+            }
+        }.start();
+    }
+
     public void checkAadharWithOTP(String requestIdForAadhar, String otp) {
+        otpRequest.dismiss();
         Log.i("AADHAR", userId + "/" + aadharNumber.getText().toString() + "/" + requestIdForAadhar + "/" + otp);
         Call<AadharInfoResponse> responseCall = ApiClient.getVerification().checkAadharWithOTP(userId, aadharNumber.getText().toString(), requestIdForAadhar, otp);
         responseCall.enqueue(new Callback<AadharInfoResponse>() {
@@ -1151,11 +1221,12 @@ public class PersonalDetailsActivity extends AppCompat {
                 if (response.isSuccessful()) {
                     try {
                         AadharInfoResponse response1 = response.body();
-                        AadharInfoResponse.UserList list = response1.getData().get(0);
+                        AadharInfoResponse.localAadhar list = response1.getData().get(0);
                         Log.i("Success Message", list.getSuccess());
                         if (list.getSuccess().equals("1")) {
                             aadharNumber.setEnabled(false);
                             aadharNumber.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success_small, 0);
+                            aadharVerified = true;
                         } else {
                             Toast.makeText(PersonalDetailsActivity.this, "Please enter a valid Aadhar number", Toast.LENGTH_SHORT).show();
                         }

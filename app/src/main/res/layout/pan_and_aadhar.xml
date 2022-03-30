@@ -26,12 +26,27 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/all_rounded_small"
             android:src="@drawable/pan_card"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/pancard1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bsjdufcsdkcs" />
+
+        <TextView
+            android:id="@+id/bsjdufcsdkcs"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/OR"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/imagePan"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/pan_aadhar_pan_number" />
 
@@ -103,7 +118,6 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
             android:background="@drawable/edit_text_border"
             android:ems="10"
             android:hint="@string/Enter_PAN_Number"
@@ -114,7 +128,7 @@
             android:paddingEnd="5dp"
             android:paddingBottom="10dp"
             android:textSize="15sp"
-            app:layout_constraintBottom_toTopOf="@+id/imagePan"
+            app:layout_constraintBottom_toTopOf="@+id/bsjdufcsdkcs"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -198,7 +212,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/frontText"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pan_aadhar_aadhar_number" />
+            app:layout_constraintTop_toBottomOf="@+id/bsjdufcsdkcs1" />
 
         <TextView
             android:id="@+id/frontText"
@@ -213,6 +227,20 @@
             app:layout_constraintStart_toEndOf="@+id/imageF"
             app:layout_constraintTop_toTopOf="@+id/imageF"
             app:layout_constraintVertical_bias="0.506" />
+
+        <TextView
+            android:id="@+id/bsjdufcsdkcs1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/OR"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/imageF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pan_aadhar_aadhar_number" />
 
         <Button
             android:id="@+id/uploadF"
@@ -271,14 +299,14 @@
             android:background="@drawable/edit_text_border"
             android:ems="10"
             android:hint="@string/Enter_Aadhar_Number"
-            android:inputType="textPersonName"
+            android:inputType="number"
             android:maxLength="12"
             android:paddingStart="5dp"
             android:paddingTop="10dp"
             android:paddingEnd="5dp"
             android:paddingBottom="10dp"
             android:textSize="15sp"
-            app:layout_constraintBottom_toTopOf="@+id/imageF"
+            app:layout_constraintBottom_toTopOf="@+id/bsjdufcsdkcs1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

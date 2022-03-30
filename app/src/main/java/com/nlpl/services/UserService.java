@@ -2,8 +2,8 @@ package com.nlpl.services;
 
 import com.nlpl.model.Requests.UserRequest;
 import com.nlpl.model.Responses.AdminResponse;
-import com.nlpl.model.Responses.RatingResponse;
 import com.nlpl.model.Responses.UserResponse;
+import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserAadharNumber;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserAddress;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserAlternatePhoneNumber;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserDeviceId;
@@ -18,6 +18,7 @@ import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsTruckAdde
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserLat;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserLong;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserName;
+import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserPANNumber;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserPhoneNumber;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserPinCode;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserPreferredLanguage;
@@ -102,4 +103,13 @@ public interface UserService {
 
     @GET("/admin/getFees")
     Call<AdminResponse> GetFees();
+
+    @GET("/user/{userId}")
+    Call<UserResponse> getUserDetailsParticular(@Path("userId") String userId);
+
+    @PUT("/user/{userId}")
+    Call<UpdateUserPANNumber> updateUserPANNumber(@Path("userId") String userId, @Body UpdateUserPANNumber updateUserPANNumber);
+
+    @PUT("/user/{userId}")
+    Call<UpdateUserAadharNumber> updateUserAadharNumber(@Path("userId") String userId, @Body UpdateUserAadharNumber updateUserAadharNumber);
 }

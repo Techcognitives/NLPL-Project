@@ -16,7 +16,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <include
         android:id="@+id/personal_details_pan_and_aadhar"
         layout="@layout/pan_and_aadhar"

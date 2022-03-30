@@ -38,12 +38,12 @@ public class ViewPersonalDetailsActivity extends AppCompat {
     String companyNameAPI, companyAddressAPI, companyCityAPI, companyZipAPI, companyPanAPI, companyGstAPI;
     String phone, userId, isPersonalDetailsDone, isProfilePicAdded;
 
-    TextView uploadPanAAdharBtn,  uploadPanAAdharBtnTitle, uploadProfilebtn;
+    TextView uploadPanAAdharBtn, uploadPanAAdharBtnTitle, uploadProfilebtn;
 
     Dialog previewDialogPan, previewDialogAadhar, previewDialogProfile;
 
     View actionBar;
-    TextView actionBarTitle, actionBarSkip, previewAadharBtn, previewPANBtn, previewProfileBtn, userAlternateNumber;
+    TextView actionBarTitle, actionBarSkip, previewAadharBtn, panText, aadharText, panNumber, aadharNumber, previewPANBtn, previewProfileBtn, userAlternateNumber;
     ImageView actionBarBackButton, actionBarMenuButton;
 
     View bottomNav;
@@ -121,8 +121,12 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         userEditFirmDetailsTextView = (TextView) findViewById(R.id.view_personal_details_edit_firm_details);
 
         previewAadharBtn = findViewById(R.id.view_personal_details_preview_aadhar_card);
+        panText = findViewById(R.id.pan_text);
+        panNumber = findViewById(R.id.personal_details_pan_number);
         previewPANBtn = findViewById(R.id.view_personal_details_preview_pan_card);
         previewProfileBtn = findViewById(R.id.view_personal_details_preview_profile);
+        aadharText = findViewById(R.id.aadhar_text);
+        aadharNumber = findViewById(R.id.personal_details_aadhar_number);
 
         previewDialogPan = new Dialog(ViewPersonalDetailsActivity.this);
         previewDialogPan.setContentView(R.layout.dialog_preview_images);
@@ -137,7 +141,6 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         previewDialogProfile.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         getUserDetails();
-
         getImageURL();
 
     }
@@ -162,6 +165,8 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                         isPersonalDetailsDone = obj.getString("isPersonal_dt_added");
                         isProfilePicAdded = obj.getString("isProfile_pic_added");
                         String userAlternateMobileNumber = obj.getString("alternate_ph_no");
+                        String panNumberAPI = obj.getString("pan_number");
+                        String aadharNumberAPI = obj.getString("aadhaar_number");
 
 
 //                        if (userRoleAPI.equals("Customer")) {
@@ -178,7 +183,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
 //                            userFirmAddressTextView.setVisibility(View.GONE);
 //                        }
 
-                        if (isProfilePicAdded.equals("1")){
+                        if (isProfilePicAdded.equals("1")) {
                             uploadProfilebtn.setVisibility(View.GONE);
                             previewProfileBtn.setVisibility(View.GONE);
                         } else {
@@ -191,11 +196,40 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                             previewPANBtn.setVisibility(View.VISIBLE);
                             uploadPanAAdharBtn.setVisibility(View.GONE);
                             uploadPanAAdharBtnTitle.setVisibility(View.GONE);
+                            panText.setVisibility(View.VISIBLE);
+                            aadharText.setVisibility(View.VISIBLE);
+
+                            try {
+                                if (panNumberAPI.isEmpty() || panNumberAPI.equals("null") || panNumberAPI == null){
+                                    panNumber.setVisibility(View.INVISIBLE);
+                                }else {
+                                    panNumber.setText(panNumberAPI);
+                                    panNumber.setVisibility(View.VISIBLE);
+                                }
+                            } catch (Exception e) {
+                                panNumber.setVisibility(View.INVISIBLE);
+                            }
+
+                            try {
+                                if (aadharNumberAPI.length()==10){
+                                    aadharNumber.setVisibility(View.VISIBLE);
+                                    aadharNumber.setText(panNumberAPI);
+                                }else {
+                                    aadharNumber.setVisibility(View.INVISIBLE);
+                                }
+                            } catch (Exception e) {
+                                aadharNumber.setVisibility(View.INVISIBLE);
+                            }
+
                         } else {
                             previewAadharBtn.setVisibility(View.INVISIBLE);
                             previewPANBtn.setVisibility(View.INVISIBLE);
                             uploadPanAAdharBtn.setVisibility(View.VISIBLE);
                             uploadPanAAdharBtnTitle.setVisibility(View.VISIBLE);
+                            panText.setVisibility(View.INVISIBLE);
+                            aadharText.setVisibility(View.INVISIBLE);
+                            panNumber.setVisibility(View.INVISIBLE);
+                            aadharNumber.setVisibility(View.INVISIBLE);
                         }
 
                         getCompanyDetails();
@@ -219,7 +253,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                         try {
                             String s2 = userAlternateMobileNumber.substring(2, 12);
                             userAlternateNumber.setText("+91 " + s2);
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
 
@@ -324,14 +358,23 @@ public class ViewPersonalDetailsActivity extends AppCompat {
 
                         if (imageType.equals("aadhar")) {
                             aadharImageURL = obj.getString("image_url");
-                            new DownloadImageTask((ImageView) previewDialogAadhar.findViewById(R.id.dialog_preview_image_view)).execute(aadharImageURL);
-                            Log.i("IMAGE AADHAR URL", aadharImageURL);
+                            try {
+                                new DownloadImageTask((ImageView) previewDialogAadhar.findViewById(R.id.dialog_preview_image_view)).execute(aadharImageURL);
+                                Log.i("IMAGE AADHAR URL", aadharImageURL);
+                            } catch (Exception e) {
+                                previewAadharBtn.setVisibility(View.INVISIBLE);
+                            }
                         }
 
                         if (imageType.equals("pan")) {
                             panImageURL = obj.getString("image_url");
-                            Log.i("IMAGE PAN URL", panImageURL);
-                            new DownloadImageTask((ImageView) previewDialogPan.findViewById(R.id.dialog_preview_image_view)).execute(panImageURL);
+                            try {
+                                Log.i("IMAGE PAN URL", panImageURL);
+                                new DownloadImageTask((ImageView) previewDialogPan.findViewById(R.id.dialog_preview_image_view)).execute(panImageURL);
+                            } catch (Exception e) {
+                                previewPANBtn.setVisibility(View.INVISIBLE);
+                            }
+
                         }
 
                         if (imageType.equals("profile")) {
@@ -423,7 +466,6 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                     break;
             }
         }
-
     }
 
     @Override

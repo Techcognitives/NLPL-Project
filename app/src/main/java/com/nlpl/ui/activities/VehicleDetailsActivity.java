@@ -729,15 +729,7 @@ public class VehicleDetailsActivity extends AppCompat {
 
 
     public void onClickVehicleDetailsOk(View view) {
-        if (vehicleNumberEdit.getText().toString().isEmpty() || isRcUploaded) {
-            Toast.makeText(this, "Enter Vehicle Number or Upload RC Book", Toast.LENGTH_SHORT).show();
-        } else if (selectModel.getText().toString().isEmpty()) {
-            Toast.makeText(this, "Please Enter Body type", Toast.LENGTH_SHORT).show();
-        } else if (selectLoadType.getText().toString().isEmpty()) {
-            Toast.makeText(this, "Please Enter Load Type", Toast.LENGTH_SHORT).show();
-        } else if (!isInsurance) {
-            Toast.makeText(this, "Please Upload Insurance", Toast.LENGTH_SHORT).show();
-        } else {
+        if (vehicleVerified || isRcUploaded && !selectModel.getText().toString().isEmpty() && !selectLoadType.getText().toString().isEmpty() && isInsurance) {
             if (isEdit) {
                 if (isRcEdited) {
                     uploadTruckRC(truckId, pathForRC);
@@ -769,6 +761,18 @@ public class VehicleDetailsActivity extends AppCompat {
                         Toast.makeText(this, "Please Enter Vehicle Number or Upload RC Book", Toast.LENGTH_SHORT).show();
                     }
                 }
+            }
+        }else{
+            if (vehicleNumberEdit.getText().toString().isEmpty() && isRcUploaded) {
+                Toast.makeText(this, "Enter Vehicle Number or Upload RC Book", Toast.LENGTH_SHORT).show();
+            } else if (selectModel.getText().toString().isEmpty()) {
+                Toast.makeText(this, "Please Enter Body type", Toast.LENGTH_SHORT).show();
+            } else if (selectLoadType.getText().toString().isEmpty()) {
+                Toast.makeText(this, "Please Enter Load Type", Toast.LENGTH_SHORT).show();
+            } else if (!isInsurance) {
+                Toast.makeText(this, "Please Upload Insurance", Toast.LENGTH_SHORT).show();
+            } else if (vehicleVerified){
+                Toast.makeText(this, "Please enter valid Vehicle Number or Upload RC Book", Toast.LENGTH_SHORT).show();
             }
         }
     }

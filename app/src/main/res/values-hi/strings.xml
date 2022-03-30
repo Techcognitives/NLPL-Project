@@ -84,10 +84,10 @@
     <string name="Name">नाम: </string>       //new
     <string name="Email">ईमेल: </string>       //new
     <string name="Address">पता: </string>    //new
-    <string name="PANCard">पैन कार्ड </string>
+    <string name="PANCard">पैन कार्ड: </string>
     <string name="Upload">अपलोड </string>
     <string name="UploadAny">कोई भी अपलोड करें </string>
-    <string name="Aadhar">आधार कार्ड </string>
+    <string name="Aadhar">आधार कार्ड: </string>
     <string name="uploadAadhar">आधार कार्ड अपलोड करें* </string>
     <string name="uploadpan">पैन कार्ड अपलोड करें* </string>
     <string name="VoterId">वोटर आईडी कार्ड </string>

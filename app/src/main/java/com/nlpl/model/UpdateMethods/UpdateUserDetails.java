@@ -2,6 +2,7 @@ package com.nlpl.model.UpdateMethods;
 
 import android.util.Log;
 
+import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserAadharNumber;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserAddress;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserAlternatePhoneNumber;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserDeviceId;
@@ -16,6 +17,7 @@ import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsTruckAdde
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserLat;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserLong;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserName;
+import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserPANNumber;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserPhoneNumber;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserPinCode;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserPreferredLanguage;
@@ -416,6 +418,40 @@ public class UpdateUserDetails {
 
             @Override
             public void onFailure(Call<UpdateUserLong> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //-------------------------------- Update User PAN Number --------------------------------------
+    public static void updateUserPAN(String userId, String panNumber) {
+        UpdateUserPANNumber updateUserPANNumber = new UpdateUserPANNumber(panNumber);
+        Call<UpdateUserPANNumber> call = ApiClient.getUserService().updateUserPANNumber("" + userId, updateUserPANNumber);
+        call.enqueue(new Callback<UpdateUserPANNumber>() {
+            @Override
+            public void onResponse(Call<UpdateUserPANNumber> call, Response<UpdateUserPANNumber> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserPANNumber> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //-------------------------------- Update User Aadhar Number -----------------------------------
+    public static void updateUserAadhar(String userId, String aadharNumber) {
+        UpdateUserAadharNumber updateUserAadharNumber = new UpdateUserAadharNumber(aadharNumber);
+        Call<UpdateUserAadharNumber> call = ApiClient.getUserService().updateUserAadharNumber("" + userId, updateUserAadharNumber);
+        call.enqueue(new Callback<UpdateUserAadharNumber>() {
+            @Override
+            public void onResponse(Call<UpdateUserAadharNumber> call, Response<UpdateUserAadharNumber> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserAadharNumber> call, Throwable t) {
 
             }
         });

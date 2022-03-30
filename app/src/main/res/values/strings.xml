@@ -1148,10 +1148,10 @@
     //new
     <string name="Address">Address:</string>
     //new
-    <string name="PANCard">PAN Card</string>
+    <string name="PANCard">PAN Card:</string>
     <string name="Upload">Upload</string>
     <string name="UploadAny">Upload any of the following</string>
-    <string name="Aadhar">Aadhar Card</string>
+    <string name="Aadhar">Aadhar Card:</string>
     <string name="uploadAadhar">Upload Aadhar Card*</string>
     <string name="uploadpan">Upload PAN Card*</string>
     <string name="VoterId">Voter ID</string>
@@ -1173,7 +1173,7 @@
     <string name="Aadhar_Card_Uploaded_Successfully">Aadhar Card Uploaded Successfully</string>
     <string name="PAN_Card_not_Uploaded">PAN Card not Uploaded, please try again</string>
     <string name="Aadhar_Card_not_Uploaded">Aadhar Card not Uploaded, please try again</string>
-    <string name="Personal_Details_added_successfully">Personal Details added successfully</string>
+    <string name="Personal_Details_added_successfully">Personal Details added successfully\nWaiting for approval</string>
     <string name="update_your_phone_number">Do you really want to update your phone number?</string>
     <string name="Firm_Details">Firm Details</string>
     <string name="GST_No">GST No.: </string>

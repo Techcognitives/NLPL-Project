@@ -1839,16 +1839,17 @@ public class ServiceProviderDashboardActivity extends AppCompat {
         TextView dropLocation = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_drop_location_textview);
         TextView receivedNotes = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_received_notes_textview);
         TextView loadIdHeading = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_loadId_heading);
-        customerNameHeading = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_customerName_heading);
-        customerName = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_customerName);
-        customerNumberHeading = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_customer_phone_heading);
-        customerNumber = (TextView) dialogViewConsignment.findViewById(R.id.dialog_bid_now_customer_mobile_no);
+        customerNameHeading = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_customerName_heading);
+        customerName = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_customerName);
+        customerNumberHeading = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_customer_phone_heading);
+        customerNumber = (TextView) dialogAcceptRevisedBid.findViewById(R.id.dialog_bid_now_customer_mobile_no);
 
-        customerNameHeading.setVisibility(View.GONE);
-        customerName.setVisibility(View.GONE);
-        customerNumber.setVisibility(View.GONE);
-        customerNumberHeading.setVisibility(View.GONE);
+        customerNameHeading.setVisibility(View.VISIBLE);
+        customerName.setVisibility(View.VISIBLE);
+        customerNumber.setVisibility(View.VISIBLE);
+        customerNumberHeading.setVisibility(View.VISIBLE);
 
+        getCustomerNameAndNumber(obj.getUser_id());
         pickUpDate.setText(pick_up_date);
         pickUpTime.setText(pick_up_time);
         approxDistance.setText(distance);
