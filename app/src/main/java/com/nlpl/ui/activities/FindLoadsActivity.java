@@ -168,7 +168,7 @@ public class FindLoadsActivity extends AppCompat {
         actionBarBackButton = (ImageView) actionBar.findViewById(R.id.action_bar_back_button);
         actionBarMenuButton = (ImageView) actionBar.findViewById(R.id.action_bar_menu);
 
-        actionBarTitle.setText(getString(R.string.Find_Loads));
+        actionBarTitle.setText("Trips & Loads");
         actionBarMenuButton.setVisibility(View.GONE);
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,15 +177,19 @@ public class FindLoadsActivity extends AppCompat {
             }
         });
         //---------------------------- Bottom Nav --------------------------------------------------
-        bottomNav = (View) findViewById(R.id.find_loads_bottom_nav_bar);
-        spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
-        customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
-        spDashboard.setBackgroundColor(getResources().getColor(R.color.nav_unselected_blue));
-        customerDashboard.setBackgroundColor(getResources().getColor(R.color.nav_selected_blue));
-        TextView profileText = (TextView) bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
-        ImageView profileImageView = (ImageView) bottomNav.findViewById(R.id.bottom_nav_profile_image_view);
-        profileText.setText(getString(R.string.Find_Loads));
-        profileImageView.setImageDrawable(getDrawable(R.drawable.find_small));
+        View bottomNav = findViewById(R.id.find_loads_bottom_nav_bar);
+        ConstraintLayout spDashboard = bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
+        ConstraintLayout customerDashboard = bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
+        customerDashboard.setBackgroundTintList(getResources().getColorStateList(R.color.white));
+        spDashboard.setBackgroundTintList(getResources().getColorStateList(R.color.light_white));
+        TextView profileText = bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
+        ImageView profileImageView = bottomNav.findViewById(R.id.bottom_nav_profile_image_view);
+        profileText.setText("Trips & Loads");
+        profileImageView.setImageDrawable(getDrawable(R.drawable.bottom_nav_search_small));
+        View spView = bottomNav.findViewById(R.id.bottom_nav_bar_dashboard_underline);
+        spView.setVisibility(View.INVISIBLE);
+        View customerView = bottomNav.findViewById(R.id.bottom_nav_bar_find_underline);
+        customerView.setVisibility(View.VISIBLE);
 
         //---------------------------- Get Bank Details --------------------------------------------
         mQueue = Volley.newRequestQueue(FindLoadsActivity.this);
