@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     //---------------------------- LogIn Activity --------------------------------------------------
     <string name="login">लॉगिन करें </string>
     <string name="mobile_prefix">+91 |</string>

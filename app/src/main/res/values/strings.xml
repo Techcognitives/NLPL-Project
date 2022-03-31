@@ -1089,6 +1089,11 @@
 
     //----------------------------------------------------------------------------------------------
 
+    <string-array name="array_sort_trips">
+        <item>Pick-up Location</item>
+        <item>Drop Location</item>
+    </string-array>
+
     //---------------------------- Registration Screen Activity ------------------------------------
     <string name="name">Name*</string>
     <string name="name_hint">Enter your Name</string>
@@ -1407,7 +1412,7 @@
     //--------------------------------------Bid_now dialog------------------------------------------
     <string name="load_id">Load ID: city-city-000 </string>
     <string name="timeLeft"> <p>   </p> Time left </string>
-    <string name="timeinmin">00:00</string>
+    <string name="timeinmin" translatable="false">00:00</string>
     <string name="pickUpDateWithColon">Pick-up Date:</string>
     <string name="pickUpLocationWithColon"><p>  </p>Pick-up:</string>
     <string name="addressForPickUpLocation">City, State, PIN Code, Address</string>

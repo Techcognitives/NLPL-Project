@@ -8,6 +8,7 @@ import com.nlpl.services.CompanyService;
 import com.nlpl.services.ImageService;
 import com.nlpl.services.ImageUploadService;
 import com.nlpl.services.PostLoadService;
+import com.nlpl.services.PostTripService;
 import com.nlpl.services.PreferedLocationService;
 import com.nlpl.services.RatingService;
 import com.nlpl.services.UploadChequeService;
@@ -118,5 +119,10 @@ public class ApiClient {
     public static VerificationService getVerification() {
         VerificationService verificationService = getRetrofit().create(VerificationService.class);
         return verificationService;
+    }
+
+    public static PostTripService getPostTripService() {
+        PostTripService postLoadService = getRetrofit().create(PostTripService.class);
+        return postLoadService;
     }
 }

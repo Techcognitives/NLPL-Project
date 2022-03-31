@@ -148,7 +148,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.011"
-        app:srcCompat="@drawable/logo_circle" />
+        app:srcCompat="@drawable/new_logo" />
 
 <!--    <Spinner-->
 <!--        android:id="@+id/selectCountry"-->

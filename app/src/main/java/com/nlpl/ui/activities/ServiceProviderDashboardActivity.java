@@ -2592,6 +2592,10 @@ public class ServiceProviderDashboardActivity extends AppCompat {
         selectDriver.setText(obj.getDriver_name());
     }
 
+    public void onClickPostATrip(View view) {
+        JumpTo.goToPostATrip(ServiceProviderDashboardActivity.this, phone, userId,false, null, false);
+    }
+
     private class SwipeListener implements View.OnTouchListener {
         GestureDetector gestureDetector;
 

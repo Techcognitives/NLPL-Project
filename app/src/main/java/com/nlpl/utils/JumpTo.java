@@ -7,6 +7,7 @@ import com.nlpl.ui.activities.BankDetailsActivity;
 import com.nlpl.ui.activities.CompanyDetailsActivity;
 import com.nlpl.ui.activities.CustomerDashboardActivity;
 import com.nlpl.ui.activities.CustomerLoadsHistoryActivity;
+import com.nlpl.ui.activities.PostATripActivity;
 import com.nlpl.ui.activities.SettingsAndPreferences;
 import com.nlpl.ui.activities.DriverDetailsActivity;
 import com.nlpl.ui.activities.FindLoadsActivity;
@@ -285,6 +286,20 @@ public class JumpTo {
     public static void goToLPTrackActivity(Activity activity, String mobileNumber, Boolean isFinish) {
         Intent intent = new Intent(activity, TrackForLoadPosterActivity.class);
         intent.putExtra("mobile", mobileNumber);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        activity.startActivity(intent);
+        if (isFinish){
+            activity.finish();
+        }
+        activity.overridePendingTransition(0, 0);
+    }
+
+    public static void goToPostATrip(Activity activity, String mobileNumber, String userId, Boolean isEdit, Boolean tripId, Boolean isFinish) {
+        Intent intent = new Intent(activity, PostATripActivity.class);
+        intent.putExtra("mobile", mobileNumber);
+        intent.putExtra("userId", userId);
+        intent.putExtra("isEdit", isEdit);
+        intent.putExtra("tripId", tripId);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivity(intent);
         if (isFinish){

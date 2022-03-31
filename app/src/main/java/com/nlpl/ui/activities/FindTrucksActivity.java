@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.Manifest;
@@ -46,16 +48,23 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import com.nlpl.R;
 import com.nlpl.model.MapsModel.LocationModel;
+import com.nlpl.model.ModelForRecyclerView.FindLoadsModel;
+import com.nlpl.model.ModelForRecyclerView.SearchLoadModel;
 import com.nlpl.model.Responses.UserResponse;
 import com.nlpl.ui.adapters.GoogleMapTextInfoAdapter;
+import com.nlpl.ui.adapters.SearchLoadAdapter;
+import com.nlpl.ui.adapters.SearchTripAdapter;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.JumpTo;
+import com.nlpl.utils.SelectCity;
+import com.nlpl.utils.SelectState;
 import com.nlpl.utils.ShowAlert;
 
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -72,6 +81,19 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
     Marker marker;
     ArrayList<UserResponse.UserList> userDetails = new ArrayList<>();
     Dialog loadingDialog;
+    ConstraintLayout tripConstrain, truckConstrain;
+    View tripUnderline, truckUnderline;
+    TextView tripText, truckText, selectState, selectCity;
+
+    //------------------------------------- State List ---------------------------------------------
+    private ArrayList<FindLoadsModel> anList, apList, arList, asList, brList, chList, cgList, ddList,
+            dd2List, dlList, gaList, gjList, hrList, hpList, jkList, jhList, kaList, klList, laList,
+            ldList, mpList, mhList, mnList, mlList, mzList, nlList, odList, pyList, pbList, rjList,
+            skList, tnList, tsList, trList, ukList, upList, wbList;
+    private ArrayList<SearchLoadModel> searchLoadModels = new ArrayList<>();
+    ArrayList<SearchLoadModel> searchList;
+    private SearchTripAdapter searchLoadAdapter;
+    private RecyclerView searchListRecyclerView;
 
     @SuppressLint({"UseCompatLoadingForColorStateLists", "UseCompatLoadingForDrawables"})
     @Override
@@ -87,6 +109,16 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
         }
 
         getCurrentLocation(FindTrucksActivity.this);
+        //-------------------------- Initialization ------------------------------------------------
+        tripText = findViewById(R.id.find_trucks_find_trip_text);
+        truckText = findViewById(R.id.find_trucks_find_truck_text);
+        tripUnderline = findViewById(R.id.find_trucks_find_trip_view);
+        truckUnderline = findViewById(R.id.find_trucks_find_truck_view);
+        tripConstrain = findViewById(R.id.find_trucks_find_trips_constrain);
+        truckConstrain = findViewById(R.id.find_trucks_find_truck_constrain);
+        selectState = findViewById(R.id.find_trip_select_state);
+        selectCity = findViewById(R.id.find_trip_select_city);
+
         //--------------------------- action bar ---------------------------------------------------
         View actionBar = findViewById(R.id.find_trucks_action_bar);
         TextView actionBarTitle = actionBar.findViewById(R.id.action_bar_title);
@@ -95,7 +127,7 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
         ImageView actionBarWhatsApp = actionBar.findViewById(R.id.action_bar_whats_app);
         actionBarWhatsApp.setVisibility(View.VISIBLE);
 
-        actionBarTitle.setText(getString(R.string.Find_Trucks));
+        actionBarTitle.setText("Trips & Trucks");
         actionBarBackButton.setVisibility(View.VISIBLE);
         actionBarMenuButton.setVisibility(View.GONE);
 
@@ -117,7 +149,7 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
         spDashboard.setBackgroundTintList(getResources().getColorStateList(R.color.light_white));
         TextView profileText = bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
         ImageView profileImageView = bottomNav.findViewById(R.id.bottom_nav_profile_image_view);
-        profileText.setText(getString(R.string.Find_Trucks));
+        profileText.setText("Trips & Trucks");
         profileImageView.setImageDrawable(getDrawable(R.drawable.bottom_nav_search_small));
         View spView = bottomNav.findViewById(R.id.bottom_nav_bar_dashboard_underline);
         spView.setVisibility(View.INVISIBLE);
@@ -128,6 +160,62 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         Objects.requireNonNull(mapFragment).getMapAsync(this);
+
+        //------------------------------------------------------------------------------------------
+        anList = new ArrayList<>();
+        apList = new ArrayList<>();
+        arList = new ArrayList<>();
+        asList = new ArrayList<>();
+        brList = new ArrayList<>();
+        chList = new ArrayList<>();
+        cgList = new ArrayList<>();
+        ddList = new ArrayList<>();
+        dd2List = new ArrayList<>();
+        dlList = new ArrayList<>();
+        gaList = new ArrayList<>();
+        gjList = new ArrayList<>();
+        hrList = new ArrayList<>();
+        hpList = new ArrayList<>();
+        jkList = new ArrayList<>();
+        jhList = new ArrayList<>();
+        kaList = new ArrayList<>();
+        klList = new ArrayList<>();
+        laList = new ArrayList<>();
+        ldList = new ArrayList<>();
+        mpList = new ArrayList<>();
+        mhList = new ArrayList<>();
+        mnList = new ArrayList<>();
+        mlList = new ArrayList<>();
+        mzList = new ArrayList<>();
+        nlList = new ArrayList<>();
+        odList = new ArrayList<>();
+        pyList = new ArrayList<>();
+        pbList = new ArrayList<>();
+        rjList = new ArrayList<>();
+        skList = new ArrayList<>();
+        tnList = new ArrayList<>();
+        tsList = new ArrayList<>();
+        trList = new ArrayList<>();
+        ukList = new ArrayList<>();
+        upList = new ArrayList<>();
+        wbList = new ArrayList<>();
+
+        searchListRecyclerView = (RecyclerView) findViewById(R.id.find_trip_state_recycler_view);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager.setReverseLayout(false);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        searchListRecyclerView.setLayoutManager(linearLayoutManager);
+        searchListRecyclerView.setHasFixedSize(true);
+
+        searchList = new ArrayList(Arrays.asList(getResources().getStringArray(R.array.array_indian_states)));
+        for (int i = 0; i < searchList.size(); i++) {
+            SearchLoadModel searchLoadModel = new SearchLoadModel();
+            searchLoadModel.setSearchList(String.valueOf(searchList.get(i)));
+            searchLoadModels.add(searchLoadModel);
+        }
+
+        searchLoadAdapter = new SearchTripAdapter(FindTrucksActivity.this, searchLoadModels);
+        searchListRecyclerView.setAdapter(searchLoadAdapter);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -325,7 +413,7 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
                 JumpTo.goToRegistrationActivity(FindTrucksActivity.this, phone, true);
             });
             //------------------------------------------------------------------------------------------
-        }else{
+        } else {
             ShowAlert.loadingDialog(FindTrucksActivity.this);
             JumpTo.goToCustomerDashboard(FindTrucksActivity.this, phone, true);
         }
@@ -375,5 +463,39 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + "+918806930081"));
             startActivity(intent);
         });
+    }
+
+    public void onClickTripTruck(View view) {
+        switch (view.getId()) {
+            case R.id.find_trucks_find_trip_text:
+
+                truckConstrain.setVisibility(View.INVISIBLE);
+                tripConstrain.setVisibility(View.VISIBLE);
+                tripText.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
+                truckText.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+                tripUnderline.setVisibility(View.VISIBLE);
+                truckUnderline.setVisibility(View.INVISIBLE);
+                break;
+
+            case R.id.find_trucks_find_truck_text:
+
+                truckConstrain.setVisibility(View.VISIBLE);
+                tripConstrain.setVisibility(View.INVISIBLE);
+                tripText.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+                truckText.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
+                tripUnderline.setVisibility(View.INVISIBLE);
+                truckUnderline.setVisibility(View.VISIBLE);
+                break;
+        }
+    }
+
+    public void onClickSelectState(View view) {
+        SelectState.selectState(FindTrucksActivity.this, selectState, selectCity);
+    }
+
+    public void onClickSelectCity(View view) {
+        if (!selectState.getText().toString().isEmpty()) {
+            SelectCity.selectCity(FindTrucksActivity.this, selectState.getText().toString(), selectCity);
+        }
     }
 }

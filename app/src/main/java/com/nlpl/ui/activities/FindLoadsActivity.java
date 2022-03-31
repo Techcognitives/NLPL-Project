@@ -71,6 +71,7 @@ public class FindLoadsActivity extends AppCompat {
             dd2List, dlList, gaList, gjList, hrList, hpList, jkList, jhList, kaList, klList, laList,
             ldList, mpList, mhList, mnList, mlList, mzList, nlList, odList, pyList, pbList, rjList,
             skList, tnList, tsList, trList, ukList, upList, wbList;
+
     private FindLoadAdapter bidsListAdapter;
     private RecyclerView bidsListRecyclerView;
     ConstraintLayout stateConstrain;
@@ -117,6 +118,7 @@ public class FindLoadsActivity extends AppCompat {
                 Log.i("userId find loads", userId);
             }
         }
+
         //------------------------------------------------------------------------------------------
         anList = new ArrayList<>();
         apList = new ArrayList<>();
