@@ -26,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
 
@@ -95,7 +96,7 @@ public class FindLoadsActivity extends AppCompat {
     View bottomNav;
     ConstraintLayout spDashboard, customerDashboard;
 
-    String phone, userId;
+    String phone, userId, pickFromBundle = "Pick";
 
     String loadId, bidStatus, vehicle_no, truckId, selectedDriverId, updateAssignedTruckId, updateAssignedDriverId, selectedDriverName;
     Dialog previewDialogBidNow, selectTruckDialog, setBudget;
@@ -111,6 +112,7 @@ public class FindLoadsActivity extends AppCompat {
     ArrayList<TripResponse.TripList> tripList = new ArrayList<>();
     TripListAdapter tripListAdapter;
     RecyclerView tripListRecyclerView;
+    Spinner pickOrDropSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,7 +182,16 @@ public class FindLoadsActivity extends AppCompat {
         truckConstrain = findViewById(R.id.trip_load_constrain);
         selectState = findViewById(R.id.find_loads_select_state);
         selectCity = findViewById(R.id.find_loads_select_city);
+        pickOrDropSpinner = findViewById(R.id.find_loads_spinner);
 
+        selectState.addTextChangedListener(spinnerWatcher);
+        selectCity.addTextChangedListener(spinnerWatcher);
+
+        if (pickFromBundle.equals("Drop")){
+            pickOrDropSpinner.setSelection(1);
+        }else{
+            pickOrDropSpinner.setSelection(0);
+        }
         //-------------------------------- Action Bar ----------------------------------------------
         actionBar = findViewById(R.id.find_loads_action_bar);
         actionBarTitle = (TextView) actionBar.findViewById(R.id.action_bar_title);
@@ -241,7 +252,7 @@ public class FindLoadsActivity extends AppCompat {
         searchListRecyclerView.setAdapter(searchLoadAdapter);
         //------------------------------------------------------------------------------------------
         tripListRecyclerView = (RecyclerView) findViewById(R.id.find_trips_recycler_view);
-        
+
         LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager1.setReverseLayout(false);
         linearLayoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
@@ -250,8 +261,27 @@ public class FindLoadsActivity extends AppCompat {
 
         tripListAdapter = new TripListAdapter(FindLoadsActivity.this, tripList);
         tripListRecyclerView.setAdapter(tripListAdapter);
-        
-        getBidsReceived();
+
+
+        pickOrDropSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String location = adapterView.getSelectedItem().toString();
+                if (location.equals("Pick-up Location")){
+                    pickFromBundle = "Pick";
+                    getBidsReceived();
+                }else{
+                    pickFromBundle = "Drop";
+                    getBidsReceived();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         checkTrip();
     }
 
@@ -297,6 +327,7 @@ public class FindLoadsActivity extends AppCompat {
     }
 
     public void getBidsReceived() {
+        bidsList.clear();
         String url1 = getString(R.string.baseURL) + "/loadpost/getAllPosts";
         Log.i("URL: ", url1);
 
@@ -734,6 +765,35 @@ public class FindLoadsActivity extends AppCompat {
             }
         }
     }
+
+    private TextWatcher spinnerWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String location = pickOrDropSpinner.getSelectedItem().toString().trim();
+            String state = selectState.getText().toString().trim();
+            String city = selectCity.getText().toString().trim();
+
+            if (!location.isEmpty()) {
+                if (location.equals("Pick-up Location")) {
+                    ShowAlert.loadingDialog(FindLoadsActivity.this);
+                    pickFromBundle = "Pick";
+                    RearrangeItems();
+                } else {
+                    ShowAlert.loadingDialog(FindLoadsActivity.this);
+                    pickFromBundle = "Drop";
+                    RearrangeItems();
+                }
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+    };
 
     public void onClickBidNow(FindLoadsModel obj) {
         previewDialogBidNow = new Dialog(FindLoadsActivity.this);
@@ -1470,9 +1530,14 @@ public class FindLoadsActivity extends AppCompat {
 
                     if (loadSubmittedList.size() > 0) {
                         updatedLoadSubmittedList.addAll(loadSubmittedList);
-                        compareAndRemove(loadListToCompare);
+                        compareAndRemove(loadListToCompare, pickFromBundle);
                     } else {
-                        getStateBids(loadListToCompare);
+                        if (pickFromBundle.equals("Drop")){
+                            getStateBidsDrop(loadListToCompare);
+                        }else{
+                            getStateBidsPick(loadListToCompare);
+                        }
+
                     }
 
                 } catch (JSONException e) {
@@ -1488,7 +1553,7 @@ public class FindLoadsActivity extends AppCompat {
         mQueue.add(request);
     }
 
-    private void compareAndRemove(ArrayList<FindLoadsModel> loadListToCompare) {
+    private void compareAndRemove(ArrayList<FindLoadsModel> loadListToCompare, String pickOrDrop) {
 
         Log.i("Load list", String.valueOf(loadListToCompare.size()));
 
@@ -1501,10 +1566,14 @@ public class FindLoadsActivity extends AppCompat {
         }
 
 //        Collections.reverse(loadListToCompare);
-        getStateBids(loadListToCompare);
+        if (pickOrDrop.equals("Pick")) {
+            getStateBidsPick(loadListToCompare);
+        } else {
+            getStateBidsDrop(loadListToCompare);
+        }
     }
 
-    private void getStateBids(ArrayList<FindLoadsModel> loadListToCompare) {
+    private void getStateBidsDrop(ArrayList<FindLoadsModel> loadListToCompare) {
         anList.clear();
         apList.clear();
         arList.clear();
@@ -1542,6 +1611,162 @@ public class FindLoadsActivity extends AppCompat {
         ukList.clear();
         upList.clear();
         wbList.clear();
+
+        for (int i = 0; i < loadListToCompare.size(); i++) {
+            if (loadListToCompare.get(i).getDrop_state().equals("AN")) {
+                anList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("AP")) {
+                apList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("AR")) {
+                arList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("AS")) {
+                asList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("BR")) {
+                brList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("CH/PB")) {
+                chList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("CG")) {
+                cgList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("DD")) {
+                ddList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("DD2")) {
+                dd2List.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("DL")) {
+                dlList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("GA")) {
+                gaList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("GJ")) {
+                gjList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("HR")) {
+                hrList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("HP")) {
+                hpList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("JK")) {
+                jkList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("JH")) {
+                jhList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("KA")) {
+                kaList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("KL")) {
+                klList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("LA")) {
+                laList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("LD")) {
+                ldList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("MP")) {
+                mpList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("MH")) {
+                mhList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("MN")) {
+                mnList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("ML")) {
+                mlList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("MZ")) {
+                mzList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("NL")) {
+                nlList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("OD")) {
+                odList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("PY")) {
+                pyList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("PB")) {
+                pbList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("RJ")) {
+                rjList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("SK")) {
+                skList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("TN")) {
+                tnList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("TS")) {
+                tsList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("TR")) {
+                trList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("UK")) {
+                ukList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("UP")) {
+                upList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("WB")) {
+                wbList.add(loadListToCompare.get(i));
+            }
+        }
+    }
+
+
+    private void getStateBidsPick(ArrayList<FindLoadsModel> loadListToCompare) {
+        anList.clear();
+        apList.clear();
+        arList.clear();
+        asList.clear();
+        brList.clear();
+        chList.clear();
+        cgList.clear();
+        ddList.clear();
+        dd2List.clear();
+        dlList.clear();
+        gaList.clear();
+        gjList.clear();
+        hrList.clear();
+        hpList.clear();
+        jkList.clear();
+        jhList.clear();
+        kaList.clear();
+        klList.clear();
+        laList.clear();
+        ldList.clear();
+        mpList.clear();
+        mhList.clear();
+        mnList.clear();
+        mlList.clear();
+        mzList.clear();
+        nlList.clear();
+        odList.clear();
+        pyList.clear();
+        pbList.clear();
+        rjList.clear();
+        skList.clear();
+        tnList.clear();
+        tsList.clear();
+        trList.clear();
+        ukList.clear();
+        upList.clear();
+        wbList.clear();
+
 
         for (int i = 0; i < loadListToCompare.size(); i++) {
             if (loadListToCompare.get(i).getPick_state().equals("AN")) {
@@ -1727,7 +1952,7 @@ public class FindLoadsActivity extends AppCompat {
         alertPositiveButton.setOnClickListener(view1 -> {
             alert.dismiss();
             ShowAlert.loadingDialog(FindLoadsActivity.this);
-            JumpTo.goToPostATrip(FindLoadsActivity.this, ""+phone, ""+userId, true, ""+obj.getTrip_id(), false);
+            JumpTo.goToPostATrip(FindLoadsActivity.this, "" + phone, "" + userId, true, "" + obj.getTrip_id(), false);
         });
         //------------------------------------------------------------------------------------------
     }
