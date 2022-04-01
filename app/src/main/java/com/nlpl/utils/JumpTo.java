@@ -167,11 +167,14 @@ public class JumpTo {
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void goToFindLoadsActivity(Activity activity, String userId, String mobileNumber) {
+    public static void goToFindLoadsActivity(Activity activity, String userId, String mobileNumber, Boolean isFinish) {
         Intent intent = new Intent(activity, FindLoadsActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("mobile", mobileNumber);
         activity.startActivity(intent);
+        if (isFinish) {
+            activity.finish();
+        }
         activity.overridePendingTransition(0, 0);
     }
 
@@ -294,7 +297,7 @@ public class JumpTo {
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void goToPostATrip(Activity activity, String mobileNumber, String userId, Boolean isEdit, Boolean tripId, Boolean isFinish) {
+    public static void goToPostATrip(Activity activity, String mobileNumber, String userId, Boolean isEdit, String tripId, Boolean isFinish) {
         Intent intent = new Intent(activity, PostATripActivity.class);
         intent.putExtra("mobile", mobileNumber);
         intent.putExtra("userId", userId);

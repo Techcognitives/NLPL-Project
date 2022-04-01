@@ -123,7 +123,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <Spinner
-                android:id="@+id/textView6"
+                android:id="@+id/find_trips_spinner"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -149,10 +149,10 @@
                 android:textColor="@color/light_black"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/textView6"
-                app:layout_constraintEnd_toStartOf="@+id/textView6"
+                app:layout_constraintBottom_toBottomOf="@+id/find_trips_spinner"
+                app:layout_constraintEnd_toStartOf="@+id/find_trips_spinner"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textView6" />
+                app:layout_constraintTop_toTopOf="@+id/find_trips_spinner" />
 
             <TextView
                 android:id="@+id/find_trip_select_state"
@@ -196,7 +196,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/find_trip_select_state"
-                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+                app:layout_constraintTop_toBottomOf="@+id/find_trips_spinner" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

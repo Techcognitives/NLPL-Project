@@ -839,7 +839,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
                     });
                     //------------------------------------------------------------------------------------------
                 } else {
-                    JumpTo.goToFindLoadsActivity(ServiceProviderDashboardActivity.this, userId, phone);
+                    JumpTo.goToFindLoadsActivity(ServiceProviderDashboardActivity.this, userId, phone, false);
                 }
                 break;
 
@@ -2593,6 +2593,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
     }
 
     public void onClickPostATrip(View view) {
+        ShowAlert.loadingDialog(ServiceProviderDashboardActivity.this);
         JumpTo.goToPostATrip(ServiceProviderDashboardActivity.this, phone, userId,false, null, false);
     }
 

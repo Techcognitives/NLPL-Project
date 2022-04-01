@@ -1,0 +1,85 @@
+package com.nlpl.ui.adapters;
+
+import android.annotation.SuppressLint;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.nlpl.R;
+import com.nlpl.model.ModelForRecyclerView.SearchLoadModel;
+import com.nlpl.model.Responses.TripResponse;
+import com.nlpl.ui.activities.FindLoadsActivity;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+import retrofit2.http.Body;
+
+public class TripListAdapter extends RecyclerView.Adapter<TripListAdapter.SearchLoadsViewHolder> {
+
+    private FindLoadsActivity activity;
+    ArrayList<TripResponse.TripList> array_indian_states;
+
+    public TripListAdapter(FindLoadsActivity activity, ArrayList<TripResponse.TripList> searchList) {
+        this.activity = activity;
+        this.array_indian_states = searchList;
+    }
+
+    @Override
+    public SearchLoadsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.trip_list, parent, false);
+        return new SearchLoadsViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(SearchLoadsViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        TripResponse.TripList obj = array_indian_states.get(position);
+       holder.startCity.setText(obj.getPick_city());
+       holder.endCity.setText(obj.getDrop_city());
+       holder.date.setText("Trip Date: "+obj.getTrip_date());
+       holder.time.setText("Trip Time: "+obj.getTrip_start_time());
+       holder.budget.setText("₹ "+obj.getTrip_budget());
+       holder.body.setText("Body Type: "+obj.getVehicle_model());
+       holder.capacity.setText("Load Type: "+obj.getCapacity());
+       holder.note.setText("Notes: "+obj.getNotes_meterial_des());
+       holder.tripConstrain.setOnClickListener(view -> activity.onClickEditTrip(obj));
+    }
+
+    @Override
+    public int getItemCount() {
+        return array_indian_states.size();
+    }
+
+    public void updateData(ArrayList<TripResponse.TripList> searchList) {
+        array_indian_states = searchList;
+        notifyDataSetChanged();
+    }
+
+    public class SearchLoadsViewHolder extends RecyclerView.ViewHolder {
+        private TextView startCity, endCity, date, time, capacity, body, budget, note;
+        private ConstraintLayout tripConstrain;
+
+        public SearchLoadsViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            startCity = itemView.findViewById(R.id.trip_list_pick_up);
+            endCity = itemView.findViewById(R.id.trip_list_drop);
+            date = itemView.findViewById(R.id.trip_list_pick_up_date);
+            time = itemView.findViewById(R.id.load_list_pick_up_time);
+            capacity = itemView.findViewById(R.id.trip_list_capacity);
+            body = itemView.findViewById(R.id.trip_list_body);
+            budget = itemView.findViewById(R.id.trip_list_budget);
+            note = itemView.findViewById(R.id.trip_list_notes);
+            tripConstrain = itemView.findViewById(R.id.trip_list_constrain);
+
+        }
+
+    }
+//--------------------------------------------------------------------------------------------------
+}

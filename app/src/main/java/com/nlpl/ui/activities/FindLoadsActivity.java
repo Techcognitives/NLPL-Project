@@ -1,7 +1,6 @@
 package com.nlpl.ui.activities;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -41,14 +41,17 @@ import com.nlpl.model.ModelForRecyclerView.FindLoadsModel;
 import com.nlpl.model.ModelForRecyclerView.SearchLoadModel;
 import com.nlpl.model.Requests.BidLoadRequest;
 import com.nlpl.model.Responses.BidLadResponse;
-import com.nlpl.ui.adapters.FindLoadAdapter;
 
+import com.nlpl.model.Responses.TripResponse;
 import com.nlpl.ui.adapters.SearchLoadAdapter;
 import com.nlpl.ui.adapters.StateLoadAdapter;
+import com.nlpl.ui.adapters.TripListAdapter;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.EnglishNumberToWords;
 import com.nlpl.utils.JumpTo;
+import com.nlpl.utils.SelectCity;
+import com.nlpl.utils.SelectState;
 import com.nlpl.utils.ShowAlert;
 
 import org.json.JSONArray;
@@ -60,6 +63,7 @@ import java.util.Arrays;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FindLoadsActivity extends AppCompat {
 
@@ -71,10 +75,10 @@ public class FindLoadsActivity extends AppCompat {
             dd2List, dlList, gaList, gjList, hrList, hpList, jkList, jhList, kaList, klList, laList,
             ldList, mpList, mhList, mnList, mlList, mzList, nlList, odList, pyList, pbList, rjList,
             skList, tnList, tsList, trList, ukList, upList, wbList;
-
-    private FindLoadAdapter bidsListAdapter;
-    private RecyclerView bidsListRecyclerView;
     ConstraintLayout stateConstrain;
+    ConstraintLayout tripConstrain, truckConstrain;
+    View tripUnderline, truckUnderline;
+    TextView tripText, truckText, selectState, selectCity;
 
     private ArrayList<SearchLoadModel> searchLoadModels = new ArrayList<>();
     ArrayList<SearchLoadModel> searchList;
@@ -87,7 +91,6 @@ public class FindLoadsActivity extends AppCompat {
     View actionBar;
     TextView actionBarTitle;
     ImageView actionBarBackButton, actionBarMenuButton;
-    EditText searchLoad;
 
     View bottomNav;
     ConstraintLayout spDashboard, customerDashboard;
@@ -104,6 +107,11 @@ public class FindLoadsActivity extends AppCompat {
     ArrayList<String> arrayTruckId, arrayTruckList, arrayDriverId, arrayDriverName;
     SwipeRefreshLayout swipeRefreshLayout;
 
+    //----------------------------------------------------------------------------------------------
+    ArrayList<TripResponse.TripList> tripList = new ArrayList<>();
+    TripListAdapter tripListAdapter;
+    RecyclerView tripListRecyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,7 +122,7 @@ public class FindLoadsActivity extends AppCompat {
             phone = bundle.getString("mobile");
             Log.i("Mobile No View Personal", phone);
             userId = bundle.getString("userId");
-            if (userId!=null) {
+            if (userId != null) {
                 Log.i("userId find loads", userId);
             }
         }
@@ -162,6 +170,17 @@ public class FindLoadsActivity extends AppCompat {
         arrayTruckList = new ArrayList<>();
         arrayDriverId = new ArrayList<>();
         arrayDriverName = new ArrayList<>();
+
+        //-------------------------- Initialization ------------------------------------------------
+        tripText = findViewById(R.id.find_loads_find_trip_text);
+        truckText = findViewById(R.id.find_loads_find_truck_text);
+        tripUnderline = findViewById(R.id.find_loads_find_trip_view);
+        truckUnderline = findViewById(R.id.find_loads_find_truck_view);
+        tripConstrain = findViewById(R.id.load_trip_constrain);
+        truckConstrain = findViewById(R.id.trip_load_constrain);
+        selectState = findViewById(R.id.find_loads_select_state);
+        selectCity = findViewById(R.id.find_loads_select_city);
+
         //-------------------------------- Action Bar ----------------------------------------------
         actionBar = findViewById(R.id.find_loads_action_bar);
         actionBarTitle = (TextView) actionBar.findViewById(R.id.action_bar_title);
@@ -193,16 +212,8 @@ public class FindLoadsActivity extends AppCompat {
 
         //---------------------------- Get Bank Details --------------------------------------------
         mQueue = Volley.newRequestQueue(FindLoadsActivity.this);
-        bidsListRecyclerView = (RecyclerView) findViewById(R.id.find_loads_recycler_view);
         searchListRecyclerView = (RecyclerView) findViewById(R.id.find_loads_search_recycler_view);
-        searchLoad = (EditText) findViewById(R.id.find_loads_search_load);
         stateConstrain = (ConstraintLayout) findViewById(R.id.find_loads_state_constrain);
-
-        LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(getApplicationContext());
-        linearLayoutManagerBank.setReverseLayout(false);
-        linearLayoutManagerBank.setOrientation(LinearLayoutManager.HORIZONTAL);
-        bidsListRecyclerView.setLayoutManager(linearLayoutManagerBank);
-        bidsListRecyclerView.setHasFixedSize(true);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setReverseLayout(false);
@@ -219,9 +230,6 @@ public class FindLoadsActivity extends AppCompat {
             }
         });
 
-        bidsListAdapter = new FindLoadAdapter(FindLoadsActivity.this, loadListToCompare);
-//        bidsListRecyclerView.setAdapter(bidsListAdapter);
-
         searchList = new ArrayList(Arrays.asList(getResources().getStringArray(R.array.array_indian_states)));
         for (int i = 0; i < searchList.size(); i++) {
             SearchLoadModel searchLoadModel = new SearchLoadModel();
@@ -231,42 +239,43 @@ public class FindLoadsActivity extends AppCompat {
 
         searchLoadAdapter = new SearchLoadAdapter(FindLoadsActivity.this, searchLoadModels);
         searchListRecyclerView.setAdapter(searchLoadAdapter);
-        getBidsReceived();
+        //------------------------------------------------------------------------------------------
+        tripListRecyclerView = (RecyclerView) findViewById(R.id.find_trips_recycler_view);
+        
+        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager1.setReverseLayout(false);
+        linearLayoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
+        tripListRecyclerView.setLayoutManager(linearLayoutManager1);
+        tripListRecyclerView.setHasFixedSize(true);
 
-        searchLoad.addTextChangedListener(searchTextWatcher);
+        tripListAdapter = new TripListAdapter(FindLoadsActivity.this, tripList);
+        tripListRecyclerView.setAdapter(tripListAdapter);
+        
+        getBidsReceived();
+        checkTrip();
     }
 
-    private TextWatcher searchTextWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-            filter(editable.toString());
-        }
-    };
-
-    private void filter(String text) {
-        ArrayList<SearchLoadModel> searchLoadList = new ArrayList<>();
-
-        for (SearchLoadModel item : searchLoadModels) {
-            if (item.getSearchList().toLowerCase().contains(text.toLowerCase())) {
-                searchLoadList.add(item);
+    private void checkTrip() {
+        Call<TripResponse> tripModelClass = ApiClient.getPostTripService().getTripDetailsByUserId(userId);
+        tripModelClass.enqueue(new Callback<TripResponse>() {
+            @Override
+            public void onResponse(Call<TripResponse> call, Response<TripResponse> response) {
+                TripResponse tripModelClass1 = response.body();
+                TripResponse.TripList list = tripModelClass1.getData().get(0);
+                if (response.isSuccessful()) tripList.addAll(tripModelClass1.getData());
+                tripListAdapter.updateData(tripList);
             }
-        }
-        searchLoadAdapter.updateData(searchLoadList);
+
+            @Override
+            public void onFailure(Call<TripResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     public void RearrangeItems() {
         ShowAlert.loadingDialog(FindLoadsActivity.this);
-        JumpTo.goToFindLoadsActivity(FindLoadsActivity.this, userId, phone);
+        JumpTo.goToFindLoadsActivity(FindLoadsActivity.this, userId, phone, true);
     }
 
     public void onClickBottomNavigation(View view) {
@@ -342,21 +351,13 @@ public class FindLoadsActivity extends AppCompat {
         //-------------------------------------------------------------------------------------------
     }
 
-    public void onClickShiftRecyclerviewToLeft(View view) {
-        bidsListRecyclerView.setAdapter(bidsListAdapter);
-    }
-
-    public void onClickShiftRecyclerviewToRight(View view) {
-        bidsListRecyclerView.scrollToPosition(bidsListAdapter.getItemCount() - 1);
-    }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         String visibility = String.valueOf(stateConstrain.getVisibility());
         Log.i("visibility", visibility); //visible = 0
         if (visibility.equals("0")) {
-            JumpTo.goToFindLoadsActivity(FindLoadsActivity.this, userId, phone);
+            RearrangeItems();
         } else {
             JumpTo.goToServiceProviderDashboard(FindLoadsActivity.this, phone, true);
         }
@@ -843,7 +844,7 @@ public class FindLoadsActivity extends AppCompat {
                         saveBid(createBidRequest("Accepted", spQuote.getText().toString()));
                     } else if (!spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) && !negotiable) {
                         saveBid(createBidRequest("submittedNonNego", spQuote.getText().toString()));
-                    } else if (!spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) && negotiable){
+                    } else if (!spQuote.getText().toString().equals(customerFirstBudget.getText().toString()) && negotiable) {
                         saveBid(createBidRequest("submittedNego", spQuote.getText().toString()));
                     }
 
@@ -1361,7 +1362,6 @@ public class FindLoadsActivity extends AppCompat {
     }
 
     private void selectDriverToBid(ArrayList<String> arrayDriverId) {
-
         selectTruckDialog = new Dialog(FindLoadsActivity.this);
         selectTruckDialog.setContentView(R.layout.dialog_spinner);
         selectTruckDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -1472,9 +1472,6 @@ public class FindLoadsActivity extends AppCompat {
                         updatedLoadSubmittedList.addAll(loadSubmittedList);
                         compareAndRemove(loadListToCompare);
                     } else {
-//                        bidsListAdapter = new FindLoadAdapter(FindLoadsActivity.this, loadListToCompare);
-//                        bidsListRecyclerView.setAdapter(bidsListAdapter);
-                        bidsListAdapter.updateData(loadListToCompare);
                         getStateBids(loadListToCompare);
                     }
 
@@ -1504,30 +1501,7 @@ public class FindLoadsActivity extends AppCompat {
         }
 
 //        Collections.reverse(loadListToCompare);
-
-        bidsListAdapter = new FindLoadAdapter(FindLoadsActivity.this, loadListToCompare);
-        bidsListRecyclerView.setAdapter(bidsListAdapter);
-
-        if (loadListToCompare.size() > 0) {
-            bidsListAdapter.updateData(loadListToCompare);
-
-            for (int i = 0; i < loadListToCompare.size(); i++) {
-                if (loadListToCompare.size() == 0) {
-                    bidsListRecyclerView.setVisibility(View.GONE);
-                } else if (loadListToCompare.size() == 1) {
-                    ArrayList<FindLoadsModel> newList = new ArrayList<>(loadListToCompare.subList(loadListToCompare.size() - 1, loadListToCompare.size()));
-                    bidsListAdapter.updateData(newList);
-                } else if (loadListToCompare.size() == 2) {
-                    ArrayList<FindLoadsModel> newList = new ArrayList<>(loadListToCompare.subList(loadListToCompare.size() - 2, loadListToCompare.size()));
-                    bidsListAdapter.updateData(newList);
-                } else if (loadListToCompare.size() >= 3) {
-                    ArrayList<FindLoadsModel> newList = new ArrayList<>(loadListToCompare.subList(loadListToCompare.size() - 3, loadListToCompare.size()));
-                    bidsListAdapter.updateData(newList);
-                }
-            }
-            getStateBids(loadListToCompare);
-        }
-
+        getStateBids(loadListToCompare);
     }
 
     private void getStateBids(ArrayList<FindLoadsModel> loadListToCompare) {
@@ -1682,6 +1656,80 @@ public class FindLoadsActivity extends AppCompat {
                 wbList.add(loadListToCompare.get(i));
             }
         }
+    }
+
+    public void onClickTripLoads(View view) {
+        switch (view.getId()) {
+            case R.id.find_loads_find_trip_text:
+
+                truckConstrain.setVisibility(View.INVISIBLE);
+                tripConstrain.setVisibility(View.VISIBLE);
+                tripText.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
+                truckText.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+                tripUnderline.setVisibility(View.VISIBLE);
+                truckUnderline.setVisibility(View.INVISIBLE);
+                break;
+
+            case R.id.find_loads_find_truck_text:
+
+                truckConstrain.setVisibility(View.VISIBLE);
+                tripConstrain.setVisibility(View.INVISIBLE);
+                tripText.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+                truckText.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
+                tripUnderline.setVisibility(View.INVISIBLE);
+                truckUnderline.setVisibility(View.VISIBLE);
+                break;
+        }
+    }
+
+    public void onClickSelectState(View view) {
+        SelectState.selectState(FindLoadsActivity.this, selectState, selectCity);
+    }
+
+    public void onClickSelectCity(View view) {
+        if (!selectState.getText().toString().isEmpty()) {
+            SelectCity.selectCity(FindLoadsActivity.this, selectState.getText().toString(), selectCity);
+        }
+    }
+
+    public void onClickEditTrip(TripResponse.TripList obj) {
+        //----------------------- Alert Dialog -------------------------------------------------
+        Dialog alert = new Dialog(FindLoadsActivity.this);
+        alert.setContentView(R.layout.dialog_alert);
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(alert.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        alert.show();
+        alert.getWindow().setAttributes(lp);
+        alert.setCancelable(false);
+
+        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+        alertTitle.setText("Edit Trip");
+        alertMessage.setText("Would you like to edit your Trip?");
+        alertPositiveButton.setText(getString(R.string.edit));
+        alertNegativeButton.setText(getString(R.string.cancel));
+
+        alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+            }
+        });
+
+        alertPositiveButton.setOnClickListener(view1 -> {
+            alert.dismiss();
+            ShowAlert.loadingDialog(FindLoadsActivity.this);
+            JumpTo.goToPostATrip(FindLoadsActivity.this, ""+phone, ""+userId, true, ""+obj.getTrip_id(), false);
+        });
+        //------------------------------------------------------------------------------------------
     }
     //----------------------------------------------------------------------------------------------
 }

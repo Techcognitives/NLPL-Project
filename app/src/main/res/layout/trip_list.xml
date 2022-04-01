@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:id="@+id/trip_list_constrain"
+    android:layout_marginBottom="5dp"
+    android:background="@drawable/all_rounded_small"
+    android:backgroundTint="@color/dark_white"
+    android:paddingTop="5dp">
+
+    <TextView
+        android:id="@+id/trip_list_pick_up_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:paddingEnd="5dp"
+        android:text="DD-MMM-YY"
+        android:textColor="@color/light_black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/trip_list_capacity"
+        app:layout_constraintEnd_toStartOf="@+id/load_list_pick_up_time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trip_list_pick_up" />
+
+    <TextView
+        android:id="@+id/load_list_pick_up_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:gravity="center|end"
+        android:text="HH:MMpm"
+        android:textColor="@color/light_black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/trip_list_pick_up_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/trip_list_pick_up_date"
+        app:layout_constraintTop_toTopOf="@+id/trip_list_pick_up_date"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/trip_list_capacity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="2dp"
+        android:text="Capacity: 0,000 kgs"
+        android:textColor="@color/light_black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/trip_list_body"
+        app:layout_constraintEnd_toEndOf="@+id/trip_list_pick_up_date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trip_list_pick_up_date" />
+
+    <TextView
+        android:id="@+id/trip_list_body"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="2dp"
+        android:text="Body: Open"
+        android:textColor="@color/light_black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/trip_list_notes"
+        app:layout_constraintEnd_toEndOf="@+id/trip_list_capacity"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trip_list_capacity" />
+
+    <TextView
+        android:id="@+id/trip_list_pick_up"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/edit_text_border_small_black"
+        android:drawableStart="@drawable/ic_start"
+        android:padding="5dp"
+        android:singleLine="true"
+        android:text="Pune"
+        android:textColor="@color/light_black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/trip_list_pick_up_date"
+        app:layout_constraintEnd_toStartOf="@+id/imageView7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/trip_list_drop"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:background="@drawable/edit_text_border_small_black"
+        android:drawableStart="@drawable/ic_end"
+        android:padding="5dp"
+        android:singleLine="true"
+        android:text="Mumbai"
+        android:textColor="@color/light_black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView7"
+        app:layout_constraintTop_toTopOf="@+id/imageView7" />
+
+    <TextView
+        android:id="@+id/trip_list_budget"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:gravity="center|end"
+        android:paddingBottom="2dp"
+        android:text="INR X,XXX"
+        android:textColor="@color/light_black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/trip_list_notes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/trip_list_capacity"
+        app:layout_constraintTop_toBottomOf="@+id/load_list_pick_up_time" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/trip_list_pick_up"
+        app:layout_constraintEnd_toStartOf="@+id/trip_list_drop"
+        app:layout_constraintStart_toEndOf="@+id/trip_list_pick_up"
+        app:layout_constraintTop_toTopOf="@+id/trip_list_pick_up"
+        app:srcCompat="@drawable/ic_arrow_towards"
+        app:tint="@color/light_black" />
+
+    <TextView
+        android:id="@+id/trip_list_notes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:text="@string/Notes"
+        android:textColor="@color/light_black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trip_list_body" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

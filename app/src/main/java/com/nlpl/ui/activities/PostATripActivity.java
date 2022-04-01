@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ import com.nlpl.model.ModelForRecyclerView.TruckModel;
 import com.nlpl.model.Requests.PostATripRequest;
 import com.nlpl.model.Responses.AddTruckResponse;
 import com.nlpl.model.Responses.PostATripResponse;
+import com.nlpl.model.Responses.TripResponse;
 import com.nlpl.model.Responses.TruckResponse;
 import com.nlpl.model.UpdateModel.Models.UpdateTripDetails;
 import com.nlpl.ui.adapters.TrucksListAdapterBid;
@@ -37,6 +39,7 @@ import com.nlpl.utils.SelectBudget;
 import com.nlpl.utils.SelectCity;
 import com.nlpl.utils.SelectDate;
 import com.nlpl.utils.SelectState;
+import com.nlpl.utils.ShowAlert;
 
 
 import java.util.ArrayList;
@@ -54,6 +57,7 @@ public class PostATripActivity extends AppCompat {
     Dialog dialogSelectTruck;
     TrucksListTripAdapter truckListAdapter;
     Boolean isEdit;
+    Button postTrip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,10 +95,14 @@ public class PostATripActivity extends AppCompat {
         selectDropCity = findViewById(R.id.post_a_trip_select_city_drop);
         note = findViewById(R.id.post_a_trip_notes_edit_text);
         deleteTrip = findViewById(R.id.delete_trip_in_post_a_load);
+        postTrip = findViewById(R.id.post_a_trip_ok_button);
 
-        if (isEdit){
+        if (isEdit) {
+            getTripDetails();
+            actionBarTitle.setText("Edit Trip");
             deleteTrip.setVisibility(View.VISIBLE);
-        }else{
+            postTrip.setText("Update Trip");
+        } else {
             deleteTrip.setVisibility(View.GONE);
         }
 
@@ -291,7 +299,7 @@ public class PostATripActivity extends AppCompat {
                         @Override
                         public void onClick(View view) {
                             alert.dismiss();
-                            JumpTo.goToServiceProviderDashboard(PostATripActivity.this, phone, true);
+                            JumpTo.goToFindLoadsActivity(PostATripActivity.this, userId, phone, true);
                         }
                     });
                     //------------------------------------------------------------------------------------------
@@ -398,6 +406,7 @@ public class PostATripActivity extends AppCompat {
 
         alertPositiveButton.setOnClickListener(view1 -> {
             alert.dismiss();
+            deleteTrip(tripId);
         });
 
         alertNegativeButton.setOnClickListener(view2 -> alert.dismiss());
@@ -405,8 +414,8 @@ public class PostATripActivity extends AppCompat {
 
     public void onClickTruckList(TruckResponse.TruckList obj) {
         selectTruck.setText(obj.getVehicle_no());
-        bodyType.setText("Body Type: " + obj.getTruck_type());
-        loadType.setText("Load Type: " + obj.getTruck_carrying_capacity());
+        bodyType.setText(obj.getTruck_type());
+        loadType.setText(obj.getTruck_carrying_capacity());
         dialogSelectTruck.dismiss();
     }
 
@@ -422,13 +431,264 @@ public class PostATripActivity extends AppCompat {
         call.enqueue(new Callback<UpdateTripDetails>() {
             @Override
             public void onResponse(Call<UpdateTripDetails> call, Response<UpdateTripDetails> response) {
+                if (response.isSuccessful()) {
+                    //----------------------- Alert Dialog -------------------------------------------------
+                    Dialog alert = new Dialog(PostATripActivity.this);
+                    alert.setContentView(R.layout.dialog_alert_single_button);
+                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(alert.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.gravity = Gravity.CENTER;
 
+                    alert.show();
+                    alert.getWindow().setAttributes(lp);
+                    alert.setCancelable(false);
+
+                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                    alertTitle.setText("Update Trip");
+                    alertMessage.setText("Trip Updated Successfully");
+                    alertPositiveButton.setVisibility(View.GONE);
+                    alertNegativeButton.setText(getString(R.string.ok));
+                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+
+                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alert.dismiss();
+                            JumpTo.goToFindLoadsActivity(PostATripActivity.this, userId, phone, true);
+                        }
+                    });
+                    //------------------------------------------------------------------------------------------
+                } else {
+                    //----------------------- Alert Dialog -------------------------------------------------
+                    Dialog alert = new Dialog(PostATripActivity.this);
+                    alert.setContentView(R.layout.dialog_alert_single_button);
+                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(alert.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.gravity = Gravity.CENTER;
+
+                    alert.show();
+                    alert.getWindow().setAttributes(lp);
+                    alert.setCancelable(false);
+
+                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                    alertTitle.setText("Update Trip");
+                    alertMessage.setText("Trip Update Unsuccessful\nPlease try again");
+                    alertPositiveButton.setVisibility(View.GONE);
+                    alertNegativeButton.setText(getString(R.string.ok));
+                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+
+                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alert.dismiss();
+                        }
+                    });
+                    //------------------------------------------------------------------------------------------
+                }
             }
 
             @Override
             public void onFailure(Call<UpdateTripDetails> call, Throwable t) {
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(PostATripActivity.this);
+                alert.setContentView(R.layout.dialog_alert_single_button);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(false);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Update Trip");
+                alertMessage.setText("Trip Update Unsuccessful\nPlease try again");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText(getString(R.string.ok));
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                    }
+                });
+                //------------------------------------------------------------------------------------------
+            }
+        });
+    }
+
+    public void deleteTrip(String tripId) {
+        Call<TripResponse> call = ApiClient.getPostTripService().deleteTrip(tripId);
+        call.enqueue(new Callback<TripResponse>() {
+            @Override
+            public void onResponse(Call<TripResponse> call, Response<TripResponse> response) {
+                if (response.isSuccessful()) {
+                    //----------------------- Alert Dialog -------------------------------------------------
+                    Dialog alert = new Dialog(PostATripActivity.this);
+                    alert.setContentView(R.layout.dialog_alert_single_button);
+                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(alert.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.gravity = Gravity.CENTER;
+
+                    alert.show();
+                    alert.getWindow().setAttributes(lp);
+                    alert.setCancelable(false);
+
+                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                    alertTitle.setText("Delete Trip");
+                    alertMessage.setText("Trip Deleted Successfully");
+                    alertPositiveButton.setVisibility(View.GONE);
+                    alertNegativeButton.setText(getString(R.string.ok));
+                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+
+                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alert.dismiss();
+                            JumpTo.goToFindLoadsActivity(PostATripActivity.this, userId, phone, true);
+                        }
+                    });
+                    //------------------------------------------------------------------------------------------
+                } else {
+                    //----------------------- Alert Dialog -------------------------------------------------
+                    Dialog alert = new Dialog(PostATripActivity.this);
+                    alert.setContentView(R.layout.dialog_alert_single_button);
+                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(alert.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.gravity = Gravity.CENTER;
+
+                    alert.show();
+                    alert.getWindow().setAttributes(lp);
+                    alert.setCancelable(false);
+
+                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                    alertTitle.setText("Delete Trip");
+                    alertMessage.setText("Trip Delete Unsuccessful\nPlease try again");
+                    alertPositiveButton.setVisibility(View.GONE);
+                    alertNegativeButton.setText(getString(R.string.ok));
+                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+
+                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alert.dismiss();
+                        }
+                    });
+                    //------------------------------------------------------------------------------------------
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TripResponse> call, Throwable t) {
+//----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(PostATripActivity.this);
+                alert.setContentView(R.layout.dialog_alert_single_button);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(false);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText("Delete Trip");
+                alertMessage.setText("Trip Delete Unsuccessful\nPlease try again");
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText(getString(R.string.ok));
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                    }
+                });
+                //------------------------------------------------------------------------------------------
+            }
+        });
+    }
+
+    private void getTripDetails() {
+        Call<TripResponse> tripModelClass = ApiClient.getPostTripService().getTripDetails(tripId);
+        tripModelClass.enqueue(new Callback<TripResponse>() {
+            @Override
+            public void onResponse(Call<TripResponse> call, Response<TripResponse> response) {
+                TripResponse tripModelClass1 = response.body();
+                TripResponse.TripList list =tripModelClass1.getData().get(0);
+                selectDate.setText(list.getTrip_date());
+                selectTime.setText(list.getTrip_start_time());
+                selectBudget.setText(list.getTrip_budget());
+                bodyType.setText(list.getVehicle_model());
+                loadType.setText(list.getCapacity());
+                selectPickUpState.setText(list.getPick_state());
+                selectPickUpCity.setText(list.getPick_city());
+                selectDropState.setText(list.getDrop_state());
+                selectDropCity.setText(list.getDrop_city());
+                note.setText(list.getNotes_meterial_des());
+            }
+
+            @Override
+            public void onFailure(Call<TripResponse> call, Throwable t) {
 
             }
         });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ShowAlert.loadingDialog(this);
+        JumpTo.goToFindLoadsActivity(this, userId, phone, true);
     }
 }

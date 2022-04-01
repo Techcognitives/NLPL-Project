@@ -362,7 +362,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
 
             case R.id.bottom_nav_customer_dashboard:
                 ShowAlert.loadingDialog(TrackForServiceProviderActivity.this);
-                JumpTo.goToFindLoadsActivity(TrackForServiceProviderActivity.this, userId, phone);
+                JumpTo.goToFindLoadsActivity(TrackForServiceProviderActivity.this, userId, phone, true);
                 break;
 
             case R.id.bottom_nav_track:
