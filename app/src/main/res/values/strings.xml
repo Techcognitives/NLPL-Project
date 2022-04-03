@@ -1465,7 +1465,7 @@
     <string name="You_can_track_your_trip_in_track_section">You can track your trip in track section</string>
     <string name="Call">Call</string>
     <string name="Whats_App">Whats App</string>
-    <string name="Bids_Submitted">Bids Submitted</string>
+    <string name="Bids_Submitted">Bids</string>
     //new
     <string name="No_Bids_Submitted">No Bids Submitted</string>
     //new
@@ -1556,8 +1556,8 @@
 
     //--------------------------------Find Loads Activity-----------------------------------
     //new
-    <string name="Find_Loads">Find Loads</string>
-    <string name="Load_Notifications">Load Notifications</string>
+    <string name="Find_Loads">Find</string>
+    <string name="Load_Notifications">Loads</string>
     <string name="No_loads_available_for_the_state">No loads available for the state\n</string>
     <string name="No_Load_Available">No Load Available</string>
     <string name="No_Load_Posted">No Load Posted</string>

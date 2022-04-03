@@ -12,19 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.SearchLoadModel;
-import com.nlpl.ui.activities.FindLoadsActivity;
 import com.nlpl.ui.activities.ServiceProviderDashboardActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class SearchLoadAdapter extends RecyclerView.Adapter<SearchLoadAdapter.SearchLoadsViewHolder> {
+public class SearchLoadAdapterDrop extends RecyclerView.Adapter<SearchLoadAdapterDrop.SearchLoadsViewHolder> {
 
     private ServiceProviderDashboardActivity activity;
     ArrayList<SearchLoadModel> array_indian_states;
 
-    public SearchLoadAdapter(ServiceProviderDashboardActivity activity, ArrayList<SearchLoadModel> searchList) {
+    public SearchLoadAdapterDrop(ServiceProviderDashboardActivity activity, ArrayList<SearchLoadModel> searchList) {
         this.activity = activity;
         this.array_indian_states = searchList;
     }
@@ -41,7 +40,7 @@ public class SearchLoadAdapter extends RecyclerView.Adapter<SearchLoadAdapter.Se
         String state = obj.getSearchList();
         holder.stateName.setText("  " + state);
 
-        activity.setLoadCount(obj, holder.numberOfLoads, holder.findConstrain, array_indian_states);
+        activity.setLoadCountDrop(obj, holder.numberOfLoads, holder.findConstrain, array_indian_states);
 
         Collections.sort(array_indian_states, new Comparator<SearchLoadModel>() {
             @Override

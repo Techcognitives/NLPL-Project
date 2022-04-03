@@ -1,6 +1,7 @@
 package com.nlpl.ui.activities;
 
 import static com.nlpl.R.drawable.blue_profile_small;
+import static com.nlpl.R.drawable.find;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -47,11 +48,13 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,7 +73,9 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.BidSubmittedModel;
 import com.nlpl.model.ModelForRecyclerView.DriverModel;
+import com.nlpl.model.ModelForRecyclerView.FindLoadsModel;
 import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
+import com.nlpl.model.ModelForRecyclerView.SearchLoadModel;
 import com.nlpl.model.ModelForRecyclerView.TruckModel;
 import com.nlpl.model.Requests.BidLoadRequest;
 import com.nlpl.model.Requests.ImageRequest;
@@ -84,6 +89,9 @@ import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserDeviceId;
 import com.nlpl.ui.adapters.DriversListAdapterBid;
 import com.nlpl.ui.adapters.LoadNotificationAdapter;
 import com.nlpl.ui.adapters.LoadSubmittedAdapter;
+import com.nlpl.ui.adapters.SearchLoadAdapter;
+import com.nlpl.ui.adapters.SearchLoadAdapterDrop;
+import com.nlpl.ui.adapters.StateLoadAdapter;
 import com.nlpl.ui.adapters.TrucksListAdapterBid;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.AppCompat;
@@ -104,6 +112,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -151,7 +160,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
     private DriversListAdapterBid driverListAdapter;
     private RecyclerView driverListRecyclerView;
 
-    View actionBar, loadNotificationUnderline, bidSubmittedUnderline;
+    View actionBar, loadNotificationUnderline, bidSubmittedUnderline, findLoadsUnderline;
     TextView customerNumber, startTrip, customerNumberHeading, customerName, customerNameHeading, customerFirstBudget, customerSecondBudget, cancel2, cancel, acceptAndBid, spQuote, selectDriver, selectTruck, selectedTruckModel, selectedTruckCapacity, actionBarTitle;
     EditText notesSp;
     CheckBox declaration;
@@ -164,8 +173,8 @@ public class ServiceProviderDashboardActivity extends AppCompat {
     TextView timeLeft00, timeLeftTextview, partitionTextview, menuUserNameTextView, mobileText, personalDetailsButton, bankDetailsTextView, addTrucksTextView;
     ImageView personalDetailsLogoImageView, bankDetailsLogoImageView, truckDetailsLogoImageView, driverDetailsLogoImageView, arrowImage, actionBarWhatsApp;
 
-    ConstraintLayout loadNotificationConstrain, bidsSubmittedConstrain;
-    TextView loadNotificationTextView, bidsSubmittedTextView, currentLocationText;
+    ConstraintLayout loadNotificationConstrain, bidsSubmittedConstrain, stateConstrainView;
+    TextView loadNotificationTextView, bidsSubmittedTextView, findLoadsConstrain;
 
     View bottomNav;
 
@@ -173,6 +182,26 @@ public class ServiceProviderDashboardActivity extends AppCompat {
     ArrayList<String> arrayUserId, arrayMobileNo, arrayDriverMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
 
     String mobile, name, address, pinCode, city, role, emailIdAPI;
+
+    //------------------------------------ Find Loads ----------------------------------------------
+    private RecyclerView searchListRecyclerView;
+    private SearchLoadAdapter searchLoadAdapter;
+    private ArrayList<SearchLoadModel> searchLoadModels = new ArrayList<>();
+    ArrayList<SearchLoadModel> searchList;
+    private ArrayList<LoadNotificationModel> anList, apList, arList, asList, brList, chList, cgList, ddList,
+            dd2List, dlList, gaList, gjList, hrList, hpList, jkList, jhList, kaList, klList, laList,
+            ldList, mpList, mhList, mnList, mlList, mzList, nlList, odList, pyList, pbList, rjList,
+            skList, tnList, tsList, trList, ukList, upList, wbList;
+    ConstraintLayout stateConstrain;
+    Spinner findLoadSpinner;
+
+    //-------------------------------- drop --------------------------------------------------------
+    private RecyclerView searchListRecyclerViewDrop;
+    SearchLoadAdapterDrop searchLoadAdapterDrop;
+    private ArrayList<LoadNotificationModel> anListD, apListD, arListD, asListD, brListD, chListD, cgListD, ddListD,
+            dd2ListD, dlListD, gaListD, gjListD, hrListD, hpListD, jkListD, jhListD, kaListD, klListD, laListD,
+            ldListD, mpListD, mhListD, mnListD, mlListD, mzListD, nlListD, odListD, pyListD, pbListD, rjListD,
+            skListD, tnListD, tsListD, trListD, ukListD, upListD, wbListD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,12 +219,17 @@ public class ServiceProviderDashboardActivity extends AppCompat {
             isLoadNotificationSelected = true;
         }
 
-        loadNotificationConstrain = (ConstraintLayout) findViewById(R.id.dashboard_load_notification_constrain);
-        bidsSubmittedConstrain = (ConstraintLayout) findViewById(R.id.dashboard_bids_submitted_constrain);
-        loadNotificationTextView = (TextView) findViewById(R.id.dashboard_load_notification_button);
-        bidsSubmittedTextView = (TextView) findViewById(R.id.dashboard_bids_submitted_button);
-        loadNotificationUnderline = (View) findViewById(R.id.dashboard_load_notification_view);
-        bidSubmittedUnderline = (View) findViewById(R.id.dashboard_bids_submitted_view);
+        loadNotificationConstrain = findViewById(R.id.dashboard_load_notification_constrain);
+        bidsSubmittedConstrain = findViewById(R.id.dashboard_bids_submitted_constrain);
+        loadNotificationTextView = findViewById(R.id.dashboard_load_notification_button);
+        bidsSubmittedTextView = findViewById(R.id.dashboard_bids_submitted_button);
+        loadNotificationUnderline = findViewById(R.id.dashboard_load_notification_view);
+        bidSubmittedUnderline = findViewById(R.id.dashboard_bids_submitted_view);
+        findLoadsConstrain = findViewById(R.id.find_loads_find_truck_text);
+        findLoadsUnderline = findViewById(R.id.find_loads_find_truck_view);
+        stateConstrainView = findViewById(R.id.find_load_constrain);
+        findLoadSpinner = findViewById(R.id.find_loads_spinner);
+        findLoadSpinner.setOnItemSelectedListener(onPickOrDrop);
 
         getNotification();
         getCurrentLocation = new GetCurrentLocation();
@@ -220,7 +254,6 @@ public class ServiceProviderDashboardActivity extends AppCompat {
 
         mQueue = Volley.newRequestQueue(ServiceProviderDashboardActivity.this);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        currentLocationText = (TextView) findViewById(R.id.dashboard_current_location_text_view);
 
         actionBar = findViewById(R.id.profile_registration_action_bar);
         actionBarTitle = (TextView) actionBar.findViewById(R.id.action_bar_title);
@@ -236,7 +269,11 @@ public class ServiceProviderDashboardActivity extends AppCompat {
         bottomNav = (View) findViewById(R.id.profile_registration_bottom_nav_bar);
         TextView profileText = (TextView) bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
         ImageView profileImageView = (ImageView) bottomNav.findViewById(R.id.bottom_nav_profile_image_view);
-        profileText.setText(getString(R.string.Find_Loads));
+        profileImageView.setImageDrawable(getDrawable(R.drawable.black_truck_small));
+        View customerView = bottomNav.findViewById(R.id.bottom_nav_bar_find_underline);
+        profileText.setText("Trips");
+        ConstraintLayout truck = findViewById(R.id.bottom_nav_trip);
+        truck.setVisibility(View.GONE);
 
         arrayUserId = new ArrayList<>();
         arrayMobileNo = new ArrayList<>();
@@ -247,6 +284,82 @@ public class ServiceProviderDashboardActivity extends AppCompat {
         arrayName = new ArrayList<>();
         arrayRole = new ArrayList<>();
         arrayRegDone = new ArrayList<>();
+
+        anList = new ArrayList<>();
+        apList = new ArrayList<>();
+        arList = new ArrayList<>();
+        asList = new ArrayList<>();
+        brList = new ArrayList<>();
+        chList = new ArrayList<>();
+        cgList = new ArrayList<>();
+        ddList = new ArrayList<>();
+        dd2List = new ArrayList<>();
+        dlList = new ArrayList<>();
+        gaList = new ArrayList<>();
+        gjList = new ArrayList<>();
+        hrList = new ArrayList<>();
+        hpList = new ArrayList<>();
+        jkList = new ArrayList<>();
+        jhList = new ArrayList<>();
+        kaList = new ArrayList<>();
+        klList = new ArrayList<>();
+        laList = new ArrayList<>();
+        ldList = new ArrayList<>();
+        mpList = new ArrayList<>();
+        mhList = new ArrayList<>();
+        mnList = new ArrayList<>();
+        mlList = new ArrayList<>();
+        mzList = new ArrayList<>();
+        nlList = new ArrayList<>();
+        odList = new ArrayList<>();
+        pyList = new ArrayList<>();
+        pbList = new ArrayList<>();
+        rjList = new ArrayList<>();
+        skList = new ArrayList<>();
+        tnList = new ArrayList<>();
+        tsList = new ArrayList<>();
+        trList = new ArrayList<>();
+        ukList = new ArrayList<>();
+        upList = new ArrayList<>();
+        wbList = new ArrayList<>();
+
+        anListD = new ArrayList<>();
+        apListD = new ArrayList<>();
+        arListD = new ArrayList<>();
+        asListD = new ArrayList<>();
+        brListD = new ArrayList<>();
+        chListD = new ArrayList<>();
+        cgListD = new ArrayList<>();
+        ddListD = new ArrayList<>();
+        dd2ListD = new ArrayList<>();
+        dlListD = new ArrayList<>();
+        gaListD = new ArrayList<>();
+        gjListD = new ArrayList<>();
+        hrListD = new ArrayList<>();
+        hpListD = new ArrayList<>();
+        jkListD = new ArrayList<>();
+        jhListD = new ArrayList<>();
+        kaListD = new ArrayList<>();
+        klListD = new ArrayList<>();
+        laListD = new ArrayList<>();
+        ldListD = new ArrayList<>();
+        mpListD = new ArrayList<>();
+        mhListD = new ArrayList<>();
+        mnListD = new ArrayList<>();
+        mlListD = new ArrayList<>();
+        mzListD = new ArrayList<>();
+        nlListD = new ArrayList<>();
+        odListD = new ArrayList<>();
+        pyListD = new ArrayList<>();
+        pbListD = new ArrayList<>();
+        rjListD = new ArrayList<>();
+        skListD = new ArrayList<>();
+        tnListD = new ArrayList<>();
+        tsListD = new ArrayList<>();
+        trListD = new ArrayList<>();
+        ukListD = new ArrayList<>();
+        upListD = new ArrayList<>();
+        wbListD = new ArrayList<>();
 
         getUserId(phone);
 
@@ -361,7 +474,37 @@ public class ServiceProviderDashboardActivity extends AppCompat {
         driverListAdapter = new DriversListAdapterBid(ServiceProviderDashboardActivity.this, driverList);
         driverListRecyclerView.setAdapter(driverListAdapter);
 
-        //------------------------------------------------------------------------------------------
+        //--------------------------------- Find Loads ---------------------------------------------
+        searchListRecyclerView = (RecyclerView) findViewById(R.id.find_loads_search_recycler_view);
+
+        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager1.setReverseLayout(false);
+        linearLayoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
+        searchListRecyclerView.setLayoutManager(linearLayoutManager1);
+        searchListRecyclerView.setHasFixedSize(true);
+
+        searchLoadAdapter = new SearchLoadAdapter(ServiceProviderDashboardActivity.this, searchLoadModels);
+        searchListRecyclerView.setAdapter(searchLoadAdapter);
+
+        searchList = new ArrayList(Arrays.asList(getResources().getStringArray(R.array.array_indian_states)));
+        for (int i = 0; i < searchList.size(); i++) {
+            SearchLoadModel searchLoadModel = new SearchLoadModel();
+            searchLoadModel.setSearchList(String.valueOf(searchList.get(i)));
+            searchLoadModels.add(searchLoadModel);
+        }
+
+        //------------------------------ Drop ------------------------------------------------------
+        searchListRecyclerViewDrop = (RecyclerView) findViewById(R.id.find_loads_search_recycler_view_drop);
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager2.setReverseLayout(false);
+        linearLayoutManager2.setOrientation(LinearLayoutManager.VERTICAL);
+        searchListRecyclerViewDrop.setLayoutManager(linearLayoutManager2);
+        searchListRecyclerViewDrop.setHasFixedSize(true);
+
+        searchLoadAdapterDrop = new SearchLoadAdapterDrop(ServiceProviderDashboardActivity.this, searchLoadModels);
+        searchListRecyclerViewDrop.setAdapter(searchLoadAdapterDrop);
+
+        stateConstrain = (ConstraintLayout) findViewById(R.id.find_loads_state_constrain);
     }
 
     public void getTruckList() {
@@ -779,6 +922,9 @@ public class ServiceProviderDashboardActivity extends AppCompat {
                 bidSubmittedUnderline.setVisibility(View.INVISIBLE);
                 loadNotificationTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
                 bidsSubmittedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+                findLoadsConstrain.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+                findLoadsUnderline.setVisibility(View.INVISIBLE);
+                stateConstrainView.setVisibility(View.INVISIBLE);
                 break;
 
             case R.id.dashboard_bids_submitted_button:
@@ -789,7 +935,21 @@ public class ServiceProviderDashboardActivity extends AppCompat {
                 bidSubmittedUnderline.setVisibility(View.VISIBLE);
                 loadNotificationTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
                 bidsSubmittedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
+                findLoadsConstrain.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+                findLoadsUnderline.setVisibility(View.INVISIBLE);
+                stateConstrainView.setVisibility(View.INVISIBLE);
+                break;
 
+            case R.id.find_loads_find_truck_text:
+                loadNotificationConstrain.setVisibility(View.INVISIBLE);
+                bidsSubmittedConstrain.setVisibility(View.INVISIBLE);
+                loadNotificationUnderline.setVisibility(View.INVISIBLE);
+                bidSubmittedUnderline.setVisibility(View.INVISIBLE);
+                loadNotificationTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+                bidsSubmittedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
+                findLoadsConstrain.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
+                findLoadsUnderline.setVisibility(View.VISIBLE);
+                stateConstrainView.setVisibility(View.VISIBLE);
                 break;
         }
     }
@@ -908,6 +1068,10 @@ public class ServiceProviderDashboardActivity extends AppCompat {
         if (loadListToCompare.size() > 0) {
             loadListAdapter.updateData(loadListToCompare);
         }
+
+
+//        getStateBidsPick(loadListToCompare);
+        getStateBidsDrop(loadListToCompare);
     }
 
     public void getLoadNotificationList() {
@@ -1329,6 +1493,26 @@ public class ServiceProviderDashboardActivity extends AppCompat {
         }
     }
 
+    AdapterView.OnItemSelectedListener onPickOrDrop = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            String selected = adapterView.getSelectedItem().toString();
+
+            if (selected.equals("Pick-up Location")){
+                searchListRecyclerViewDrop.setVisibility(View.INVISIBLE);
+                searchListRecyclerView.setVisibility(View.VISIBLE);
+            }else{
+                searchListRecyclerViewDrop.setVisibility(View.VISIBLE);
+                searchListRecyclerView.setVisibility(View.INVISIBLE);
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+
+        }
+    };
+
     private void getDriverDetailsByDriverId(String driverIdSelected) {
 
         updateAssignedDriverId = driverIdSelected;
@@ -1498,6 +1682,9 @@ public class ServiceProviderDashboardActivity extends AppCompat {
                             noBidsSubmittedTextView.setVisibility(View.VISIBLE);
                         }
                         compareAndRemove(loadListToCompare);
+                    } else {
+                        getStateBidsDrop(loadListToCompare);
+                        getStateBidsPick(loadListToCompare);
                     }
 //
 //                    else {
@@ -2594,7 +2781,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
 
     public void onClickPostATrip(View view) {
         ShowAlert.loadingDialog(ServiceProviderDashboardActivity.this);
-        JumpTo.goToPostATrip(ServiceProviderDashboardActivity.this, phone, userId,false, null, false);
+        JumpTo.goToPostATrip(ServiceProviderDashboardActivity.this, phone, userId, false, null, false);
     }
 
     private class SwipeListener implements View.OnTouchListener {
@@ -2672,7 +2859,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
                             addressCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getAddressLine(0)));
                             pinCodeCurrent = String.valueOf(Html.fromHtml("" + addresses.get(0).getPostalCode()));
 
-                            currentLocationText.setText(addressCurrent);
+
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -2686,7 +2873,11 @@ public class ServiceProviderDashboardActivity extends AppCompat {
 
     @Override
     public void onBackPressed() {
-        if (isBackPressed) {
+        String visibility = String.valueOf(stateConstrain.getVisibility());
+        Log.i("visibility", visibility); //visible = 0
+        if (visibility.equals("0")) {
+            RearrangeItems();
+        } else if (isBackPressed) {
             finishAffinity();
             System.exit(0);
         } else {
@@ -3045,5 +3236,845 @@ public class ServiceProviderDashboardActivity extends AppCompat {
                 startActivity(intent);
             }
         });
+    }
+
+    //----------------------------------- Find Loads -----------------------------------------------
+    public void setLoadCount(SearchLoadModel obj, TextView numberOfLoads, ConstraintLayout findConstrain, ArrayList<SearchLoadModel> array_indian_states) {
+        try {
+            if (obj.getSearchList().equals(searchList.get(0))) {
+                numberOfLoads.setText(anList.size() + " Loads");
+                obj.setItemCount(anList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(1))) {
+                numberOfLoads.setText(apList.size() + " Loads");
+                obj.setItemCount(apList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(2))) {
+                numberOfLoads.setText(arList.size() + " Loads");
+                obj.setItemCount(arList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(3))) {
+                numberOfLoads.setText(asList.size() + " Loads");
+                obj.setItemCount(asList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(4))) {
+                numberOfLoads.setText(brList.size() + " Loads");
+                obj.setItemCount(brList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(5))) {
+                numberOfLoads.setText(chList.size() + " Loads");
+                obj.setItemCount(chList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(6))) {
+                numberOfLoads.setText(cgList.size() + " Loads");
+                obj.setItemCount(cgList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(7))) {
+                numberOfLoads.setText(ddList.size() + " Loads");
+                obj.setItemCount(ddList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(8))) {
+                numberOfLoads.setText(dd2List.size() + " Loads");
+                obj.setItemCount(dd2List.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(9))) {
+                numberOfLoads.setText(dlList.size() + " Loads");
+                obj.setItemCount(dlList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(10))) {
+                numberOfLoads.setText(gaList.size() + " Loads");
+                obj.setItemCount(gaList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(11))) {
+                numberOfLoads.setText(gjList.size() + " Loads");
+                obj.setItemCount(gjList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(12))) {
+                numberOfLoads.setText(hrList.size() + " Loads");
+                obj.setItemCount(hrList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(13))) {
+                numberOfLoads.setText(hpList.size() + " Loads");
+                obj.setItemCount(hpList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(14))) {
+                numberOfLoads.setText(jkList.size() + " Loads");
+                obj.setItemCount(jkList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(15))) {
+                numberOfLoads.setText(jhList.size() + " Loads");
+                obj.setItemCount(jhList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(16))) {
+                numberOfLoads.setText(kaList.size() + " Loads");
+                obj.setItemCount(kaList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(17))) {
+                numberOfLoads.setText(klList.size() + " Loads");
+                obj.setItemCount(klList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(18))) {
+                numberOfLoads.setText(laList.size() + " Loads");
+                obj.setItemCount(laList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(19))) {
+                numberOfLoads.setText(ldList.size() + " Loads");
+                obj.setItemCount(ldList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(20))) {
+                numberOfLoads.setText(mpList.size() + " Loads");
+                obj.setItemCount(mpList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(21))) {
+                numberOfLoads.setText(mhList.size() + " Loads");
+                obj.setItemCount(mhList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(22))) {
+                numberOfLoads.setText(mnList.size() + " Loads");
+                obj.setItemCount(mnList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(23))) {
+                numberOfLoads.setText(mlList.size() + " Loads");
+                obj.setItemCount(mlList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(24))) {
+                numberOfLoads.setText(mzList.size() + " Loads");
+                obj.setItemCount(mzList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(25))) {
+                numberOfLoads.setText(nlList.size() + " Loads");
+                obj.setItemCount(nlList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(26))) {
+                numberOfLoads.setText(odList.size() + " Loads");
+                obj.setItemCount(odList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(27))) {
+                numberOfLoads.setText(pyList.size() + " Loads");
+                obj.setItemCount(pyList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(28))) {
+                numberOfLoads.setText(pbList.size() + " Loads");
+                obj.setItemCount(pbList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(29))) {
+                numberOfLoads.setText(rjList.size() + " Loads");
+                obj.setItemCount(rjList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(30))) {
+                numberOfLoads.setText(skList.size() + " Loads");
+                obj.setItemCount(skList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(31))) {
+                numberOfLoads.setText(tnList.size() + " Loads");
+                obj.setItemCount(tnList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(32))) {
+                numberOfLoads.setText(tsList.size() + " Loads");
+                obj.setItemCount(tsList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(33))) {
+                numberOfLoads.setText(trList.size() + " Loads");
+                obj.setItemCount(trList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(34))) {
+                numberOfLoads.setText(ukList.size() + " Loads");
+                obj.setItemCount(ukList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(35))) {
+                numberOfLoads.setText(upList.size() + " Loads");
+                obj.setItemCount(upList.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(36))) {
+                numberOfLoads.setText(wbList.size() + " Loads");
+                obj.setItemCount(wbList.size());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //----------------------------------- Find Loads -----------------------------------------------
+    public void setLoadCountDrop(SearchLoadModel obj, TextView numberOfLoads, ConstraintLayout findConstrain, ArrayList<SearchLoadModel> array_indian_states) {
+        try {
+            if (obj.getSearchList().equals(searchList.get(0))) {
+                numberOfLoads.setText(anListD.size() + " Loads");
+                obj.setItemCount(anListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(1))) {
+                numberOfLoads.setText(apListD.size() + " Loads");
+                obj.setItemCount(apListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(2))) {
+                numberOfLoads.setText(arListD.size() + " Loads");
+                obj.setItemCount(arListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(3))) {
+                numberOfLoads.setText(asListD.size() + " Loads");
+                obj.setItemCount(asListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(4))) {
+                numberOfLoads.setText(brListD.size() + " Loads");
+                obj.setItemCount(brListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(5))) {
+                numberOfLoads.setText(chListD.size() + " Loads");
+                obj.setItemCount(chListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(6))) {
+                numberOfLoads.setText(cgListD.size() + " Loads");
+                obj.setItemCount(cgListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(7))) {
+                numberOfLoads.setText(ddListD.size() + " Loads");
+                obj.setItemCount(ddListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(8))) {
+                numberOfLoads.setText(dd2ListD.size() + " Loads");
+                obj.setItemCount(dd2ListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(9))) {
+                numberOfLoads.setText(dlListD.size() + " Loads");
+                obj.setItemCount(dlListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(10))) {
+                numberOfLoads.setText(gaListD.size() + " Loads");
+                obj.setItemCount(gaListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(11))) {
+                numberOfLoads.setText(gjListD.size() + " Loads");
+                obj.setItemCount(gjListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(12))) {
+                numberOfLoads.setText(hrListD.size() + " Loads");
+                obj.setItemCount(hrListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(13))) {
+                numberOfLoads.setText(hpListD.size() + " Loads");
+                obj.setItemCount(hpListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(14))) {
+                numberOfLoads.setText(jkListD.size() + " Loads");
+                obj.setItemCount(jkListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(15))) {
+                numberOfLoads.setText(jhListD.size() + " Loads");
+                obj.setItemCount(jhListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(16))) {
+                numberOfLoads.setText(kaListD.size() + " Loads");
+                obj.setItemCount(kaListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(17))) {
+                numberOfLoads.setText(klListD.size() + " Loads");
+                obj.setItemCount(klListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(18))) {
+                numberOfLoads.setText(laListD.size() + " Loads");
+                obj.setItemCount(laListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(19))) {
+                numberOfLoads.setText(ldListD.size() + " Loads");
+                obj.setItemCount(ldListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(20))) {
+                numberOfLoads.setText(mpListD.size() + " Loads");
+                obj.setItemCount(mpListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(21))) {
+                numberOfLoads.setText(mhListD.size() + " Loads");
+                obj.setItemCount(mhListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(22))) {
+                numberOfLoads.setText(mnListD.size() + " Loads");
+                obj.setItemCount(mnListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(23))) {
+                numberOfLoads.setText(mlListD.size() + " Loads");
+                obj.setItemCount(mlListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(24))) {
+                numberOfLoads.setText(mzListD.size() + " Loads");
+                obj.setItemCount(mzListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(25))) {
+                numberOfLoads.setText(nlListD.size() + " Loads");
+                obj.setItemCount(nlListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(26))) {
+                numberOfLoads.setText(odListD.size() + " Loads");
+                obj.setItemCount(odListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(27))) {
+                numberOfLoads.setText(pyListD.size() + " Loads");
+                obj.setItemCount(pyListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(28))) {
+                numberOfLoads.setText(pbListD.size() + " Loads");
+                obj.setItemCount(pbListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(29))) {
+                numberOfLoads.setText(rjListD.size() + " Loads");
+                obj.setItemCount(rjListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(30))) {
+                numberOfLoads.setText(skListD.size() + " Loads");
+                obj.setItemCount(skListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(31))) {
+                numberOfLoads.setText(tnListD.size() + " Loads");
+                obj.setItemCount(tnListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(32))) {
+                numberOfLoads.setText(tsListD.size() + " Loads");
+                obj.setItemCount(tsListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(33))) {
+                numberOfLoads.setText(trListD.size() + " Loads");
+                obj.setItemCount(trListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(34))) {
+                numberOfLoads.setText(ukListD.size() + " Loads");
+                obj.setItemCount(ukListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(35))) {
+                numberOfLoads.setText(upListD.size() + " Loads");
+                obj.setItemCount(upListD.size());
+            }
+            if (obj.getSearchList().equals(searchList.get(36))) {
+                numberOfLoads.setText(wbListD.size() + " Loads");
+                obj.setItemCount(wbListD.size());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void onClickFindLoadListItem(SearchLoadModel obj, TextView holder) {
+        if (holder.getText().equals("0 Loads")) {
+            stateConstrain.setVisibility(View.INVISIBLE);
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
+            alert.setContentView(R.layout.dialog_alert_single_button);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(true);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText(getString(R.string.Load_Notifications));
+            alertMessage.setText(getString(R.string.No_loads_available_for_the_state) + obj.getSearchList());
+            alertPositiveButton.setVisibility(View.GONE);
+            alertNegativeButton.setText(getString(R.string.ok));
+            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.dismiss();
+                }
+            });
+            //------------------------------------------------------------------------------------------
+        } else {
+            stateConstrain.setVisibility(View.VISIBLE);
+
+            //-------------------------------- Action Bar for state ----------------------------------------------
+            View actionBarState = findViewById(R.id.find_loads_action_bar_for_state);
+            TextView actionBarTitleState = (TextView) actionBarState.findViewById(R.id.action_bar_title);
+            ImageView actionBarBackButtonState = (ImageView) actionBarState.findViewById(R.id.action_bar_back_button);
+            ImageView actionBarMenuButtonState = (ImageView) actionBarState.findViewById(R.id.action_bar_menu);
+
+            actionBarTitleState.setText(getString(R.string.Loads_for) + obj.getSearchList());
+            actionBarMenuButtonState.setVisibility(View.GONE);
+            actionBarBackButtonState.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    stateConstrain.setVisibility(View.INVISIBLE);
+                }
+            });
+            //--------------------------------------------------------------------------------------
+            RecyclerView stateLoadRecyclerView = (RecyclerView) findViewById(R.id.find_loads_state_recycler_view);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+            linearLayoutManager.setReverseLayout(false);
+            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            stateLoadRecyclerView.setLayoutManager(linearLayoutManager);
+            stateLoadRecyclerView.setHasFixedSize(true);
+
+            try {
+                if (obj.getSearchList().equals(searchList.get(0))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, anList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(1))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, apList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(2))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, arList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(3))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, asList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(4))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, brList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(5))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, chList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(6))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, cgList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(7))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, ddList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(8))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, dd2List);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(9))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, dlList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(10))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, gaList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(11))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, gjList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(12))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, hrList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(13))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, hpList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(14))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, jkList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(15))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, jhList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(16))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, kaList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(17))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, klList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(18))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, laList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(19))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, ldList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(20))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, mpList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(21))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, mhList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(22))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, mnList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(23))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, mlList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(24))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, mzList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(25))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, nlList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(26))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, odList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(27))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, pyList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(28))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, pbList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(29))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, rjList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(30))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, skList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(31))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, tnList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(32))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, tsList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(33))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, trList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(34))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, ukList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(35))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, upList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+                if (obj.getSearchList().equals(searchList.get(36))) {
+                    StateLoadAdapter stateLoadAdapter = new StateLoadAdapter(ServiceProviderDashboardActivity.this, wbList);
+                    stateLoadRecyclerView.setAdapter(stateLoadAdapter);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void getStateBidsDrop(ArrayList<LoadNotificationModel> loadListToCompare) {
+        anListD.clear();
+        apListD.clear();
+        arListD.clear();
+        asListD.clear();
+        brListD.clear();
+        chListD.clear();
+        cgListD.clear();
+        ddListD.clear();
+        dd2ListD.clear();
+        dlListD.clear();
+        gaListD.clear();
+        gjListD.clear();
+        hrListD.clear();
+        hpListD.clear();
+        jkListD.clear();
+        jhListD.clear();
+        kaListD.clear();
+        klListD.clear();
+        laListD.clear();
+        ldListD.clear();
+        mpListD.clear();
+        mhListD.clear();
+        mnListD.clear();
+        mlListD.clear();
+        mzListD.clear();
+        nlListD.clear();
+        odListD.clear();
+        pyListD.clear();
+        pbListD.clear();
+        rjListD.clear();
+        skListD.clear();
+        tnListD.clear();
+        tsListD.clear();
+        trListD.clear();
+        ukListD.clear();
+        upListD.clear();
+        wbListD.clear();
+
+        for (int i = 0; i < loadListToCompare.size(); i++) {
+            if (loadListToCompare.get(i).getDrop_state().equals("AN")) {
+                anListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("AP")) {
+                apListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("AR")) {
+                arListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("AS")) {
+                asListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("BR")) {
+                brListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("CH/PB")) {
+                chListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("CG")) {
+                cgListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("DD")) {
+                ddListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("DD2")) {
+                dd2ListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("DL")) {
+                dlListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("GA")) {
+                gaListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("GJ")) {
+                gjListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("HR")) {
+                hrListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("HP")) {
+                hpListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("JK")) {
+                jkListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("JH")) {
+                jhListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("KA")) {
+                kaListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("KL")) {
+                klListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("LA")) {
+                laListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("LD")) {
+                ldListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("MP")) {
+                mpListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("MH")) {
+                mhListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("MN")) {
+                mnListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("ML")) {
+                mlListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("MZ")) {
+                mzListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("NL")) {
+                nlListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("OD")) {
+                odListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("PY")) {
+                pyListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("PB")) {
+                pbListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("RJ")) {
+                rjListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("SK")) {
+                skListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("TN")) {
+                tnListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("TS")) {
+                tsListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("TR")) {
+                trListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("UK")) {
+                ukListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("UP")) {
+                upListD.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getDrop_state().equals("WB")) {
+                wbListD.add(loadListToCompare.get(i));
+            }
+        }
+    }
+
+
+    private void getStateBidsPick(ArrayList<LoadNotificationModel> loadListToCompare) {
+        anList.clear();
+        apList.clear();
+        arList.clear();
+        asList.clear();
+        brList.clear();
+        chList.clear();
+        cgList.clear();
+        ddList.clear();
+        dd2List.clear();
+        dlList.clear();
+        gaList.clear();
+        gjList.clear();
+        hrList.clear();
+        hpList.clear();
+        jkList.clear();
+        jhList.clear();
+        kaList.clear();
+        klList.clear();
+        laList.clear();
+        ldList.clear();
+        mpList.clear();
+        mhList.clear();
+        mnList.clear();
+        mlList.clear();
+        mzList.clear();
+        nlList.clear();
+        odList.clear();
+        pyList.clear();
+        pbList.clear();
+        rjList.clear();
+        skList.clear();
+        tnList.clear();
+        tsList.clear();
+        trList.clear();
+        ukList.clear();
+        upList.clear();
+        wbList.clear();
+
+
+        for (int i = 0; i < loadListToCompare.size(); i++) {
+            if (loadListToCompare.get(i).getPick_state().equals("AN")) {
+                anList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("AP")) {
+                apList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("AR")) {
+                arList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("AS")) {
+                asList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("BR")) {
+                brList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("CH/PB")) {
+                chList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("CG")) {
+                cgList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("DD")) {
+                ddList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("DD2")) {
+                dd2List.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("DL")) {
+                dlList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("GA")) {
+                gaList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("GJ")) {
+                gjList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("HR")) {
+                hrList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("HP")) {
+                hpList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("JK")) {
+                jkList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("JH")) {
+                jhList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("KA")) {
+                kaList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("KL")) {
+                klList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("LA")) {
+                laList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("LD")) {
+                ldList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("MP")) {
+                mpList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("MH")) {
+                mhList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("MN")) {
+                mnList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("ML")) {
+                mlList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("MZ")) {
+                mzList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("NL")) {
+                nlList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("OD")) {
+                odList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("PY")) {
+                pyList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("PB")) {
+                pbList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("RJ")) {
+                rjList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("SK")) {
+                skList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("TN")) {
+                tnList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("TS")) {
+                tsList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("TR")) {
+                trList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("UK")) {
+                ukList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("UP")) {
+                upList.add(loadListToCompare.get(i));
+            }
+            if (loadListToCompare.get(i).getPick_state().equals("WB")) {
+                wbList.add(loadListToCompare.get(i));
+            }
+        }
     }
 }

@@ -11,11 +11,12 @@
         android:id="@+id/bottom_nav_sp_dashboard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="1dp"
         android:background="@drawable/personal_details_buttons_active"
         android:backgroundTint="@color/white"
         android:onClick="onClickBottomNavigation"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/bottom_nav_customer_dashboard"
+        app:layout_constraintEnd_toStartOf="@+id/bottom_nav_trip"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -71,7 +72,7 @@
         android:onClick="onClickBottomNavigation"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/bottom_nav_track"
-        app:layout_constraintStart_toEndOf="@+id/bottom_nav_sp_dashboard"
+        app:layout_constraintStart_toEndOf="@+id/bottom_nav_trip"
         app:layout_constraintTop_toTopOf="parent">
 
         <View
@@ -118,6 +119,7 @@
         android:id="@+id/bottom_nav_track"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
         android:background="@drawable/personal_details_buttons_active"
         android:backgroundTint="@color/light_white"
         android:onClick="onClickBottomNavigation"
@@ -167,25 +169,40 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout18"
+        android:id="@+id/bottom_nav_trip"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/nav_unselected_blue"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        android:background="@drawable/personal_details_buttons_active"
+        android:backgroundTint="@color/light_white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bottom_nav_track"
+        app:layout_constraintEnd_toStartOf="@+id/bottom_nav_customer_dashboard"
+        app:layout_constraintStart_toEndOf="@+id/bottom_nav_sp_dashboard"
         app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:id="@+id/bottom_nav_bar_trip_underline"
+            android:layout_width="0dp"
+            android:layout_height="4dp"
+            android:background="@drawable/personal_details_buttons_active"
+            android:backgroundTint="@color/light_black"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/imageView23"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView20"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:text="Track"
-
+            android:paddingBottom="5dp"
+            android:text="Trip"
             android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textColor="@color/light_black"
+            android:textSize="12sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -195,13 +212,13 @@
             android:id="@+id/imageView23"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:paddingTop="5dp"
             app:layout_constraintBottom_toTopOf="@+id/textView20"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/track_logo_blue" />
+            app:layout_constraintTop_toBottomOf="@+id/bottom_nav_bar_trip_underline"
+            app:srcCompat="@drawable/black_truck_small" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

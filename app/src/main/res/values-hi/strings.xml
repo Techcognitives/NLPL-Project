@@ -373,7 +373,7 @@
     <string name="You_can_track_your_trip_in_track_section">आप ट्रैक अनुभाग में अपनी ट्रिप को ट्रैक कर सकते हैं </string>
     <string name="Call">कॉल </string>
     <string name="Whats_App">Whats App </string>                         //dot
-    <string name="Bids_Submitted">बिड सबमिट </string>       //new
+    <string name="Bids_Submitted">बिड</string>       //new
     <string name="No_Bids_Submitted">कोई बिड सबमिट नहीं की गई </string> //new
     <string name="View_and_Accept_Bid">देखें और\nबिड स्वीकार करें </string>       //new
     <string name="Bidder_Quote">बिड लगाने कोट : </string>          //new
@@ -446,8 +446,8 @@
 
     //--------------------------------Find Loads Activity-----------------------------------
     //new
-    <string name="Find_Loads">फाइंड लोड </string>
-    <string name="Load_Notifications">लोड नोटिफिकेशन </string>
+    <string name="Find_Loads">फाइंड</string>
+    <string name="Load_Notifications">लोड</string>
     <string name="No_loads_available_for_the_state">राज्य के लिए कोई लोड उपलब्ध नहीं है\n</string>
     <string name="No_Load_Available">कोई लोड उपलब्ध नहीं है </string>
     <string name="No_Load_Posted">कोई लोड पोस्ट नहीं</string>

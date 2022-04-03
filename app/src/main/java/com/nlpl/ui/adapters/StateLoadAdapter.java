@@ -15,20 +15,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.FindLoadsModel;
+import com.nlpl.model.ModelForRecyclerView.LoadNotificationModel;
 import com.nlpl.model.UpdateMethods.UpdatePostLoadDetails;
 import com.nlpl.ui.activities.FindLoadsActivity;
+import com.nlpl.ui.activities.ServiceProviderDashboardActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class StateLoadAdapter extends RecyclerView.Adapter<StateLoadAdapter.StateLoadsViewHolder> {
 
-    private ArrayList<FindLoadsModel> loadList;
-    private FindLoadsActivity activity;
+    private ArrayList<LoadNotificationModel> loadList;
+    private ServiceProviderDashboardActivity activity;
     int timeLeftToExpire, timeInMillisec, minLeftToExpire, months;
     String bidEndsAt, currentTimeToCompare, bidEndsAtStringTime, finalBidEndsAt, finalDate;
 
-    public StateLoadAdapter(FindLoadsActivity activity, ArrayList<FindLoadsModel> loadList) {
+    public StateLoadAdapter(ServiceProviderDashboardActivity activity, ArrayList<LoadNotificationModel> loadList) {
         this.loadList = loadList;
         this.activity = activity;
     }
@@ -41,7 +43,7 @@ public class StateLoadAdapter extends RecyclerView.Adapter<StateLoadAdapter.Stat
 
     @Override
     public void onBindViewHolder(StateLoadsViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        FindLoadsModel obj = loadList.get(position);
+        LoadNotificationModel obj = loadList.get(position);
 
         if (obj.getBid_ends_at().equals("null")) {
             bidEndsAt = "2022-02-01 12:05:11.598";
@@ -229,7 +231,7 @@ public class StateLoadAdapter extends RecyclerView.Adapter<StateLoadAdapter.Stat
         return loadList.size();
     }
 
-    public void updateData(ArrayList<FindLoadsModel> loadList) {
+    public void updateData(ArrayList<LoadNotificationModel> loadList) {
         this.loadList = loadList;
         notifyDataSetChanged();
     }

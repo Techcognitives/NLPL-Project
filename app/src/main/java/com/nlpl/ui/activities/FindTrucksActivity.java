@@ -505,16 +505,6 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
         }
     }
 
-    public void onClickSelectState(View view) {
-        SelectState.selectState(FindTrucksActivity.this, selectState, selectCity);
-    }
-
-    public void onClickSelectCity(View view) {
-        if (!selectState.getText().toString().isEmpty()) {
-            SelectCity.selectCity(FindTrucksActivity.this, selectState.getText().toString(), selectCity);
-        }
-    }
-
     private void getAllTripDetails() {
         Call<TripResponse> tripModelCall = ApiClient.getPostTripService().getAllTripDetails();
         tripModelCall.enqueue(new Callback<TripResponse>() {
