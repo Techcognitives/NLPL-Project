@@ -13,20 +13,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.SearchLoadModel;
 import com.nlpl.model.Responses.TripResponse;
-import com.nlpl.ui.activities.FindLoadsActivity;
+import com.nlpl.ui.activities.FindTrucksActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import retrofit2.http.Body;
+public class AllTripAdapter extends RecyclerView.Adapter<AllTripAdapter.SearchLoadsViewHolder> {
 
-public class TripListAdapter extends RecyclerView.Adapter<TripListAdapter.SearchLoadsViewHolder> {
-
-    private FindLoadsActivity activity;
+    private FindTrucksActivity activity;
     ArrayList<TripResponse.TripList> array_indian_states;
 
-    public TripListAdapter(FindLoadsActivity activity, ArrayList<TripResponse.TripList> searchList) {
+    public AllTripAdapter(FindTrucksActivity activity, ArrayList<TripResponse.TripList> searchList) {
         this.activity = activity;
         this.array_indian_states = searchList;
     }
@@ -48,7 +46,6 @@ public class TripListAdapter extends RecyclerView.Adapter<TripListAdapter.Search
         holder.body.setText("Body Type: " + obj.getVehicle_model());
         holder.capacity.setText("Load Type: " + obj.getCapacity());
         holder.note.setText("Notes: " + obj.getNotes_meterial_des());
-        holder.tripConstrain.setOnClickListener(view -> activity.onClickEditTrip(obj));
     }
 
     @Override

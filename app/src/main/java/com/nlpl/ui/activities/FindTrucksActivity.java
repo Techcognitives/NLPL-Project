@@ -50,7 +50,10 @@ import com.nlpl.R;
 import com.nlpl.model.MapsModel.LocationModel;
 import com.nlpl.model.ModelForRecyclerView.FindLoadsModel;
 import com.nlpl.model.ModelForRecyclerView.SearchLoadModel;
+import com.nlpl.model.Responses.TripResponse;
+import com.nlpl.model.Responses.TruckResponse;
 import com.nlpl.model.Responses.UserResponse;
+import com.nlpl.ui.adapters.AllTripAdapter;
 import com.nlpl.ui.adapters.GoogleMapTextInfoAdapter;
 import com.nlpl.ui.adapters.SearchLoadAdapter;
 import com.nlpl.ui.adapters.SearchTripAdapter;
@@ -83,7 +86,10 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
     Dialog loadingDialog;
     ConstraintLayout tripConstrain, truckConstrain;
     View tripUnderline, truckUnderline;
-    TextView tripText, truckText, selectState, selectCity;
+    TextView tripText, truckText, selectState, selectCity, noTrips;
+
+    ArrayList<TripResponse.TripList> tripList = new ArrayList<>();
+    AllTripAdapter allTripAdapter;
 
     //------------------------------------- State List ---------------------------------------------
     private ArrayList<FindLoadsModel> anList, apList, arList, asList, brList, chList, cgList, ddList,
@@ -118,6 +124,7 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
         truckConstrain = findViewById(R.id.find_trucks_find_truck_constrain);
         selectState = findViewById(R.id.find_trip_select_state);
         selectCity = findViewById(R.id.find_trip_select_city);
+        noTrips = findViewById(R.id.find_trips_no_trips);
 
         //--------------------------- action bar ---------------------------------------------------
         View actionBar = findViewById(R.id.find_trucks_action_bar);
@@ -215,7 +222,11 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
         }
 
         searchLoadAdapter = new SearchTripAdapter(FindTrucksActivity.this, searchLoadModels);
-        searchListRecyclerView.setAdapter(searchLoadAdapter);
+//        searchListRecyclerView.setAdapter(searchLoadAdapter);
+
+        allTripAdapter = new AllTripAdapter(FindTrucksActivity.this, tripList);
+        searchListRecyclerView.setAdapter(allTripAdapter);
+        getAllTripDetails();
     }
 
     //----------------------------------------------------------------------------------------------
@@ -374,6 +385,11 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
                 ShowAlert.loadingDialog(FindTrucksActivity.this);
                 JumpTo.goToFindTrucksActivity(FindTrucksActivity.this, userId, phone);
                 break;
+
+            case R.id.bottom_nav_track:
+                ShowAlert.loadingDialog(FindTrucksActivity.this);
+                JumpTo.goToLPTrackActivity(FindTrucksActivity.this, phone, true);
+                break;
         }
     }
 
@@ -497,5 +513,27 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
         if (!selectState.getText().toString().isEmpty()) {
             SelectCity.selectCity(FindTrucksActivity.this, selectState.getText().toString(), selectCity);
         }
+    }
+
+    private void getAllTripDetails() {
+        Call<TripResponse> tripModelCall = ApiClient.getPostTripService().getAllTripDetails();
+        tripModelCall.enqueue(new Callback<TripResponse>() {
+            @Override
+            public void onResponse(Call<TripResponse> call, Response<TripResponse> response) {
+                TripResponse tripModel = response.body();
+                TripResponse.TripList list =tripModel.getData().get(0);
+
+                tripList.addAll(tripModel.getData());
+                allTripAdapter.updateData(tripList);
+
+                if (tripList.size()==0) noTrips.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onFailure(Call<TripResponse> call, Throwable t) {
+
+            }
+        });
+
     }
 }

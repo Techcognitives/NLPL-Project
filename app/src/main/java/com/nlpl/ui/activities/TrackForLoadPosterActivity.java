@@ -144,7 +144,7 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
     View bottomNav;
     ConstraintLayout spDashboard, customerDashboard;
 
-    TextView quoteBySp1, timeLeftTextview, timeLeft00, customerQuote, submitResponseBtn, cancleBtn;
+    TextView quoteBySp1, timeLeftTextview, timeLeft00, customerQuote, submitResponseBtn, cancleBtn, noTrips;
     RadioButton negotiable_yes, negotiable_no;
     EditText notesCustomer;
     String userId, phone, s1, customerEmail;
@@ -178,7 +178,7 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
         lp2.gravity = Gravity.CENTER;
 
         ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
-
+        noTrips = findViewById(R.id.find_trips_no_trips);
 
 //        loadingDialog.show();
         loadingDialog.setCancelable(false);
@@ -376,6 +376,8 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
                     if (acceptedList.size() > 0) {
 //                        bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
                         bidsAcceptedAdapter.updateData(acceptedList);
+                    }else{
+                        noTrips.setVisibility(View.VISIBLE);
                     }
 //                        }
 //                    }
@@ -916,21 +918,8 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (isBackPressed) {
-            finishAffinity();
-            System.exit(0);
-        } else {
-            Toast.makeText(getApplicationContext(), "Please click back again to exit", Toast.LENGTH_SHORT).show();
-            isBackPressed = true;
-        }
-
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                isBackPressed = false;
-            }
-        };
-        new Handler().postDelayed(runnable, 3000);
+        ShowAlert.loadingDialog(TrackForLoadPosterActivity.this);
+        JumpTo.goToCustomerDashboard(TrackForLoadPosterActivity.this, phone, true);
     }
 
     public void onClickOpenDialer(View view) {

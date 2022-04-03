@@ -1159,7 +1159,7 @@ public class VehicleDetailsActivity extends AppCompat {
     public void onBackPressed() {
         super.onBackPressed();
         ShowAlert.loadingDialog(VehicleDetailsActivity.this);
-        JumpTo.goToViewDriverDetailsActivity(VehicleDetailsActivity.this, userId, mobile, true);
+        JumpTo.goToViewVehicleDetailsActivity(VehicleDetailsActivity.this, userId, mobile, true);
     }
 
     private TextWatcher loadTypeTextWatcher = new TextWatcher() {

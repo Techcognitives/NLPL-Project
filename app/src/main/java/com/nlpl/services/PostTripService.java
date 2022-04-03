@@ -29,4 +29,8 @@ public interface PostTripService {
 
     @GET("/trip/getTripDtByTripId/{tripID}")
     Call<TripResponse> getTripDetails(@Path("tripID") String tripID);
+
+    @GET("/trip/getAllTrips")
+    Call<TripResponse> getAllTripDetails();
+
 }

@@ -79,7 +79,8 @@ public class PostATripActivity extends AppCompat {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JumpTo.goToServiceProviderDashboard(PostATripActivity.this, phone, true);
+                ShowAlert.loadingDialog(PostATripActivity.this);
+                JumpTo.goToFindTrucksActivity(PostATripActivity.this, userId, phone);
             }
         });
 
@@ -664,7 +665,7 @@ public class PostATripActivity extends AppCompat {
             @Override
             public void onResponse(Call<TripResponse> call, Response<TripResponse> response) {
                 TripResponse tripModelClass1 = response.body();
-                TripResponse.TripList list =tripModelClass1.getData().get(0);
+                TripResponse.TripList list = tripModelClass1.getData().get(0);
                 selectDate.setText(list.getTrip_date());
                 selectTime.setText(list.getTrip_start_time());
                 selectBudget.setText(list.getTrip_budget());

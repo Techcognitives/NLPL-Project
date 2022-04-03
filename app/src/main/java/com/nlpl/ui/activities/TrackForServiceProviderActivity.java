@@ -149,7 +149,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
     RadioButton negotiable_yes, negotiable_no;
     ImageView actionBarBackButton, actionBarMenuButton;
 
-    TextView timeLeft00, timeLeftTextview, partitionTextview;
+    TextView timeLeft00, timeLeftTextview, partitionTextview, noTrips;
     ImageView actionBarWhatsApp;
 
     ConstraintLayout bidsSubmittedConstrain;
@@ -237,6 +237,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
         lp2.gravity = Gravity.CENTER;
 
         ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+        noTrips = findViewById(R.id.find_trips_no_trips);
 
 //        loadingDialog.show();
         loadingDialog.setCancelable(false);
@@ -451,6 +452,8 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
                         fooThread.start();
                         updatedLoadSubmittedList.addAll(loadSubmittedList);
                         loadSubmittedAdapter.updateData(updatedLoadSubmittedList);
+                    }else{
+                        noTrips.setVisibility(View.VISIBLE);
                     }
 //
 //                    else {
@@ -1098,5 +1101,12 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ShowAlert.loadingDialog(this);
+        JumpTo.goToServiceProviderDashboard(this, phone, true);
     }
 }

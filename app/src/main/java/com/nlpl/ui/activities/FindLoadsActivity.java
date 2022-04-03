@@ -90,7 +90,7 @@ public class FindLoadsActivity extends AppCompat {
     private ArrayList<BidSubmittedModel> updatedLoadSubmittedList = new ArrayList<>();
 
     View actionBar;
-    TextView actionBarTitle;
+    TextView actionBarTitle, noTrips;
     ImageView actionBarBackButton, actionBarMenuButton;
 
     View bottomNav;
@@ -183,6 +183,7 @@ public class FindLoadsActivity extends AppCompat {
         selectState = findViewById(R.id.find_loads_select_state);
         selectCity = findViewById(R.id.find_loads_select_city);
         pickOrDropSpinner = findViewById(R.id.find_loads_spinner);
+        noTrips = findViewById(R.id.find_trips_no_trips);
 
         selectState.addTextChangedListener(spinnerWatcher);
         selectCity.addTextChangedListener(spinnerWatcher);
@@ -294,6 +295,7 @@ public class FindLoadsActivity extends AppCompat {
                 TripResponse.TripList list = tripModelClass1.getData().get(0);
                 if (response.isSuccessful()) tripList.addAll(tripModelClass1.getData());
                 tripListAdapter.updateData(tripList);
+                if (tripList.size()==0) noTrips.setVisibility(View.VISIBLE);
             }
 
             @Override

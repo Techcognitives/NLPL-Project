@@ -211,9 +211,9 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                             }
 
                             try {
-                                if (aadharNumberAPI.length()==10){
+                                if (aadharNumberAPI.length()>5){
                                     aadharNumber.setVisibility(View.VISIBLE);
-                                    aadharNumber.setText(panNumberAPI);
+                                    aadharNumber.setText(aadharNumberAPI);
                                 }else {
                                     aadharNumber.setVisibility(View.INVISIBLE);
                                 }
