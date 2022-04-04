@@ -263,7 +263,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
         TextView profileText = (TextView) bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
 
-        profileText.setText(getString(R.string.Find_Trucks));
+        profileText.setText("Trucks");
 
         acceptedList = new ArrayList<>();
         arrayAssignedDriverId = new ArrayList<>();
@@ -545,6 +545,11 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
 
             case R.id.bottom_nav_track:
                 JumpTo.goToLPTrackActivity(CustomerDashboardActivity.this, phone, false);
+                break;
+
+            case R.id.bottom_nav_trip:
+                ShowAlert.loadingDialog(CustomerDashboardActivity.this);
+                JumpTo.goToFindTripLPActivity(CustomerDashboardActivity.this, phone, userId, false);
                 break;
         }
     }

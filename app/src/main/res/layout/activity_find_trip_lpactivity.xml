@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activities.FindTripLPActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/find_trips_action_bar"
+            layout="@layout/action_bar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/find_trips_action_bar">
+
+            <View
+                android:id="@+id/find_trucks_find_trip_view"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:background="@color/underline"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="@+id/find_trucks_find_trip_text"
+                app:layout_constraintHorizontal_bias="0.517"
+                app:layout_constraintStart_toStartOf="@+id/find_trucks_find_trip_text"
+                app:layout_constraintTop_toBottomOf="@+id/find_trucks_find_trip_text" />
+
+            <View
+                android:id="@+id/find_trucks_find_truck_view"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:background="@color/underline"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="@+id/find_trucks_find_truck_text"
+                app:layout_constraintHorizontal_bias="0.493"
+                app:layout_constraintStart_toStartOf="@+id/find_trucks_find_truck_text"
+                app:layout_constraintTop_toBottomOf="@+id/find_trucks_find_truck_text" />
+
+            <TextView
+                android:id="@+id/find_trucks_find_trip_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginBottom="2dp"
+                android:background="@drawable/personal_details_buttons_active"
+                android:onClick="onClickTripTruck"
+                android:paddingStart="2dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="2dp"
+                android:paddingBottom="5dp"
+                android:text="Trips"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/light_black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/find_trucks_find_truck_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/find_trucks_find_truck_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/personal_details_buttons_de_active"
+                android:onClick="onClickTripTruck"
+                android:paddingStart="2dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="2dp"
+                android:paddingBottom="5dp"
+                android:text="@string/Find_Trucks"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/light_black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/find_trucks_find_trip_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/find_trucks_find_trip_text"
+                app:layout_constraintTop_toTopOf="@+id/find_trucks_find_trip_text" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- All Trips-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/find_trip_all_trips"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/find_trucks_find_trips_constrain"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout10">
+
+            <TextView
+                android:id="@+id/find_trips_no_trips"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="No Trips Available"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/find_trip_all_recycler_view"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true"
+                android:foregroundGravity="top"
+                android:scrollbarThumbVertical="@android:color/holo_blue_dark"
+                android:scrollbars="vertical"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Find Trips -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/find_trucks_find_trips_constrain"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/find_trips_bottom_nav"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout10">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/all_rounded_small"
+                android:backgroundTint="@color/dark_white"
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@+id/find_trip_state_recycler_view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Spinner
+                    android:id="@+id/find_trips_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:drawableEnd="@drawable/ccp_ic_arrow_drop_down"
+                    android:drawableTint="@color/light_black"
+                    android:entries="@array/array_sort_trips"
+                    android:gravity="center|start"
+                    android:text="Pick-up Date"
+                    android:textColor="@color/light_black"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toTopOf="@+id/find_trip_select_city"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView7"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="Search Trip by"
+                    android:textColor="@color/light_black"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/find_trips_spinner"
+                    app:layout_constraintEnd_toStartOf="@+id/find_trips_spinner"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/find_trips_spinner" />
+
+                <TextView
+                    android:id="@+id/find_trip_select_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="2dp"
+                    android:background="@drawable/edit_text_border"
+                    android:drawableEnd="@drawable/ic_down"
+                    android:drawableTint="@color/black"
+                    android:hint="@string/select_state"
+                    android:padding="8dp"
+                    android:visibility="gone"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/dark_grey"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/find_trip_select_city"
+                    app:layout_constraintEnd_toStartOf="@+id/find_trip_select_city"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/find_trip_select_city"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/find_trip_select_city"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/edit_text_border"
+                    android:drawableEnd="@drawable/ic_down"
+                    android:drawableTint="@color/black"
+                    android:ellipsize="end"
+                    android:hint="@string/select_city"
+                    android:maxLines="1"
+                    android:visibility="gone"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/dark_grey"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/find_trip_select_state"
+                    app:layout_constraintTop_toBottomOf="@+id/find_trips_spinner" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/find_trip_state_recycler_view"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true"
+                android:foregroundGravity="top"
+                android:scrollbarThumbVertical="@android:color/holo_blue_dark"
+                android:scrollbars="vertical"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/find_trip_state_recycler_view_drop"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true"
+                android:foregroundGravity="top"
+                android:scrollbarThumbVertical="@android:color/holo_blue_dark"
+                android:scrollbars="vertical"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <include
+            android:id="@+id/find_trips_bottom_nav"
+            layout="@layout/bottom_nav_bar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

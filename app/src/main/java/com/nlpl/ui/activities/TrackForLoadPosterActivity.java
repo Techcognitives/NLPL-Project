@@ -217,12 +217,12 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
         //------------------------------- bottom nav -----------------------------------------------
         bottomNav = (View) findViewById(R.id.customer_dashboard_bottom_nav_bar);
         TextView profileText = (TextView) bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
-        profileText.setText(getString(R.string.Find_Trucks));
+        profileText.setText("Trucks");
         View dashboardView = findViewById(R.id.bottom_nav_bar_dashboard_underline);
         dashboardView.setVisibility(View.INVISIBLE);
         ConstraintLayout dashboardConstrain = findViewById(R.id.bottom_nav_sp_dashboard);
         dashboardConstrain.setBackgroundTintList(getResources().getColorStateList(R.color.light_white));
-        ConstraintLayout trackConstrain =  findViewById(R.id.bottom_nav_track);
+        ConstraintLayout trackConstrain = findViewById(R.id.bottom_nav_track);
         trackConstrain.setBackgroundTintList(getResources().getColorStateList(R.color.white));
         View trackView = findViewById(R.id.bottom_nav_bar_track_underline);
         trackView.setVisibility(View.VISIBLE);
@@ -376,7 +376,7 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
                     if (acceptedList.size() > 0) {
 //                        bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
                         bidsAcceptedAdapter.updateData(acceptedList);
-                    }else{
+                    } else {
                         noTrips.setVisibility(View.VISIBLE);
                     }
 //                        }
@@ -410,6 +410,11 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
 
             case R.id.bottom_nav_track:
                 RearrangeItems();
+                break;
+
+            case R.id.bottom_nav_trip:
+                ShowAlert.loadingDialog(TrackForLoadPosterActivity.this);
+                JumpTo.goToFindTripLPActivity(TrackForLoadPosterActivity.this, userId, phone, true);
                 break;
         }
     }
@@ -636,7 +641,7 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
                     submitResponseBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            DisplayTrack.DisplayTrack(TrackForLoadPosterActivity.this, obj.getPick_add()+" "+obj.getPick_city()+" "+obj.getPick_pin_code(), obj.getDrop_add()+" "+obj.getDrop_city()+" "+obj.getDrop_pin_code());
+                            DisplayTrack.DisplayTrack(TrackForLoadPosterActivity.this, obj.getPick_add() + " " + obj.getPick_city() + " " + obj.getPick_pin_code(), obj.getDrop_add() + " " + obj.getDrop_city() + " " + obj.getDrop_pin_code());
                         }
                     });
 

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.SearchLoadModel;
 import com.nlpl.model.Responses.TripResponse;
+import com.nlpl.ui.activities.FindTripLPActivity;
 import com.nlpl.ui.activities.FindTrucksActivity;
 
 import java.util.ArrayList;
@@ -21,10 +22,10 @@ import java.util.Comparator;
 
 public class AllTripAdapter extends RecyclerView.Adapter<AllTripAdapter.SearchLoadsViewHolder> {
 
-    private FindTrucksActivity activity;
+    private FindTripLPActivity activity;
     ArrayList<TripResponse.TripList> array_indian_states;
 
-    public AllTripAdapter(FindTrucksActivity activity, ArrayList<TripResponse.TripList> searchList) {
+    public AllTripAdapter(FindTripLPActivity activity, ArrayList<TripResponse.TripList> searchList) {
         this.activity = activity;
         this.array_indian_states = searchList;
     }

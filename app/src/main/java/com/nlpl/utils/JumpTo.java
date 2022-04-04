@@ -7,6 +7,7 @@ import com.nlpl.ui.activities.BankDetailsActivity;
 import com.nlpl.ui.activities.CompanyDetailsActivity;
 import com.nlpl.ui.activities.CustomerDashboardActivity;
 import com.nlpl.ui.activities.CustomerLoadsHistoryActivity;
+import com.nlpl.ui.activities.FindTripLPActivity;
 import com.nlpl.ui.activities.PostATripActivity;
 import com.nlpl.ui.activities.SettingsAndPreferences;
 import com.nlpl.ui.activities.DriverDetailsActivity;
@@ -303,6 +304,18 @@ public class JumpTo {
         intent.putExtra("userId", userId);
         intent.putExtra("isEdit", isEdit);
         intent.putExtra("tripId", tripId);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        activity.startActivity(intent);
+        if (isFinish){
+            activity.finish();
+        }
+        activity.overridePendingTransition(0, 0);
+    }
+
+    public static void goToFindTripLPActivity(Activity activity, String mobileNumber, String userId, Boolean isFinish) {
+        Intent intent = new Intent(activity, FindTripLPActivity.class);
+        intent.putExtra("mobile", mobileNumber);
+        intent.putExtra("userId", userId);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivity(intent);
         if (isFinish){

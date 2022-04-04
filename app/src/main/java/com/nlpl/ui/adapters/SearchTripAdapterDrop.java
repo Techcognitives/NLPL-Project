@@ -12,20 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.SearchLoadModel;
-import com.nlpl.ui.activities.FindLoadsActivity;
 import com.nlpl.ui.activities.FindTripLPActivity;
-import com.nlpl.ui.activities.FindTrucksActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class SearchTripAdapter extends RecyclerView.Adapter<SearchTripAdapter.SearchLoadsViewHolder> {
+public class SearchTripAdapterDrop extends RecyclerView.Adapter<SearchTripAdapterDrop.SearchLoadsViewHolder> {
 
     private FindTripLPActivity activity;
     ArrayList<SearchLoadModel> array_indian_states;
 
-    public SearchTripAdapter(FindTripLPActivity activity, ArrayList<SearchLoadModel> searchList) {
+    public SearchTripAdapterDrop(FindTripLPActivity activity, ArrayList<SearchLoadModel> searchList) {
         this.activity = activity;
         this.array_indian_states = searchList;
     }
@@ -42,7 +40,7 @@ public class SearchTripAdapter extends RecyclerView.Adapter<SearchTripAdapter.Se
         String state = obj.getSearchList();
         holder.stateName.setText("  " + state);
 
-        activity.setLoadCount(obj, holder.numberOfLoads, holder.findConstrain, array_indian_states);
+        activity.setLoadCountDrop(obj, holder.numberOfLoads, holder.findConstrain, array_indian_states);
 
         Collections.sort(array_indian_states, new Comparator<SearchLoadModel>() {
             @Override
