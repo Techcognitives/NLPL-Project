@@ -201,13 +201,13 @@ public class RegistrationActivity extends AppCompat {
                 Log.i("Role Selected", role);
                 if (role != null) {
                     if (role.equals("Customer")) {
-                        actionBarTitle.setText(getString(R.string.Load_Poster) + getString(R.string.Registration_as));
+                        actionBarTitle.setText(getString(R.string.Registration_as) + getString(R.string.Load_Poster));
                     } else if(role.equals("Owner")) {
-                        actionBarTitle.setText(getString(R.string.Truck_Owner) + getString(R.string.Registration_as));
+                        actionBarTitle.setText(getString(R.string.Registration_as) + getString(R.string.Truck_Owner));
                     } else if(role.equals("Driver")) {
-                        actionBarTitle.setText(getString(R.string.Driver) + getString(R.string.Registration_as));
+                        actionBarTitle.setText(getString(R.string.Registration_as) + getString(R.string.Driver));
                     } else {
-                        actionBarTitle.setText(getString(R.string.Broker) + getString(R.string.Registration_as));
+                        actionBarTitle.setText(getString(R.string.Registration_as) + getString(R.string.Broker));
                     }
                 }
             }

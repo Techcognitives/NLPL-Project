@@ -48,7 +48,7 @@
     <string name="customer">मैं एक लोड पोस्टर हूँ </string>
     <string name="yes">हाँ </string>
     //new
-    <string name="Registration_as">के रूप में रजिस्ट्रेशन करें<p> </p></string>
+    <string name="Registration_as">रजिस्ट्रेशन जैसा<p> </p></string>
     <string name="Load_Poster">लोड पोस्टर<p> </p></string>
     <string name="Registration_Successful">रजिस्ट्रेशन सफल </string>
     <string name="Welcome_to">आपका स्वागत है. </string>
