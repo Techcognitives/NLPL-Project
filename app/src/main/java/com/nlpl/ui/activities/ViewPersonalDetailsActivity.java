@@ -84,7 +84,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
             }
         });
 
-        actionBarSkip.setVisibility(View.VISIBLE);
+        actionBarSkip.setVisibility(View.INVISIBLE);
         actionBarSkip.setText(getString(R.string.edit));
         actionBarSkip.setOnClickListener(view -> {
             ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
