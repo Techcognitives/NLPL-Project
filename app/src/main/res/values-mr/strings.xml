@@ -49,8 +49,8 @@
     <string name="customer">मी एक लोड पोस्टर आहे </string>
     <string name="yes">होय </string>
     //new
-    <string name="Registration_as">म्हणून नोंदणी करा<p> </p></string>
-    <string name="Load_Poster">लोड पोस्टर </string>
+    <string name="Registration_as">रजिस्ट्रेशन म्हणून<p> </p></string>
+    <string name="Load_Poster">लोड पोस्टर<p> </p></string>
     <string name="Registration_Successful">नोंदणी यशस्वी</string>
     <string name="Welcome_to">आपले स्वागत आहे. </string>
     <string name="Please_update_your_profile">\n\nकृपया तुमचे प्रोफाइल अपडेट करा आणि प्लॅटफॉर्म एक्सप्लोर करा.</string>
@@ -220,10 +220,10 @@
     <string name="Self">स्वत: </string>               //new
     <string name="Search">शोध </string>           //new
     <string name="Current_Location">करंट लोकेशन </string>
-    <string name="Truck_Owner">ट्रक ओनर </string> //new
-    <string name="Driver">ड्रायव्हर </string>           //new
+    <string name="Truck_Owner">ट्रक ओनर<p> </p></string> //new
+    <string name="Driver">ड्रायव्हर<p> </p></string>           //new
     <string name="Search_Driver_by_Number">नंबर द्वारा ड्रायव्हर शोधा </string>
-    <string name="Broker">ब्रोकर </string>           //new
+    <string name="Broker">ब्रोकर<p> </p></string>           //new
     <string name="Enter_Driving_License_Number">ड्राइविंग लायसन्स नंबर एंटर करा</string>       //new
     <string name="Choose_any_of_the_following">कोणतेही निवडा </string>         //new
     <string name="Photo_Library">फोटो लायब्ररी </string>             //new
