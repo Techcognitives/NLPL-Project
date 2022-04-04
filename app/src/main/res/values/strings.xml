@@ -1115,7 +1115,7 @@
     <string name="yes">YES</string>
     //new
     <string name="Registration_as">as Registration<p> </p></string>
-    <string name="Load_Poster">Load Poster</string>
+    <string name="Load_Poster">Load Poster<p> </p></string>
     <string name="Registration_Successful">Registration Successful</string>
     <string name="Welcome_to">Welcome to </string>
     <string name="Please_update_your_profile">\n\nPlease update your profile and explore platform benefits.</string>
@@ -1300,10 +1300,10 @@
     <string name="Current_Location">Current Location</string>
     <string name="Truck_Owner">Truck Owner<p> </p></string>
     //new
-    <string name="Driver">Driver</string>
+    <string name="Driver">Driver<p> </p></string>
     //new
     <string name="Search_Driver_by_Number">Search Driver by Number</string>
-    <string name="Broker">Broker</string>
+    <string name="Broker">Broker<p> </p></string>
     //new
     <string name="Enter_Driving_License_Number">Enter Driving License Number</string>
     //new
