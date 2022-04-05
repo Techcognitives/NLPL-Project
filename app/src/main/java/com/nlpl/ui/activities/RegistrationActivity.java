@@ -333,15 +333,6 @@ public class RegistrationActivity extends AppCompat {
         }
     }
 
-    public void onClickEnterManually(View view) {
-        address.setEnabled(true);
-        address.setFocusable(true);
-        address.setCursorVisible(true);
-        address.requestFocus();
-        address.setSelection(address.getText().length());
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-    }
-
     public void onClickOpenMaps(View view) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             Places.initialize(getApplicationContext(), "AIzaSyDAAes8x5HVKYB5YEIGBmdnCdyBrAHUijM");
