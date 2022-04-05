@@ -93,10 +93,6 @@
             android:exported="true"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".ui.activities.PersonalDetailsAndIdProofActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Design.Light.NoActionBar" />
-        <activity
             android:name=".ui.activities.CompanyDetailsActivity"
             android:exported="false"
             android:theme="@style/Theme.Design.Light.NoActionBar" />

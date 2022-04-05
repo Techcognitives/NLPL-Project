@@ -173,6 +173,7 @@ public class DriverDetailsActivity extends AppCompat {
         driverName = personalAndAddress.findViewById(R.id.registration_edit_name);
         series = (TextView) personalAndAddress.findViewById(R.id.registration_prefix);
         driverEmailId = (EditText) personalAndAddress.findViewById(R.id.registration_email_id_edit);
+        driverEmailId.setVisibility(View.GONE);
         setCurrentLocation = (TextView) personalAndAddress.findViewById(R.id.personal_and_address_get_current_location);
         setCurrentLocation.setVisibility(View.VISIBLE);
 
@@ -199,6 +200,10 @@ public class DriverDetailsActivity extends AppCompat {
         driverMobile.addTextChangedListener(driverMobileWatcher);
         pinCode.addTextChangedListener(pinCodeWatcher);
         address.addTextChangedListener(driverNameWatcher);
+
+        pinCode.setVisibility(View.GONE);
+        selectStateText.setVisibility(View.GONE);
+        selectDistrictText.setVisibility(View.GONE);
 
         address.setFilters(new InputFilter[]{filter});
 
@@ -1201,6 +1206,17 @@ public class DriverDetailsActivity extends AppCompat {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String addressText  = address.getText().toString().trim();
+
+            if (addressText.length()==0){
+                pinCode.setVisibility(View.GONE);
+                selectStateText.setVisibility(View.GONE);
+                selectDistrictText.setVisibility(View.GONE);
+            }else{
+                pinCode.setVisibility(View.VISIBLE);
+                selectStateText.setVisibility(View.VISIBLE);
+                selectDistrictText.setVisibility(View.VISIBLE);
+            }
         }
 
         @Override
@@ -1752,44 +1768,20 @@ public class DriverDetailsActivity extends AppCompat {
 
     }
 
+    public void onClickOpenMaps(View view) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            Places.initialize(getApplicationContext(), "AIzaSyDAAes8x5HVKYB5YEIGBmdnCdyBrAHUijM");
+            List<Place.Field> fields = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG);
+            Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields).build(this);
+            startActivityForResult(intent, 100);
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+        }
+    }
+
     public void onClickGetCurrentLocation(View view) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            Dialog chooseDialog = new Dialog(this);
-            chooseDialog.setContentView(R.layout.dialog_choose);
-            chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-            WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-            lp2.copyFrom(chooseDialog.getWindow().getAttributes());
-            lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-            lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-            lp2.gravity = Gravity.BOTTOM;
-
-            chooseDialog.show();
-            chooseDialog.getWindow().setAttributes(lp2);
-
-            ImageView currentLocation = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
-            currentLocation.setImageResource(R.drawable.google_location_small);
-            ImageView searchFromMaps = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
-            searchFromMaps.setImageResource(R.drawable.google_address_small);
-
-            TextView currentText = chooseDialog.findViewById(R.id.dialog_camera_text);
-            currentText.setText("Current Location");
-            TextView fromMapText = chooseDialog.findViewById(R.id.dialog_photo_library_text);
-            fromMapText.setText("Search");
-
-            currentLocation.setOnClickListener(view2 -> {
-                chooseDialog.dismiss();
-                getCurrentLocation(this, address, pinCode);
-            });
-
-            searchFromMaps.setOnClickListener(view3 -> {
-                chooseDialog.dismiss();
-                Places.initialize(getApplicationContext(), "AIzaSyDAAes8x5HVKYB5YEIGBmdnCdyBrAHUijM");
-                List<Place.Field> fields = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG);
-                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields).build(this);
-                startActivityForResult(intent, 100);
-            });
-
+            getCurrentLocation(this, address, pinCode);
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }

@@ -17,7 +17,6 @@ import com.nlpl.ui.activities.LanguageActivity;
 import com.nlpl.ui.activities.LogInActivity;
 import com.nlpl.ui.activities.OtpCodeActivity;
 import com.nlpl.ui.activities.PersonalDetailsActivity;
-import com.nlpl.ui.activities.PersonalDetailsAndIdProofActivity;
 import com.nlpl.ui.activities.PostALoadActivity;
 import com.nlpl.ui.activities.RegistrationActivity;
 import com.nlpl.ui.activities.ServiceProviderDashboardActivity;
@@ -60,9 +59,11 @@ public class JumpTo {
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void goToRegistrationActivity(Activity activity, String mobileNumber, Boolean isFinish) {
+    public static void goToRegistrationActivity(Activity activity, String mobileNumber, Boolean isEdit, String userId, Boolean isFinish) {
         Intent intent = new Intent(activity, RegistrationActivity.class);
         intent.putExtra("mobile1", mobileNumber);
+        intent.putExtra("isEdit", isEdit);
+        intent.putExtra("userId", userId);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivity(intent);
         if (isFinish) {
@@ -245,17 +246,6 @@ public class JumpTo {
         Intent intent = new Intent(activity, PersonalDetailsActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("profile", profile);
-        intent.putExtra("mobile", mobileNumber);
-        activity.startActivity(intent);
-        if (isFinish) {
-            activity.finish();
-        }
-        activity.overridePendingTransition(0, 0);
-    }
-
-    public static void goToPersonalDetailsIdProofActivity(Activity activity, String userId, String mobileNumber, Boolean isFinish) {
-        Intent intent = new Intent(activity, PersonalDetailsAndIdProofActivity.class);
-        intent.putExtra("userId", userId);
         intent.putExtra("mobile", mobileNumber);
         activity.startActivity(intent);
         if (isFinish) {

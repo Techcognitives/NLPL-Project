@@ -74,7 +74,7 @@ public class SliderActivity extends AppCompat {
 
     public void onClickRegisterNow(View view) {
         ShowAlert.loadingDialog(SliderActivity.this);
-        JumpTo.goToRegistrationActivity(SliderActivity.this, mobile, false);
+        JumpTo.goToRegistrationActivity(SliderActivity.this, mobile, false, null, true);
     }
 
     public void onClickSkipRegistration(View view) {

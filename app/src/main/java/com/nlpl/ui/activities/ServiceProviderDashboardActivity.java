@@ -851,7 +851,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
             alertPositiveButton.setOnClickListener(view1 -> {
                 alert.dismiss();
                 ShowAlert.loadingDialog(ServiceProviderDashboardActivity.this);
-                JumpTo.goToRegistrationActivity(ServiceProviderDashboardActivity.this, phone, true);
+                JumpTo.goToRegistrationActivity(ServiceProviderDashboardActivity.this, phone, false, null, true);
             });
             //------------------------------------------------------------------------------------------
         } else {
@@ -997,7 +997,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
 
                     alertPositiveButton.setOnClickListener(view1 -> {
                         alert.dismiss();
-                        JumpTo.goToRegistrationActivity(ServiceProviderDashboardActivity.this, phone, true);
+                        JumpTo.goToRegistrationActivity(ServiceProviderDashboardActivity.this, phone, false, null, true);
                     });
                     //------------------------------------------------------------------------------------------
                 } else {
@@ -1040,7 +1040,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
 
                     alertPositiveButton.setOnClickListener(view1 -> {
                         alert.dismiss();
-                        JumpTo.goToRegistrationActivity(ServiceProviderDashboardActivity.this, phone, true);
+                        JumpTo.goToRegistrationActivity(ServiceProviderDashboardActivity.this, phone, false, null, true);
                     });
                     //------------------------------------------------------------------------------------------
                 } else {
@@ -1186,7 +1186,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
             alertPositiveButton.setOnClickListener(view -> {
                 alert.dismiss();
                 ShowAlert.loadingDialog(ServiceProviderDashboardActivity.this);
-                JumpTo.goToRegistrationActivity(ServiceProviderDashboardActivity.this, phone, true);
+                JumpTo.goToRegistrationActivity(ServiceProviderDashboardActivity.this, phone, false, null, true);
             });
             //------------------------------------------------------------------------------------------
         } else {
@@ -2816,7 +2816,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
 
             alertPositiveButton.setOnClickListener(view1 -> {
                 alert.dismiss();
-                JumpTo.goToRegistrationActivity(ServiceProviderDashboardActivity.this, phone, true);
+                JumpTo.goToRegistrationActivity(ServiceProviderDashboardActivity.this, phone, false, null, true);
             });
             //------------------------------------------------------------------------------------------
         } else {
