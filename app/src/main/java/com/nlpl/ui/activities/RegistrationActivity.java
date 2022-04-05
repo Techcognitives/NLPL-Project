@@ -111,7 +111,9 @@ public class RegistrationActivity extends AppCompat {
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp.gravity = Gravity.CENTER;
 
-        roleDialog.show();
+        if (!isEdit) {
+            roleDialog.show();
+        }
         roleDialog.getWindow().setAttributes(lp);
         roleDialog.setCancelable(false);
 
@@ -418,7 +420,7 @@ public class RegistrationActivity extends AppCompat {
                 }
 
                 if (alternateMobile.getText().toString() != null) {
-                    UpdateUserDetails.updateUserAlternatePhoneNumber(userId, "91"+alternateMobile.getText().toString());
+                    UpdateUserDetails.updateUserAlternatePhoneNumber(userId, "91" + alternateMobile.getText().toString());
                 }
 
                 if (email_id.getText().toString() != null) {
@@ -764,4 +766,5 @@ public class RegistrationActivity extends AppCompat {
 
         }
     }
+
 }

@@ -134,13 +134,13 @@ public class DriverDetailsActivity extends AppCompat {
     Dialog previewDialogDL, previewDialogSelfie;
     View personalAndAddress;
 
-    TextView selectStateText, selectDistrictText, setCurrentLocation;
+    TextView selectStateText, selectDistrictText, setCurrentLocation, mapLocation;
     String selectedState;
     EditText pinCode, address, dlNumber, dDOB;
 
     String userIdAPI, nameAPI, stateAPI, pinCodeAPI, addressAPI, mobileNoAPI, cityAPI, roleAPI;
     ArrayList<String> arrayUserId, arrayMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayState;
-    Boolean alreadyDriver = true, isSelfieEdited = false, dlValid = false;
+    Boolean alreadyDriver = true, isSelfieEdited = false, dlValid = true;
     String truckIdPass, driverIdPass;
 
     @Override
@@ -176,6 +176,7 @@ public class DriverDetailsActivity extends AppCompat {
         driverEmailId.setVisibility(View.GONE);
         setCurrentLocation = (TextView) personalAndAddress.findViewById(R.id.personal_and_address_get_current_location);
         setCurrentLocation.setVisibility(View.VISIBLE);
+        mapLocation = personalAndAddress.findViewById(R.id.personal_map_address);
 
         previewDLImageView = (ImageView) findViewById(R.id.driver_details_preview_driving_license);
         previewSelfieImageView = (ImageView) findViewById(R.id.driver_details_preview_selfie);
@@ -410,6 +411,7 @@ public class DriverDetailsActivity extends AppCompat {
             if (mobile.equals("91" + driverMobile.getText().toString())) {
                 selfCheckBox.setVisibility(View.GONE);
                 setCurrentLocation.setVisibility(View.GONE);
+                mapLocation.setVisibility(View.GONE);
                 driverName.setCursorVisible(false);
                 driverName.setEnabled(false);
                 driverMobile.setCursorVisible(false);
@@ -427,6 +429,7 @@ public class DriverDetailsActivity extends AppCompat {
             } else {
                 selfCheckBox.setVisibility(View.VISIBLE);
                 setCurrentLocation.setVisibility(View.GONE);
+                mapLocation.setVisibility(View.GONE);
                 driverName.setCursorVisible(true);
                 driverName.setEnabled(true);
                 driverMobile.setCursorVisible(true);
@@ -1245,7 +1248,7 @@ public class DriverDetailsActivity extends AppCompat {
             } else {
                 dDOB.setVisibility(View.VISIBLE);
                 if (dob.length() == 10) {
-                    checkDl(dlNumberWatcher, dob);
+//                    checkDl(dlNumberWatcher, dob);
                 } else if (dob.length() > 1) {
                     dlNumber.setEnabled(false);
                 } else {
@@ -1679,10 +1682,12 @@ public class DriverDetailsActivity extends AppCompat {
             driverEmailId.setEnabled(false);
             selectDistrictText.setEnabled(false);
             selectStateText.setEnabled(false);
+            mapLocation.setVisibility(View.GONE);
 
         } else if (!selfCheckBox.isChecked()) {
 
             setCurrentLocation.setVisibility(View.VISIBLE);
+            mapLocation.setVisibility(View.VISIBLE);
             driverName.setCursorVisible(true);
             driverName.setEnabled(true);
             driverMobile.setCursorVisible(true);

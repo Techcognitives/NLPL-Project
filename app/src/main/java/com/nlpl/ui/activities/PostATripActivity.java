@@ -80,7 +80,7 @@ public class PostATripActivity extends AppCompat {
             @Override
             public void onClick(View view) {
                 ShowAlert.loadingDialog(PostATripActivity.this);
-                JumpTo.goToFindTrucksActivity(PostATripActivity.this, userId, phone);
+                JumpTo.goToFindLoadsActivity(PostATripActivity.this, userId, phone, true);
             }
         });
 
