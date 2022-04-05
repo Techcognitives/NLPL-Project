@@ -593,19 +593,19 @@ public class BankDetailsActivity extends AppCompat {
                             ifscCode.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success_small, 0);
                             bankVerified = true;
                         } else {
-                            Toast.makeText(BankDetailsActivity.this, "Please enter a valid Bank Details", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BankDetailsActivity.this, "Please enter valid Bank Details", Toast.LENGTH_SHORT).show();
                         }
                     } catch (Exception e) {
-                        Toast.makeText(BankDetailsActivity.this, "Please enter a valid Bank Details", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BankDetailsActivity.this, "Please enter valid Bank Details", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(BankDetailsActivity.this, "Please enter a valid Bank Details", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BankDetailsActivity.this, "Please enter valid Bank Details", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<BankVerificationResponse> call, Throwable t) {
-                Toast.makeText(BankDetailsActivity.this, "Please enter a valid Bank Details", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BankDetailsActivity.this, "Please enter valid Bank Details", Toast.LENGTH_SHORT).show();
             }
         });
     }

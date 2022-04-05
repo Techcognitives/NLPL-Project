@@ -149,7 +149,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
     RadioButton negotiable_yes, negotiable_no;
     ImageView actionBarBackButton, actionBarMenuButton;
 
-    TextView timeLeft00, timeLeftTextview, partitionTextview;
+    TextView timeLeft00, timeLeftTextview, partitionTextview, noTrips;
     ImageView actionBarWhatsApp;
 
     ConstraintLayout bidsSubmittedConstrain;
@@ -192,15 +192,19 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
 
         bottomNav = (View) findViewById(R.id.profile_registration_bottom_nav_bar);
         TextView profileText = (TextView) bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
-        profileText.setText(getString(R.string.Find_Loads));
+        profileText.setText("trips");
         View dashboardView = findViewById(R.id.bottom_nav_bar_dashboard_underline);
         dashboardView.setVisibility(View.INVISIBLE);
+        ImageView profileImageView = (ImageView) bottomNav.findViewById(R.id.bottom_nav_profile_image_view);
+        profileImageView.setImageDrawable(getDrawable(R.drawable.black_truck_small));
         ConstraintLayout dashboardConstrain = findViewById(R.id.bottom_nav_sp_dashboard);
         dashboardConstrain.setBackgroundTintList(getResources().getColorStateList(R.color.light_white));
         ConstraintLayout trackConstrain = findViewById(R.id.bottom_nav_track);
         trackConstrain.setBackgroundTintList(getResources().getColorStateList(R.color.white));
         View trackView = findViewById(R.id.bottom_nav_bar_track_underline);
         trackView.setVisibility(View.VISIBLE);
+        ConstraintLayout truck = findViewById(R.id.bottom_nav_trip);
+        truck.setVisibility(View.GONE);
 
         arrayUserId = new ArrayList<>();
         arrayMobileNo = new ArrayList<>();
@@ -237,6 +241,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
         lp2.gravity = Gravity.CENTER;
 
         ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+        noTrips = findViewById(R.id.find_trips_no_trips);
 
 //        loadingDialog.show();
         loadingDialog.setCancelable(false);
@@ -362,7 +367,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
 
             case R.id.bottom_nav_customer_dashboard:
                 ShowAlert.loadingDialog(TrackForServiceProviderActivity.this);
-                JumpTo.goToFindLoadsActivity(TrackForServiceProviderActivity.this, userId, phone);
+                JumpTo.goToFindLoadsActivity(TrackForServiceProviderActivity.this, userId, phone, true);
                 break;
 
             case R.id.bottom_nav_track:
@@ -451,6 +456,12 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
                         fooThread.start();
                         updatedLoadSubmittedList.addAll(loadSubmittedList);
                         loadSubmittedAdapter.updateData(updatedLoadSubmittedList);
+                    }
+
+                    if (updatedLoadSubmittedList.size() == 0){
+                        noTrips.setVisibility(View.VISIBLE);
+                    }else{
+                        noTrips.setVisibility(View.GONE);
                     }
 //
 //                    else {
@@ -697,7 +708,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setCountdown();
-//                initiateOtp("+"+mobileNumberCustomer, obj);
+                initiateOtp("+"+mobileNumberCustomer, obj);
                 Dialog otpRequest = new Dialog(TrackForServiceProviderActivity.this);
                 otpRequest.setContentView(R.layout.activity_otp_code);
                 otpRequest.getWindow().setBackgroundDrawable(getDrawable(R.drawable.all_rounded_small));
@@ -728,7 +739,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
                 reSendOtp.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-//                        initiateOtp("+"+mobileNumberCustomer, obj);
+                        initiateOtp("+"+mobileNumberCustomer, obj);
                         setCountdown();
                         reSendOtp.setVisibility(View.INVISIBLE);
                     }
@@ -1098,5 +1109,12 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ShowAlert.loadingDialog(this);
+        JumpTo.goToServiceProviderDashboard(this, phone, true);
     }
 }

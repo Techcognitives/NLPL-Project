@@ -662,7 +662,6 @@ public class PersonalDetailsActivity extends AppCompat {
                 @Override
                 public void onClick(View view) {
                     alert.dismiss();
-
                 }
             });
             //------------------------------------------------------------------------------------------
@@ -689,9 +688,9 @@ public class PersonalDetailsActivity extends AppCompat {
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 UserResponse nameResponse = response.body();
                 UserResponse.UserList listObj = nameResponse.getData().get(0);
-                int userVerified = listObj.getIs_user_verfied();
+                int userVerified = listObj.getIsPersonal_dt_added();
                 Log.i("userVerified", String.valueOf(userVerified));
-                if (userVerified==0){
+                if (userVerified==1){
                     panConstrain.setVisibility(View.GONE);
                     aadharConstrain.setVisibility(View.GONE);
                     okButton.setVisibility(View.GONE);

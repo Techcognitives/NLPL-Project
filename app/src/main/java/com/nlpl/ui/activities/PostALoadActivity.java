@@ -56,6 +56,7 @@ import com.nlpl.utils.GetLocationPickUp;
 import com.nlpl.utils.GetStateCityUsingPINCode;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.SelectCity;
+import com.nlpl.utils.SelectDate;
 import com.nlpl.utils.SelectState;
 import com.nlpl.utils.SelectVehicleType;
 import com.nlpl.utils.ShowAlert;
@@ -276,14 +277,14 @@ public class PostALoadActivity extends AppCompat {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
-                pickDateFromCalender();
+                SelectDate.selectDate(PostALoadActivity.this,pick_up_date);
             }
         });
 
         pick_up_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pickTime();
+                SelectDate.selectTime(PostALoadActivity.this, pick_up_time);
             }
         });
 
@@ -548,117 +549,6 @@ public class PostALoadActivity extends AppCompat {
             }
         });
 
-    }
-
-    private void pickTime() {
-
-        Calendar mcurrentTime = Calendar.getInstance();
-        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-        int minute = mcurrentTime.get(Calendar.MINUTE);
-        TimePickerDialog mTimePicker;
-        mTimePicker = new TimePickerDialog(PostALoadActivity.this, R.style.TimePickerTheme, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-//                pick_up_time.setText(selectedHour + ":" + selectedMinute);
-
-                int sizeOfHr = String.valueOf(selectedHour).length();
-                int sizeOfMin = String.valueOf(selectedMinute).length();
-                if (sizeOfHr == 2 && sizeOfMin == 2) {
-                    pick_up_time.setText(selectedHour + ":" + selectedMinute);
-                } else if (sizeOfHr == 1 && sizeOfMin == 2) {
-                    String selectedHr = "0" + String.valueOf(selectedHour);
-                    pick_up_time.setText(selectedHr + ":" + selectedMinute);
-                } else if (sizeOfHr == 1 && sizeOfMin == 1) {
-                    String selectedHr = "0" + String.valueOf(selectedHour);
-                    String selectedMin = "0" + String.valueOf(selectedMinute);
-                    pick_up_time.setText(selectedHr + ":" + selectedMin);
-                } else if (sizeOfHr == 2 && sizeOfMin == 1) {
-                    String selectedMin = "0" + String.valueOf(selectedMinute);
-                    pick_up_time.setText(selectedHour + ":" + selectedMin);
-                }
-            }
-        }, hour, minute, true);//Yes 24 hour time
-        mTimePicker.setTitle("Select Time");
-        mTimePicker.show();
-    }
-
-    private void pickDateFromCalender() {
-
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(PostALoadActivity.this, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
-                if (month == 0) {
-                    sMonth = 1;
-                    monthS = "Jan";
-                } else if (month == 1) {
-                    monthS = "Feb";
-                    sMonth = 2;
-                } else if (month == 2) {
-                    monthS = "Mar";
-                    sMonth = 3;
-                } else if (month == 3) {
-                    sMonth = 4;
-                    monthS = "Apr";
-                } else if (month == 4) {
-                    sMonth = 5;
-                    monthS = "May";
-                } else if (month == 5) {
-                    sMonth = 6;
-                    monthS = "Jun";
-                } else if (month == 6) {
-                    sMonth = 7;
-                    monthS = "Jul";
-                } else if (month == 7) {
-                    sMonth = 8;
-                    monthS = "Aug";
-                } else if (month == 8) {
-                    sMonth = 9;
-                    monthS = "Sep";
-                } else if (month == 9) {
-                    sMonth = 10;
-                    monthS = "Oct";
-                } else if (month == 10) {
-                    sMonth = 11;
-                    monthS = "Nov";
-                } else if (month == 11) {
-                    sMonth = 12;
-                    monthS = "Dec";
-                }
-
-                sDate = dayOfMonth + "-" + monthS + "-" + year;
-                pick_up_date.setText(sDate);
-
-                startCount = startCount + 1;
-                Log.i("Length of Start Date", String.valueOf(startCount));
-
-                startingDate = dayOfMonth + "/" + sMonth + "/" + year;
-
-                Log.i("Separated sDate", startingDate);
-                Log.i("Separated sMonth", String.valueOf(sMonth));
-
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                try {
-                    date1 = simpleDateFormat.parse(startingDate);
-                    Log.i("Date Parsed", String.valueOf(date1));
-                    date2 = simpleDateFormat.parse(todayDate);
-                    startD = date2.getTime();
-                    todayD = date1.getTime();
-
-                    diff = (todayD - startD) / 86400000;
-                    Log.i("Diff Start-Today Date", String.valueOf(diff));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, year, month, day);
-        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
-        datePickerDialog.show();
     }
 
     private String blockCharacterSet = ".,[]`~#^|$%&*!+@₹_-()':;?/={}";

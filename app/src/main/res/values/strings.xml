@@ -1089,6 +1089,11 @@
 
     //----------------------------------------------------------------------------------------------
 
+    <string-array name="array_sort_trips">
+        <item>Pick-up Location</item>
+        <item>Drop Location</item>
+    </string-array>
+
     //---------------------------- Registration Screen Activity ------------------------------------
     <string name="name">Name*</string>
     <string name="name_hint">Enter your Name</string>
@@ -1109,8 +1114,8 @@
     <string name="customer">I"'"m a Load Poster</string>
     <string name="yes">YES</string>
     //new
-    <string name="Registration_as">as Registration<p> </p></string>
-    <string name="Load_Poster">Load Poster</string>
+    <string name="Registration_as">Registration as<p> </p></string>
+    <string name="Load_Poster">Load Poster<p> </p></string>
     <string name="Registration_Successful">Registration Successful</string>
     <string name="Welcome_to">Welcome to </string>
     <string name="Please_update_your_profile">\n\nPlease update your profile and explore platform benefits.</string>
@@ -1293,12 +1298,12 @@
     <string name="Search">Search</string>
     //new
     <string name="Current_Location">Current Location</string>
-    <string name="Truck_Owner">Truck Owner</string>
+    <string name="Truck_Owner">Truck Owner<p> </p></string>
     //new
-    <string name="Driver">Driver</string>
+    <string name="Driver">Driver<p> </p></string>
     //new
     <string name="Search_Driver_by_Number">Search Driver by Number</string>
-    <string name="Broker">Broker</string>
+    <string name="Broker">Broker<p> </p></string>
     //new
     <string name="Enter_Driving_License_Number">Enter Driving License Number</string>
     //new
@@ -1407,7 +1412,7 @@
     //--------------------------------------Bid_now dialog------------------------------------------
     <string name="load_id">Load ID: city-city-000 </string>
     <string name="timeLeft"> <p>   </p> Time left </string>
-    <string name="timeinmin">00:00</string>
+    <string name="timeinmin" translatable="false">00:00</string>
     <string name="pickUpDateWithColon">Pick-up Date:</string>
     <string name="pickUpLocationWithColon"><p>  </p>Pick-up:</string>
     <string name="addressForPickUpLocation">City, State, PIN Code, Address</string>
@@ -1460,7 +1465,7 @@
     <string name="You_can_track_your_trip_in_track_section">You can track your trip in track section</string>
     <string name="Call">Call</string>
     <string name="Whats_App">Whats App</string>
-    <string name="Bids_Submitted">Bids Submitted</string>
+    <string name="Bids_Submitted">Bids</string>
     //new
     <string name="No_Bids_Submitted">No Bids Submitted</string>
     //new
@@ -1551,8 +1556,8 @@
 
     //--------------------------------Find Loads Activity-----------------------------------
     //new
-    <string name="Find_Loads">Find Loads</string>
-    <string name="Load_Notifications">Load Notifications</string>
+    <string name="Find_Loads">Find</string>
+    <string name="Load_Notifications">Loads</string>
     <string name="No_loads_available_for_the_state">No loads available for the state\n</string>
     <string name="No_Load_Available">No Load Available</string>
     <string name="No_Load_Posted">No Load Posted</string>

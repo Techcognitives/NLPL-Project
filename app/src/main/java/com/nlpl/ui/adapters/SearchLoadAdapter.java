@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.SearchLoadModel;
 import com.nlpl.ui.activities.FindLoadsActivity;
+import com.nlpl.ui.activities.ServiceProviderDashboardActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,10 +21,10 @@ import java.util.Comparator;
 
 public class SearchLoadAdapter extends RecyclerView.Adapter<SearchLoadAdapter.SearchLoadsViewHolder> {
 
-    private FindLoadsActivity activity;
+    private ServiceProviderDashboardActivity activity;
     ArrayList<SearchLoadModel> array_indian_states;
 
-    public SearchLoadAdapter(FindLoadsActivity activity, ArrayList<SearchLoadModel> searchList) {
+    public SearchLoadAdapter(ServiceProviderDashboardActivity activity, ArrayList<SearchLoadModel> searchList) {
         this.activity = activity;
         this.array_indian_states = searchList;
     }

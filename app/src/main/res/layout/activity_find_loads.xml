@@ -2,274 +2,184 @@
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/find_loads_swipe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:id="@+id/find_loads_swipe"
     tools:context=".ui.activities.FindLoadsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout4"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/find_loads_bottom_nav_bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <include
-            android:id="@+id/find_loads_action_bar"
-            layout="@layout/action_bar"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/find_loads_constrain"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/find_loads_constrain"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:paddingBottom="5dp"
-            android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout19"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/find_loads_action_bar">
-
-            <TextView
-                android:id="@+id/dashboard_load_notification_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/personal_details_buttons_active"
-                android:paddingStart="2dp"
-                android:paddingTop="5dp"
-                android:paddingEnd="2dp"
-                android:paddingBottom="5dp"
-                android:text="@string/Load_Notifications"
-                android:textAlignment="center"
-                android:textAllCaps="false"
-                android:textColor="@color/light_black"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/find_loads_recycler_view"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/find_loads_recycler_view"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:foregroundGravity="top"
-                android:scrollbarThumbHorizontal="@android:color/holo_blue_dark"
-                android:scrollbars="horizontal"
-                android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/jbnskdc"
-                app:layout_constraintStart_toEndOf="@+id/bdcscxlsdn"
-                app:layout_constraintTop_toBottomOf="@+id/dashboard_load_notification_button"
-                app:stackFromEnd="true" />
-
-            <ImageView
-                android:id="@+id/bdcscxlsdn"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginEnd="5dp"
-                android:onClick="onClickShiftRecyclerviewToLeft"
-                android:scaleX="-1"
-                app:layout_constraintBottom_toBottomOf="@+id/find_loads_recycler_view"
-                app:layout_constraintEnd_toStartOf="@+id/find_loads_recycler_view"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/find_loads_recycler_view"
-                app:srcCompat="@drawable/ic_right"
-                app:tint="@color/black" />
-
-            <ImageView
-                android:id="@+id/jbnskdc"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginStart="5dp"
-                android:onClick="onClickShiftRecyclerviewToRight"
-                app:layout_constraintBottom_toBottomOf="@+id/find_loads_recycler_view"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/find_loads_recycler_view"
-                app:layout_constraintTop_toTopOf="@+id/find_loads_recycler_view"
-                app:srcCompat="@drawable/ic_right"
-                app:tint="@color/black" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout19"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/find_loads_constrain">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/find_loads_search_recycler_view"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:foregroundGravity="top"
-                android:scrollbarThumbHorizontal="@android:color/holo_blue_dark"
-                android:scrollbars="horizontal"
-                android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/find_loads_search_load"
-                app:layout_constraintStart_toStartOf="@+id/find_loads_search_load"
-                app:layout_constraintTop_toBottomOf="@+id/find_loads_search_load"
-                app:stackFromEnd="true" />
-
-            <EditText
-                android:id="@+id/find_loads_search_load"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/edit_text_border_grey"
-                android:drawableStart="@drawable/find_small"
-                android:ems="10"
-                android:hint="@string/Search_States"
-                android:inputType="textPersonName"
-                android:paddingStart="5dp"
-                android:paddingTop="5dp"
-                android:paddingEnd="5dp"
-                android:paddingBottom="5dp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/find_loads_search_recycler_view"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/find_loads_state_recycler_view"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_centerHorizontal="true"
-                android:foregroundGravity="top"
-                android:scrollbarThumbVertical="@android:color/holo_blue_dark"
-                android:scrollbars="vertical"
-                android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="@+id/find_loads_search_recycler_view"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/find_loads_state_constrain"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:visibility="invisible"
-        android:background="@color/background"
-        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <include
-            android:id="@+id/find_loads_action_bar_for_state"
-            layout="@layout/action_bar"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout6"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout6"
+            android:id="@+id/constraintLayout4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="5dp"
-            android:background="@drawable/bottom_corners_rounded_buttons"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            app:layout_constraintBottom_toTopOf="@+id/find_loads_bids_according_state_constrain"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/find_loads_bottom_nav_bar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/find_loads_action_bar_for_state">
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/find_loads_loadId_heading"
-                android:layout_width="0dp"
+            <include
+                android:id="@+id/find_loads_action_bar"
+                layout="@layout/action_bar"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Load Details"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/find_loads_pick_up_date_text"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout10"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/find_loads_pick_up_date_text"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout10"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Pickup Date"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:textStyle="bold"
+                android:layout_marginTop="5dp"
+                app:layout_constraintBottom_toTopOf="@+id/find_load_constrain"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/find_loads_action_bar">
+
+                <View
+                    android:id="@+id/find_loads_find_trip_view"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:background="@color/underline"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="@+id/find_loads_find_trip_text"
+                    app:layout_constraintHorizontal_bias="0.517"
+                    app:layout_constraintStart_toStartOf="@+id/find_loads_find_trip_text"
+                    app:layout_constraintTop_toBottomOf="@+id/find_loads_find_trip_text" />
+
+                <View
+                    android:id="@+id/find_loads_find_truck_view"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:background="@color/underline"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="@+id/find_loads_find_truck_text"
+                    app:layout_constraintHorizontal_bias="0.493"
+                    app:layout_constraintStart_toStartOf="@+id/find_loads_find_truck_text"
+                    app:layout_constraintTop_toBottomOf="@+id/find_loads_find_truck_text" />
+
+                <TextView
+                    android:id="@+id/find_loads_find_trip_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="3dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/personal_details_buttons_active"
+                    android:onClick="onClickTripLoads"
+                    android:paddingStart="2dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="2dp"
+                    android:paddingBottom="5dp"
+                    android:text="My Trips"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/light_black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/find_loads_find_truck_text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/find_loads_find_truck_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/personal_details_buttons_de_active"
+                    android:onClick="onClickTripLoads"
+                    android:paddingStart="2dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="2dp"
+                    android:paddingBottom="5dp"
+                    android:text="@string/Find_Loads"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/light_black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/find_loads_find_trip_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/find_loads_find_trip_text"
+                    app:layout_constraintTop_toTopOf="@+id/find_loads_find_trip_text" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/load_trip_constrain"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/find_loads_loadId_heading"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout10">
 
-            <!--            <ImageView-->
-            <!--                android:id="@+id/find_loads_pick_up_sort_image"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:src="@drawable/ic_drop_down"-->
-            <!--                app:layout_constraintBottom_toBottomOf="@+id/find_loads_pick_up_date_text"-->
-            <!--                app:layout_constraintEnd_toEndOf="@+id/find_loads_pick_up_date_text"-->
-            <!--                app:layout_constraintTop_toTopOf="@+id/find_loads_pick_up_date_text"-->
-            <!--                app:tint="@color/black" />-->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/find_trips_recycler_view"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:foregroundGravity="top"
+                    android:scrollbarThumbHorizontal="@android:color/holo_blue_dark"
+                    android:scrollbars="horizontal"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:stackFromEnd="true" />
 
+                <TextView
+                    android:id="@+id/find_trips_no_trips"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="No Trips Posted"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/find_load_constrain"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout10">
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/find_loads_bids_according_state_constrain"
+        <include
+            android:id="@+id/find_loads_bottom_nav_bar"
+            layout="@layout/bottom_nav_bar"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
+            android:layout_height="wrap_content"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <include
-        android:id="@+id/find_loads_bottom_nav_bar"
-        layout="@layout/bottom_nav_bar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

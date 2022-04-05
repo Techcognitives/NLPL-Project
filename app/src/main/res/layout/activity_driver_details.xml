@@ -89,6 +89,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
                     android:background="@drawable/edit_text_border"
                     android:ems="10"
                     android:hint="@string/Enter_Driving_License_Number"
@@ -99,7 +100,7 @@
                     android:paddingEnd="5dp"
                     android:paddingBottom="10dp"
                     android:textSize="15sp"
-                    app:layout_constraintBottom_toTopOf="@+id/bsjdufcsdkcs"
+                    app:layout_constraintBottom_toTopOf="@+id/driver_details_dob"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -117,7 +118,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/driver_details_driver_license_image"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/driver_details_driver_license_number" />
+                    app:layout_constraintTop_toBottomOf="@+id/driver_details_dob" />
 
                 <EditText
                     android:id="@+id/driver_details_dob"

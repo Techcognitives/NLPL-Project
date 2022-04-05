@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.Manifest;
@@ -46,16 +48,26 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import com.nlpl.R;
 import com.nlpl.model.MapsModel.LocationModel;
+import com.nlpl.model.ModelForRecyclerView.FindLoadsModel;
+import com.nlpl.model.ModelForRecyclerView.SearchLoadModel;
+import com.nlpl.model.Responses.TripResponse;
+import com.nlpl.model.Responses.TruckResponse;
 import com.nlpl.model.Responses.UserResponse;
+import com.nlpl.ui.adapters.AllTripAdapter;
 import com.nlpl.ui.adapters.GoogleMapTextInfoAdapter;
+import com.nlpl.ui.adapters.SearchLoadAdapter;
+import com.nlpl.ui.adapters.SearchTripAdapter;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.JumpTo;
+import com.nlpl.utils.SelectCity;
+import com.nlpl.utils.SelectState;
 import com.nlpl.utils.ShowAlert;
 
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -87,6 +99,7 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
         }
 
         getCurrentLocation(FindTrucksActivity.this);
+
         //--------------------------- action bar ---------------------------------------------------
         View actionBar = findViewById(R.id.find_trucks_action_bar);
         TextView actionBarTitle = actionBar.findViewById(R.id.action_bar_title);
@@ -95,7 +108,7 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
         ImageView actionBarWhatsApp = actionBar.findViewById(R.id.action_bar_whats_app);
         actionBarWhatsApp.setVisibility(View.VISIBLE);
 
-        actionBarTitle.setText(getString(R.string.Find_Trucks));
+        actionBarTitle.setText("Trucks");
         actionBarBackButton.setVisibility(View.VISIBLE);
         actionBarMenuButton.setVisibility(View.GONE);
 
@@ -117,7 +130,7 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
         spDashboard.setBackgroundTintList(getResources().getColorStateList(R.color.light_white));
         TextView profileText = bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
         ImageView profileImageView = bottomNav.findViewById(R.id.bottom_nav_profile_image_view);
-        profileText.setText(getString(R.string.Find_Trucks));
+        profileText.setText("Trucks");
         profileImageView.setImageDrawable(getDrawable(R.drawable.bottom_nav_search_small));
         View spView = bottomNav.findViewById(R.id.bottom_nav_bar_dashboard_underline);
         spView.setVisibility(View.INVISIBLE);
@@ -128,6 +141,8 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         Objects.requireNonNull(mapFragment).getMapAsync(this);
+
+        //------------------------------------------------------------------------------------------
     }
 
     //----------------------------------------------------------------------------------------------
@@ -286,6 +301,86 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
                 ShowAlert.loadingDialog(FindTrucksActivity.this);
                 JumpTo.goToFindTrucksActivity(FindTrucksActivity.this, userId, phone);
                 break;
+
+            case R.id.bottom_nav_track:
+                if (userId == null) {
+                    //----------------------- Alert Dialog -------------------------------------------------
+                    Dialog alert = new Dialog(FindTrucksActivity.this);
+                    alert.setContentView(R.layout.dialog_alert);
+                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(alert.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.gravity = Gravity.CENTER;
+
+                    alert.show();
+                    alert.getWindow().setAttributes(lp);
+                    alert.setCancelable(false);
+
+                    TextView alertTitle = alert.findViewById(R.id.dialog_alert_title);
+                    TextView alertMessage = alert.findViewById(R.id.dialog_alert_message);
+                    TextView alertPositiveButton = alert.findViewById(R.id.dialog_alert_positive_button);
+                    TextView alertNegativeButton = alert.findViewById(R.id.dialog_alert_negative_button);
+
+                    alertTitle.setText(getString(R.string.Please_Register));
+                    alertMessage.setText(getString(R.string.You_cannot_bid_without_Registration));
+                    alertPositiveButton.setText(getString(R.string.Register_Now));
+                    alertNegativeButton.setText(getString(R.string.cancel));
+
+                    alertNegativeButton.setOnClickListener(view12 -> alert.dismiss());
+
+                    alertPositiveButton.setOnClickListener(view1 -> {
+                        alert.dismiss();
+                        ShowAlert.loadingDialog(FindTrucksActivity.this);
+                        JumpTo.goToRegistrationActivity(FindTrucksActivity.this, phone, true);
+                    });
+                    //------------------------------------------------------------------------------------------
+                } else {
+                    ShowAlert.loadingDialog(FindTrucksActivity.this);
+                    JumpTo.goToLPTrackActivity(FindTrucksActivity.this, phone, true);
+                }
+                break;
+
+            case R.id.bottom_nav_trip:
+                if (userId == null) {
+                    //----------------------- Alert Dialog -------------------------------------------------
+                    Dialog alert = new Dialog(FindTrucksActivity.this);
+                    alert.setContentView(R.layout.dialog_alert);
+                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(alert.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.gravity = Gravity.CENTER;
+
+                    alert.show();
+                    alert.getWindow().setAttributes(lp);
+                    alert.setCancelable(false);
+
+                    TextView alertTitle = alert.findViewById(R.id.dialog_alert_title);
+                    TextView alertMessage = alert.findViewById(R.id.dialog_alert_message);
+                    TextView alertPositiveButton = alert.findViewById(R.id.dialog_alert_positive_button);
+                    TextView alertNegativeButton = alert.findViewById(R.id.dialog_alert_negative_button);
+
+                    alertTitle.setText(getString(R.string.Please_Register));
+                    alertMessage.setText(getString(R.string.You_cannot_bid_without_Registration));
+                    alertPositiveButton.setText(getString(R.string.Register_Now));
+                    alertNegativeButton.setText(getString(R.string.cancel));
+
+                    alertNegativeButton.setOnClickListener(view12 -> alert.dismiss());
+
+                    alertPositiveButton.setOnClickListener(view1 -> {
+                        alert.dismiss();
+                        ShowAlert.loadingDialog(FindTrucksActivity.this);
+                        JumpTo.goToRegistrationActivity(FindTrucksActivity.this, phone, true);
+                    });
+                    //------------------------------------------------------------------------------------------
+                } else {
+                    ShowAlert.loadingDialog(FindTrucksActivity.this);
+                    JumpTo.goToFindTripLPActivity(FindTrucksActivity.this, userId, phone, true);
+                }
+                break;
         }
     }
 
@@ -325,7 +420,7 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
                 JumpTo.goToRegistrationActivity(FindTrucksActivity.this, phone, true);
             });
             //------------------------------------------------------------------------------------------
-        }else{
+        } else {
             ShowAlert.loadingDialog(FindTrucksActivity.this);
             JumpTo.goToCustomerDashboard(FindTrucksActivity.this, phone, true);
         }
@@ -376,4 +471,5 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
             startActivity(intent);
         });
     }
+
 }

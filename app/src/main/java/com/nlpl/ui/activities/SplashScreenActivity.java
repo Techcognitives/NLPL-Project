@@ -6,6 +6,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -39,6 +42,10 @@ public class SplashScreenActivity extends AppCompat {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         deleteCache(this);
+
+        Animation logo = AnimationUtils.loadAnimation(this, R.anim.right_to_left);
+        ImageView logoTruck = findViewById(R.id.logo_truck);
+        logoTruck.setAnimation(logo);
     }
 
     @Override
