@@ -79,7 +79,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                 if (userRoleAPI.equals("Customer")) {
                     JumpTo.goToCustomerDashboard(ViewPersonalDetailsActivity.this, phone, true);
                 } else {
-                    JumpTo.goToServiceProviderDashboard(ViewPersonalDetailsActivity.this, phone, true);
+                    JumpTo.goToServiceProviderDashboard(ViewPersonalDetailsActivity.this, phone, true, true);
                 }
             }
         });
@@ -451,7 +451,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
             switch (view.getId()) {
                 case R.id.bottom_nav_sp_dashboard:
                     ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
-                    JumpTo.goToServiceProviderDashboard(ViewPersonalDetailsActivity.this, phone, true);
+                    JumpTo.goToServiceProviderDashboard(ViewPersonalDetailsActivity.this, phone, true, true);
                     break;
 
                 case R.id.bottom_nav_customer_dashboard:
@@ -468,7 +468,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         if (userRoleAPI.equals("Customer")) {
             JumpTo.goToCustomerDashboard(ViewPersonalDetailsActivity.this, phone, true);
         } else {
-            JumpTo.goToServiceProviderDashboard(ViewPersonalDetailsActivity.this, phone, true);
+            JumpTo.goToServiceProviderDashboard(ViewPersonalDetailsActivity.this, phone, true, true);
         }
     }
 

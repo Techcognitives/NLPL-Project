@@ -119,7 +119,7 @@ public class FindLoadsActivity extends AppCompat {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JumpTo.goToServiceProviderDashboard(FindLoadsActivity.this, phone, true);
+                JumpTo.goToServiceProviderDashboard(FindLoadsActivity.this, phone, true, true);
             }
         });
         //---------------------------- Bottom Nav --------------------------------------------------
@@ -191,7 +191,7 @@ public class FindLoadsActivity extends AppCompat {
         switch (view.getId()) {
             case R.id.bottom_nav_sp_dashboard:
                 ShowAlert.loadingDialog(FindLoadsActivity.this);
-                JumpTo.goToServiceProviderDashboard(FindLoadsActivity.this, phone, true);
+                JumpTo.goToServiceProviderDashboard(FindLoadsActivity.this, phone, true, true);
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
@@ -209,7 +209,7 @@ public class FindLoadsActivity extends AppCompat {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        JumpTo.goToServiceProviderDashboard(FindLoadsActivity.this, phone, true);
+        JumpTo.goToServiceProviderDashboard(FindLoadsActivity.this, phone, true, true);
     }
 
     public void onClickTripLoads(View view) {

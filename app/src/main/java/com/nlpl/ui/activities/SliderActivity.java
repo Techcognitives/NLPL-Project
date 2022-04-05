@@ -79,6 +79,6 @@ public class SliderActivity extends AppCompat {
 
     public void onClickSkipRegistration(View view) {
         ShowAlert.loadingDialog(SliderActivity.this);
-        JumpTo.goToServiceProviderDashboard(SliderActivity.this, mobile, true);
+        JumpTo.goToServiceProviderDashboard(SliderActivity.this, mobile, true, true);
     }
 }

@@ -291,11 +291,9 @@ public class RegistrationActivity extends AppCompat {
     public void onClickSkip(View view) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             if (role.equals("Customer")) {
-                ShowAlert.loadingDialog(RegistrationActivity.this);
                 JumpTo.goToFindTrucksActivity(RegistrationActivity.this, null, mobile);
             } else {
-                ShowAlert.loadingDialog(RegistrationActivity.this);
-                JumpTo.goToServiceProviderDashboard(RegistrationActivity.this, mobile, true);
+                JumpTo.goToServiceProviderDashboard(RegistrationActivity.this, mobile, true, false);
             }
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
@@ -562,7 +560,7 @@ public class RegistrationActivity extends AppCompat {
                         if (role.equals("Customer")) {
                             JumpTo.goToCustomerDashboard(RegistrationActivity.this, mobile, true);
                         } else {
-                            JumpTo.goToServiceProviderDashboard(RegistrationActivity.this, mobile, true);
+                            JumpTo.goToServiceProviderDashboard(RegistrationActivity.this, mobile, true, true);
                         }
                     }
                 });

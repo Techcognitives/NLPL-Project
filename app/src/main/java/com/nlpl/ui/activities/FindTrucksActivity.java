@@ -114,8 +114,7 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
 
         actionBarBackButton.setOnClickListener(view -> {
             if (userId == null) {
-                ShowAlert.loadingDialog(FindTrucksActivity.this);
-                JumpTo.goToRegistrationActivity(FindTrucksActivity.this, phone, false, null, true);
+                this.finish();
             } else {
                 ShowAlert.loadingDialog(FindTrucksActivity.this);
                 JumpTo.goToCustomerDashboard(FindTrucksActivity.this, phone, true);
@@ -287,8 +286,7 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
 
                     alertPositiveButton.setOnClickListener(view1 -> {
                         alert.dismiss();
-                        ShowAlert.loadingDialog(FindTrucksActivity.this);
-                        JumpTo.goToRegistrationActivity(FindTrucksActivity.this, phone, false, null, true);
+                        this.finish();
                     });
                     //------------------------------------------------------------------------------------------
                 } else {
@@ -332,8 +330,7 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
 
                     alertPositiveButton.setOnClickListener(view1 -> {
                         alert.dismiss();
-                        ShowAlert.loadingDialog(FindTrucksActivity.this);
-                        JumpTo.goToRegistrationActivity(FindTrucksActivity.this, phone, false, null, true);
+                        this.finish();
                     });
                     //------------------------------------------------------------------------------------------
                 } else {
@@ -372,8 +369,7 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
 
                     alertPositiveButton.setOnClickListener(view1 -> {
                         alert.dismiss();
-                        ShowAlert.loadingDialog(FindTrucksActivity.this);
-                        JumpTo.goToRegistrationActivity(FindTrucksActivity.this, phone, false, null, true);
+                        this.finish();
                     });
                     //------------------------------------------------------------------------------------------
                 } else {
@@ -416,8 +412,7 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
 
             alertPositiveButton.setOnClickListener(view1 -> {
                 alert.dismiss();
-                ShowAlert.loadingDialog(FindTrucksActivity.this);
-                JumpTo.goToRegistrationActivity(FindTrucksActivity.this, phone, false, null, true);
+                this.finish();
             });
             //------------------------------------------------------------------------------------------
         } else {

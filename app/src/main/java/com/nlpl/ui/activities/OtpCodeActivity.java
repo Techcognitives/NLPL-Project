@@ -370,7 +370,7 @@ public class OtpCodeActivity extends AppCompat {
                         if (role.equals("Customer")) {
                             JumpTo.goToCustomerDashboard(OtpCodeActivity.this, phone, true);
                         } else {
-                            JumpTo.goToServiceProviderDashboard(OtpCodeActivity.this, phone, true);
+                            JumpTo.goToServiceProviderDashboard(OtpCodeActivity.this, phone, true,true);
                         }
 
                     } else {
@@ -452,7 +452,7 @@ public class OtpCodeActivity extends AppCompat {
                         if (role.equals("Customer")) {
                             JumpTo.goToCustomerDashboard(OtpCodeActivity.this, phone, true);
                         } else {
-                            JumpTo.goToServiceProviderDashboard(OtpCodeActivity.this, phone, true);
+                            JumpTo.goToServiceProviderDashboard(OtpCodeActivity.this, phone, true,true);
                         }
 
                     } else {

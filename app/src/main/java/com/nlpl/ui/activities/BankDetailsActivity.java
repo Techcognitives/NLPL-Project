@@ -996,7 +996,7 @@ public class BankDetailsActivity extends AppCompat {
             JumpTo.goToCustomerDashboard(BankDetailsActivity.this, mobile, true);
 
         } else {
-            JumpTo.goToServiceProviderDashboard(BankDetailsActivity.this, mobile, true);
+            JumpTo.goToServiceProviderDashboard(BankDetailsActivity.this, mobile, true, true);
         }
     }
 

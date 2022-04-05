@@ -81,13 +81,15 @@ public class JumpTo {
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void goToServiceProviderDashboard(Activity activity, String mobileNumber, Boolean isFromLoadNotification) {
+    public static void goToServiceProviderDashboard(Activity activity, String mobileNumber, Boolean isFromLoadNotification, Boolean isFinish) {
         Intent intent = new Intent(activity, ServiceProviderDashboardActivity.class);
         intent.putExtra("mobile2", mobileNumber);
         intent.putExtra("loadNotification", isFromLoadNotification);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivity(intent);
-        activity.finish();
+        if (isFinish) {
+            activity.finish();
+        }
         activity.overridePendingTransition(0, 0);
     }
 

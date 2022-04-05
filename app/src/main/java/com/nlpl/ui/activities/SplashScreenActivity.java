@@ -131,7 +131,7 @@ public class SplashScreenActivity extends AppCompat {
                                     if (role.equals("Customer")) {
                                         JumpTo.goToCustomerDashboard(SplashScreenActivity.this, phone, true);
                                     }else{
-                                        JumpTo.goToServiceProviderDashboard(SplashScreenActivity.this, phone, true);
+                                        JumpTo.goToServiceProviderDashboard(SplashScreenActivity.this, phone, true, true);
                                     }
 
                                 } else {

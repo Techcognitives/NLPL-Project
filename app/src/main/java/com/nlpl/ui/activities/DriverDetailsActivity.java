@@ -1831,7 +1831,7 @@ public class DriverDetailsActivity extends AppCompat {
     public void onBackPressed() {
         super.onBackPressed();
         ShowAlert.loadingDialog(DriverDetailsActivity.this);
-        JumpTo.goToServiceProviderDashboard(DriverDetailsActivity.this, mobile, true);
+        JumpTo.goToServiceProviderDashboard(DriverDetailsActivity.this, mobile, true, true);
     }
 
     private void DialogChooseForDriverSelfie() {
