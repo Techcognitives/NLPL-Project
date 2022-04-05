@@ -322,7 +322,7 @@
         android:layout_marginEnd="5dp"
         android:background="@drawable/edit_text_border"
         android:ems="10"
-        android:hint="@string/address"
+        android:hint="Enter Manually"
         android:enabled="true"
         android:inputType="textMultiLine"
         android:maxLines="2"
