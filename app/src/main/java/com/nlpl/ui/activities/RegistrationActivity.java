@@ -150,6 +150,10 @@ public class RegistrationActivity extends AppCompat {
         pinCode.addTextChangedListener(pinCodeWatcher);
         address.addTextChangedListener(registrationWatcher);
 
+        pinCode.setVisibility(View.GONE);
+        selectStateText.setVisibility(View.GONE);
+        selectDistrictText.setVisibility(View.GONE);
+
         email_id.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -454,6 +458,17 @@ public class RegistrationActivity extends AppCompat {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String addressText  = address.getText().toString().trim();
+
+            if (addressText.length()==0){
+                pinCode.setVisibility(View.GONE);
+                selectStateText.setVisibility(View.GONE);
+                selectDistrictText.setVisibility(View.GONE);
+            }else{
+                pinCode.setVisibility(View.VISIBLE);
+                selectStateText.setVisibility(View.VISIBLE);
+                selectDistrictText.setVisibility(View.VISIBLE);
+            }
 
         }
 
