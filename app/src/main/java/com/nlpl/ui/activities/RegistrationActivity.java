@@ -202,9 +202,9 @@ public class RegistrationActivity extends AppCompat {
                 if (role != null) {
                     if (role.equals("Customer")) {
                         actionBarTitle.setText(getString(R.string.Registration_as) + getString(R.string.Load_Poster));
-                    } else if(role.equals("Owner")) {
+                    } else if (role.equals("Owner")) {
                         actionBarTitle.setText(getString(R.string.Registration_as) + getString(R.string.Truck_Owner));
-                    } else if(role.equals("Driver")) {
+                    } else if (role.equals("Driver")) {
                         actionBarTitle.setText(getString(R.string.Registration_as) + getString(R.string.Driver));
                     } else {
                         actionBarTitle.setText(getString(R.string.Registration_as) + getString(R.string.Broker));
@@ -333,44 +333,29 @@ public class RegistrationActivity extends AppCompat {
         }
     }
 
+    public void onClickEnterManually(View view) {
+        address.setEnabled(true);
+        address.setFocusable(true);
+        address.setCursorVisible(true);
+        address.requestFocus();
+        address.setSelection(address.getText().length());
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+    }
+
+    public void onClickOpenMaps(View view) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            Places.initialize(getApplicationContext(), "AIzaSyDAAes8x5HVKYB5YEIGBmdnCdyBrAHUijM");
+            List<Place.Field> fields = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG);
+            Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields).build(this);
+            startActivityForResult(intent, 100);
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+        }
+    }
+
     public void onClickGetCurrentLocation(View view) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            Dialog chooseDialog = new Dialog(this);
-            chooseDialog.setContentView(R.layout.dialog_choose);
-            chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-            WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-            lp2.copyFrom(chooseDialog.getWindow().getAttributes());
-            lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-            lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-            lp2.gravity = Gravity.BOTTOM;
-
-            chooseDialog.show();
-            chooseDialog.getWindow().setAttributes(lp2);
-
-            ImageView currentLocation = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
-            currentLocation.setImageResource(R.drawable.google_location_small);
-            ImageView searchFromMaps = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
-            searchFromMaps.setImageResource(R.drawable.google_address_small);
-
-            TextView currentText = chooseDialog.findViewById(R.id.dialog_camera_text);
-            currentText.setText(getString(R.string.Current_Location));
-            TextView fromMapText = chooseDialog.findViewById(R.id.dialog_photo_library_text);
-            fromMapText.setText(getString(R.string.Search));
-
-            currentLocation.setOnClickListener(view2 -> {
-                chooseDialog.dismiss();
-                getCurrentLocation(this, address, pinCode);
-            });
-
-            searchFromMaps.setOnClickListener(view3 -> {
-                chooseDialog.dismiss();
-                Places.initialize(getApplicationContext(), "AIzaSyDAAes8x5HVKYB5YEIGBmdnCdyBrAHUijM");
-                List<Place.Field> fields = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG);
-                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields).build(this);
-                startActivityForResult(intent, 100);
-            });
-
+            getCurrentLocation(this, address, pinCode);
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
