@@ -323,7 +323,6 @@
         android:background="@drawable/edit_text_border"
         android:ems="10"
         android:hint="@string/address"
-        android:onClick="onClickEnterAddress"
         android:enabled="true"
         android:inputType="textMultiLine"
         android:maxLines="2"
@@ -358,10 +357,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:drawableStart="@drawable/ic_edit_small"
-        android:drawableTint="@color/button_blue"
-        android:text="Enter manually"
-        android:onClick="onClickEnterManually"
+        android:drawableStart="@drawable/google_address_small"
+        android:text="Search Location"
+        android:onClick="onClickOpenMaps"
         android:textColor="@color/button_blue"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/personal_and_address_get_current_location"
@@ -369,14 +367,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/personal_and_address_get_current_location" />
 
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:onClick="onClickOpenMaps"
-        app:layout_constraintBottom_toBottomOf="@+id/registration_address_edit"
-        app:layout_constraintEnd_toEndOf="@+id/registration_address_edit"
-        app:layout_constraintStart_toStartOf="@+id/registration_address_edit"
-        app:layout_constraintTop_toTopOf="@+id/registration_address_edit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
