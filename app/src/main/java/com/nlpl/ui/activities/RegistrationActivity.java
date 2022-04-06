@@ -445,9 +445,9 @@ public class RegistrationActivity extends AppCompat {
                     UpdateUserDetails.updateUserCity(userId, selectDistrictText.getText().toString());
                 }
 
-                if (role != null) {
-                    UpdateUserDetails.updateUserType(userId, role);
-                }
+//                if (role != null) {
+//                    UpdateUserDetails.updateUserType(userId, role);
+//                }
 
                 if (mobile.equals("91" + mobileNoEdit.getText().toString()) || mobileNoEdit.getText().toString().isEmpty()) {
                     ShowAlert.loadingDialog(RegistrationActivity.this);
