@@ -290,7 +290,7 @@ public class DriverDetailsActivity extends AppCompat {
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
                 alertTitle.setText(getString(R.string.Please_add_a_Driver));
-                alertMessage.setText("You cannot bid unless you have a Driver");
+                alertMessage.setText(getString(R.string.You_cannot_bid_unless_you_have_a_Driver));
                 alertPositiveButton.setText(getString(R.string.Add));
                 alertPositiveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -1773,9 +1773,9 @@ public class DriverDetailsActivity extends AppCompat {
             searchFromMaps.setImageResource(R.drawable.google_address_small);
 
             TextView currentText = chooseDialog.findViewById(R.id.dialog_camera_text);
-            currentText.setText("Current Location");
+            currentText.setText(getString(R.string.Current_Location));
             TextView fromMapText = chooseDialog.findViewById(R.id.dialog_photo_library_text);
-            fromMapText.setText("Search");
+            fromMapText.setText(getString(R.string.Search));
 
             currentLocation.setOnClickListener(view2 -> {
                 chooseDialog.dismiss();

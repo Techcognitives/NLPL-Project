@@ -118,7 +118,7 @@ public class TrackLPTripAdapter extends RecyclerView.Adapter<TrackLPTripAdapter.
 
                                             if (bid_status.equals("start")) {
 //                                                holder.budget.setText("₹" + obj1.getString("is_bid_accpted_by_sp"));
-                                                holder.bidNowButton.setText("View Trip Details");
+                                                holder.bidNowButton.setText(activity.getString(R.string.View_Trip_Details));
                                                 holder.bidNowButton.setBackgroundTintList(activity.getResources().getColorStateList(R.color.green));
                                                 holder.bidNowButton.setOnClickListener(new View.OnClickListener() {
                                                     @Override

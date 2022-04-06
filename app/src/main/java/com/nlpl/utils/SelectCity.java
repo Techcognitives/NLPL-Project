@@ -20,7 +20,7 @@ public class SelectCity {
         selectDistrictDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         selectDistrictDialog.show();
         TextView title = selectDistrictDialog.findViewById(R.id.dialog_spinner_title);
-        title.setText("Select City");
+        title.setText(context.getString(R.string.select_city_name));
 
         ListView districtList = (ListView) selectDistrictDialog.findViewById(R.id.list_state);
 

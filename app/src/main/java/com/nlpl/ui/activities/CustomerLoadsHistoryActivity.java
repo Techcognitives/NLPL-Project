@@ -444,7 +444,7 @@ public class CustomerLoadsHistoryActivity extends AppCompat {
         quoteBySP.setText(obj.getBudget());
         capacityBySP.setText(obj.getCapacity());
         bodyTypeBySP.setText(obj.getBody_type());
-        negotiableBySP.setText("No");
+        negotiableBySP.setText(getString(R.string.no));
         notesBySP.setText(noteBySPToCustomer);
 
         String url3 = getString(R.string.baseURL) + "/spbid/getBidDtByPostId/" + obj.getIdpost_load();

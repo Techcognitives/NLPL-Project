@@ -114,7 +114,7 @@ public class FindLoadsActivity extends AppCompat {
         actionBarBackButton = (ImageView) actionBar.findViewById(R.id.action_bar_back_button);
         actionBarMenuButton = (ImageView) actionBar.findViewById(R.id.action_bar_menu);
 
-        actionBarTitle.setText("Trips");
+        actionBarTitle.setText(getString(R.string.Trips));
         actionBarMenuButton.setVisibility(View.GONE);
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,7 +130,7 @@ public class FindLoadsActivity extends AppCompat {
         spDashboard.setBackgroundTintList(getResources().getColorStateList(R.color.light_white));
         TextView profileText = bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
         ImageView profileImageView = bottomNav.findViewById(R.id.bottom_nav_profile_image_view);
-        profileText.setText("Trips");
+        profileText.setText(getString(R.string.Trips));
         profileImageView.setImageDrawable(getDrawable(R.drawable.black_truck_small));
         View spView = bottomNav.findViewById(R.id.bottom_nav_bar_dashboard_underline);
         spView.setVisibility(View.INVISIBLE);
@@ -256,8 +256,8 @@ public class FindLoadsActivity extends AppCompat {
         TextView alertPositiveButton = alert.findViewById(R.id.dialog_alert_positive_button);
         TextView alertNegativeButton = alert.findViewById(R.id.dialog_alert_negative_button);
 
-        alertTitle.setText("Edit Trip");
-        alertMessage.setText("Would you like to edit your Trip?");
+        alertTitle.setText(getString(R.string.Edit_Trip));
+        alertMessage.setText(getString(R.string.Would_you_like_to_edit_your_Trip));
         alertPositiveButton.setText(getString(R.string.edit));
         alertNegativeButton.setText(getString(R.string.cancel));
 

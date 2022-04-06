@@ -915,9 +915,9 @@ public class PersonalDetailsAndIdProofActivity extends AppCompat {
             searchFromMaps.setImageResource(R.drawable.google_address_small);
 
             TextView currentText = chooseDialog.findViewById(R.id.dialog_camera_text);
-            currentText.setText("Current Location");
+            currentText.setText(getString(R.string.Current_Location));
             TextView fromMapText = chooseDialog.findViewById(R.id.dialog_photo_library_text);
-            fromMapText.setText("Search");
+            fromMapText.setText(getString(R.string.Search));
 
             currentLocation.setOnClickListener(view2 -> {
                 chooseDialog.dismiss();

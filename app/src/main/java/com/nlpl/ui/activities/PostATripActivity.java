@@ -75,7 +75,7 @@ public class PostATripActivity extends AppCompat {
         View action_bar = findViewById(R.id.post_a_trip_action_bar);
         TextView actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         ImageView actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
-        actionBarTitle.setText("Post A Trip");
+        actionBarTitle.setText(getString(R.string.Post_A_Trip));
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,9 +100,9 @@ public class PostATripActivity extends AppCompat {
 
         if (isEdit) {
             getTripDetails();
-            actionBarTitle.setText("Edit Trip");
+            actionBarTitle.setText(getString(R.string.Edit_Trip));
             deleteTrip.setVisibility(View.VISIBLE);
-            postTrip.setText("Update Trip");
+            postTrip.setText(getString(R.string.Update_Trip));
         } else {
             deleteTrip.setVisibility(View.GONE);
         }
@@ -289,8 +289,8 @@ public class PostATripActivity extends AppCompat {
                     TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                    alertTitle.setText("Post A Trip");
-                    alertMessage.setText("Trip Posted Successfully");
+                    alertTitle.setText(getString(R.string.Post_A_Trip));
+                    alertMessage.setText(getString(R.string.Trip_Posted_Successfully));
                     alertPositiveButton.setVisibility(View.GONE);
                     alertNegativeButton.setText(getString(R.string.ok));
                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -324,8 +324,8 @@ public class PostATripActivity extends AppCompat {
                     TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                    alertTitle.setText("Post A Trip");
-                    alertMessage.setText("Trip Post Unsuccessful\nPlease try again");
+                    alertTitle.setText(getString(R.string.Post_A_Trip));
+                    alertMessage.setText(getString(R.string.Trip_Post_Unsuccessful));
                     alertPositiveButton.setVisibility(View.GONE);
                     alertNegativeButton.setText(getString(R.string.ok));
                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -362,8 +362,8 @@ public class PostATripActivity extends AppCompat {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Post A Trip");
-                alertMessage.setText("Trip Post Unsuccessful\nPlease try again");
+                alertTitle.setText(getString(R.string.Post_A_Trip));
+                alertMessage.setText(getString(R.string.Trip_Post_Unsuccessful));
                 alertPositiveButton.setVisibility(View.GONE);
                 alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -400,8 +400,8 @@ public class PostATripActivity extends AppCompat {
         TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
         TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-        alertTitle.setText("Delete Trip");
-        alertMessage.setText("Are you sure,\nYou want to delete Trip Details?");
+        alertTitle.setText(getString(R.string.Delete_Trip));
+        alertMessage.setText(getString(R.string.Delete_message));
         alertPositiveButton.setText(getString(R.string.yes));
         alertNegativeButton.setText(getString(R.string.no));
 
@@ -452,8 +452,8 @@ public class PostATripActivity extends AppCompat {
                     TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                    alertTitle.setText("Update Trip");
-                    alertMessage.setText("Trip Updated Successfully");
+                    alertTitle.setText(getString(R.string.Update_Trip));
+                    alertMessage.setText(getString(R.string.Trip_Updated_Successfully));
                     alertPositiveButton.setVisibility(View.GONE);
                     alertNegativeButton.setText(getString(R.string.ok));
                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -487,8 +487,8 @@ public class PostATripActivity extends AppCompat {
                     TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                    alertTitle.setText("Update Trip");
-                    alertMessage.setText("Trip Update Unsuccessful\nPlease try again");
+                    alertTitle.setText(getString(R.string.Update_Trip));
+                    alertMessage.setText(getString(R.string.Trip_Update_Unsuccessful));
                     alertPositiveButton.setVisibility(View.GONE);
                     alertNegativeButton.setText(getString(R.string.ok));
                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -525,8 +525,8 @@ public class PostATripActivity extends AppCompat {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Update Trip");
-                alertMessage.setText("Trip Update Unsuccessful\nPlease try again");
+                alertTitle.setText(getString(R.string.Update_Trip));
+                alertMessage.setText(getString(R.string.Trip_Update_Unsuccessful));
                 alertPositiveButton.setVisibility(View.GONE);
                 alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -568,8 +568,8 @@ public class PostATripActivity extends AppCompat {
                     TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                    alertTitle.setText("Delete Trip");
-                    alertMessage.setText("Trip Deleted Successfully");
+                    alertTitle.setText(getString(R.string.Delete_Trip));
+                    alertMessage.setText(getString(R.string.Trip_Deleted_Successfully));
                     alertPositiveButton.setVisibility(View.GONE);
                     alertNegativeButton.setText(getString(R.string.ok));
                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -603,8 +603,8 @@ public class PostATripActivity extends AppCompat {
                     TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                    alertTitle.setText("Delete Trip");
-                    alertMessage.setText("Trip Delete Unsuccessful\nPlease try again");
+                    alertTitle.setText(getString(R.string.Delete_Trip));
+                    alertMessage.setText(getString(R.string.Trip_Delete_Unsuccessful));
                     alertPositiveButton.setVisibility(View.GONE);
                     alertNegativeButton.setText(getString(R.string.ok));
                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -641,8 +641,8 @@ public class PostATripActivity extends AppCompat {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Delete Trip");
-                alertMessage.setText("Trip Delete Unsuccessful\nPlease try again");
+                alertTitle.setText(getString(R.string.Delete_Trip));
+                alertMessage.setText(getString(R.string.Trip_Delete_Unsuccessful));
                 alertPositiveButton.setVisibility(View.GONE);
                 alertNegativeButton.setText(getString(R.string.ok));
                 alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));

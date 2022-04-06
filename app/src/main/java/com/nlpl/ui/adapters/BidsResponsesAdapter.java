@@ -68,7 +68,7 @@ public class BidsResponsesAdapter extends RecyclerView.Adapter<BidsResponsesAdap
                         holder.spName.setText(spName);
                         String phone = obj.getString("phone_number");
                         String splits = phone.substring(2, 12);
-                        holder.spNumber.setText("Call");
+                        holder.spNumber.setText(activity.getString(R.string.Call));
                         holder.spNumber.setOnClickListener(view -> {
                             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + "+91 "+splits));
                             activity.startActivity(intent);
