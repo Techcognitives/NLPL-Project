@@ -109,16 +109,19 @@ public class GetCurrentLocation {
 
             searchFromMaps.setOnClickListener(view -> {
                 chooseDialog.dismiss();
-
-                Places.initialize(activity.getApplicationContext(), "AIzaSyDAAes8x5HVKYB5YEIGBmdnCdyBrAHUijM");
-                List<Place.Field> fields = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG);
-                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields).build(activity);
-                activity.startActivityForResult(intent, 100);
+                GetCurrentLocation.searchOnMap(activity);
             });
 
         } else {
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
+    }
+
+    public static void searchOnMap(Activity activity){
+        Places.initialize(activity.getApplicationContext(), "AIzaSyDAAes8x5HVKYB5YEIGBmdnCdyBrAHUijM");
+        List<Place.Field> fields = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG);
+        Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields).build(activity);
+        activity.startActivityForResult(intent, 100);
     }
 
     public void setAddressAndPin(Activity activity, Intent data, EditText address, EditText pin) {

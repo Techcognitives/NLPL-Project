@@ -88,7 +88,7 @@ public class BankDetailsActivity extends AppCompat {
     int GET_FROM_GALLERY = 0;
     int CAMERA_PIC_REQUEST1 = 1;
     ImageView cancelledCheckImage, previewCancelledCheque, previewDialogCancelledChequeImageView, canceledCheckBlurImage, accountDetailsBlurImage;
-    Boolean isEdit, isImgUploaded = false, bankVerified = false;
+    Boolean isEdit, isImgUploaded = false, bankVerified = true;
 
     RadioButton canceledCheckRadioButton, acDetailsRadioButton;
     String bankId, mobile, userRoleAPI, ccUploadedAPI;
@@ -558,7 +558,7 @@ public class BankDetailsActivity extends AppCompat {
                 reAccount.setBackground(getResources().getDrawable(R.drawable.edit_text_border));
                 if (ifscCode1.length() == 11 && !accNo1.isEmpty() && !reAccNo1.isEmpty()) {
                     if (!bankName1.isEmpty()) {
-                        checkBankDetail(accNo1, ifscCode1);
+//                        checkBankDetail(accNo1, ifscCode1);
                     }
                 }
             } else {
@@ -996,7 +996,7 @@ public class BankDetailsActivity extends AppCompat {
             JumpTo.goToCustomerDashboard(BankDetailsActivity.this, mobile, true);
 
         } else {
-            JumpTo.goToServiceProviderDashboard(BankDetailsActivity.this, mobile, true);
+            JumpTo.goToServiceProviderDashboard(BankDetailsActivity.this, mobile, true, true);
         }
     }
 

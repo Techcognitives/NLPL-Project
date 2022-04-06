@@ -362,7 +362,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.bottom_nav_sp_dashboard:
                 ShowAlert.loadingDialog(TrackForServiceProviderActivity.this);
-                JumpTo.goToServiceProviderDashboard(TrackForServiceProviderActivity.this, phone, true);
+                JumpTo.goToServiceProviderDashboard(TrackForServiceProviderActivity.this, phone, true, true);
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
@@ -931,7 +931,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
                         public void onClick(View view) {
                             alert.dismiss();
                             ShowAlert.loadingDialog(TrackForServiceProviderActivity.this);
-                            JumpTo.goToServiceProviderDashboard(TrackForServiceProviderActivity.this, phone, true);
+                            JumpTo.goToServiceProviderDashboard(TrackForServiceProviderActivity.this, phone, true, true);
                         }
                     });
                     //------------------------------------------------------------------------------------------
@@ -1115,6 +1115,6 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         ShowAlert.loadingDialog(this);
-        JumpTo.goToServiceProviderDashboard(this, phone, true);
+        JumpTo.goToServiceProviderDashboard(this, phone, true, true);
     }
 }

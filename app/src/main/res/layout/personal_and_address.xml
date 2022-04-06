@@ -348,11 +348,11 @@
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/registration_address_edit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView13"
+        app:layout_constraintStart_toEndOf="@+id/personal_map_address"
         app:layout_constraintTop_toBottomOf="@+id/registration_location" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/personal_map_address"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"

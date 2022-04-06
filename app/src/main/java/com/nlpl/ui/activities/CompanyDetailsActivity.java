@@ -115,6 +115,10 @@ public class CompanyDetailsActivity extends AppCompat {
         pinCode.addTextChangedListener(pinCodeWatcher);
         address.addTextChangedListener(companyWatcher);
 
+        pinCode.setVisibility(View.GONE);
+        selectStateText.setVisibility(View.GONE);
+        selectDistrictText.setVisibility(View.GONE);
+
         companyName.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
@@ -183,6 +187,16 @@ public class CompanyDetailsActivity extends AppCompat {
             } else {
                 okButton.setEnabled(false);
                 okButton.setBackground(getResources().getDrawable(R.drawable.button_de_active));
+            }
+
+            if (address.getText().toString().length()==0){
+                pinCode.setVisibility(View.GONE);
+                selectStateText.setVisibility(View.GONE);
+                selectDistrictText.setVisibility(View.GONE);
+            }else{
+                pinCode.setVisibility(View.VISIBLE);
+                selectStateText.setVisibility(View.VISIBLE);
+                selectDistrictText.setVisibility(View.VISIBLE);
             }
         }
 
@@ -540,7 +554,7 @@ public class CompanyDetailsActivity extends AppCompat {
     }
 
     public void onClickGetCurrentCompanyLocation(View view) {
-        getCurrentLocation.getCurrentLocationMaps(CompanyDetailsActivity.this, address, pinCode);
+        GetCurrentLocation.getCurrentLocation(CompanyDetailsActivity.this, address, pinCode);
     }
 
     @Override
@@ -553,5 +567,9 @@ public class CompanyDetailsActivity extends AppCompat {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         getCurrentLocation.setAddressAndPin(CompanyDetailsActivity.this, data, address, pinCode);
+    }
+
+    public void onClickOpenMaps(View view) {
+        GetCurrentLocation.searchOnMap(CompanyDetailsActivity.this);
     }
 }

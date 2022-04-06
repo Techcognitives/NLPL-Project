@@ -94,7 +94,7 @@ public class VehicleDetailsActivity extends AppCompat {
     int CAMERA_PIC_REQUEST2 = 12;
 
     String userId, truckId, vehicleNumberAPI, truckModelAPI, truckCapacityAPI;
-    Boolean isRcEdited = false, isInsuranceEdited = false, fromBidNow = true, isEdit, isRcUploaded = false, isInsurance = false, isAssignTruck = false, vehicleVerified = false;
+    Boolean isRcEdited = false, isInsuranceEdited = false, fromBidNow = true, isEdit, isRcUploaded = false, isInsurance = false, isAssignTruck = false, vehicleVerified = true;
 
     private RequestQueue mQueue;
 
@@ -1188,7 +1188,7 @@ public class VehicleDetailsActivity extends AppCompat {
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             String truckNumber = vehicleNumberEdit.getText().toString().trim();
             if (truckNumber.length() == 10) {
-                checkVehicle(truckNumber);
+//                checkVehicle(truckNumber);
             }
         }
 

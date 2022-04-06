@@ -25,7 +25,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/post_a_load_action_bar">
 
-
         <TextView
             android:id="@+id/delete_load_in_post_a_load"
             android:layout_width="wrap_content"
@@ -232,8 +231,9 @@
 
                 <TextView
                     android:id="@+id/post_a_load_get_current_location_drop"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     android:drawableStart="@drawable/google_location_small"
                     android:onClick="onClickGetCurrentLocationDrop"
@@ -241,10 +241,25 @@
                     android:textColor="@color/button_blue"
                     android:textSize="14sp"
                     android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="@+id/post_a_load_address_edit_drop"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/post_a_load_address_edit_drop"
-                    app:layout_constraintTop_toTopOf="@+id/post_a_load_address_edit_drop" />
+                    app:layout_constraintStart_toEndOf="@+id/textView13drop"
+                    app:layout_constraintTop_toBottomOf="@+id/post_a_load_enter_drop_location" />
+
+                <TextView
+                    android:id="@+id/textView13drop"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:drawableStart="@drawable/google_address_small"
+                    android:text="Search Address"
+                    android:onClick="onClickOpenMapsDrop"
+                    android:textColor="@color/button_blue"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/post_a_load_get_current_location_drop"
+                    app:layout_constraintEnd_toStartOf="@+id/post_a_load_get_current_location_drop"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/post_a_load_get_current_location_drop" />
 
                 <EditText
                     android:id="@+id/post_a_load_address_edit_drop"
@@ -263,9 +278,9 @@
                     android:textColor="@color/black"
                     android:textColorHint="@color/hint"
                     android:textSize="14sp"
-                    app:layout_constraintEnd_toStartOf="@+id/post_a_load_get_current_location_drop"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/post_a_load_enter_drop_location" />
+                    app:layout_constraintTop_toBottomOf="@+id/post_a_load_get_current_location_drop" />
 
                 <EditText
                     android:id="@+id/post_a_load_pin_code_edit_drop"
@@ -279,6 +294,7 @@
                     android:inputType="number"
                     android:maxLength="6"
                     android:padding="10dp"
+                    android:visibility="gone"
                     android:textColor="@color/black"
                     android:textColorHint="@color/hint"
                     android:textSize="14sp"
@@ -302,6 +318,7 @@
                     android:maxLines="1"
                     android:onClick="onClickDropCity"
                     android:padding="8dp"
+                    android:visibility="gone"
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textColorHint="@color/hint"
@@ -322,6 +339,7 @@
                     android:onClick="onClickDropState"
                     android:padding="8dp"
                     android:textColor="@color/black"
+                    android:visibility="gone"
                     android:textColorHint="@color/hint"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="@+id/post_a_load_select_city_drop"
@@ -468,8 +486,9 @@
 
                 <TextView
                     android:id="@+id/post_a_load_get_current_location_pick"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     android:drawableStart="@drawable/google_location_small"
                     android:onClick="onClickGetCurrentLocationPickUp"
@@ -477,10 +496,25 @@
                     android:textColor="@color/button_blue"
                     android:textSize="14sp"
                     android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="@+id/post_a_load_address_edit_pick_up"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/post_a_load_address_edit_pick_up"
-                    app:layout_constraintTop_toTopOf="@+id/post_a_load_address_edit_pick_up" />
+                    app:layout_constraintStart_toEndOf="@+id/textView13"
+                    app:layout_constraintTop_toBottomOf="@+id/post_a_load_enter_pick_location" />
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:drawableStart="@drawable/google_address_small"
+                    android:text="Search Address"
+                    android:onClick="onClickOpenMapsPick"
+                    android:textColor="@color/button_blue"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/post_a_load_get_current_location_pick"
+                    app:layout_constraintEnd_toStartOf="@+id/post_a_load_get_current_location_pick"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/post_a_load_get_current_location_pick" />
 
                 <EditText
                     android:id="@+id/post_a_load_address_edit_pick_up"
@@ -499,9 +533,9 @@
                     android:textColor="@color/black"
                     android:textColorHint="@color/hint"
                     android:textSize="14sp"
-                    app:layout_constraintEnd_toStartOf="@+id/post_a_load_get_current_location_pick"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/post_a_load_enter_pick_location" />
+                    app:layout_constraintTop_toBottomOf="@+id/post_a_load_get_current_location_pick" />
 
                 <EditText
                     android:id="@+id/post_a_load_pin_code_edit_pick_up"
@@ -515,6 +549,7 @@
                     android:inputType="number"
                     android:maxLength="6"
                     android:padding="10dp"
+                    android:visibility="gone"
                     android:textColor="@color/black"
                     android:textColorHint="@color/hint"
                     android:textSize="14sp"
@@ -533,6 +568,7 @@
                     android:drawableEnd="@drawable/ic_down"
                     android:drawableTint="@color/black"
                     android:hint="@string/select_state"
+                    android:visibility="gone"
                     android:onClick="onClickPickUpState"
                     android:padding="8dp"
                     android:textColor="@color/black"
@@ -555,6 +591,7 @@
                     android:ellipsize="end"
                     android:hint="@string/select_city"
                     android:maxLines="1"
+                    android:visibility="gone"
                     android:onClick="onClickPickUpCity"
                     android:padding="8dp"
                     android:singleLine="true"

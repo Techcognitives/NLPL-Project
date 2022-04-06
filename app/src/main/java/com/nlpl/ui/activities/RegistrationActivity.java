@@ -50,6 +50,7 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.nlpl.R;
+import com.nlpl.model.UpdateMethods.UpdateUserDetails;
 import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.CreateUser;
 import com.nlpl.utils.GetLocationPickUp;
@@ -75,7 +76,7 @@ public class RegistrationActivity extends AppCompat {
     TextView actionBarTitle, selectStateText, selectDistrictText, actionBarSkip;
     ImageView actionBarBackButton, actionBarMenuButton;
 
-    String selectedState, role;
+    String selectedState, role, userId;
     String mobile, stateByPinCode, distByPinCode, deviceId;
 
     EditText name, pinCode, address, mobileNoEdit, email_id, alternateMobile;
@@ -86,6 +87,7 @@ public class RegistrationActivity extends AppCompat {
     int PLACE_PICKER_REQUEST = 1;
     ConstraintLayout roleConstrain;
     String latForAddress, longForAddress;
+    Boolean isEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +98,8 @@ public class RegistrationActivity extends AppCompat {
         if (bundle != null) {
             mobile = bundle.getString("mobile1");
             Log.i("Mobile No Registration", mobile);
+            isEdit = bundle.getBoolean("isEdit");
+            userId = bundle.getString("userId");
         }
 
         Dialog roleDialog = new Dialog(this);
@@ -107,7 +111,9 @@ public class RegistrationActivity extends AppCompat {
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp.gravity = Gravity.CENTER;
 
-        roleDialog.show();
+        if (!isEdit) {
+            roleDialog.show();
+        }
         roleDialog.getWindow().setAttributes(lp);
         roleDialog.setCancelable(false);
 
@@ -184,7 +190,9 @@ public class RegistrationActivity extends AppCompat {
         mobileNoEdit.setVisibility(View.VISIBLE);
         String s1 = mobile.substring(2, 12);
         mobileNoEdit.setText(s1);
-        mobileNoEdit.setEnabled(false);
+        if (!isEdit) {
+            mobileNoEdit.setEnabled(false);
+        }
         series.setVisibility(View.VISIBLE);
 
         name.requestFocus();
@@ -285,11 +293,9 @@ public class RegistrationActivity extends AppCompat {
     public void onClickSkip(View view) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             if (role.equals("Customer")) {
-                ShowAlert.loadingDialog(RegistrationActivity.this);
                 JumpTo.goToFindTrucksActivity(RegistrationActivity.this, null, mobile);
             } else {
-                ShowAlert.loadingDialog(RegistrationActivity.this);
-                JumpTo.goToServiceProviderDashboard(RegistrationActivity.this, mobile, true);
+                JumpTo.goToServiceProviderDashboard(RegistrationActivity.this, mobile, true, false);
             }
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
@@ -408,45 +414,160 @@ public class RegistrationActivity extends AppCompat {
         } else if (selectDistrictText.getText().toString().isEmpty()) {
             Toast.makeText(this, "Please Select City", Toast.LENGTH_SHORT).show();
         } else {
-            CreateUser.saveUser(CreateUser.createUser(name.getText().toString(), mobile, "91" + alternateMobile.getText().toString(), address.getText().toString(), role, email_id.getText().toString(), pinCode.getText().toString(), selectDistrictText.getText().toString(), selectStateText.getText().toString(), deviceId, latForAddress, longForAddress));
-            //----------------------- Alert Dialog -------------------------------------------------
-            Dialog alert = new Dialog(RegistrationActivity.this);
-            alert.setContentView(R.layout.dialog_alert_single_button);
-            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(alert.getWindow().getAttributes());
-            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.gravity = Gravity.CENTER;
-            alert.show();
-            alert.getWindow().setAttributes(lp);
-            alert.setCancelable(false);
-
-            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-            alertTitle.setText(getString(R.string.Registration_Successful));
-            alertMessage.setText(getString(R.string.Welcome_to) + " FindYourTruck" + getString(R.string.Please_update_your_profile));
-            alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText(getString(R.string.ok));
-            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
-
-            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    alert.dismiss();
-                    ShowAlert.loadingDialog(RegistrationActivity.this);
-                    if (role.equals("Customer")) {
-                        JumpTo.goToCustomerDashboard(RegistrationActivity.this, mobile, true);
-                    } else {
-                        JumpTo.goToServiceProviderDashboard(RegistrationActivity.this, mobile, true);
-                    }
+            if (isEdit) {
+                if (name.getText().toString() != null) {
+                    UpdateUserDetails.updateUserName(userId, name.getText().toString());
                 }
-            });
-            //------------------------------------------------------------------------------------------
+
+                if (alternateMobile.getText().toString() != null) {
+                    UpdateUserDetails.updateUserAlternatePhoneNumber(userId, "91" + alternateMobile.getText().toString());
+                }
+
+                if (email_id.getText().toString() != null) {
+                    UpdateUserDetails.updateUserEmailId(userId, email_id.getText().toString());
+                }
+
+                if (address.getText().toString() != null) {
+                    UpdateUserDetails.updateUserAddress(userId, address.getText().toString());
+                    UpdateUserDetails.updateUserLatLong(userId, latForAddress, longForAddress);
+                }
+
+                if (pinCode.getText().toString() != null) {
+                    UpdateUserDetails.updateUserPinCode(userId, pinCode.getText().toString());
+                    UpdateUserDetails.updateUserLatLong(userId, latForAddress, longForAddress);
+                }
+
+                if (selectStateText.getText().toString() != null) {
+                    UpdateUserDetails.updateUserState(userId, selectStateText.getText().toString());
+                }
+
+                if (selectDistrictText.getText().toString() != null) {
+                    UpdateUserDetails.updateUserCity(userId, selectDistrictText.getText().toString());
+                }
+
+//                if (role != null) {
+//                    UpdateUserDetails.updateUserType(userId, role);
+//                }
+
+                if (mobile.equals("91" + mobileNoEdit.getText().toString()) || mobileNoEdit.getText().toString().isEmpty()) {
+                    ShowAlert.loadingDialog(RegistrationActivity.this);
+                    JumpTo.goToViewPersonalDetailsActivity(RegistrationActivity.this, userId, mobile, true);
+                } else {
+                    //----------------------- Alert Dialog -------------------------------------------------
+                    Dialog alert = new Dialog(RegistrationActivity.this);
+                    alert.setContentView(R.layout.dialog_alert);
+                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(alert.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.gravity = Gravity.CENTER;
+
+                    alert.show();
+                    alert.getWindow().setAttributes(lp);
+                    alert.setCancelable(false);
+
+                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                    alertTitle.setText(getString(R.string.Personal_Details));
+                    alertMessage.setText(getString(R.string.update_your_phone_number));
+                    alertPositiveButton.setText(getString(R.string.yes));
+                    alertPositiveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            //----------------------- Alert Dialog -------------------------------------------------
+                            Dialog alert = new Dialog(RegistrationActivity.this);
+                            alert.setContentView(R.layout.dialog_alert_single_button);
+                            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                            lp.copyFrom(alert.getWindow().getAttributes());
+                            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                            lp.gravity = Gravity.CENTER;
+
+                            alert.show();
+                            alert.getWindow().setAttributes(lp);
+                            alert.setCancelable(false);
+
+                            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                            alertTitle.setText(getString(R.string.OTP_sent_successfully));
+                            alertMessage.setText(getString(R.string.OTP_sent_to) + "+91" + mobileNoEdit.getText().toString());
+                            alertPositiveButton.setVisibility(View.GONE);
+                            alertNegativeButton.setText(getString(R.string.ok));
+                            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+
+                            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    alert.dismiss();
+                                    JumpTo.goToOTPActivity(RegistrationActivity.this, "+91" + mobileNoEdit.getText().toString(), true, userId);
+                                }
+                            });
+                        }
+                    });
+
+                    alertNegativeButton.setText(getString(R.string.no));
+                    alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                    alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+
+                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alert.dismiss();
+
+                        }
+                    });
+                    //------------------------------------------------------------------------------------------
+                }
+            } else {
+                CreateUser.saveUser(CreateUser.createUser(name.getText().toString(), mobile, "91" + alternateMobile.getText().toString(), address.getText().toString(), role, email_id.getText().toString(), pinCode.getText().toString(), selectDistrictText.getText().toString(), selectStateText.getText().toString(), deviceId, latForAddress, longForAddress));
+                //----------------------- Alert Dialog -------------------------------------------------
+                Dialog alert = new Dialog(RegistrationActivity.this);
+                alert.setContentView(R.layout.dialog_alert_single_button);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(alert.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.gravity = Gravity.CENTER;
+                alert.show();
+                alert.getWindow().setAttributes(lp);
+                alert.setCancelable(false);
+
+                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                alertTitle.setText(getString(R.string.Registration_Successful));
+                alertMessage.setText(getString(R.string.Welcome_to) + " FindYourTruck" + getString(R.string.Please_update_your_profile));
+                alertPositiveButton.setVisibility(View.GONE);
+                alertNegativeButton.setText(getString(R.string.ok));
+                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
+                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
+
+                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                        ShowAlert.loadingDialog(RegistrationActivity.this);
+                        if (role.equals("Customer")) {
+                            JumpTo.goToCustomerDashboard(RegistrationActivity.this, mobile, true);
+                        } else {
+                            JumpTo.goToServiceProviderDashboard(RegistrationActivity.this, mobile, true, true);
+                        }
+                    }
+                });
+                //------------------------------------------------------------------------------------------
+            }
         }
     }
 
@@ -458,13 +579,13 @@ public class RegistrationActivity extends AppCompat {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            String addressText  = address.getText().toString().trim();
+            String addressText = address.getText().toString().trim();
 
-            if (addressText.length()==0){
+            if (addressText.length() == 0) {
                 pinCode.setVisibility(View.GONE);
                 selectStateText.setVisibility(View.GONE);
                 selectDistrictText.setVisibility(View.GONE);
-            }else{
+            } else {
                 pinCode.setVisibility(View.VISIBLE);
                 selectStateText.setVisibility(View.VISIBLE);
                 selectDistrictText.setVisibility(View.VISIBLE);
@@ -645,4 +766,5 @@ public class RegistrationActivity extends AppCompat {
 
         }
     }
+
 }

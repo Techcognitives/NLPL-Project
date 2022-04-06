@@ -79,17 +79,18 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                 if (userRoleAPI.equals("Customer")) {
                     JumpTo.goToCustomerDashboard(ViewPersonalDetailsActivity.this, phone, true);
                 } else {
-                    JumpTo.goToServiceProviderDashboard(ViewPersonalDetailsActivity.this, phone, true);
+                    JumpTo.goToServiceProviderDashboard(ViewPersonalDetailsActivity.this, phone, true, true);
                 }
             }
         });
 
-        actionBarSkip.setVisibility(View.INVISIBLE);
+        actionBarSkip.setVisibility(View.VISIBLE);
         actionBarSkip.setText(getString(R.string.edit));
         actionBarSkip.setOnClickListener(view -> {
             ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
-            JumpTo.goToPersonalDetailsIdProofActivity(ViewPersonalDetailsActivity.this, userId, phone, false);
+            JumpTo.goToRegistrationActivity(ViewPersonalDetailsActivity.this, phone, true, userId, true);
         });
+
         //---------------------------- Bottom Nav --------------------------------------------------
         bottomNav = (View) findViewById(R.id.view_personal_details_bottom_nav_bar);
         spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
@@ -450,7 +451,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
             switch (view.getId()) {
                 case R.id.bottom_nav_sp_dashboard:
                     ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
-                    JumpTo.goToServiceProviderDashboard(ViewPersonalDetailsActivity.this, phone, true);
+                    JumpTo.goToServiceProviderDashboard(ViewPersonalDetailsActivity.this, phone, true, true);
                     break;
 
                 case R.id.bottom_nav_customer_dashboard:
@@ -467,7 +468,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         if (userRoleAPI.equals("Customer")) {
             JumpTo.goToCustomerDashboard(ViewPersonalDetailsActivity.this, phone, true);
         } else {
-            JumpTo.goToServiceProviderDashboard(ViewPersonalDetailsActivity.this, phone, true);
+            JumpTo.goToServiceProviderDashboard(ViewPersonalDetailsActivity.this, phone, true, true);
         }
     }
 
