@@ -35,6 +35,7 @@
     <string name="name_hint">आपले नाव एंटर करा</string>
     <string name="email_id">तुमचा email ID एंटर करा (ऑप्शनल)</string>
     <string name="location">पत्ता*</string>
+    <string name="Search_Address">शोध पत्ता</string>
     <string name="select_state">राज्य</string>
     <string name="Select_State">राज्य निवडा</string>       //new
     <string name="Search_States">शोध राज्ये</string>
@@ -86,7 +87,7 @@
 
     //---------------------------------------Personal Details Activity------------------------------
     <string name="Name">नाव: </string>       //new
-    <string name="Email">ईमेल: </string>       //new
+    <string name="Email">ईमेल:</string>       //new
     <string name="Address">पत्ता: </string>    //new
     <string name="PANCard">पॅन कार्ड:</string>
     <string name="Upload">अपलोड </string>
@@ -231,6 +232,7 @@
     <string name="Current_Location">करंट लोकेशन </string>
     <string name="Truck_Owner">ट्रक ओनर<p> </p></string> //new
     <string name="Driver">ड्रायव्हर<p> </p></string>           //new
+    <string name="Driver_colon">ड्रायव्हर: </string>
     <string name="Search_Driver_by_Number">नंबर द्वारा ड्रायव्हर शोधा </string>
     <string name="Broker">ब्रोकर<p> </p></string>           //new
     <string name="Enter_Driving_License_Number">ड्राइविंग लायसन्स नंबर एंटर करा</string>       //new
@@ -438,7 +440,7 @@
     <string name="Log_Out_message">आपल्याला खात्री आहे की आपण लॉगआउट करू इच्छिता?</string>
     <string name="ReActivate_Load">लोड पुन्हा सक्रिय करा</string>
     <string name="Do_you_want_to_ReActivate_Load">तुम्हाला लोड पुन्हा सक्रीय करायचे आहे का? </string>
-    <string name="Continue_with_other_Service_Provider">इतर सेवा प्रदाता सुरू ठेवा </string>
+    <string name="Continue_with_other_Service_Provider">इतर सेवा प्रोवाइडर सुरू ठेवा </string>
     <string name="Current_Bidder_have_withdrawn_Bid">सध्याच्या निविदाकाराने बिड मागे घेतली आहे, आपण अद्याप इतर सेवा प्रदात्यासह चालू ठेवू इच्छिता?</string>
     <string name="Continue">पुढे चालू ठेवा</string>
     <string name="Cancel">रद्द करा</string>
@@ -458,6 +460,7 @@
     <string name="FYT_Promotional_Discount">(-) एफ़वाईटी प्रमोशनल डिस्काउंट </string>
     <string name="Your_Final_Payment">आपले अंतिम पेमेंट                        ₹       0.00</string>
     <string name="Advance_Payment">एडवांस पेमेंट </string>
+    <string name="Search_Load_by">द्वारे लोड शोधा</string>
 
     //----------------------------------------------------------------------------------------------
 
@@ -539,7 +542,7 @@
     <string name="Did_not_deliver_on_time">वेळेवर डिलिव्हरी दिली नाही. </string>
     <string name="Goods_Damaged">मालाचे नुकसान झाले. </string>
     <string name="Other">इतर </string>
-
+    <string name="Rate_Service_Provider">दर सेवा प्रोवाइडर</string>
 
     //----------------------------------------------------------------------------------------------
 

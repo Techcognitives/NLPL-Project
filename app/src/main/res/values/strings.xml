@@ -1099,6 +1099,7 @@
     <string name="name_hint">Enter your Name</string>
     <string name="email_id">Enter your Email ID (Optional)</string>
     <string name="location">Address*</string>
+    <string name="Search_Address">Search Address</string>
     <string name="select_state">State</string>
     <string name="Select_State">Select State</string>
     //new
@@ -1312,6 +1313,7 @@
     //new
     <string name="Driver">Driver<p> </p></string>
     //new
+    <string name="Driver_colon">Driver: </string>
     <string name="Search_Driver_by_Number">Search Driver by Number</string>
     <string name="Broker">Broker<p> </p></string>
     //new
@@ -1563,6 +1565,7 @@
     <string name="FYT_Promotional_Discount">(-) FYT Promotional Discount </string>
     <string name="Your_Final_Payment">Your Final Payment                        ₹       0.00</string>
     <string name="Advance_Payment">Advance Payment </string>
+    <string name="Search_Load_by">Search Load by</string>
     
     //----------------------------------------------------------------------------------------------
 
@@ -1649,6 +1652,7 @@
     <string name="Did_not_deliver_on_time">Did not deliver on time</string>
     <string name="Goods_Damaged">Goods Damaged</string>
     <string name="Other">Other</string>
+    <string name="Rate_Service_Provider">Rate Service Provider</string>
 
 
     //----------------------------------------------------------------------------------------------

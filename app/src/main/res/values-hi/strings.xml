@@ -34,6 +34,7 @@
     <string name="name_hint">अपना नाम दर्ज करें </string>
     <string name="email_id">अपना ईमेल आईडी दर्ज करें (ऑप्शनल)</string>         //dot
     <string name="location">पता* </string>
+    <string name="Search_Address">खोज पता</string>
     <string name="select_state">राज्य </string>
     <string name="Select_State">राज्य चुनें  </string>       //new
     <string name="Search_States">खोज राज्य</string>
@@ -85,7 +86,7 @@
 
     //---------------------------------------Personal Details Activity------------------------------
     <string name="Name">नाम: </string>       //new
-    <string name="Email">ईमेल: </string>       //new
+    <string name="Email">ईमेल:</string>       //new
     <string name="Address">पता: </string>    //new
     <string name="PANCard">पैन कार्ड: </string>
     <string name="Upload">अपलोड </string>
@@ -230,6 +231,7 @@
     <string name="Current_Location">करंट लोकेशन </string>
     <string name="Truck_Owner">ट्रक मालिक<p> </p></string> //new
     <string name="Driver">ड्राइवर<p> </p></string>           //new
+    <string name="Driver_colon">ड्रायव्हर: </string>
     <string name="Search_Driver_by_Number">नंबर के आधार पर ड्राइवर खोजें</string>
     <string name="Broker">ब्रोकर<p> </p></string>           //new
     <string name="Enter_Driving_License_Number">ड्राइविंग लाइसेंस नंबर दर्ज करें </string>       //new
@@ -456,6 +458,8 @@
     <string name="FYT_Promotional_Discount">(-) एफ़वाईटी प्रचार छूट </string>
     <string name="Your_Final_Payment">आपका अंतिम पेमेंट                        ₹       0.00</string>
     <string name="Advance_Payment">एडवांस पेमेंट </string>
+    <string name="Search_Load_by">इसके द्वारा खोज लोड करें</string>
+
 
     //----------------------------------------------------------------------------------------------
 
@@ -537,7 +541,7 @@
     <string name="Did_not_deliver_on_time">टाइम पर नहीं दिया </string>        //dot
     <string name="Goods_Damaged">सामान को नुकसान पहुंचा </string>
     <string name="Other">अन्य </string>                                     //dot
-
+    <string name="Rate_Service_Provider">दर सेवा प्रोवाइडर</string>
 
     //----------------------------------------------------------------------------------------------
 
