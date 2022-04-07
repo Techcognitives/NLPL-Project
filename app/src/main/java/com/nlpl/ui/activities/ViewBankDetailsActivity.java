@@ -305,8 +305,8 @@ public class ViewBankDetailsActivity extends AppCompat {
 
         TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
         TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
 
         alertTitle.setText("Delete Bank Details");
         alertMessage.setText("Are you sure?\nYou want to delete Bank Details?");

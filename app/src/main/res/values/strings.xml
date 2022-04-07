@@ -1220,7 +1220,7 @@
     //new
     <string name="Enter_AC_Details">Enter A/C Details</string>
     //new
-    <string name="Upload_a_photo_of_Canceled_Check">Upload a photo of Canceled Check</string>
+    <string name="Upload_a_photo_of_Canceled_Check">Upload a photo of cancelled cheque</string>
     //new
     <string name="Cancelled_Cheque">Cancelled Cheque*</string>
     <string name="OR">--------------------- OR ---------------------</string>
