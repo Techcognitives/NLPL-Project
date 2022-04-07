@@ -181,6 +181,23 @@
         <entry key="..\:/Users/abhij/Downloads/Telegram Desktop/NLPL-Project/app/src/main/res/layout/activity_profile_and_registration.xml" value="0.27309782608695654" />
         <entry key="..\:/Users/abhij/Downloads/Telegram Desktop/NLPL-Project/app/src/main/res/layout/activity_registration.xml" value="0.29483695652173914" />
         <entry key="..\:/Users/abhij/Downloads/Telegram Desktop/NLPL-Project/app/src/main/res/layout/dialog_language.xml" value="0.29483695652173914" />
+        <entry key="app/src/main/res/drawable/button_active.xml" value="0.214" />
+        <entry key="app/src/main/res/layout/activity_bank_details.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_driver_details.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_otp_code.xml" value="0.18385416666666668" />
+        <entry key="app/src/main/res/layout/activity_post_aload.xml" value="0.20677083333333332" />
+        <entry key="app/src/main/res/layout/dialog_acept_bid_customer.xml" value="0.20677083333333332" />
+        <entry key="app/src/main/res/layout/dialog_alert.xml" value="0.20677083333333332" />
+        <entry key="app/src/main/res/layout/dialog_alert_single_button.xml" value="0.20677083333333332" />
+        <entry key="app/src/main/res/layout/dialog_bid_now.xml" value="0.20677083333333332" />
+        <entry key="app/src/main/res/layout/dialog_budget.xml" value="0.20677083333333332" />
+        <entry key="app/src/main/res/layout/dialog_choose.xml" value="0.20677083333333332" />
+        <entry key="app/src/main/res/layout/dialog_payment.xml" value="0.1574074074074074" />
+        <entry key="app/src/main/res/layout/dialog_preview_driver_details.xml" value="0.20677083333333332" />
+        <entry key="app/src/main/res/layout/dialog_preview_driver_truck_details.xml" value="0.20677083333333332" />
+        <entry key="app/src/main/res/layout/dialog_preview_images.xml" value="0.20677083333333332" />
+        <entry key="app/src/main/res/layout/dialog_preview_profile.xml" value="0.20677083333333332" />
+        <entry key="app/src/main/res/layout/dialog_spinner_bind.xml" value="0.4244791666666667" />
       </map>
     </option>
   </component>
