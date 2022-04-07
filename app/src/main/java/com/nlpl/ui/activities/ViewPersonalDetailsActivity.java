@@ -79,7 +79,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                 if (userRoleAPI.equals("Customer")) {
                     JumpTo.goToCustomerDashboard(ViewPersonalDetailsActivity.this, phone, true);
                 } else {
-                    JumpTo.goToServiceProviderDashboard(ViewPersonalDetailsActivity.this, phone, true);
+                    JumpTo.goToServiceProviderDashboard(ViewPersonalDetailsActivity.this, phone, true, true);
                 }
             }
         });
@@ -88,16 +88,17 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         actionBarSkip.setText(getString(R.string.edit));
         actionBarSkip.setOnClickListener(view -> {
             ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
-            JumpTo.goToPersonalDetailsIdProofActivity(ViewPersonalDetailsActivity.this, userId, phone, false);
+            JumpTo.goToRegistrationActivity(ViewPersonalDetailsActivity.this, phone, true, userId, true);
         });
+
         //---------------------------- Bottom Nav --------------------------------------------------
         bottomNav = (View) findViewById(R.id.view_personal_details_bottom_nav_bar);
         spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
         customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
         spDashboard.setBackgroundColor(getResources().getColor(R.color.nav_unselected_blue));
         customerDashboard.setBackgroundColor(getResources().getColor(R.color.nav_selected_blue));
-        //------------------------------------------------------------------------------------------
 
+        //------------------------------------------------------------------------------------------
         userNameTextView = (TextView) findViewById(R.id.view_personal_details_name_text_view);
         userPhoneNumberTextView = (TextView) findViewById(R.id.view_personal_details_phone_number_text_view);
         userEmailTextView = (TextView) findViewById(R.id.view_personal_details_email_id_text_view);
@@ -142,11 +143,9 @@ public class ViewPersonalDetailsActivity extends AppCompat {
 
         getUserDetails();
         getImageURL();
-
     }
 
     private void getUserDetails() {
-
         String url = getString(R.string.baseURL) + "/user/" + userId;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
@@ -167,7 +166,6 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                         String userAlternateMobileNumber = obj.getString("alternate_ph_no");
                         String panNumberAPI = obj.getString("pan_number");
                         String aadharNumberAPI = obj.getString("aadhaar_number");
-
 
 //                        if (userRoleAPI.equals("Customer")) {
 //                            userFirmAddCompany.setVisibility(View.GONE);
@@ -243,11 +241,8 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                         isDriverDetailsDoneAPI = obj.getString("isDriver_added");
 
                         userNameTextView.setText(userNameAPI);
-
                         String s1 = userMobileNumberAPI.substring(2, 12);
-
                         userPhoneNumberTextView.setText("+91 " + s1);
-
                         userEmailTextView.setText(userEmailIdAPI);
 
                         try {
@@ -269,9 +264,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                 error.printStackTrace();
             }
         });
-
         mQueue.add(request);
-
     }
 
     public void getCompanyDetails() {
@@ -458,7 +451,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
             switch (view.getId()) {
                 case R.id.bottom_nav_sp_dashboard:
                     ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
-                    JumpTo.goToServiceProviderDashboard(ViewPersonalDetailsActivity.this, phone, true);
+                    JumpTo.goToServiceProviderDashboard(ViewPersonalDetailsActivity.this, phone, true, true);
                     break;
 
                 case R.id.bottom_nav_customer_dashboard:
@@ -475,7 +468,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         if (userRoleAPI.equals("Customer")) {
             JumpTo.goToCustomerDashboard(ViewPersonalDetailsActivity.this, phone, true);
         } else {
-            JumpTo.goToServiceProviderDashboard(ViewPersonalDetailsActivity.this, phone, true);
+            JumpTo.goToServiceProviderDashboard(ViewPersonalDetailsActivity.this, phone, true, true);
         }
     }
 

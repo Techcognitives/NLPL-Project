@@ -16,6 +16,21 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/textView13"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:drawableStart="@drawable/google_address_small"
+        android:onClick="onClickOpenMaps"
+        android:text="Search Address"
+        android:textColor="@color/button_blue"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/company_details_get_current_location"
+        app:layout_constraintEnd_toStartOf="@+id/company_details_get_current_location"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/company_details_get_current_location" />
+
+    <TextView
         android:id="@+id/company_details_company_name_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -92,7 +107,7 @@
         android:ems="10"
         android:layout_marginTop="5dp"
         android:hint="@string/gst_number_hint"
-        android:maxLength="10"
+        android:maxLength="15"
         android:inputType="textCapCharacters"
         android:padding="10dp"
         android:textSize="14sp"
@@ -118,19 +133,21 @@
 
     <TextView
         android:id="@+id/company_details_get_current_location"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:drawableStart="@drawable/google_location_small"
         android:onClick="onClickGetCurrentCompanyLocation"
-        android:text="@string/Set_Address"
+        android:text="@string/Current_Location"
         android:textColor="@color/button_blue"
         android:textSize="14sp"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/company_details_address_edit"
+        app:layout_constraintBottom_toTopOf="@+id/company_details_address_edit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/company_details_address_edit"
-        app:layout_constraintTop_toTopOf="@+id/company_details_address_edit" />
+        app:layout_constraintStart_toEndOf="@+id/textView13"
+        app:layout_constraintTop_toBottomOf="@+id/company_details_company_address_text" />
 
     <TextView
         android:id="@+id/company_details_select_state"
@@ -188,6 +205,7 @@
         android:id="@+id/company_details_address_edit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:background="@drawable/edit_text_border"
@@ -201,9 +219,9 @@
         android:paddingEnd="8dp"
         android:paddingBottom="4dp"
         android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/company_details_get_current_location"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/company_details_company_address_text" />
+        app:layout_constraintTop_toBottomOf="@+id/company_details_get_current_location" />
 
     <Button
         android:id="@+id/company_details_ok_button"

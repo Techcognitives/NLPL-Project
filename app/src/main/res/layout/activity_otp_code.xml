@@ -45,7 +45,7 @@
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/countdown"
+            app:layout_constraintBottom_toTopOf="@+id/pin_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/otp_code_text" />
@@ -54,20 +54,15 @@
             android:id="@+id/countdown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/countdown_background"
-            android:paddingStart="20dp"
-            android:paddingTop="3dp"
-            android:paddingEnd="20dp"
-            android:paddingBottom="5dp"
+            android:layout_marginEnd="15dp"
             android:text="00 : 00"
             android:textColor="@color/black"
-            android:textSize="25sp"
+            android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/pin_view"
+            app:layout_constraintBottom_toBottomOf="@+id/resend_otp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/otp_text" />
+            app:layout_constraintTop_toTopOf="@+id/resend_otp"
+            app:layout_constraintVertical_bias="0.65" />
 
         <Button
             android:id="@+id/otp_button"
@@ -78,12 +73,12 @@
             android:layout_marginEnd="10dp"
             android:background="@drawable/button_active"
             android:text="@string/verify_otp"
+            android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="@color/background"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textAlignment="center"
-            app:layout_constraintBottom_toTopOf="@+id/resend_otp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/pin_view" />
@@ -92,23 +87,20 @@
             android:id="@+id/resend_otp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginEnd="5dp"
-            android:layout_marginBottom="20dp"
             android:text="@string/resend_otp"
             android:textColor="@color/button_blue"
             android:textSize="16sp"
             android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/otp_button" />
+            app:layout_constraintBottom_toTopOf="@+id/otp_button"
+            app:layout_constraintEnd_toStartOf="@+id/countdown"
+            app:layout_constraintTop_toBottomOf="@+id/pin_view" />
 
         <com.chaos.view.PinView
             android:id="@+id/pin_view"
             style="@style/PinWidget.PinView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:cursorVisible="true"
             android:inputType="number"
             android:itemBackground="@color/grey"
@@ -121,7 +113,7 @@
             app:layout_constraintBottom_toTopOf="@+id/otp_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/countdown"
+            app:layout_constraintTop_toBottomOf="@+id/otp_text"
             app:lineColor="@color/dark_grey"
             app:lineWidth="1dp" />
 

@@ -107,7 +107,7 @@ public class ViewTruckDetailsActivity extends AppCompat {
             @Override
             public void onClick(View view) {
                 ShowAlert.loadingDialog(ViewTruckDetailsActivity.this);
-                JumpTo.goToServiceProviderDashboard(ViewTruckDetailsActivity.this, phone, true);
+                JumpTo.goToServiceProviderDashboard(ViewTruckDetailsActivity.this, phone, true, true);
             }
         });
         //---------------------------- Bottom Nav --------------------------------------------------
@@ -306,7 +306,7 @@ public class ViewTruckDetailsActivity extends AppCompat {
         switch (view.getId()) {
             case R.id.bottom_nav_sp_dashboard:
                 ShowAlert.loadingDialog(ViewTruckDetailsActivity.this);
-                JumpTo.goToServiceProviderDashboard(ViewTruckDetailsActivity.this, phone, true);
+                JumpTo.goToServiceProviderDashboard(ViewTruckDetailsActivity.this, phone, true, true);
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
@@ -319,7 +319,7 @@ public class ViewTruckDetailsActivity extends AppCompat {
     public void onBackPressed() {
         super.onBackPressed();
         ShowAlert.loadingDialog(ViewTruckDetailsActivity.this);
-        JumpTo.goToServiceProviderDashboard(ViewTruckDetailsActivity.this, phone, true);
+        JumpTo.goToServiceProviderDashboard(ViewTruckDetailsActivity.this, phone, true, true);
     }
 
     public void getDriverDetailsOnTruckActivity(TruckModel obj) {

@@ -35,21 +35,21 @@ public class LanguageActivity extends AppCompat {
         english.setOnClickListener(view ->
         {
             lang.updateResource("en");
-            JumpTo.goToRegistrationActivity(LanguageActivity.this, mobile, true);
+            JumpTo.goToRegistrationActivity(LanguageActivity.this, mobile, false, null, true);
         });
 
         hindi.setOnClickListener(view ->
         {
             lang.updateResource("hi");
             recreate();
-            JumpTo.goToRegistrationActivity(LanguageActivity.this, mobile, true);
+            JumpTo.goToRegistrationActivity(LanguageActivity.this, mobile, false, null, true);
         });
 
         marathi.setOnClickListener(view ->
         {
             lang.updateResource("mr");
             recreate();
-            JumpTo.goToRegistrationActivity(LanguageActivity.this, mobile, true);
+            JumpTo.goToRegistrationActivity(LanguageActivity.this, mobile, false, null, true);
         });
 
     }

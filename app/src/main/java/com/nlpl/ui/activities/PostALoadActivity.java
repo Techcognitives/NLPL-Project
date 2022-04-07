@@ -166,8 +166,8 @@ public class PostALoadActivity extends AppCompat {
         dropStateText = (TextView) findViewById(R.id.post_a_load_select_state_drop);
         dropCityText = (TextView) findViewById(R.id.post_a_load_select_city_drop);
 
-        pickUpAddressEdit.addTextChangedListener(addressWatcher);
-        dropAddressEdit.addTextChangedListener(addressWatcher);
+        pickUpAddressEdit.addTextChangedListener(addressWatcherPick);
+        dropAddressEdit.addTextChangedListener(addressWatcherDrop);
 
         pickupPinCodeEdit.addTextChangedListener(pickUpPinCodeWatcher);
         dropPinCodeEdit.addTextChangedListener(pickUpPinCodeWatcher);
@@ -277,7 +277,7 @@ public class PostALoadActivity extends AppCompat {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
-                SelectDate.selectDate(PostALoadActivity.this,pick_up_date);
+                SelectDate.selectDate(PostALoadActivity.this, pick_up_date);
             }
         });
 
@@ -717,13 +717,13 @@ public class PostALoadActivity extends AppCompat {
                         dropPinCode = dropPinCodes;
                         dropPinCodeEdit.setText(dropPinCodes);
                         note_to_post_load.setText(notesFromLP);
-                        paymentMethod= paymentMethodAPI;
+                        paymentMethod = paymentMethodAPI;
 
-                        if (paymentMethodAPI.equals("ToPay")){
+                        if (paymentMethodAPI.equals("ToPay")) {
                             paymentMethodText.setText(getString(R.string.Payment_Method) + getString(R.string.To_Pay));
-                        }else if(paymentMethodAPI.equals("ToBeBilled")){
+                        } else if (paymentMethodAPI.equals("ToBeBilled")) {
                             paymentMethodText.setText(getString(R.string.Payment_Method) + getString(R.string.To_be_billed));
-                        }else{
+                        } else {
                             paymentMethodText.setText(getString(R.string.Payment_Method) + getString(R.string.Pay) + paymentMethodAPI + getString(R.string.in_Advance));
                         }
 
@@ -823,12 +823,12 @@ public class PostALoadActivity extends AppCompat {
     }
 
     public void onClickGetCurrentLocationPickUp(View view) {
-        getCurrentLocation.getCurrentLocationMaps(PostALoadActivity.this, pickUpAddressEdit, pickupPinCodeEdit);
+        GetCurrentLocation.getCurrentLocation(PostALoadActivity.this, pickUpAddressEdit, pickupPinCodeEdit);
         isPickDrop = "1";
     }
 
     public void onClickGetCurrentLocationDrop(View view) {
-        getCurrentLocation.getCurrentLocationMaps(PostALoadActivity.this, dropAddressEdit, dropPinCodeEdit);
+        GetCurrentLocation.getCurrentLocation(PostALoadActivity.this, dropAddressEdit, dropPinCodeEdit);
         isPickDrop = "2";
     }
 
@@ -979,6 +979,16 @@ public class PostALoadActivity extends AppCompat {
         });
     }
 
+    public void onClickOpenMapsPick(View view) {
+        GetCurrentLocation.searchOnMap(PostALoadActivity.this);
+        isPickDrop = "1";
+    }
+
+    public void onClickOpenMapsDrop(View view) {
+        GetCurrentLocation.searchOnMap(PostALoadActivity.this);
+        isPickDrop = "2";
+    }
+
     private class GeoHandlerLatitude extends Handler {
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -1121,7 +1131,7 @@ public class PostALoadActivity extends AppCompat {
         });
     }
 
-    private TextWatcher addressWatcher = new TextWatcher() {
+    private TextWatcher addressWatcherPick = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -1129,7 +1139,49 @@ public class PostALoadActivity extends AppCompat {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String addressText = pickUpAddressEdit.getText().toString().trim();
 
+            if (addressText.length() == 0) {
+                pickupPinCodeEdit.setVisibility(View.GONE);
+                pickUpStateText.setVisibility(View.GONE);
+                pickUpCityText.setVisibility(View.GONE);
+            } else {
+                pickupPinCodeEdit.setVisibility(View.VISIBLE);
+                pickUpStateText.setVisibility(View.VISIBLE);
+                pickUpCityText.setVisibility(View.VISIBLE);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            for (int i = s.length() - 1; i >= 0; i--) {
+                if (s.charAt(i) == '\n') {
+                    s.delete(i, i + 1);
+                    return;
+                }
+            }
+        }
+    };
+
+    private TextWatcher addressWatcherDrop = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String addressText = dropAddressEdit.getText().toString().trim();
+
+            if (addressText.length() == 0) {
+                dropPinCodeEdit.setVisibility(View.GONE);
+                dropStateText.setVisibility(View.GONE);
+                dropCityText.setVisibility(View.GONE);
+            } else {
+                dropPinCodeEdit.setVisibility(View.VISIBLE);
+                dropStateText.setVisibility(View.VISIBLE);
+                dropCityText.setVisibility(View.VISIBLE);
+            }
         }
 
         @Override

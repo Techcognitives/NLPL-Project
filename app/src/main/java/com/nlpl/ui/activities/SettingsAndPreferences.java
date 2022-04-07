@@ -80,7 +80,7 @@ public class SettingsAndPreferences extends AppCompat {
                     JumpTo.goToCustomerDashboard(SettingsAndPreferences.this, phone, true);
                 } else {
                     ShowAlert.loadingDialog(SettingsAndPreferences.this);
-                    JumpTo.goToServiceProviderDashboard(SettingsAndPreferences.this, phone, true);
+                    JumpTo.goToServiceProviderDashboard(SettingsAndPreferences.this, phone, true , true);
                 }
             }
         });
@@ -131,7 +131,7 @@ public class SettingsAndPreferences extends AppCompat {
             JumpTo.goToCustomerDashboard(SettingsAndPreferences.this, phone, true);
         } else {
             ShowAlert.loadingDialog(SettingsAndPreferences.this);
-            JumpTo.goToServiceProviderDashboard(SettingsAndPreferences.this, phone, true);
+            JumpTo.goToServiceProviderDashboard(SettingsAndPreferences.this, phone, true, true);
         }
 
     }

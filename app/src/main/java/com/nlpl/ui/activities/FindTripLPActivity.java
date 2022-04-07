@@ -5,6 +5,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -54,6 +55,7 @@ public class FindTripLPActivity extends AppCompatActivity {
 
     RecyclerView allTripsRecyclerView;
     Spinner findTripSpinner;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     //------------------------------------- State List ---------------------------------------------
     private ArrayList<TripResponse.TripList> anList, apList, arList, asList, brList, chList, cgList, ddList,
@@ -96,6 +98,15 @@ public class FindTripLPActivity extends AppCompatActivity {
         noTrips = findViewById(R.id.find_trips_no_trips);
         findTripSpinner = findViewById(R.id.find_trips_spinner);
         findTripSpinner.setOnItemSelectedListener(onPickOrDrop);
+
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.find_trips_refresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(false);
+                RearrangeItems();
+            }
+        });
 
         anList = new ArrayList<>();
         apList = new ArrayList<>();

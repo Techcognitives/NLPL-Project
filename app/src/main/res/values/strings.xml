@@ -1106,7 +1106,7 @@
     <string name="select_city">City</string>
     <string name="select_city_name">Select City</string>
     <string name="pin_code">PIN Code</string>
-    <string name="address">Search or Type Address</string>
+    <string name="address">Type Address</string>
     <string name="are_u_sp">Truck Owner / Driver / Broker? </string>
     <string name="truck_owner">I"'"m a Truck Owner</string>
     <string name="driver">I"'"m a Driver</string>

@@ -2565,7 +2565,6 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
     public void onClickProfileAndRegisterCustomer(View view) {
         switch (view.getId()) {
             case R.id.customer_menu_personal_details_button:
-                ShowAlert.loadingDialog(CustomerDashboardActivity.this);
                 JumpTo.goToViewPersonalDetailsActivity(CustomerDashboardActivity.this, userId, phone, false);
                 break;
 

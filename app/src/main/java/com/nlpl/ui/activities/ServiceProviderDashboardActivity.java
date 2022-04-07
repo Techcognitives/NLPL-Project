@@ -606,7 +606,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
     public void RearrangeItems() {
         getLocation();
         ShowAlert.loadingDialog(ServiceProviderDashboardActivity.this);
-        JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected);
+        JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected, true);
     }
 
     private void getUserId(String userMobileNumber) {
@@ -638,8 +638,10 @@ public class ServiceProviderDashboardActivity extends AppCompat {
 
                     if (userId == null) {
                         bidsSubmittedTextView.setVisibility(View.GONE);
+                        findLoadsConstrain.setVisibility(View.GONE);
                     } else {
                         bidsSubmittedTextView.setVisibility(View.VISIBLE);
+                        findLoadsConstrain.setVisibility(View.VISIBLE);
                     }
 
                     getUserDetails();
@@ -848,8 +850,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
 
             alertPositiveButton.setOnClickListener(view1 -> {
                 alert.dismiss();
-                ShowAlert.loadingDialog(ServiceProviderDashboardActivity.this);
-                JumpTo.goToRegistrationActivity(ServiceProviderDashboardActivity.this, phone, true);
+                this.finish();
             });
             //------------------------------------------------------------------------------------------
         } else {
@@ -995,7 +996,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
 
                     alertPositiveButton.setOnClickListener(view1 -> {
                         alert.dismiss();
-                        JumpTo.goToRegistrationActivity(ServiceProviderDashboardActivity.this, phone, true);
+                        this.finish();
                     });
                     //------------------------------------------------------------------------------------------
                 } else {
@@ -1038,7 +1039,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
 
                     alertPositiveButton.setOnClickListener(view1 -> {
                         alert.dismiss();
-                        JumpTo.goToRegistrationActivity(ServiceProviderDashboardActivity.this, phone, true);
+                        this.finish();
                     });
                     //------------------------------------------------------------------------------------------
                 } else {
@@ -1183,8 +1184,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
 
             alertPositiveButton.setOnClickListener(view -> {
                 alert.dismiss();
-                ShowAlert.loadingDialog(ServiceProviderDashboardActivity.this);
-                JumpTo.goToRegistrationActivity(ServiceProviderDashboardActivity.this, phone, true);
+                this.finish();
             });
             //------------------------------------------------------------------------------------------
         } else {
@@ -1405,7 +1405,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
                                 @Override
                                 public void onClick(View view) {
                                     alert.dismiss();
-                                    JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, false);
+                                    JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, false, true);
                                     previewDialogBidNow.dismiss();
                                 }
                             });
@@ -2780,8 +2780,47 @@ public class ServiceProviderDashboardActivity extends AppCompat {
     }
 
     public void onClickPostATrip(View view) {
-        ShowAlert.loadingDialog(ServiceProviderDashboardActivity.this);
-        JumpTo.goToPostATrip(ServiceProviderDashboardActivity.this, phone, userId, false, null, false);
+        if (userId == null) {
+            //----------------------- Alert Dialog -------------------------------------------------
+            Dialog alert = new Dialog(ServiceProviderDashboardActivity.this);
+            alert.setContentView(R.layout.dialog_alert);
+            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(alert.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.gravity = Gravity.CENTER;
+
+            alert.show();
+            alert.getWindow().setAttributes(lp);
+            alert.setCancelable(false);
+
+            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+            alertTitle.setText(getString(R.string.Please_Register));
+            alertMessage.setText(getString(R.string.You_cannot_bid_without_Registration));
+            alertPositiveButton.setText(getString(R.string.Register_Now));
+            alertNegativeButton.setText(getString(R.string.cancel));
+
+            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.dismiss();
+                }
+            });
+
+            alertPositiveButton.setOnClickListener(view1 -> {
+                alert.dismiss();
+                this.finish();
+            });
+            //------------------------------------------------------------------------------------------
+        } else {
+            ShowAlert.loadingDialog(ServiceProviderDashboardActivity.this);
+            JumpTo.goToPostATrip(ServiceProviderDashboardActivity.this, phone, userId, false, null, false);
+        }
     }
 
     private class SwipeListener implements View.OnTouchListener {

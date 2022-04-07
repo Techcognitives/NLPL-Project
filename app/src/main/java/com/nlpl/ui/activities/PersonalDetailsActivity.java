@@ -93,7 +93,7 @@ public class PersonalDetailsActivity extends AppCompat {
     TextView uploadAadharTitle, uploadPanTitle, uploadProfileTitle, countdown;
 
     String userId, mobile, requestIdForAadhar;
-    Boolean profilePic, isPanUploaded = false, isFrontUploaded = false, isProfileUploaded = false, panVerified = false, aadharVerified = false;
+    Boolean profilePic, isPanUploaded = false, isFrontUploaded = false, isProfileUploaded = false, panVerified = true, aadharVerified = true;
     String img_type;
     EditText panNumber, aadharNumber;
 
@@ -1060,7 +1060,7 @@ public class PersonalDetailsActivity extends AppCompat {
             if (panWatcher.length() != 10) {
 
             } else {
-                checkPAN(panWatcher);
+//                checkPAN(panWatcher);
             }
         }
 
@@ -1083,7 +1083,7 @@ public class PersonalDetailsActivity extends AppCompat {
             if (aadharWatcher.length() != 12) {
 
             } else {
-                checkAadhar(aadharWatcher);
+//                checkAadhar(aadharWatcher);
             }
         }
 

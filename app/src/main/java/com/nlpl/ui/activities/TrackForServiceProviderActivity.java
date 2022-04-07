@@ -192,15 +192,19 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
 
         bottomNav = (View) findViewById(R.id.profile_registration_bottom_nav_bar);
         TextView profileText = (TextView) bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
-        profileText.setText(getString(R.string.Find_Loads));
+        profileText.setText("trips");
         View dashboardView = findViewById(R.id.bottom_nav_bar_dashboard_underline);
         dashboardView.setVisibility(View.INVISIBLE);
+        ImageView profileImageView = (ImageView) bottomNav.findViewById(R.id.bottom_nav_profile_image_view);
+        profileImageView.setImageDrawable(getDrawable(R.drawable.black_truck_small));
         ConstraintLayout dashboardConstrain = findViewById(R.id.bottom_nav_sp_dashboard);
         dashboardConstrain.setBackgroundTintList(getResources().getColorStateList(R.color.light_white));
         ConstraintLayout trackConstrain = findViewById(R.id.bottom_nav_track);
         trackConstrain.setBackgroundTintList(getResources().getColorStateList(R.color.white));
         View trackView = findViewById(R.id.bottom_nav_bar_track_underline);
         trackView.setVisibility(View.VISIBLE);
+        ConstraintLayout truck = findViewById(R.id.bottom_nav_trip);
+        truck.setVisibility(View.GONE);
 
         arrayUserId = new ArrayList<>();
         arrayMobileNo = new ArrayList<>();
@@ -358,7 +362,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.bottom_nav_sp_dashboard:
                 ShowAlert.loadingDialog(TrackForServiceProviderActivity.this);
-                JumpTo.goToServiceProviderDashboard(TrackForServiceProviderActivity.this, phone, true);
+                JumpTo.goToServiceProviderDashboard(TrackForServiceProviderActivity.this, phone, true, true);
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
@@ -452,8 +456,12 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
                         fooThread.start();
                         updatedLoadSubmittedList.addAll(loadSubmittedList);
                         loadSubmittedAdapter.updateData(updatedLoadSubmittedList);
-                    }else{
+                    }
+
+                    if (updatedLoadSubmittedList.size() == 0){
                         noTrips.setVisibility(View.VISIBLE);
+                    }else{
+                        noTrips.setVisibility(View.GONE);
                     }
 //
 //                    else {
@@ -700,7 +708,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setCountdown();
-//                initiateOtp("+"+mobileNumberCustomer, obj);
+                initiateOtp("+"+mobileNumberCustomer, obj);
                 Dialog otpRequest = new Dialog(TrackForServiceProviderActivity.this);
                 otpRequest.setContentView(R.layout.activity_otp_code);
                 otpRequest.getWindow().setBackgroundDrawable(getDrawable(R.drawable.all_rounded_small));
@@ -731,7 +739,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
                 reSendOtp.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-//                        initiateOtp("+"+mobileNumberCustomer, obj);
+                        initiateOtp("+"+mobileNumberCustomer, obj);
                         setCountdown();
                         reSendOtp.setVisibility(View.INVISIBLE);
                     }
@@ -923,7 +931,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
                         public void onClick(View view) {
                             alert.dismiss();
                             ShowAlert.loadingDialog(TrackForServiceProviderActivity.this);
-                            JumpTo.goToServiceProviderDashboard(TrackForServiceProviderActivity.this, phone, true);
+                            JumpTo.goToServiceProviderDashboard(TrackForServiceProviderActivity.this, phone, true, true);
                         }
                     });
                     //------------------------------------------------------------------------------------------
@@ -1107,6 +1115,6 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         ShowAlert.loadingDialog(this);
-        JumpTo.goToServiceProviderDashboard(this, phone, true);
+        JumpTo.goToServiceProviderDashboard(this, phone, true, true);
     }
 }

@@ -90,7 +90,7 @@ public class ViewBankDetailsActivity extends AppCompat {
                 if (roleAPI.equals("Customer")) {
                     JumpTo.goToCustomerDashboard(ViewBankDetailsActivity.this, phone, true);
                 } else {
-                    JumpTo.goToServiceProviderDashboard(ViewBankDetailsActivity.this, phone, true);
+                    JumpTo.goToServiceProviderDashboard(ViewBankDetailsActivity.this, phone, true, true);
                 }
 
             }
@@ -228,7 +228,7 @@ public class ViewBankDetailsActivity extends AppCompat {
             switch (view.getId()) {
                 case R.id.bottom_nav_sp_dashboard:
                     ShowAlert.loadingDialog(ViewBankDetailsActivity.this);
-                    JumpTo.goToServiceProviderDashboard(ViewBankDetailsActivity.this, phone, true);
+                    JumpTo.goToServiceProviderDashboard(ViewBankDetailsActivity.this, phone, true, true);
                     break;
 
                 case R.id.bottom_nav_customer_dashboard:
@@ -284,7 +284,7 @@ public class ViewBankDetailsActivity extends AppCompat {
         if (roleAPI.equals("Customer")) {
             JumpTo.goToCustomerDashboard(ViewBankDetailsActivity.this, phone, true);
         } else {
-            JumpTo.goToServiceProviderDashboard(ViewBankDetailsActivity.this, phone, true);
+            JumpTo.goToServiceProviderDashboard(ViewBankDetailsActivity.this, phone, true, true);
         }
     }
 

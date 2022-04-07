@@ -19,7 +19,6 @@ import com.nlpl.ui.activities.FindLoadsActivity;
 import com.nlpl.ui.activities.LogInActivity;
 import com.nlpl.ui.activities.OtpCodeActivity;
 import com.nlpl.ui.activities.PersonalDetailsActivity;
-import com.nlpl.ui.activities.PersonalDetailsAndIdProofActivity;
 import com.nlpl.ui.activities.PostALoadActivity;
 import com.nlpl.ui.activities.RegistrationActivity;
 import com.nlpl.ui.activities.ServiceProviderDashboardActivity;
@@ -546,37 +545,6 @@ public class InAppNotification {
         Intent intent = new Intent(activity, PersonalDetailsActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("profile", profile);
-        intent.putExtra("mobile", mobileNumber);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        intent.setAction(Intent.ACTION_MAIN);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
-        PendingIntent resultIntent = PendingIntent.getActivity(activity, 0, intent, 0);
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity, default_notification_channel_id)
-                .setSmallIcon(R.drawable.ic_truck_noti)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setContentIntent(resultIntent)
-                .setAutoCancel(true);
-        NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel notificationChannel = new
-                    NotificationChannel(NOTIFICATION_CHANNEL_ID, "NOTIFICATION_CHANNEL_NAME", importance);
-            mBuilder.setChannelId(NOTIFICATION_CHANNEL_ID);
-            assert mNotificationManager != null;
-            mNotificationManager.createNotificationChannel(notificationChannel);
-        }
-        assert mNotificationManager != null;
-        mNotificationManager.notify((int) System.currentTimeMillis(), mBuilder.build());
-    }
-
-    public static void SendNotificationJumpToPersonalDetailsIdProofActivity(Activity activity, String title, String message, String userId, String mobileNumber) {
-        final String NOTIFICATION_CHANNEL_ID = "10001";
-        final String default_notification_channel_id = "default";
-
-        Intent intent = new Intent(activity, PersonalDetailsAndIdProofActivity.class);
-        intent.putExtra("userId", userId);
         intent.putExtra("mobile", mobileNumber);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         intent.setAction(Intent.ACTION_MAIN);
