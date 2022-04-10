@@ -1561,9 +1561,7 @@ public class DriverDetailsActivity extends AppCompat {
             }
         });
         mQueue.add(request);
-
         //------------------------------------------------------------------------------------------------
-
     }
 
     private void checkPhoneForDriverDetails(String getMobile) {
