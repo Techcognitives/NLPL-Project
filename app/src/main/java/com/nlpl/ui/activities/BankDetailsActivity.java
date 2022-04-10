@@ -758,7 +758,7 @@ public class BankDetailsActivity extends AppCompat {
                     uploadCC.setEnabled(true);
                     uploadCC.setVisibility(View.VISIBLE);
                     editCC.setVisibility(View.INVISIBLE);
-                    previewCancelledCheque.setVisibility(View.VISIBLE);
+                    previewCancelledCheque.setVisibility(View.INVISIBLE);
 
                 }
                 break;
@@ -768,6 +768,7 @@ public class BankDetailsActivity extends AppCompat {
                 acDetailsRadioButton.setChecked(true);
                 canceledCheckBlurImage.setVisibility(View.VISIBLE);
                 accountDetailsBlurImage.setVisibility(View.GONE);
+
 
                 bankName.requestFocus();
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);

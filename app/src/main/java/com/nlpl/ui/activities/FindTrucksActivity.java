@@ -200,34 +200,39 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
     }
 
     private void initMarker(ArrayList<UserResponse.UserList> userDetails) {
+        try {
+            LatLng latLng = new LatLng(Double.parseDouble(latitudeCurrent), Double.parseDouble(longitudeCurrent));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latLng.latitude, latLng.longitude), 10.0f));
 
-        LatLng latLng = new LatLng(Double.parseDouble(latitudeCurrent), Double.parseDouble(longitudeCurrent));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latLng.latitude, latLng.longitude), 10.0f));
+            mMap.getUiSettings().setMapToolbarEnabled(false);
 
-        mMap.getUiSettings().setMapToolbarEnabled(false);
+            for (int i = 0; i < userDetails.size(); i++) {
+                if (!userDetails.get(i).getUser_type().equals("Customer")) {
+                    double latitudes = Double.parseDouble(userDetails.get(i).getLatitude());
+                    double longitudes = Double.parseDouble(userDetails.get(i).getLongitude());
 
-        for (int i = 0; i < userDetails.size(); i++) {
-            if (!userDetails.get(i).getUser_type().equals("Customer")) {
-                double latitudes = Double.parseDouble(userDetails.get(i).getLatitude());
-                double longitudes = Double.parseDouble(userDetails.get(i).getLongitude());
+                    LatLng location = new LatLng(latitudes,
+                            longitudes);
 
-                LatLng location = new LatLng(latitudes,
-                        longitudes);
+                    marker = mMap.addMarker(new MarkerOptions().position(location)
+                            .title(userDetails.get(i).getUser_id())
+                            .snippet(userDetails.get(i).getUser_type()));
 
-                marker = mMap.addMarker(new MarkerOptions().position(location)
-                        .title(userDetails.get(i).getUser_id())
-                        .snippet(userDetails.get(i).getUser_type()));
-
-                LocationModel info = new LocationModel();
-                info.setUrl("");
-                marker.setTag(info);
+                    LocationModel info = new LocationModel();
+                    info.setUrl("");
+                    marker.setTag(info);
 
 //        if(mListMarker.size() != 0){
-                GoogleMapTextInfoAdapter googleMapTextInfoAdapter = new GoogleMapTextInfoAdapter(this, userDetails);
-                mMap.setInfoWindowAdapter(googleMapTextInfoAdapter);
+                    GoogleMapTextInfoAdapter googleMapTextInfoAdapter = new GoogleMapTextInfoAdapter(this, userDetails);
+                    mMap.setInfoWindowAdapter(googleMapTextInfoAdapter);
 //        }
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+
         }
+
     }
 
     //----------------------------------------------------------------------------------------------

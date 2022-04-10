@@ -50,7 +50,9 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.nlpl.R;
+import com.nlpl.model.Responses.UserResponse;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
+import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.CreateUser;
 import com.nlpl.utils.GetLocationPickUp;
@@ -65,6 +67,10 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegistrationActivity extends AppCompat {
 
@@ -113,6 +119,8 @@ public class RegistrationActivity extends AppCompat {
 
         if (!isEdit) {
             roleDialog.show();
+        }else{
+            getUserDetails(userId);
         }
         roleDialog.getWindow().setAttributes(lp);
         roleDialog.setCancelable(false);
@@ -127,10 +135,17 @@ public class RegistrationActivity extends AppCompat {
         actionBarMenuButton = (ImageView) action_bar.findViewById(R.id.action_bar_menu);
         actionBarSkip = (TextView) action_bar.findViewById(R.id.action_bar_skip);
 
-        actionBarSkip.setVisibility(View.VISIBLE);
+        if (!isEdit) {
+            actionBarSkip.setVisibility(View.VISIBLE);
+            actionBarBackButton.setVisibility(View.GONE);
+        }else{
+            actionBarSkip.setVisibility(View.GONE);
+            actionBarTitle.setText("Edit Personal Details");
+            actionBarBackButton.setVisibility(View.VISIBLE);
+        }
         actionBarMenuButton.setVisibility(View.GONE);
 
-        actionBarBackButton.setVisibility(View.GONE);
+        actionBarBackButton.setOnClickListener(view -> JumpTo.goToViewPersonalDetailsActivity(RegistrationActivity.this, userId, mobile, true));
 
         deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         //------------------------------------------------------------------------------------------
@@ -210,7 +225,6 @@ public class RegistrationActivity extends AppCompat {
             @Override
             public void onClick(View view) {
                 roleDialog.dismiss();
-                Log.i("Role Selected", role);
                 if (role != null) {
                     if (role.equals("Customer")) {
                         actionBarTitle.setText(getString(R.string.Registration_as) + getString(R.string.Load_Poster));
@@ -767,4 +781,40 @@ public class RegistrationActivity extends AppCompat {
         }
     }
 
+
+    public void getUserDetails(String userId) {
+        Call<UserResponse> call = ApiClient.getUserService().getUserDetailsParticular(userId);
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                UserResponse nameResponse = response.body();
+                UserResponse.UserList listObj = nameResponse.getData().get(0);
+                name.setText(listObj.getName());
+                address.setText(listObj.getAddress());
+                String phoneNumber = listObj.getAlternate_ph_no();
+                try {
+                    String s1 = phoneNumber.substring(2, 12);
+                    alternateMobile.setText(s1);
+                }catch (Exception e){
+                    alternateMobile.setText("");
+                }
+                pinCode.setText(listObj.getPin_code());
+                selectStateText.setText(listObj.getState_code());
+                selectDistrictText.setText(listObj.getPreferred_location());
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (isEdit){
+            JumpTo.goToViewPersonalDetailsActivity(RegistrationActivity.this, userId, mobile, true);
+        }
+    }
 }
