@@ -694,7 +694,7 @@ public class PersonalDetailsActivity extends AppCompat {
                     panConstrain.setVisibility(View.GONE);
                     aadharConstrain.setVisibility(View.GONE);
                     okButton.setVisibility(View.GONE);
-                    uploadPanTitle.setText("Your profile is under verification");
+                    uploadPanTitle.setText(getString(R.string.Your_profile_is_under_verification));
                     uploadAadharTitle.setVisibility(View.GONE);
                 }else{
                     panConstrain.setVisibility(View.VISIBLE);
@@ -1166,13 +1166,13 @@ public class PersonalDetailsActivity extends AppCompat {
 
         PinView otpCode = (PinView) otpRequest.findViewById(R.id.pin_view);
         TextView changeNumber = otpRequest.findViewById(R.id.otp_change_number);
-        changeNumber.setText("Cancel");
+        changeNumber.setText(getString(R.string.cancel));
         changeNumber.setOnClickListener(view -> {
             otpRequest.dismiss();
         });
         TextView otpCodeText = otpRequest.findViewById(R.id.otp_code_text);
         TextView otpSentText = otpRequest.findViewById(R.id.otp_text);
-        otpSentText.setText("Enter OTP Code sent on Aadhar linked mobile number");
+        otpSentText.setText(getString(R.string.Enter_OTP_Code_sent_on_Aadhar_linked_mobile_number));
         Button verifyOtp = otpRequest.findViewById(R.id.otp_button);
         countdown = otpRequest.findViewById(R.id.countdown);
         setCountdown();

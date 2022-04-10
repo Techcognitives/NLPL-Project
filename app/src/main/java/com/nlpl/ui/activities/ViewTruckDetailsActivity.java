@@ -568,8 +568,8 @@ public class ViewTruckDetailsActivity extends AppCompat {
         TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
         TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-        alertTitle.setText("Delete Truck Details");
-        alertMessage.setText("Are you sure?\nYou want to delete Truck Details?");
+        alertTitle.setText(getString(R.string.Delete_Truck_Details));
+        alertMessage.setText(getString(R.string.Truck_Delete_message));
         alertPositiveButton.setText(getString(R.string.yes));
         alertNegativeButton.setText(getString(R.string.no));
 

@@ -358,7 +358,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:drawableStart="@drawable/google_address_small"
-        android:text="Search Address"
+        android:text="@string/Search_Address"
         android:onClick="onClickOpenMaps"
         android:textColor="@color/button_blue"
         android:textSize="14sp"

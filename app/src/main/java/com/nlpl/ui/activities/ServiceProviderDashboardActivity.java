@@ -271,7 +271,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
         ImageView profileImageView = (ImageView) bottomNav.findViewById(R.id.bottom_nav_profile_image_view);
         profileImageView.setImageDrawable(getDrawable(R.drawable.black_truck_small));
         View customerView = bottomNav.findViewById(R.id.bottom_nav_bar_find_underline);
-        profileText.setText("Trips");
+        profileText.setText(getString(R.string.Trips));
         ConstraintLayout truck = findViewById(R.id.bottom_nav_trip);
         truck.setVisibility(View.GONE);
 
@@ -1208,10 +1208,10 @@ public class ServiceProviderDashboardActivity extends AppCompat {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Truck Details");
-                alertMessage.setText("You cannot bid unless you have a Truck");
-                alertPositiveButton.setText("+ Add");
-                alertNegativeButton.setText("Cancel");
+                alertTitle.setText(getString(R.string.Truck_Details));
+                alertMessage.setText(getString(R.string.You_cannot_bid_unless_you_have_a_Truck));
+                alertPositiveButton.setText(getString(R.string.Add));
+                alertNegativeButton.setText(getString(R.string.cancel));
 
                 alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -1246,10 +1246,10 @@ public class ServiceProviderDashboardActivity extends AppCompat {
                 TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                alertTitle.setText("Truck Details");
-                alertMessage.setText("You cannot bid unless you have a Driver");
-                alertPositiveButton.setText("+ Add");
-                alertNegativeButton.setText("Cancel");
+                alertTitle.setText(getString(R.string.Truck_Details));
+                alertMessage.setText(getString(R.string.You_cannot_bid_unless_you_have_a_Driver));
+                alertPositiveButton.setText(getString(R.string.Add));
+                alertNegativeButton.setText(getString(R.string.cancel));
 
                 alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -3241,7 +3241,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
         chooseDialog.getWindow().setAttributes(lp2);
 
         TextView cameraText = chooseDialog.findViewById(R.id.dialog_camera_text);
-        cameraText.setText("Whats App");
+        cameraText.setText(getString(R.string.Whats_App));
         TextView galleryText = chooseDialog.findViewById(R.id.dialog_photo_library_text);
         galleryText.setText(getString(R.string.Call));
 

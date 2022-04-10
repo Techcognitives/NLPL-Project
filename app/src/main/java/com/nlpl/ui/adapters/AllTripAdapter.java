@@ -41,12 +41,12 @@ public class AllTripAdapter extends RecyclerView.Adapter<AllTripAdapter.SearchLo
         TripResponse.TripList obj = array_indian_states.get(position);
         holder.startCity.setText(obj.getPick_city());
         holder.endCity.setText(obj.getDrop_city());
-        holder.date.setText("Trip Date: " + obj.getTrip_date());
-        holder.time.setText("Trip Time: " + obj.getTrip_start_time());
+        holder.date.setText(activity.getString(R.string.Trip_Date_colon) + obj.getTrip_date());
+        holder.time.setText(activity.getString(R.string.Trip_Time_colon) + obj.getTrip_start_time());
         holder.budget.setText("₹ " + obj.getTrip_budget());
-        holder.body.setText("Body Type: " + obj.getVehicle_model());
-        holder.capacity.setText("Load Type: " + obj.getCapacity());
-        holder.note.setText("Notes: " + obj.getNotes_meterial_des());
+        holder.body.setText(activity.getString(R.string.bodyType) + obj.getVehicle_model());
+        holder.capacity.setText(activity.getString(R.string.Load_Type) + obj.getCapacity());
+        holder.note.setText(activity.getString(R.string.Notes_colon) + obj.getNotes_meterial_des());
     }
 
     @Override

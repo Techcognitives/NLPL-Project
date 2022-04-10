@@ -156,8 +156,8 @@ public class SettingsAndPreferences extends AppCompat {
         TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
         TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-        alertTitle.setText("Delete Preferred Location");
-        alertMessage.setText("Are you sure you want to delete Preferred Location");
+        alertTitle.setText(getString(R.string.Delete_Preferred_Location));
+        alertMessage.setText(getString(R.string.Are_you_sure_you_want_to_delete_Preferred_Location));
         alertPositiveButton.setText(getString(R.string.ok));
         alertNegativeButton.setText(getString(R.string.cancel));
         alertPositiveButton.setOnClickListener(view -> {

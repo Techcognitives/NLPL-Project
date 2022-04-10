@@ -195,6 +195,7 @@ public class OtpCodeActivity extends AppCompat {
 //                initiateOtp();
                 setCountdown();
                 reSendOtp.setVisibility(View.INVISIBLE);
+                countdown.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -222,6 +223,7 @@ public class OtpCodeActivity extends AppCompat {
                 countdown.setText("00:00");
                 reSendOtp.setVisibility(View.VISIBLE);
 //                otpEdit.setEnabled(false);
+                countdown.setVisibility(View.GONE);
             }
         }.start();
     }

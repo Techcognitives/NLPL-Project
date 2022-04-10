@@ -34,10 +34,12 @@
     <string name="name_hint">अपना नाम दर्ज करें </string>
     <string name="email_id">अपना ईमेल आईडी दर्ज करें (ऑप्शनल)</string>         //dot
     <string name="location">पता* </string>
+    <string name="Search_Address">खोज पता</string>
     <string name="select_state">राज्य </string>
     <string name="Select_State">राज्य चुनें  </string>       //new
     <string name="Search_States">खोज राज्य</string>
     <string name="select_city">शहर </string>
+    <string name="select_city_name">शहर चुनें </string>
     <string name="pin_code">पिन कोड </string>
     <string name="address">पता खोजें या टाइप करें </string>
     <string name="are_u_sp">ट्रक मालिक / ड्राइवर / ब्रोकर? </string>
@@ -50,6 +52,7 @@
     //new
     <string name="Registration_as">रजिस्ट्रेशन जैसा<p> </p></string>
     <string name="Load_Poster">लोड पोस्टर<p> </p></string>
+    <string name="Load_Poster_colon">लोड पोस्टर:</string>
     <string name="Registration_Successful">रजिस्ट्रेशन सफल </string>
     <string name="Welcome_to">आपका स्वागत है. </string>
     <string name="Please_update_your_profile">\n\nकृपया अपनी प्रोफ़ाइल अपडेट करें और प्लेटफ़ॉर्म उपभोग लीजिये. </string>       //dot
@@ -64,7 +67,9 @@
     <string name="Please_complete_your_profile">कृपया अपनी प्रोफ़ाइल पूर्ण करें</string>
     <string name="Profile_Photo">प्रोफ़ाइल फ़ोटो</string>
     <string name="Upload_Profile">प्रोफ़ाइल अपलोड करें. </string>
-
+    <string name="Provide_Access">पहुँच प्रदान करें</string>
+    <string name="Please_provide_location_access">कृपया स्थान पहुँच प्रदान करें</string>
+    <string name="Go_to_settings">सेटिंग्स पर जाएँ</string>
 
     //----------------------------------------------------------------------------------------------
 
@@ -81,7 +86,7 @@
 
     //---------------------------------------Personal Details Activity------------------------------
     <string name="Name">नाम: </string>       //new
-    <string name="Email">ईमेल: </string>       //new
+    <string name="Email">ईमेल:</string>       //new
     <string name="Address">पता: </string>    //new
     <string name="PANCard">पैन कार्ड: </string>
     <string name="Upload">अपलोड </string>
@@ -114,6 +119,8 @@
     <string name="GST_No">जीएसटी नंबर: </string>
     <string name="PAN_No">पैन नंबर: </string>
     <string name="Edit_Profile_Picture">प्रोफ़ाइल पिक्चर एडिट करें </string>       //new       //dot
+    <string name="Your_profile_is_under_verification">आपकी प्रोफ़ाइल का वेरिफ़िकेशन किया जा रहा है</string>
+    <string name="Enter_OTP_Code_sent_on_Aadhar_linked_mobile_number">आधार लिंक्ड मोबाइल नंबर पर भेजा गया ओटीपी कोड दर्ज करें</string>
 
     //----------------------------------------------------------------------------------------------
 
@@ -179,6 +186,9 @@
     <string name="Driver_Selfie">ड्राइवर सेल्फी </string>
     <string name="Select_Load_Type">लोड टाइप चुनें </string>       //new        //dot
     <string name="Selected_Body_Type_Load_Type">चुनें बॉडी टाइप और लोड टाइप </string>     //new
+    <string name="Locate_Truck">ट्रक का पता लगाएं</string>
+    <string name="Delete_Truck_Details">ट्रक जानकारी हटाएँ</string>
+    <string name="Truck_Delete_message">क्या आपको यकीन है?\nआप ट्रक जानकारी को हटाना चाहते हैं?</string>
 
     //----------------------------------------------------------------------------------------------
 
@@ -221,6 +231,7 @@
     <string name="Current_Location">करंट लोकेशन </string>
     <string name="Truck_Owner">ट्रक मालिक<p> </p></string> //new
     <string name="Driver">ड्राइवर<p> </p></string>           //new
+    <string name="Driver_colon">ड्रायव्हर: </string>
     <string name="Search_Driver_by_Number">नंबर के आधार पर ड्राइवर खोजें</string>
     <string name="Broker">ब्रोकर<p> </p></string>           //new
     <string name="Enter_Driving_License_Number">ड्राइविंग लाइसेंस नंबर दर्ज करें </string>       //new
@@ -350,6 +361,7 @@
     <string name="Search_by_Truck_Number">ट्रक नंबर द्वारा खोजें </string>
     <string name="feet">फीट </string>
     <string name="Notes">नोट्स </string>
+    <string name="Notes_colon">नोट्स: </string>
     <string name="NotesIfAny">टाइप करें या चुनें </string>
     <string name="acceptBid">स्वीकार करें और बिड लगाएं </string>
     <string name="cancel">रद्द करना</string>
@@ -366,10 +378,11 @@
     <string name="Withdraw_Bid">बिड वापस लेना </string>
     <string name="Do_you_really_want_to_withdraw_bid">क्या आप वास्तव में बिड वापस लेना चाहते हैं? </string>
     <string name="Bid_is_withdrawn_successfully">बिड सफलतापूर्वक वापस ले ली जाती है. ग्राहक अब आपकी बिड नहीं देखेगा. </string>
-    <string name="Start_Trip">यात्रा शुरू करें </string>                          //dot
+    <string name="Start_Trip">ट्रिप शुरू करें </string>                          //dot
+    <string name="End_Trip">ट्रिप अंत करें</string>
     <string name="View_Trip_Details">ट्रिप जानकारी देखें</string>
     <string name="Trip_Details">ट्रिप जानकारी</string>
-    <string name="Trip_Started_Successfully">यात्रा सफलतापूर्वक प्रारंभ करें </string>        //dot
+    <string name="Trip_Started_Successfully">ट्रिप सफलतापूर्वक प्रारंभ करें </string>        //dot
     <string name="You_can_track_your_trip_in_track_section">आप ट्रैक अनुभाग में अपनी ट्रिप को ट्रैक कर सकते हैं </string>
     <string name="Call">कॉल </string>
     <string name="Whats_App">Whats App </string>                         //dot
@@ -386,6 +399,13 @@
     <string name="You_cannot_bid_less_than_50_of_customer_Budget">आप ग्राहक बजट के ५0% से कम बिड नहीं लगा सकते</string>
     <string name="Edit_Load">एडिट लोड</string>
     <string name="Would_you_like_to_edit_your_Load">क्या आप अपना लोड एडिट करना चाहेंगे?</string>
+    <string name="You_cannot_bid_unless_you_have_a_Truck">आप तब तक बोली नहीं लगा सकते जब तक कि आपके पास ट्रक न हो</string>
+    <string name="Trip_Code">ट्रिप कोड</string>
+    <string name="Resend_Trip_Code">ट्रिप कोड पुन: भेजें</string>
+    <string name="Please_enter_Trip_Code_sent_to_Load_Posters_mobile">कृपया लोड पोस्टर के मोबाइल पर भेजा गया ट्रिप कोड दर्ज करें (+91 </string>
+    <string name="Verify_Trip_Code">ट्रिप कोड वेरीफाई करें</string>
+    <string name="Thank_You">धन्यवाद</string>
+    <string name="Your_has_ended_Thank_you_for_using_FYT">आपका समाप्त हो गया है FYT का उपयोग करने के लिए धन्यवाद</string>
 
     //----------------------------------------------------------------------------------------------
 
@@ -425,12 +445,21 @@
     <string name="visible_for_other_Service_Provider">वर्तमान सेवा प्रोवाइडर से वापस लिया गया है और अन्य सेवा प्रोवाइडर के लिए खाई देगा लोड </string>
     <string name="Close">बंद </string>
     <string name="Bids_Received">बिड प्राप्त हुई </string>         //new
-    <string name="Loads_Accepted">लोड स्वीकार किए गए </string>       //new       //dot
+    <string name="Loads_Accepted">बिड स्वीकार किए गए </string>       //new       //dot
     <string name="Profile">प्रोफ़ाइल </string>                     //new
     <string name="Track">ट्रैक </string>                         //new
     <string name="Loads_Expired">लोड कालबाह्य </string>         //new        //dot
     <string name="Loads_Completed">लोड पूर्ण </string>     //new
     <string name="Payments">पेमेंट </string>                   //new
+    <string name="Trucks">ट्रक्स</string>
+    <string name="Make_Payment">पेमेंट करें</string>
+    <string name="Payment_Details">पेमेंट डिटेल्स\n\n</string>
+    <string name="FYT_Platform_Charges">एफ़वाईटी प्लेटफ़ॉर्म शुल्क </string>
+    <string name="FYT_Promotional_Discount">(-) एफ़वाईटी प्रचार छूट </string>
+    <string name="Your_Final_Payment">आपका अंतिम पेमेंट                        ₹       0.00</string>
+    <string name="Advance_Payment">एडवांस पेमेंट </string>
+    <string name="Search_Load_by">इसके द्वारा खोज लोड करें</string>
+
 
     //----------------------------------------------------------------------------------------------
 
@@ -440,7 +469,8 @@
     <string name="Preferred_Location_1">पसंदीदा स्थान १ +</string>     //new               //dot
     <string name="Preferred_Location_2">पसंदीदा स्थान २ +</string>     //new
     <string name="Preferred_Location_3">पसंदीदा स्थान ३ +</string>     //new
-
+    <string name="Delete_Preferred_Location">पसंदीदा स्थान हटाएँ</string>
+    <string name="Are_you_sure_you_want_to_delete_Preferred_Location">क्या आप वाकई पसंदीदा स्थान हटाना चाहते हैं</string>
 
     //----------------------------------------------------------------------------------------------
 
@@ -471,6 +501,11 @@
     <string name="Select_Driver_to_Bid">बिड लगाने के लिए ड्राइवर को चुनें </string>
     <string name="Loads_and_Trips">लोड और ट्रिप </string>             //new
     <string name="Trip_History">ट्रिप हिस्ट्री </string>                   //new      //dot
+    <string name="Trips">ट्रिप्स</string>
+    <string name="Edit_Trip">एडिट ट्रिप</string>
+    <string name="Update_Trip">ट्रिप अपडेट करें</string>
+    <string name="Would_you_like_to_edit_your_Trip">क्या आप अपनी ट्रिप एडिट करना चाहेंगे?</string>
+    <string name="Find_Trips">ट्रिप्स ढूँढें</string>
 
 
     //----------------------------------------------------------------------------------------------
@@ -486,6 +521,7 @@
     <string name="Select_Platform_Charges">प्लेटफ़ॉर्म शुल्क को चुनें </string>
     <string name="NLPL_will_take_ownership_of_delivery">3% एनएलपीएल डिलीवरी के एंड-टू-एंड मिल्कियत को लेगा </string>     //dot
     <string name="Connect_with_Driver_Truck_Owner_Broker">1% ड्राइवर के साथ कनेक्ट करें / ट्रक मालिक / ब्रोकर </string>
+    <string name="NLPL_will_take_endToend_ownership_of_delivery">% एनएलपीएल डिलीवरी के एंड-टू-एंड मिल्कियत को लेगा. </string>
     <string name="Pay">पेमेंट </string>
     <string name="Please_add_Driver_Bank_Details">कृपया ड्राइवर बैंक जानकारी जोड़ें </string>
     <string name="in_Advance">% एडवांस में </string>         //new
@@ -505,7 +541,7 @@
     <string name="Did_not_deliver_on_time">टाइम पर नहीं दिया </string>        //dot
     <string name="Goods_Damaged">सामान को नुकसान पहुंचा </string>
     <string name="Other">अन्य </string>                                     //dot
-
+    <string name="Rate_Service_Provider">दर सेवा प्रोवाइडर</string>
 
     //----------------------------------------------------------------------------------------------
 
@@ -518,5 +554,21 @@
     <string name="whats_app">What"'"s App</string>
     <string name="call">कॉल</string>
     //----------------------------------------------------------------------------------------------
+
+    //------------------------------------ Post A Trip ---------------------------------------------
+    <string name="Post_A_Trip">एक ट्रिप पोस्ट करें</string>
+    <string name="Trip_Posted_Successfully">ट्रिप सफलतापूर्वक पोस्ट</string>
+    <string name="Trip_Post_Unsuccessful">ट्रिप पोस्ट असफल\nकृपया पुन: प्रयास करें</string>
+    <string name="Delete_Trip">ट्रिप हटाएँ</string>
+    <string name="Trip_Deleted_Successfully">ट्रिप सफलतापूर्वक हटाई गई</string>
+    <string name="Trip_Delete_Unsuccessful">ट्रिप हटाएँ असफल\nकृपया पुन: प्रयास करें</string>
+    <string name="Delete_message">क्या आपको यकीन है,\nआप ट्रिप डिटेल्स हटाना चाहते हैं?</string>
+    <string name="Trip_Updated_Successfully">ट्रिप सफलतापूर्वक अपडेट की गई</string>
+    <string name="Trip_Update_Unsuccessful">ट्रिप अपडेट असफल\nकृपया पुन: प्रयास करें</string>
+    <string name="Trip_Date_colon">ट्रिप डेट: </string>
+    <string name="Trip_Time_colon">ट्रिप टाइम: </string>
+
+    //----------------------------------------------------------------------------------------------
+
 
 </resources>

@@ -63,7 +63,7 @@
                 android:paddingTop="5dp"
                 android:paddingEnd="2dp"
                 android:paddingBottom="5dp"
-                android:text="Trips"
+                android:text="@string/Trips"
                 android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textColor="@color/light_black"

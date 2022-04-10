@@ -263,7 +263,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
         TextView profileText = (TextView) bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
 
-        profileText.setText("Trucks");
+        profileText.setText(getString(R.string.Trucks));
 
         acceptedList = new ArrayList<>();
         arrayAssignedDriverId = new ArrayList<>();
@@ -1208,7 +1208,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         capacityBySP.setText(obj.getCapacity());
         bodyTypeBySP.setText(obj.getBody_type());
         notesBySP.setText(obj.getNotes());
-        negotiableBySP.setText("No");
+        negotiableBySP.setText(getString(R.string.no));
         //----------------------------------------------------------------------------------------------------------------
 
         customerQuote = (TextView) acceptFinalBid.findViewById(R.id.dialog_accept_bid_customer_final_quote_textview);
@@ -1245,7 +1245,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                         paymentTypeFromAPI = obj.getString("payment_type");
                         paymentMethod = paymentTypeFromAPI;
 
-                        headingLoad.setText("Load Details: " + pickupCity + "-" + dropCity + "-000");
+                        headingLoad.setText(getString(R.string.Load_Details) + pickupCity + "-" + dropCity + "-000");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1300,8 +1300,8 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                 threePercentage = alert.findViewById(R.id.dialog_payment_three_percent_radio_button);
                 onePercentage = alert.findViewById(R.id.dialog_payment_one_percent_radio_button);
 
-                threePercentage.setText(platformFeesMain + "% NLPL will take end-to-end ownership of delivery");
-                onePercentage.setText(platformFeesBasic + "% Connect with Driver / Truck Owner / Broker");
+                threePercentage.setText(platformFeesMain + getString(R.string.NLPL_will_take_endToend_ownership_of_delivery));
+                onePercentage.setText(platformFeesBasic + getString(R.string.Connect_with_Driver_Truck_Owner_Broker));
 
                 View stepOne, stepTwo;
                 stepOne = alert.findViewById(R.id.dialog_payment_step_one_view);
@@ -1383,13 +1383,13 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
                                 alertMessage.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-                                alertTitle.setText("Make Payment");
-                                alertMessage.setText("Payment Details\n\n" +
-                                        "FYT Platform Charges " + platformFeesMain + "%.              ₹     " + finalQuote + "\n" +
-                                        "(-) FYT Promotional Discount " + platformFeesMain + "%.  ₹   - " + finalQuote + "\n\n" +
-                                        "Your Final Payment                        ₹       0.00");
-                                alertPositiveButton.setText("Pay");
-                                alertNegativeButton.setText("Cancel");
+                                alertTitle.setText(getString(R.string.Make_Payment));
+                                alertMessage.setText(getString(R.string.Payment_Details) +
+                                        getString(R.string.FYT_Platform_Charges) + platformFeesMain + "%.              ₹     " + finalQuote + "\n" +
+                                        getString(R.string.FYT_Promotional_Discount) + platformFeesMain + "%.  ₹   - " + finalQuote + "\n\n" +
+                                        getString(R.string.Your_Final_Payment));
+                                alertPositiveButton.setText(getString(R.string.Pay));
+                                alertNegativeButton.setText(getString(R.string.cancel));
 
                                 alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -1445,13 +1445,13 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
                                 alertMessage.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-                                alertTitle.setText("Make Payment");
-                                alertMessage.setText("Payment Details\n\n" +
-                                        "FYT Platform Charges " + platformFeesBasic + "%.              ₹     " + finalQuote + "\n" +
-                                        "(-) FYT Promotional Discount " + platformFeesBasic + "%.  ₹   - " + finalQuote + "\n\n" +
-                                        "Your Final Payment                       ₹       0.00");
-                                alertPositiveButton.setText("Pay");
-                                alertNegativeButton.setText("Cancel");
+                                alertTitle.setText(getString(R.string.Make_Payment));
+                                alertMessage.setText(getString(R.string.Payment_Details) +
+                                        getString(R.string.FYT_Platform_Charges) + platformFeesBasic + "%.              ₹     " + finalQuote + "\n" +
+                                        getString(R.string.FYT_Promotional_Discount) + platformFeesBasic + "%.  ₹   - " + finalQuote + "\n\n" +
+                                        getString(R.string.Your_Final_Payment));
+                                alertPositiveButton.setText(getString(R.string.Pay));
+                                alertNegativeButton.setText(getString(R.string.cancel));
 
                                 alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -1506,13 +1506,13 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
                                 alertMessage.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-                                alertTitle.setText("Make Payment");
-                                alertMessage.setText("Payment Details\n\n" +
-                                        "FYT Platform Charges " + platformFeesMain + "%.              ₹     " + finalQuote + "\n" +
-                                        "(-) FYT Promotional Discount " + platformFeesMain + "%.  ₹   - " + finalQuote + "\n\n" +
-                                        "Your Final Payment                        ₹       0.00");
-                                alertPositiveButton.setText("Pay");
-                                alertNegativeButton.setText("Cancel");
+                                alertTitle.setText(getString(R.string.Make_Payment));
+                                alertMessage.setText(getString(R.string.Payment_Details) +
+                                        getString(R.string.FYT_Platform_Charges) + platformFeesMain + "%.              ₹     " + finalQuote + "\n" +
+                                        getString(R.string.FYT_Promotional_Discount) + platformFeesMain + "%.  ₹   - " + finalQuote + "\n\n" +
+                                        getString(R.string.Your_Final_Payment));
+                                alertPositiveButton.setText(getString(R.string.Pay));
+                                alertNegativeButton.setText(getString(R.string.cancel));
 
                                 alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -1567,13 +1567,13 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
                                 alertMessage.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-                                alertTitle.setText("Make Payment");
-                                alertMessage.setText("Payment Details\n\n" +
-                                        "FYT Platform Charges " + platformFeesBasic + "%.              ₹     " + finalQuote + "\n" +
-                                        "(-) FYT Promotional Discount " + platformFeesBasic + "%.  ₹   - " + finalQuote + "\n\n" +
-                                        "Your Final Payment                       ₹       0.00");
-                                alertPositiveButton.setText("Pay");
-                                alertNegativeButton.setText("Cancel");
+                                alertTitle.setText(getString(R.string.Make_Payment));
+                                alertMessage.setText(getString(R.string.Payment_Details) +
+                                        getString(R.string.FYT_Platform_Charges) + platformFeesBasic + "%.              ₹     " + finalQuote + "\n" +
+                                        getString(R.string.FYT_Promotional_Discount) + platformFeesBasic + "%.  ₹   - " + finalQuote + "\n\n" +
+                                        getString(R.string.Your_Final_Payment));
+                                alertPositiveButton.setText(getString(R.string.Pay));
+                                alertNegativeButton.setText(getString(R.string.cancel));
 
                                 alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -1632,14 +1632,14 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
                                 alertMessage.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-                                alertTitle.setText("Make Payment");
-                                alertMessage.setText("Payment Details\n\n" +
-                                        "Advance Payment " + paymentTypeFromAPI + "%                  ₹     " + percentVal + "\n" +
-                                        "FYT Platform Charges " + platformFeesMain + "%.              ₹     " + semiFinalQuote + "\n" +
-                                        "(-) FYT Promotional Discount " + platformFeesMain + "%.  ₹   - " + semiFinalQuote + "\n\n" +
-                                        "Your Final Payment                        ₹       0.00");
-                                alertPositiveButton.setText("Pay");
-                                alertNegativeButton.setText("Cancel");
+                                alertTitle.setText(getString(R.string.Make_Payment));
+                                alertMessage.setText(getString(R.string.Payment_Details) +
+                                        getString(R.string.Advance_Payment) + paymentTypeFromAPI + "%                  ₹     " + percentVal + "\n" +
+                                        getString(R.string.FYT_Platform_Charges) + platformFeesMain + "%.              ₹     " + semiFinalQuote + "\n" +
+                                        getString(R.string.FYT_Promotional_Discount) + platformFeesMain + "%.  ₹   - " + semiFinalQuote + "\n\n" +
+                                        getString(R.string.Your_Final_Payment));
+                                alertPositiveButton.setText(getString(R.string.Pay));
+                                alertNegativeButton.setText(getString(R.string.cancel));
 
                                 alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -1695,14 +1695,14 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
                                 alertMessage.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-                                alertTitle.setText("Make Payment");
-                                alertMessage.setText("Payment Details\n\n" +
-                                        "Advance Payment " + paymentTypeFromAPI + "%                  ₹     " + percentVal + "\n" +
-                                        "FYT Platform Charges " + platformFeesBasic + "%.              ₹     " + semiFinalQuote + "\n" +
-                                        "(-) FYT Promotional Discount " + platformFeesBasic + "%.  ₹   - " + semiFinalQuote + "\n\n" +
-                                        "Your Final Payment                       ₹       0.00");
-                                alertPositiveButton.setText("Pay");
-                                alertNegativeButton.setText("Cancel");
+                                alertTitle.setText(getString(R.string.Make_Payment));
+                                alertMessage.setText(getString(R.string.Payment_Details) +
+                                        getString(R.string.Advance_Payment) + paymentTypeFromAPI + "%                  ₹     " + percentVal + "\n" +
+                                        getString(R.string.FYT_Platform_Charges) + platformFeesBasic + "%.              ₹     " + semiFinalQuote + "\n" +
+                                        getString(R.string.FYT_Promotional_Discount) + platformFeesBasic + "%.  ₹   - " + semiFinalQuote + "\n\n" +
+                                        getString(R.string.Your_Final_Payment));
+                                alertPositiveButton.setText(getString(R.string.Pay));
+                                alertNegativeButton.setText(getString(R.string.cancel));
 
                                 alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -3244,7 +3244,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         chooseDialog.getWindow().setAttributes(lp2);
 
         TextView cameraText = chooseDialog.findViewById(R.id.dialog_camera_text);
-        cameraText.setText("Whats App");
+        cameraText.setText(getString(R.string.Whats_App));
         TextView galleryText = chooseDialog.findViewById(R.id.dialog_photo_library_text);
         galleryText.setText(getString(R.string.Call));
 

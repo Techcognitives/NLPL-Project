@@ -1099,11 +1099,13 @@
     <string name="name_hint">Enter your Name</string>
     <string name="email_id">Enter your Email ID (Optional)</string>
     <string name="location">Address*</string>
+    <string name="Search_Address">Search Address</string>
     <string name="select_state">State</string>
     <string name="Select_State">Select State</string>
     //new
     <string name="Search_States">Search States</string>
     <string name="select_city">City</string>
+    <string name="select_city_name">Select City</string>
     <string name="pin_code">PIN Code</string>
     <string name="address">Type Address</string>
     <string name="are_u_sp">Truck Owner / Driver / Broker? </string>
@@ -1116,6 +1118,7 @@
     //new
     <string name="Registration_as">Registration as<p> </p></string>
     <string name="Load_Poster">Load Poster<p> </p></string>
+    <string name="Load_Poster_colon">Load Poster:</string>
     <string name="Registration_Successful">Registration Successful</string>
     <string name="Welcome_to">Welcome to </string>
     <string name="Please_update_your_profile">\n\nPlease update your profile and explore platform benefits.</string>
@@ -1132,6 +1135,9 @@
     <string name="Please_complete_your_profile">Please complete your profile</string>
     <string name="Profile_Photo">Profile Photo</string>
     <string name="Upload_Profile">Upload Profile </string>
+    <string name="Provide_Access">Provide Access</string>
+    <string name="Please_provide_location_access">Please provide location access</string>
+    <string name="Go_to_settings">Go to settings</string>
 
     //----------------------------------------------------------------------------------------------
 
@@ -1185,6 +1191,8 @@
     <string name="PAN_No">PAN No.: </string>
     <string name="Edit_Profile_Picture">Edit Profile Picture</string>
     //new
+    <string name="Your_profile_is_under_verification">Your profile is under verification</string>
+    <string name="Enter_OTP_Code_sent_on_Aadhar_linked_mobile_number">Enter OTP Code sent on Aadhar linked mobile number</string>
 
     //----------------------------------------------------------------------------------------------
 
@@ -1213,7 +1221,7 @@
     //new
     <string name="Enter_AC_Details">Enter A/C Details</string>
     //new
-    <string name="Upload_a_photo_of_Canceled_Check">Upload a photo of Canceled Check</string>
+    <string name="Upload_a_photo_of_Canceled_Check">Upload a photo of cancelled cheque</string>
     //new
     <string name="Cancelled_Cheque">Cancelled Cheque*</string>
     <string name="OR">--------------------- OR ---------------------</string>
@@ -1256,6 +1264,9 @@
     //new
     <string name="Selected_Body_Type_Load_Type">Selected Body Type &amp; Load Type</string>
     //new
+    <string name="Locate_Truck">Locate Truck</string>
+    <string name="Delete_Truck_Details">Delete Truck Details</string>
+    <string name="Truck_Delete_message">Are you sure?\nYou want to delete Truck Details?</string>
 
     //----------------------------------------------------------------------------------------------
 
@@ -1302,6 +1313,7 @@
     //new
     <string name="Driver">Driver<p> </p></string>
     //new
+    <string name="Driver_colon">Driver: </string>
     <string name="Search_Driver_by_Number">Search Driver by Number</string>
     <string name="Broker">Broker<p> </p></string>
     //new
@@ -1442,6 +1454,7 @@
     <string name="Search_by_Truck_Number">Search by Truck Number</string>
     <string name="feet">Feet</string>
     <string name="Notes">Notes</string>
+    <string name="Notes_colon">Notes: </string>
     <string name="NotesIfAny">Type or select</string>
     <string name="acceptBid">Accept &amp; Bid</string>
     <string name="cancel">Cancel</string>
@@ -1459,6 +1472,7 @@
     <string name="Do_you_really_want_to_withdraw_bid">Do you really want to withdraw bid.</string>
     <string name="Bid_is_withdrawn_successfully">Bid is withdrawn successfully. Customer will no longer see your Bid.</string>
     <string name="Start_Trip">Start Trip</string>
+    <string name="End_Trip">End Trip</string>
     <string name="View_Trip_Details">View Trip Details</string>
     <string name="Trip_Details">Trip Details</string>
     <string name="Trip_Started_Successfully">Trip Started Successfully</string>
@@ -1485,6 +1499,13 @@
     <string name="You_cannot_bid_less_than_50_of_customer_Budget">You cannot bid less than 50% of customer Budget</string>
     <string name="Edit_Load">Edit Load</string>
     <string name="Would_you_like_to_edit_your_Load">Would you like to edit your Load?</string>
+    <string name="You_cannot_bid_unless_you_have_a_Truck">You cannot bid unless you have a Truck</string>
+    <string name="Trip_Code">Trip Code</string>
+    <string name="Resend_Trip_Code">Resend Trip Code</string>
+    <string name="Please_enter_Trip_Code_sent_to_Load_Posters_mobile">Please enter Trip Code sent to Load Poster\'s mobile (+91 </string>
+    <string name="Verify_Trip_Code">Verify Trip Code</string>
+    <string name="Thank_You">Thank You</string>
+    <string name="Your_has_ended_Thank_you_for_using_FYT">Your has ended Thank you for using FYT</string>
 
     //----------------------------------------------------------------------------------------------
 
@@ -1525,7 +1546,7 @@
     <string name="Close">Close</string>
     <string name="Bids_Received">Bids Received</string>
     //new
-    <string name="Loads_Accepted">Loads Accepted</string>
+    <string name="Loads_Accepted">Bids Accepted</string>
     //new
     <string name="Profile">Profile</string>
     //new
@@ -1537,7 +1558,15 @@
     //new
     <string name="Payments">Payments</string>
     //new
-
+    <string name="Trucks">Trucks</string>
+    <string name="Make_Payment">Make Payment</string>
+    <string name="Payment_Details">Payment Details\n\n</string>
+    <string name="FYT_Platform_Charges">FYT Platform Charges </string>
+    <string name="FYT_Promotional_Discount">(-) FYT Promotional Discount </string>
+    <string name="Your_Final_Payment">Your Final Payment                        ₹       0.00</string>
+    <string name="Advance_Payment">Advance Payment </string>
+    <string name="Search_Load_by">Search Load by</string>
+    
     //----------------------------------------------------------------------------------------------
 
     //--------------------------------Customer Settings And
@@ -1550,7 +1579,8 @@
     //new
     <string name="Preferred_Location_3">Preferred Location 3 +</string>
     //new
-
+    <string name="Delete_Preferred_Location">Delete Preferred Location</string>
+    <string name="Are_you_sure_you_want_to_delete_Preferred_Location">Are you sure you want to delete Preferred Location</string>
 
     //----------------------------------------------------------------------------------------------
 
@@ -1583,7 +1613,11 @@
     //new
     <string name="Trip_History">Trip History</string>
     //new
-
+    <string name="Trips">Trips</string>
+    <string name="Edit_Trip">Edit Trip</string>
+    <string name="Update_Trip">Update Trip</string>
+    <string name="Would_you_like_to_edit_your_Trip">Would you like to edit your Trip?</string>
+    <string name="Find_Trips">Find Trips</string>
 
     //----------------------------------------------------------------------------------------------
 
@@ -1598,6 +1632,7 @@
     <string name="Select_Platform_Charges">Select Platform Charges</string>
     <string name="NLPL_will_take_ownership_of_delivery">3% NLPL will take end-to-end ownership of delivery</string>
     <string name="Connect_with_Driver_Truck_Owner_Broker">1% Connect with Driver / Truck Owner / Broker</string>
+    <string name="NLPL_will_take_endToend_ownership_of_delivery">% NLPL will take end-to-end ownership of delivery</string>
     <string name="Pay">Pay</string>
     <string name="Please_add_Driver_Bank_Details">Please add Driver Bank Details</string>
     <string name="in_Advance">% in Advance</string>
@@ -1617,6 +1652,7 @@
     <string name="Did_not_deliver_on_time">Did not deliver on time</string>
     <string name="Goods_Damaged">Goods Damaged</string>
     <string name="Other">Other</string>
+    <string name="Rate_Service_Provider">Rate Service Provider</string>
 
 
     //----------------------------------------------------------------------------------------------
@@ -1629,6 +1665,21 @@
     //---------------------------- Find Truck ------------------------------------------------------
     <string name="whats_app">What"'"s App</string>
     <string name="call">Call</string>
+    //----------------------------------------------------------------------------------------------
+
+    //------------------------------------ Post A Trip ---------------------------------------------
+    <string name="Post_A_Trip">Post A Trip</string>
+    <string name="Trip_Posted_Successfully">Trip Posted Successfully</string>
+    <string name="Trip_Post_Unsuccessful">Trip Post Unsuccessful\nPlease try again</string>
+    <string name="Delete_Trip">Delete Trip</string>
+    <string name="Trip_Deleted_Successfully">Trip Deleted Successfully</string>
+    <string name="Trip_Delete_Unsuccessful">Trip Delete Unsuccessful\nPlease try again</string>
+    <string name="Delete_message">Are you sure,\nYou want to delete Trip Details?</string>
+    <string name="Trip_Updated_Successfully">Trip Updated Successfully</string>
+    <string name="Trip_Update_Unsuccessful">Trip Update Unsuccessful\nPlease try again</string>
+    <string name="Trip_Date_colon">Trip Date: </string>
+    <string name="Trip_Time_colon">Trip Time: </string>
+
     //----------------------------------------------------------------------------------------------
 
 </resources>

@@ -331,13 +331,13 @@ public class RegistrationActivity extends AppCompat {
             TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
             TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-            alertTitle.setText("Provide Access");
-            alertMessage.setText("Please provide location access");
+            alertTitle.setText(getString(R.string.Provide_Access));
+            alertMessage.setText(getString(R.string.Please_provide_location_access));
 
-            alertPositiveButton.setText("Go to settings");
+            alertPositiveButton.setText(getString(R.string.Go_to_settings));
             alertPositiveButton.setVisibility(View.VISIBLE);
 
-            alertNegativeButton.setText("OK");
+            alertNegativeButton.setText(getString(R.string.ok));
             alertNegativeButton.setVisibility(View.VISIBLE);
 
             alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));

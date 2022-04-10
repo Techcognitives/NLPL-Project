@@ -192,7 +192,7 @@ public class FindTripLPActivity extends AppCompatActivity {
         ImageView actionBarWhatsApp = actionBar.findViewById(R.id.action_bar_whats_app);
         actionBarWhatsApp.setVisibility(View.VISIBLE);
 
-        actionBarTitle.setText("Find Trips");
+        actionBarTitle.setText(getString(R.string.Find_Trips));
         actionBarBackButton.setVisibility(View.VISIBLE);
         actionBarMenuButton.setVisibility(View.GONE);
 
@@ -210,7 +210,7 @@ public class FindTripLPActivity extends AppCompatActivity {
         spDashboard.setBackgroundTintList(getResources().getColorStateList(R.color.light_white));
         TextView profileText = bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
         ImageView profileImageView = bottomNav.findViewById(R.id.bottom_nav_profile_image_view);
-        profileText.setText("Trucks");
+        profileText.setText(getString(R.string.Trucks));
         profileImageView.setImageDrawable(getDrawable(R.drawable.bottom_nav_search_small));
         View spView = bottomNav.findViewById(R.id.bottom_nav_bar_dashboard_underline);
         spView.setVisibility(View.INVISIBLE);

@@ -188,10 +188,10 @@ public class DriverDetailsActivity extends AppCompat {
         selectStateText = (TextView) personalAndAddress.findViewById(R.id.registration_select_state);
         selectDistrictText = (TextView) personalAndAddress.findViewById(R.id.registration_select_city);
 
-        dlNumber = findViewById(R.id.driver_details_driver_license_number);
-        dDOB = findViewById(R.id.driver_details_dob);
-        dlNumber.addTextChangedListener(dlverificationWatcher);
-        dDOB.addTextChangedListener(dlverificationWatcher);
+//        dlNumber = findViewById(R.id.driver_details_driver_license_number);
+//        dDOB = findViewById(R.id.driver_details_dob);
+//        dlNumber.addTextChangedListener(dlverificationWatcher);
+//        dDOB.addTextChangedListener(dlverificationWatcher);
 
         driverName.setHint(getString(R.string.EnterDriverName));
         driverMobile.setHint(getString(R.string.Enter_10_digit_Driver_Number));
@@ -296,7 +296,7 @@ public class DriverDetailsActivity extends AppCompat {
                 TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
                 alertTitle.setText(getString(R.string.Please_add_a_Driver));
-                alertMessage.setText("You cannot bid unless you have a Driver");
+                alertMessage.setText(getString(R.string.You_cannot_bid_unless_you_have_a_Driver));
                 alertPositiveButton.setText(getString(R.string.Add));
                 alertPositiveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -1031,24 +1031,19 @@ public class DriverDetailsActivity extends AppCompat {
             Toast.makeText(this, "Please select State", Toast.LENGTH_SHORT).show();
         } else if (selectDistrictText.getText().toString().isEmpty()) {
             Toast.makeText(this, "Please select City", Toast.LENGTH_SHORT).show();
-        } else if (!isDLUploaded || dlNumber.getText().toString().isEmpty()) {
-            Toast.makeText(this, "Please enter Driving License Number or upload Driving License", Toast.LENGTH_SHORT).show();
-        } else if (!isSelfieUploded) {
+        }
+//        else if (!isDLUploaded || dlNumber.getText().toString().isEmpty()) {
+//            Toast.makeText(this, "Please enter Driving License Number or upload Driving License", Toast.LENGTH_SHORT).show();
+//        }
+        else if (!isSelfieUploded) {
             Toast.makeText(this, "Please upload Driver Selfie", Toast.LENGTH_SHORT).show();
         } else {
-            if (!dlNumber.getText().toString().isEmpty()) {
-                if (dlValid) {
-                    createDriverDetails();
-                } else {
-                    Toast.makeText(this, "Please enter valid Driving License Number or upload Driving License", Toast.LENGTH_SHORT).show();
-                }
-            } else {
+
                 if (isDLUploaded) {
                     createDriverDetails();
                 } else {
                     Toast.makeText(this, "Please enter valid Driving License Number or upload Driving License", Toast.LENGTH_SHORT).show();
                 }
-            }
         }
     }
 
@@ -1099,9 +1094,9 @@ public class DriverDetailsActivity extends AppCompat {
                 UpdateUserDetails.updateUserCity(driverUserIdGet, selectDistrictText.getText().toString());
             }
 
-            if (dlNumber.getText().toString() != null) {
-                UpdateDriverDetails.updateDriverDlNumber(driverId, dlNumber.getText().toString());
-            }
+//            if (dlNumber.getText().toString() != null) {
+//                UpdateDriverDetails.updateDriverDlNumber(driverId, dlNumber.getText().toString());
+//            }
             ShowAlert.loadingDialog(DriverDetailsActivity.this);
             JumpTo.goToViewDriverDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
 
@@ -1176,7 +1171,7 @@ public class DriverDetailsActivity extends AppCompat {
         addDriverRequest.setDriver_emailId(driverEmailId.getText().toString());
         addDriverRequest.setTruck_id(truckIdPass);
         addDriverRequest.setAlternate_ph_no("91" + driverAlternateMobile.getText().toString());
-        addDriverRequest.setDl_number(dlNumber.getText().toString());
+        //addDriverRequest.setDl_number(dlNumber.getText().toString());
         return addDriverRequest;
     }
 
@@ -1233,69 +1228,76 @@ public class DriverDetailsActivity extends AppCompat {
         }
     };
 
-    private TextWatcher dlverificationWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        }
 
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            String dlNumberWatcher = dlNumber.getText().toString().trim();
-            String dob = dDOB.getText().toString().trim();
+    //**************************************** delete dlNumber************************************************//
+//    private TextWatcher dlverificationWatcher = new TextWatcher() {
+//        @Override
+//        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//        }
+//
+//        @Override
+//        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//            String dlNumberWatcher = dlNumber.getText().toString().trim();
+//            String dob = dDOB.getText().toString().trim();
+//
+//            if (dlNumberWatcher.length() != 15) {
+//                dDOB.setVisibility(View.GONE);
+//            } else {
+//                dDOB.setVisibility(View.VISIBLE);
+//                if (dob.length() == 10) {
+////                    checkDl(dlNumberWatcher, dob);
+//                } else if (dob.length() > 1) {
+//                    dlNumber.setEnabled(false);
+//                } else {
+//                    dlNumber.setEnabled(true);
+//                }
+//            }
+//        }
+//
+//        @Override
+//        public void afterTextChanged(Editable s) {
+//        }
+//    };
 
-            if (dlNumberWatcher.length() != 15) {
-                dDOB.setVisibility(View.GONE);
-            } else {
-                dDOB.setVisibility(View.VISIBLE);
-                if (dob.length() == 10) {
-//                    checkDl(dlNumberWatcher, dob);
-                } else if (dob.length() > 1) {
-                    dlNumber.setEnabled(false);
-                } else {
-                    dlNumber.setEnabled(true);
-                }
-            }
-        }
+    //**************************************** delete dlNumber************************************************//
 
-        @Override
-        public void afterTextChanged(Editable s) {
-        }
-    };
+//    public void checkDl(String dlNumbers, String dob) {
+//        Call<DLVerificationResponse> responseCall = ApiClient.getVerification().checkDL(userId, dlNumbers, dob);
+//        responseCall.enqueue(new Callback<DLVerificationResponse>() {
+//            @Override
+//            public void onResponse(Call<DLVerificationResponse> call, retrofit2.Response<DLVerificationResponse> response) {
+//                if (response.isSuccessful()) {
+//                    try {
+//                        DLVerificationResponse response1 = response.body();
+//                        DLVerificationResponse.UserList list = response1.getData().get(0);
+//                        Log.i("Success Message", list.getSuccess());
+//                        if (list.getSuccess().equals("1")) {
+//                            dlNumber.setEnabled(false);
+//                            dlNumber.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success_small, 0);
+//                            dDOB.setEnabled(false);
+//                            dDOB.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success_small, 0);
+//                            dlValid = true;
+//                        } else {
+//                            Toast.makeText(DriverDetailsActivity.this, "Please enter a valid DL number", Toast.LENGTH_SHORT).show();
+//                        }
+//                    } catch (Exception e) {
+//                        Toast.makeText(DriverDetailsActivity.this, "Please enter a valid DL number", Toast.LENGTH_SHORT).show();
+//                    }
+//                } else {
+//                    Toast.makeText(DriverDetailsActivity.this, "Please enter a valid DL number", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<DLVerificationResponse> call, Throwable t) {
+//                Toast.makeText(DriverDetailsActivity.this, "Please enter a valid DL number", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
-    public void checkDl(String dlNumbers, String dob) {
-        Call<DLVerificationResponse> responseCall = ApiClient.getVerification().checkDL(userId, dlNumbers, dob);
-        responseCall.enqueue(new Callback<DLVerificationResponse>() {
-            @Override
-            public void onResponse(Call<DLVerificationResponse> call, retrofit2.Response<DLVerificationResponse> response) {
-                if (response.isSuccessful()) {
-                    try {
-                        DLVerificationResponse response1 = response.body();
-                        DLVerificationResponse.UserList list = response1.getData().get(0);
-                        Log.i("Success Message", list.getSuccess());
-                        if (list.getSuccess().equals("1")) {
-                            dlNumber.setEnabled(false);
-                            dlNumber.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success_small, 0);
-                            dDOB.setEnabled(false);
-                            dDOB.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success_small, 0);
-                            dlValid = true;
-                        } else {
-                            Toast.makeText(DriverDetailsActivity.this, "Please enter a valid DL number", Toast.LENGTH_SHORT).show();
-                        }
-                    } catch (Exception e) {
-                        Toast.makeText(DriverDetailsActivity.this, "Please enter a valid DL number", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(DriverDetailsActivity.this, "Please enter a valid DL number", Toast.LENGTH_SHORT).show();
-                }
-            }
+        //**************************************** delete dlNumber************************************************//
 
-            @Override
-            public void onFailure(Call<DLVerificationResponse> call, Throwable t) {
-                Toast.makeText(DriverDetailsActivity.this, "Please enter a valid DL number", Toast.LENGTH_SHORT).show();
-            }
-        });
         //****************************************************************************************//
-    }
+   // }
 
 
     private TextWatcher driverMobileWatcher = new TextWatcher() {

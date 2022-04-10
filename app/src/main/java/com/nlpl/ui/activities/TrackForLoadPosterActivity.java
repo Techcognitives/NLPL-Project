@@ -217,7 +217,7 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
         //------------------------------- bottom nav -----------------------------------------------
         bottomNav = (View) findViewById(R.id.customer_dashboard_bottom_nav_bar);
         TextView profileText = (TextView) bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
-        profileText.setText("Trucks");
+        profileText.setText(getString(R.string.Trucks));
         View dashboardView = findViewById(R.id.bottom_nav_bar_dashboard_underline);
         dashboardView.setVisibility(View.INVISIBLE);
         ConstraintLayout dashboardConstrain = findViewById(R.id.bottom_nav_sp_dashboard);
@@ -633,7 +633,7 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
                     negotiable_no.setChecked(true);
 
 
-                    submitResponseBtn.setText("Locate Truck");
+                    submitResponseBtn.setText(getString(R.string.Locate_Truck));
                     submitResponseBtn.setBackgroundResource((R.drawable.button_active));
                     submitResponseBtn.setBackgroundTintList(getResources().getColorStateList(R.color.light_black));
                     submitResponseBtn.setEnabled(true);
@@ -1012,7 +1012,7 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
         chooseDialog.getWindow().setAttributes(lp2);
 
         TextView cameraText = chooseDialog.findViewById(R.id.dialog_camera_text);
-        cameraText.setText("Whats App");
+        cameraText.setText(getString(R.string.Whats_App));
         TextView galleryText = chooseDialog.findViewById(R.id.dialog_photo_library_text);
         galleryText.setText(getString(R.string.Call));
 

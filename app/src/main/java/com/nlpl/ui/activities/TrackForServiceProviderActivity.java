@@ -700,7 +700,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
             }
         });
 
-        endTrip.setText("End Trip");
+        endTrip.setText(getString(R.string.End_Trip));
         endTrip.setEnabled(true);
         endTrip.setBackgroundResource((R.drawable.button_active));
 
@@ -726,15 +726,15 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
                 TextView changeNumber = otpRequest.findViewById(R.id.otp_change_number);
                 changeNumber.setVisibility(View.INVISIBLE);
                 TextView otpCodeText = otpRequest.findViewById(R.id.otp_code_text);
-                otpCodeText.setText("Trip Code");
+                otpCodeText.setText(getString(R.string.Trip_Code));
                 TextView otpSentText = otpRequest.findViewById(R.id.otp_text);
 
                 String mobileNo = mobileNumberCustomer.substring(2, 12);
-                otpSentText.setText("Please enter Trip Code sent to Load Poster's mobile (+91 " + mobileNo + ")");
+                otpSentText.setText(getString(R.string.Please_enter_Trip_Code_sent_to_Load_Posters_mobile) + mobileNo + ")");
 
                 countdown = otpRequest.findViewById(R.id.countdown);
                 reSendOtp = otpRequest.findViewById(R.id.resend_otp);
-                reSendOtp.setText("Resend Trip Code");
+                reSendOtp.setText(getString(R.string.Resend_Trip_Code));
 
                 reSendOtp.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -746,7 +746,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
                 });
 
                 Button verifyOtp = otpRequest.findViewById(R.id.otp_button);
-                verifyOtp.setText("Verify Trip Code");
+                verifyOtp.setText(getString(R.string.Verify_Trip_Code));
                 verifyOtp.setOnClickListener(view1 -> {
                     String otp = otpCode.getText().toString();
                     if (otp.length() == 6) {
@@ -919,8 +919,8 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
                     TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
                     TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
 
-                    alertTitle.setText("Thank You");
-                    alertMessage.setText("Your has ended Thank you for using FYT");
+                    alertTitle.setText(getString(R.string.Thank_You));
+                    alertMessage.setText(getString(R.string.Your_has_ended_Thank_you_for_using_FYT));
                     alertPositiveButton.setVisibility(View.GONE);
                     alertNegativeButton.setText(getString(R.string.ok));
                     alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
@@ -1075,7 +1075,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
         chooseDialog.getWindow().setAttributes(lp2);
 
         TextView cameraText = chooseDialog.findViewById(R.id.dialog_camera_text);
-        cameraText.setText("Whats App");
+        cameraText.setText(getString(R.string.Whats_App));
         TextView galleryText = chooseDialog.findViewById(R.id.dialog_photo_library_text);
         galleryText.setText(getString(R.string.Call));
 
