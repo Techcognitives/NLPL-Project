@@ -188,7 +188,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
         actionBarTitle.setText(getString(R.string.Trip_Details));
         actionBarMenuButton.setVisibility(View.GONE);
         actionBarBackButton.setVisibility(View.VISIBLE);
-        actionBarBackButton.setOnClickListener(view -> this.finish());
+        actionBarBackButton.setOnClickListener(view -> JumpTo.goToServiceProviderDashboard(TrackForServiceProviderActivity.this, phone, true, true));
 
         bottomNav = (View) findViewById(R.id.profile_registration_bottom_nav_bar);
         TextView profileText = (TextView) bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
