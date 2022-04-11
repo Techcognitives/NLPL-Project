@@ -396,7 +396,6 @@ public class VehicleDetailsActivity extends AppCompat {
             textInsurance.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
             uploadInsurance.setVisibility(View.INVISIBLE);
             editInsurance.setVisibility(View.VISIBLE);
-
             isInsurance = true;
 
             try {
@@ -722,7 +721,6 @@ public class VehicleDetailsActivity extends AppCompat {
                 });
                 //------------------------------------------------------------------------------------------
             }
-
         }
         return "";
     }
