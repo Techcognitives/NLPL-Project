@@ -192,7 +192,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
 
         bottomNav = (View) findViewById(R.id.profile_registration_bottom_nav_bar);
         TextView profileText = (TextView) bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
-        profileText.setText("trips");
+        profileText.setText("Trips");
         View dashboardView = findViewById(R.id.bottom_nav_bar_dashboard_underline);
         dashboardView.setVisibility(View.INVISIBLE);
         ImageView profileImageView = (ImageView) bottomNav.findViewById(R.id.bottom_nav_profile_image_view);
