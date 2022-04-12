@@ -4,11 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/action_bar.xml" value="0.16197916666666667" />
-        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_customer_dashboard.xml" value="0.16197916666666667" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_bank_details.xml" value="0.16197916666666667" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_company_details.xml" value="0.16197916666666667" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_customer_dashboard.xml" value="0.25" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_customer_loads_history.xml" value="0.16197916666666667" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_driver_details.xml" value="0.25" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_find_loads.xml" value="0.16197916666666667" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_find_trip_lpactivity.xml" value="0.16197916666666667" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_find_trucks.xml" value="0.25" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_personal_details.xml" value="0.16197916666666667" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_personal_details_and_id_proof.xml" value="0.16197916666666667" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_post_aload.xml" value="0.33" />
@@ -21,22 +24,26 @@
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_track_for_load_poster.xml" value="0.16197916666666667" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_track_for_service_provider.xml" value="0.16197916666666667" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_vehicle_details.xml" value="0.25" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_view_driver_details.xml" value="0.25" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_view_personal_details.xml" value="0.25" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/activity_view_truck_details.xml" value="0.16197916666666667" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/bank_list.xml" value="0.16197916666666667" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/bids_received_list.xml" value="0.16197916666666667" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/bids_responses_list.xml" value="0.16197916666666667" />
-        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/bottom_nav_bar.xml" value="0.16197916666666667" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/bottom_nav_bar.xml" value="0.33" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/custom_list_row.xml" value="0.16197916666666667" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/custom_list_single.xml" value="0.16197916666666667" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/dialog_acept_bid_customer.xml" value="0.33" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/dialog_alert.xml" value="0.16197916666666667" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/dialog_alert_single_button.xml" value="0.16197916666666667" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/dialog_bid_now.xml" value="0.33" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/dialog_customer_menu.xml" value="0.16197916666666667" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/dialog_preview_driver_details.xml" value="0.16197916666666667" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/dialog_preview_driver_truck_details.xml" value="0.16197916666666667" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/dialog_preview_profile.xml" value="0.16197916666666667" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/find_load_list.xml" value="0.16197916666666667" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/load_list.xml" value="0.25" />
+        <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/location_list.xml" value="0.16197916666666667" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/my_driver_list.xml" value="0.16197916666666667" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/my_truck_list.xml" value="0.16197916666666667" />
         <entry key="..\:/Suraj/Android/NLPL-Project/app/src/main/res/layout/pan_and_aadhar.xml" value="0.22" />
@@ -101,6 +108,7 @@
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/bids_responses_list.xml" value="0.3625" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/bottom_nav_bar.xml" value="0.3625" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/dialog_acept_bid_customer.xml" value="0.1762917933130699" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/bottom_nav_bar.xml" value="0.1762917933130699" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/dialog_alert.xml" value="0.2875905797101449" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/dialog_alert_single_button.xml" value="0.2875905797101449" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/dialog_bid_now.xml" value="0.3625" />
@@ -218,7 +226,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

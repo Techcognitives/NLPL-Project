@@ -78,19 +78,21 @@ public class PersonalDetailsActivity extends AppCompat {
     ImageView actionBarBackButton;
     Dialog chooseDialog;
 
-    TextView panCardText, editPAN, editFront, frontText;
+    TextView panCardText, editPAN, editFront, frontText, alertNegativeButton;
     Button uploadPAN, uploadF, okButton;
     ImageView imgPAN, imgF, previewPan, previewAadhar;
     private int GET_FROM_GALLERY = 0;
     private int GET_FROM_GALLERY1 = 1;
     private int CAMERA_PIC_REQUEST = 3;
     private int CAMERA_PIC_REQUEST1 = 2;
+    private int CAMERA_PIC_REQUEST2 = 4;
+    private int GET_FROM_GALLERY2 = 5;
 
     View panAndAadharView;
     ConstraintLayout aadharConstrain, panConstrain;
     TextView uploadAadharTitle, uploadPanTitle, countdown;
 
-    String userId, mobile, requestIdForAadhar;
+    String userId, mobile, requestIdForAadhar, userRoleAPI;
     Boolean isPanUploaded = false, isFrontUploaded = false, panVerified = true, aadharVerified = true;
     String img_type;
     EditText panNumber, aadharNumber;
@@ -115,7 +117,12 @@ public class PersonalDetailsActivity extends AppCompat {
             @Override
             public void onClick(View view) {
                 ShowAlert.loadingDialog(PersonalDetailsActivity.this);
-                JumpTo.goToServiceProviderDashboard(PersonalDetailsActivity.this, mobile, false, true);
+                if (userRoleAPI.equals("Customer")) {
+                    JumpTo.goToCustomerDashboard(PersonalDetailsActivity.this, mobile, true);
+                } else {
+                    JumpTo.goToServiceProviderDashboard(PersonalDetailsActivity.this, mobile, true, true);
+                }
+//                JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, false);
             }
         });
 
@@ -533,6 +540,7 @@ public class PersonalDetailsActivity extends AppCompat {
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 UserResponse nameResponse = response.body();
                 UserResponse.UserList listObj = nameResponse.getData().get(0);
+                userRoleAPI = listObj.getUser_type();
                 int userVerified = listObj.getIsPersonal_dt_added();
                 Log.i("userVerified", String.valueOf(userVerified));
                 if (userVerified == 1) {
@@ -800,7 +808,12 @@ public class PersonalDetailsActivity extends AppCompat {
     public void onBackPressed() {
         super.onBackPressed();
         ShowAlert.loadingDialog(PersonalDetailsActivity.this);
-        JumpTo.goToServiceProviderDashboard(PersonalDetailsActivity.this, mobile, true, true);
+        if (userRoleAPI.equals("Customer")) {
+            JumpTo.goToCustomerDashboard(PersonalDetailsActivity.this, mobile, true);
+        } else {
+            JumpTo.goToServiceProviderDashboard(PersonalDetailsActivity.this, mobile, true, true);
+        }
+//        JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, false);
     }
 
     @Override
