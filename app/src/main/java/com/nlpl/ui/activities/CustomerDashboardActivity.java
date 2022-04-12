@@ -120,11 +120,10 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
     private int GET_FROM_GALLERY2 = 5;
     int platformChargesBasicInt, platformChargesMainInt;
 
-    Dialog menuDialog, loadingDialog;
-    TextView userNameTextViewMenu, mobileTextViewMenu, spNumber, driverNumber, postALoadButton;
-    ImageView personalDetailsLogoImageView, bankDetailsLogoImageView, actionBarWhatsApp;
-    Dialog previewDialogProfile, previewDialogProfileOfSp;
-    ImageView profilePic;
+    Dialog loadingDialog;
+    TextView spNumber, driverNumber, postALoadButton;
+    ImageView actionBarWhatsApp;
+    Dialog previewDialogProfileOfSp;
     Boolean checkedReasonOne = false, checkedReasonTwo = false, checkedReasonThree = false, checkedReasonFour = false, checkedReasonFive = false, checkedReasonSix = false, checkedReasonSeven = false;
 
     String isPersonalDetailsDone, isBankDetailsDone, isProfileAdded, profileImgUrlForRating, reasonForLowRate = "";
@@ -238,24 +237,9 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         actionBarBackButton.setVisibility(View.GONE);
         actionBarMenuButton.setVisibility(View.VISIBLE);
         //------------------------------------------------------------------------------------------
-        //------------------------------- menu button ----------------------------------------------
-        menuDialog = new Dialog(CustomerDashboardActivity.this);
-        menuDialog.setContentView(R.layout.dialog_customer_menu);
-        menuDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        previewDialogProfile = new Dialog(CustomerDashboardActivity.this);
-        previewDialogProfile.setContentView(R.layout.dialog_preview_profile);
-        previewDialogProfile.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.black)));
-
         previewDialogProfileOfSp = new Dialog(CustomerDashboardActivity.this);
         previewDialogProfileOfSp.setContentView(R.layout.dialog_preview_images);
         previewDialogProfileOfSp.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.black)));
-
-        userNameTextViewMenu = (TextView) menuDialog.findViewById(R.id.customer_menu_name_text);
-        profilePic = (ImageView) menuDialog.findViewById(R.id.profile_picture_on_customer_menu);
-        mobileTextViewMenu = (TextView) menuDialog.findViewById(R.id.customer_menu_mobile);
-        personalDetailsLogoImageView = (ImageView) menuDialog.findViewById(R.id.customer_menu_personal_details_logo_image_view);
-        bankDetailsLogoImageView = (ImageView) menuDialog.findViewById(R.id.customer_menu_bank_details_logo_image_view);
         //------------------------------------------------------------------------------------------
         //------------------------------- bottom nav -----------------------------------------------
         bottomNav = (View) findViewById(R.id.customer_dashboard_bottom_nav_bar);
@@ -345,33 +329,14 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                         if (arrayMobileNo.get(j).equals(userMobileNumber)) {
                             userId = arrayUserId.get(j);
                             customerNameAPI = arrayCustomerName.get(j);
-                            userNameTextViewMenu.setText(customerNameAPI);
                             String customerNumberAPI = arrayMobileNo.get(j);
                             s1 = customerNumberAPI.substring(2, 12);
-                            mobileTextViewMenu.setText("+91 " + s1);
                             customerEmail = arrayCustomerEmail.get(j);
 
                             isPersonalDetailsDone = isPersonalD.get(j);
                             isProfileAdded = isProfileArray.get(j);
                             isBankDetailsDone = isBankD.get(j);
 
-                            if (isProfileAdded.equals("1")) {
-                                getProfilePic();
-                            } else {
-                                profilePic.setImageDrawable(getResources().getDrawable(blue_profile_small));
-                            }
-
-                            if (isPersonalDetailsDone.equals("1")) {
-                                personalDetailsLogoImageView.setImageDrawable(getResources().getDrawable(R.drawable.personal_success));
-                            } else {
-                                personalDetailsLogoImageView.setImageDrawable(getResources().getDrawable(R.drawable.personal));
-                            }
-
-                            if (isBankDetailsDone.equals("1")) {
-                                bankDetailsLogoImageView.setImageDrawable(getResources().getDrawable(R.drawable.bank_success));
-                            } else {
-                                bankDetailsLogoImageView.setImageDrawable(getResources().getDrawable(R.drawable.bank));
-                            }
                         }
                     }
                     adminFeesList();
@@ -550,6 +515,11 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
             case R.id.bottom_nav_trip:
                 ShowAlert.loadingDialog(CustomerDashboardActivity.this);
                 JumpTo.goToFindTripLPActivity(CustomerDashboardActivity.this, phone, userId, false);
+                break;
+
+            case R.id.bottom_nav_profile:
+                ShowAlert.loadingDialog(CustomerDashboardActivity.this);
+                JumpTo.goToViewPersonalDetailsActivity(CustomerDashboardActivity.this, userId, phone,  false);
                 break;
         }
     }
@@ -2505,63 +2475,6 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         mQueue.add(request1);
     }
 
-    //--------------------------------- menu -------------------------------------------------------
-    public void onCLickShowMenu(View view) {
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(menuDialog.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.gravity = Gravity.END;
-        menuDialog.show();
-        menuDialog.setCancelable(true);
-        menuDialog.getWindow().setAttributes(lp);
-    }
-
-    public void onClickDismissDialog(View view) {
-        menuDialog.dismiss();
-    }
-
-    public void onClickLogOutCustomer(View view) {
-        //----------------------- Alert Dialog -------------------------------------------------
-        Dialog alert = new Dialog(CustomerDashboardActivity.this);
-        alert.setContentView(R.layout.dialog_alert);
-        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(alert.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.gravity = Gravity.CENTER;
-
-        alert.show();
-        alert.getWindow().setAttributes(lp);
-        alert.setCancelable(true);
-
-        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-        alertTitle.setText(getString(R.string.Log_Out));
-        alertMessage.setText(getString(R.string.Log_Out_message));
-        alertPositiveButton.setText(getString(R.string.yes));
-        alertNegativeButton.setText(getString(R.string.no));
-
-        alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alert.dismiss();
-            }
-        });
-
-        alertPositiveButton.setOnClickListener(view1 -> {
-            alert.dismiss();
-            FirebaseAuth.getInstance().signOut();
-            JumpTo.goToLogInActivity(CustomerDashboardActivity.this);
-        });
-        //------------------------------------------------------------------------------------------
-
-    }
-
     public void onClickProfileAndRegisterCustomer(View view) {
         switch (view.getId()) {
             case R.id.customer_menu_personal_details_button:
@@ -2673,406 +2586,6 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         mQueue.add(request1);
     }
 
-    private void getProfilePic() {
-
-        String url1 = getString(R.string.baseURL) + "/imgbucket/Images/" + userId;
-        JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray imageList = response.getJSONArray("data");
-                    for (int i = 0; i < imageList.length(); i++) {
-                        JSONObject obj = imageList.getJSONObject(i);
-                        String imageType = obj.getString("image_type");
-                        String profileImgUrl = "";
-                        if (imageType.equals("profile")) {
-                            profileImgUrl = obj.getString("image_url");
-                            new DownloadImageTask(profilePic).execute(profileImgUrl);
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request1);
-    }
-
-    public void ViewCustomerProfile(View view) {
-        if (isProfileAdded.equals("1")) {
-            String url1 = getString(R.string.baseURL) + "/imgbucket/Images/" + userId;
-            JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        JSONArray imageList = response.getJSONArray("data");
-                        for (int i = 0; i < imageList.length(); i++) {
-                            JSONObject obj = imageList.getJSONObject(i);
-                            String imageType = obj.getString("image_type");
-
-                            String profileImgUrl = "";
-                            if (imageType.equals("profile")) {
-                                profileImgUrl = obj.getString("image_url");
-                                if (profileImgUrl.equals("null")) {
-
-                                } else {
-                                    WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-                                    lp2.copyFrom(previewDialogProfile.getWindow().getAttributes());
-                                    lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-                                    lp2.height = WindowManager.LayoutParams.MATCH_PARENT;
-                                    lp2.gravity = Gravity.CENTER;
-
-                                    previewDialogProfile.show();
-                                    previewDialogProfile.getWindow().setAttributes(lp2);
-                                    new DownloadImageTask((ImageView) previewDialogProfile.findViewById(R.id.dialog_preview_image_view_profile)).execute(profileImgUrl);
-
-                                    TextView editProfilePic = previewDialogProfile.findViewById(R.id.editProfilePic);
-
-                                    editProfilePic.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            uploadProfileDialogChoose();
-                                        }
-                                    });
-                                }
-                            }
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }, new com.android.volley.Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    error.printStackTrace();
-                }
-            });
-            mQueue.add(request1);
-        } else {
-            uploadProfileDialogChoose();
-        }
-    }
-
-    private void uploadProfileDialogChoose() {
-        requestPermissionsForCamera();
-        requestPermissionsForGalleryWRITE();
-        requestPermissionsForGalleryREAD();
-        img_type = "profile";
-
-        Dialog chooseDialog;
-        chooseDialog = new Dialog(CustomerDashboardActivity.this);
-        chooseDialog.setContentView(R.layout.dialog_choose);
-        chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-        lp2.copyFrom(chooseDialog.getWindow().getAttributes());
-        lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp2.gravity = Gravity.BOTTOM;
-
-        chooseDialog.show();
-        chooseDialog.getWindow().setAttributes(lp2);
-
-        ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
-        ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
-
-        camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST2);
-                chooseDialog.dismiss();
-            }
-        });
-
-        gallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY2);
-                chooseDialog.dismiss();
-            }
-        });
-    }
-
-    //-----------------------------------------------upload Image------------------------------------------------------------
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == GET_FROM_GALLERY2 && resultCode == Activity.RESULT_OK) {
-            //----------------------- Alert Dialog -------------------------------------------------
-            Dialog alert = new Dialog(CustomerDashboardActivity.this);
-            alert.setContentView(R.layout.dialog_alert_single_button);
-            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(alert.getWindow().getAttributes());
-            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.gravity = Gravity.CENTER;
-
-            alert.show();
-            alert.getWindow().setAttributes(lp);
-            alert.setCancelable(true);
-
-            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-            alertTitle.setText(getString(R.string.Personal_Details));
-            alertMessage.setText(getString(R.string.Profile_Uploaded_Successfully));
-            alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText(getString(R.string.ok));
-            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
-
-            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    alert.dismiss();
-                }
-            });
-            //------------------------------------------------------------------------------------------
-
-            Uri selectedImage = data.getData();
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
-            saveImage(imageRequest());
-            uploadImage(picturePath);
-
-            profileAddedAlert();
-
-        } else if (requestCode == CAMERA_PIC_REQUEST2) {
-            try {
-                Bitmap image = (Bitmap) data.getExtras().get("data");
-                String path = getRealPathFromURI(getImageUri(this, image));
-                saveImage(imageRequest());
-                uploadImage(path);
-                profileAddedAlert();
-
-                //----------------------- Alert Dialog -------------------------------------------------
-                Dialog alert = new Dialog(CustomerDashboardActivity.this);
-                alert.setContentView(R.layout.dialog_alert_single_button);
-                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                lp.copyFrom(alert.getWindow().getAttributes());
-                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.gravity = Gravity.CENTER;
-
-                alert.show();
-                alert.getWindow().setAttributes(lp);
-                alert.setCancelable(true);
-
-                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-                alertTitle.setText(getString(R.string.Personal_Details));
-                alertMessage.setText(getString(R.string.Profile_Uploaded_Successfully));
-                alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText(getString(R.string.ok));
-                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
-
-                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        alert.dismiss();
-
-                    }
-                });
-                //------------------------------------------------------------------------------------------
-            } catch (Exception e) {
-                //----------------------- Alert Dialog -------------------------------------------------
-                Dialog alert = new Dialog(CustomerDashboardActivity.this);
-                alert.setContentView(R.layout.dialog_alert_single_button);
-                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                lp.copyFrom(alert.getWindow().getAttributes());
-                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.gravity = Gravity.CENTER;
-
-                alert.show();
-                alert.getWindow().setAttributes(lp);
-                alert.setCancelable(true);
-
-                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-                alertTitle.setText(getString(R.string.Personal_Details));
-                alertMessage.setText(getString(R.string.Profile_not_Uploaded_please_try_again));
-                alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText(getString(R.string.ok));
-                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
-
-                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        alert.dismiss();
-                    }
-                });
-                //------------------------------------------------------------------------------------------
-            }
-        }
-    }
-
-    @NonNull
-    private MultipartBody.Part prepareFilePart(String partName, Uri fileUri) {
-
-        Log.i("file uri: ", String.valueOf(fileUri));
-        // use the FileUtils to get the actual file by uri
-        File file = FileUtils.getFile(this, fileUri);
-
-        // create RequestBody instance from file
-        RequestBody requestFile = RequestBody.create(MediaType.parse("image"), file);
-
-        // MultipartBody.Part is used to send also the actual file name
-        return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
-    }
-
-    private void uploadImage(String picPath) {
-
-        File file = new File(picPath);
-//        File file = new File(getExternalFilesDir("/").getAbsolutePath(), file);
-
-        MultipartBody.Part body = prepareFilePart("file", Uri.fromFile(file));
-
-        Call<UploadImageResponse> call = ApiClient.getImageUploadService().uploadImage(userId, img_type, body);
-        call.enqueue(new Callback<UploadImageResponse>() {
-            @Override
-            public void onResponse(Call<UploadImageResponse> call, retrofit2.Response<UploadImageResponse> response) {
-                Log.i("successful:", "success");
-            }
-
-            @Override
-            public void onFailure(Call<UploadImageResponse> call, Throwable t) {
-                t.printStackTrace();
-                Log.i("failed:", "failed");
-            }
-        });
-    }
-
-    //-------------------------------------------------------------------------------------------------------------------
-    public ImageRequest imageRequest() {
-        ImageRequest imageRequest = new ImageRequest();
-        imageRequest.setUser_id(userId);
-        imageRequest.setImage_type(img_type);
-        return imageRequest;
-    }
-
-    public void saveImage(ImageRequest imageRequest) {
-        Call<ImageResponse> imageResponseCall = ApiClient.getImageService().saveImage(imageRequest);
-        imageResponseCall.enqueue(new Callback<ImageResponse>() {
-            @Override
-            public void onResponse(Call<ImageResponse> call, retrofit2.Response<ImageResponse> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<ImageResponse> call, Throwable t) {
-
-            }
-        });
-    }
-
-    private void profileAddedAlert() {
-        UpdateUserDetails.updateUserIsProfileAdded(userId, "1");
-
-        Dialog alert = new Dialog(CustomerDashboardActivity.this);
-        alert.setContentView(R.layout.dialog_alert_single_button);
-        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(alert.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.gravity = Gravity.CENTER;
-
-        alert.show();
-        alert.getWindow().setAttributes(lp);
-        alert.setCancelable(false);
-
-        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-        alertTitle.setText(getString(R.string.Profile_Picture));
-        alertMessage.setText(getString(R.string.Profile_Picture_added_successfully));
-        alertPositiveButton.setVisibility(View.GONE);
-        alertNegativeButton.setText(getString(R.string.ok));
-        alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-        alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
-
-        alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                RearrangeItems();
-            }
-        });
-    }
-
-    public String getRealPathFromURI(Uri uri) {
-        String path = "";
-        if (getContentResolver() != null) {
-            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-            if (cursor != null) {
-                cursor.moveToFirst();
-                int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-                path = cursor.getString(idx);
-                cursor.close();
-            }
-        }
-        return path;
-    }
-
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
-    }
-
-    private void requestPermissionsForCamera() {
-        if (ContextCompat.checkSelfPermission(CustomerDashboardActivity.this, Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(CustomerDashboardActivity.this, new String[]{
-                    Manifest.permission.CAMERA
-            }, 100);
-        }
-    }
-
-    private void requestPermissionsForGalleryWRITE() {
-        if (ContextCompat.checkSelfPermission(CustomerDashboardActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(CustomerDashboardActivity.this, new String[]{
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-            }, 100);
-        }
-    }
-
-    private void requestPermissionsForGalleryREAD() {
-        if (ContextCompat.checkSelfPermission(CustomerDashboardActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(CustomerDashboardActivity.this, new String[]{
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-            }, 100);
-        }
-    }
 
     public void reActivateLoad(BidsReceivedModel obj) {
 
@@ -3224,7 +2737,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         }
     };
 
-    public void onClickOpenPostALoad(View view) {
+    public void onCLickPost(View view) {
         ShowAlert.loadingDialog(CustomerDashboardActivity.this);
         JumpTo.goToPostALoad(CustomerDashboardActivity.this, userId, phone, false, false, null, false);
     }

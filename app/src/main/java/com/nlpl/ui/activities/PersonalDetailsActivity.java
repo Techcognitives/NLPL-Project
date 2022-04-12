@@ -78,26 +78,24 @@ public class PersonalDetailsActivity extends AppCompat {
     ImageView actionBarBackButton;
     Dialog chooseDialog;
 
-    TextView panCardText, editPAN, editFront, frontText, profileText, editProfile;
-    Button uploadPAN, uploadF, uploadProfile, okButton;
-    ImageView imgPAN, imgF, imgProfile, previewProfile, previewPan, previewAadhar;
+    TextView panCardText, editPAN, editFront, frontText;
+    Button uploadPAN, uploadF, okButton;
+    ImageView imgPAN, imgF, previewPan, previewAadhar;
     private int GET_FROM_GALLERY = 0;
     private int GET_FROM_GALLERY1 = 1;
     private int CAMERA_PIC_REQUEST = 3;
     private int CAMERA_PIC_REQUEST1 = 2;
-    private int CAMERA_PIC_REQUEST2 = 4;
-    private int GET_FROM_GALLERY2 = 5;
 
     View panAndAadharView;
-    ConstraintLayout aadharConstrain, panConstrain, profileConstrain;
-    TextView uploadAadharTitle, uploadPanTitle, uploadProfileTitle, countdown;
+    ConstraintLayout aadharConstrain, panConstrain;
+    TextView uploadAadharTitle, uploadPanTitle, countdown;
 
     String userId, mobile, requestIdForAadhar;
-    Boolean profilePic, isPanUploaded = false, isFrontUploaded = false, isProfileUploaded = false, panVerified = true, aadharVerified = true;
+    Boolean isPanUploaded = false, isFrontUploaded = false, panVerified = true, aadharVerified = true;
     String img_type;
     EditText panNumber, aadharNumber;
 
-    Dialog previewDialogPan, previewDialogAadhar, previewDialogProfile, otpRequest;
+    Dialog previewDialogPan, previewDialogAadhar, otpRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +104,6 @@ public class PersonalDetailsActivity extends AppCompat {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            profilePic = bundle.getBoolean("profile");
             userId = bundle.getString("userId");
             mobile = bundle.getString("mobile");
         }
@@ -122,11 +119,7 @@ public class PersonalDetailsActivity extends AppCompat {
             }
         });
 
-        if (profilePic) {
-            actionBarTitle.setText(getString(R.string.Personal_Details));
-        } else {
-            actionBarTitle.setText(getString(R.string.kyc_verification));
-        }
+        actionBarTitle.setText(getString(R.string.kyc_verification));
 
         PackageManager pm = getPackageManager();
         pm.setComponentEnabledSetting(new ComponentName(this, com.nlpl.utils.OTPReceiver.class),
@@ -143,11 +136,7 @@ public class PersonalDetailsActivity extends AppCompat {
         editFront = panAndAadharView.findViewById(R.id.editFront);
         previewPan = (ImageView) panAndAadharView.findViewById(R.id.pan_aadhar_preview_pan);
         previewAadhar = (ImageView) panAndAadharView.findViewById(R.id.pan_aadhar_preview_aadhar);
-        previewProfile = (ImageView) panAndAadharView.findViewById(R.id.preview_profile);
-        editProfile = panAndAadharView.findViewById(R.id.editProfile);
-        uploadProfile = panAndAadharView.findViewById(R.id.uploadProfile);
-        profileText = panAndAadharView.findViewById(R.id.ProfileText);
-        imgProfile = panAndAadharView.findViewById(R.id.imageProfile);
+
         panNumber = panAndAadharView.findViewById(R.id.pan_aadhar_pan_number);
         panNumber.addTextChangedListener(panNumberCheck);
         aadharNumber = panAndAadharView.findViewById(R.id.pan_aadhar_aadhar_number);
@@ -157,26 +146,14 @@ public class PersonalDetailsActivity extends AppCompat {
 
         aadharConstrain = panAndAadharView.findViewById(R.id.aadhar_constrain);
         panConstrain = panAndAadharView.findViewById(R.id.pan_card_constrain);
-        profileConstrain = panAndAadharView.findViewById(R.id.upload_profile_constrain);
+
         uploadPanTitle = panAndAadharView.findViewById(R.id.upload_pan_text);
         uploadAadharTitle = panAndAadharView.findViewById(R.id.upload_aadhar_text);
-        uploadProfileTitle = panAndAadharView.findViewById(R.id.upload_profile_text);
 
-        if (profilePic) {
-            uploadProfileTitle.setVisibility(View.VISIBLE);
-            profileConstrain.setVisibility(View.VISIBLE);
-            uploadAadharTitle.setVisibility(View.GONE);
-            aadharConstrain.setVisibility(View.GONE);
-            uploadPanTitle.setVisibility(View.GONE);
-            panConstrain.setVisibility(View.GONE);
-        } else {
-            uploadProfileTitle.setVisibility(View.GONE);
-            profileConstrain.setVisibility(View.GONE);
-            uploadAadharTitle.setVisibility(View.VISIBLE);
-            aadharConstrain.setVisibility(View.VISIBLE);
-            uploadPanTitle.setVisibility(View.VISIBLE);
-            panConstrain.setVisibility(View.VISIBLE);
-        }
+        uploadAadharTitle.setVisibility(View.VISIBLE);
+        aadharConstrain.setVisibility(View.VISIBLE);
+        uploadPanTitle.setVisibility(View.VISIBLE);
+        panConstrain.setVisibility(View.VISIBLE);
 
         previewDialogPan = new Dialog(PersonalDetailsActivity.this);
         previewDialogPan.setContentView(R.layout.dialog_preview_images);
@@ -185,10 +162,6 @@ public class PersonalDetailsActivity extends AppCompat {
         previewDialogAadhar = new Dialog(PersonalDetailsActivity.this);
         previewDialogAadhar.setContentView(R.layout.dialog_preview_images);
         previewDialogAadhar.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.black)));
-
-        previewDialogProfile = new Dialog(PersonalDetailsActivity.this);
-        previewDialogProfile.setContentView(R.layout.dialog_preview_images);
-        previewDialogProfile.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.black)));
 
         otpRequest = new Dialog(PersonalDetailsActivity.this);
         otpRequest.setContentView(R.layout.activity_otp_code);
@@ -222,20 +195,6 @@ public class PersonalDetailsActivity extends AppCompat {
             }
         });
 
-        previewProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-                lp2.copyFrom(previewDialogProfile.getWindow().getAttributes());
-                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp2.height = WindowManager.LayoutParams.MATCH_PARENT;
-                lp2.gravity = Gravity.CENTER;
-
-                previewDialogProfile.show();
-                previewDialogProfile.getWindow().setAttributes(lp2);
-            }
-        });
-
         uploadF.setVisibility(View.VISIBLE);
         editFront.setVisibility(View.INVISIBLE);
 
@@ -264,20 +223,6 @@ public class PersonalDetailsActivity extends AppCompat {
             @Override
             public void onClick(View view) {
                 uploadAadharDialogChoose();
-            }
-        });
-
-        uploadProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                uploadProfileDialogChoose();
-            }
-        });
-
-        editProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                uploadProfileDialogChoose();
             }
         });
         getUserDetails(userId);
@@ -577,106 +522,6 @@ public class PersonalDetailsActivity extends AppCompat {
                 //------------------------------------------------------------------------------------------
             }
 
-        } else if (requestCode == GET_FROM_GALLERY2 && resultCode == Activity.RESULT_OK) {
-            //----------------------- Alert Dialog -------------------------------------------------
-            Dialog alert = new Dialog(PersonalDetailsActivity.this);
-            alert.setContentView(R.layout.dialog_alert_single_button);
-            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(alert.getWindow().getAttributes());
-            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.gravity = Gravity.CENTER;
-
-            alert.show();
-            alert.getWindow().setAttributes(lp);
-            alert.setCancelable(true);
-
-            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-            alertTitle.setText(getString(R.string.Personal_Details));
-            alertMessage.setText(getString(R.string.Profile_Uploaded_Successfully));
-            alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText(getString(R.string.ok));
-            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
-
-            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    alert.dismiss();
-                }
-            });
-            //------------------------------------------------------------------------------------------
-            profileText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-            uploadProfile.setVisibility(View.INVISIBLE);
-            editProfile.setVisibility(View.VISIBLE);
-            previewProfile.setVisibility(View.VISIBLE);
-            isProfileUploaded = true;
-
-            Uri selectedImage = data.getData();
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
-            saveImage(imageRequest());
-            uploadImage(picturePath);
-            ImageView editedAadhar = (ImageView) previewDialogAadhar.findViewById(R.id.dialog_preview_image_view);
-            ImageView editedPan = (ImageView) previewDialogPan.findViewById(R.id.dialog_preview_image_view);
-            editedPan.setImageURI(selectedImage);
-            imgProfile.setImageURI(selectedImage);
-
-        } else if (requestCode == CAMERA_PIC_REQUEST2) {
-            //----------------------- Alert Dialog -------------------------------------------------
-            Dialog alert = new Dialog(PersonalDetailsActivity.this);
-            alert.setContentView(R.layout.dialog_alert_single_button);
-            alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(alert.getWindow().getAttributes());
-            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.gravity = Gravity.CENTER;
-
-            alert.show();
-            alert.getWindow().setAttributes(lp);
-            alert.setCancelable(true);
-
-            TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-            TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-            TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-            TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-            alertTitle.setText(getString(R.string.Personal_Details));
-            alertMessage.setText(getString(R.string.Profile_Uploaded_Successfully));
-            alertPositiveButton.setVisibility(View.GONE);
-            alertNegativeButton.setText(getString(R.string.ok));
-            alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-            alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
-
-            alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    alert.dismiss();
-                }
-            });
-            //------------------------------------------------------------------------------------------
-
-            profileText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success, 0);
-            uploadProfile.setVisibility(View.INVISIBLE);
-            editProfile.setVisibility(View.VISIBLE);
-            previewProfile.setVisibility(View.VISIBLE);
-            isProfileUploaded = true;
-
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-            String path = getRealPathFromURI(getImageUri(this, image));
-            imgProfile.setImageBitmap(BitmapFactory.decodeFile(path));
-            saveImage(imageRequest());
-            uploadImage(path);
         }
     }
     //-------------------------------------------------------------------------------------------------------------------
@@ -690,13 +535,13 @@ public class PersonalDetailsActivity extends AppCompat {
                 UserResponse.UserList listObj = nameResponse.getData().get(0);
                 int userVerified = listObj.getIsPersonal_dt_added();
                 Log.i("userVerified", String.valueOf(userVerified));
-                if (userVerified==1){
+                if (userVerified == 1) {
                     panConstrain.setVisibility(View.GONE);
                     aadharConstrain.setVisibility(View.GONE);
                     okButton.setVisibility(View.GONE);
                     uploadPanTitle.setText(getString(R.string.Your_profile_is_under_verification));
                     uploadAadharTitle.setVisibility(View.GONE);
-                }else{
+                } else {
                     panConstrain.setVisibility(View.VISIBLE);
                     aadharConstrain.setVisibility(View.VISIBLE);
                     okButton.setVisibility(View.VISIBLE);
@@ -712,54 +557,12 @@ public class PersonalDetailsActivity extends AppCompat {
     }
 
     public void onClickOKPersonal(View view) {
-        if (profilePic) {
-            if (isProfileUploaded) {
-                UpdateUserDetails.updateUserIsProfileAdded(userId, "1");
-
-                Dialog alert = new Dialog(PersonalDetailsActivity.this);
-                alert.setContentView(R.layout.dialog_alert_single_button);
-                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                lp.copyFrom(alert.getWindow().getAttributes());
-                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.gravity = Gravity.CENTER;
-
-                alert.show();
-                alert.getWindow().setAttributes(lp);
-                alert.setCancelable(false);
-
-                TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
-                TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
-                TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
-                TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
-
-                alertTitle.setText(getString(R.string.Profile_Picture));
-                alertMessage.setText(getString(R.string.Profile_Picture_added_successfully));
-                alertPositiveButton.setVisibility(View.GONE);
-                alertNegativeButton.setText(getString(R.string.ok));
-                alertNegativeButton.setBackground(getResources().getDrawable(R.drawable.button_active));
-                alertNegativeButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.light_black)));
-
-                alertNegativeButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        alert.dismiss();
-                        ShowAlert.loadingDialog(PersonalDetailsActivity.this);
-                        JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, false);
-                    }
-                });
-            } else {
-                Toast.makeText(this, "Please Upload Profile Picture", Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            if (!isPanUploaded && !panVerified){
-                Toast.makeText(this, "Please enter valid PAN Number or upload PAN Card", Toast.LENGTH_SHORT).show();
-            } else if (!isFrontUploaded && !aadharVerified){
-                Toast.makeText(this, "Please enter valid Aadhar Number or upload Aadhar Card", Toast.LENGTH_SHORT).show();
-            }else if (isPanUploaded || panVerified && isFrontUploaded || aadharVerified){
-                createPanAadhar();
-            }
+        if (!isPanUploaded && !panVerified) {
+            Toast.makeText(this, "Please enter valid PAN Number or upload PAN Card", Toast.LENGTH_SHORT).show();
+        } else if (!isFrontUploaded && !aadharVerified) {
+            Toast.makeText(this, "Please enter valid Aadhar Number or upload Aadhar Card", Toast.LENGTH_SHORT).show();
+        } else if (isPanUploaded || panVerified && isFrontUploaded || aadharVerified) {
+            createPanAadhar();
         }
     }
 
@@ -988,47 +791,6 @@ public class PersonalDetailsActivity extends AppCompat {
             @Override
             public void onClick(View view) {
                 startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY1);
-                chooseDialog.dismiss();
-            }
-        });
-    }
-
-    private void uploadProfileDialogChoose() {
-        requestPermissionsForCamera();
-        requestPermissionsForGalleryWRITE();
-        requestPermissionsForGalleryREAD();
-        img_type = "profile";
-
-        Dialog chooseDialog;
-        chooseDialog = new Dialog(PersonalDetailsActivity.this);
-        chooseDialog.setContentView(R.layout.dialog_choose);
-        chooseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-        lp2.copyFrom(chooseDialog.getWindow().getAttributes());
-        lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp2.gravity = Gravity.BOTTOM;
-
-        chooseDialog.show();
-        chooseDialog.getWindow().setAttributes(lp2);
-
-        ImageView camera = chooseDialog.findViewById(R.id.dialog_choose_camera_image);
-        ImageView gallery = chooseDialog.findViewById(R.id.dialog__choose_photo_lirary_image);
-
-        camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST2);
-                chooseDialog.dismiss();
-            }
-        });
-
-        gallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY2);
                 chooseDialog.dismiss();
             }
         });

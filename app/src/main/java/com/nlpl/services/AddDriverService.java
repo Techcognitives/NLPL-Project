@@ -2,6 +2,7 @@ package com.nlpl.services;
 
 import com.nlpl.model.Requests.AddDriverRequest;
 import com.nlpl.model.Responses.AddDriverResponse;
+import com.nlpl.model.Responses.AddDriverResponseGet;
 import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverAlternateNumber;
 import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverDlNumber;
 import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverEmailId;
@@ -11,6 +12,7 @@ import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverTruckId
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -36,4 +38,7 @@ public interface AddDriverService {
 
     @PUT("/driver/udateDr/{driverId}")
     Call<UpdateDriverDlNumber> updateDriverDlNumber(@Path("driverId") String driverId, @Body UpdateDriverDlNumber updateDriverDlNumber);
+
+    @GET("/driver/userId/{userId}")
+    Call<AddDriverResponseGet> getDriverById(@Path("userId") String userId);
 }

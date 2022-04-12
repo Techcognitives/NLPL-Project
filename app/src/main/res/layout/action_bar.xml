@@ -41,7 +41,7 @@
         android:id="@+id/action_bar_menu"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:onClick="onCLickShowMenu"
+        android:onClick="onCLickPost"
         android:paddingStart="7dp"
         android:paddingEnd="12dp"
         android:visibility="gone"
@@ -50,7 +50,7 @@
         app:layout_constraintStart_toEndOf="@+id/action_bar_whats_app"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.515"
-        app:srcCompat="@drawable/ic_baseline_menu_24"
+        app:srcCompat="@android:drawable/ic_input_add"
         app:tint="@color/light_black" />
 
     <TextView
