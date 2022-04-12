@@ -78,7 +78,7 @@ public class PersonalDetailsActivity extends AppCompat {
     ImageView actionBarBackButton;
     Dialog chooseDialog;
 
-    TextView panCardText, editPAN, editFront, frontText, alertNegativeButton;
+    TextView panCardText, editPAN, editFront, frontText;
     Button uploadPAN, uploadF, okButton;
     ImageView imgPAN, imgF, previewPan, previewAadhar;
     private int GET_FROM_GALLERY = 0;
