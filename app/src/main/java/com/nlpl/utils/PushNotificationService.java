@@ -24,7 +24,7 @@ public class PushNotificationService extends FirebaseMessagingService {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "fytNotification");
         builder.setContentTitle(title);
         builder.setContentText(message);
-        builder.setSmallIcon(R.drawable.logo_circle);
+        builder.setSmallIcon(R.drawable.new_logo);
         builder.setAutoCancel(true);
 
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);

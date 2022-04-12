@@ -1077,7 +1077,6 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                         driverCount.setText(driverList.size() + " Drivers");
                     }
                 } catch (Exception e) {
-
                 }
             }
 
@@ -1089,9 +1088,34 @@ public class ViewPersonalDetailsActivity extends AppCompat {
     }
 
     public void onClickAddDetails(View view) {
-        if (userRoleAPI.equals("Customer")){
+        if (userRoleAPI.equals("Customer")) {
+            switch (view.getId()) {
+                case R.id.profile_view_add_bank:
+                    if (isBankDetailsDone.equals("1")) {
+                        ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
+                        JumpTo.goToViewBankDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false);
+                    } else {
+                        ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
+                        JumpTo.goToBankDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false, false, null);
+                    }
+                    break;
 
-        }else{
+                case R.id.profile_view_settings:
+                    ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
+                    JumpTo.getToSettingAndPreferences(ViewPersonalDetailsActivity.this, phone, userId, "Customer", false);
+                    break;
+
+                case R.id.profile_view_history:
+                    ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
+                    JumpTo.goToCustomerLoadHistoryActivity(ViewPersonalDetailsActivity.this, userId, phone, false);
+                    break;
+
+                case R.id.customer_menu_kyc:
+                    ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
+                    JumpTo.goToPersonalDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false, false);
+                    break;
+            }
+        } else {
             switch (view.getId()) {
                 case R.id.profile_view_add_bank:
                     if (isBankDetailsDone.equals("1")) {
