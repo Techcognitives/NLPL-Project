@@ -46,7 +46,6 @@
             android:layout_marginBottom="5dp"
             android:background="@drawable/button_active"
             android:backgroundTint="@color/light_black"
-            android:drawableStart="@drawable/log_out_small"
             android:onClick="onClickAddDetails"
             android:paddingStart="5dp"
             android:paddingTop="10dp"
@@ -58,7 +57,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scrollView5" />
+            app:layout_constraintTop_toBottomOf="@+id/scrollView5"
+            app:drawableStartCompat="@drawable/log_out_small" />
 
         <ScrollView
             android:id="@+id/scrollView5"

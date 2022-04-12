@@ -89,7 +89,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
     ImageView actionBarBackButton, actionBarMenuButton, profilePic, arrowPersonal, arrowFirm;
 
     View bottomNav;
-    ConstraintLayout constrainProfileDetails, constrainFirmDetails;
+    ConstraintLayout constrainProfileDetails, constrainFirmDetails, truckConstrain, driverConstrain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,8 +149,10 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         bankCount = findViewById(R.id.profile_number_of_banks);
 
         truckCount = findViewById(R.id.profile_number_of_trucks);
+        truckConstrain = findViewById(R.id.profile_truck_details);
 
         driverCount = findViewById(R.id.profile_number_of_drivers);
+        driverConstrain = findViewById(R.id.profile_driver_details);
 
         uploadPanAAdharBtnTitle = (TextView) findViewById(R.id.view_personal_details_complete_personal_details_text);
         uploadPanAAdharBtn = (TextView) findViewById(R.id.view_personal_details_add_personal_details);
@@ -234,6 +236,8 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                         isDriverDetailsDone = obj.getString("isDriver_added");
 
                         if (userRoleAPI.equals("Customer")) {
+                            truckConstrain.setVisibility(View.GONE);
+                            driverConstrain.setVisibility(View.GONE);
                             View bottomNav = findViewById(R.id.view_personal_details_bottom_nav_bar);
                             ConstraintLayout spDashboard = bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
                             spDashboard.setBackgroundTintList(getResources().getColorStateList(R.color.light_white));
@@ -249,6 +253,8 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                             profileUnderline.setVisibility(View.VISIBLE);
                             roleProfile.setText("Load Poster");
                         } else {
+                            truckConstrain.setVisibility(View.VISIBLE);
+                            driverConstrain.setVisibility(View.VISIBLE);
                             //---------------------------- Bottom Nav --------------------------------------------------
                             View bottomNav = (View) findViewById(R.id.view_personal_details_bottom_nav_bar);
                             TextView profileText = (TextView) bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
