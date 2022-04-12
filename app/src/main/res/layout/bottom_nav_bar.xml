@@ -199,7 +199,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingBottom="5dp"
-            android:text="Trips"
+            android:text="@string/Trips"
             android:textAlignment="center"
             android:textColor="@color/light_black"
             android:textSize="12sp"

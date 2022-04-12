@@ -95,7 +95,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         bottomNav = (View) findViewById(R.id.view_personal_details_bottom_nav_bar);
         TextView profileText = (TextView) bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
         ImageView profileImageView = (ImageView) bottomNav.findViewById(R.id.bottom_nav_profile_image_view);
-        profileImageView.setImageDrawable(getDrawable(R.drawable.black_truck_small));
+        profileImageView.setImageDrawable(getDrawable(R.drawable.bottom_nav_search_small));
         ConstraintLayout customerDashboard = bottomNav.findViewById(R.id.bottom_nav_trip);
         customerDashboard.setBackgroundTintList(getResources().getColorStateList(R.color.white));
         ConstraintLayout spDashboard = bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
@@ -103,7 +103,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         View spView = bottomNav.findViewById(R.id.bottom_nav_bar_dashboard_underline);
         spView.setVisibility(View.INVISIBLE);
         View customerView = bottomNav.findViewById(R.id.bottom_nav_bar_find_underline);
-        profileText.setText(getString(R.string.Trips));
+        profileText.setText(getString(R.string.Trucks));
         truck = findViewById(R.id.bottom_nav_trip);
         //------------------------------------------------------------------------------------------
         userNameTextView = (TextView) findViewById(R.id.view_personal_details_name_text_view);
