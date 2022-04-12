@@ -76,7 +76,6 @@ public class PersonalDetailsActivity extends AppCompat {
     View action_bar;
     TextView actionBarTitle;
     ImageView actionBarBackButton;
-    Dialog chooseDialog;
 
     TextView panCardText, editPAN, editFront, frontText;
     Button uploadPAN, uploadF, okButton;
@@ -85,8 +84,6 @@ public class PersonalDetailsActivity extends AppCompat {
     private int GET_FROM_GALLERY1 = 1;
     private int CAMERA_PIC_REQUEST = 3;
     private int CAMERA_PIC_REQUEST1 = 2;
-    private int CAMERA_PIC_REQUEST2 = 4;
-    private int GET_FROM_GALLERY2 = 5;
 
     View panAndAadharView;
     ConstraintLayout aadharConstrain, panConstrain;
