@@ -47,7 +47,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
     ImageView actionBarBackButton, actionBarMenuButton;
 
     View bottomNav;
-    ConstraintLayout spDashboard, customerDashboard;
+    ConstraintLayout truck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,11 +93,18 @@ public class ViewPersonalDetailsActivity extends AppCompat {
 
         //---------------------------- Bottom Nav --------------------------------------------------
         bottomNav = (View) findViewById(R.id.view_personal_details_bottom_nav_bar);
-        spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
-        customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
-        spDashboard.setBackgroundColor(getResources().getColor(R.color.nav_unselected_blue));
-        customerDashboard.setBackgroundColor(getResources().getColor(R.color.nav_selected_blue));
-
+        TextView profileText = (TextView) bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
+        ImageView profileImageView = (ImageView) bottomNav.findViewById(R.id.bottom_nav_profile_image_view);
+        profileImageView.setImageDrawable(getDrawable(R.drawable.black_truck_small));
+        ConstraintLayout customerDashboard = bottomNav.findViewById(R.id.bottom_nav_trip);
+        customerDashboard.setBackgroundTintList(getResources().getColorStateList(R.color.white));
+        ConstraintLayout spDashboard = bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
+        spDashboard.setBackgroundTintList(getResources().getColorStateList(R.color.light_white));
+        View spView = bottomNav.findViewById(R.id.bottom_nav_bar_dashboard_underline);
+        spView.setVisibility(View.INVISIBLE);
+        View customerView = bottomNav.findViewById(R.id.bottom_nav_bar_find_underline);
+        profileText.setText(getString(R.string.Trips));
+        truck = findViewById(R.id.bottom_nav_trip);
         //------------------------------------------------------------------------------------------
         userNameTextView = (TextView) findViewById(R.id.view_personal_details_name_text_view);
         userPhoneNumberTextView = (TextView) findViewById(R.id.view_personal_details_phone_number_text_view);
@@ -180,6 +187,12 @@ public class ViewPersonalDetailsActivity extends AppCompat {
 //                            userFirmAddressTitleTextView.setVisibility(View.GONE);
 //                            userFirmAddressTextView.setVisibility(View.GONE);
 //                        }
+
+                        if (userRoleAPI.equals("Customer")) {
+                            truck.setVisibility(View.VISIBLE);
+                        } else {
+                            truck.setVisibility(View.GONE);
+                        }
 
                         if (isProfilePicAdded.equals("1")) {
                             uploadProfilebtn.setVisibility(View.GONE);
@@ -444,7 +457,17 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                     break;
 
                 case R.id.bottom_nav_customer_dashboard:
+                    ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
+                    JumpTo.goToFindTrucksActivity(ViewPersonalDetailsActivity.this, userId, phone);
+                    break;
 
+                case R.id.bottom_nav_track:
+                    JumpTo.goToLPTrackActivity(ViewPersonalDetailsActivity.this, phone, false);
+                    break;
+
+                case R.id.bottom_nav_trip:
+                    ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
+                    JumpTo.goToFindTripLPActivity(ViewPersonalDetailsActivity.this, phone, userId, false);
                     break;
             }
         } else {
@@ -455,7 +478,14 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                     break;
 
                 case R.id.bottom_nav_customer_dashboard:
+                    ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
+                    JumpTo.goToFindLoadsActivity(ViewPersonalDetailsActivity.this, userId, phone, false);
 
+                    break;
+
+                case R.id.bottom_nav_track:
+                    ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
+                    JumpTo.goToSPTrackActivity(ViewPersonalDetailsActivity.this, phone, false);
                     break;
             }
         }

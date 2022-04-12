@@ -1910,7 +1910,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         spRatings.setVisibility(View.VISIBLE);
         spRatingInInt.setVisibility(View.VISIBLE);
         nameSP.setVisibility(View.VISIBLE);
-        rateSp.setVisibility(View.VISIBLE);
+        rateSp.setVisibility(View.GONE);
         rateDriver.setVisibility(View.GONE);
 
         spNumber.setVisibility(View.VISIBLE);

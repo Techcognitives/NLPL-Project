@@ -124,6 +124,8 @@ public class CompanyDetailsActivity extends AppCompat {
 
         companyName.setFilters(new InputFilter[]{filter});
         address.setFilters(new InputFilter[]{filter});
+        int maxLength = 10;
+        gstNumber.setFilters(new InputFilter[]{filter, new InputFilter.LengthFilter(maxLength)});
 
         mQueue = Volley.newRequestQueue(CompanyDetailsActivity.this);
 

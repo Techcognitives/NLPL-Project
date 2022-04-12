@@ -118,7 +118,7 @@ public class PersonalDetailsActivity extends AppCompat {
             @Override
             public void onClick(View view) {
                 ShowAlert.loadingDialog(PersonalDetailsActivity.this);
-                JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, false);
+                JumpTo.goToServiceProviderDashboard(PersonalDetailsActivity.this, mobile, false, true);
             }
         });
 
@@ -1038,7 +1038,7 @@ public class PersonalDetailsActivity extends AppCompat {
     public void onBackPressed() {
         super.onBackPressed();
         ShowAlert.loadingDialog(PersonalDetailsActivity.this);
-        JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, false);
+        JumpTo.goToServiceProviderDashboard(PersonalDetailsActivity.this, mobile, true, true);
     }
 
     @Override

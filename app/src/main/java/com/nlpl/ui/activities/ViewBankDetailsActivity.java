@@ -59,7 +59,7 @@ public class ViewBankDetailsActivity extends AppCompat {
     ImageView actionBarBackButton, actionBarMenuButton;
 
     View bottomNav;
-    ConstraintLayout spDashboard, customerDashboard;
+    ConstraintLayout truck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,6 @@ public class ViewBankDetailsActivity extends AppCompat {
         }
 
         mQueue = Volley.newRequestQueue(ViewBankDetailsActivity.this);
-        getUserDetails();
         //-------------------------------- Action Bar ----------------------------------------------
         actionBar = findViewById(R.id.view_bank_details_action_bar);
         actionBarTitle = (TextView) actionBar.findViewById(R.id.action_bar_title);
@@ -97,10 +96,19 @@ public class ViewBankDetailsActivity extends AppCompat {
         });
         //---------------------------- Bottom Nav --------------------------------------------------
         bottomNav = (View) findViewById(R.id.view_bank_details_bottom_nav_bar);
-        spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
-        customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
-        spDashboard.setBackgroundColor(getResources().getColor(R.color.nav_unselected_blue));
-        customerDashboard.setBackgroundColor(getResources().getColor(R.color.nav_selected_blue));
+        TextView profileText = (TextView) bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
+        ImageView profileImageView = (ImageView) bottomNav.findViewById(R.id.bottom_nav_profile_image_view);
+        profileImageView.setImageDrawable(getDrawable(R.drawable.black_truck_small));
+        ConstraintLayout customerDashboard = bottomNav.findViewById(R.id.bottom_nav_trip);
+        customerDashboard.setBackgroundTintList(getResources().getColorStateList(R.color.white));
+        ConstraintLayout spDashboard = bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
+        spDashboard.setBackgroundTintList(getResources().getColorStateList(R.color.light_white));
+        View spView = bottomNav.findViewById(R.id.bottom_nav_bar_dashboard_underline);
+        spView.setVisibility(View.INVISIBLE);
+        View customerView = bottomNav.findViewById(R.id.bottom_nav_bar_find_underline);
+        profileText.setText(getString(R.string.Trips));
+        truck = findViewById(R.id.bottom_nav_trip);
+        getUserDetails();
         //---------------------------- Get Bank Details --------------------------------------------
         bankListRecyclerView = (RecyclerView) findViewById(R.id.bank_list_view);
 
@@ -221,7 +229,17 @@ public class ViewBankDetailsActivity extends AppCompat {
                     break;
 
                 case R.id.bottom_nav_customer_dashboard:
+                    ShowAlert.loadingDialog(ViewBankDetailsActivity.this);
+                    JumpTo.goToFindTrucksActivity(ViewBankDetailsActivity.this, userId, phone);
+                    break;
 
+                case R.id.bottom_nav_track:
+                    JumpTo.goToLPTrackActivity(ViewBankDetailsActivity.this, phone, false);
+                    break;
+
+                case R.id.bottom_nav_trip:
+                    ShowAlert.loadingDialog(ViewBankDetailsActivity.this);
+                    JumpTo.goToFindTripLPActivity(ViewBankDetailsActivity.this, phone, userId, false);
                     break;
             }
         } else {
@@ -232,7 +250,14 @@ public class ViewBankDetailsActivity extends AppCompat {
                     break;
 
                 case R.id.bottom_nav_customer_dashboard:
+                    ShowAlert.loadingDialog(ViewBankDetailsActivity.this);
+                    JumpTo.goToFindLoadsActivity(ViewBankDetailsActivity.this, userId, phone, false);
 
+                    break;
+
+                case R.id.bottom_nav_track:
+                    ShowAlert.loadingDialog(ViewBankDetailsActivity.this);
+                    JumpTo.goToSPTrackActivity(ViewBankDetailsActivity.this, phone, false);
                     break;
             }
         }
@@ -262,6 +287,11 @@ public class ViewBankDetailsActivity extends AppCompat {
 //
 //                        String s1 = mobileAPI.substring(2, 12);
 //                        mobileEdit.setText(s1);
+                        if (roleAPI.equals("Customer")) {
+                            truck.setVisibility(View.VISIBLE);
+                        } else {
+                            truck.setVisibility(View.GONE);
+                        }
 
                     }
                 } catch (JSONException e) {

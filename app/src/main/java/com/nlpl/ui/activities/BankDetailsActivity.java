@@ -442,10 +442,15 @@ public class BankDetailsActivity extends AppCompat {
     public void onClickBankDetailsOk(View view) {
         if (isImgUploaded) {
             UpdateUserDetails.updateUserIsBankDetailsGiven(userId, "1");
-            saveBank(createBankAcc());
-            ShowAlert.loadingDialog(this);
-            uploadCheque(bankId, PathForCC);
-            JumpTo.goToViewBankDetailsActivity(BankDetailsActivity.this, userId, mobile, true);
+            if (!isEdit){
+                saveBank(createBankAcc());
+                ShowAlert.loadingDialog(this);
+                uploadCheque(bankId, PathForCC);
+                JumpTo.goToViewBankDetailsActivity(BankDetailsActivity.this, userId, mobile, true);
+            }else{
+                uploadCheque(bankId, PathForCC);
+                JumpTo.goToViewBankDetailsActivity(BankDetailsActivity.this, userId, mobile, true);
+            }
         } else {
             if (bankName.getText().toString().isEmpty()) {
                 Toast.makeText(this, "Please enter Bank Name", Toast.LENGTH_SHORT).show();

@@ -112,10 +112,19 @@ public class ViewTruckDetailsActivity extends AppCompat {
         });
         //---------------------------- Bottom Nav --------------------------------------------------
         bottomNav = (View) findViewById(R.id.view_truck_details_bottom_nav_bar);
-        spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
-        customerDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_customer_dashboard);
-        spDashboard.setBackgroundColor(getResources().getColor(R.color.nav_unselected_blue));
-        customerDashboard.setBackgroundColor(getResources().getColor(R.color.nav_selected_blue));
+        TextView profileText = (TextView) bottomNav.findViewById(R.id.bottom_nav_profile_text_view);
+        ImageView profileImageView = (ImageView) bottomNav.findViewById(R.id.bottom_nav_profile_image_view);
+        profileImageView.setImageDrawable(getDrawable(R.drawable.black_truck_small));
+        ConstraintLayout customerDashboard = bottomNav.findViewById(R.id.bottom_nav_trip);
+        customerDashboard.setBackgroundTintList(getResources().getColorStateList(R.color.white));
+        ConstraintLayout spDashboard = bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
+        spDashboard.setBackgroundTintList(getResources().getColorStateList(R.color.light_white));
+        View spView = bottomNav.findViewById(R.id.bottom_nav_bar_dashboard_underline);
+        spView.setVisibility(View.INVISIBLE);
+        View customerView = bottomNav.findViewById(R.id.bottom_nav_bar_find_underline);
+        profileText.setText(getString(R.string.Trips));
+        ConstraintLayout truck = findViewById(R.id.bottom_nav_trip);
+        truck.setVisibility(View.GONE);
 
         //---------------------------- Get Truck Details -------------------------------------------
         truckListRecyclerView = (RecyclerView) findViewById(R.id.trucks_list_view);
@@ -310,7 +319,14 @@ public class ViewTruckDetailsActivity extends AppCompat {
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
+                ShowAlert.loadingDialog(ViewTruckDetailsActivity.this);
+                JumpTo.goToFindLoadsActivity(ViewTruckDetailsActivity.this, userId, phone, false);
 
+                break;
+
+            case R.id.bottom_nav_track:
+                ShowAlert.loadingDialog(ViewTruckDetailsActivity.this);
+                JumpTo.goToSPTrackActivity(ViewTruckDetailsActivity.this, phone, false);
                 break;
         }
     }
