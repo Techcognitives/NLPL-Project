@@ -78,7 +78,7 @@ public class PersonalDetailsActivity extends AppCompat {
     ImageView actionBarBackButton;
     Dialog chooseDialog;
 
-    TextView panCardText, editPAN, editFront, frontText, profileText, editProfile;
+    TextView panCardText, editPAN, editFront, frontText, profileText, editProfile, alertNegativeButton;
     Button uploadPAN, uploadF, uploadProfile, okButton;
     ImageView imgPAN, imgF, imgProfile, previewProfile, previewPan, previewAadhar;
     private int GET_FROM_GALLERY = 0;
@@ -92,7 +92,7 @@ public class PersonalDetailsActivity extends AppCompat {
     ConstraintLayout aadharConstrain, panConstrain, profileConstrain;
     TextView uploadAadharTitle, uploadPanTitle, uploadProfileTitle, countdown;
 
-    String userId, mobile, requestIdForAadhar;
+    String userId, mobile, requestIdForAadhar, userRoleAPI;
     Boolean profilePic, isPanUploaded = false, isFrontUploaded = false, isProfileUploaded = false, panVerified = true, aadharVerified = true;
     String img_type;
     EditText panNumber, aadharNumber;
@@ -118,7 +118,12 @@ public class PersonalDetailsActivity extends AppCompat {
             @Override
             public void onClick(View view) {
                 ShowAlert.loadingDialog(PersonalDetailsActivity.this);
-                JumpTo.goToServiceProviderDashboard(PersonalDetailsActivity.this, mobile, false, true);
+//                if (userRoleAPI.equals("Customer")) {
+//                    JumpTo.goToCustomerDashboard(PersonalDetailsActivity.this, mobile, true);
+//                } else {
+//                    JumpTo.goToServiceProviderDashboard(PersonalDetailsActivity.this, mobile, true, true);
+//                }
+                JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, false);
             }
         });
 
@@ -688,6 +693,7 @@ public class PersonalDetailsActivity extends AppCompat {
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 UserResponse nameResponse = response.body();
                 UserResponse.UserList listObj = nameResponse.getData().get(0);
+//                String userRoleAPI = listObj.getUser_type();
                 int userVerified = listObj.getIsPersonal_dt_added();
                 Log.i("userVerified", String.valueOf(userVerified));
                 if (userVerified==1){
@@ -749,10 +755,12 @@ public class PersonalDetailsActivity extends AppCompat {
                         JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, false);
                     }
                 });
-            } else {
+            }
+            else {
                 Toast.makeText(this, "Please Upload Profile Picture", Toast.LENGTH_SHORT).show();
             }
-        } else {
+        }
+        else {
             if (!isPanUploaded && !panVerified){
                 Toast.makeText(this, "Please enter valid PAN Number or upload PAN Card", Toast.LENGTH_SHORT).show();
             } else if (!isFrontUploaded && !aadharVerified){
@@ -761,6 +769,7 @@ public class PersonalDetailsActivity extends AppCompat {
                 createPanAadhar();
             }
         }
+
     }
 
     public void createPanAadhar() {
@@ -1038,7 +1047,13 @@ public class PersonalDetailsActivity extends AppCompat {
     public void onBackPressed() {
         super.onBackPressed();
         ShowAlert.loadingDialog(PersonalDetailsActivity.this);
-        JumpTo.goToServiceProviderDashboard(PersonalDetailsActivity.this, mobile, true, true);
+
+//        if (userRoleAPI.equals("Customer")) {
+//            JumpTo.goToCustomerDashboard(PersonalDetailsActivity.this, mobile, true);
+//        } else {
+//            JumpTo.goToServiceProviderDashboard(PersonalDetailsActivity.this, mobile, true, true);
+//        }
+        JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, false);
     }
 
     @Override
