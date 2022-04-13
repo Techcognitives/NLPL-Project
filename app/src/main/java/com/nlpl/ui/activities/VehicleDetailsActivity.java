@@ -1192,6 +1192,7 @@ public class VehicleDetailsActivity extends AppCompat {
                 RegexTemplate.NOT_EMPTY, R.string.invalid_RC);
         awesomeValidation.addValidation(VehicleDetailsActivity.this, R.id.vehicle_details_vehicle_number_edit2,
                 "[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{4}", R.string.invalid_RC);
+        awesomeValidation.validate();
     }
 
     private void checkVehicle(String vehicleNumbers) {
