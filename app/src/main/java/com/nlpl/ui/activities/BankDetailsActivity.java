@@ -457,7 +457,7 @@ public class BankDetailsActivity extends AppCompat {
             }
         } else {
             if (bankName.getText().toString().isEmpty()) {
-                Toast.makeText(this, "Please enter Bank Name", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please upload cancelled cheque or Enter Bank details", Toast.LENGTH_SHORT).show();
             } else if (accountNo.getText().toString().isEmpty()) {
                 Toast.makeText(this, "Please enter Account Number", Toast.LENGTH_SHORT).show();
             } else if (reAccount.getText().toString().isEmpty()) {
@@ -1002,12 +1002,13 @@ public class BankDetailsActivity extends AppCompat {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (userRoleAPI.equals("Customer")) {
-            JumpTo.goToCustomerDashboard(BankDetailsActivity.this, mobile, true);
-
-        } else {
-            JumpTo.goToServiceProviderDashboard(BankDetailsActivity.this, mobile, true, true);
-        }
+//        if (userRoleAPI.equals("Customer")) {
+//            JumpTo.goToCustomerDashboard(BankDetailsActivity.this, mobile, true);
+//
+//        } else {
+//            JumpTo.goToServiceProviderDashboard(BankDetailsActivity.this, mobile, true, true);
+//        }
+        JumpTo.goToViewBankDetailsActivity(BankDetailsActivity.this, userId, mobile, true);
     }
 
 }
