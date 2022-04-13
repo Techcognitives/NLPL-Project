@@ -1041,6 +1041,9 @@ public class DriverDetailsActivity extends AppCompat {
 
                 if (isDLUploaded) {
                     createDriverDetails();
+                    if (selfCheckBox.isChecked()){
+                        UpdateUserDetails.updateUserIsDriverAddedAlready(userId, "1");
+                    }
                 } else {
                     Toast.makeText(this, "Please enter valid Driving License Number or upload Driving License", Toast.LENGTH_SHORT).show();
                 }
@@ -1733,6 +1736,13 @@ public class DriverDetailsActivity extends AppCompat {
                         String userRole = obj.getString("user_type");
                         String alternateMob = obj.getString("alternate_ph_no");
                         isDriverDetailsDoneAPI = obj.getString("isDriver_added");
+                        String isDriverAsSelfAlreadyAdded = obj.getString("is_self_added_asDriver");
+
+                        if (isDriverAsSelfAlreadyAdded.equals("1")){
+                            selfCheckBox.setVisibility(View.GONE);
+                        }else{
+                            selfCheckBox.setVisibility(View.VISIBLE);
+                        }
 
                         if (selfCheckBox.isChecked()) {
                             driverName.setText(userNameAPI);

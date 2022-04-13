@@ -10,6 +10,7 @@ import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserEmailId;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsBankDetailsGiven;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsCompanyAdded;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsDriverAdded;
+import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsDriverAddedAlready;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsPersonalDetailsAdded;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsProfileAdded;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsRegistrationDone;
@@ -452,6 +453,25 @@ public class UpdateUserDetails {
 
             @Override
             public void onFailure(Call<UpdateUserAadharNumber> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public static void updateUserIsDriverAddedAlready(String userId, String isDriverAddedAlready) {
+        UpdateUserIsDriverAddedAlready updateUserIsDriverAddedAlready = new UpdateUserIsDriverAddedAlready(isDriverAddedAlready);
+        Call<UpdateUserIsDriverAddedAlready> call = ApiClient.getUserService().updateUserIsDriverAddedAlready("" + userId, updateUserIsDriverAddedAlready);
+        call.enqueue(new Callback<UpdateUserIsDriverAddedAlready>() {
+            @Override
+            public void onResponse(Call<UpdateUserIsDriverAddedAlready> call, Response<UpdateUserIsDriverAddedAlready> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Successful", "User is Driver Added");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateUserIsDriverAddedAlready> call, Throwable t) {
+                Log.i("Not Successful", "User is Driver Added");
 
             }
         });

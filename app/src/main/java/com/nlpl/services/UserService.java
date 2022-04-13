@@ -11,6 +11,7 @@ import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserEmailId;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsBankDetailsGiven;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsCompanyAdded;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsDriverAdded;
+import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsDriverAddedAlready;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsPersonalDetailsAdded;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsProfileAdded;
 import com.nlpl.model.UpdateModel.Models.UpdateUserDetails.UpdateUserIsRegistrationDone;
@@ -73,6 +74,9 @@ public interface UserService {
 
     @PUT("/user/{userId}")
     Call<UpdateUserIsDriverAdded> updateUserIsDriverAdded(@Path("userId") String userId, @Body UpdateUserIsDriverAdded updateUserIsDriverAdded);
+
+    @PUT("/user/{userId}")
+    Call<UpdateUserIsDriverAddedAlready> updateUserIsDriverAddedAlready(@Path("userId") String userId, @Body UpdateUserIsDriverAddedAlready updateUserIsDriverAddedAlready);
 
     @PUT("/user/{userId}")
     Call<UpdateUserIsBankDetailsGiven> updateUserIsBankDetailsGiven(@Path("userId") String userId, @Body UpdateUserIsBankDetailsGiven updateUserIsBankDetailsGiven);
