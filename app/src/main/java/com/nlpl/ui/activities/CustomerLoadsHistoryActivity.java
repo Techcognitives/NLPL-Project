@@ -272,7 +272,7 @@ public class CustomerLoadsHistoryActivity extends AppCompat {
     public void onBackPressed() {
         super.onBackPressed();
         ShowAlert.loadingDialog(CustomerLoadsHistoryActivity.this);
-        JumpTo.goToCustomerDashboard(CustomerLoadsHistoryActivity.this, phone, true);
+        JumpTo.goToViewPersonalDetailsActivity(CustomerLoadsHistoryActivity.this, userId, phone, true);
     }
 
     public void onClickLoadsCompleted(View view) {

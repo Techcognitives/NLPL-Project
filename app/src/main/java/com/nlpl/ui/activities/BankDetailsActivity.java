@@ -449,6 +449,10 @@ public class BankDetailsActivity extends AppCompat {
                 JumpTo.goToViewBankDetailsActivity(BankDetailsActivity.this, userId, mobile, true);
             }else{
                 uploadCheque(bankId, PathForCC);
+                UpdateBankDetails.updateBankName(bankId, bankName.getText().toString());
+                UpdateBankDetails.updateBankAccountNumber(bankId, accountNo.getText().toString());
+                UpdateBankDetails.updateBankReEnterAccountNumber(bankId, reAccount.getText().toString());
+                UpdateBankDetails.updateBankIFSICode(bankId, ifscCode.getText().toString());
                 JumpTo.goToViewBankDetailsActivity(BankDetailsActivity.this, userId, mobile, true);
             }
         } else {

@@ -915,11 +915,13 @@ public class PostALoadActivity extends AppCompat {
 
         EditText advancePercentage;
         advancePercentage = alert.findViewById(R.id.dialog_payment_advance_percentages);
+        advancePercentage.setEnabled(false);
 
         toPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 paymentMethod = "ToPay";
+                advancePercentage.setEnabled(false);
                 toPay.setChecked(true);
                 payNow.setChecked(false);
                 toBeBilled.setChecked(false);
@@ -930,6 +932,7 @@ public class PostALoadActivity extends AppCompat {
             @Override
             public void onClick(View view) {
                 paymentMethod = "PayNow";
+                advancePercentage.setEnabled(true);
                 toPay.setChecked(false);
                 payNow.setChecked(true);
                 toBeBilled.setChecked(false);
@@ -940,6 +943,7 @@ public class PostALoadActivity extends AppCompat {
             @Override
             public void onClick(View view) {
                 paymentMethod = "ToBeBilled";
+                advancePercentage.setEnabled(false);
                 toPay.setChecked(false);
                 payNow.setChecked(false);
                 toBeBilled.setChecked(true);

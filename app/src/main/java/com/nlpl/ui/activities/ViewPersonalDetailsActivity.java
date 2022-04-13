@@ -285,7 +285,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                         if (isPersonalDetailsDone.equals("1")) {
                             previewAadharBtn.setVisibility(View.VISIBLE);
                             previewPANBtn.setVisibility(View.VISIBLE);
-                            uploadPanAAdharBtn.setVisibility(View.GONE);
+                            uploadPanAAdharBtn.setText("Edit KYC");
                             uploadPanAAdharBtnTitle.setVisibility(View.GONE);
                             panText.setVisibility(View.VISIBLE);
                             aadharText.setVisibility(View.VISIBLE);
@@ -315,7 +315,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                         } else {
                             previewAadharBtn.setVisibility(View.INVISIBLE);
                             previewPANBtn.setVisibility(View.INVISIBLE);
-                            uploadPanAAdharBtn.setVisibility(View.VISIBLE);
+                            uploadPanAAdharBtn.setText("Complete KYC");
                             uploadPanAAdharBtnTitle.setVisibility(View.VISIBLE);
                             panText.setVisibility(View.INVISIBLE);
                             aadharText.setVisibility(View.INVISIBLE);
@@ -483,7 +483,6 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                         userFirmAddCompany.setVisibility(View.INVISIBLE);
                         userFirmTitle.setVisibility(View.VISIBLE);
                         userFirmTitle.setText(getString(R.string.Firm_Details));
-                        userFirmTitle.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.redDark)));
                         userFirmNameTitleTextView.setVisibility(View.VISIBLE);
                         userFirmNameTextView.setVisibility(View.VISIBLE);
                         userFirmAddressTitleTextView.setVisibility(View.VISIBLE);

@@ -114,12 +114,12 @@ public class PersonalDetailsActivity extends AppCompat {
             @Override
             public void onClick(View view) {
                 ShowAlert.loadingDialog(PersonalDetailsActivity.this);
-                if (userRoleAPI.equals("Customer")) {
-                    JumpTo.goToCustomerDashboard(PersonalDetailsActivity.this, mobile, true);
-                } else {
-                    JumpTo.goToServiceProviderDashboard(PersonalDetailsActivity.this, mobile, true, true);
-                }
-//                JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, false);
+//                if (userRoleAPI.equals("Customer")) {
+//                    JumpTo.goToCustomerDashboard(PersonalDetailsActivity.this, mobile, true);
+//                } else {
+//                    JumpTo.goToServiceProviderDashboard(PersonalDetailsActivity.this, mobile, true, true);
+//                }
+                JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, false);
             }
         });
 
@@ -562,12 +562,14 @@ public class PersonalDetailsActivity extends AppCompat {
     }
 
     public void onClickOKPersonal(View view) {
-        if (!isPanUploaded && !panVerified) {
+        if (isPanUploaded || panNumber.getText().toString().length()==10){
+            if (isFrontUploaded || aadharNumber.getText().toString().length()==12){
+                createPanAadhar();
+            }else{
+                Toast.makeText(this, "Please enter valid Aadhar Number or upload Aadhar Card", Toast.LENGTH_SHORT).show();
+            }
+        }else{
             Toast.makeText(this, "Please enter valid PAN Number or upload PAN Card", Toast.LENGTH_SHORT).show();
-        } else if (!isFrontUploaded && !aadharVerified) {
-            Toast.makeText(this, "Please enter valid Aadhar Number or upload Aadhar Card", Toast.LENGTH_SHORT).show();
-        } else if (isPanUploaded || panVerified && isFrontUploaded || aadharVerified) {
-            createPanAadhar();
         }
     }
 
@@ -805,12 +807,12 @@ public class PersonalDetailsActivity extends AppCompat {
     public void onBackPressed() {
         super.onBackPressed();
         ShowAlert.loadingDialog(PersonalDetailsActivity.this);
-        if (userRoleAPI.equals("Customer")) {
-            JumpTo.goToCustomerDashboard(PersonalDetailsActivity.this, mobile, true);
-        } else {
-            JumpTo.goToServiceProviderDashboard(PersonalDetailsActivity.this, mobile, true, true);
-        }
-//        JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, false);
+//        if (userRoleAPI.equals("Customer")) {
+//            JumpTo.goToCustomerDashboard(PersonalDetailsActivity.this, mobile, true);
+//        } else {
+//            JumpTo.goToServiceProviderDashboard(PersonalDetailsActivity.this, mobile, true, true);
+//        }
+        JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, false);
     }
 
     @Override

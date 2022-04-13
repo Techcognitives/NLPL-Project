@@ -734,35 +734,37 @@ public class VehicleDetailsActivity extends AppCompat {
 
 
     public void onClickVehicleDetailsOk(View view) {
-        if (awesomeValidation.validate() || !isRcUploaded) {
-            Toast.makeText(this, "Enter Vehicle Number or Upload RC Book", Toast.LENGTH_SHORT).show();
-        } else if (selectModel.getText().toString().isEmpty()) {
-            Toast.makeText(this, "Please Enter Body type", Toast.LENGTH_SHORT).show();
-        } else if (selectLoadType.getText().toString().isEmpty()) {
-            Toast.makeText(this, "Please Enter Load Type", Toast.LENGTH_SHORT).show();
-        } else if (!isInsurance) {
-            Toast.makeText(this, "Please Upload Insurance", Toast.LENGTH_SHORT).show();
-        } else {
-            if (isEdit) {
-                if (isRcEdited) {
-                    uploadTruckRC(truckId, pathForRC);
-                }
-                if (isInsuranceEdited) {
-                    uploadTruckInsurance(truckId, pathForInsurance);
-                }
-                if (vehicleNumberEdit.getText().toString() != null) {
-                    UpdateTruckDetails.updateTruckNumber(truckId, vehicleNumberEdit.getText().toString());
-                }
-                if (selectModel.getText().toString() != null) {
-                    UpdateTruckDetails.updateTruckModel(truckId, selectModel.getText().toString());
-                }
-                if (selectLoadType.getText().toString() != null) {
-                    UpdateTruckDetails.updateTruckCarryingCapacity(truckId, selectLoadType.getText().toString());
-                }
-                JumpTo.goToViewVehicleDetailsActivity(VehicleDetailsActivity.this, userId, mobile, true);
+        if (awesomeValidation.validate() || isRcUploaded) {
+            if (selectModel.getText().toString().isEmpty()) {
+                Toast.makeText(this, "Please Enter Body type", Toast.LENGTH_SHORT).show();
+            } else if (selectLoadType.getText().toString().isEmpty()) {
+                Toast.makeText(this, "Please Enter Load Type", Toast.LENGTH_SHORT).show();
+            } else if (!isInsurance) {
+                Toast.makeText(this, "Please Upload Insurance", Toast.LENGTH_SHORT).show();
             } else {
-                saveTruckDetails();
+                if (isEdit) {
+                    if (isRcEdited) {
+                        uploadTruckRC(truckId, pathForRC);
+                    }
+                    if (isInsuranceEdited) {
+                        uploadTruckInsurance(truckId, pathForInsurance);
+                    }
+                    if (vehicleNumberEdit.getText().toString() != null) {
+                        UpdateTruckDetails.updateTruckNumber(truckId, vehicleNumberEdit.getText().toString());
+                    }
+                    if (selectModel.getText().toString() != null) {
+                        UpdateTruckDetails.updateTruckModel(truckId, selectModel.getText().toString());
+                    }
+                    if (selectLoadType.getText().toString() != null) {
+                        UpdateTruckDetails.updateTruckCarryingCapacity(truckId, selectLoadType.getText().toString());
+                    }
+                    JumpTo.goToViewVehicleDetailsActivity(VehicleDetailsActivity.this, userId, mobile, true);
+                } else {
+                    saveTruckDetails();
+                }
             }
+        } else {
+            Toast.makeText(this, "Enter Vehicle Number or Upload RC Book", Toast.LENGTH_SHORT).show();
         }
     }
 

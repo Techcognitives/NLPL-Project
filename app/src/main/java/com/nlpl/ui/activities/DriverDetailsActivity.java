@@ -188,10 +188,10 @@ public class DriverDetailsActivity extends AppCompat {
         selectStateText = (TextView) personalAndAddress.findViewById(R.id.registration_select_state);
         selectDistrictText = (TextView) personalAndAddress.findViewById(R.id.registration_select_city);
 
-//        dlNumber = findViewById(R.id.driver_details_driver_license_number);
-//        dDOB = findViewById(R.id.driver_details_dob);
-//        dlNumber.addTextChangedListener(dlverificationWatcher);
-//        dDOB.addTextChangedListener(dlverificationWatcher);
+        dlNumber = findViewById(R.id.driver_details_driver_license_number);
+        dDOB = findViewById(R.id.driver_details_dob);
+        dlNumber.addTextChangedListener(dlverificationWatcher);
+        dDOB.addTextChangedListener(dlverificationWatcher);
 
         driverName.setHint(getString(R.string.EnterDriverName));
         driverMobile.setHint(getString(R.string.Enter_10_digit_Driver_Number));
@@ -1031,22 +1031,19 @@ public class DriverDetailsActivity extends AppCompat {
             Toast.makeText(this, "Please select State", Toast.LENGTH_SHORT).show();
         } else if (selectDistrictText.getText().toString().isEmpty()) {
             Toast.makeText(this, "Please select City", Toast.LENGTH_SHORT).show();
-        }
-//        else if (!isDLUploaded || dlNumber.getText().toString().isEmpty()) {
-//            Toast.makeText(this, "Please enter Driving License Number or upload Driving License", Toast.LENGTH_SHORT).show();
-//        }
-        else if (!isSelfieUploded) {
-            Toast.makeText(this, "Please upload Driver Selfie", Toast.LENGTH_SHORT).show();
         } else {
-
-                if (isDLUploaded) {
+            if (isDLUploaded || dlNumber.getText().toString().length()==15) {
+                if (isSelfieUploded) {
                     createDriverDetails();
-                    if (selfCheckBox.isChecked()){
+                    if (selfCheckBox.isChecked()) {
                         UpdateUserDetails.updateUserIsDriverAddedAlready(userId, "1");
                     }
-                } else {
-                    Toast.makeText(this, "Please enter valid Driving License Number or upload Driving License", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(this, "Please upload Driver Selfie", Toast.LENGTH_SHORT).show();
                 }
+            }else{
+                Toast.makeText(this, "Please enter Driving License Number or upload Driving License", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -1207,13 +1204,13 @@ public class DriverDetailsActivity extends AppCompat {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            String addressText  = address.getText().toString().trim();
+            String addressText = address.getText().toString().trim();
 
-            if (addressText.length()==0){
+            if (addressText.length() == 0) {
                 pinCode.setVisibility(View.GONE);
                 selectStateText.setVisibility(View.GONE);
                 selectDistrictText.setVisibility(View.GONE);
-            }else{
+            } else {
                 pinCode.setVisibility(View.VISIBLE);
                 selectStateText.setVisibility(View.VISIBLE);
                 selectDistrictText.setVisibility(View.VISIBLE);
@@ -1233,34 +1230,34 @@ public class DriverDetailsActivity extends AppCompat {
 
 
     //**************************************** delete dlNumber************************************************//
-//    private TextWatcher dlverificationWatcher = new TextWatcher() {
-//        @Override
-//        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//        }
-//
-//        @Override
-//        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//            String dlNumberWatcher = dlNumber.getText().toString().trim();
-//            String dob = dDOB.getText().toString().trim();
-//
-//            if (dlNumberWatcher.length() != 15) {
-//                dDOB.setVisibility(View.GONE);
-//            } else {
-//                dDOB.setVisibility(View.VISIBLE);
-//                if (dob.length() == 10) {
-////                    checkDl(dlNumberWatcher, dob);
-//                } else if (dob.length() > 1) {
-//                    dlNumber.setEnabled(false);
-//                } else {
-//                    dlNumber.setEnabled(true);
-//                }
-//            }
-//        }
-//
-//        @Override
-//        public void afterTextChanged(Editable s) {
-//        }
-//    };
+    private TextWatcher dlverificationWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String dlNumberWatcher = dlNumber.getText().toString().trim();
+            String dob = dDOB.getText().toString().trim();
+
+            if (dlNumberWatcher.length() != 15) {
+                dDOB.setVisibility(View.GONE);
+            } else {
+                dDOB.setVisibility(View.VISIBLE);
+                if (dob.length() == 10) {
+//                    checkDl(dlNumberWatcher, dob);
+                } else if (dob.length() > 1) {
+                    dlNumber.setEnabled(false);
+                } else {
+                    dlNumber.setEnabled(true);
+                }
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+    };
 
     //**************************************** delete dlNumber************************************************//
 
@@ -1297,10 +1294,10 @@ public class DriverDetailsActivity extends AppCompat {
 //            }
 //        });
 
-        //**************************************** delete dlNumber************************************************//
+    //**************************************** delete dlNumber************************************************//
 
-        //****************************************************************************************//
-   // }
+    //****************************************************************************************//
+    // }
 
 
     private TextWatcher driverMobileWatcher = new TextWatcher() {
@@ -1360,7 +1357,7 @@ public class DriverDetailsActivity extends AppCompat {
 
                         try {
                             dlNumber.setText(driverDlNumberAPI);
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
 
@@ -1738,13 +1735,13 @@ public class DriverDetailsActivity extends AppCompat {
                         isDriverDetailsDoneAPI = obj.getString("isDriver_added");
                         String isDriverAsSelfAlreadyAdded = obj.getString("is_self_added_asDriver");
 
-                        try{
-                            if (isDriverAsSelfAlreadyAdded.equals("1")){
+                        try {
+                            if (isDriverAsSelfAlreadyAdded.equals("1")) {
                                 selfCheckBox.setVisibility(View.GONE);
-                            }else{
+                            } else {
                                 selfCheckBox.setVisibility(View.VISIBLE);
                             }
-                        }catch (Exception e){
+                        } catch (Exception e) {
 
                         }
 
