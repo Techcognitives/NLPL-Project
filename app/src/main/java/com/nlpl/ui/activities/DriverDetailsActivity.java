@@ -1201,8 +1201,7 @@ public class DriverDetailsActivity extends AppCompat {
             }
 
             @Override
-            public void onFailure(Call<AddDriverResponse> call, Throwable t) {
-            }
+            public void onFailure(Call<AddDriverResponse> call, Throwable t) {}
         });
     }
 
