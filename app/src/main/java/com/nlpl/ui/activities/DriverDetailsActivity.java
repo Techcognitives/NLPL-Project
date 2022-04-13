@@ -1033,13 +1033,17 @@ public class DriverDetailsActivity extends AppCompat {
             Toast.makeText(this, "Please select City", Toast.LENGTH_SHORT).show();
         } else {
             if (isDLUploaded || dlNumber.getText().toString().length()==15) {
-                if (isSelfieUploded) {
-                    createDriverDetails();
-                    if (selfCheckBox.isChecked()) {
-                        UpdateUserDetails.updateUserIsDriverAddedAlready(userId, "1");
+                if (dDOB.getText().toString().length()==10){
+                    if (isSelfieUploded) {
+                        createDriverDetails();
+                        if (selfCheckBox.isChecked()) {
+                            UpdateUserDetails.updateUserIsDriverAddedAlready(userId, "1");
+                        }
+                    }else{
+                        Toast.makeText(this, "Please upload Driver Selfie", Toast.LENGTH_SHORT).show();
                     }
                 }else{
-                    Toast.makeText(this, "Please upload Driver Selfie", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Please enter Driving Date of Birth", Toast.LENGTH_SHORT).show();
                 }
             }else{
                 Toast.makeText(this, "Please enter Driving License Number or upload Driving License", Toast.LENGTH_SHORT).show();
@@ -1094,9 +1098,13 @@ public class DriverDetailsActivity extends AppCompat {
                 UpdateUserDetails.updateUserCity(driverUserIdGet, selectDistrictText.getText().toString());
             }
 
-//            if (dlNumber.getText().toString() != null) {
-//                UpdateDriverDetails.updateDriverDlNumber(driverId, dlNumber.getText().toString());
-//            }
+            if (dlNumber.getText().toString() != null) {
+                UpdateDriverDetails.updateDriverDlNumber(driverId, dlNumber.getText().toString());
+            }
+
+            if (dDOB.getText().toString() != null){
+                UpdateDriverDetails.updateDriverDOB(driverId, dDOB.getText().toString());
+            }
             ShowAlert.loadingDialog(DriverDetailsActivity.this);
             JumpTo.goToViewDriverDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
 
@@ -1171,7 +1179,8 @@ public class DriverDetailsActivity extends AppCompat {
         addDriverRequest.setDriver_emailId(driverEmailId.getText().toString());
         addDriverRequest.setTruck_id(truckIdPass);
         addDriverRequest.setAlternate_ph_no("91" + driverAlternateMobile.getText().toString());
-        //addDriverRequest.setDl_number(dlNumber.getText().toString());
+        addDriverRequest.setDl_number(dlNumber.getText().toString());
+        addDriverRequest.setDriver_dob(dDOB.getText().toString());
         return addDriverRequest;
     }
 
@@ -1354,9 +1363,11 @@ public class DriverDetailsActivity extends AppCompat {
                         driverNumberAPI = obj.getString("driver_number");
                         driverEmailAPI = obj.getString("driver_emailId");
                         String driverDlNumberAPI = obj.getString("dl_number");
+                        String driverDobAPI = obj.getString("driver_dob");
 
                         try {
                             dlNumber.setText(driverDlNumberAPI);
+                            dDOB.setText(driverDobAPI);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

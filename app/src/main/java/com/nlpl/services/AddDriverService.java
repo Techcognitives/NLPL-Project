@@ -4,6 +4,7 @@ import com.nlpl.model.Requests.AddDriverRequest;
 import com.nlpl.model.Responses.AddDriverResponse;
 import com.nlpl.model.Responses.AddDriverResponseGet;
 import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverAlternateNumber;
+import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverDOB;
 import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverDlNumber;
 import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverEmailId;
 import com.nlpl.model.UpdateModel.Models.UpdateDriverDetails.UpdateDriverName;
@@ -38,6 +39,9 @@ public interface AddDriverService {
 
     @PUT("/driver/udateDr/{driverId}")
     Call<UpdateDriverDlNumber> updateDriverDlNumber(@Path("driverId") String driverId, @Body UpdateDriverDlNumber updateDriverDlNumber);
+
+    @PUT("/driver/udateDr/{driverId}")
+    Call<UpdateDriverDOB> updateDriverDOB(@Path("driverId") String driverId, @Body UpdateDriverDOB updateDriverDOB);
 
     @GET("/driver/userId/{userId}")
     Call<AddDriverResponseGet> getDriverById(@Path("userId") String userId);
