@@ -104,7 +104,7 @@ public class CustomerLoadsHistoryActivity extends AppCompat {
             @Override
             public void onClick(View view) {
                 ShowAlert.loadingDialog(CustomerLoadsHistoryActivity.this);
-                JumpTo.goToCustomerDashboard(CustomerLoadsHistoryActivity.this, phone, true);
+                JumpTo.goToViewPersonalDetailsActivity(CustomerLoadsHistoryActivity.this, userId, phone, true);
             }
         });
         //------------------------------------------------------------------------------------------

@@ -75,13 +75,14 @@ public class SettingsAndPreferences extends AppCompat {
         actionBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (role.equals("Customer")) {
-                    ShowAlert.loadingDialog(SettingsAndPreferences.this);
-                    JumpTo.goToCustomerDashboard(SettingsAndPreferences.this, phone, true);
-                } else {
-                    ShowAlert.loadingDialog(SettingsAndPreferences.this);
-                    JumpTo.goToServiceProviderDashboard(SettingsAndPreferences.this, phone, true , true);
-                }
+//                if (role.equals("Customer")) {
+//                    ShowAlert.loadingDialog(SettingsAndPreferences.this);
+//                    JumpTo.goToCustomerDashboard(SettingsAndPreferences.this, phone, true);
+//                } else {
+//                    ShowAlert.loadingDialog(SettingsAndPreferences.this);
+//                    JumpTo.goToServiceProviderDashboard(SettingsAndPreferences.this, phone, true , true);
+//                }
+                JumpTo.goToViewPersonalDetailsActivity(SettingsAndPreferences.this, userId, phone, true);
             }
         });
         //------------------------------------------------------------------------------------------
@@ -126,14 +127,14 @@ public class SettingsAndPreferences extends AppCompat {
 
     @Override
     public void onBackPressed() {
-        if (role.equals("Customer")) {
-            ShowAlert.loadingDialog(SettingsAndPreferences.this);
-            JumpTo.goToCustomerDashboard(SettingsAndPreferences.this, phone, true);
-        } else {
-            ShowAlert.loadingDialog(SettingsAndPreferences.this);
-            JumpTo.goToServiceProviderDashboard(SettingsAndPreferences.this, phone, true, true);
-        }
-
+//        if (role.equals("Customer")) {
+//            ShowAlert.loadingDialog(SettingsAndPreferences.this);
+//            JumpTo.goToCustomerDashboard(SettingsAndPreferences.this, phone, true);
+//        } else {
+//            ShowAlert.loadingDialog(SettingsAndPreferences.this);
+//            JumpTo.goToServiceProviderDashboard(SettingsAndPreferences.this, phone, true, true);
+//        }
+        JumpTo.goToViewPersonalDetailsActivity(SettingsAndPreferences.this, userId, phone, true);
     }
 
     public void deleteLocation(PreferedLocationResponse.UserList obj) {

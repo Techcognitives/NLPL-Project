@@ -86,12 +86,12 @@ public class ViewBankDetailsActivity extends AppCompat {
             @Override
             public void onClick(View view) {
                 ShowAlert.loadingDialog(ViewBankDetailsActivity.this);
-                if (roleAPI.equals("Customer")) {
-                    JumpTo.goToCustomerDashboard(ViewBankDetailsActivity.this, phone, true);
-                } else {
-                    JumpTo.goToServiceProviderDashboard(ViewBankDetailsActivity.this, phone, true, true);
-                }
-
+//                if (roleAPI.equals("Customer")) {
+//                    JumpTo.goToCustomerDashboard(ViewBankDetailsActivity.this, phone, true);
+//                } else {
+//                    JumpTo.goToServiceProviderDashboard(ViewBankDetailsActivity.this, phone, true, true);
+//                }
+                JumpTo.goToViewPersonalDetailsActivity(ViewBankDetailsActivity.this, userId, phone, true);
             }
         });
         //---------------------------- Bottom Nav --------------------------------------------------
@@ -311,11 +311,12 @@ public class ViewBankDetailsActivity extends AppCompat {
     public void onBackPressed() {
         super.onBackPressed();
         ShowAlert.loadingDialog(ViewBankDetailsActivity.this);
-        if (roleAPI.equals("Customer")) {
-            JumpTo.goToCustomerDashboard(ViewBankDetailsActivity.this, phone, true);
-        } else {
-            JumpTo.goToServiceProviderDashboard(ViewBankDetailsActivity.this, phone, true, true);
-        }
+//        if (roleAPI.equals("Customer")) {
+//            JumpTo.goToCustomerDashboard(ViewBankDetailsActivity.this, phone, true);
+//        } else {
+//            JumpTo.goToServiceProviderDashboard(ViewBankDetailsActivity.this, phone, true, true);
+//        }
+        JumpTo.goToViewPersonalDetailsActivity(ViewBankDetailsActivity.this, userId, phone, true);
     }
 
     public void deleteBankDetails(BankModel obj) {
