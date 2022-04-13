@@ -373,6 +373,11 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
             case R.id.bottom_nav_track:
                 RearrangeItems();
                 break;
+
+            case R.id.bottom_nav_profile_image:
+                ShowAlert.loadingDialog(TrackForServiceProviderActivity.this);
+                JumpTo.goToViewPersonalDetailsActivity(TrackForServiceProviderActivity.this, userId, phone, true);
+                break;
         }
     }
 

@@ -203,6 +203,11 @@ public class FindLoadsActivity extends AppCompat {
                 ShowAlert.loadingDialog(FindLoadsActivity.this);
                 JumpTo.goToSPTrackActivity(FindLoadsActivity.this, phone, false);
                 break;
+
+            case R.id.bottom_nav_profile_image:
+                ShowAlert.loadingDialog(FindLoadsActivity.this);
+                JumpTo.goToViewPersonalDetailsActivity(FindLoadsActivity.this, userId, phone, true);
+                break;
         }
     }
 

@@ -241,6 +241,11 @@ public class ViewBankDetailsActivity extends AppCompat {
                     ShowAlert.loadingDialog(ViewBankDetailsActivity.this);
                     JumpTo.goToFindTripLPActivity(ViewBankDetailsActivity.this, phone, userId, false);
                     break;
+
+                case R.id.bottom_nav_profile_image:
+                    ShowAlert.loadingDialog(ViewBankDetailsActivity.this);
+                    JumpTo.goToViewPersonalDetailsActivity(ViewBankDetailsActivity.this, userId, phone, true);
+                    break;
             }
         } else {
             switch (view.getId()) {

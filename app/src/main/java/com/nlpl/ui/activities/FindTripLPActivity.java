@@ -1024,6 +1024,11 @@ public class FindTripLPActivity extends AppCompatActivity {
             case R.id.bottom_nav_trip:
                 RearrangeItems();
                 break;
+
+            case R.id.bottom_nav_profile_image:
+                ShowAlert.loadingDialog(FindTripLPActivity.this);
+                JumpTo.goToViewPersonalDetailsActivity(FindTripLPActivity.this, userId, phone, true);
+                break;
         }
     }
 

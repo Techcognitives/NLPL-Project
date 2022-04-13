@@ -465,6 +465,11 @@ public class ViewDriverDetailsActivity extends AppCompat {
                 ShowAlert.loadingDialog(ViewDriverDetailsActivity.this);
                 JumpTo.goToSPTrackActivity(ViewDriverDetailsActivity.this, phone, false);
                 break;
+
+            case R.id.bottom_nav_profile_image:
+                ShowAlert.loadingDialog(ViewDriverDetailsActivity.this);
+                JumpTo.goToViewPersonalDetailsActivity(ViewDriverDetailsActivity.this, userId, phone, true);
+                break;
         }
     }
 

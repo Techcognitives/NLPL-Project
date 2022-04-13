@@ -382,6 +382,45 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
                     JumpTo.goToFindTripLPActivity(FindTrucksActivity.this, userId, phone, true);
                 }
                 break;
+
+            case R.id.bottom_nav_profile_image:
+                if (userId == null) {
+                    //----------------------- Alert Dialog -------------------------------------------------
+                    Dialog alert = new Dialog(FindTrucksActivity.this);
+                    alert.setContentView(R.layout.dialog_alert);
+                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(alert.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.gravity = Gravity.CENTER;
+
+                    alert.show();
+                    alert.getWindow().setAttributes(lp);
+                    alert.setCancelable(false);
+
+                    TextView alertTitle = alert.findViewById(R.id.dialog_alert_title);
+                    TextView alertMessage = alert.findViewById(R.id.dialog_alert_message);
+                    TextView alertPositiveButton = alert.findViewById(R.id.dialog_alert_positive_button);
+                    TextView alertNegativeButton = alert.findViewById(R.id.dialog_alert_negative_button);
+
+                    alertTitle.setText(getString(R.string.Please_Register));
+                    alertMessage.setText(getString(R.string.You_cannot_bid_without_Registration));
+                    alertPositiveButton.setText(getString(R.string.Register_Now));
+                    alertNegativeButton.setText(getString(R.string.cancel));
+
+                    alertNegativeButton.setOnClickListener(view12 -> alert.dismiss());
+
+                    alertPositiveButton.setOnClickListener(view1 -> {
+                        alert.dismiss();
+                        this.finish();
+                    });
+                    //------------------------------------------------------------------------------------------
+                } else {
+                    ShowAlert.loadingDialog(FindTrucksActivity.this);
+                    JumpTo.goToViewPersonalDetailsActivity(FindTrucksActivity.this, userId, phone, true);
+                }
+                break;
         }
     }
 
