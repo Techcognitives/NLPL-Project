@@ -42,6 +42,8 @@ public class LogInActivity extends AppCompat {
         mobileNo = (EditText) findViewById(R.id.log_in_mobile_no);
         getStarted = (Button) findViewById(R.id.log_in_get_otp_button);
         series = (TextView) findViewById(R.id.log_in_series);
+
+
 //        selectCountry = findViewById(R.id.selectCountry);
 //        registerForContextMenu(selectCountry);
 
