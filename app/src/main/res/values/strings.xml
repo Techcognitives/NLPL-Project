@@ -1267,7 +1267,7 @@
     <string name="Locate_Truck">Locate Truck</string>
     <string name="Delete_Truck_Details">Delete Truck Details</string>
     <string name="Truck_Delete_message">Are you sure?\nYou want to delete Truck Details?</string>
-
+    <string name="invalid_RC">Please enter valid RC Number (Eg. MH12AB1234)</string>
     //----------------------------------------------------------------------------------------------
 
     //---------------------------------------Driver Details Activity--------------------------------

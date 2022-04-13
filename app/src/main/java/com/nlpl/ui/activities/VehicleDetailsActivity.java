@@ -1,5 +1,7 @@
 package com.nlpl.ui.activities;
 
+import static com.nlpl.R.id.vehicle_details_vehicle_number_edit2;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -39,6 +41,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
+import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.nlpl.R;
 import com.nlpl.model.Requests.AddTruckRequest;
 import com.nlpl.model.Responses.AddTruckResponse;
@@ -82,6 +87,7 @@ public class VehicleDetailsActivity extends AppCompat {
     TextView selectModel, selectLoadType;
     ImageView imgRC, imgI;
     String mobile, truckIdPass, driverIdBundle;
+    AwesomeValidation awesomeValidation;
 
     String isDriverDetailsDoneAPI, pathForRC, pathForInsurance;
 
@@ -117,6 +123,7 @@ public class VehicleDetailsActivity extends AppCompat {
             driverIdBundle = bundle.getString("driverId");
         }
         mQueue = Volley.newRequestQueue(VehicleDetailsActivity.this);
+        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
         getUserDetails(userId);
 
         action_bar = findViewById(R.id.vehicle_details_action_bar);
@@ -130,7 +137,7 @@ public class VehicleDetailsActivity extends AppCompat {
             }
         });
 
-        vehicleNumberEdit = (EditText) findViewById(R.id.vehicle_details_vehicle_number_edit2);
+        vehicleNumberEdit = (EditText) findViewById(vehicle_details_vehicle_number_edit2);
 
         uploadRC = (Button) findViewById(R.id.vehicle_details_rc_upload);
         textRC = (TextView) findViewById(R.id.vehicle_details_rc_text);
@@ -727,7 +734,7 @@ public class VehicleDetailsActivity extends AppCompat {
 
 
     public void onClickVehicleDetailsOk(View view) {
-        if (vehicleNumberEdit.getText().toString().length() != 10 || !isRcUploaded) {
+        if (awesomeValidation.validate() || !isRcUploaded) {
             Toast.makeText(this, "Enter Vehicle Number or Upload RC Book", Toast.LENGTH_SHORT).show();
         } else if (selectModel.getText().toString().isEmpty()) {
             Toast.makeText(this, "Please Enter Body type", Toast.LENGTH_SHORT).show();
@@ -1171,6 +1178,7 @@ public class VehicleDetailsActivity extends AppCompat {
             String truckNumber = vehicleNumberEdit.getText().toString().trim();
             if (truckNumber.length() == 10) {
 //                checkVehicle(truckNumber);
+                validateNumber();
             }
         }
 
@@ -1178,6 +1186,13 @@ public class VehicleDetailsActivity extends AppCompat {
         public void afterTextChanged(Editable s) {
         }
     };
+
+    public void validateNumber() {
+        awesomeValidation.addValidation(VehicleDetailsActivity.this, R.id.vehicle_details_vehicle_number_edit2,
+                RegexTemplate.NOT_EMPTY, R.string.invalid_RC);
+        awesomeValidation.addValidation(VehicleDetailsActivity.this, R.id.vehicle_details_vehicle_number_edit2,
+                "[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{4}", R.string.invalid_RC);
+    }
 
     private void checkVehicle(String vehicleNumbers) {
         Call<VehicleVerificationResponse> vehicleModelCall = ApiClient.getVerification().checkVehicle(userId, vehicleNumbers);
