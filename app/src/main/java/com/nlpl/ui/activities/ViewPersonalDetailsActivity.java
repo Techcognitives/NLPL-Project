@@ -1120,6 +1120,46 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                     ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
                     JumpTo.goToPersonalDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false, false);
                     break;
+
+                case R.id.profile_log_out:
+                    //----------------------- Alert Dialog -------------------------------------------------
+                    Dialog alert = new Dialog(ViewPersonalDetailsActivity.this);
+                    alert.setContentView(R.layout.dialog_alert);
+                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(alert.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.gravity = Gravity.CENTER;
+
+                    alert.show();
+                    alert.getWindow().setAttributes(lp);
+                    alert.setCancelable(true);
+
+                    TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+                    TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+                    TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+                    TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+                    alertTitle.setText(getString(R.string.Log_Out));
+                    alertMessage.setText(getString(R.string.Log_Out_message));
+                    alertPositiveButton.setText(getString(R.string.yes));
+                    alertNegativeButton.setText(getString(R.string.no));
+
+                    alertNegativeButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alert.dismiss();
+                        }
+                    });
+
+                    alertPositiveButton.setOnClickListener(view1 -> {
+                        alert.dismiss();
+                        FirebaseAuth.getInstance().signOut();
+                        JumpTo.goToLogInActivity(ViewPersonalDetailsActivity.this);
+                    });
+                    //------------------------------------------------------------------------------------------
+                    break;
             }
         } else {
             switch (view.getId()) {
