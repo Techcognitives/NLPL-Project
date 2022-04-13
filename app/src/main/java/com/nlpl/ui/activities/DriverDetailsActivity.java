@@ -1738,11 +1738,16 @@ public class DriverDetailsActivity extends AppCompat {
                         isDriverDetailsDoneAPI = obj.getString("isDriver_added");
                         String isDriverAsSelfAlreadyAdded = obj.getString("is_self_added_asDriver");
 
-                        if (isDriverAsSelfAlreadyAdded.equals("1")){
-                            selfCheckBox.setVisibility(View.GONE);
-                        }else{
-                            selfCheckBox.setVisibility(View.VISIBLE);
+                        try{
+                            if (isDriverAsSelfAlreadyAdded.equals("1")){
+                                selfCheckBox.setVisibility(View.GONE);
+                            }else{
+                                selfCheckBox.setVisibility(View.VISIBLE);
+                            }
+                        }catch (Exception e){
+
                         }
+
 
                         if (selfCheckBox.isChecked()) {
                             driverName.setText(userNameAPI);
