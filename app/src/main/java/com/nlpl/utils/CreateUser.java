@@ -40,6 +40,7 @@ public class CreateUser {
         userRequest.setLatitude(latitude);
         userRequest.setLongitude(longitude);
         userRequest.setDevice_id(deviceId);
+        userRequest.setIs_self_added_asDriver(0);
 
         return userRequest;
     }

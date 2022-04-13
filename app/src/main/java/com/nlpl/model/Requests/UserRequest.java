@@ -2,7 +2,7 @@ package com.nlpl.model.Requests;
 
 public class UserRequest {
     String name, phone_number, user_type, preferred_location, address, state_code, pin_code, preferred_language, email_id, alternate_ph_no, latitude, longitude, device_id;
-    int isProfile_pic_added, isRegistration_done, isTruck_added, isDriver_added, isBankDetails_given, isCompany_added, isPersonal_dt_added, is_Addhar_verfied, is_pan_verfied, is_user_verfied, is_account_active;
+    int isProfile_pic_added, isRegistration_done, isTruck_added, isDriver_added, isBankDetails_given, isCompany_added, isPersonal_dt_added, is_Addhar_verfied, is_pan_verfied, is_user_verfied, is_account_active, is_self_added_asDriver;
 
     public UserRequest() {
         this.name = name;
@@ -29,6 +29,7 @@ public class UserRequest {
         this.latitude = latitude;
         this.longitude = longitude;
         this.device_id = device_id;
+        this.is_self_added_asDriver = is_self_added_asDriver;
     }
 
     public int getIsProfile_pic_added() {
@@ -221,5 +222,13 @@ public class UserRequest {
 
     public void setIs_account_active(int is_account_active) {
         this.is_account_active = is_account_active;
+    }
+
+    public int getIs_self_added_asDriver() {
+        return is_self_added_asDriver;
+    }
+
+    public void setIs_self_added_asDriver(int is_self_added_asDriver) {
+        this.is_self_added_asDriver = is_self_added_asDriver;
     }
 }
