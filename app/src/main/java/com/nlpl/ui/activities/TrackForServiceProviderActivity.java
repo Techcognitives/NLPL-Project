@@ -374,7 +374,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
                 RearrangeItems();
                 break;
 
-            case R.id.bottom_nav_profile_image:
+            case R.id.bottom_nav_profile:
                 ShowAlert.loadingDialog(TrackForServiceProviderActivity.this);
                 JumpTo.goToViewPersonalDetailsActivity(TrackForServiceProviderActivity.this, userId, phone, true);
                 break;

@@ -417,7 +417,7 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
                 JumpTo.goToFindTripLPActivity(TrackForLoadPosterActivity.this, userId, phone, true);
                 break;
 
-            case R.id.bottom_nav_profile_image:
+            case R.id.bottom_nav_profile:
                 ShowAlert.loadingDialog(TrackForLoadPosterActivity.this);
                 JumpTo.goToViewPersonalDetailsActivity(TrackForLoadPosterActivity.this, userId, phone, true);
                 break;

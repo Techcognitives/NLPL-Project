@@ -329,7 +329,7 @@ public class ViewTruckDetailsActivity extends AppCompat {
                 JumpTo.goToSPTrackActivity(ViewTruckDetailsActivity.this, phone, false);
                 break;
 
-            case R.id.bottom_nav_profile_image:
+            case R.id.bottom_nav_profile:
                 ShowAlert.loadingDialog(ViewTruckDetailsActivity.this);
                 JumpTo.goToViewPersonalDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, true);
                 break;

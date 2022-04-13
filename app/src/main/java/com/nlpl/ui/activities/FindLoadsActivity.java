@@ -204,7 +204,7 @@ public class FindLoadsActivity extends AppCompat {
                 JumpTo.goToSPTrackActivity(FindLoadsActivity.this, phone, false);
                 break;
 
-            case R.id.bottom_nav_profile_image:
+            case R.id.bottom_nav_profile:
                 ShowAlert.loadingDialog(FindLoadsActivity.this);
                 JumpTo.goToViewPersonalDetailsActivity(FindLoadsActivity.this, userId, phone, true);
                 break;

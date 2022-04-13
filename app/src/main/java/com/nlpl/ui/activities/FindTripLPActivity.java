@@ -1025,7 +1025,7 @@ public class FindTripLPActivity extends AppCompatActivity {
                 RearrangeItems();
                 break;
 
-            case R.id.bottom_nav_profile_image:
+            case R.id.bottom_nav_profile:
                 ShowAlert.loadingDialog(FindTripLPActivity.this);
                 JumpTo.goToViewPersonalDetailsActivity(FindTripLPActivity.this, userId, phone, true);
                 break;

@@ -383,7 +383,7 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
                 }
                 break;
 
-            case R.id.bottom_nav_profile_image:
+            case R.id.bottom_nav_profile:
                 if (userId == null) {
                     //----------------------- Alert Dialog -------------------------------------------------
                     Dialog alert = new Dialog(FindTrucksActivity.this);
