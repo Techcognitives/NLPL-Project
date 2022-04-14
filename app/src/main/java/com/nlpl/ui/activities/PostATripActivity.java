@@ -52,7 +52,7 @@ import retrofit2.Response;
 public class PostATripActivity extends AppCompat {
 
     TextView selectDate, selectTime, selectBudget, selectTruck, bodyType, loadType, selectPickUpState, selectPickUpCity, selectDropState, selectDropCity, note, deleteTrip;
-    String phone, userId, tripId;
+    String phone, userId, tripId, truckId;
     ArrayList<TruckResponse.TruckList> truckList = new ArrayList<>();
     Dialog dialogSelectTruck;
     TrucksListTripAdapter truckListAdapter;
@@ -259,6 +259,7 @@ public class PostATripActivity extends AppCompat {
         postATripRequest.setVehicle_model(bodyType.getText().toString());
         postATripRequest.setCapacity(loadType.getText().toString());
         postATripRequest.setNotes_meterial_des(note.getText().toString());
+        postATripRequest.setFeet(truckId);
 
         return postATripRequest;
     }
@@ -418,13 +419,14 @@ public class PostATripActivity extends AppCompat {
         bodyType.setText(obj.getTruck_type());
         loadType.setText(obj.getTruck_carrying_capacity());
         dialogSelectTruck.dismiss();
+        truckId = obj.getTruck_id();
     }
 
     public void updateTripDetails() {
         UpdateTripDetails updateTripDetails = new UpdateTripDetails("" + selectDate.getText().toString(),
                 "" + selectTime.getText().toString(), "" + selectBudget.getText().toString(),
                 "", "", "", "" + bodyType.getText().toString(),
-                "", "" + loadType.getText().toString(), "", "", "",
+                ""+truckId, "" + loadType.getText().toString(), "", "", "",
                 "" + selectPickUpCity.getText().toString(), "" + selectPickUpState.getText().toString(),
                 "India", "", "", "" + selectDropCity.getText().toString(),
                 "" + selectDropState.getText().toString(), "India", "" + note.getText().toString(), 0, "");
@@ -676,6 +678,8 @@ public class PostATripActivity extends AppCompat {
                 selectDropState.setText(list.getDrop_state());
                 selectDropCity.setText(list.getDrop_city());
                 note.setText(list.getNotes_meterial_des());
+                truckId = list.getFeet();
+                TruckDetailsByTruckId();
             }
 
             @Override
@@ -684,6 +688,27 @@ public class PostATripActivity extends AppCompat {
             }
         });
 
+    }
+
+    public void TruckDetailsByTruckId() {
+        Call<TruckResponse> responseCall = ApiClient.addTruckService().getTruckByTruckId(truckId);
+        responseCall.enqueue(new Callback<TruckResponse>() {
+            @Override
+            public void onResponse(Call<TruckResponse> call, retrofit2.Response<TruckResponse> response) {
+                try {
+                    TruckResponse response1 = response.body();
+                    TruckResponse.TruckList list = response1.getData().get(0);
+                    selectTruck.setText(list.getVehicle_no());
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TruckResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override

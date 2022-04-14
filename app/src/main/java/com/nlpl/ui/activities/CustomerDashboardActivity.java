@@ -519,7 +519,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
 
             case R.id.bottom_nav_profile:
                 ShowAlert.loadingDialog(CustomerDashboardActivity.this);
-                JumpTo.goToViewPersonalDetailsActivity(CustomerDashboardActivity.this, userId, phone,  false);
+                JumpTo.goToViewPersonalDetailsActivity(CustomerDashboardActivity.this, userId, phone, false);
                 break;
         }
     }
@@ -1607,7 +1607,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                                         getString(R.string.Advance_Payment) + paymentTypeFromAPI + "%                  ₹     " + percentVal + "\n" +
                                         getString(R.string.FYT_Platform_Charges) + platformFeesMain + "%.              ₹     " + semiFinalQuote + "\n" +
                                         getString(R.string.FYT_Promotional_Discount) + platformFeesMain + "%.  ₹   - " + semiFinalQuote + "\n\n" +
-                                        getString(R.string.Your_Final_Payment));
+                                        "Your Final Payment                        ₹       " + percentVal);
                                 alertPositiveButton.setText(getString(R.string.Pay));
                                 alertNegativeButton.setText(getString(R.string.cancel));
 
@@ -1670,7 +1670,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                                         getString(R.string.Advance_Payment) + paymentTypeFromAPI + "%                  ₹     " + percentVal + "\n" +
                                         getString(R.string.FYT_Platform_Charges) + platformFeesBasic + "%.              ₹     " + semiFinalQuote + "\n" +
                                         getString(R.string.FYT_Promotional_Discount) + platformFeesBasic + "%.  ₹   - " + semiFinalQuote + "\n\n" +
-                                        getString(R.string.Your_Final_Payment));
+                                        "Your Final Payment                        ₹       " + percentVal);
                                 alertPositiveButton.setText(getString(R.string.Pay));
                                 alertNegativeButton.setText(getString(R.string.cancel));
 

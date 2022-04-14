@@ -37,6 +37,9 @@ public interface AddTruckService {
 
     @GET("/truck/truckbyuserID/{userId}")
     Call<TruckResponse> getTruckDetails(@Path("userId")String userId);
+
+    @GET("/truck/{truckId}")
+    Call<TruckResponse> getTruckByTruckId(@Path("truckId") String truckId);
 }
 
 

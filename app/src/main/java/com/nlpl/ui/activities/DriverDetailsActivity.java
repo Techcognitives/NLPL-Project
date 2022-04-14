@@ -1032,20 +1032,33 @@ public class DriverDetailsActivity extends AppCompat {
         } else if (selectDistrictText.getText().toString().isEmpty()) {
             Toast.makeText(this, "Please select City", Toast.LENGTH_SHORT).show();
         } else {
-            if (isDLUploaded || dlNumber.getText().toString().length()==15) {
-                if (dDOB.getText().toString().length()==10){
+            if (isDLUploaded || dlNumber.getText().toString().length() == 15) {
+                if (isDLUploaded) {
                     if (isSelfieUploded) {
                         createDriverDetails();
                         if (selfCheckBox.isChecked()) {
                             UpdateUserDetails.updateUserIsDriverAddedAlready(userId, "1");
                         }
-                    }else{
+                    } else {
                         Toast.makeText(this, "Please upload Driver Selfie", Toast.LENGTH_SHORT).show();
                     }
-                }else{
-                    Toast.makeText(this, "Please enter Driving Date of Birth", Toast.LENGTH_SHORT).show();
+                } else if (dlNumber.getText().toString().length() == 15) {
+                    if (dDOB.getText().toString().length() == 10) {
+                        if (isSelfieUploded) {
+                            createDriverDetails();
+                            if (selfCheckBox.isChecked()) {
+                                UpdateUserDetails.updateUserIsDriverAddedAlready(userId, "1");
+                            }
+                        } else {
+                            Toast.makeText(this, "Please upload Driver Selfie", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(this, "Please enter correct Driver Date of Birth", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(this, "Please enter correct Driving License Number", Toast.LENGTH_SHORT).show();
                 }
-            }else{
+            } else {
                 Toast.makeText(this, "Please enter Driving License Number or upload Driving License", Toast.LENGTH_SHORT).show();
             }
         }
@@ -1102,7 +1115,7 @@ public class DriverDetailsActivity extends AppCompat {
                 UpdateDriverDetails.updateDriverDlNumber(driverId, dlNumber.getText().toString());
             }
 
-            if (dDOB.getText().toString() != null){
+            if (dDOB.getText().toString() != null) {
                 UpdateDriverDetails.updateDriverDOB(driverId, dDOB.getText().toString());
             }
             ShowAlert.loadingDialog(DriverDetailsActivity.this);
@@ -1201,7 +1214,8 @@ public class DriverDetailsActivity extends AppCompat {
             }
 
             @Override
-            public void onFailure(Call<AddDriverResponse> call, Throwable t) {}
+            public void onFailure(Call<AddDriverResponse> call, Throwable t) {
+            }
         });
     }
 

@@ -264,6 +264,11 @@ public class ViewBankDetailsActivity extends AppCompat {
                     ShowAlert.loadingDialog(ViewBankDetailsActivity.this);
                     JumpTo.goToSPTrackActivity(ViewBankDetailsActivity.this, phone, false);
                     break;
+
+                case R.id.bottom_nav_profile:
+                    ShowAlert.loadingDialog(ViewBankDetailsActivity.this);
+                    JumpTo.goToViewPersonalDetailsActivity(ViewBankDetailsActivity.this, userId, phone, true);
+                    break;
             }
         }
 
