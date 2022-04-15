@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nlpl.R;
+import com.nlpl.model.MainResponse;
 import com.nlpl.model.ModelForRecyclerView.TruckModel;
 import com.nlpl.ui.activities.ViewTruckDetailsActivity;
 
@@ -18,10 +19,10 @@ import java.util.ArrayList;
 
 public class TrucksAdapter extends RecyclerView.Adapter<TrucksAdapter.TruckViewHolder> {
 
-    private ArrayList<TruckModel> truckList;
+    private ArrayList<MainResponse.Data.TruckDetails> truckList;
     private ViewTruckDetailsActivity activity;
 
-    public TrucksAdapter(ViewTruckDetailsActivity activity, ArrayList<TruckModel> truckList) {
+    public TrucksAdapter(ViewTruckDetailsActivity activity, ArrayList<MainResponse.Data.TruckDetails> truckList) {
         this.truckList = truckList;
         this.activity = activity;
     }
@@ -34,7 +35,7 @@ public class TrucksAdapter extends RecyclerView.Adapter<TrucksAdapter.TruckViewH
 
     @Override
     public void onBindViewHolder(TruckViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        TruckModel obj = truckList.get(position);
+        MainResponse.Data.TruckDetails obj = truckList.get(position);
 //---------------------------------- Set Title -----------------------------------------------------
         String name1 = obj.getVehicle_no();
         Log.i("File Name:", name1);
@@ -80,7 +81,7 @@ public class TrucksAdapter extends RecyclerView.Adapter<TrucksAdapter.TruckViewH
         return truckList.size();
     }
 
-    public void updateData(ArrayList<TruckModel> truckList) {
+    public void updateData(ArrayList<MainResponse.Data.TruckDetails> truckList) {
         this.truckList = truckList;
         notifyDataSetChanged();
     }

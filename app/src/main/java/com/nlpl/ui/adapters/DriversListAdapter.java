@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nlpl.R;
+import com.nlpl.model.MainResponse;
 import com.nlpl.model.ModelForRecyclerView.DriverModel;
 import com.nlpl.ui.activities.ViewDriverDetailsActivity;
 import com.nlpl.ui.activities.ViewTruckDetailsActivity;
@@ -18,10 +19,10 @@ import java.util.ArrayList;
 
 public class DriversListAdapter extends RecyclerView.Adapter<DriversListAdapter.DriverViewHolder> {
 
-    private ArrayList<DriverModel> driverList;
+    private ArrayList<MainResponse.Data.DriverDetails> driverList;
     private ViewTruckDetailsActivity activity;
 
-    public DriversListAdapter(ViewTruckDetailsActivity activity, ArrayList<DriverModel> driverList) {
+    public DriversListAdapter(ViewTruckDetailsActivity activity, ArrayList<MainResponse.Data.DriverDetails> driverList) {
         this.driverList = driverList;
         this.activity = activity;
     }
@@ -34,7 +35,7 @@ public class DriversListAdapter extends RecyclerView.Adapter<DriversListAdapter.
 
     @Override
     public void onBindViewHolder(DriverViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        DriverModel obj = driverList.get(position);
+        MainResponse.Data.DriverDetails obj = driverList.get(position);
 
         holder.list_title.setText(" " + obj.getDriver_name());
         holder.list_title.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +51,7 @@ public class DriversListAdapter extends RecyclerView.Adapter<DriversListAdapter.
         return driverList.size();
     }
 
-    public void updateData(ArrayList<DriverModel> driverList) {
+    public void updateData(ArrayList<MainResponse.Data.DriverDetails> driverList) {
         this.driverList = driverList;
         notifyDataSetChanged();
     }

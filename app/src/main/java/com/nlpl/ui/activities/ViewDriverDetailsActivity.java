@@ -57,8 +57,6 @@ public class ViewDriverDetailsActivity extends AppCompat {
     private TrucksListAdapter truckListAdapter;
     private RecyclerView truckListRecyclerView;
 
-    private AddDriverService addDriverService;
-
     ArrayList<String> arrayUserDriverId, arrayDriverMobileNo;
     Dialog previewDialogDriverDetails, previewDialogAssignedTruck;
     TextView previewDriverDetailsDriverBankName, previewDriverDetailsLabelAddDriverBank, previewDriverDetailsAddDriverBank, previewDriverDetailsDriverBankAccountNumber, previewDriverDetailsDriverBankIFSICode, previewDriverDetailsDriverBankDetailsTitle;
@@ -96,12 +94,6 @@ public class ViewDriverDetailsActivity extends AppCompat {
         }
 
         mQueue = Volley.newRequestQueue(ViewDriverDetailsActivity.this);
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://13.234.163.179:3000")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        addDriverService = retrofit.create(AddDriverService.class);
 
         //-------------------------------- Action Bar ----------------------------------------------
         actionBar = findViewById(R.id.view_driver_details_action_bar);

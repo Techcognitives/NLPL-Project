@@ -83,9 +83,6 @@ public class PostALoadActivity extends AppCompat {
     TextView actionBarTitle;
     ImageView actionBarBackButton;
 
-    View bottomNav;
-    ConstraintLayout spDashboard, customerDashboard;
-
     double latitude1, latitude2, longitude1, longitude2;
     String isPickDrop = "0", pickUpAddress, pickUpPinCode, pickupState, pickUpCity, dropAddress, dropPinCode, dropState, dropCiy;
 
@@ -234,8 +231,6 @@ public class PostALoadActivity extends AppCompat {
         Log.i("Separated Month", monC);
         Log.i("Separate timeC", timeC);
         Log.i("Separated Year", yearC);
-
-        getVehicleTypeList();
 
         if (monC.equals("Jan")) {
             count = 1;
@@ -565,54 +560,6 @@ public class PostALoadActivity extends AppCompat {
             return null;
         }
     };
-
-    private void getVehicleTypeList() {
-        String url = getString(R.string.baseURL) + "/trucktype/getAllTruckType";
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray truckLists = response.getJSONArray("data");
-                    for (int i = 0; i < truckLists.length(); i++) {
-                        JSONObject obj = truckLists.getJSONObject(i);
-                        vehicle_typeAPI = obj.getString("vehicle_model");
-                        truck_ftAPI = obj.getString("truck_ft");
-                        truck_carrying_capacityAPI = obj.getString("truck_carrying_capacity");
-
-                        arrayTruckFt.add(truck_ftAPI);
-                        arrayCapacity.add(truck_carrying_capacityAPI);
-                    }
-
-                    int size3 = arrayTruckFt.size();
-
-                    if (size3 == 1) {
-                        updatedArrayTruckFt.add(arrayTruckFt.get(0));
-                    } else {
-                        for (int i = 0; i < size3 - 1; i++) {
-                            if (!arrayTruckFt.get(i).equals(arrayTruckFt.get(i + 1))) {
-                                updatedArrayTruckFt.add(arrayTruckFt.get(i));
-                            }
-                        }
-                        for (int k = 0; k < size3; k++) {
-                            if (k == size3 - 1) {
-                                updatedArrayTruckFt.add(arrayTruckFt.get(k));
-                            }
-                        }
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request);
-    }
 
     //--------------------------------------create Bank Details in API -------------------------------------
     public PostLoadRequest createLoadRequest() {

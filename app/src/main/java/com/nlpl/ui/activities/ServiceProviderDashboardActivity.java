@@ -1427,7 +1427,6 @@ public class ServiceProviderDashboardActivity extends AppCompat {
     }
 
     private void getTruckDetailsByTruckId(String truckIdSelected, Boolean acceptRevised) {
-
         updateAssignedTruckId = truckIdSelected;
 
         Log.i("truckId selected", truckIdSelected);

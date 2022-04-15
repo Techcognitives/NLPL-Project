@@ -36,6 +36,12 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    dataBinding{
+        enabled = true
+    }
+
+    dataBinding.enabled true
 }
 
 
@@ -57,6 +63,7 @@ dependencies {
     implementation 'androidx.browser:browser:1.2.0'
     implementation 'com.google.firebase:firebase-messaging:23.0.0'
     implementation 'com.google.android.libraries.places:places:2.5.0'
+    implementation 'androidx.databinding:databinding-runtime:4.2.2'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

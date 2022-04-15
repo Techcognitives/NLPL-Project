@@ -26,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
+import com.nlpl.model.MainResponse;
 import com.nlpl.model.ModelForRecyclerView.DriverModel;
 import com.nlpl.model.ModelForRecyclerView.TruckModel;
 import com.nlpl.model.Responses.AddTruckResponse;
@@ -51,11 +52,11 @@ import retrofit2.Callback;
 public class ViewTruckDetailsActivity extends AppCompat {
 
     private RequestQueue mQueue;
-    private ArrayList<TruckModel> truckList = new ArrayList<>();
+    ArrayList<MainResponse.Data.TruckDetails> truckList = new ArrayList<>();
     private TrucksAdapter truckListAdapter;
     private RecyclerView truckListRecyclerView;
 
-    private ArrayList<DriverModel> driverList = new ArrayList<>();
+    ArrayList<MainResponse.Data.DriverDetails> driverList = new ArrayList<>();
     private DriversListAdapter driverListAdapter;
     private RecyclerView driverListRecyclerView;
 
@@ -75,7 +76,6 @@ public class ViewTruckDetailsActivity extends AppCompat {
     ImageView actionBarBackButton, actionBarMenuButton;
 
     View bottomNav;
-    ConstraintLayout spDashboard, customerDashboard;
     EditText searchVehicle;
 
     Dialog previewDialogDriverDetails;
@@ -94,6 +94,8 @@ public class ViewTruckDetailsActivity extends AppCompat {
         }
 
         mQueue = Volley.newRequestQueue(ViewTruckDetailsActivity.this);
+
+        getUserDetailsMain();
 
         //-------------------------------- Action Bar ----------------------------------------------
         actionBar = findViewById(R.id.view_truck_details_action_bar);
@@ -139,7 +141,6 @@ public class ViewTruckDetailsActivity extends AppCompat {
         truckListAdapter = new TrucksAdapter(ViewTruckDetailsActivity.this, truckList);
         truckListRecyclerView.setAdapter(truckListAdapter);
 
-        getTruckList();
         //------------------------------------------------------------------------------------------
         previewDialogDL = new Dialog(ViewTruckDetailsActivity.this);
         previewDialogDL.setContentView(R.layout.dialog_preview_images);
@@ -186,7 +187,7 @@ public class ViewTruckDetailsActivity extends AppCompat {
 
         driverListAdapter = new DriversListAdapter(ViewTruckDetailsActivity.this, driverList);
         driverListRecyclerView.setAdapter(driverListAdapter);
-        getDriverDetailsList();
+
         //------------------------------------------------------------------------------------------
 
         previewDialogRcBook = new Dialog(ViewTruckDetailsActivity.this);
@@ -219,64 +220,171 @@ public class ViewTruckDetailsActivity extends AppCompat {
         JumpTo.goToViewVehicleDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, true);
     }
 
-    public void getTruckList() {
-        //---------------------------- Get Truck Details -------------------------------------------
-        String url1 = getString(R.string.baseURL) + "/truck/truckbyuserID/" + userId;
-        Log.i("URL: ", url1);
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+    private void getUserDetailsMain() {
+        Call<MainResponse> responseCall = ApiClient.getUserService().mainResponse(userId);
+        responseCall.enqueue(new Callback<MainResponse>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(Call<MainResponse> call, retrofit2.Response<MainResponse> response) {
                 try {
-                    truckList = new ArrayList<>();
-                    JSONArray truckLists = response.getJSONArray("data");
-                    for (int i = 0; i < truckLists.length(); i++) {
-                        JSONObject obj = truckLists.getJSONObject(i);
-                        TruckModel model = new TruckModel();
-                        model.setUser_id(obj.getString("user_id"));
-                        model.setVehicle_no(obj.getString("vehicle_no"));
-                        model.setTruck_type(obj.getString("truck_type"));
-                        model.setTruck_carrying_capacity(obj.getString("truck_carrying_capacity"));
-                        model.setRc_book(obj.getString("rc_book"));
-                        model.setVehicle_insurance(obj.getString("vehicle_insurance"));
-                        model.setTruck_id(obj.getString("truck_id"));
-                        model.setDriver_id(obj.getString("driver_id"));
-                        truckList.add(model);
-                    }
-                    if (truckList.size() > 0) {
-                        truckListAdapter.updateData(truckList);
-                    } else {
-                    }
+                    MainResponse response1 = response.body();
+                    MainResponse.Data list = response1.getData();
 
-//                    if (truckList.size() > 5) {
-//                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//                        params.height = 235; //height recycleviewer
-//                        truckListRecyclerView.setLayoutParams(params);
-//                    } else {
-//                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//                        truckListRecyclerView.setLayoutParams(params);
-//                    }
+                    //GET USER DETAILS
+                    String userNameAPI, userPhoneNumberAPI, userAlternatePhoneNumberAPI, userUserTypeAPI, userCityAPI, userPreferredLanguageAPI, userAddressAPI, userStateAPI, userPinCode, userEmailIdAPI, userPayTypeAPI, userIsRegistrationDoneAPI, userIsProfilePicAddedAPI;
+                    String userIsTruckAddedAPI, userIsDriverAddedAPI, userIsBankDetailsAddedAPI, userIsCompanyAddedAPI, userIsPersonalAddedAPI, userIsAadhaarVerifiedAPI, userIsPanVerifiedAPI, userIsUserVerifiedAPI, userIsAccountActiveAPI, userCreatedAtAPI, userUpdatedAtAPI;
+                    String userUpdatedByAPI, userDeletedAtAPI, userDeletedByAPI, idAPI, userLatitudeAPI, userLongitudeAPI, userDeviceIdAPI, userPanNumberAPI, userAadhaarNumberAPI, userIsSelfAddedAsDriverAPI;
 
-                } catch (JSONException e) {
+                    userNameAPI = list.getName();
+                    userPhoneNumberAPI = String.valueOf(list.getPhone_number());
+                    userAlternatePhoneNumberAPI = String.valueOf(list.getAlternate_ph_no());
+                    userUserTypeAPI = list.getUser_type();
+                    userCityAPI = list.getPreferred_location();
+                    userPreferredLanguageAPI = list.getPreferred_language();
+                    userAddressAPI = list.getAddress();
+                    userStateAPI = list.getState_code();
+                    userPinCode = String.valueOf(list.getPin_code());
+                    userEmailIdAPI = list.getEmail_id();
+                    userPayTypeAPI = list.getPay_type();
+                    userIsRegistrationDoneAPI = String.valueOf(list.getIsRegistration_done());
+                    userIsProfilePicAddedAPI = String.valueOf(list.getIsProfile_pic_added());
+                    userIsTruckAddedAPI = String.valueOf(list.getIsTruck_added());
+                    userIsDriverAddedAPI = String.valueOf(list.getIsDriver_added());
+                    userIsBankDetailsAddedAPI = String.valueOf(list.getIsBankDetails_given());
+                    userIsCompanyAddedAPI = String.valueOf(list.getIsCompany_added());
+                    userIsPersonalAddedAPI = String.valueOf(list.getIsPersonal_dt_added());
+                    userIsAadhaarVerifiedAPI = String.valueOf(list.getIs_Addhar_verfied());
+                    userIsPanVerifiedAPI = String.valueOf(list.getIs_pan_verfied());
+                    userIsUserVerifiedAPI = String.valueOf(list.getIs_user_verfied());
+                    userIsAccountActiveAPI = String.valueOf(list.getIs_account_active());
+                    userCreatedAtAPI = list.getCreated_at();
+                    userUpdatedAtAPI = list.getUpdated_at();
+                    userUpdatedByAPI = list.getUpdated_by();
+                    userDeletedAtAPI = list.getDeleted_at();
+                    userDeletedByAPI = list.getDeleted_by();
+                    idAPI = String.valueOf(list.getId());
+                    userLatitudeAPI = list.getLatitude();
+                    userLongitudeAPI = list.getLongitude();
+                    userDeviceIdAPI = list.getDevice_id();
+                    userPanNumberAPI = list.getPan_number();
+                    userAadhaarNumberAPI = list.getAadhaar_number();
+                    userIsSelfAddedAsDriverAPI = String.valueOf(list.getIs_self_added_asDriver());
+
+                    //GET TRUCK DETAILS
+                    truckList.addAll(list.getTruckdetails());
+                    truckListAdapter.updateData(truckList);
+//                    textView.setText("\n user_id :" + list.truckdetails.get(0).getUser_id()+
+//                            "\n Vehicle number :" + list.truckdetails.get(0).getVehicle_no()+
+//                            "\n RC Book :" + list.truckdetails.get(0).getRc_book()+
+//                            "\n Vehicle insurance :"+list.truckdetails.get(0).getVehicle_insurance()+
+//                            "\n Truck Type :" + list.truckdetails.get(0).getTruck_type()+
+//                            "\n Vehicle Type :" + list.truckdetails.get(0).getVehicle_type()+
+//                            "\n Driver_id :" + list.truckdetails.get(0).getDriver_id());
+
+                    //GET DRIVER DETAILS
+                    driverList.addAll(list.getDriverDetails());
+                    driverListAdapter.updateData(driverList);
+                    /*textView.setText("\n user_id :" + list.driverdetails.get(0).getUser_id()+
+                            "\n Driver name :" + list.driverdetails.get(0).getDriver_name()+
+                            "\n License number :" + list.driverdetails.get(0).getDl_number()+
+                            "\n Driver DOB :" + list.driverdetails.get(0).getDriver_dob()+
+                            "\n Driver phone number :"+list.driverdetails.get(0).getDriver_number()+
+                            "\n Driver Id :" + list.driverdetails.get(0).getDriver_id()+
+                            "\n Driver selfie :" + list.driverdetails.get(0).getDriver_selfie()+
+                            "\n Alternate number :" + list.driverdetails.get(0).getAlternate_ph_no());*/
+
+                    //GET BANK DETAILS
+                    ArrayList<MainResponse.Data.BankDetails> bankList = new ArrayList<>();
+                    bankList.addAll(list.getBankDetails());
+                    /*textView.setText("\n user_id :" + list.bankDetails.get(0).getUser_id()+
+                            "\n Account name holder :" + list.bankDetails.get(0).getAccountholder_name()+
+                            "\n Account number :" + list.bankDetails.get(0).getAccount_number()+
+                            "\n Ifsc code :" + list.bankDetails.get(0).getIFSI_CODE()+
+                            "\n Cancelled cheque :"+list.bankDetails.get(0).getCancelled_cheque()+
+                            "\n Bank name :" + list.bankDetails.get(0).getBank_name()+
+                            "\n Verification status :" + list.bankDetails.get(0).getVerification_status());*/
+
+                    //GET COMPANY DETAILS
+                    ArrayList<MainResponse.Data.CompanyDetails> companyDetails = new ArrayList<>();
+                    companyDetails.addAll(list.getCompanyDetails());
+                    /*textView.setText("\n Company_id :" + list.companyDetails.get(0).getCompany_id() +
+                                     "\n Company name :" + list.companyDetails.get(0).getCompany_name() +
+                                     "\n GST number :" + list.companyDetails.get(0).getCompany_gst_no() +
+                                     "\n Company PAN :" + list.companyDetails.get(0).getCompany_pan() +
+                                     "\n Company City :" + list.companyDetails.get(0).getComp_city() +
+                                     "\n Company Address :" + list.companyDetails.get(0).getComp_add() +
+                                     "\n Company Zip :" + list.companyDetails.get(0).getComp_zip() +
+                                     "\n Company type :" + list.companyDetails.get(0).getCompany_type());*/
+
+                    //GET POST LOAD DETAILS
+                    ArrayList<MainResponse.Data.PostaLoadDetails> loadList = new ArrayList<>();
+                    loadList.addAll(list.getPostaLoadDetails());
+                    /*textView.setText("\n id post :" + list.postaLoadDetails.get(0).getIdpost_load()+
+                            "\n Capacity :" + list.postaLoadDetails.get(0).getCapacity()+
+                            "\n Drop city :" + list.postaLoadDetails.get(0).getDrop_city()+
+                            "\n Pick city :" + list.postaLoadDetails.get(0).getPick_city()+
+                            "\n Pick Country :"+list.postaLoadDetails.get(0).getPick_country()+
+                            "\n Drop Country :" + list.postaLoadDetails.get(0).getDrop_country()+
+                            "\n Pick address :" + list.postaLoadDetails.get(0).getPick_add()+
+                            "\n Drop address :" + list.postaLoadDetails.get(0).getDrop_add());*/
+
+                    //GET PREFERRED LOCATIONS
+                    ArrayList<MainResponse.Data.PreferredLocation> preferredLocationList = new ArrayList<>();
+                    preferredLocationList.addAll(list.getPreferredLocations());
+                    /*textView.setText("\n Location Id:" + list.preferredLocations.get(0).getPref_locations_id()+
+                            "\n Preferred State :" + list.preferredLocations.get(0).getPref_state()+
+                            "\n Preferred city :" + list.preferredLocations.get(0).getPref_city()+
+                            "\n User id :" + list.preferredLocations.get(0).getUser_id() +
+                            "\n Preferred pincode:"+list.preferredLocations.get(0).getPref_pin_code());*/
+
+                    //GET USER RATINGS
+                    ArrayList<MainResponse.Data.UserRatings> ratingsList = new ArrayList<>();
+                    ratingsList.addAll(list.getUserRatings());
+                    /*textView.setText("\n Rating Id:" + list.userRatings.get(0).getRating_id()+
+                            "\n Transaction Id :" + list.userRatings.get(0).getTransection_id()+
+                            "\n Rated number :" + list.userRatings.get(0).getRated_no()+
+                            "\n Rated comment :" + list.userRatings.get(0).getRatings_comment()+
+                            "\n User id :" + list.userRatings.get(0).getUser_id() +
+                            "\n Given by :"+list.userRatings.get(0).getGiven_by());*/
+
+                    //GET USER IMAGE
+                    ArrayList<MainResponse.Data.UserImages> imagesList = new ArrayList<>();
+                    imagesList.addAll(list.getUserImages());
+                    /*textView.setText("\n Image Id:" + list.userImages.get(0).getImage_id()+
+                            "\n User id :" + list.userImages.get(0).getUser_id() +
+                            "\n Image Type :" + list.userImages.get(0).getImage_type()+
+                            "\n Image URL :" + list.userImages.get(0).getImage_url());*/
+
+                    //GET SP BID DETAILS
+                    ArrayList<MainResponse.Data.SpBidDetails> spBidDetailsList = new ArrayList<>();
+                    spBidDetailsList.addAll(list.getSpBidDetails());
+//                    textView.setText("\n Bid_id :" + list.spBidDetails.get(0).getSp_bid_id() +
+//                            "\n Sp Quote :" + list.spBidDetails.get(0).getSp_quote() +
+//                            "\n Capacity :" + list.spBidDetails.get(0).getCapacity() +
+//                            "\n Body type :" + list.spBidDetails.get(0).getBody_type() +
+//                            "\n bid Status :" + list.spBidDetails.get(0).getBid_status() +
+//                            "\n Id Postload :" + list.spBidDetails.get(0).getIdpost_load() +
+//                            "\n Bid accepted by sp :" + list.spBidDetails.get(0).getIs_bid_accpted_by_sp() +
+//                            "\n Driver Id :" + list.spBidDetails.get(0).getAssigned_driver_id() +
+//                            "\n Truck Id :" + list.spBidDetails.get(0).getAssigned_truck_id());
+                } catch (Exception e) {
                     e.printStackTrace();
+                    getUserDetailsMain();
                 }
             }
-        }, new com.android.volley.Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+            public void onFailure(Call<MainResponse> call, Throwable t) {
+                getUserDetailsMain();
             }
         });
-        mQueue.add(request);
-        //-------------------------------------------------------------------------------------------
     }
 
-    public void getTruckDetails(TruckModel obj) {
+    public void getTruckDetails(MainResponse.Data.TruckDetails obj) {
         ShowAlert.loadingDialog(ViewTruckDetailsActivity.this);
-        JumpTo.goToVehicleDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, true, false, false, false,null, obj.getTruck_id());
+        JumpTo.goToVehicleDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, true, false, false, false, null, obj.getTruck_id());
     }
 
-    public void getOnClickPreviewTruckRcBook(TruckModel obj) {
+    public void getOnClickPreviewTruckRcBook(MainResponse.Data.TruckDetails obj) {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(previewDialogRcBook.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -291,7 +399,7 @@ public class ViewTruckDetailsActivity extends AppCompat {
         new DownloadImageTask(previewRcBook).execute(rcBookURL);
     }
 
-    public void getOnClickPreviewTruckInsurance(TruckModel obj) {
+    public void getOnClickPreviewTruckInsurance(MainResponse.Data.TruckDetails obj) {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(previewDialogInsurance.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -343,7 +451,7 @@ public class ViewTruckDetailsActivity extends AppCompat {
         JumpTo.goToViewPersonalDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, true);
     }
 
-    public void getDriverDetailsOnTruckActivity(TruckModel obj) {
+    public void getDriverDetailsOnTruckActivity(MainResponse.Data.TruckDetails obj) {
         truckIdPass = obj.getTruck_id();
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(previewDialogDriverDetails.getWindow().getAttributes());
@@ -360,8 +468,9 @@ public class ViewTruckDetailsActivity extends AppCompat {
         previewDriverDetailsDriverSelfie.setText(getString(R.string.Driver_Selfie));
         previewDriverDetailsMessage.setText(getString(R.string.Please_add_a_Driver));
         previewDriverDetailsMessage.setVisibility(View.INVISIBLE);
+        String driverIdAPI = obj.getDriver_id();
 
-        if (obj.getDriver_id().equals("null")) {
+        if (driverIdAPI.equals("null") || driverIdAPI == null || driverIdAPI.equals("0")) {
             previewDriverDetailsMessage.setVisibility(View.VISIBLE);
             previewDriverDetailsDriverLicence.setVisibility(View.INVISIBLE);
             previewDriverDetailsDriverSelfie.setVisibility(View.INVISIBLE);
@@ -381,7 +490,7 @@ public class ViewTruckDetailsActivity extends AppCompat {
         }
     }
 
-    public void getDriverDetailsAssigned(String driverId){
+    public void getDriverDetailsAssigned(String driverId) {
         //---------------------------- Get Driver Details -------------------------------------------
         String url1 = getString(R.string.baseURL) + "/driver/driverId/" + driverId;
         Log.i("URL: ", url1);
@@ -403,21 +512,25 @@ public class ViewTruckDetailsActivity extends AppCompat {
 
                         try {
                             String s2 = driverAltNumber.substring(2, 12);
-                            previewDriverDetailsDriverNumber.setText("+91 "+ s1 +"\n"+ "+91 "+s2);
-                        }catch (Exception e){
-                            previewDriverDetailsDriverNumber.setText("+91 "+ s1);
+                            previewDriverDetailsDriverNumber.setText("+91 " + s1 + "\n" + "+91 " + s2);
+                        } catch (Exception e) {
+                            previewDriverDetailsDriverNumber.setText("+91 " + s1);
                         }
 
                         String driverEmail = obj.getString("driver_emailId");
                         String driverDlURL = obj.getString("upload_dl");
                         String driverSelfieURL = obj.getString("driver_selfie");
 
-                        new DownloadImageTask(previewDL).execute(driverDlURL);
-                        new DownloadImageTask(previewSelfie).execute(driverSelfieURL);
+                        try {
+                            new DownloadImageTask(previewDL).execute(driverDlURL);
+                            new DownloadImageTask(previewSelfie).execute(driverSelfieURL);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
-                        if (driverEmail == null){
+                        if (driverEmail == null) {
                             previewDriverDetailsDriverEmails.setVisibility(View.INVISIBLE);
-                        }else{
+                        } else {
                             previewDriverDetailsDriverEmails.setVisibility(View.VISIBLE);
                             previewDriverDetailsDriverEmails.setText(driverEmail);
                         }
@@ -483,57 +596,13 @@ public class ViewTruckDetailsActivity extends AppCompat {
         JumpTo.goToDriverDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, false, false, true, truckIdPass, null);
     }
 
-    public void getDriverDetailsList() {
-        //---------------------------- Get Driver Details ------------------------------------------
-        String url1 = getString(R.string.baseURL) + "/driver/userId/" + userId;
-        Log.i("URL: ", url1);
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    driverList = new ArrayList<>();
-                    JSONArray driverLists = response.getJSONArray("data");
-                    for (int i = 0; i < driverLists.length(); i++) {
-                        JSONObject obj = driverLists.getJSONObject(i);
-                        DriverModel modelDriver = new DriverModel();
-                        modelDriver.setUser_id(obj.getString("user_id"));
-                        modelDriver.setTruck_id(obj.getString("truck_id"));
-                        modelDriver.setDriver_id(obj.getString("driver_id"));
-                        modelDriver.setDriver_name(obj.getString("driver_name"));
-                        modelDriver.setUpload_lc(obj.getString("upload_dl"));
-                        modelDriver.setDriver_selfie(obj.getString("driver_selfie"));
-                        modelDriver.setDriver_number(obj.getString("driver_number"));
-                        modelDriver.setDriver_emailId(obj.getString("driver_emailId"));
-                        driverList.add(modelDriver);
-                    }
-                    if (driverList.size() > 0) {
-                        driverListAdapter.updateData(driverList);
-                    } else {
-
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request);
-        //-------------------------------------------------------------------------------------------
-    }
-
     public void onClickCancelSelectBind(View view) {
         previewDialogSpinner.dismiss();
         previewDialogDriverDetails.dismiss();
         RearrangeItems();
     }
 
-    public void onClickReAssignDriver(DriverModel obj) {
+    public void onClickReAssignDriver(MainResponse.Data.DriverDetails obj) {
         UpdateTruckDetails.updateTruckDriverId(truckIdPass, obj.getDriver_id());
         RearrangeItems();
     }
@@ -551,7 +620,7 @@ public class ViewTruckDetailsActivity extends AppCompat {
 
         @Override
         public void afterTextChanged(Editable editable) {
-            if (editable.length()==0){
+            if (editable.length() == 0) {
                 RearrangeItems();
             }
             filter(editable.toString());
@@ -559,9 +628,9 @@ public class ViewTruckDetailsActivity extends AppCompat {
     };
 
     private void filter(String text) {
-        ArrayList<TruckModel> searchVehicleList = new ArrayList<>();
+        ArrayList<MainResponse.Data.TruckDetails> searchVehicleList = new ArrayList<>();
 
-        for (TruckModel item : truckList) {
+        for (MainResponse.Data.TruckDetails item : truckList) {
             if (item.getVehicle_no().toLowerCase().contains(text.toLowerCase())) {
                 searchVehicleList.add(item);
             }
@@ -569,7 +638,7 @@ public class ViewTruckDetailsActivity extends AppCompat {
         truckListAdapter.updateData(searchVehicleList);
     }
 
-    public void deleteTruckDetails(TruckModel obj) {
+    public void deleteTruckDetails(MainResponse.Data.TruckDetails obj) {
         //----------------------- Alert Dialog -------------------------------------------------
         Dialog alert = new Dialog(ViewTruckDetailsActivity.this);
         alert.setContentView(R.layout.dialog_alert);

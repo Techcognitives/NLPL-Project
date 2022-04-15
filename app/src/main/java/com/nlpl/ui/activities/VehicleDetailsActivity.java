@@ -883,11 +883,17 @@ public class VehicleDetailsActivity extends AppCompat {
     public AddTruckRequest createTruck() {
         AddTruckRequest addTruckRequest = new AddTruckRequest();
         addTruckRequest.setUser_id(userId);
-        addTruckRequest.setVehicle_no(vehicleNumberEdit.getText().toString());
+        if (vehicleNumberEdit.getText().toString().isEmpty()){
+            addTruckRequest.setVehicle_no("0");
+        }else{
+            addTruckRequest.setVehicle_no(vehicleNumberEdit.getText().toString());
+        }
         addTruckRequest.setTruck_type(selectModel.getText().toString());
         addTruckRequest.setTruck_carrying_capacity(selectLoadType.getText().toString());
         if (isAssignTruck) {
             addTruckRequest.setDriver_id(driverIdBundle);
+        }else{
+            addTruckRequest.setDriver_id("0");
         }
         return addTruckRequest;
     }

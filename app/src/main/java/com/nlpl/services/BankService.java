@@ -1,5 +1,6 @@
 package com.nlpl.services;
 
+import com.nlpl.model.GetBankDetailsResponse;
 import com.nlpl.model.Requests.BankRequest;
 import com.nlpl.model.Responses.BankResponse;
 import com.nlpl.model.Responses.BankResponseGet;
@@ -41,4 +42,7 @@ public interface BankService {
 
     @GET("/bank/getBkByUserId/{userId}")
     Call<BankResponseGet> getBankByUserId(@Path("userId") String userId);
+
+    @GET("/bank/getBkByBkId/{BankId}")
+    Call<GetBankDetailsResponse> getBankDetailsByBankId(@Path("BankId") String BankId);
 }

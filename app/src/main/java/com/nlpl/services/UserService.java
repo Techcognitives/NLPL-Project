@@ -1,5 +1,6 @@
 package com.nlpl.services;
 
+import com.nlpl.model.MainResponse;
 import com.nlpl.model.Requests.UserRequest;
 import com.nlpl.model.Responses.AdminResponse;
 import com.nlpl.model.Responses.UserResponse;
@@ -38,6 +39,9 @@ public interface UserService {
 
     @POST("/user/create")
     Call<UserResponse> saveUser(@Body UserRequest userRequest);
+
+    @GET("/user/userDetailsBy/{userId}")
+    Call<MainResponse> mainResponse(@Path("userId") String userId);
 
     @PUT("/user/{userId}")
     Call<UpdateUserName> updateUserName(@Path("userId") String userId, @Body UpdateUserName updateUserName);
