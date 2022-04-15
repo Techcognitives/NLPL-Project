@@ -4,305 +4,320 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="handlers"
             type="com.nlpl.ui.activities.BankDetailsActivity" />
     </data>
 
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-       <ScrollView
-           android:layout_width="match_parent"
-           android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-           <androidx.constraintlayout.widget.ConstraintLayout
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-               <include
-                   android:id="@+id/bank_details_action_bar"
-                   layout="@layout/action_bar"
-                   android:layout_width="fill_parent"
-                   android:layout_height="wrap_content"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintTop_toTopOf="parent" />
+                <include
+                    android:id="@+id/bank_details_action_bar"
+                    layout="@layout/action_bar"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-               <TextView
-                   android:id="@+id/bank_details_person_name_text"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:paddingStart="5dp"
-                   android:text="@string/NameWithStar"
-                   android:textColor="@color/light_black"
-                   android:textSize="16sp"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintHorizontal_bias="0.0"
-                   app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintTop_toBottomOf="@+id/bsjdufcsdkcs" />
+                <TextView
+                    android:id="@+id/bank_details_bank_details_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:paddingStart="5dp"
+                    android:text="@string/Enter_AC_Details"
+                    android:textColor="@color/light_black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bsjdufcsdkcs" />
 
-               <EditText
-                   android:id="@+id/bank_details_person_name_text_edit"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_marginStart="5dp"
-                   android:layout_marginTop="3dp"
-                   android:layout_marginEnd="5dp"
-                   android:background="@drawable/edit_text_border"
-                   android:cursorVisible="true"
-                   android:ems="10"
-                   android:inputType="textCapWords"
-                   android:onClick="onAccCheck"
-                   android:padding="10dp"
-                   android:text=""
-                   android:textSize="14sp"
-                   android:textColor="@color/light_black"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintTop_toBottomOf="@+id/bank_details_person_name_text" />
+                <TextView
+                    android:id="@+id/bank_details_person_name_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:paddingStart="5dp"
+                    android:text="@string/NameWithStar"
+                    android:textColor="@color/light_black"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bank_details_bank_details_text" />
 
-               <TextView
-                   android:id="@+id/bank_details_account_number_text"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_marginTop="5dp"
-                   android:paddingStart="5dp"
-                   android:text="@string/AccountNumber"
-                   android:textColor="@color/light_black"
-                   android:textSize="16sp"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintTop_toBottomOf="@+id/bank_details_person_name_text_edit" />
+                <EditText
+                    android:id="@+id/bank_details_person_name_text_edit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/edit_text_border"
+                    android:cursorVisible="true"
+                    android:ems="10"
+                    android:inputType="textCapWords"
+                    android:onClick="@{handlers :: onAccCheck}"
+                    android:padding="10dp"
+                    android:text=""
+                    android:textColor="@color/light_black"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bank_details_person_name_text" />
 
-               <EditText
-                   android:id="@+id/bank_details_account_number_edit"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_marginStart="5dp"
-                   android:layout_marginTop="3dp"
-                   android:layout_marginEnd="5dp"
-                   android:background="@drawable/edit_text_border"
-                   android:textColor="@color/light_black"
-                   android:ems="10"
-                   android:inputType="numberPassword"
-                   android:padding="10dp"
-                   android:text=""
-                   android:textSize="14sp"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintTop_toBottomOf="@+id/bank_details_account_number_text" />
+                <TextView
+                    android:id="@+id/bank_details_account_number_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:paddingStart="5dp"
+                    android:text="@string/AccountNumber"
+                    android:textColor="@color/light_black"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bank_details_person_name_text_edit" />
 
-               <TextView
-                   android:id="@+id/bank_details_reenter_account_number_text"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_marginTop="5dp"
-                   android:paddingStart="5dp"
-                   android:text="@string/ReEnterAcc"
-                   android:textColor="@color/light_black"
-                   android:textSize="16sp"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintTop_toBottomOf="@+id/bank_details_account_number_edit" />
+                <EditText
+                    android:id="@+id/bank_details_account_number_edit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/edit_text_border"
+                    android:ems="10"
+                    android:inputType="numberPassword"
+                    android:padding="10dp"
+                    android:text=""
+                    android:textColor="@color/light_black"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bank_details_account_number_text" />
 
-               <EditText
-                   android:id="@+id/bank_details_reenter_account_number_edit"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_marginStart="5dp"
-                   android:layout_marginTop="3dp"
-                   android:layout_marginEnd="5dp"
-                   android:background="@drawable/edit_text_border"
-                   android:ems="10"
-                   android:textColor="@color/light_black"
-                   android:inputType="number"
-                   android:padding="10dp"
-                   android:text=""
-                   android:textSize="14sp"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintTop_toBottomOf="@+id/bank_details_reenter_account_number_text" />
+                <TextView
+                    android:id="@+id/bank_details_reenter_account_number_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:paddingStart="5dp"
+                    android:text="@string/ReEnterAcc"
+                    android:textColor="@color/light_black"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bank_details_account_number_edit" />
 
-               <TextView
-                   android:id="@+id/bank_details_ifsc_code"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_marginTop="5dp"
-                   android:inputType="textCapCharacters"
-                   android:paddingStart="5dp"
-                   android:text="@string/IFSC"
-                   android:textColor="@color/light_black"
-                   android:textSize="16sp"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintTop_toBottomOf="@+id/bank_details_reenter_account_number_edit" />
+                <EditText
+                    android:id="@+id/bank_details_reenter_account_number_edit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/edit_text_border"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:text=""
+                    android:textColor="@color/light_black"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bank_details_reenter_account_number_text" />
 
-               <EditText
-                   android:id="@+id/bank_details_ifsc_edit"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_marginStart="5dp"
-                   android:layout_marginTop="3dp"
-                   android:layout_marginEnd="5dp"
-                   android:background="@drawable/edit_text_border"
-                   android:ems="10"
-                   android:maxLength="11"
-                   android:textColor="@color/light_black"
-                   android:inputType="textCapCharacters"
-                   android:onClick="onAccCheck"
-                   android:padding="10dp"
-                   android:text=""
-                   android:textSize="14sp"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintTop_toBottomOf="@+id/bank_details_ifsc_code" />
+                <TextView
+                    android:id="@+id/bank_details_ifsc_code"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:inputType="textCapCharacters"
+                    android:paddingStart="5dp"
+                    android:text="@string/IFSC"
+                    android:textColor="@color/light_black"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bank_details_reenter_account_number_edit" />
 
-               <Button
-                   android:id="@+id/bank_details_ok_button"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginStart="5dp"
-                   android:layout_marginTop="20dp"
-                   android:layout_marginEnd="5dp"
-                   android:background="@drawable/button_active"
-                   android:onClick="onClickBankDetailsOk"
-                   android:text="@string/ok"
-                   android:textAllCaps="false"
-                   android:textColor="@color/white"
-                   android:textSize="18sp"
-                   android:textStyle="bold"
-                   app:layout_constraintBottom_toBottomOf="parent"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintTop_toBottomOf="@+id/bank_details_ifsc_edit" />
+                <EditText
+                    android:id="@+id/bank_details_ifsc_edit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/edit_text_border"
+                    android:ems="10"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="11"
+                    android:onClick="@{handlers :: onAccCheck}"
+                    android:padding="10dp"
+                    android:text=""
+                    android:textColor="@color/light_black"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bank_details_ifsc_code" />
 
-               <TextView
-                   android:id="@+id/bank_details_cancelled_check_text"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_marginTop="5dp"
-                   android:paddingStart="5dp"
-                   android:text="@string/Upload_a_photo_of_Canceled_Check"
-                   android:textColor="@color/light_black"
-                   android:textSize="16sp"
-                   android:textStyle="bold"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintTop_toBottomOf="@+id/bank_details_action_bar" />
+                <Button
+                    android:id="@+id/bank_details_ok_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/button_active"
+                    android:onClick="@{handlers :: onClickBankDetailsOk}"
+                    android:text="@string/ok"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bank_details_ifsc_edit" />
 
-               <androidx.constraintlayout.widget.ConstraintLayout
-                   android:id="@+id/bank_details_canceled_check_constrain"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_marginStart="5dp"
-                   android:layout_marginTop="5dp"
-                   android:layout_marginEnd="5dp"
-                   android:background="@drawable/shadow_file"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintHorizontal_bias="0.0"
-                   app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintTop_toBottomOf="@+id/bank_details_cancelled_check_text">
+                <TextView
+                    android:id="@+id/bank_details_cancelled_check_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:paddingStart="5dp"
+                    android:text="@string/Upload_a_photo_of_Canceled_Check"
+                    android:textColor="@color/light_black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bank_details_action_bar" />
 
-                   <ImageView
-                       android:id="@+id/bank_details_canceled_check_image"
-                       android:layout_width="60dp"
-                       android:layout_height="60dp"
-                       android:layout_marginStart="10dp"
-                       android:layout_marginTop="5dp"
-                       android:layout_marginBottom="5dp"
-                       android:background="@drawable/image_view_border"
-                       android:padding="2dp"
-                       android:src="@drawable/check"
-                       app:layout_constraintBottom_toBottomOf="parent"
-                       app:layout_constraintEnd_toStartOf="@+id/bank_details_canceled_check_text"
-                       app:layout_constraintStart_toStartOf="parent"
-                       app:layout_constraintTop_toTopOf="parent"
-                       app:layout_constraintVertical_bias="0.0" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/bank_details_canceled_check_constrain"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/shadow_file"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bank_details_cancelled_check_text">
 
-                   <TextView
-                       android:id="@+id/bank_details_canceled_check_text"
-                       android:layout_width="0dp"
-                       android:layout_height="wrap_content"
-                       android:padding="10dp"
-                       android:text="@string/Cancelled_Cheque"
-                       android:textColor="@color/light_black"
-                       android:textSize="14sp"
-                       app:layout_constraintBottom_toBottomOf="@+id/bank_details_canceled_check_image"
-                       app:layout_constraintEnd_toStartOf="@+id/bank_details_canceled_check_upload"
-                       app:layout_constraintHorizontal_bias="0.228"
-                       app:layout_constraintStart_toEndOf="@+id/bank_details_canceled_check_image"
-                       app:layout_constraintTop_toTopOf="@+id/bank_details_canceled_check_image"
-                       app:layout_constraintVertical_bias="0.523" />
+                    <ImageView
+                        android:id="@+id/bank_details_canceled_check_image"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/image_view_border"
+                        android:padding="2dp"
+                        android:src="@drawable/check"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/bank_details_canceled_check_text"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
 
-                   <Button
-                       android:id="@+id/bank_details_canceled_check_upload"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_marginEnd="10dp"
-                       android:background="@drawable/all_rounded_small"
-                       android:backgroundTint="@color/light_black"
-                       android:drawableStart="@drawable/ic_upload"
-                       android:padding="10dp"
-                       android:text="@string/Upload"
-                       android:textAllCaps="false"
-                       android:textColor="@color/white"
-                       android:textSize="14sp"
-                       android:visibility="visible"
-                       app:layout_constraintBottom_toBottomOf="@+id/bank_details_canceled_check_text"
-                       app:layout_constraintEnd_toEndOf="parent"
-                       app:layout_constraintStart_toEndOf="@+id/bank_details_canceled_check_text"
-                       app:layout_constraintTop_toTopOf="@+id/bank_details_canceled_check_text"
-                       app:layout_constraintVertical_bias="0.555" />
+                    <TextView
+                        android:id="@+id/bank_details_canceled_check_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="@string/Cancelled_Cheque"
+                        android:textColor="@color/light_black"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/bank_details_canceled_check_image"
+                        app:layout_constraintEnd_toStartOf="@+id/bank_details_canceled_check_upload"
+                        app:layout_constraintHorizontal_bias="0.228"
+                        app:layout_constraintStart_toEndOf="@+id/bank_details_canceled_check_image"
+                        app:layout_constraintTop_toTopOf="@+id/bank_details_canceled_check_image"
+                        app:layout_constraintVertical_bias="0.523" />
 
-                   <TextView
-                       android:id="@+id/bank_details_edit_canceled_check"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_marginEnd="20dp"
-                       android:drawableStart="@drawable/ic_edit"
-                       android:padding="10dp"
-                       android:textColor="@color/black"
-                       android:textSize="14sp"
-                       android:visibility="gone"
-                       app:layout_constraintBottom_toBottomOf="@+id/bank_details_canceled_check_text"
-                       app:layout_constraintEnd_toEndOf="parent"
-                       app:layout_constraintHorizontal_bias="0.692"
-                       app:layout_constraintStart_toEndOf="@+id/bank_details_canceled_check_text"
-                       app:layout_constraintTop_toTopOf="@+id/bank_details_canceled_check_text"
-                       app:layout_constraintVertical_bias="0.487" />
+                    <Button
+                        android:id="@+id/bank_details_canceled_check_upload"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/all_rounded_small"
+                        android:backgroundTint="@color/light_black"
+                        android:drawableStart="@drawable/ic_upload"
+                        android:padding="10dp"
+                        android:text="@string/Upload"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:visibility="visible"
+                        app:layout_constraintBottom_toBottomOf="@+id/bank_details_canceled_check_text"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/bank_details_canceled_check_text"
+                        app:layout_constraintTop_toTopOf="@+id/bank_details_canceled_check_text"
+                        app:layout_constraintVertical_bias="0.555" />
 
-                   <ImageView
-                       android:id="@+id/bank_details_preview_cancelled_cheque_image_view"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:onClick="onClickPreviewCancelledCheque"
-                       android:visibility="gone"
-                       app:layout_constraintBottom_toBottomOf="@+id/bank_details_edit_canceled_check"
-                       app:layout_constraintEnd_toStartOf="@+id/bank_details_edit_canceled_check"
-                       app:layout_constraintTop_toTopOf="@+id/bank_details_edit_canceled_check"
-                       app:layout_constraintVertical_bias="0.45"
-                       app:srcCompat="@drawable/ic_preview" />
+                    <TextView
+                        android:id="@+id/bank_details_edit_canceled_check"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:drawableStart="@drawable/ic_edit"
+                        android:padding="10dp"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/bank_details_canceled_check_text"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.692"
+                        app:layout_constraintStart_toEndOf="@+id/bank_details_canceled_check_text"
+                        app:layout_constraintTop_toTopOf="@+id/bank_details_canceled_check_text"
+                        app:layout_constraintVertical_bias="0.487" />
 
-               </androidx.constraintlayout.widget.ConstraintLayout>
+                    <ImageView
+                        android:id="@+id/bank_details_preview_cancelled_cheque_image_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{handlers :: onClickPreviewCancelledCheque}"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/bank_details_edit_canceled_check"
+                        app:layout_constraintEnd_toStartOf="@+id/bank_details_edit_canceled_check"
+                        app:layout_constraintTop_toTopOf="@+id/bank_details_edit_canceled_check"
+                        app:layout_constraintVertical_bias="0.45"
+                        app:srcCompat="@drawable/ic_preview" />
 
-               <TextView
-                   android:id="@+id/bsjdufcsdkcs"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_marginTop="5dp"
-                   android:layout_marginBottom="5dp"
-                   android:text="@string/OR"
-                   android:textAlignment="center"
-                   android:textColor="@color/black"
-                   android:textSize="14sp"
-                   app:layout_constraintBottom_toTopOf="@+id/bank_details_person_name_text"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintTop_toBottomOf="@+id/bank_details_canceled_check_constrain" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-           </androidx.constraintlayout.widget.ConstraintLayout>
-       </ScrollView>
-   </LinearLayout>
+                <TextView
+                    android:id="@+id/bsjdufcsdkcs"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/OR"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toTopOf="@+id/bank_details_bank_details_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bank_details_canceled_check_constrain" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </LinearLayout>
 </layout>

@@ -626,7 +626,7 @@ public class BankDetailsActivity extends AppCompat {
                     new DownloadImageTask(previewDialogCancelledCheque.findViewById(R.id.dialog_preview_image_view)).execute(cancelledChequeURL);
 
                 } catch (Exception e) {
-
+                    e.printStackTrace();
                 }
             }
 
