@@ -68,19 +68,12 @@ import retrofit2.Response;
 
 public class BankDetailsActivity extends AppCompat {
 
-    String userId, PathForCC = "";
-    int requestCode, resultCode;
+    String userId, PathForCC = "", bankId, mobile, userRoleAPI, ccUploadedAPI;
+    int requestCode, resultCode, GET_FROM_GALLERY = 0, CAMERA_PIC_REQUEST1 = 0;
     Intent data;
-
-    int GET_FROM_GALLERY = 0;
-    int CAMERA_PIC_REQUEST1 = 0;
-
+    Dialog previewDialogCancelledCheque;
     ImageView previewDialogCancelledChequeImageView;
     Boolean isEdit, isImgUploaded = false, bankVerified = true;
-
-    String bankId, mobile, userRoleAPI, ccUploadedAPI;
-
-    Dialog previewDialogCancelledCheque;
     ActivityBankDetailsBinding binding;
 
     @Override
