@@ -2,11 +2,6 @@ package com.nlpl.ui.activities;
 
 import static com.nlpl.R.id.vehicle_details_vehicle_number_edit2;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
@@ -36,6 +31,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
@@ -47,7 +46,6 @@ import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.nlpl.R;
 import com.nlpl.model.Requests.AddTruckRequest;
 import com.nlpl.model.Responses.AddTruckResponse;
-import com.nlpl.model.Responses.BankVerificationResponse;
 import com.nlpl.model.Responses.UploadTruckInsuranceResponse;
 import com.nlpl.model.Responses.UploadTruckRCResponse;
 import com.nlpl.model.Responses.VehicleVerificationResponse;

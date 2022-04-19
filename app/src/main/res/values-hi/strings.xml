@@ -189,6 +189,7 @@
     <string name="Locate_Truck">ट्रक का पता लगाएं</string>
     <string name="Delete_Truck_Details">ट्रक जानकारी हटाएँ</string>
     <string name="Truck_Delete_message">क्या आपको यकीन है?\nआप ट्रक जानकारी को हटाना चाहते हैं?</string>
+    <string name="invalid_RC">कृपया मान्य आरसी नंबर दर्ज करें (Eg. MH12AB1234)</string>
 
     //----------------------------------------------------------------------------------------------
 
