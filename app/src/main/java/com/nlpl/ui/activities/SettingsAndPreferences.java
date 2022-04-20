@@ -120,7 +120,6 @@ public class SettingsAndPreferences extends AppCompat {
     }
 
     public void RearrangeItems() {
-        ShowAlert.loadingDialog(SettingsAndPreferences.this);
         JumpTo.getToSettingAndPreferences(SettingsAndPreferences.this, phone, userId, role, true);
     }
 

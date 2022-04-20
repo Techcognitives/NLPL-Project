@@ -219,7 +219,7 @@ public class FindTripLPActivity extends AppCompatActivity {
         actionBarMenuButton.setVisibility(View.GONE);
 
         actionBarBackButton.setOnClickListener(view -> {
-            ShowAlert.loadingDialog(FindTripLPActivity.this);
+
             JumpTo.goToCustomerDashboard(FindTripLPActivity.this, phone, true);
         });
 
@@ -1021,7 +1021,6 @@ public class FindTripLPActivity extends AppCompatActivity {
     }
 
     public void RearrangeItems() {
-        ShowAlert.loadingDialog(FindTripLPActivity.this);
         JumpTo.goToFindTripLPActivity(FindTripLPActivity.this, phone, userId, true);
     }
 
@@ -1029,17 +1028,14 @@ public class FindTripLPActivity extends AppCompatActivity {
     public void onClickBottomNavigation(View view) {
         switch (view.getId()) {
             case R.id.bottom_nav_sp_dashboard:
-                ShowAlert.loadingDialog(FindTripLPActivity.this);
                 JumpTo.goToCustomerDashboard(FindTripLPActivity.this, phone, true);
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
-                ShowAlert.loadingDialog(FindTripLPActivity.this);
                 JumpTo.goToFindTrucksActivity(FindTripLPActivity.this, userId, phone);
                 break;
 
             case R.id.bottom_nav_track:
-                ShowAlert.loadingDialog(FindTripLPActivity.this);
                 JumpTo.goToLPTrackActivity(FindTripLPActivity.this, phone, true);
                 break;
 
@@ -1048,7 +1044,6 @@ public class FindTripLPActivity extends AppCompatActivity {
                 break;
 
             case R.id.bottom_nav_profile:
-                ShowAlert.loadingDialog(FindTripLPActivity.this);
                 JumpTo.goToViewPersonalDetailsActivity(FindTripLPActivity.this, userId, phone, true);
                 break;
         }
@@ -1057,7 +1052,6 @@ public class FindTripLPActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        ShowAlert.loadingDialog(FindTripLPActivity.this);
         JumpTo.goToCustomerDashboard(FindTripLPActivity.this, phone, true);
     }
 

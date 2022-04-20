@@ -73,12 +73,10 @@ public class SliderActivity extends AppCompat {
     }
 
     public void onClickRegisterNow(View view) {
-        ShowAlert.loadingDialog(SliderActivity.this);
         JumpTo.goToRegistrationActivity(SliderActivity.this, mobile, false, null, true);
     }
 
     public void onClickSkipRegistration(View view) {
-        ShowAlert.loadingDialog(SliderActivity.this);
         JumpTo.goToServiceProviderDashboard(SliderActivity.this, mobile, true, true);
     }
 }

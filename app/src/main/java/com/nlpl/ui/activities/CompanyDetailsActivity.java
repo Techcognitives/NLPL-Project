@@ -246,7 +246,6 @@ public class CompanyDetailsActivity extends AppCompat {
     };
 
     public void onClickCompanyDetailsOK(View view) {
-        ShowAlert.loadingDialog(CompanyDetailsActivity.this);
         if (isEdit) {
             if (companyName.getText().toString() != null) {
                 UpdateCompanyDetails.updateCompanyName(companyIdAPI, companyName.getText().toString());

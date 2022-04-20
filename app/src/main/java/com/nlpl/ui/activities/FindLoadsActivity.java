@@ -205,29 +205,24 @@ public class FindLoadsActivity extends AppCompat {
     }
 
     public void RearrangeItems() {
-        ShowAlert.loadingDialog(FindLoadsActivity.this);
         JumpTo.goToFindLoadsActivity(FindLoadsActivity.this, userId, phone, true);
     }
 
     public void onClickBottomNavigation(View view) {
         switch (view.getId()) {
             case R.id.bottom_nav_sp_dashboard:
-                ShowAlert.loadingDialog(FindLoadsActivity.this);
                 JumpTo.goToServiceProviderDashboard(FindLoadsActivity.this, phone, true, true);
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
-                ShowAlert.loadingDialog(FindLoadsActivity.this);
                 RearrangeItems();
                 break;
 
             case R.id.bottom_nav_track:
-                ShowAlert.loadingDialog(FindLoadsActivity.this);
                 JumpTo.goToSPTrackActivity(FindLoadsActivity.this, phone, false);
                 break;
 
             case R.id.bottom_nav_profile:
-                ShowAlert.loadingDialog(FindLoadsActivity.this);
                 JumpTo.goToViewPersonalDetailsActivity(FindLoadsActivity.this, userId, phone, true);
                 break;
         }
@@ -297,7 +292,6 @@ public class FindLoadsActivity extends AppCompat {
 
         alertPositiveButton.setOnClickListener(view1 -> {
             alert.dismiss();
-            ShowAlert.loadingDialog(FindLoadsActivity.this);
             JumpTo.goToPostATrip(FindLoadsActivity.this, "" + phone, "" + userId, true, "" + obj.getTrip_id(), false);
         });
         //------------------------------------------------------------------------------------------

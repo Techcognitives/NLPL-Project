@@ -817,7 +817,6 @@ public class VehicleDetailsActivity extends AppCompat {
         alertPositiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShowAlert.loadingDialog(VehicleDetailsActivity.this);
                 if (fromBidNow) {
                     JumpTo.goToDriverDetailsActivity(VehicleDetailsActivity.this, userId, mobile, false, true, true, truckIdPass, null);
                 }
@@ -838,7 +837,6 @@ public class VehicleDetailsActivity extends AppCompat {
                     if (fromBidNow) {
                         JumpTo.goToViewVehicleDetailsActivity(VehicleDetailsActivity.this, userId, mobile, true);
                     } else {
-                        ShowAlert.loadingDialog(VehicleDetailsActivity.this);
                         JumpTo.goToViewVehicleDetailsActivity(VehicleDetailsActivity.this, userId, mobile, true);
                     }
                 } else {
@@ -867,7 +865,6 @@ public class VehicleDetailsActivity extends AppCompat {
                     alertPositiveButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            ShowAlert.loadingDialog(VehicleDetailsActivity.this);
                             if (fromBidNow) {
                                 JumpTo.goToDriverDetailsActivity(VehicleDetailsActivity.this, userId, mobile, false, true, false, truckIdPass, null);
                             }
@@ -884,7 +881,6 @@ public class VehicleDetailsActivity extends AppCompat {
                         @Override
                         public void onClick(View view) {
                             alert.dismiss();
-                            ShowAlert.loadingDialog(VehicleDetailsActivity.this);
                             if (fromBidNow) {
                                 JumpTo.goToViewVehicleDetailsActivity(VehicleDetailsActivity.this, userId, mobile, true);
                             } else {
@@ -1175,7 +1171,6 @@ public class VehicleDetailsActivity extends AppCompat {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        ShowAlert.loadingDialog(VehicleDetailsActivity.this);
         JumpTo.goToViewVehicleDetailsActivity(VehicleDetailsActivity.this, userId, mobile, true);
     }
 

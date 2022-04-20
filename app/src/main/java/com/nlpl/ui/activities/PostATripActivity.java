@@ -101,7 +101,6 @@ public class PostATripActivity extends AppCompat {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShowAlert.loadingDialog(PostATripActivity.this);
                 JumpTo.goToFindLoadsActivity(PostATripActivity.this, userId, phone, true);
             }
         });
@@ -736,7 +735,6 @@ public class PostATripActivity extends AppCompat {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        ShowAlert.loadingDialog(this);
         JumpTo.goToFindLoadsActivity(this, userId, phone, true);
     }
 

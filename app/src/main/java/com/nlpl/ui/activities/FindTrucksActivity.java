@@ -135,7 +135,6 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
             if (userId == null) {
                 this.finish();
             } else {
-                ShowAlert.loadingDialog(FindTrucksActivity.this);
                 JumpTo.goToCustomerDashboard(FindTrucksActivity.this, phone, true);
             }
         });
@@ -296,13 +295,11 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
                     });
                     //------------------------------------------------------------------------------------------
                 } else {
-                    ShowAlert.loadingDialog(FindTrucksActivity.this);
                     JumpTo.goToCustomerDashboard(FindTrucksActivity.this, phone, true);
                 }
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
-                ShowAlert.loadingDialog(FindTrucksActivity.this);
                 JumpTo.goToFindTrucksActivity(FindTrucksActivity.this, userId, phone);
                 break;
 
@@ -340,7 +337,6 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
                     });
                     //------------------------------------------------------------------------------------------
                 } else {
-                    ShowAlert.loadingDialog(FindTrucksActivity.this);
                     JumpTo.goToLPTrackActivity(FindTrucksActivity.this, phone, true);
                 }
                 break;
@@ -379,7 +375,6 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
                     });
                     //------------------------------------------------------------------------------------------
                 } else {
-                    ShowAlert.loadingDialog(FindTrucksActivity.this);
                     JumpTo.goToFindTripLPActivity(FindTrucksActivity.this, userId, phone, true);
                 }
                 break;
@@ -418,7 +413,6 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
                     });
                     //------------------------------------------------------------------------------------------
                 } else {
-                    ShowAlert.loadingDialog(FindTrucksActivity.this);
                     JumpTo.goToViewPersonalDetailsActivity(FindTrucksActivity.this, userId, phone, true);
                 }
                 break;
@@ -461,7 +455,6 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
             });
             //------------------------------------------------------------------------------------------
         } else {
-            ShowAlert.loadingDialog(FindTrucksActivity.this);
             JumpTo.goToCustomerDashboard(FindTrucksActivity.this, phone, true);
         }
     }

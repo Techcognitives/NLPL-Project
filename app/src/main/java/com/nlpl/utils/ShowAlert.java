@@ -64,25 +64,4 @@ public class ShowAlert {
             alert.dismiss();
         });
     }
-
-    public static void loadingDialog(Activity activity){
-        Dialog loadingDialog = new Dialog(activity);
-        loadingDialog.setContentView(R.layout.dialog_loading);
-        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-        lp2.copyFrom(loadingDialog.getWindow().getAttributes());
-        lp2.width = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp2.gravity = Gravity.CENTER;
-        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
-
-        loadingDialog.show();
-        loadingDialog.setCancelable(false);
-        loadingDialog.getWindow().setAttributes(lp2);
-
-        Animation rotate = AnimationUtils.loadAnimation(activity, R.anim.clockwiserotate);
-        loading_img.startAnimation(rotate);
-    }
-
 }

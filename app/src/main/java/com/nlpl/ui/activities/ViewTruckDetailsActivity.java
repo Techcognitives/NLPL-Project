@@ -129,7 +129,6 @@ public class ViewTruckDetailsActivity extends AppCompat {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShowAlert.loadingDialog(ViewTruckDetailsActivity.this);
                 JumpTo.goToViewPersonalDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, true);
             }
         });
@@ -237,7 +236,6 @@ public class ViewTruckDetailsActivity extends AppCompat {
     }
 
     public void RearrangeItems() {
-        ShowAlert.loadingDialog(ViewTruckDetailsActivity.this);
         JumpTo.goToViewVehicleDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, true);
     }
 
@@ -401,7 +399,6 @@ public class ViewTruckDetailsActivity extends AppCompat {
     }
 
     public void getTruckDetails(MainResponse.Data.TruckDetails obj) {
-        ShowAlert.loadingDialog(ViewTruckDetailsActivity.this);
         JumpTo.goToVehicleDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, true, false, false, false, null, obj.getTruck_id());
     }
 
@@ -436,30 +433,29 @@ public class ViewTruckDetailsActivity extends AppCompat {
     }
 
     public void onClickAddTruckDetails(View view) {
-        ShowAlert.loadingDialog(ViewTruckDetailsActivity.this);
+
         JumpTo.goToVehicleDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, false, false, false, false, null, null);
     }
 
     public void onClickBottomNavigation(View view) {
         switch (view.getId()) {
             case R.id.bottom_nav_sp_dashboard:
-                ShowAlert.loadingDialog(ViewTruckDetailsActivity.this);
+
                 JumpTo.goToServiceProviderDashboard(ViewTruckDetailsActivity.this, phone, true, true);
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
-                ShowAlert.loadingDialog(ViewTruckDetailsActivity.this);
+
                 JumpTo.goToFindLoadsActivity(ViewTruckDetailsActivity.this, userId, phone, false);
 
                 break;
 
             case R.id.bottom_nav_track:
-                ShowAlert.loadingDialog(ViewTruckDetailsActivity.this);
+
                 JumpTo.goToSPTrackActivity(ViewTruckDetailsActivity.this, phone, false);
                 break;
 
             case R.id.bottom_nav_profile:
-                ShowAlert.loadingDialog(ViewTruckDetailsActivity.this);
                 JumpTo.goToViewPersonalDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, true);
                 break;
         }
@@ -468,7 +464,6 @@ public class ViewTruckDetailsActivity extends AppCompat {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        ShowAlert.loadingDialog(ViewTruckDetailsActivity.this);
         JumpTo.goToViewPersonalDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, true);
     }
 
@@ -613,7 +608,6 @@ public class ViewTruckDetailsActivity extends AppCompat {
     public void onClickAddDriverDetailsAssigned(View view) {
         previewDialogSpinner.dismiss();
         previewDialogDriverDetails.dismiss();
-        ShowAlert.loadingDialog(ViewTruckDetailsActivity.this);
         JumpTo.goToDriverDetailsActivity(ViewTruckDetailsActivity.this, userId, phone, false, false, true, truckIdPass, null);
     }
 

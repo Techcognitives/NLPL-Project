@@ -715,7 +715,6 @@ public class PostALoadActivity extends AppCompat {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        ShowAlert.loadingDialog(PostALoadActivity.this);
         JumpTo.goToCustomerDashboard(PostALoadActivity.this, phone, true);
     }
 
@@ -776,7 +775,6 @@ public class PostALoadActivity extends AppCompat {
             public void onClick(View view) {
                 UpdatePostLoadDetails.updateStatus(loadId, "delete");
                 deleteLoad.dismiss();
-                ShowAlert.loadingDialog(PostALoadActivity.this);
                 JumpTo.goToCustomerDashboard(PostALoadActivity.this, phone, true);
             }
         });

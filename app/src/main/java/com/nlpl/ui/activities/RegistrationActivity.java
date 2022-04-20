@@ -603,7 +603,6 @@ public class RegistrationActivity extends AppCompat {
 //                }
 
                     if (mobile.equals("91" + mobileNoEdit.getText().toString()) || mobileNoEdit.getText().toString().isEmpty()) {
-                        ShowAlert.loadingDialog(RegistrationActivity.this);
                         JumpTo.goToViewPersonalDetailsActivity(RegistrationActivity.this, userId, mobile, true);
                     } else {
                         //----------------------- Alert Dialog -------------------------------------------------
@@ -711,7 +710,6 @@ public class RegistrationActivity extends AppCompat {
                         @Override
                         public void onClick(View view) {
                             alert.dismiss();
-                            ShowAlert.loadingDialog(RegistrationActivity.this);
                             if (role.equals("Customer")) {
                                 JumpTo.goToCustomerDashboard(RegistrationActivity.this, mobile, true);
                             } else {
@@ -883,7 +881,6 @@ public class RegistrationActivity extends AppCompat {
     }
 
     public void onClickExploreNow(View view) {
-        ShowAlert.loadingDialog(RegistrationActivity.this);
         JumpTo.goToSliderActivity(RegistrationActivity.this, mobile);
     }
 

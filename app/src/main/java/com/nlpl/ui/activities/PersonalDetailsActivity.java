@@ -134,7 +134,6 @@ public class PersonalDetailsActivity extends AppCompat {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShowAlert.loadingDialog(PersonalDetailsActivity.this);
 //                if (userRoleAPI.equals("Customer")) {
 //                    JumpTo.goToCustomerDashboard(PersonalDetailsActivity.this, mobile, true);
 //                } else {
@@ -628,7 +627,6 @@ public class PersonalDetailsActivity extends AppCompat {
             @Override
             public void onClick(View view) {
                 alert.dismiss();
-                ShowAlert.loadingDialog(PersonalDetailsActivity.this);
                 JumpTo.goToViewPersonalDetailsActivity(PersonalDetailsActivity.this, userId, mobile, true);
             }
         });
@@ -827,7 +825,6 @@ public class PersonalDetailsActivity extends AppCompat {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        ShowAlert.loadingDialog(PersonalDetailsActivity.this);
 //        if (userRoleAPI.equals("Customer")) {
 //            JumpTo.goToCustomerDashboard(PersonalDetailsActivity.this, mobile, true);
 //        } else {

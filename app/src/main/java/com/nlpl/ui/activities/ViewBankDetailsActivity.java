@@ -107,7 +107,6 @@ public class ViewBankDetailsActivity extends AppCompat {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShowAlert.loadingDialog(ViewBankDetailsActivity.this);
 //                if (roleAPI.equals("Customer")) {
 //                    JumpTo.goToCustomerDashboard(ViewBankDetailsActivity.this, phone, true);
 //                } else {
@@ -161,7 +160,6 @@ public class ViewBankDetailsActivity extends AppCompat {
     }
 
     public void RearrangeItems() {
-        ShowAlert.loadingDialog(ViewBankDetailsActivity.this);
         JumpTo.goToViewBankDetailsActivity(ViewBankDetailsActivity.this, userId, phone, true);
     }
 
@@ -217,7 +215,6 @@ public class ViewBankDetailsActivity extends AppCompat {
     }
 
     public void getBankDetails(BankModel obj) {
-        ShowAlert.loadingDialog(ViewBankDetailsActivity.this);
         JumpTo.goToBankDetailsActivity(ViewBankDetailsActivity.this, userId, phone, true, false, obj.getBank_id());
     }
 
@@ -238,7 +235,6 @@ public class ViewBankDetailsActivity extends AppCompat {
     }
 
     public void onClickAddBankDetails(View view) {
-        ShowAlert.loadingDialog(ViewBankDetailsActivity.this);
         JumpTo.goToBankDetailsActivity(ViewBankDetailsActivity.this, userId, phone, false, false, null);
     }
 
@@ -246,12 +242,10 @@ public class ViewBankDetailsActivity extends AppCompat {
         if (roleAPI.equals("Customer")) {
             switch (view.getId()) {
                 case R.id.bottom_nav_sp_dashboard:
-                    ShowAlert.loadingDialog(ViewBankDetailsActivity.this);
                     JumpTo.goToCustomerDashboard(ViewBankDetailsActivity.this, phone, true);
                     break;
 
                 case R.id.bottom_nav_customer_dashboard:
-                    ShowAlert.loadingDialog(ViewBankDetailsActivity.this);
                     JumpTo.goToFindTrucksActivity(ViewBankDetailsActivity.this, userId, phone);
                     break;
 
@@ -260,35 +254,29 @@ public class ViewBankDetailsActivity extends AppCompat {
                     break;
 
                 case R.id.bottom_nav_trip:
-                    ShowAlert.loadingDialog(ViewBankDetailsActivity.this);
                     JumpTo.goToFindTripLPActivity(ViewBankDetailsActivity.this, phone, userId, false);
                     break;
 
                 case R.id.bottom_nav_profile:
-                    ShowAlert.loadingDialog(ViewBankDetailsActivity.this);
                     JumpTo.goToViewPersonalDetailsActivity(ViewBankDetailsActivity.this, userId, phone, true);
                     break;
             }
         } else {
             switch (view.getId()) {
                 case R.id.bottom_nav_sp_dashboard:
-                    ShowAlert.loadingDialog(ViewBankDetailsActivity.this);
                     JumpTo.goToServiceProviderDashboard(ViewBankDetailsActivity.this, phone, true, true);
                     break;
 
                 case R.id.bottom_nav_customer_dashboard:
-                    ShowAlert.loadingDialog(ViewBankDetailsActivity.this);
                     JumpTo.goToFindLoadsActivity(ViewBankDetailsActivity.this, userId, phone, false);
 
                     break;
 
                 case R.id.bottom_nav_track:
-                    ShowAlert.loadingDialog(ViewBankDetailsActivity.this);
                     JumpTo.goToSPTrackActivity(ViewBankDetailsActivity.this, phone, false);
                     break;
 
                 case R.id.bottom_nav_profile:
-                    ShowAlert.loadingDialog(ViewBankDetailsActivity.this);
                     JumpTo.goToViewPersonalDetailsActivity(ViewBankDetailsActivity.this, userId, phone, true);
                     break;
             }
@@ -342,7 +330,6 @@ public class ViewBankDetailsActivity extends AppCompat {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        ShowAlert.loadingDialog(ViewBankDetailsActivity.this);
 //        if (roleAPI.equals("Customer")) {
 //            JumpTo.goToCustomerDashboard(ViewBankDetailsActivity.this, phone, true);
 //        } else {

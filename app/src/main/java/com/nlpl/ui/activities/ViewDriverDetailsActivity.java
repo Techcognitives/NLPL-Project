@@ -126,7 +126,6 @@ public class ViewDriverDetailsActivity extends AppCompat {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShowAlert.loadingDialog(ViewDriverDetailsActivity.this);
                 JumpTo.goToViewPersonalDetailsActivity(ViewDriverDetailsActivity.this, userId, phone, true);
             }
         });
@@ -248,7 +247,6 @@ public class ViewDriverDetailsActivity extends AppCompat {
     }
 
     public void RearrangeItems() {
-        ShowAlert.loadingDialog(ViewDriverDetailsActivity.this);
         JumpTo.goToViewDriverDetailsActivity(ViewDriverDetailsActivity.this, userId, phone, true);
     }
 
@@ -427,12 +425,10 @@ public class ViewDriverDetailsActivity extends AppCompat {
     }
 
     public void onClickAddDriverDetails(View view) {
-        ShowAlert.loadingDialog(ViewDriverDetailsActivity.this);
         JumpTo.goToDriverDetailsActivity(ViewDriverDetailsActivity.this, userId, phone, false, false, false, null, null);
     }
 
     public void onClickAddDriverBankDetails(View view) {
-        ShowAlert.loadingDialog(ViewDriverDetailsActivity.this);
         JumpTo.goToBankDetailsActivity(ViewDriverDetailsActivity.this, driverUserIdGet, phone, false, true, null);
     }
 
@@ -456,30 +452,25 @@ public class ViewDriverDetailsActivity extends AppCompat {
     }
 
     public void getDriverDetails(DriverModel obj) {
-        ShowAlert.loadingDialog(ViewDriverDetailsActivity.this);
         JumpTo.goToDriverDetailsActivity(ViewDriverDetailsActivity.this, userId, phone, true, false, false, null, obj.getDriver_id());
     }
 
     public void onClickBottomNavigation(View view) {
         switch (view.getId()) {
             case R.id.bottom_nav_sp_dashboard:
-                ShowAlert.loadingDialog(ViewDriverDetailsActivity.this);
                 JumpTo.goToServiceProviderDashboard(ViewDriverDetailsActivity.this, phone, true, true);
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
-                ShowAlert.loadingDialog(ViewDriverDetailsActivity.this);
                 JumpTo.goToFindLoadsActivity(ViewDriverDetailsActivity.this, userId, phone, false);
 
                 break;
 
             case R.id.bottom_nav_track:
-                ShowAlert.loadingDialog(ViewDriverDetailsActivity.this);
                 JumpTo.goToSPTrackActivity(ViewDriverDetailsActivity.this, phone, false);
                 break;
 
             case R.id.bottom_nav_profile:
-                ShowAlert.loadingDialog(ViewDriverDetailsActivity.this);
                 JumpTo.goToViewPersonalDetailsActivity(ViewDriverDetailsActivity.this, userId, phone, true);
                 break;
         }
@@ -488,7 +479,6 @@ public class ViewDriverDetailsActivity extends AppCompat {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        ShowAlert.loadingDialog(ViewDriverDetailsActivity.this);
         JumpTo.goToViewPersonalDetailsActivity(ViewDriverDetailsActivity.this, userId, phone, true);
     }
 
@@ -609,7 +599,6 @@ public class ViewDriverDetailsActivity extends AppCompat {
     public void onClickAddDriverDetailsAssigned(View view) {
         previewDialogSpinner.dismiss();
         previewDialogAssignedTruck.dismiss();
-        ShowAlert.loadingDialog(ViewDriverDetailsActivity.this);
         JumpTo.goToVehicleDetailsActivity(ViewDriverDetailsActivity.this, userId, phone, false, false, true, false, driverId, null);
     }
 

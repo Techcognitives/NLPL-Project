@@ -578,7 +578,6 @@ public class ServiceProviderDashboardActivity extends AppCompat {
 
     public void RearrangeItems() {
         getLocation();
-        ShowAlert.loadingDialog(ServiceProviderDashboardActivity.this);
         JumpTo.goToServiceProviderDashboard(ServiceProviderDashboardActivity.this, phone, loadNotificationSelected, true);
     }
 
@@ -710,7 +709,6 @@ public class ServiceProviderDashboardActivity extends AppCompat {
     }
 
     public void onClickProfileAndRegister(View view) {
-        ShowAlert.loadingDialog(ServiceProviderDashboardActivity.this);
         switch (view.getId()) {
             case R.id.menu_personal_details_button:
                 JumpTo.goToViewPersonalDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, false);
@@ -1102,7 +1100,6 @@ public class ServiceProviderDashboardActivity extends AppCompat {
 
                 alertPositiveButton.setOnClickListener(view -> {
                     alert.dismiss();
-                    ShowAlert.loadingDialog(ServiceProviderDashboardActivity.this);
                     JumpTo.goToVehicleDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, false, false, false, false, null, null);
                 });
                 //------------------------------------------------------------------------------------------
@@ -1140,7 +1137,6 @@ public class ServiceProviderDashboardActivity extends AppCompat {
 
                 alertPositiveButton.setOnClickListener(view -> {
                     alert.dismiss();
-                    ShowAlert.loadingDialog(ServiceProviderDashboardActivity.this);
                     JumpTo.goToDriverDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, false, false, false, null, null);
 
                 });
@@ -2519,7 +2515,6 @@ public class ServiceProviderDashboardActivity extends AppCompat {
             });
             //------------------------------------------------------------------------------------------
         } else {
-            ShowAlert.loadingDialog(ServiceProviderDashboardActivity.this);
             JumpTo.goToPostATrip(ServiceProviderDashboardActivity.this, phone, userId, false, null, false);
         }
     }

@@ -357,7 +357,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
     }
 
     public void RearrangeItems() {
-        ShowAlert.loadingDialog(CustomerDashboardActivity.this);
+
         JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
     }
 
@@ -503,7 +503,6 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
-                ShowAlert.loadingDialog(CustomerDashboardActivity.this);
                 JumpTo.goToFindTrucksActivity(CustomerDashboardActivity.this, userId, phone);
                 break;
 
@@ -512,12 +511,10 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                 break;
 
             case R.id.bottom_nav_trip:
-                ShowAlert.loadingDialog(CustomerDashboardActivity.this);
                 JumpTo.goToFindTripLPActivity(CustomerDashboardActivity.this, phone, userId, false);
                 break;
 
             case R.id.bottom_nav_profile:
-                ShowAlert.loadingDialog(CustomerDashboardActivity.this);
                 JumpTo.goToViewPersonalDetailsActivity(CustomerDashboardActivity.this, userId, phone, false);
                 break;
         }
@@ -975,7 +972,6 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
 
         alertPositiveButton.setOnClickListener(view1 -> {
             alert.dismiss();
-            ShowAlert.loadingDialog(CustomerDashboardActivity.this);
             JumpTo.goToPostALoad(CustomerDashboardActivity.this, userId, phone, false, true, obj.getIdpost_load(), false);
         });
         //------------------------------------------------------------------------------------------
@@ -2482,26 +2478,21 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
 
             case R.id.customer_menu_bank_details_button:
                 if (isBankDetailsDone.equals("1")) {
-                    ShowAlert.loadingDialog(CustomerDashboardActivity.this);
                     JumpTo.goToViewBankDetailsActivity(CustomerDashboardActivity.this, userId, phone, false);
                 } else {
-                    ShowAlert.loadingDialog(CustomerDashboardActivity.this);
                     JumpTo.goToBankDetailsActivity(CustomerDashboardActivity.this, userId, phone, false, false, null);
                 }
                 break;
 
             case R.id.menu_settings_button:
-                ShowAlert.loadingDialog(CustomerDashboardActivity.this);
                 JumpTo.getToSettingAndPreferences(CustomerDashboardActivity.this, phone, userId, "Customer", false);
                 break;
 
             case R.id.menu_loads_history_button:
-                ShowAlert.loadingDialog(CustomerDashboardActivity.this);
                 JumpTo.goToCustomerLoadHistoryActivity(CustomerDashboardActivity.this, userId, phone, false);
                 break;
 
             case R.id.customer_menu_kyc:
-                ShowAlert.loadingDialog(CustomerDashboardActivity.this);
                 JumpTo.goToPersonalDetailsActivity(CustomerDashboardActivity.this, userId, phone, false, false);
                 break;
         }
@@ -2618,7 +2609,6 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
             @Override
             public void onClick(View view) {
                 reActivateLoad.dismiss();
-                ShowAlert.loadingDialog(CustomerDashboardActivity.this);
                 JumpTo.goToPostALoad(CustomerDashboardActivity.this, userId, phone, true, true, obj.getIdpost_load(), false);
             }
         });
@@ -2737,7 +2727,6 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
     };
 
     public void onCLickPost(View view) {
-        ShowAlert.loadingDialog(CustomerDashboardActivity.this);
         JumpTo.goToPostALoad(CustomerDashboardActivity.this, userId, phone, false, false, null, false);
     }
 

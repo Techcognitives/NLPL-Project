@@ -272,7 +272,6 @@ public class DriverDetailsActivity extends AppCompat {
             actionBarBackButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ShowAlert.loadingDialog(DriverDetailsActivity.this);
                     JumpTo.goToViewDriverDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
                 }
             });
@@ -286,7 +285,6 @@ public class DriverDetailsActivity extends AppCompat {
             actionBarBackButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ShowAlert.loadingDialog(DriverDetailsActivity.this);
                     JumpTo.goToViewDriverDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
                 }
             });
@@ -295,7 +293,6 @@ public class DriverDetailsActivity extends AppCompat {
 
         actionBarSkipButton.setOnClickListener(view -> {
             if (isDriverDetailsDoneAPI.equals("1")) {
-                ShowAlert.loadingDialog(DriverDetailsActivity.this);
                 JumpTo.goToViewDriverDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
             } else {
                 //----------------------- Alert Dialog -------------------------------------------------
@@ -335,7 +332,6 @@ public class DriverDetailsActivity extends AppCompat {
                     @Override
                     public void onClick(View view) {
                         alert.dismiss();
-                        ShowAlert.loadingDialog(DriverDetailsActivity.this);
                         JumpTo.goToViewVehicleDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
                     }
                 });
@@ -1140,7 +1136,6 @@ public class DriverDetailsActivity extends AppCompat {
             if (dDOB.getText().toString() != null) {
                 UpdateDriverDetails.updateDriverDOB(driverId, dDOB.getText().toString());
             }
-            ShowAlert.loadingDialog(DriverDetailsActivity.this);
             JumpTo.goToViewDriverDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
 
         } else {
@@ -1177,7 +1172,6 @@ public class DriverDetailsActivity extends AppCompat {
                 @Override
                 public void onClick(View view) {
                     alert.dismiss();
-                    ShowAlert.loadingDialog(DriverDetailsActivity.this);
                     if (alreadyDriver) {
                         JumpTo.goToBankDetailsActivity(DriverDetailsActivity.this, userId, mobile, false, true, null);
                     } else {
@@ -1193,7 +1187,6 @@ public class DriverDetailsActivity extends AppCompat {
                 @Override
                 public void onClick(View view) {
                     alert.dismiss();
-                    ShowAlert.loadingDialog(DriverDetailsActivity.this);
                     if (fromBidNow) {
                         DriverDetailsActivity.this.finish();
                     } else {
@@ -1893,7 +1886,6 @@ public class DriverDetailsActivity extends AppCompat {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        ShowAlert.loadingDialog(DriverDetailsActivity.this);
         JumpTo.goToServiceProviderDashboard(DriverDetailsActivity.this, mobile, true, true);
     }
 

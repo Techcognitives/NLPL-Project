@@ -124,7 +124,6 @@ public class CustomerLoadsHistoryActivity extends AppCompat {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShowAlert.loadingDialog(CustomerLoadsHistoryActivity.this);
                 JumpTo.goToViewPersonalDetailsActivity(CustomerLoadsHistoryActivity.this, userId, phone, true);
             }
         });
@@ -170,7 +169,6 @@ public class CustomerLoadsHistoryActivity extends AppCompat {
     }
 
     private void RearrangeItems() {
-        ShowAlert.loadingDialog(CustomerLoadsHistoryActivity.this);
         JumpTo.goToCustomerLoadHistoryActivity(CustomerLoadsHistoryActivity.this, userId, phone, true);
     }
 
@@ -292,7 +290,6 @@ public class CustomerLoadsHistoryActivity extends AppCompat {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        ShowAlert.loadingDialog(CustomerLoadsHistoryActivity.this);
         JumpTo.goToViewPersonalDetailsActivity(CustomerLoadsHistoryActivity.this, userId, phone, true);
     }
 
@@ -342,7 +339,6 @@ public class CustomerLoadsHistoryActivity extends AppCompat {
             @Override
             public void onClick(View view) {
                 reActivateLoad.dismiss();
-                ShowAlert.loadingDialog(CustomerLoadsHistoryActivity.this);
                 JumpTo.goToPostALoad(CustomerLoadsHistoryActivity.this, userId, phone, true,false, obj.getIdpost_load(), false);
             }
         });

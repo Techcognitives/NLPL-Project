@@ -256,7 +256,6 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
 
     public void RearrangeItems() {
         getLocation();
-        ShowAlert.loadingDialog(TrackForServiceProviderActivity.this);
         JumpTo.goToSPTrackActivity(TrackForServiceProviderActivity.this, phone, true);
     }
 
@@ -360,12 +359,10 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
     public void onClickBottomNavigation(View view) {
         switch (view.getId()) {
             case R.id.bottom_nav_sp_dashboard:
-                ShowAlert.loadingDialog(TrackForServiceProviderActivity.this);
                 JumpTo.goToServiceProviderDashboard(TrackForServiceProviderActivity.this, phone, true, true);
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
-                ShowAlert.loadingDialog(TrackForServiceProviderActivity.this);
                 JumpTo.goToFindLoadsActivity(TrackForServiceProviderActivity.this, userId, phone, true);
                 break;
 
@@ -374,7 +371,6 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
                 break;
 
             case R.id.bottom_nav_profile:
-                ShowAlert.loadingDialog(TrackForServiceProviderActivity.this);
                 JumpTo.goToViewPersonalDetailsActivity(TrackForServiceProviderActivity.this, userId, phone, true);
                 break;
         }
@@ -934,7 +930,6 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             alert.dismiss();
-                            ShowAlert.loadingDialog(TrackForServiceProviderActivity.this);
                             JumpTo.goToServiceProviderDashboard(TrackForServiceProviderActivity.this, phone, true, true);
                         }
                     });
@@ -1118,7 +1113,6 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        ShowAlert.loadingDialog(this);
         JumpTo.goToServiceProviderDashboard(this, phone, true, true);
     }
     public void showLoading(){

@@ -5,6 +5,8 @@ import static com.nlpl.R.drawable.find;
 import static com.nlpl.R.drawable.ic_down;
 import static com.nlpl.R.drawable.ic_up;
 
+import static java.util.Collections.addAll;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -41,6 +43,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.nlpl.R;
+import com.nlpl.model.MainResponse;
 import com.nlpl.model.Requests.ImageRequest;
 import com.nlpl.model.Responses.AddDriverResponseGet;
 import com.nlpl.model.Responses.BankResponse;
@@ -73,12 +76,10 @@ import retrofit2.Response;
 
 public class ViewPersonalDetailsActivity extends AppCompat {
 
-    private RequestQueue mQueue;
     Boolean profileAdded, personalVisible = false, firmVisible = false;
     TextView userFirmGSTTextview, userFirmGSTTextviewTitle, userFirmPANTextview, userFirmPANTextviewTitle, userNameTextView, userPhoneNumberTextView, userEmailTextView, userAddressTextView, userFirmNameTextView, userFirmAddressTextView, userFirmNameTitleTextView, userFirmAddressTitleTextView, userFirmTitle, userFirmAddCompany, userEditFirmDetailsTextView;
-    String userNameAPI, userMobileNumberAPI, userAddressAPI, userCityAPI, userPinCodeAPI, userRoleAPI, userEmailIdAPI, isPersonalDetailsDoneAPI, isFirmDetailsDoneAPI, isBankDetailsDoneAPI, isTruckDetailsDoneAPI, isDriverDetailsDoneAPI;
-    String companyNameAPI, companyAddressAPI, companyCityAPI, companyZipAPI, companyPanAPI, companyGstAPI, img_type;
-    String phone, userId, isPersonalDetailsDone, isProfileAdded, isBankDetailsDone, isTruckDetailsDone, isDriverDetailsDone;
+    String img_type;
+    String phone, userId;
 
     private int CAMERA_PIC_REQUEST_profile = 8;
     private int GET_FROM_GALLERY_profile = 5;
@@ -90,8 +91,12 @@ public class ViewPersonalDetailsActivity extends AppCompat {
     TextView actionBarTitle, actionBarSkip, previewAadharBtn, panText, aadharText, panNumber, aadharNumber, previewPANBtn, userAlternateNumber, bankCount, truckCount, driverCount;
     ImageView actionBarBackButton, actionBarMenuButton, profilePic, arrowPersonal, arrowFirm;
 
-    View bottomNav;
     ConstraintLayout constrainProfileDetails, constrainFirmDetails, truckConstrain, driverConstrain;
+
+    String userNameAPI, userPhoneNumberAPI, userAlternatePhoneNumberAPI, userUserTypeAPI, userCityAPI, userPreferredLanguageAPI, userAddressAPI, userStateAPI, userPinCodeAPI, userEmailIdAPI, userPayTypeAPI, userIsRegistrationDoneAPI, userIsProfilePicAddedAPI;
+    String userIsTruckAddedAPI, userIsDriverAddedAPI, userIsBankDetailsAddedAPI, userIsCompanyAddedAPI, userIsPersonalAddedAPI, userIsAadhaarVerifiedAPI, userIsPanVerifiedAPI, userIsUserVerifiedAPI, userIsAccountActiveAPI, userCreatedAtAPI, userUpdatedAtAPI;
+    String userUpdatedByAPI, userDeletedAtAPI, userDeletedByAPI, idAPI, userLatitudeAPI, userLongitudeAPI, userDeviceIdAPI, userPanNumberAPI, userAadhaarNumberAPI, userIsSelfAddedAsDriverAPI;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,8 +129,6 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         loading_img.startAnimation(rotate);
         //------------------------------------------------------------------------------------------
 
-        mQueue = Volley.newRequestQueue(ViewPersonalDetailsActivity.this);
-
         //-------------------------------- Action Bar ----------------------------------------------
         actionBar = findViewById(R.id.view_personal_details_action_bar);
         actionBarTitle = (TextView) actionBar.findViewById(R.id.action_bar_title);
@@ -138,8 +141,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
-                if (userRoleAPI.equals("Customer")) {
+                if (userUserTypeAPI.equals("Customer")) {
                     JumpTo.goToCustomerDashboard(ViewPersonalDetailsActivity.this, phone, true);
                 } else {
                     JumpTo.goToServiceProviderDashboard(ViewPersonalDetailsActivity.this, phone, true, true);
@@ -150,7 +152,6 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         actionBarSkip.setVisibility(View.VISIBLE);
         actionBarSkip.setText(getString(R.string.edit));
         actionBarSkip.setOnClickListener(view -> {
-            ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
             JumpTo.goToRegistrationActivity(ViewPersonalDetailsActivity.this, phone, true, userId, true);
         });
 
@@ -209,54 +210,70 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         previewDialogProfile.setContentView(R.layout.dialog_preview_profile);
         previewDialogProfile.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
 
-        getUserDetails();
-        getImageURL();
-        bankDetailsByUserId();
-        getTruckDetailsByUserId();
-        getDriverDetailsByUserId();
+        getUserDetailsMain();
     }
 
-    private void getUserDetails() {
-        String url = getString(R.string.baseURL) + "/user/" + userId;
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+    private void getUserDetailsMain() {
+        Call<MainResponse> responseCall = ApiClient.getUserService().mainResponse(userId);
+        responseCall.enqueue(new Callback<MainResponse>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(Call<MainResponse> call, retrofit2.Response<MainResponse> response) {
                 try {
-                    JSONArray truckLists = response.getJSONArray("data");
-                    for (int i = 0; i < truckLists.length(); i++) {
-                        JSONObject obj = truckLists.getJSONObject(i);
+                    if (response.isSuccessful()){
+                        MainResponse response1 = response.body();
+                        MainResponse.Data list = response1.getData();
+                        
+                        //GET USER DETAILS
+                        userNameAPI = list.getName();
+                        userPhoneNumberAPI = String.valueOf(list.getPhone_number());
+                        userAlternatePhoneNumberAPI = String.valueOf(list.getAlternate_ph_no());
+                        userUserTypeAPI = list.getUser_type();
+                        userCityAPI = list.getPreferred_location();
+                        userPreferredLanguageAPI = list.getPreferred_language();
+                        userAddressAPI = list.getAddress();
+                        userStateAPI = list.getState_code();
+                        userPinCodeAPI = String.valueOf(list.getPin_code());
+                        userEmailIdAPI = list.getEmail_id();
+                        userPayTypeAPI = list.getPay_type();
+                        userIsRegistrationDoneAPI = String.valueOf(list.getIsRegistration_done());
+                        userIsProfilePicAddedAPI = String.valueOf(list.getIsProfile_pic_added());
+                        userIsTruckAddedAPI = String.valueOf(list.getIsTruck_added());
+                        userIsDriverAddedAPI = String.valueOf(list.getIsDriver_added());
+                        userIsBankDetailsAddedAPI = String.valueOf(list.getIsBankDetails_given());
+                        userIsCompanyAddedAPI = String.valueOf(list.getIsCompany_added());
+                        userIsPersonalAddedAPI = String.valueOf(list.getIsPersonal_dt_added());
+                        userIsAadhaarVerifiedAPI = String.valueOf(list.getIs_Addhar_verfied());
+                        userIsPanVerifiedAPI = String.valueOf(list.getIs_pan_verfied());
+                        userIsUserVerifiedAPI = String.valueOf(list.getIs_user_verfied());
+                        userIsAccountActiveAPI = String.valueOf(list.getIs_account_active());
+                        userCreatedAtAPI = list.getCreated_at();
+                        userUpdatedAtAPI = list.getUpdated_at();
+                        userUpdatedByAPI = list.getUpdated_by();
+                        userDeletedAtAPI = list.getDeleted_at();
+                        userDeletedByAPI = list.getDeleted_by();
+                        idAPI = String.valueOf(list.getId());
+                        userLatitudeAPI = list.getLatitude();
+                        userLongitudeAPI = list.getLongitude();
+                        userDeviceIdAPI = list.getDevice_id();
+                        userPanNumberAPI = list.getPan_number();
+                        userAadhaarNumberAPI = list.getAadhaar_number();
+                        userIsSelfAddedAsDriverAPI = String.valueOf(list.getIs_self_added_asDriver());
 
-                        userNameAPI = obj.getString("name");
-                        userMobileNumberAPI = obj.getString("phone_number");
-                        userAddressAPI = obj.getString("address");
-                        userCityAPI = obj.getString("preferred_location");
-                        userPinCodeAPI = obj.getString("pin_code");
-                        userRoleAPI = obj.getString("user_type");
-                        isPersonalDetailsDone = obj.getString("isPersonal_dt_added");
-                        isProfileAdded = obj.getString("isProfile_pic_added");
-                        String userAlternateMobileNumber = obj.getString("alternate_ph_no");
-                        String panNumberAPI = obj.getString("pan_number");
-                        String aadharNumberAPI = obj.getString("aadhaar_number");
+                        userNameTextView.setText(userNameAPI);
+                        String s1 = userPhoneNumberAPI.substring(2, 12);
 
-//                        if (userRoleAPI.equals("Customer")) {
-//                            userFirmAddCompany.setVisibility(View.GONE);
-//                            userFirmTitle.setVisibility(View.GONE);
-//                            userFirmGSTTextview.setVisibility(View.GONE);
-//                            userFirmGSTTextviewTitle.setVisibility(View.GONE);
-//                            userFirmPANTextviewTitle.setVisibility(View.GONE);
-//                            userFirmPANTextview.setVisibility(View.GONE);
-//                            userFirmNameTitleTextView.setVisibility(View.GONE);
-//                            userEditFirmDetailsTextView.setVisibility(View.GONE);
-//                            userFirmNameTextView.setVisibility(View.GONE);
-//                            userFirmAddressTitleTextView.setVisibility(View.GONE);
-//                            userFirmAddressTextView.setVisibility(View.GONE);
-//                        }
+                        userPhoneNumberTextView.setText("+91 " + userPhoneNumberAPI);
+                        try {
+                            String s2 = userAlternatePhoneNumberAPI.substring(2, 12);
+                            userAlternateNumber.setText("+91 " + userAlternatePhoneNumberAPI);
 
-                        isBankDetailsDone = obj.getString("isBankDetails_given");
-                        isTruckDetailsDone = obj.getString("isTruck_added");
-                        isDriverDetailsDone = obj.getString("isDriver_added");
+                            userEmailTextView.setText(userEmailIdAPI);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        userAddressTextView.setText(userAddressAPI + ", " + userCityAPI + " " + userPinCodeAPI);
 
-                        if (userRoleAPI.equals("Customer")) {
+                        if (userUserTypeAPI.equals("Customer")) {
                             truckConstrain.setVisibility(View.GONE);
                             driverConstrain.setVisibility(View.GONE);
                             View bottomNav = findViewById(R.id.view_personal_details_bottom_nav_bar);
@@ -297,13 +314,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                             roleProfile.setText("Service Provider");
                         }
 
-                        if (isProfileAdded.equals("1")) {
-
-                        } else {
-                            profilePic.setImageDrawable(getResources().getDrawable(blue_profile_small));
-                        }
-
-                        if (isPersonalDetailsDone.equals("1")) {
+                        if (userIsPersonalAddedAPI.equals("1")) {
                             previewAadharBtn.setVisibility(View.VISIBLE);
                             previewPANBtn.setVisibility(View.VISIBLE);
                             uploadPanAAdharBtn.setText("Edit KYC");
@@ -312,10 +323,10 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                             aadharText.setVisibility(View.VISIBLE);
 
                             try {
-                                if (panNumberAPI.isEmpty() || panNumberAPI.equals("null") || panNumberAPI == null) {
+                                if (userPanNumberAPI.isEmpty() || userPanNumberAPI.equals("null") || userPanNumberAPI == null) {
                                     panNumber.setVisibility(View.INVISIBLE);
                                 } else {
-                                    panNumber.setText(panNumberAPI);
+                                    panNumber.setText(userPanNumberAPI);
                                     panNumber.setVisibility(View.VISIBLE);
                                 }
                             } catch (Exception e) {
@@ -323,9 +334,9 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                             }
 
                             try {
-                                if (aadharNumberAPI.length() > 5) {
+                                if (userAadhaarNumberAPI.length() > 5) {
                                     aadharNumber.setVisibility(View.VISIBLE);
-                                    aadharNumber.setText(aadharNumberAPI);
+                                    aadharNumber.setText(userAadhaarNumberAPI);
                                 } else {
                                     aadharNumber.setVisibility(View.INVISIBLE);
                                 }
@@ -344,90 +355,164 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                             aadharNumber.setVisibility(View.INVISIBLE);
                         }
 
-                        getCompanyDetails();
+                        if (userIsProfilePicAddedAPI.equals("1")) {
 
-                        userEmailIdAPI = obj.getString("email_id");
-
-                        isPersonalDetailsDoneAPI = obj.getString("isPersonal_dt_added");
-                        isFirmDetailsDoneAPI = obj.getString("isCompany_added");
-                        isBankDetailsDoneAPI = obj.getString("isBankDetails_given");
-                        isTruckDetailsDoneAPI = obj.getString("isTruck_added");
-                        isDriverDetailsDoneAPI = obj.getString("isDriver_added");
-
-                        userNameTextView.setText(userNameAPI);
-                        String s1 = userMobileNumberAPI.substring(2, 12);
-                        userPhoneNumberTextView.setText("+91 " + s1);
-                        userEmailTextView.setText(userEmailIdAPI);
-
-                        try {
-                            String s2 = userAlternateMobileNumber.substring(2, 12);
-                            userAlternateNumber.setText("+91 " + s2);
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        } else {
+                            profilePic.setImageDrawable(getResources().getDrawable(blue_profile_small));
                         }
 
-                        userAddressTextView.setText(userAddressAPI + ", " + userCityAPI + " " + userPinCodeAPI);
+                        //GET TRUCK DETAILS
+                        ArrayList<MainResponse.Data.TruckDetails> truckList = new ArrayList<>();
+                        truckList.addAll(list.getTruckdetails());
+                        if (truckList.size() <= 1) {
+                            truckCount.setText(truckList.size() + " Truck");
+                        } else {
+                            truckCount.setText(truckList.size() + " Trucks");
+                        }
+
+                        //GET DRIVER DETAILS
+                        ArrayList<MainResponse.Data.DriverDetails> driverList = new ArrayList<>();
+                        driverList.addAll(list.getDriverDetails());
+                        if (driverList.size() <= 1) {
+                            driverCount.setText(driverList.size() + " Driver");
+                        } else {
+                            driverCount.setText(driverList.size() + " Drivers");
+                        }
+
+                        //GET BANK DETAILS
+                        ArrayList<MainResponse.Data.BankDetails> bankList = new ArrayList<>();
+                        bankList.addAll(list.getBankDetails());
+                        if (bankList.size() <= 1) {
+                            bankCount.setText(bankList.size() + " Bank");
+                        } else {
+                            bankCount.setText(bankList.size() + " Banks");
+                        }
+
+                        //GET COMPANY DETAILS
+                        ArrayList<MainResponse.Data.CompanyDetails> companyDetails = new ArrayList<>();
+                        companyDetails.addAll(list.getCompanyDetails());
+                        String userCompanyNameAPI, userCompanyTypeAPI, userCompanyGSTAPI, userCompanyPANAPI, userCompanyAddressAPI, userCompanyStateAPI, userCompanyCityAPI, userCompanyPINCodeAPI;
+                        userCompanyNameAPI = companyDetails.get(0).company_name;
+                        userCompanyTypeAPI = companyDetails.get(0).company_type;
+                        userCompanyGSTAPI = companyDetails.get(0).company_gst_no;
+                        userCompanyPANAPI = companyDetails.get(0).company_pan;
+                        userCompanyAddressAPI = companyDetails.get(0).comp_add;
+                        userCompanyStateAPI = companyDetails.get(0).comp_state;
+                        userCompanyCityAPI = companyDetails.get(0).comp_city;
+                        userCompanyPINCodeAPI = companyDetails.get(0).comp_zip;
+
+                        if (userIsCompanyAddedAPI.equals("1")) {
+                            userFirmGSTTextview.setVisibility(View.VISIBLE);
+                            userFirmGSTTextviewTitle.setVisibility(View.VISIBLE);
+                            userFirmPANTextviewTitle.setVisibility(View.VISIBLE);
+                            userFirmPANTextview.setVisibility(View.VISIBLE);
+
+                            userFirmGSTTextview.setText(userCompanyGSTAPI);
+                            userFirmPANTextview.setText(userCompanyPANAPI);
+
+                            userFirmAddCompany.setVisibility(View.INVISIBLE);
+                            userFirmTitle.setVisibility(View.VISIBLE);
+                            userFirmTitle.setText(getString(R.string.Firm_Details));
+                            userFirmNameTitleTextView.setVisibility(View.VISIBLE);
+                            userFirmNameTextView.setVisibility(View.VISIBLE);
+                            userFirmAddressTitleTextView.setVisibility(View.VISIBLE);
+                            userFirmAddressTextView.setVisibility(View.VISIBLE);
+                            userEditFirmDetailsTextView.setVisibility(View.VISIBLE);
+                            userFirmNameTextView.setText(userCompanyNameAPI);
+                            userFirmAddressTextView.setText(userCompanyAddressAPI + ", " + userCompanyCityAPI + ", " + userCompanyPINCodeAPI);
+                        } else {
+                            userFirmAddCompany.setVisibility(View.VISIBLE);
+                            userFirmTitle.setVisibility(View.VISIBLE);
+                            userFirmGSTTextview.setVisibility(View.GONE);
+                            userFirmGSTTextviewTitle.setVisibility(View.GONE);
+                            userFirmPANTextviewTitle.setVisibility(View.GONE);
+                            userFirmPANTextview.setVisibility(View.GONE);
+                            userFirmNameTitleTextView.setVisibility(View.GONE);
+                            userEditFirmDetailsTextView.setVisibility(View.GONE);
+                            userFirmNameTextView.setVisibility(View.GONE);
+                            userFirmAddressTitleTextView.setVisibility(View.GONE);
+                            userFirmAddressTextView.setVisibility(View.GONE);
+                        }
+
+                        //GET POST LOAD DETAILS
+                        ArrayList<MainResponse.Data.PostaLoadDetails> loadList = new ArrayList<>();
+                        loadList.addAll(list.getPostaLoadDetails());
+
+                        //GET PREFERRED LOCATIONS
+                        ArrayList<MainResponse.Data.PreferredLocation> preferredLocationList = new ArrayList<>();
+                        preferredLocationList.addAll(list.getPreferredLocations());
+
+
+                        //GET USER RATINGS
+                        ArrayList<MainResponse.Data.UserRatings> ratingsList = new ArrayList<>();
+                        ratingsList.addAll(list.getUserRatings());
+
+                        //GET USER IMAGE
+                        ArrayList<MainResponse.Data.UserImages> imagesList = new ArrayList<>();
+                        imagesList.addAll(list.getUserImages());
+                        for (int i = 0; i <= imagesList.size(); i++) {
+                            if (imagesList.get(i).image_type.equals("profile")) {
+                                String userProfileURL = imagesList.get(i).image_url;
+                                new DownloadImageTask(profilePic).execute(userProfileURL);
+                                new DownloadImageTask((ImageView) previewDialogProfile.findViewById(R.id.dialog_preview_image_view_profile)).execute(userProfileURL);
+                            }
+                            if (imagesList.get(i).image_type.equals("pan")) {
+                                String userPanURL = imagesList.get(i).image_url;
+                                try {
+                                    new DownloadImageTask((ImageView) previewDialogPan.findViewById(R.id.dialog_preview_image_view)).execute(userPanURL);
+                                } catch (Exception e) {
+                                    previewPANBtn.setVisibility(View.INVISIBLE);
+                                }
+                            }
+                            if (imagesList.get(i).image_type.equals("aadhar")) {
+                                String userAadhaarURL = imagesList.get(i).image_url;
+                                try {
+                                    new DownloadImageTask((ImageView) previewDialogAadhar.findViewById(R.id.dialog_preview_image_view)).execute(userAadhaarURL);
+                                } catch (Exception e) {
+                                    previewAadharBtn.setVisibility(View.INVISIBLE);
+                                }
+                            }
+                        }
+
+                        //GET SP BID DETAILS
+                        ArrayList<MainResponse.Data.SpBidDetails> spBidDetailsList = new ArrayList<>();
+                        spBidDetailsList.addAll(list.getSpBidDetails());
+
+                    }else{
+                        getUserDetailsMain();
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        }, new com.android.volley.Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+            public void onFailure(Call<MainResponse> call, Throwable t) {
+                getUserDetailsMain();
             }
         });
-        mQueue.add(request);
     }
 
     public void ViewSPProfile(View view) {
-        if (isProfileAdded.equals("1")) {
-            String url1 = getString(R.string.baseURL) + "/imgbucket/Images/" + userId;
-            JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+        if (userIsProfilePicAddedAPI.equals("1")) {
+            profileAdded = true;
+            WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+            lp2.copyFrom(previewDialogProfile.getWindow().getAttributes());
+            lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp2.height = WindowManager.LayoutParams.MATCH_PARENT;
+            lp2.gravity = Gravity.CENTER;
+
+            previewDialogProfile.show();
+            previewDialogProfile.getWindow().setAttributes(lp2);
+
+            TextView editProfilePic = previewDialogProfile.findViewById(R.id.editProfilePic);
+
+            editProfilePic.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        JSONArray imageList = response.getJSONArray("data");
-                        for (int i = 0; i < imageList.length(); i++) {
-                            JSONObject obj = imageList.getJSONObject(i);
-                            String imageType = obj.getString("image_type");
-
-                            String profileImgUrl = "";
-                            if (imageType.equals("profile")) {
-                                profileImgUrl = obj.getString("image_url");
-                                profileAdded = true;
-                                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-                                lp2.copyFrom(previewDialogProfile.getWindow().getAttributes());
-                                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-                                lp2.height = WindowManager.LayoutParams.MATCH_PARENT;
-                                lp2.gravity = Gravity.CENTER;
-
-                                previewDialogProfile.show();
-                                previewDialogProfile.getWindow().setAttributes(lp2);
-                                new DownloadImageTask((ImageView) previewDialogProfile.findViewById(R.id.dialog_preview_image_view_profile)).execute(profileImgUrl);
-
-                                TextView editProfilePic = previewDialogProfile.findViewById(R.id.editProfilePic);
-
-                                editProfilePic.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        uploadProfileDialogChoose();
-                                    }
-                                });
-                            }
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }, new com.android.volley.Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    error.printStackTrace();
+                public void onClick(View view) {
+                    uploadProfileDialogChoose();
                 }
             });
-            mQueue.add(request1);
         } else {
             profileAdded = false;
             uploadProfileDialogChoose();
@@ -472,129 +557,6 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         });
     }
 
-    public void getCompanyDetails() {
-        //---------------------------- Get Company Details -------------------------------------------
-        String url1 = getString(R.string.baseURL) + "/company/get/" + userId;
-        Log.i("URL: ", url1);
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray companyDetails = response.getJSONArray("data");
-                    for (int i = 0; i < companyDetails.length(); i++) {
-                        JSONObject data = companyDetails.getJSONObject(i);
-                        companyNameAPI = data.getString("company_name");
-                        companyAddressAPI = data.getString("comp_add");
-                        companyCityAPI = data.getString("comp_city");
-                        companyZipAPI = data.getString("comp_zip");
-                        companyPanAPI = data.getString("company_pan");
-                        companyGstAPI = data.getString("company_gst_no");
-                    }
-
-                    if (companyNameAPI != null) {
-                        userFirmGSTTextview.setVisibility(View.VISIBLE);
-                        userFirmGSTTextviewTitle.setVisibility(View.VISIBLE);
-                        userFirmPANTextviewTitle.setVisibility(View.VISIBLE);
-                        userFirmPANTextview.setVisibility(View.VISIBLE);
-
-                        userFirmGSTTextview.setText(companyGstAPI);
-                        userFirmPANTextview.setText(companyPanAPI);
-
-                        userFirmAddCompany.setVisibility(View.INVISIBLE);
-                        userFirmTitle.setVisibility(View.VISIBLE);
-                        userFirmTitle.setText(getString(R.string.Firm_Details));
-                        userFirmNameTitleTextView.setVisibility(View.VISIBLE);
-                        userFirmNameTextView.setVisibility(View.VISIBLE);
-                        userFirmAddressTitleTextView.setVisibility(View.VISIBLE);
-                        userFirmAddressTextView.setVisibility(View.VISIBLE);
-                        userEditFirmDetailsTextView.setVisibility(View.VISIBLE);
-                        userFirmNameTextView.setText(companyNameAPI);
-                        userFirmAddressTextView.setText(companyAddressAPI + ", " + companyCityAPI + ", " + companyZipAPI);
-                    } else {
-                        userFirmAddCompany.setVisibility(View.VISIBLE);
-                        userFirmTitle.setVisibility(View.VISIBLE);
-                        userFirmGSTTextview.setVisibility(View.GONE);
-                        userFirmGSTTextviewTitle.setVisibility(View.GONE);
-                        userFirmPANTextviewTitle.setVisibility(View.GONE);
-                        userFirmPANTextview.setVisibility(View.GONE);
-                        userFirmNameTitleTextView.setVisibility(View.GONE);
-                        userEditFirmDetailsTextView.setVisibility(View.GONE);
-                        userFirmNameTextView.setVisibility(View.GONE);
-                        userFirmAddressTitleTextView.setVisibility(View.GONE);
-                        userFirmAddressTextView.setVisibility(View.GONE);
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request);
-        //-------------------------------------------------------------------------------------------
-    }
-
-    private void getImageURL() {
-        String url = getString(R.string.baseURL) + "/imgbucket/Images/" + userId;
-        Log.i("Image URL", url);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray imageList = response.getJSONArray("data");
-                    for (int i = 0; i < imageList.length(); i++) {
-                        JSONObject obj = imageList.getJSONObject(i);
-                        String imageType = obj.getString("image_type");
-
-                        String panImageURL, aadharImageURL, profileImgUrl;
-
-                        if (imageType.equals("aadhar")) {
-                            aadharImageURL = obj.getString("image_url");
-                            try {
-                                new DownloadImageTask((ImageView) previewDialogAadhar.findViewById(R.id.dialog_preview_image_view)).execute(aadharImageURL);
-                                Log.i("IMAGE AADHAR URL", aadharImageURL);
-                            } catch (Exception e) {
-                                previewAadharBtn.setVisibility(View.INVISIBLE);
-                            }
-                        }
-
-                        if (imageType.equals("pan")) {
-                            panImageURL = obj.getString("image_url");
-                            try {
-                                Log.i("IMAGE PAN URL", panImageURL);
-                                new DownloadImageTask((ImageView) previewDialogPan.findViewById(R.id.dialog_preview_image_view)).execute(panImageURL);
-                            } catch (Exception e) {
-                                previewPANBtn.setVisibility(View.INVISIBLE);
-                            }
-
-                        }
-
-                        if (imageType.equals("profile")) {
-                            profileImgUrl = obj.getString("image_url");
-                            Log.i("IMAGE PAN URL", profileImgUrl);
-                            new DownloadImageTask((ImageView) previewDialogProfile.findViewById(R.id.dialog_preview_image_view_profile)).execute(profileImgUrl);
-                            new DownloadImageTask(profilePic).execute(profileImgUrl);
-                        }
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request);
-    }
-
     public void onClickPreviewAadharCard(View view) {
         WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
         lp2.copyFrom(previewDialogAadhar.getWindow().getAttributes());
@@ -617,39 +579,22 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         previewDialogPan.getWindow().setAttributes(lp);
     }
 
-    public void onClickPreviewProfile(View view) {
-        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-        lp2.copyFrom(previewDialogProfile.getWindow().getAttributes());
-        lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp2.height = WindowManager.LayoutParams.MATCH_PARENT;
-        lp2.gravity = Gravity.CENTER;
-
-        previewDialogProfile.show();
-        previewDialogProfile.getWindow().setAttributes(lp2);
-    }
-
     public void onClickEditFirmDetailsView(View view) {
-        ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
         JumpTo.goToCompanyDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, true, false);
     }
 
     public void onClickAddCompanyDetails(View view) {
-        if (companyNameAPI == null) {
-            ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
-            JumpTo.goToCompanyDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false, false);
-        }
+        JumpTo.goToCompanyDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false, false);
     }
 
     public void onClickBottomNavigation(View view) {
-        if (userRoleAPI.equals("Customer")) {
+        if (userUserTypeAPI.equals("Customer")) {
             switch (view.getId()) {
                 case R.id.bottom_nav_sp_dashboard:
-                    ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
                     JumpTo.goToCustomerDashboard(ViewPersonalDetailsActivity.this, phone, true);
                     break;
 
                 case R.id.bottom_nav_customer_dashboard:
-                    ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
                     JumpTo.goToFindTrucksActivity(ViewPersonalDetailsActivity.this, userId, phone);
                     break;
 
@@ -658,7 +603,6 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                     break;
 
                 case R.id.bottom_nav_trip:
-                    ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
                     JumpTo.goToFindTripLPActivity(ViewPersonalDetailsActivity.this, phone, userId, false);
                     break;
 
@@ -669,18 +613,15 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         } else {
             switch (view.getId()) {
                 case R.id.bottom_nav_sp_dashboard:
-                    ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
                     JumpTo.goToServiceProviderDashboard(ViewPersonalDetailsActivity.this, phone, true, true);
                     break;
 
                 case R.id.bottom_nav_customer_dashboard:
-                    ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
                     JumpTo.goToFindLoadsActivity(ViewPersonalDetailsActivity.this, userId, phone, false);
 
                     break;
 
                 case R.id.bottom_nav_track:
-                    ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
                     JumpTo.goToSPTrackActivity(ViewPersonalDetailsActivity.this, phone, false);
                     break;
 
@@ -692,15 +633,13 @@ public class ViewPersonalDetailsActivity extends AppCompat {
     }
 
     public void RearrangeItems() {
-        ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
         JumpTo.goToViewPersonalDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, true);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
-        if (userRoleAPI.equals("Customer")) {
+        if (userUserTypeAPI.equals("Customer")) {
             JumpTo.goToCustomerDashboard(ViewPersonalDetailsActivity.this, phone, true);
         } else {
             JumpTo.goToServiceProviderDashboard(ViewPersonalDetailsActivity.this, phone, true, true);
@@ -708,7 +647,6 @@ public class ViewPersonalDetailsActivity extends AppCompat {
     }
 
     public void onClickAddPersonalDetails(View view) {
-        ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
         JumpTo.goToPersonalDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false, false);
     }
 
@@ -1032,112 +970,26 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         }
     }
 
-    public void bankDetailsByUserId() {
-        Call<BankResponseGet> responseCall = ApiClient.getBankService().getBankByUserId(userId);
-        responseCall.enqueue(new Callback<BankResponseGet>() {
-            @Override
-            public void onResponse(Call<BankResponseGet> call, retrofit2.Response<BankResponseGet> response) {
-                try {
-                    BankResponseGet response1 = response.body();
-                    ArrayList<BankResponseGet.bankDetailById> userBank = new ArrayList<>();
-                    if (response.isSuccessful()) userBank.addAll(response1.getData());
-                    if (userBank.size() <= 1) {
-                        bankCount.setText(userBank.size() + " Bank");
-                    } else {
-                        bankCount.setText(userBank.size() + " Banks");
-                    }
-
-                } catch (Exception e) {
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<BankResponseGet> call, Throwable t) {
-
-            }
-        });
-    }
-
-    private void getTruckDetailsByUserId() {
-        Call<TruckResponse> truckModelClassCall = ApiClient.addTruckService().getTruckDetails(userId);
-        truckModelClassCall.enqueue(new Callback<TruckResponse>() {
-            @Override
-            public void onResponse(Call<TruckResponse> call, Response<TruckResponse> response) {
-                try {
-                    TruckResponse truckModelClass = response.body();
-                    ArrayList<TruckResponse.TruckList> truckList = new ArrayList<>();
-                    if (response.isSuccessful()) truckList.addAll(truckModelClass.getData());
-                    if (truckList.size() <= 1) {
-                        truckCount.setText(truckList.size() + " Truck");
-                    } else {
-                        truckCount.setText(truckList.size() + " Trucks");
-                    }
-
-                } catch (Exception e) {
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<TruckResponse> call, Throwable t) {
-
-            }
-        });
-    }
-
-    public void getDriverDetailsByUserId() {
-        Call<AddDriverResponseGet> responseCall = ApiClient.addDriverService().getDriverById(userId);
-        responseCall.enqueue(new Callback<AddDriverResponseGet>() {
-            @Override
-            public void onResponse(Call<AddDriverResponseGet> call, retrofit2.Response<AddDriverResponseGet> response) {
-                try {
-                    AddDriverResponseGet response1 = response.body();
-                    AddDriverResponseGet.driverDetailsById list = response1.getData().get(0);
-
-                    ArrayList<AddDriverResponseGet.driverDetailsById> driverList = new ArrayList<>();
-                    if (response.isSuccessful()) driverList.addAll(response1.getData());
-                    if (driverList.size() <= 1) {
-                        driverCount.setText(driverList.size() + " Driver");
-                    } else {
-                        driverCount.setText(driverList.size() + " Drivers");
-                    }
-                } catch (Exception e) {
-                }
-            }
-
-            @Override
-            public void onFailure(Call<AddDriverResponseGet> call, Throwable t) {
-
-            }
-        });
-    }
-
     public void onClickAddDetails(View view) {
-        if (userRoleAPI.equals("Customer")) {
+        if (userUserTypeAPI.equals("Customer")) {
             switch (view.getId()) {
                 case R.id.profile_view_add_bank:
-                    if (isBankDetailsDone.equals("1")) {
-                        ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
+                    if (userIsBankDetailsAddedAPI.equals("1")) {
                         JumpTo.goToViewBankDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false);
                     } else {
-                        ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
                         JumpTo.goToBankDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false, false, null);
                     }
                     break;
 
                 case R.id.profile_view_settings:
-                    ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
                     JumpTo.getToSettingAndPreferences(ViewPersonalDetailsActivity.this, phone, userId, "Customer", false);
                     break;
 
                 case R.id.profile_view_history:
-                    ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
                     JumpTo.goToCustomerLoadHistoryActivity(ViewPersonalDetailsActivity.this, userId, phone, false);
                     break;
 
                 case R.id.customer_menu_kyc:
-                    ShowAlert.loadingDialog(ViewPersonalDetailsActivity.this);
                     JumpTo.goToPersonalDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false, false);
                     break;
 
@@ -1184,7 +1036,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         } else {
             switch (view.getId()) {
                 case R.id.profile_view_add_bank:
-                    if (isBankDetailsDone.equals("1")) {
+                    if (userIsBankDetailsAddedAPI.equals("1")) {
                         JumpTo.goToViewBankDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false);
                     } else {
                         JumpTo.goToBankDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false, false, null);
@@ -1192,7 +1044,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                     break;
 
                 case R.id.profile_view_add_truck:
-                    if (isTruckDetailsDone.equals("1")) {
+                    if (userIsTruckAddedAPI.equals("1")) {
                         JumpTo.goToViewVehicleDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false);
                     } else {
                         JumpTo.goToVehicleDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false, false, false, false, null, null);
@@ -1200,7 +1052,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                     break;
 
                 case R.id.profile_view_add_driver:
-                    if (isDriverDetailsDone.equals("1")) {
+                    if (userIsDriverAddedAPI.equals("1")) {
                         JumpTo.goToViewDriverDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false);
                     } else {
                         JumpTo.goToDriverDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false, false, false, null, null);
@@ -1208,7 +1060,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                     break;
 
                 case R.id.profile_view_settings:
-                    JumpTo.getToSettingAndPreferences(ViewPersonalDetailsActivity.this, phone, userId, userRoleAPI, false);
+                    JumpTo.getToSettingAndPreferences(ViewPersonalDetailsActivity.this, phone, userId, userUserTypeAPI, false);
                     break;
 
                 case R.id.menu_kyc:
@@ -1258,11 +1110,11 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         }
     }
 
-    public void showLoading(){
+    public void showLoading() {
         loadingDialog.show();
     }
 
-    public void dismissLoading(){
+    public void dismissLoading() {
         loadingDialog.dismiss();
     }
 }

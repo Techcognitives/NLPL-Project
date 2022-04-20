@@ -319,7 +319,6 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
     }
 
     public void RearrangeItems() {
-        ShowAlert.loadingDialog(TrackForLoadPosterActivity.this);
         JumpTo.goToLPTrackActivity(TrackForLoadPosterActivity.this, phone, true);
     }
 
@@ -398,12 +397,10 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
     public void onClickBottomNavigation(View view) {
         switch (view.getId()) {
             case R.id.bottom_nav_sp_dashboard:
-                ShowAlert.loadingDialog(TrackForLoadPosterActivity.this);
                 JumpTo.goToCustomerDashboard(TrackForLoadPosterActivity.this, phone, true);
                 break;
 
             case R.id.bottom_nav_customer_dashboard:
-                ShowAlert.loadingDialog(TrackForLoadPosterActivity.this);
                 JumpTo.goToFindTrucksActivity(TrackForLoadPosterActivity.this, userId, phone);
                 break;
 
@@ -412,12 +409,10 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
                 break;
 
             case R.id.bottom_nav_trip:
-                ShowAlert.loadingDialog(TrackForLoadPosterActivity.this);
                 JumpTo.goToFindTripLPActivity(TrackForLoadPosterActivity.this, userId, phone, true);
                 break;
 
             case R.id.bottom_nav_profile:
-                ShowAlert.loadingDialog(TrackForLoadPosterActivity.this);
                 JumpTo.goToViewPersonalDetailsActivity(TrackForLoadPosterActivity.this, userId, phone, true);
                 break;
         }
@@ -927,7 +922,6 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        ShowAlert.loadingDialog(TrackForLoadPosterActivity.this);
         JumpTo.goToCustomerDashboard(TrackForLoadPosterActivity.this, phone, true);
     }
 
