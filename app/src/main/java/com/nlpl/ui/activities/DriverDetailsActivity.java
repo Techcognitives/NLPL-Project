@@ -38,6 +38,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -131,7 +133,7 @@ public class DriverDetailsActivity extends AppCompat {
     String pathForDL, pathForSelfie, userId, driverId, driverNameAPI, driverNumberAPI, driverEmailAPI, mobile;
     Boolean fromBidNow = false, isDLUploaded = false, isEdit, isSelfieUploded = false, idDLEdited = false;
     ImageView previewDrivingLicense, previewSelfie, previewDLImageView, previewSelfieImageView;
-    Dialog previewDialogDL, previewDialogSelfie;
+    Dialog previewDialogDL, previewDialogSelfie, loadingDialog;
     View personalAndAddress;
 
     TextView selectStateText, selectDistrictText, setCurrentLocation, mapLocation;
@@ -157,6 +159,26 @@ public class DriverDetailsActivity extends AppCompat {
             mobile = bundle.getString("mobile");
             truckIdPass = bundle.getString("truckIdPass");
         }
+
+        //------------------------------------------------------------------------------------------
+        loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+        lp2.copyFrom(loadingDialog.getWindow().getAttributes());
+        lp2.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.gravity = Gravity.CENTER;
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.setCancelable(false);
+        loadingDialog.getWindow().setAttributes(lp2);
+
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+        //------------------------------------------------------------------------------------------
+
         mQueue = Volley.newRequestQueue(DriverDetailsActivity.this);
 
         personalAndAddress = (View) findViewById(R.id.driver_details_personal_and_address);
@@ -1960,5 +1982,13 @@ public class DriverDetailsActivity extends AppCompat {
                 chooseDialog.dismiss();
             }
         });
+    }
+
+    public void showLoading(){
+        loadingDialog.show();
+    }
+
+    public void dismissLoading(){
+        loadingDialog.dismiss();
     }
 }

@@ -18,8 +18,11 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nlpl.R;
@@ -30,9 +33,10 @@ public class LogInActivity extends AppCompat {
 
     EditText mobileNo;
     TextView series;
-//    Spinner selectCountry;
+    //    Spinner selectCountry;
     Button getStarted;
-    String  mobile;
+    String mobile;
+    Dialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,25 @@ public class LogInActivity extends AppCompat {
         mobileNo = (EditText) findViewById(R.id.log_in_mobile_no);
         getStarted = (Button) findViewById(R.id.log_in_get_otp_button);
         series = (TextView) findViewById(R.id.log_in_series);
+
+        //------------------------------------------------------------------------------------------
+        loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+        lp2.copyFrom(loadingDialog.getWindow().getAttributes());
+        lp2.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.gravity = Gravity.CENTER;
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.setCancelable(false);
+        loadingDialog.getWindow().setAttributes(lp2);
+
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+        //------------------------------------------------------------------------------------------
 
 
 //        selectCountry = findViewById(R.id.selectCountry);
@@ -83,7 +106,7 @@ public class LogInActivity extends AppCompat {
             @Override
             public void onClick(View view) {
                 mobile = "+91" + mobileNo.getText().toString();
-                if (mobileNo.getText().length()==10) {
+                if (mobileNo.getText().length() == 10) {
                     JumpTo.goToOTPActivity(LogInActivity.this, mobile, false, null);
                 } else {
                     //----------------------- Alert Dialog -----------------------------------------------------
@@ -147,14 +170,15 @@ public class LogInActivity extends AppCompat {
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             String mobileNoWatcher = mobileNo.getText().toString().trim();
 
-            if (mobileNoWatcher.length() == 10){
+            if (mobileNoWatcher.length() == 10) {
                 mobileNo.setBackground(getResources().getDrawable(R.drawable.mobile_number_right));
                 series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left));
-            }else{
+            } else {
                 mobileNo.setBackground(getResources().getDrawable(R.drawable.mobile_number_right_red));
                 series.setBackground(getResources().getDrawable(R.drawable.mobile_number_left_red));
             }
         }
+
         @Override
         public void afterTextChanged(Editable editable) {
 
@@ -197,4 +221,11 @@ public class LogInActivity extends AppCompat {
         }
     }
 
+    public void showLoading() {
+        loadingDialog.show();
+    }
+
+    public void dismissLoading() {
+        loadingDialog.dismiss();
+    }
 }

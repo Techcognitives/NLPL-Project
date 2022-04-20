@@ -25,6 +25,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -102,7 +104,7 @@ public class VehicleDetailsActivity extends AppCompat {
 
     private RequestQueue mQueue;
 
-    Dialog previewDialogRcBook, previewDialogInsurance;
+    Dialog previewDialogRcBook, previewDialogInsurance, loadingDialog;
     ImageView previewRcBook, previewInsurance, previewRcBookImageView, previewInsuranceImageView;
 
     @Override
@@ -120,6 +122,26 @@ public class VehicleDetailsActivity extends AppCompat {
             isAssignTruck = bundle.getBoolean("assignTruck");
             driverIdBundle = bundle.getString("driverId");
         }
+
+        //------------------------------------------------------------------------------------------
+        loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+        lp2.copyFrom(loadingDialog.getWindow().getAttributes());
+        lp2.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.gravity = Gravity.CENTER;
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.setCancelable(false);
+        loadingDialog.getWindow().setAttributes(lp2);
+
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+        //------------------------------------------------------------------------------------------
+
         mQueue = Volley.newRequestQueue(VehicleDetailsActivity.this);
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
         getUserDetails(userId);
@@ -1233,4 +1255,11 @@ public class VehicleDetailsActivity extends AppCompat {
         });
     }
 
+    public void showLoading(){
+        loadingDialog.show();
+    }
+
+    public void dismissLoading(){
+        loadingDialog.dismiss();
+    }
 }

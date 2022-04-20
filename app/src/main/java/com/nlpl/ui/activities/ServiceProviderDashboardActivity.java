@@ -381,7 +381,6 @@ public class ServiceProviderDashboardActivity extends AppCompat {
 
         ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
 
-//        loadingDialog.show();
         loadingDialog.setCancelable(false);
         loadingDialog.getWindow().setAttributes(lp2);
 
@@ -3577,5 +3576,13 @@ public class ServiceProviderDashboardActivity extends AppCompat {
                 wbList.add(loadListToCompare.get(i));
             }
         }
+    }
+
+    public void showLoading(){
+        loadingDialog.show();
+    }
+
+    public void dismissLoading(){
+        loadingDialog.dismiss();
     }
 }

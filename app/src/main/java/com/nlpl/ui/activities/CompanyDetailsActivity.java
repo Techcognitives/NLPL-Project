@@ -2,6 +2,7 @@ package com.nlpl.ui.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -17,6 +18,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,6 +32,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
+import com.nlpl.databinding.ActivityCompanyDetailsBinding;
 import com.nlpl.model.Requests.CompanyRequest;
 import com.nlpl.model.Responses.CompanyResponse;
 import com.nlpl.model.UpdateMethods.UpdateCompanyDetails;
@@ -68,10 +72,14 @@ public class CompanyDetailsActivity extends AppCompat {
     String companyNameAPI, companyAddressAPI, companyCityAPI, companyZipAPI, companyGSTNumberAPI, companyPanAPI, companyStateAPI, companyIdAPI, companyTypeAPI;
     private RequestQueue mQueue;
 
+    ActivityCompanyDetailsBinding binding;
+    Dialog loadingDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_company_details);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_company_details);
+        binding.setHandlers(CompanyDetailsActivity.this);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -80,8 +88,26 @@ public class CompanyDetailsActivity extends AppCompat {
             isEdit = bundle.getBoolean("isEdit");
         }
 
-        action_bar = findViewById(R.id.company_details_action_bar);
+        //------------------------------------------------------------------------------------------
+        loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+        lp2.copyFrom(loadingDialog.getWindow().getAttributes());
+        lp2.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.gravity = Gravity.CENTER;
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.setCancelable(false);
+        loadingDialog.getWindow().setAttributes(lp2);
+
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+        //------------------------------------------------------------------------------------------
+
+        action_bar = findViewById(R.id.company_details_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
         actionBarBackButton = (ImageView) action_bar.findViewById(R.id.action_bar_back_button);
         actionBarTitle.setText(getString(R.string.Company_Details));
@@ -132,12 +158,6 @@ public class CompanyDetailsActivity extends AppCompat {
         if (isEdit) {
             getCompanyDetails();
         }
-//
-//        if (!name.getText().toString().isEmpty() && !selectStateText.getText().toString().isEmpty() && !selectDistrictText.getText().toString().isEmpty() && role != null){
-//            okButton.setBackground(getDrawable(R.drawable.button_active));
-//        }else if (name.getText().toString().isEmpty() || selectStateText.getText().toString().isEmpty() || selectDistrictText.getText().toString().isEmpty() || role == null) {
-//            okButton.setBackground(getDrawable(R.drawable.button_de_active));
-//        }
 
         companyName.setOnClickListener(view -> companyName.setCursorVisible(true));
 
@@ -149,7 +169,6 @@ public class CompanyDetailsActivity extends AppCompat {
             companyName.setCursorVisible(false);
             pinCode.setCursorVisible(false);
             address.setCursorVisible(false);
-
             SelectState.selectState(CompanyDetailsActivity.this, selectStateText, selectDistrictText);
         });
 
@@ -169,9 +188,7 @@ public class CompanyDetailsActivity extends AppCompat {
 
     private TextWatcher companyWatcher = new TextWatcher() {
         @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -573,5 +590,13 @@ public class CompanyDetailsActivity extends AppCompat {
 
     public void onClickOpenMaps(View view) {
         GetCurrentLocation.searchOnMap(CompanyDetailsActivity.this);
+    }
+
+    public void showLoading(){
+        loadingDialog.show();
+    }
+
+    public void dismissLoading(){
+        loadingDialog.dismiss();
     }
 }

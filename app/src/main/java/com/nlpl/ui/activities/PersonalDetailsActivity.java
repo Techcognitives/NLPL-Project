@@ -32,6 +32,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -94,7 +96,7 @@ public class PersonalDetailsActivity extends AppCompat {
     String img_type;
     EditText panNumber, aadharNumber;
 
-    Dialog previewDialogPan, previewDialogAadhar, otpRequest;
+    Dialog previewDialogPan, previewDialogAadhar, otpRequest, loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +108,25 @@ public class PersonalDetailsActivity extends AppCompat {
             userId = bundle.getString("userId");
             mobile = bundle.getString("mobile");
         }
+
+        //------------------------------------------------------------------------------------------
+        loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+        lp2.copyFrom(loadingDialog.getWindow().getAttributes());
+        lp2.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.gravity = Gravity.CENTER;
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.setCancelable(false);
+        loadingDialog.getWindow().setAttributes(lp2);
+
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+        //------------------------------------------------------------------------------------------
 
         action_bar = findViewById(R.id.personal_details_action_bar);
         actionBarTitle = (TextView) action_bar.findViewById(R.id.action_bar_title);
@@ -1017,5 +1038,13 @@ public class PersonalDetailsActivity extends AppCompat {
             }
         });
         //****************************************************************************************//
+    }
+
+    public void showLoading(){
+        loadingDialog.show();
+    }
+
+    public void dismissLoading(){
+        loadingDialog.dismiss();
     }
 }

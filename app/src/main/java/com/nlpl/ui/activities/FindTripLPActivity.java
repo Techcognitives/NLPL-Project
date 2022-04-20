@@ -18,6 +18,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -56,6 +58,7 @@ public class FindTripLPActivity extends AppCompatActivity {
     RecyclerView allTripsRecyclerView;
     Spinner findTripSpinner;
     SwipeRefreshLayout swipeRefreshLayout;
+    Dialog loadingDialog;
 
     //------------------------------------- State List ---------------------------------------------
     private ArrayList<TripResponse.TripList> anList, apList, arList, asList, brList, chList, cgList, ddList,
@@ -85,6 +88,25 @@ public class FindTripLPActivity extends AppCompatActivity {
             Log.i("Mobile No View Personal", phone);
             userId = bundle.getString("userId");
         }
+
+        //------------------------------------------------------------------------------------------
+        loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+        lp2.copyFrom(loadingDialog.getWindow().getAttributes());
+        lp2.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.gravity = Gravity.CENTER;
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.setCancelable(false);
+        loadingDialog.getWindow().setAttributes(lp2);
+
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+        //------------------------------------------------------------------------------------------
 
         //-------------------------- Initialization ------------------------------------------------
         tripText = findViewById(R.id.find_trucks_find_trip_text);
@@ -1037,5 +1059,13 @@ public class FindTripLPActivity extends AppCompatActivity {
         super.onBackPressed();
         ShowAlert.loadingDialog(FindTripLPActivity.this);
         JumpTo.goToCustomerDashboard(FindTripLPActivity.this, phone, true);
+    }
+
+    public void showLoading(){
+        loadingDialog.show();
+    }
+
+    public void dismissLoading(){
+        loadingDialog.dismiss();
     }
 }

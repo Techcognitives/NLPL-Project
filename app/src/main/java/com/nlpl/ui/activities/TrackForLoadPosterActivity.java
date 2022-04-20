@@ -180,7 +180,6 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
         ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
         noTrips = findViewById(R.id.find_trips_no_trips);
 
-//        loadingDialog.show();
         loadingDialog.setCancelable(false);
         loadingDialog.getWindow().setAttributes(lp2);
 
@@ -1051,5 +1050,12 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+    public void showLoading(){
+        loadingDialog.show();
+    }
+
+    public void dismissLoading(){
+        loadingDialog.dismiss();
     }
 }

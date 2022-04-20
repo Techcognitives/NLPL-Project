@@ -62,7 +62,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:21.0.1'
     implementation 'androidx.browser:browser:1.2.0'
     implementation 'com.google.firebase:firebase-messaging:23.0.0'
-    implementation 'com.google.android.libraries.places:places:2.5.0'
+    implementation 'com.google.android.libraries.places:places:2.6.0'
     implementation 'androidx.databinding:databinding-runtime:4.2.2'
 
     testImplementation 'junit:junit:4.+'

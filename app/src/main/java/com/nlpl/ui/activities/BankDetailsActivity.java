@@ -34,6 +34,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,7 +56,6 @@ import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
 import com.nlpl.utils.JumpTo;
-import com.nlpl.utils.ShowAlert;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -71,7 +72,7 @@ public class BankDetailsActivity extends AppCompat {
     String userId, PathForCC = "", bankId, mobile, userRoleAPI, ccUploadedAPI;
     int requestCode, resultCode, GET_FROM_GALLERY = 0, CAMERA_PIC_REQUEST1 = 0;
     Intent data;
-    Dialog previewDialogCancelledCheque;
+    Dialog previewDialogCancelledCheque, loadingDialog;
     ImageView previewDialogCancelledChequeImageView;
     Boolean isEdit, isImgUploaded = false, bankVerified = true;
     ActivityBankDetailsBinding binding;
@@ -92,6 +93,26 @@ public class BankDetailsActivity extends AppCompat {
             bankId = bundle.getString("bankDetailsID");
             mobile = bundle.getString("mobile");
         }
+
+        //------------------------------------------------------------------------------------------
+        loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+        lp2.copyFrom(loadingDialog.getWindow().getAttributes());
+        lp2.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.gravity = Gravity.CENTER;
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+
+        loadingDialog.setCancelable(false);
+        loadingDialog.getWindow().setAttributes(lp2);
+
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+        //------------------------------------------------------------------------------------------
 
         getUserDetailsMain();
 
@@ -324,7 +345,6 @@ public class BankDetailsActivity extends AppCompat {
             UpdateUserDetails.updateUserIsBankDetailsGiven(userId, "1");
             if (!isEdit) {
                 saveBank(createBankAcc());
-                ShowAlert.loadingDialog(this);
                 uploadCheque(bankId, PathForCC);
                 JumpTo.goToViewBankDetailsActivity(BankDetailsActivity.this, userId, mobile, true);
             } else {
@@ -734,6 +754,14 @@ public class BankDetailsActivity extends AppCompat {
 //            JumpTo.goToServiceProviderDashboard(BankDetailsActivity.this, mobile, true, true);
 //        }
         JumpTo.goToViewBankDetailsActivity(BankDetailsActivity.this, userId, mobile, true);
+    }
+
+    public void showLoading(){
+        loadingDialog.show();
+    }
+
+    public void dismissLoading(){
+        loadingDialog.dismiss();
     }
 
 }

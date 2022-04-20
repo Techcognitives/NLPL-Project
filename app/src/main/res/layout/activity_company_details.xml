@@ -1,305 +1,312 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".ui.activities.CompanyDetailsActivity">
 
-    <include
-        android:id="@+id/company_details_action_bar"
-        layout="@layout/action_bar"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:drawableStart="@drawable/google_address_small"
-        android:onClick="onClickOpenMaps"
-        android:text="Search Address"
-        android:textColor="@color/button_blue"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/company_details_get_current_location"
-        app:layout_constraintEnd_toStartOf="@+id/company_details_get_current_location"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/company_details_get_current_location" />
-
-    <TextView
-        android:id="@+id/company_details_company_name_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:paddingStart="5dp"
-        android:paddingEnd="0dp"
-        android:text="@string/company_name"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/company_details_action_bar" />
-
-    <EditText
-        android:id="@+id/company_details_pan_number"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/edit_text_border"
-        android:ems="10"
-        android:maxLength="10"
-        android:hint="@string/pan_number"
-        android:inputType="textCapCharacters"
-        android:padding="10dp"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/company_details_gst_number_edit" />
-
-    <EditText
-        android:id="@+id/company_details_company_name_edit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/edit_text_border"
-        android:ems="10"
-        android:maxLength="30"
-        android:hint="@string/company_name_hint"
-        android:inputType="textCapWords"
-        android:padding="10dp"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/company_details_company_name_text" />
-
-    <TextView
-        android:id="@+id/dhdeddkchuudic"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textStyle="bold"
-        android:paddingStart="5dp"
-        android:paddingEnd="0dp"
-        android:text="@string/Company_Type"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/company_details_company_name_edit" />
-
-    <EditText
-        android:id="@+id/company_details_gst_number_edit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/edit_text_border"
-        android:ems="10"
-        android:layout_marginTop="5dp"
-        android:hint="@string/gst_number_hint"
-        android:maxLength="15"
-        android:inputType="textCapCharacters"
-        android:padding="10dp"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
-
-    <TextView
-        android:id="@+id/company_details_company_address_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:paddingStart="5dp"
-        android:paddingEnd="0dp"
-        android:text="@string/company_address"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/company_details_pan_number"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/company_details_pan_number" />
-
-    <TextView
-        android:id="@+id/company_details_get_current_location"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:drawableStart="@drawable/google_location_small"
-        android:onClick="onClickGetCurrentCompanyLocation"
-        android:text="@string/Current_Location"
-        android:textColor="@color/button_blue"
-        android:textSize="14sp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/company_details_address_edit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView13"
-        app:layout_constraintTop_toBottomOf="@+id/company_details_company_address_text" />
-
-    <TextView
-        android:id="@+id/company_details_select_state"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/edit_text_border"
-        android:drawableEnd="@drawable/ic_down"
-        android:drawableTint="@color/black"
-        android:textColor="@color/black"
-        android:hint="@string/select_state"
-        android:padding="10dp"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/company_details_select_city"
-        app:layout_constraintStart_toEndOf="@+id/company_details_pin_code_edit"
-        app:layout_constraintTop_toBottomOf="@+id/company_details_address_edit" />
-
-    <TextView
-        android:id="@+id/company_details_select_city"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/edit_text_border"
-        android:drawableEnd="@drawable/ic_down"
-        android:drawableTint="@color/black"
-        android:hint="@string/select_city"
-        android:padding="10dp"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/company_details_select_state"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/company_details_select_state"
-        app:layout_constraintTop_toTopOf="@+id/company_details_select_state" />
-
-    <EditText
-        android:id="@+id/company_details_pin_code_edit"
-        android:layout_width="87dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:background="@drawable/edit_text_border"
-        android:ems="10"
-        android:hint="@string/pin_code"
-        android:inputType="number"
-        android:maxLength="6"
-        android:padding="12dp"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/company_details_select_state"
-        app:layout_constraintEnd_toStartOf="@+id/company_details_select_state"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/company_details_select_state" />
-
-    <EditText
-        android:id="@+id/company_details_address_edit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/edit_text_border"
-        android:ems="10"
-        android:hint="@string/address"
-        android:inputType="textMultiLine"
-        android:lines="2"
-        android:maxLines="2"
-        android:paddingStart="10dp"
-        android:paddingTop="4dp"
-        android:paddingEnd="8dp"
-        android:paddingBottom="4dp"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/company_details_get_current_location" />
-
-    <Button
-        android:id="@+id/company_details_ok_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/button_de_active"
-        android:enabled="false"
-        android:onClick="onClickCompanyDetailsOK"
-        android:text="@string/ok"
-        android:textAllCaps="false"
-        android:textColor="@color/background"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/company_details_select_city" />
+    <data>
+        <variable
+            name="handlers"
+            type="com.nlpl.ui.activities.CompanyDetailsActivity" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/edit_text_border"
-        android:paddingTop="3dp"
-        android:paddingBottom="3dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dhdeddkchuudic">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <RadioButton
-            android:id="@+id/company_details_proprietary_radio_button"
-            android:layout_width="0dp"
+        <include
+            android:id="@+id/company_details_action_bar"
+            layout="@layout/action_bar"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/radioBlue"
-            android:checked="true"
-            android:onClick="onClickCompanyRadio"
-            android:text="@string/Proprietary"
-            android:singleLine="true"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/company_details_partnership_radio_button"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <RadioButton
-            android:id="@+id/company_details_partnership_radio_button"
+        <TextView
+            android:id="@+id/textView13"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/radioBlue"
-            android:onClick="onClickCompanyRadio"
-            android:text="@string/Partnership"
+            android:layout_marginStart="5dp"
+            android:drawableStart="@drawable/google_address_small"
+            android:onClick="onClickOpenMaps"
+            android:text="Search Address"
+            android:textColor="@color/button_blue"
             android:textSize="14sp"
-            android:singleLine="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/company_details_pvt_ltd_radio_button"
-            app:layout_constraintStart_toEndOf="@+id/company_details_proprietary_radio_button"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@+id/company_details_get_current_location"
+            app:layout_constraintEnd_toStartOf="@+id/company_details_get_current_location"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/company_details_get_current_location" />
 
-        <RadioButton
-            android:id="@+id/company_details_pvt_ltd_radio_button"
+        <TextView
+            android:id="@+id/company_details_company_name_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/radioBlue"
-            android:onClick="onClickCompanyRadio"
-            android:text="@string/Pvt_Ltd"
+            android:layout_marginTop="10dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="0dp"
+            android:text="@string/company_name"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/company_details_action_bar" />
+
+        <EditText
+            android:id="@+id/company_details_pan_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/edit_text_border"
+            android:ems="10"
+            android:hint="@string/pan_number"
+            android:inputType="textCapCharacters"
+            android:maxLength="10"
+            android:padding="10dp"
             android:textSize="14sp"
-            android:singleLine="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/company_details_gst_number_edit" />
+
+        <EditText
+            android:id="@+id/company_details_company_name_edit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/edit_text_border"
+            android:ems="10"
+            android:hint="@string/company_name_hint"
+            android:inputType="textCapWords"
+            android:maxLength="30"
+            android:padding="10dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/company_details_company_name_text" />
+
+        <TextView
+            android:id="@+id/dhdeddkchuudic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="0dp"
+            android:text="@string/Company_Type"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/company_details_company_name_edit" />
+
+        <EditText
+            android:id="@+id/company_details_gst_number_edit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/edit_text_border"
+            android:ems="10"
+            android:hint="@string/gst_number_hint"
+            android:inputType="textCapCharacters"
+            android:maxLength="15"
+            android:padding="10dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+
+        <TextView
+            android:id="@+id/company_details_company_address_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="0dp"
+            android:text="@string/company_address"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/company_details_pan_number"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/company_details_pan_number" />
+
+        <TextView
+            android:id="@+id/company_details_get_current_location"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:drawableStart="@drawable/google_location_small"
+            android:onClick="onClickGetCurrentCompanyLocation"
+            android:text="@string/Current_Location"
+            android:textColor="@color/button_blue"
+            android:textSize="14sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/company_details_address_edit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView13"
+            app:layout_constraintTop_toBottomOf="@+id/company_details_company_address_text" />
+
+        <TextView
+            android:id="@+id/company_details_select_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/edit_text_border"
+            android:drawableEnd="@drawable/ic_down"
+            android:drawableTint="@color/black"
+            android:hint="@string/select_state"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/company_details_select_city"
+            app:layout_constraintStart_toEndOf="@+id/company_details_pin_code_edit"
+            app:layout_constraintTop_toBottomOf="@+id/company_details_address_edit" />
+
+        <TextView
+            android:id="@+id/company_details_select_city"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/edit_text_border"
+            android:drawableEnd="@drawable/ic_down"
+            android:drawableTint="@color/black"
+            android:hint="@string/select_city"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/company_details_select_state"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/company_details_select_state"
+            app:layout_constraintTop_toTopOf="@+id/company_details_select_state" />
+
+        <EditText
+            android:id="@+id/company_details_pin_code_edit"
+            android:layout_width="87dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/edit_text_border"
+            android:ems="10"
+            android:hint="@string/pin_code"
+            android:inputType="number"
+            android:maxLength="6"
+            android:padding="12dp"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/company_details_select_state"
+            app:layout_constraintEnd_toStartOf="@+id/company_details_select_state"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/company_details_select_state" />
+
+        <EditText
+            android:id="@+id/company_details_address_edit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/edit_text_border"
+            android:ems="10"
+            android:hint="@string/address"
+            android:inputType="textMultiLine"
+            android:lines="2"
+            android:maxLines="2"
+            android:paddingStart="10dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="4dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/company_details_get_current_location" />
+
+        <Button
+            android:id="@+id/company_details_ok_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/button_de_active"
+            android:enabled="false"
+            android:onClick="onClickCompanyDetailsOK"
+            android:text="@string/ok"
+            android:textAllCaps="false"
+            android:textColor="@color/background"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/company_details_partnership_radio_button"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/company_details_select_city" />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/edit_text_border"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dhdeddkchuudic">
+
+            <RadioButton
+                android:id="@+id/company_details_proprietary_radio_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/radioBlue"
+                android:checked="true"
+                android:onClick="onClickCompanyRadio"
+                android:singleLine="true"
+                android:text="@string/Proprietary"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/company_details_partnership_radio_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RadioButton
+                android:id="@+id/company_details_partnership_radio_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/radioBlue"
+                android:onClick="onClickCompanyRadio"
+                android:singleLine="true"
+                android:text="@string/Partnership"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/company_details_pvt_ltd_radio_button"
+                app:layout_constraintStart_toEndOf="@+id/company_details_proprietary_radio_button"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RadioButton
+                android:id="@+id/company_details_pvt_ltd_radio_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/radioBlue"
+                android:onClick="onClickCompanyRadio"
+                android:singleLine="true"
+                android:text="@string/Pvt_Ltd"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/company_details_partnership_radio_button"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

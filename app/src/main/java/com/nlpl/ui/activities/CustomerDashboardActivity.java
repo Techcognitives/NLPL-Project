@@ -210,7 +210,6 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         TextView noAcceptedLoads = (TextView) findViewById(R.id.customer_dashboard_no_load_accepted_text);
         noAcceptedLoads.setVisibility(View.INVISIBLE);
 
-//        loadingDialog.show();
         loadingDialog.setCancelable(false);
         loadingDialog.getWindow().setAttributes(lp2);
 
@@ -2791,5 +2790,13 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                 startActivity(intent);
             }
         });
+    }
+
+    public void showLoading(){
+        loadingDialog.show();
+    }
+
+    public void dismissLoading(){
+        loadingDialog.dismiss();
     }
 }

@@ -25,6 +25,8 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -95,7 +97,7 @@ public class PostALoadActivity extends AppCompat {
     ArrayList currentSepDate;
     TextView setApproxDistance, paymentMethodText, deleteLoad, pickUpStateText, pickUpCityText, dropStateText, dropCityText;
     long startD, endD, todayD, diff, diff1;
-    Dialog setBudget;
+    Dialog setBudget, loadingDialog;
 
     Button Ok_PostLoad;
 
@@ -120,6 +122,25 @@ public class PostALoadActivity extends AppCompat {
             reActivate = bundle.getBoolean("reActivate");
             loadId = bundle.getString("loadId");
         }
+
+        //------------------------------------------------------------------------------------------
+        loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+        lp2.copyFrom(loadingDialog.getWindow().getAttributes());
+        lp2.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp2.gravity = Gravity.CENTER;
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.setCancelable(false);
+        loadingDialog.getWindow().setAttributes(lp2);
+
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+        //------------------------------------------------------------------------------------------
 
 //        bottomNav = (View) findViewById(R.id.post_a_load_bottom_nav_bar0);
 //        spDashboard = (ConstraintLayout) bottomNav.findViewById(R.id.bottom_nav_sp_dashboard);
@@ -1178,4 +1199,11 @@ public class PostALoadActivity extends AppCompat {
         }
     };
 
+    public void showLoading(){
+        loadingDialog.show();
+    }
+
+    public void dismissLoading(){
+        loadingDialog.dismiss();
+    }
 }
