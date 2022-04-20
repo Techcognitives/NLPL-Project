@@ -59,6 +59,7 @@ import com.nlpl.utils.JumpTo;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.Objects;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -481,13 +482,15 @@ public class BankDetailsActivity extends AppCompat {
         Call<BankVerificationResponse> bankModelCall = ApiClient.getVerification().checkBankDetail(userId, "" + accountNumber, "" + ifscCode);
         bankModelCall.enqueue(new Callback<BankVerificationResponse>() {
             @Override
-            public void onResponse(Call<BankVerificationResponse> call, Response<BankVerificationResponse> response) {
+            public void onResponse(@NonNull Call<BankVerificationResponse> call, @NonNull Response<BankVerificationResponse> response) {
                 if (response.isSuccessful()) {
                     try {
                         BankVerificationResponse bankModel = response.body();
-                        BankVerificationResponse.UserList list = bankModel.getData().get(0);
-                        Log.i("Success Message", list.getSuccess());
-                        if (list.getSuccess().equals("1")) {
+                        BankVerificationResponse.UserList list = null;
+                        if (bankModel != null) {
+                            list = bankModel.getData().get(0);
+                        }
+                        if (Objects.requireNonNull(list).getSuccess().equals("1")) {
                             binding.bankDetailsPersonNameTextEdit.setEnabled(false);
                             binding.bankDetailsPersonNameTextEdit.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.success_small, 0);
                             binding.bankDetailsAccountNumberEdit.setEnabled(false);

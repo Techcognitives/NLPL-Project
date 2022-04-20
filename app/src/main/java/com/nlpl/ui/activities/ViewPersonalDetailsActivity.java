@@ -1,24 +1,18 @@
 package com.nlpl.ui.activities;
 
 import static com.nlpl.R.drawable.blue_profile_small;
-import static com.nlpl.R.drawable.find;
 import static com.nlpl.R.drawable.ic_down;
 import static com.nlpl.R.drawable.ic_up;
 
-import static java.util.Collections.addAll;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.databinding.DataBindingUtil;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -36,20 +30,14 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.nlpl.R;
+import com.nlpl.databinding.ActivityViewPersonalDetailsBinding;
 import com.nlpl.model.MainResponse;
 import com.nlpl.model.Requests.ImageRequest;
-import com.nlpl.model.Responses.AddDriverResponseGet;
-import com.nlpl.model.Responses.BankResponse;
-import com.nlpl.model.Responses.BankResponseGet;
+
 import com.nlpl.model.Responses.ImageResponse;
-import com.nlpl.model.Responses.TruckResponse;
+
 import com.nlpl.model.Responses.UploadImageResponse;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
 import com.nlpl.utils.ApiClient;
@@ -57,12 +45,6 @@ import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
 import com.nlpl.utils.JumpTo;
-import com.nlpl.utils.ShowAlert;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
@@ -72,11 +54,10 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ViewPersonalDetailsActivity extends AppCompat {
 
-    Boolean profileAdded, personalVisible = false, firmVisible = false;
+    Boolean personalVisible = false, firmVisible = false;
     TextView userFirmGSTTextview, userFirmGSTTextviewTitle, userFirmPANTextview, userFirmPANTextviewTitle, userNameTextView, userPhoneNumberTextView, userEmailTextView, userAddressTextView, userFirmNameTextView, userFirmAddressTextView, userFirmNameTitleTextView, userFirmAddressTitleTextView, userFirmTitle, userFirmAddCompany, userEditFirmDetailsTextView;
     String img_type;
     String phone, userId;
@@ -85,7 +66,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
     private int GET_FROM_GALLERY_profile = 5;
     TextView uploadPanAAdharBtn, uploadPanAAdharBtnTitle, roleProfile;
 
-    Dialog previewDialogPan, previewDialogAadhar, previewDialogProfile, loadingDialog;
+    Dialog previewDialogPan, previewDialogAadhar, previewDialogProfile;
 
     View actionBar;
     TextView actionBarTitle, actionBarSkip, previewAadharBtn, panText, aadharText, panNumber, aadharNumber, previewPANBtn, userAlternateNumber, bankCount, truckCount, driverCount;
@@ -93,15 +74,18 @@ public class ViewPersonalDetailsActivity extends AppCompat {
 
     ConstraintLayout constrainProfileDetails, constrainFirmDetails, truckConstrain, driverConstrain;
 
+    ActivityViewPersonalDetailsBinding binding;
     String userNameAPI, userPhoneNumberAPI, userAlternatePhoneNumberAPI, userUserTypeAPI, userCityAPI, userPreferredLanguageAPI, userAddressAPI, userStateAPI, userPinCodeAPI, userEmailIdAPI, userPayTypeAPI, userIsRegistrationDoneAPI, userIsProfilePicAddedAPI;
     String userIsTruckAddedAPI, userIsDriverAddedAPI, userIsBankDetailsAddedAPI, userIsCompanyAddedAPI, userIsPersonalAddedAPI, userIsAadhaarVerifiedAPI, userIsPanVerifiedAPI, userIsUserVerifiedAPI, userIsAccountActiveAPI, userCreatedAtAPI, userUpdatedAtAPI;
     String userUpdatedByAPI, userDeletedAtAPI, userDeletedByAPI, idAPI, userLatitudeAPI, userLongitudeAPI, userDeviceIdAPI, userPanNumberAPI, userAadhaarNumberAPI, userIsSelfAddedAsDriverAPI;
 
+    String userCompanyNameAPI, userCompanyTypeAPI, userCompanyGSTAPI, userCompanyPANAPI, userCompanyAddressAPI, userCompanyStateAPI, userCompanyCityAPI, userCompanyPINCodeAPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_personal_details);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_view_personal_details);
+        binding.setHandlers(this);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -109,25 +93,6 @@ public class ViewPersonalDetailsActivity extends AppCompat {
             Log.i("Mobile No View Personal", phone);
             userId = bundle.getString("userId");
         }
-
-        //------------------------------------------------------------------------------------------
-        loadingDialog = new Dialog(this);
-        loadingDialog.setContentView(R.layout.dialog_loading);
-        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-        lp2.copyFrom(loadingDialog.getWindow().getAttributes());
-        lp2.width = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp2.gravity = Gravity.CENTER;
-        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
-
-        loadingDialog.setCancelable(false);
-        loadingDialog.getWindow().setAttributes(lp2);
-
-        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
-        loading_img.startAnimation(rotate);
-        //------------------------------------------------------------------------------------------
 
         //-------------------------------- Action Bar ----------------------------------------------
         actionBar = findViewById(R.id.view_personal_details_action_bar);
@@ -219,10 +184,10 @@ public class ViewPersonalDetailsActivity extends AppCompat {
             @Override
             public void onResponse(Call<MainResponse> call, retrofit2.Response<MainResponse> response) {
                 try {
-                    if (response.isSuccessful()){
+                    if (response.isSuccessful()) {
                         MainResponse response1 = response.body();
                         MainResponse.Data list = response1.getData();
-                        
+
                         //GET USER DETAILS
                         userNameAPI = list.getName();
                         userPhoneNumberAPI = String.valueOf(list.getPhone_number());
@@ -262,10 +227,10 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                         userNameTextView.setText(userNameAPI);
                         String s1 = userPhoneNumberAPI.substring(2, 12);
 
-                        userPhoneNumberTextView.setText("+91 " + userPhoneNumberAPI);
+                        userPhoneNumberTextView.setText("+91 " + s1);
                         try {
                             String s2 = userAlternatePhoneNumberAPI.substring(2, 12);
-                            userAlternateNumber.setText("+91 " + userAlternatePhoneNumberAPI);
+                            userAlternateNumber.setText("+91 " + s2);
 
                             userEmailTextView.setText(userEmailIdAPI);
                         } catch (Exception e) {
@@ -391,16 +356,21 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                         //GET COMPANY DETAILS
                         ArrayList<MainResponse.Data.CompanyDetails> companyDetails = new ArrayList<>();
                         companyDetails.addAll(list.getCompanyDetails());
-                        String userCompanyNameAPI, userCompanyTypeAPI, userCompanyGSTAPI, userCompanyPANAPI, userCompanyAddressAPI, userCompanyStateAPI, userCompanyCityAPI, userCompanyPINCodeAPI;
-                        userCompanyNameAPI = companyDetails.get(0).company_name;
-                        userCompanyTypeAPI = companyDetails.get(0).company_type;
-                        userCompanyGSTAPI = companyDetails.get(0).company_gst_no;
-                        userCompanyPANAPI = companyDetails.get(0).company_pan;
-                        userCompanyAddressAPI = companyDetails.get(0).comp_add;
-                        userCompanyStateAPI = companyDetails.get(0).comp_state;
-                        userCompanyCityAPI = companyDetails.get(0).comp_city;
-                        userCompanyPINCodeAPI = companyDetails.get(0).comp_zip;
 
+                        try {
+                            userCompanyNameAPI = companyDetails.get(0).company_name;
+                            userCompanyTypeAPI = companyDetails.get(0).company_type;
+                            userCompanyGSTAPI = companyDetails.get(0).company_gst_no;
+                            userCompanyPANAPI = companyDetails.get(0).company_pan;
+                            userCompanyAddressAPI = companyDetails.get(0).comp_add;
+                            userCompanyStateAPI = companyDetails.get(0).comp_state;
+                            userCompanyCityAPI = companyDetails.get(0).comp_city;
+                            userCompanyPINCodeAPI = companyDetails.get(0).comp_zip;
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+
+                        Log.i("Company Log", userIsCompanyAddedAPI);
                         if (userIsCompanyAddedAPI.equals("1")) {
                             userFirmGSTTextview.setVisibility(View.VISIBLE);
                             userFirmGSTTextviewTitle.setVisibility(View.VISIBLE);
@@ -477,9 +447,8 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                         //GET SP BID DETAILS
                         ArrayList<MainResponse.Data.SpBidDetails> spBidDetailsList = new ArrayList<>();
                         spBidDetailsList.addAll(list.getSpBidDetails());
+                    } else {
 
-                    }else{
-                        getUserDetailsMain();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -495,7 +464,6 @@ public class ViewPersonalDetailsActivity extends AppCompat {
 
     public void ViewSPProfile(View view) {
         if (userIsProfilePicAddedAPI.equals("1")) {
-            profileAdded = true;
             WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
             lp2.copyFrom(previewDialogProfile.getWindow().getAttributes());
             lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -514,14 +482,12 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                 }
             });
         } else {
-            profileAdded = false;
             uploadProfileDialogChoose();
         }
     }
 
     private void uploadProfileDialogChoose() {
         img_type = "profile";
-
         Dialog chooseDialog;
         chooseDialog = new Dialog(ViewPersonalDetailsActivity.this);
         chooseDialog.setContentView(R.layout.dialog_choose);
@@ -670,12 +636,10 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         imageResponseCall.enqueue(new Callback<ImageResponse>() {
             @Override
             public void onResponse(Call<ImageResponse> call, retrofit2.Response<ImageResponse> response) {
-
             }
 
             @Override
             public void onFailure(Call<ImageResponse> call, Throwable t) {
-
             }
         });
     }
@@ -766,7 +730,6 @@ public class ViewPersonalDetailsActivity extends AppCompat {
             profileAddedAlert();
 
         } else if (requestCode == CAMERA_PIC_REQUEST_profile) {
-
             try {
                 Bitmap image = (Bitmap) data.getExtras().get("data");
                 String path = getRealPathFromURI(getImageUri(this, image));
@@ -865,10 +828,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
     }
 
     private void uploadImage(String picPath) {
-
         File file = new File(picPath);
-//        File file = new File(getExternalFilesDir("/").getAbsolutePath(), file);
-
         MultipartBody.Part body = prepareFilePart("file", Uri.fromFile(file));
 
         Call<UploadImageResponse> call = ApiClient.getImageUploadService().uploadImage(userId, img_type, body);
@@ -905,33 +865,6 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
         return Uri.parse(path);
-    }
-
-    private void requestPermissionsForCamera() {
-        if (ContextCompat.checkSelfPermission(ViewPersonalDetailsActivity.this, Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(ViewPersonalDetailsActivity.this, new String[]{
-                    Manifest.permission.CAMERA
-            }, 100);
-        }
-    }
-
-    private void requestPermissionsForGalleryWRITE() {
-        if (ContextCompat.checkSelfPermission(ViewPersonalDetailsActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(ViewPersonalDetailsActivity.this, new String[]{
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-            }, 100);
-        }
-    }
-
-    private void requestPermissionsForGalleryREAD() {
-        if (ContextCompat.checkSelfPermission(ViewPersonalDetailsActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(ViewPersonalDetailsActivity.this, new String[]{
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-            }, 100);
-        }
     }
 
     public void onClickShowDetails(View view) {
@@ -1108,13 +1041,5 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                     break;
             }
         }
-    }
-
-    public void showLoading() {
-        loadingDialog.show();
-    }
-
-    public void dismissLoading() {
-        loadingDialog.dismiss();
     }
 }

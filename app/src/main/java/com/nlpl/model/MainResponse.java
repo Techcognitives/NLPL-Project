@@ -31,39 +31,39 @@ public class MainResponse {
         //personal user details
         private String user_id;
         private String name;
-        private float phone_number;
-        private float alternate_ph_no;
+        private String phone_number;
+        private String alternate_ph_no;
         private String user_type;
         private String preferred_location;
         private String preferred_language = null;
         private String address;
         private String state_code;
-        private float pin_code;
+        private String pin_code;
         private String email_id;
         private String pay_type = null;
-        private float isRegistration_done;
-        private float isProfile_pic_added;
-        private float isTruck_added;
-        private float isDriver_added;
-        private float isBankDetails_given;
-        private float isCompany_added;
-        private float isPersonal_dt_added;
-        private float is_Addhar_verfied;
-        private float is_pan_verfied;
-        private float is_user_verfied;
-        private float is_account_active;
+        private String isRegistration_done;
+        private String isProfile_pic_added;
+        private String isTruck_added;
+        private String isDriver_added;
+        private String isBankDetails_given;
+        private String isCompany_added;
+        private String isPersonal_dt_added;
+        private String is_Addhar_verfied;
+        private String is_pan_verfied;
+        private String is_user_verfied;
+        private String is_account_active;
         private String created_at;
         private String updated_at;
         private String updated_by = null;
         private String deleted_at = null;
         private String deleted_by = null;
-        private float id;
+        private String id;
         private String latitude;
         private String longitude;
         private String device_id;
         private String pan_number = null;
         private String aadhaar_number;
-        private float is_self_added_asDriver;
+        private String is_self_added_asDriver;
 
         //getters and setters
 
@@ -83,19 +83,19 @@ public class MainResponse {
             this.name = name;
         }
 
-        public float getPhone_number() {
+        public String getPhone_number() {
             return phone_number;
         }
 
-        public void setPhone_number(float phone_number) {
+        public void setPhone_number(String phone_number) {
             this.phone_number = phone_number;
         }
 
-        public float getAlternate_ph_no() {
+        public String getAlternate_ph_no() {
             return alternate_ph_no;
         }
 
-        public void setAlternate_ph_no(float alternate_ph_no) {
+        public void setAlternate_ph_no(String alternate_ph_no) {
             this.alternate_ph_no = alternate_ph_no;
         }
 
@@ -139,11 +139,11 @@ public class MainResponse {
             this.state_code = state_code;
         }
 
-        public float getPin_code() {
+        public String getPin_code() {
             return pin_code;
         }
 
-        public void setPin_code(float pin_code) {
+        public void setPin_code(String pin_code) {
             this.pin_code = pin_code;
         }
 
@@ -163,91 +163,91 @@ public class MainResponse {
             this.pay_type = pay_type;
         }
 
-        public float getIsRegistration_done() {
+        public String getIsRegistration_done() {
             return isRegistration_done;
         }
 
-        public void setIsRegistration_done(float isRegistration_done) {
+        public void setIsRegistration_done(String isRegistration_done) {
             this.isRegistration_done = isRegistration_done;
         }
 
-        public float getIsProfile_pic_added() {
+        public String getIsProfile_pic_added() {
             return isProfile_pic_added;
         }
 
-        public void setIsProfile_pic_added(float isProfile_pic_added) {
+        public void setIsProfile_pic_added(String isProfile_pic_added) {
             this.isProfile_pic_added = isProfile_pic_added;
         }
 
-        public float getIsTruck_added() {
+        public String getIsTruck_added() {
             return isTruck_added;
         }
 
-        public void setIsTruck_added(float isTruck_added) {
+        public void setIsTruck_added(String isTruck_added) {
             this.isTruck_added = isTruck_added;
         }
 
-        public float getIsDriver_added() {
+        public String getIsDriver_added() {
             return isDriver_added;
         }
 
-        public void setIsDriver_added(float isDriver_added) {
+        public void setIsDriver_added(String isDriver_added) {
             this.isDriver_added = isDriver_added;
         }
 
-        public float getIsBankDetails_given() {
+        public String getIsBankDetails_given() {
             return isBankDetails_given;
         }
 
-        public void setIsBankDetails_given(float isBankDetails_given) {
+        public void setIsBankDetails_given(String isBankDetails_given) {
             this.isBankDetails_given = isBankDetails_given;
         }
 
-        public float getIsCompany_added() {
+        public String getIsCompany_added() {
             return isCompany_added;
         }
 
-        public void setIsCompany_added(float isCompany_added) {
+        public void setIsCompany_added(String isCompany_added) {
             this.isCompany_added = isCompany_added;
         }
 
-        public float getIsPersonal_dt_added() {
+        public String getIsPersonal_dt_added() {
             return isPersonal_dt_added;
         }
 
-        public void setIsPersonal_dt_added(float isPersonal_dt_added) {
+        public void setIsPersonal_dt_added(String isPersonal_dt_added) {
             this.isPersonal_dt_added = isPersonal_dt_added;
         }
 
-        public float getIs_Addhar_verfied() {
+        public String getIs_Addhar_verfied() {
             return is_Addhar_verfied;
         }
 
-        public void setIs_Addhar_verfied(float is_Addhar_verfied) {
+        public void setIs_Addhar_verfied(String is_Addhar_verfied) {
             this.is_Addhar_verfied = is_Addhar_verfied;
         }
 
-        public float getIs_pan_verfied() {
+        public String getIs_pan_verfied() {
             return is_pan_verfied;
         }
 
-        public void setIs_pan_verfied(float is_pan_verfied) {
+        public void setIs_pan_verfied(String is_pan_verfied) {
             this.is_pan_verfied = is_pan_verfied;
         }
 
-        public float getIs_user_verfied() {
+        public String getIs_user_verfied() {
             return is_user_verfied;
         }
 
-        public void setIs_user_verfied(float is_user_verfied) {
+        public void setIs_user_verfied(String is_user_verfied) {
             this.is_user_verfied = is_user_verfied;
         }
 
-        public float getIs_account_active() {
+        public String getIs_account_active() {
             return is_account_active;
         }
 
-        public void setIs_account_active(float is_account_active) {
+        public void setIs_account_active(String is_account_active) {
             this.is_account_active = is_account_active;
         }
 
@@ -291,11 +291,11 @@ public class MainResponse {
             this.deleted_by = deleted_by;
         }
 
-        public float getId() {
+        public String getId() {
             return id;
         }
 
-        public void setId(float id) {
+        public void setId(String id) {
             this.id = id;
         }
 
@@ -339,13 +339,14 @@ public class MainResponse {
             this.aadhaar_number = aadhaar_number;
         }
 
-        public float getIs_self_added_asDriver() {
+        public String getIs_self_added_asDriver() {
             return is_self_added_asDriver;
         }
 
-        public void setIs_self_added_asDriver(float is_self_added_asDriver) {
+        public void setIs_self_added_asDriver(String is_self_added_asDriver) {
             this.is_self_added_asDriver = is_self_added_asDriver;
         }
+
 
         /**************************Personal user detail end**********************************/
 

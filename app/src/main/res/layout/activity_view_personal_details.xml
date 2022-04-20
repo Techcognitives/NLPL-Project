@@ -2,1056 +2,1066 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
-    tools:context=".ui.activities.ViewPersonalDetailsActivity">
+    android:background="@color/white">
+    <data>
+        <variable
+            name="handlers"
+            type="com.nlpl.ui.activities.ViewPersonalDetailsActivity" />
+    </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/view_personal_details_action_bar"
-            layout="@layout/action_bar"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout20"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <include
-            android:id="@+id/view_personal_details_bottom_nav_bar"
-            layout="@layout/bottom_nav_bar"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout20"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/view_personal_details_bottom_nav_bar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view_personal_details_action_bar">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/profile_log_out"
-                android:layout_width="0dp"
+            <include
+                android:id="@+id/view_personal_details_action_bar"
+                layout="@layout/action_bar"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/button_active"
-                android:backgroundTint="@color/light_black"
-                android:onClick="onClickAddDetails"
-                android:paddingStart="5dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="@string/Log_Out"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout20"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <include
+                android:id="@+id/view_personal_details_bottom_nav_bar"
+                layout="@layout/bottom_nav_bar"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/scrollView5"
-                app:drawableStartCompat="@drawable/log_out_small" />
+                app:layout_constraintStart_toStartOf="parent" />
 
-            <ScrollView
-                android:id="@+id/scrollView5"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout20"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@+id/profile_log_out"
+                app:layout_constraintBottom_toTopOf="@+id/view_personal_details_bottom_nav_bar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/view_personal_details_action_bar">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp">
+                <TextView
+                    android:id="@+id/profile_log_out"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/button_active"
+                    android:backgroundTint="@color/light_black"
+                    android:onClick="onClickAddDetails"
+                    android:paddingStart="5dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="@string/Log_Out"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/scrollView5"
+                    app:drawableStartCompat="@drawable/log_out_small" />
+
+                <ScrollView
+                    android:id="@+id/scrollView5"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toTopOf="@+id/profile_log_out"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/profile_personal_details"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:background="@drawable/all_rounded_small"
-                        android:backgroundTint="@color/light_white"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp">
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/profile_picture_on_sp_menu"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/profile_personal_details"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:layout_marginTop="5dp"
                             android:layout_marginEnd="5dp"
-                            android:layout_marginBottom="5dp"
                             android:background="@drawable/all_rounded_small"
-                            android:onClick="ViewSPProfile"
-                            android:src="@drawable/blue_profile"
-                            android:visibility="visible"
-                            app:civ_border_color="#FF000000"
-                            app:civ_border_width="0.5dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/view_personal_details_name_text_view"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/view_personal_details_name_text_view"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="5dp"
-                            android:text="@string/Name"
-                            android:textAlignment="center"
-                            android:textColor="@color/black"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toTopOf="@+id/view_personal_details_phone_number_text_view"
+                            android:backgroundTint="@color/light_white"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/profile_picture_on_sp_menu"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
 
-                        <TextView
-                            android:id="@+id/view_personal_details_phone_number_text_view"
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/profile_picture_on_sp_menu"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginEnd="5dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="@drawable/all_rounded_small"
+                                android:onClick="ViewSPProfile"
+                                android:src="@drawable/blue_profile"
+                                android:visibility="visible"
+                                app:civ_border_color="#FF000000"
+                                app:civ_border_width="0.5dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/view_personal_details_name_text_view"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/view_personal_details_name_text_view"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="5dp"
+                                android:text="@string/Name"
+                                android:textAlignment="center"
+                                android:textColor="@color/black"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toTopOf="@+id/view_personal_details_phone_number_text_view"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/profile_picture_on_sp_menu"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/view_personal_details_phone_number_text_view"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginEnd="5dp"
+                                android:text="Phone"
+                                android:textAlignment="center"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                app:layout_constraintBottom_toTopOf="@+id/profile_role"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/profile_picture_on_sp_menu"
+                                app:layout_constraintTop_toBottomOf="@+id/view_personal_details_name_text_view" />
+
+                            <TextView
+                                android:id="@+id/profile_role"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginEnd="5dp"
+                                android:text="Role"
+                                android:textAlignment="center"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/profile_picture_on_sp_menu"
+                                app:layout_constraintTop_toBottomOf="@+id/view_personal_details_phone_number_text_view" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/profile_bank_details"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="10dp"
                             android:layout_marginEnd="5dp"
-                            android:text="Phone"
-                            android:textAlignment="center"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toTopOf="@+id/profile_role"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/profile_picture_on_sp_menu"
-                            app:layout_constraintTop_toBottomOf="@+id/view_personal_details_name_text_view" />
+                            android:background="@drawable/all_rounded_small"
+                            android:backgroundTint="@color/light_white"
+                            android:paddingTop="5dp"
+                            app:layout_constraintBottom_toTopOf="@+id/profile_history"
+                            app:layout_constraintEnd_toStartOf="@+id/profile_truck_details"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/profile_company_constrain">
 
-                        <TextView
-                            android:id="@+id/profile_role"
+                            <TextView
+                                android:id="@+id/profile_my_banks"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/My_Bank"
+                                android:textAlignment="center"
+                                android:textColor="@color/light_black"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toTopOf="@+id/imageView8"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/imageView8"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                app:layout_constraintBottom_toTopOf="@+id/profile_number_of_banks"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/profile_my_banks"
+                                app:srcCompat="@drawable/bank" />
+
+                            <TextView
+                                android:id="@+id/profile_number_of_banks"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="0 Banks"
+                                android:textAlignment="center"
+                                android:textColor="@color/light_black"
+                                android:textSize="15sp"
+                                app:layout_constraintBottom_toTopOf="@+id/profile_view_add_bank"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+
+                            <TextView
+                                android:id="@+id/profile_view_add_bank"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/bottom_corners_rounded_buttons"
+                                android:backgroundTint="@color/light_black"
+                                android:gravity="center"
+                                android:onClick="onClickAddDetails"
+                                android:paddingTop="2dp"
+                                android:paddingBottom="2dp"
+                                android:text="View / Add"
+                                android:textColor="@color/white"
+                                android:textSize="14sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/profile_number_of_banks" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/profile_truck_details"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:background="@drawable/all_rounded_small"
+                            android:backgroundTint="@color/light_white"
+                            android:paddingTop="5dp"
+                            app:layout_constraintEnd_toStartOf="@+id/profile_driver_details"
+                            app:layout_constraintStart_toEndOf="@+id/profile_bank_details"
+                            app:layout_constraintTop_toTopOf="@+id/profile_bank_details">
+
+                            <TextView
+                                android:id="@+id/profile_my_truck"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/My_Trucks"
+                                android:textAlignment="center"
+                                android:textColor="@color/light_black"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toTopOf="@+id/imageView9"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/profile_number_of_trucks"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="0 Trucks"
+                                android:textAlignment="center"
+                                android:textColor="@color/light_black"
+                                android:textSize="15sp"
+                                app:layout_constraintBottom_toTopOf="@+id/profile_view_add_truck"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/imageView9" />
+
+                            <ImageView
+                                android:id="@+id/imageView9"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                app:layout_constraintBottom_toTopOf="@+id/profile_number_of_trucks"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/profile_my_truck"
+                                app:srcCompat="@drawable/truck" />
+
+                            <TextView
+                                android:id="@+id/profile_view_add_truck"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/bottom_corners_rounded_buttons"
+                                android:backgroundTint="@color/light_black"
+                                android:gravity="center"
+                                android:paddingTop="2dp"
+                                android:paddingBottom="2dp"
+                                android:text="View / Add"
+                                android:onClick="onClickAddDetails"
+                                android:textColor="@color/white"
+                                android:textSize="14sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/profile_number_of_trucks" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/profile_driver_details"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:background="@drawable/all_rounded_small"
+                            android:backgroundTint="@color/light_white"
+                            android:paddingTop="5dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/profile_truck_details"
+                            app:layout_constraintTop_toTopOf="@+id/profile_truck_details">
+
+                            <TextView
+                                android:id="@+id/profile_my_drivers"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/My_Drivers"
+                                android:textAlignment="center"
+                                android:textColor="@color/light_black"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toTopOf="@+id/imageView12"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/profile_number_of_drivers"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="0 Drivers"
+                                android:textAlignment="center"
+                                android:textColor="@color/light_black"
+                                android:textSize="15sp"
+                                app:layout_constraintBottom_toTopOf="@+id/profile_view_add_driver"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/imageView12" />
+
+                            <ImageView
+                                android:id="@+id/imageView12"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                app:layout_constraintBottom_toTopOf="@+id/profile_number_of_drivers"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/profile_my_drivers"
+                                app:srcCompat="@drawable/driver" />
+
+                            <TextView
+                                android:id="@+id/profile_view_add_driver"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/bottom_corners_rounded_buttons"
+                                android:backgroundTint="@color/light_black"
+                                android:gravity="center"
+                                android:paddingTop="2dp"
+                                android:paddingBottom="2dp"
+                                android:text="View / Add"
+                                android:onClick="onClickAddDetails"
+                                android:textColor="@color/white"
+                                android:textSize="14sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/profile_number_of_drivers" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/profile_history"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="10dp"
                             android:layout_marginEnd="5dp"
-                            android:text="Role"
-                            android:textAlignment="center"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/profile_picture_on_sp_menu"
-                            app:layout_constraintTop_toBottomOf="@+id/view_personal_details_phone_number_text_view" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/profile_bank_details"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="5dp"
-                        android:background="@drawable/all_rounded_small"
-                        android:backgroundTint="@color/light_white"
-                        android:paddingTop="5dp"
-                        app:layout_constraintBottom_toTopOf="@+id/profile_history"
-                        app:layout_constraintEnd_toStartOf="@+id/profile_truck_details"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/profile_company_constrain">
-
-                        <TextView
-                            android:id="@+id/profile_my_banks"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="@string/My_Bank"
-                            android:textAlignment="center"
-                            android:textColor="@color/light_black"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toTopOf="@+id/imageView8"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/imageView8"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            app:layout_constraintBottom_toTopOf="@+id/profile_number_of_banks"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/profile_my_banks"
-                            app:srcCompat="@drawable/bank" />
-
-                        <TextView
-                            android:id="@+id/profile_number_of_banks"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="0 Banks"
-                            android:textAlignment="center"
-                            android:textColor="@color/light_black"
-                            android:textSize="15sp"
-                            app:layout_constraintBottom_toTopOf="@+id/profile_view_add_bank"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/imageView8" />
-
-                        <TextView
-                            android:id="@+id/profile_view_add_bank"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/bottom_corners_rounded_buttons"
-                            android:backgroundTint="@color/light_black"
-                            android:gravity="center"
-                            android:onClick="onClickAddDetails"
-                            android:paddingTop="2dp"
-                            android:paddingBottom="2dp"
-                            android:text="View / Add"
-                            android:textColor="@color/white"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/profile_number_of_banks" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/profile_truck_details"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:background="@drawable/all_rounded_small"
-                        android:backgroundTint="@color/light_white"
-                        android:paddingTop="5dp"
-                        app:layout_constraintEnd_toStartOf="@+id/profile_driver_details"
-                        app:layout_constraintStart_toEndOf="@+id/profile_bank_details"
-                        app:layout_constraintTop_toTopOf="@+id/profile_bank_details">
-
-                        <TextView
-                            android:id="@+id/profile_my_truck"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="@string/My_Trucks"
-                            android:textAlignment="center"
-                            android:textColor="@color/light_black"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toTopOf="@+id/imageView9"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/profile_number_of_trucks"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="0 Trucks"
-                            android:textAlignment="center"
-                            android:textColor="@color/light_black"
-                            android:textSize="15sp"
-                            app:layout_constraintBottom_toTopOf="@+id/profile_view_add_truck"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/imageView9" />
-
-                        <ImageView
-                            android:id="@+id/imageView9"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            app:layout_constraintBottom_toTopOf="@+id/profile_number_of_trucks"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/profile_my_truck"
-                            app:srcCompat="@drawable/truck" />
-
-                        <TextView
-                            android:id="@+id/profile_view_add_truck"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/bottom_corners_rounded_buttons"
-                            android:backgroundTint="@color/light_black"
-                            android:gravity="center"
-                            android:paddingTop="2dp"
-                            android:paddingBottom="2dp"
-                            android:text="View / Add"
-                            android:onClick="onClickAddDetails"
-                            android:textColor="@color/white"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/profile_number_of_trucks" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/profile_driver_details"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:background="@drawable/all_rounded_small"
-                        android:backgroundTint="@color/light_white"
-                        android:paddingTop="5dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/profile_truck_details"
-                        app:layout_constraintTop_toTopOf="@+id/profile_truck_details">
-
-                        <TextView
-                            android:id="@+id/profile_my_drivers"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="@string/My_Drivers"
-                            android:textAlignment="center"
-                            android:textColor="@color/light_black"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toTopOf="@+id/imageView12"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/profile_number_of_drivers"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="0 Drivers"
-                            android:textAlignment="center"
-                            android:textColor="@color/light_black"
-                            android:textSize="15sp"
-                            app:layout_constraintBottom_toTopOf="@+id/profile_view_add_driver"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/imageView12" />
-
-                        <ImageView
-                            android:id="@+id/imageView12"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            app:layout_constraintBottom_toTopOf="@+id/profile_number_of_drivers"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/profile_my_drivers"
-                            app:srcCompat="@drawable/driver" />
-
-                        <TextView
-                            android:id="@+id/profile_view_add_driver"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/bottom_corners_rounded_buttons"
-                            android:backgroundTint="@color/light_black"
-                            android:gravity="center"
-                            android:paddingTop="2dp"
-                            android:paddingBottom="2dp"
-                            android:text="View / Add"
-                            android:onClick="onClickAddDetails"
-                            android:textColor="@color/white"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/profile_number_of_drivers" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/profile_history"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/all_rounded_small"
-                        android:backgroundTint="@color/light_white"
-                        android:paddingTop="5dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/profile_payments"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/profile_bank_details">
-
-                        <TextView
-                            android:id="@+id/profile_my_history"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="History"
-                            android:textAlignment="center"
-                            android:textColor="@color/light_black"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toTopOf="@+id/imageView16"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/imageView16"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            app:layout_constraintBottom_toTopOf="@+id/profile_view_history"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/profile_my_history"
-                            app:srcCompat="@drawable/truck_history_small" />
-
-                        <TextView
-                            android:id="@+id/profile_view_history"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/bottom_corners_rounded_buttons"
-                            android:backgroundTint="@color/light_black"
-                            android:gravity="center"
-                            android:onClick="onClickAddDetails"
-                            android:paddingTop="2dp"
-                            android:paddingBottom="2dp"
-                            android:text="View"
-                            android:textColor="@color/white"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/imageView16" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/profile_payments"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:background="@drawable/all_rounded_small"
-                        android:backgroundTint="@color/light_white"
-                        android:paddingTop="5dp"
-                        app:layout_constraintEnd_toStartOf="@+id/profile_settings"
-                        app:layout_constraintStart_toEndOf="@+id/profile_history"
-                        app:layout_constraintTop_toTopOf="@+id/profile_history">
-
-                        <TextView
-                            android:id="@+id/profile_my_payments"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="@string/Payments"
-                            android:textAlignment="center"
-                            android:textColor="@color/light_black"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toTopOf="@+id/imageView24"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/imageView24"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            app:layout_constraintBottom_toTopOf="@+id/profile_view_payments"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/profile_my_payments"
-                            app:srcCompat="@drawable/payments_small" />
-
-                        <TextView
-                            android:id="@+id/profile_view_payments"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/bottom_corners_rounded_buttons"
-                            android:backgroundTint="@color/light_black"
-                            android:gravity="center"
-                            android:onClick="onClickAddDetails"
-                            android:paddingTop="2dp"
-                            android:paddingBottom="2dp"
-                            android:text="View"
-                            android:textColor="@color/white"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/imageView24" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/profile_settings"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:background="@drawable/all_rounded_small"
-                        android:backgroundTint="@color/light_white"
-                        android:paddingTop="5dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/profile_payments"
-                        app:layout_constraintTop_toTopOf="@+id/profile_payments">
-
-                        <TextView
-                            android:id="@+id/profile_my_settings"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="Settings"
-                            android:textAlignment="center"
-                            android:textColor="@color/light_black"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toTopOf="@+id/imageView25"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/imageView25"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            app:layout_constraintBottom_toTopOf="@+id/profile_view_settings"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/profile_my_settings"
-                            app:srcCompat="@drawable/settings_small" />
-
-                        <TextView
-                            android:id="@+id/profile_view_settings"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/bottom_corners_rounded_buttons"
-                            android:backgroundTint="@color/light_black"
-                            android:gravity="center"
-                            android:onClick="onClickAddDetails"
-                            android:paddingTop="2dp"
-                            android:paddingBottom="2dp"
-                            android:text="View"
-                            android:textColor="@color/white"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/imageView25" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <TextView
-                        android:id="@+id/profile_personal_details_drop_drown"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="5dp"
-                        android:background="@drawable/button_active"
-                        android:backgroundTint="@color/light_black"
-                        android:onClick="onClickShowDetails"
-                        android:paddingStart="10dp"
-                        android:paddingTop="5dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="5dp"
-                        android:text="Personal Details"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:visibility="visible"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/profile_personal_details" />
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/profile_all_other_personal_details"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:background="@drawable/bottom_corners_rounded_buttons"
-                        android:backgroundTint="@color/light_white"
-                        android:visibility="gone"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/profile_personal_details_drop_drown">
-
-                        <TextView
-                            android:id="@+id/view_personal_details_email_id_text_view"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:background="@drawable/edit_text_border_grey"
-                            android:paddingStart="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@drawable/all_rounded_small"
+                            android:backgroundTint="@color/light_white"
                             android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
-                            android:text="Email"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/textView11"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/profile_payments"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/profile_bank_details">
+
+                            <TextView
+                                android:id="@+id/profile_my_history"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="History"
+                                android:textAlignment="center"
+                                android:textColor="@color/light_black"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toTopOf="@+id/imageView16"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/imageView16"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                app:layout_constraintBottom_toTopOf="@+id/profile_view_history"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/profile_my_history"
+                                app:srcCompat="@drawable/truck_history_small" />
+
+                            <TextView
+                                android:id="@+id/profile_view_history"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/bottom_corners_rounded_buttons"
+                                android:backgroundTint="@color/light_black"
+                                android:gravity="center"
+                                android:onClick="onClickAddDetails"
+                                android:paddingTop="2dp"
+                                android:paddingBottom="2dp"
+                                android:text="View"
+                                android:textColor="@color/white"
+                                android:textSize="14sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/imageView16" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/profile_payments"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:background="@drawable/all_rounded_small"
+                            android:backgroundTint="@color/light_white"
+                            android:paddingTop="5dp"
+                            app:layout_constraintEnd_toStartOf="@+id/profile_settings"
+                            app:layout_constraintStart_toEndOf="@+id/profile_history"
+                            app:layout_constraintTop_toTopOf="@+id/profile_history">
+
+                            <TextView
+                                android:id="@+id/profile_my_payments"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/Payments"
+                                android:textAlignment="center"
+                                android:textColor="@color/light_black"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toTopOf="@+id/imageView24"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/imageView24"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                app:layout_constraintBottom_toTopOf="@+id/profile_view_payments"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/profile_my_payments"
+                                app:srcCompat="@drawable/payments_small" />
+
+                            <TextView
+                                android:id="@+id/profile_view_payments"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/bottom_corners_rounded_buttons"
+                                android:backgroundTint="@color/light_black"
+                                android:gravity="center"
+                                android:onClick="onClickAddDetails"
+                                android:paddingTop="2dp"
+                                android:paddingBottom="2dp"
+                                android:text="View"
+                                android:textColor="@color/white"
+                                android:textSize="14sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/imageView24" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/profile_settings"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:background="@drawable/all_rounded_small"
+                            android:backgroundTint="@color/light_white"
+                            android:paddingTop="5dp"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/textView11"
-                            app:layout_constraintTop_toTopOf="@+id/textView11" />
+                            app:layout_constraintStart_toEndOf="@+id/profile_payments"
+                            app:layout_constraintTop_toTopOf="@+id/profile_payments">
+
+                            <TextView
+                                android:id="@+id/profile_my_settings"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="Settings"
+                                android:textAlignment="center"
+                                android:textColor="@color/light_black"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toTopOf="@+id/imageView25"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/imageView25"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                app:layout_constraintBottom_toTopOf="@+id/profile_view_settings"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/profile_my_settings"
+                                app:srcCompat="@drawable/settings_small" />
+
+                            <TextView
+                                android:id="@+id/profile_view_settings"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/bottom_corners_rounded_buttons"
+                                android:backgroundTint="@color/light_black"
+                                android:gravity="center"
+                                android:onClick="onClickAddDetails"
+                                android:paddingTop="2dp"
+                                android:paddingBottom="2dp"
+                                android:text="View"
+                                android:textColor="@color/white"
+                                android:textSize="14sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/imageView25" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView
-                            android:id="@+id/view_personal_details_address_text_view"
-                            android:layout_width="match_parent"
+                            android:id="@+id/profile_personal_details_drop_drown"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="8dp"
-                            android:background="@drawable/edit_text_border_grey"
-                            android:paddingStart="10dp"
-                            android:paddingTop="5dp"
-                            android:paddingEnd="5dp"
-                            android:paddingBottom="5dp"
-                            android:text="Address"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView10" />
-
-                        <TextView
-                            android:id="@+id/pan_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="5dp"
-                            android:paddingStart="5dp"
-                            android:text="@string/PANCard"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:visibility="visible"
-                            app:layout_constraintEnd_toStartOf="@+id/personal_details_pan_number"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/view_personal_details_address_text_view" />
-
-                        <TextView
-                            android:id="@+id/personal_details_pan_number"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/edit_text_border_grey"
-                            android:hint="@string/pan_number"
-                            android:paddingStart="10dp"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
-                            android:textColor="@color/light_black"
-                            android:textSize="14sp"
-                            android:visibility="visible"
-                            app:layout_constraintBottom_toBottomOf="@+id/pan_text"
-                            app:layout_constraintEnd_toStartOf="@+id/view_personal_details_preview_pan_card"
-                            app:layout_constraintStart_toEndOf="@+id/pan_text"
-                            app:layout_constraintTop_toTopOf="@+id/pan_text" />
-
-                        <TextView
-                            android:id="@+id/personal_details_aadhar_number"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/edit_text_border_grey"
-                            android:hint="Aadhar Number"
-                            android:paddingStart="10dp"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
-                            android:textColor="@color/light_black"
-                            android:textSize="14sp"
-                            android:visibility="visible"
-                            app:layout_constraintBottom_toBottomOf="@+id/aadhar_text"
-                            app:layout_constraintEnd_toStartOf="@+id/view_personal_details_preview_aadhar_card"
-                            app:layout_constraintStart_toEndOf="@+id/aadhar_text"
-                            app:layout_constraintTop_toTopOf="@+id/aadhar_text" />
-
-                        <TextView
-                            android:id="@+id/aadhar_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="5dp"
-                            android:paddingStart="5dp"
-                            android:text="@string/Aadhar"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:visibility="visible"
-                            app:layout_constraintEnd_toStartOf="@+id/personal_details_aadhar_number"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/pan_text" />
-
-                        <TextView
-                            android:id="@+id/textView10"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:paddingStart="5dp"
-                            android:text="@string/Address"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/view_personal_details_email_id_text_view" />
-
-                        <TextView
-                            android:id="@+id/textView11"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="5dp"
-                            android:paddingStart="5dp"
-                            android:text="@string/Email"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toStartOf="@+id/view_personal_details_email_id_text_view"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/personal_details_alternate_numbr" />
-
-                        <TextView
-                            android:id="@+id/view_personal_details_preview_aadhar_card"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="5dp"
-                            android:drawableStart="@drawable/ic_preview"
-                            android:onClick="onClickPreviewAadharCard"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:visibility="visible"
-                            app:layout_constraintBottom_toBottomOf="@+id/personal_details_aadhar_number"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/personal_details_aadhar_number"
-                            app:layout_constraintTop_toTopOf="@+id/personal_details_aadhar_number" />
-
-                        <TextView
-                            android:id="@+id/view_personal_details_preview_pan_card"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="5dp"
-                            android:drawableStart="@drawable/ic_preview"
-                            android:onClick="onClickPreviewPanCard"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:visibility="visible"
-                            app:layout_constraintBottom_toBottomOf="@+id/personal_details_pan_number"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/personal_details_pan_number"
-                            app:layout_constraintTop_toTopOf="@+id/personal_details_pan_number" />
-
-                        <TextView
-                            android:id="@+id/view_personal_details_complete_personal_details_text"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center"
-                            android:paddingStart="5dp"
-                            android:text="@string/Please_complete_your_profile"
-                            android:textColor="@color/black"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:visibility="visible"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/aadhar_text" />
-
-                        <TextView
-                            android:id="@+id/personal_details_alternate_numbr"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="10dp"
-                            android:background="@drawable/edit_text_border_grey"
-                            android:hint="@string/edit_number_hint_optional"
-                            android:paddingStart="10dp"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
-                            android:textColor="@color/light_black"
-                            android:textSize="14sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/view_personal_details_add_personal_details"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="25dp"
-                            android:layout_marginEnd="25dp"
-                            android:layout_marginBottom="5dp"
                             android:background="@drawable/button_active"
                             android:backgroundTint="@color/light_black"
-                            android:onClick="onClickAddPersonalDetails"
+                            android:onClick="onClickShowDetails"
+                            android:paddingStart="10dp"
                             android:paddingTop="5dp"
+                            android:paddingEnd="10dp"
                             android:paddingBottom="5dp"
-                            android:layout_marginTop="5dp"
-                            android:text="Complete KYC"
-                            android:textAlignment="center"
+                            android:text="Personal Details"
                             android:textColor="@color/white"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:visibility="visible"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/view_personal_details_complete_personal_details_text" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                            app:layout_constraintTop_toBottomOf="@+id/profile_personal_details" />
 
-                    <TextView
-                        android:id="@+id/view_personal_details_firm_title"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:background="@drawable/button_active"
-                        android:backgroundTint="@color/light_black"
-                        android:onClick="onClickShowDetails"
-                        android:paddingStart="10dp"
-                        android:paddingTop="5dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="5dp"
-                        android:text="Firm Details"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:visibility="visible"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/profile_all_other_personal_details" />
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/profile_all_other_personal_details"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:background="@drawable/bottom_corners_rounded_buttons"
+                            android:backgroundTint="@color/light_white"
+                            android:visibility="gone"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/profile_personal_details_drop_drown">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/profile_company_constrain"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:background="@drawable/bottom_corners_rounded_buttons"
-                        android:backgroundTint="@color/light_white"
-                        android:visibility="gone"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view_personal_details_firm_title">
+                            <TextView
+                                android:id="@+id/view_personal_details_email_id_text_view"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:background="@drawable/edit_text_border_grey"
+                                android:paddingStart="10dp"
+                                android:paddingTop="5dp"
+                                android:paddingBottom="5dp"
+                                android:text="Email"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                app:layout_constraintBottom_toBottomOf="@+id/textView11"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/textView11"
+                                app:layout_constraintTop_toTopOf="@+id/textView11" />
+
+                            <TextView
+                                android:id="@+id/view_personal_details_address_text_view"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginEnd="8dp"
+                                android:background="@drawable/edit_text_border_grey"
+                                android:paddingStart="10dp"
+                                android:paddingTop="5dp"
+                                android:paddingEnd="5dp"
+                                android:paddingBottom="5dp"
+                                android:text="Address"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+                            <TextView
+                                android:id="@+id/pan_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="5dp"
+                                android:paddingStart="5dp"
+                                android:text="@string/PANCard"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:visibility="visible"
+                                app:layout_constraintEnd_toStartOf="@+id/personal_details_pan_number"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/view_personal_details_address_text_view" />
+
+                            <TextView
+                                android:id="@+id/personal_details_pan_number"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edit_text_border_grey"
+                                android:hint="@string/pan_number"
+                                android:paddingStart="10dp"
+                                android:paddingTop="5dp"
+                                android:paddingBottom="5dp"
+                                android:textColor="@color/light_black"
+                                android:textSize="14sp"
+                                android:visibility="visible"
+                                app:layout_constraintBottom_toBottomOf="@+id/pan_text"
+                                app:layout_constraintEnd_toStartOf="@+id/view_personal_details_preview_pan_card"
+                                app:layout_constraintStart_toEndOf="@+id/pan_text"
+                                app:layout_constraintTop_toTopOf="@+id/pan_text" />
+
+                            <TextView
+                                android:id="@+id/personal_details_aadhar_number"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edit_text_border_grey"
+                                android:hint="Aadhar Number"
+                                android:paddingStart="10dp"
+                                android:paddingTop="5dp"
+                                android:paddingBottom="5dp"
+                                android:textColor="@color/light_black"
+                                android:textSize="14sp"
+                                android:visibility="visible"
+                                app:layout_constraintBottom_toBottomOf="@+id/aadhar_text"
+                                app:layout_constraintEnd_toStartOf="@+id/view_personal_details_preview_aadhar_card"
+                                app:layout_constraintStart_toEndOf="@+id/aadhar_text"
+                                app:layout_constraintTop_toTopOf="@+id/aadhar_text" />
+
+                            <TextView
+                                android:id="@+id/aadhar_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="5dp"
+                                android:paddingStart="5dp"
+                                android:text="@string/Aadhar"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:visibility="visible"
+                                app:layout_constraintEnd_toStartOf="@+id/personal_details_aadhar_number"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/pan_text" />
+
+                            <TextView
+                                android:id="@+id/textView10"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:paddingStart="5dp"
+                                android:text="@string/Address"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/view_personal_details_email_id_text_view" />
+
+                            <TextView
+                                android:id="@+id/textView11"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="5dp"
+                                android:paddingStart="5dp"
+                                android:text="@string/Email"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toStartOf="@+id/view_personal_details_email_id_text_view"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/personal_details_alternate_numbr" />
+
+                            <TextView
+                                android:id="@+id/view_personal_details_preview_aadhar_card"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="5dp"
+                                android:drawableStart="@drawable/ic_preview"
+                                android:onClick="onClickPreviewAadharCard"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:visibility="visible"
+                                app:layout_constraintBottom_toBottomOf="@+id/personal_details_aadhar_number"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/personal_details_aadhar_number"
+                                app:layout_constraintTop_toTopOf="@+id/personal_details_aadhar_number" />
+
+                            <TextView
+                                android:id="@+id/view_personal_details_preview_pan_card"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="5dp"
+                                android:drawableStart="@drawable/ic_preview"
+                                android:onClick="onClickPreviewPanCard"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:visibility="visible"
+                                app:layout_constraintBottom_toBottomOf="@+id/personal_details_pan_number"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/personal_details_pan_number"
+                                app:layout_constraintTop_toTopOf="@+id/personal_details_pan_number" />
+
+                            <TextView
+                                android:id="@+id/view_personal_details_complete_personal_details_text"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:gravity="center"
+                                android:paddingStart="5dp"
+                                android:text="@string/Please_complete_your_profile"
+                                android:textColor="@color/black"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:visibility="visible"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/aadhar_text" />
+
+                            <TextView
+                                android:id="@+id/personal_details_alternate_numbr"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/edit_text_border_grey"
+                                android:hint="@string/edit_number_hint_optional"
+                                android:paddingStart="10dp"
+                                android:paddingTop="5dp"
+                                android:paddingBottom="5dp"
+                                android:textColor="@color/light_black"
+                                android:textSize="14sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/view_personal_details_add_personal_details"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="25dp"
+                                android:layout_marginEnd="25dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="@drawable/button_active"
+                                android:backgroundTint="@color/light_black"
+                                android:onClick="onClickAddPersonalDetails"
+                                android:paddingTop="5dp"
+                                android:paddingBottom="5dp"
+                                android:layout_marginTop="5dp"
+                                android:text="Complete KYC"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:visibility="visible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/view_personal_details_complete_personal_details_text" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView
-                            android:id="@+id/view_personal_details_firm_btn"
+                            android:id="@+id/view_personal_details_firm_title"
                             android:layout_width="0dp"
-                            android:layout_height="29dp"
-                            android:layout_marginStart="20dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
                             android:layout_marginTop="5dp"
-                            android:layout_marginEnd="20dp"
-                            android:layout_marginBottom="5dp"
+                            android:layout_marginEnd="5dp"
                             android:background="@drawable/button_active"
-                            android:onClick="onClickAddCompanyDetails"
+                            android:backgroundTint="@color/light_black"
+                            android:onClick="onClickShowDetails"
+                            android:paddingStart="10dp"
                             android:paddingTop="5dp"
+                            android:paddingEnd="10dp"
                             android:paddingBottom="5dp"
-                            android:text="@string/add_company"
-                            android:textAlignment="center"
+                            android:text="Firm Details"
                             android:textColor="@color/white"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:visibility="visible"
-                            app:layout_constraintBottom_toTopOf="@+id/view_personal_details_firm_name_text_view"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/view_personal_details_firm_name_title"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:paddingStart="5dp"
-                            android:text="@string/Name"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:visibility="visible"
-                            app:layout_constraintBottom_toBottomOf="@+id/view_personal_details_firm_name_text_view"
-                            app:layout_constraintEnd_toStartOf="@+id/view_personal_details_firm_name_text_view"
-                            app:layout_constraintStart_toStartOf="@+id/view_personal_details_firm_address_title"
-                            app:layout_constraintTop_toTopOf="@+id/view_personal_details_firm_name_text_view" />
-
-                        <TextView
-                            android:id="@+id/view_personal_details_firm_pan_number"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="5dp"
-                            android:paddingStart="5dp"
-                            android:text="@string/PAN_No"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:visibility="visible"
-                            app:layout_constraintEnd_toStartOf="@+id/view_personal_details_firm_pan_number_set"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/view_personal_details_firm_gst_number_set" />
-
-                        <TextView
-                            android:id="@+id/view_personal_details_firm_name_text_view"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="8dp"
-                            android:background="@drawable/edit_text_border_grey"
-                            android:paddingStart="10dp"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
-                            android:text="@string/Name"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            android:visibility="visible"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="@+id/view_personal_details_firm_address_text_view"
-                            app:layout_constraintTop_toBottomOf="@+id/view_personal_details_firm_btn" />
-
-                        <TextView
-                            android:id="@+id/view_personal_details_firm_address_text_view"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:background="@drawable/edit_text_border_grey"
-                            android:paddingStart="10dp"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
-                            android:singleLine="true"
-                            android:text="@string/Address"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            android:visibility="visible"
-                            app:layout_constraintBottom_toBottomOf="@+id/view_personal_details_firm_address_title"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="@+id/view_personal_details_firm_gst_number_set"
-                            app:layout_constraintTop_toTopOf="@+id/view_personal_details_firm_address_title" />
-
-                        <TextView
-                            android:id="@+id/view_personal_details_firm_gst_number_set"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:background="@drawable/edit_text_border_grey"
-                            android:paddingStart="10dp"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
-                            android:singleLine="true"
-                            android:text="Firm GST"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            android:visibility="visible"
-                            app:layout_constraintBottom_toBottomOf="@+id/view_personal_details_firm_gst_number"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/view_personal_details_firm_gst_number"
-                            app:layout_constraintTop_toTopOf="@+id/view_personal_details_firm_gst_number" />
-
-                        <TextView
-                            android:id="@+id/view_personal_details_firm_pan_number_set"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:background="@drawable/edit_text_border_grey"
-                            android:paddingStart="10dp"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
-                            android:singleLine="true"
-                            android:text="Firm PAN"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            android:visibility="visible"
-                            app:layout_constraintBottom_toBottomOf="@+id/view_personal_details_firm_pan_number"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="@+id/view_personal_details_firm_gst_number_set"
-                            app:layout_constraintTop_toTopOf="@+id/view_personal_details_firm_pan_number" />
-
-                        <TextView
-                            android:id="@+id/view_personal_details_edit_firm_details"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="8dp"
-                            android:drawableStart="@drawable/ic_edit_small"
-                            android:drawableTint="@color/button_blue"
-                            android:onClick="onClickEditFirmDetailsView"
-                            android:padding="5dp"
-                            android:text="@string/edit"
-                            android:textAlignment="center"
-                            android:textColor="@color/button_blue"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:visibility="visible"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/view_personal_details_firm_pan_number_set" />
-
-                        <TextView
-                            android:id="@+id/view_personal_details_firm_gst_number"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="5dp"
-                            android:paddingStart="5dp"
-                            android:text="@string/GST_No"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:visibility="visible"
-                            app:layout_constraintEnd_toStartOf="@+id/view_personal_details_firm_gst_number_set"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/view_personal_details_firm_address_title" />
+                            app:layout_constraintTop_toBottomOf="@+id/profile_all_other_personal_details" />
 
-                        <TextView
-                            android:id="@+id/view_personal_details_firm_address_title"
-                            android:layout_width="wrap_content"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/profile_company_constrain"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="5dp"
                             android:layout_marginEnd="5dp"
-                            android:paddingStart="5dp"
-                            android:text="@string/Address"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:visibility="visible"
-                            app:layout_constraintEnd_toStartOf="@+id/view_personal_details_firm_address_text_view"
+                            android:background="@drawable/bottom_corners_rounded_buttons"
+                            android:backgroundTint="@color/light_white"
+                            android:visibility="gone"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/view_personal_details_firm_name_text_view" />
+                            app:layout_constraintTop_toBottomOf="@+id/view_personal_details_firm_title">
 
+                            <TextView
+                                android:id="@+id/view_personal_details_firm_btn"
+                                android:layout_width="0dp"
+                                android:layout_height="29dp"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginEnd="20dp"
+                                android:layout_marginBottom="5dp"
+                                android:background="@drawable/button_active"
+                                android:onClick="onClickAddCompanyDetails"
+                                android:paddingTop="5dp"
+                                android:paddingBottom="5dp"
+                                android:text="@string/add_company"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:visibility="visible"
+                                app:layout_constraintBottom_toTopOf="@+id/view_personal_details_firm_name_text_view"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/view_personal_details_firm_name_title"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="5dp"
+                                android:text="@string/Name"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:visibility="visible"
+                                app:layout_constraintBottom_toBottomOf="@+id/view_personal_details_firm_name_text_view"
+                                app:layout_constraintEnd_toStartOf="@+id/view_personal_details_firm_name_text_view"
+                                app:layout_constraintStart_toStartOf="@+id/view_personal_details_firm_address_title"
+                                app:layout_constraintTop_toTopOf="@+id/view_personal_details_firm_name_text_view" />
+
+                            <TextView
+                                android:id="@+id/view_personal_details_firm_pan_number"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="5dp"
+                                android:paddingStart="5dp"
+                                android:text="@string/PAN_No"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:visibility="visible"
+                                app:layout_constraintEnd_toStartOf="@+id/view_personal_details_firm_pan_number_set"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/view_personal_details_firm_gst_number_set" />
+
+                            <TextView
+                                android:id="@+id/view_personal_details_firm_name_text_view"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginEnd="8dp"
+                                android:background="@drawable/edit_text_border_grey"
+                                android:paddingStart="10dp"
+                                android:paddingTop="5dp"
+                                android:paddingBottom="5dp"
+                                android:text="@string/Name"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:visibility="visible"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="@+id/view_personal_details_firm_address_text_view"
+                                app:layout_constraintTop_toBottomOf="@+id/view_personal_details_firm_btn" />
+
+                            <TextView
+                                android:id="@+id/view_personal_details_firm_address_text_view"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:background="@drawable/edit_text_border_grey"
+                                android:paddingStart="10dp"
+                                android:paddingTop="5dp"
+                                android:paddingBottom="5dp"
+                                android:singleLine="true"
+                                android:text="@string/Address"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:visibility="visible"
+                                app:layout_constraintBottom_toBottomOf="@+id/view_personal_details_firm_address_title"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="@+id/view_personal_details_firm_gst_number_set"
+                                app:layout_constraintTop_toTopOf="@+id/view_personal_details_firm_address_title" />
+
+                            <TextView
+                                android:id="@+id/view_personal_details_firm_gst_number_set"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:background="@drawable/edit_text_border_grey"
+                                android:paddingStart="10dp"
+                                android:paddingTop="5dp"
+                                android:paddingBottom="5dp"
+                                android:singleLine="true"
+                                android:text="Firm GST"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:visibility="visible"
+                                app:layout_constraintBottom_toBottomOf="@+id/view_personal_details_firm_gst_number"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/view_personal_details_firm_gst_number"
+                                app:layout_constraintTop_toTopOf="@+id/view_personal_details_firm_gst_number" />
+
+                            <TextView
+                                android:id="@+id/view_personal_details_firm_pan_number_set"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:background="@drawable/edit_text_border_grey"
+                                android:paddingStart="10dp"
+                                android:paddingTop="5dp"
+                                android:paddingBottom="5dp"
+                                android:singleLine="true"
+                                android:text="Firm PAN"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:visibility="visible"
+                                app:layout_constraintBottom_toBottomOf="@+id/view_personal_details_firm_pan_number"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="@+id/view_personal_details_firm_gst_number_set"
+                                app:layout_constraintTop_toTopOf="@+id/view_personal_details_firm_pan_number" />
+
+                            <TextView
+                                android:id="@+id/view_personal_details_edit_firm_details"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginEnd="8dp"
+                                android:drawableStart="@drawable/ic_edit_small"
+                                android:drawableTint="@color/button_blue"
+                                android:onClick="onClickEditFirmDetailsView"
+                                android:padding="5dp"
+                                android:text="@string/edit"
+                                android:textAlignment="center"
+                                android:textColor="@color/button_blue"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:visibility="visible"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/view_personal_details_firm_pan_number_set" />
+
+                            <TextView
+                                android:id="@+id/view_personal_details_firm_gst_number"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="5dp"
+                                android:paddingStart="5dp"
+                                android:text="@string/GST_No"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:visibility="visible"
+                                app:layout_constraintEnd_toStartOf="@+id/view_personal_details_firm_gst_number_set"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/view_personal_details_firm_address_title" />
+
+                            <TextView
+                                android:id="@+id/view_personal_details_firm_address_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="5dp"
+                                android:paddingStart="5dp"
+                                android:text="@string/Address"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:visibility="visible"
+                                app:layout_constraintEnd_toStartOf="@+id/view_personal_details_firm_address_text_view"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/view_personal_details_firm_name_text_view" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <ImageView
+                            android:id="@+id/profile_down_personal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="5dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/profile_personal_details_drop_drown"
+                            app:layout_constraintEnd_toEndOf="@+id/profile_personal_details_drop_drown"
+                            app:layout_constraintTop_toTopOf="@+id/profile_personal_details_drop_drown"
+                            app:srcCompat="@drawable/ic_down"
+                            app:tint="@color/white" />
+
+                        <ImageView
+                            android:id="@+id/profile_down_firm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="5dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/view_personal_details_firm_title"
+                            app:layout_constraintEnd_toEndOf="@+id/view_personal_details_firm_title"
+                            app:layout_constraintTop_toTopOf="@+id/view_personal_details_firm_title"
+                            app:srcCompat="@drawable/ic_down"
+                            app:tint="@color/white" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <ImageView
-                        android:id="@+id/profile_down_personal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_marginEnd="5dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/profile_personal_details_drop_drown"
-                        app:layout_constraintEnd_toEndOf="@+id/profile_personal_details_drop_drown"
-                        app:layout_constraintTop_toTopOf="@+id/profile_personal_details_drop_drown"
-                        app:srcCompat="@drawable/ic_down"
-                        app:tint="@color/white" />
-
-                    <ImageView
-                        android:id="@+id/profile_down_firm"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_marginEnd="5dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/view_personal_details_firm_title"
-                        app:layout_constraintEnd_toEndOf="@+id/view_personal_details_firm_title"
-                        app:layout_constraintTop_toTopOf="@+id/view_personal_details_firm_title"
-                        app:srcCompat="@drawable/ic_down"
-                        app:tint="@color/white" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </ScrollView>
+                </ScrollView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
 </layout>
