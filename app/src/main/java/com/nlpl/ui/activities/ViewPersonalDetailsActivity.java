@@ -3,7 +3,6 @@ package com.nlpl.ui.activities;
 import static com.nlpl.R.drawable.blue_profile_small;
 import static com.nlpl.R.drawable.ic_down;
 import static com.nlpl.R.drawable.ic_up;
-import static com.nlpl.R.drawable.loading_for_dialog;
 
 import androidx.annotation.NonNull;
 
@@ -11,10 +10,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.DataBindingUtil;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
@@ -23,7 +21,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
@@ -49,7 +46,6 @@ import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
 import com.nlpl.utils.JumpTo;
-import com.nlpl.utils.ShowAlert;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
