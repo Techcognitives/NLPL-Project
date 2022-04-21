@@ -50,7 +50,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDAAes8x5HVKYB5YEIGBmdnCdyBrAHUijM" />
+            android:value="AIzaSyDQqGwhvhMOwbcbuhkZVZ5fp9lETjWno_Q" />
 
         <activity
             android:name=".ui.activities.CustomerLoadsHistoryActivity"

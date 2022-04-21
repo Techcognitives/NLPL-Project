@@ -494,7 +494,7 @@ public class RegistrationActivity extends AppCompat {
 
     public void onClickOpenMaps(View view) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            Places.initialize(getApplicationContext(), "AIzaSyBP7ifgIjGuDeRI2mb42XKNuf3hw84XD8Q");
+            Places.initialize(getApplicationContext(), "AIzaSyDQqGwhvhMOwbcbuhkZVZ5fp9lETjWno_Q");
             List<Place.Field> fields = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG);
             Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields).build(this);
             startActivityForResult(intent, 100);

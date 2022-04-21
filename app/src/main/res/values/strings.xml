@@ -1,6 +1,8 @@
 <resources>
     //------------------------------- Application name ---------------------------------------------
     <string name="app_name" translatable="false">FindMyTruck</string>
+
+    <string name="places_api" translatable="false">AIzaSyDQqGwhvhMOwbcbuhkZVZ5fp9lETjWno_Q</string>
     //----------------------------------------------------------------------------------------------
 
     //------------------------------------- States List --------------------------------------------
