@@ -68,7 +68,7 @@ public class ShowAlert {
         });
     }
 
-    public static void loadingDialog(Activity activity) {
+    public static void loadingDialog(Activity activity,int delayTimeInMilliSec) {
         Dialog loadingDialog = new Dialog(activity);
         loadingDialog.setContentView(R.layout.dialog_loading);
         loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -96,7 +96,6 @@ public class ShowAlert {
                 handler.removeCallbacks(runnable);
             }
         });
-
-        handler.postDelayed(runnable, 5000);
+        handler.postDelayed(runnable, delayTimeInMilliSec);
     }
 }

@@ -494,7 +494,7 @@ public class RegistrationActivity extends AppCompat {
 
     public void onClickOpenMaps(View view) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            Places.initialize(getApplicationContext(), "AIzaSyDAAes8x5HVKYB5YEIGBmdnCdyBrAHUijM");
+            Places.initialize(getApplicationContext(), "AIzaSyBP7ifgIjGuDeRI2mb42XKNuf3hw84XD8Q");
             List<Place.Field> fields = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG);
             Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields).build(this);
             startActivityForResult(intent, 100);
@@ -863,6 +863,7 @@ public class RegistrationActivity extends AppCompat {
                     address.setText(addressFiledWithoutCity[0]);
                     pinCode.setText(postalCode);
                 } catch (Exception e) {
+                    e.printStackTrace();
                     address.setText(address1);
                     pinCode.setText(postalCode);
                 }
@@ -874,7 +875,6 @@ public class RegistrationActivity extends AppCompat {
                 e.printStackTrace();
             }
         } catch (Exception e) {
-            e.printStackTrace();
             //setMarker(latLng);
         }
 

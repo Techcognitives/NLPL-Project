@@ -175,10 +175,19 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         previewDialogProfile.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
 
         getUserDetailsMain();
-        ShowAlert.loadingDialog(this);
     }
 
     private void getUserDetailsMain() {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+
         Call<MainResponse> responseCall = ApiClient.getUserService().mainResponse(userId);
         responseCall.enqueue(new Callback<MainResponse>() {
             @Override
@@ -225,6 +234,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                         userIsSelfAddedAsDriverAPI = String.valueOf(list.getIs_self_added_asDriver());
 
                         userNameTextView.setText(userNameAPI);
+
                         String s1 = userPhoneNumberAPI.substring(2, 12);
 
                         userPhoneNumberTextView.setText("+91 " + s1);
@@ -453,6 +463,10 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                }
+
+                if (loadingDialog.isShowing()){
+                    loadingDialog.dismiss();
                 }
             }
 
