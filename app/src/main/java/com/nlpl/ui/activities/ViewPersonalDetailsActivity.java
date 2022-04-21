@@ -3,6 +3,7 @@ package com.nlpl.ui.activities;
 import static com.nlpl.R.drawable.blue_profile_small;
 import static com.nlpl.R.drawable.ic_down;
 import static com.nlpl.R.drawable.ic_up;
+import static com.nlpl.R.drawable.loading_for_dialog;
 
 import androidx.annotation.NonNull;
 
@@ -10,8 +11,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.DataBindingUtil;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
@@ -20,6 +23,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
@@ -45,6 +49,8 @@ import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.FileUtils;
 import com.nlpl.utils.JumpTo;
+import com.nlpl.utils.ShowAlert;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
@@ -68,9 +74,8 @@ public class ViewPersonalDetailsActivity extends AppCompat {
 
     Dialog previewDialogPan, previewDialogAadhar, previewDialogProfile;
 
-    View actionBar;
-    TextView actionBarTitle, actionBarSkip, previewAadharBtn, panText, aadharText, panNumber, aadharNumber, previewPANBtn, userAlternateNumber, bankCount, truckCount, driverCount;
-    ImageView actionBarBackButton, actionBarMenuButton, profilePic, arrowPersonal, arrowFirm;
+    TextView previewAadharBtn, panText, aadharText, panNumber, aadharNumber, previewPANBtn, userAlternateNumber, bankCount, truckCount, driverCount;
+    ImageView profilePic, arrowPersonal, arrowFirm;
 
     ConstraintLayout constrainProfileDetails, constrainFirmDetails, truckConstrain, driverConstrain;
 
@@ -95,15 +100,9 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         }
 
         //-------------------------------- Action Bar ----------------------------------------------
-        actionBar = findViewById(R.id.view_personal_details_action_bar);
-        actionBarTitle = (TextView) actionBar.findViewById(R.id.action_bar_title);
-        actionBarBackButton = (ImageView) actionBar.findViewById(R.id.action_bar_back_button);
-        actionBarMenuButton = (ImageView) actionBar.findViewById(R.id.action_bar_menu);
-        actionBarSkip = (TextView) actionBar.findViewById(R.id.action_bar_skip);
-
-        actionBarTitle.setText("Profile");
-        actionBarMenuButton.setVisibility(View.GONE);
-        actionBarBackButton.setOnClickListener(new View.OnClickListener() {
+        binding.viewPersonalDetailsActionBar.actionBarTitle.setText("Profile");
+        binding.viewPersonalDetailsActionBar.actionBarMenu.setVisibility(View.GONE);
+        binding.viewPersonalDetailsActionBar.actionBarBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (userUserTypeAPI.equals("Customer")) {
@@ -114,9 +113,9 @@ public class ViewPersonalDetailsActivity extends AppCompat {
             }
         });
 
-        actionBarSkip.setVisibility(View.VISIBLE);
-        actionBarSkip.setText(getString(R.string.edit));
-        actionBarSkip.setOnClickListener(view -> {
+        binding.viewPersonalDetailsActionBar.actionBarSkip.setVisibility(View.VISIBLE);
+        binding.viewPersonalDetailsActionBar.actionBarSkip.setText(getString(R.string.edit));
+        binding.viewPersonalDetailsActionBar.actionBarSkip.setOnClickListener(view -> {
             JumpTo.goToRegistrationActivity(ViewPersonalDetailsActivity.this, phone, true, userId, true);
         });
 
@@ -176,6 +175,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         previewDialogProfile.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
 
         getUserDetailsMain();
+        ShowAlert.loadingDialog(this);
     }
 
     private void getUserDetailsMain() {
@@ -366,7 +366,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                             userCompanyStateAPI = companyDetails.get(0).comp_state;
                             userCompanyCityAPI = companyDetails.get(0).comp_city;
                             userCompanyPINCodeAPI = companyDetails.get(0).comp_zip;
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
 
@@ -447,6 +447,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                         //GET SP BID DETAILS
                         ArrayList<MainResponse.Data.SpBidDetails> spBidDetailsList = new ArrayList<>();
                         spBidDetailsList.addAll(list.getSpBidDetails());
+
                     } else {
 
                     }
