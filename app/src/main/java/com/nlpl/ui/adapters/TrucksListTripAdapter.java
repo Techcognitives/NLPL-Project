@@ -11,11 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nlpl.R;
-import com.nlpl.model.ModelForRecyclerView.TruckModel;
-import com.nlpl.model.Responses.AddTruckResponse;
 import com.nlpl.model.Responses.TruckResponse;
 import com.nlpl.ui.activities.PostATripActivity;
-import com.nlpl.ui.activities.ViewDriverDetailsActivity;
 
 import java.util.ArrayList;
 

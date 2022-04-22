@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/edit_text_border"
     android:layout_margin="5dp"
+    android:background="@drawable/edit_text_border"
     android:paddingBottom="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,9 +24,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:text="TextView"
             android:paddingTop="2dp"
             android:paddingBottom="2dp"
+            android:text="TextView"
             android:textColor="@color/white"
             android:textSize="15sp"
             android:textStyle="bold"
@@ -75,7 +75,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
         android:drawableStart="@drawable/ic_preview"
         android:gravity="center"
         android:text="@string/rc_front"
@@ -83,16 +82,18 @@
         android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/my_truck_list_preview_insurance_text_view"
         app:layout_constraintEnd_toStartOf="@+id/my_truck_list_preview_insurance_text_view"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_truck_list_capacity"
+        app:layout_constraintTop_toTopOf="@+id/my_truck_list_preview_insurance_text_view"
         tools:ignore="RtlCompat" />
 
     <TextView
         android:id="@+id/my_truck_list_preview_insurance_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
         android:drawableStart="@drawable/ic_preview"
         android:gravity="center"
         android:text="@string/insurance"
@@ -100,10 +101,10 @@
         android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/my_truck_list_preview_rc_book_text_view"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/my_truck_list_driver_details"
         app:layout_constraintStart_toEndOf="@+id/my_truck_list_preview_rc_book_text_view"
-        app:layout_constraintTop_toTopOf="@+id/my_truck_list_preview_rc_book_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/my_truck_list_capacity"
         tools:ignore="RtlCompat" />
 
     <TextView
@@ -132,12 +133,12 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/Capacity"
         android:textColor="@color/black"
         android:textSize="14sp"
         android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/my_truck_list_preview_rc_book_text_view"
+        app:layout_constraintBottom_toTopOf="@+id/my_truck_list_preview_insurance_text_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/my_truck_list_truck_type" />

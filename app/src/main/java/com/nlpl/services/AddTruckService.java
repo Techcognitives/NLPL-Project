@@ -1,5 +1,6 @@
 package com.nlpl.services;
 
+import com.nlpl.model.GetTruckDetailsResponse;
 import com.nlpl.model.Requests.AddTruckRequest;
 import com.nlpl.model.Responses.AddTruckResponse;
 import com.nlpl.model.Responses.TruckResponse;
@@ -39,7 +40,7 @@ public interface AddTruckService {
     Call<TruckResponse> getTruckDetails(@Path("userId")String userId);
 
     @GET("/truck/{truckId}")
-    Call<TruckResponse> getTruckByTruckId(@Path("truckId") String truckId);
+    Call<GetTruckDetailsResponse> getTruckByTruckId(@Path("truckId") String truckId);
 }
 
 

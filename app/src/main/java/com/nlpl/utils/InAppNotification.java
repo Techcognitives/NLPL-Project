@@ -24,8 +24,6 @@ import com.nlpl.ui.activities.RegistrationActivity;
 import com.nlpl.ui.activities.ServiceProviderDashboardActivity;
 import com.nlpl.ui.activities.SliderActivity;
 import com.nlpl.ui.activities.VehicleDetailsActivity;
-import com.nlpl.ui.activities.ViewBankDetailsActivity;
-import com.nlpl.ui.activities.ViewDriverDetailsActivity;
 import com.nlpl.ui.activities.ViewPersonalDetailsActivity;
 import com.nlpl.ui.activities.ViewTruckDetailsActivity;
 
@@ -219,37 +217,6 @@ public class InAppNotification {
         final String default_notification_channel_id = "default";
 
         Intent intent = new Intent(activity, ViewPersonalDetailsActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("mobile", mobileNumber);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        intent.setAction(Intent.ACTION_MAIN);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
-        PendingIntent resultIntent = PendingIntent.getActivity(activity, 0, intent, 0);
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity, default_notification_channel_id)
-                .setSmallIcon(R.drawable.ic_truck_noti)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setContentIntent(resultIntent)
-                .setAutoCancel(true);
-        NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel notificationChannel = new
-                    NotificationChannel(NOTIFICATION_CHANNEL_ID, "NOTIFICATION_CHANNEL_NAME", importance);
-            mBuilder.setChannelId(NOTIFICATION_CHANNEL_ID);
-            assert mNotificationManager != null;
-            mNotificationManager.createNotificationChannel(notificationChannel);
-        }
-        assert mNotificationManager != null;
-        mNotificationManager.notify((int) System.currentTimeMillis(), mBuilder.build());
-    }
-
-    public static void SendNotificationJumpToViewBankDetailsActivity(Activity activity, String title, String message, String userId, String mobileNumber) {
-        final String NOTIFICATION_CHANNEL_ID = "10001";
-        final String default_notification_channel_id = "default";
-
-        Intent intent = new Intent(activity, ViewBankDetailsActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("mobile", mobileNumber);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -483,37 +450,6 @@ public class InAppNotification {
         intent.putExtra("fromBidNow", isFromBidNow);
         intent.putExtra("truckIdPass", truckId);
         intent.putExtra("driverId", driverId);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        intent.setAction(Intent.ACTION_MAIN);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
-        PendingIntent resultIntent = PendingIntent.getActivity(activity, 0, intent, 0);
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity, default_notification_channel_id)
-                .setSmallIcon(R.drawable.ic_truck_noti)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setContentIntent(resultIntent)
-                .setAutoCancel(true);
-        NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel notificationChannel = new
-                    NotificationChannel(NOTIFICATION_CHANNEL_ID, "NOTIFICATION_CHANNEL_NAME", importance);
-            mBuilder.setChannelId(NOTIFICATION_CHANNEL_ID);
-            assert mNotificationManager != null;
-            mNotificationManager.createNotificationChannel(notificationChannel);
-        }
-        assert mNotificationManager != null;
-        mNotificationManager.notify((int) System.currentTimeMillis(), mBuilder.build());
-    }
-
-    public static void SendNotificationJumpToViewDriverDetailsActivity(Activity activity, String title, String message, String userId, String mobileNumber) {
-        final String NOTIFICATION_CHANNEL_ID = "10001";
-        final String default_notification_channel_id = "default";
-
-        Intent intent = new Intent(activity, ViewDriverDetailsActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("mobile", mobileNumber);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         intent.setAction(Intent.ACTION_MAIN);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);

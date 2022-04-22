@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nlpl.R;
 import com.nlpl.model.ModelForRecyclerView.TruckModel;
 import com.nlpl.ui.activities.ServiceProviderDashboardActivity;
-import com.nlpl.ui.activities.ViewDriverDetailsActivity;
 
 import java.util.ArrayList;
 

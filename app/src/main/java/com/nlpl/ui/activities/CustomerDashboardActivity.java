@@ -2478,7 +2478,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
 
             case R.id.customer_menu_bank_details_button:
                 if (isBankDetailsDone.equals("1")) {
-                    JumpTo.goToViewBankDetailsActivity(CustomerDashboardActivity.this, userId, phone, false);
+                    JumpTo.goToViewPersonalDetailsActivity(CustomerDashboardActivity.this, userId, phone, true);
                 } else {
                     JumpTo.goToBankDetailsActivity(CustomerDashboardActivity.this, userId, phone, false, false, null);
                 }

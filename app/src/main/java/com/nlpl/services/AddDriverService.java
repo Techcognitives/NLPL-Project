@@ -1,5 +1,6 @@
 package com.nlpl.services;
 
+import com.nlpl.model.GetDriverDetailsResponse;
 import com.nlpl.model.Requests.AddDriverRequest;
 import com.nlpl.model.Responses.AddDriverResponse;
 import com.nlpl.model.Responses.AddDriverResponseGet;
@@ -45,4 +46,7 @@ public interface AddDriverService {
 
     @GET("/driver/userId/{userId}")
     Call<AddDriverResponseGet> getDriverById(@Path("userId") String userId);
+
+    @GET("/driver/driverId/{driverId}")
+    Call<GetDriverDetailsResponse> getDriverByDriverId(@Path("driverId") String driverId);
 }

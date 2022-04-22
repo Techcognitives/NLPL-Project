@@ -24,8 +24,6 @@ import com.nlpl.ui.activities.SliderActivity;
 import com.nlpl.ui.activities.TrackForLoadPosterActivity;
 import com.nlpl.ui.activities.TrackForServiceProviderActivity;
 import com.nlpl.ui.activities.VehicleDetailsActivity;
-import com.nlpl.ui.activities.ViewBankDetailsActivity;
-import com.nlpl.ui.activities.ViewDriverDetailsActivity;
 import com.nlpl.ui.activities.ViewPersonalDetailsActivity;
 import com.nlpl.ui.activities.ViewTruckDetailsActivity;
 
@@ -113,17 +111,6 @@ public class JumpTo {
 
     public static void goToViewPersonalDetailsActivity(Activity activity, String userId, String mobileNumber, Boolean isFinish) {
         Intent intent = new Intent(activity, ViewPersonalDetailsActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("mobile", mobileNumber);
-        activity.startActivity(intent);
-        if (isFinish) {
-            activity.finish();
-        }
-        activity.overridePendingTransition(0, 0);
-    }
-
-    public static void goToViewBankDetailsActivity(Activity activity, String userId, String mobileNumber, Boolean isFinish) {
-        Intent intent = new Intent(activity, ViewBankDetailsActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("mobile", mobileNumber);
         activity.startActivity(intent);
@@ -226,17 +213,6 @@ public class JumpTo {
         intent.putExtra("truckIdPass", truckId);
         intent.putExtra("driverId", driverId);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        activity.startActivity(intent);
-        if (isFinish) {
-            activity.finish();
-        }
-        activity.overridePendingTransition(0, 0);
-    }
-
-    public static void goToViewDriverDetailsActivity(Activity activity, String userId, String mobileNumber, Boolean isFinish) {
-        Intent intent = new Intent(activity, ViewDriverDetailsActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("mobile", mobileNumber);
         activity.startActivity(intent);
         if (isFinish) {
             activity.finish();

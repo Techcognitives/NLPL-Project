@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nlpl.R;
 import com.nlpl.model.MainResponse;
 import com.nlpl.model.ModelForRecyclerView.TruckModel;
+import com.nlpl.ui.activities.ViewPersonalDetailsActivity;
 import com.nlpl.ui.activities.ViewTruckDetailsActivity;
 
 import java.util.ArrayList;
@@ -20,9 +21,9 @@ import java.util.ArrayList;
 public class TrucksAdapter extends RecyclerView.Adapter<TrucksAdapter.TruckViewHolder> {
 
     private ArrayList<MainResponse.Data.TruckDetails> truckList;
-    private ViewTruckDetailsActivity activity;
+    private ViewPersonalDetailsActivity activity;
 
-    public TrucksAdapter(ViewTruckDetailsActivity activity, ArrayList<MainResponse.Data.TruckDetails> truckList) {
+    public TrucksAdapter(ViewPersonalDetailsActivity activity, ArrayList<MainResponse.Data.TruckDetails> truckList) {
         this.truckList = truckList;
         this.activity = activity;
     }
@@ -38,9 +39,23 @@ public class TrucksAdapter extends RecyclerView.Adapter<TrucksAdapter.TruckViewH
         MainResponse.Data.TruckDetails obj = truckList.get(position);
 //---------------------------------- Set Title -----------------------------------------------------
         String name1 = obj.getVehicle_no();
-        Log.i("File Name:", name1);
 
-        holder.list_title.setText(" " + name1);
+        try{
+            if (obj.getVehicle_no()==null||obj.getVehicle_no().equals("null")){
+                holder.list_title.setText(" ");
+            }else{
+                holder.list_title.setText(" " + name1);
+            }
+
+            if (obj.getRc_book()==null || obj.getRc_book().equals("null")){
+                holder.list_preview_rc_book.setVisibility(View.GONE);
+            }else{
+                holder.list_preview_rc_book.setVisibility(View.VISIBLE);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
 //--------------------------------------------------------------------------------------------------
         holder.list_edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,10 +96,10 @@ public class TrucksAdapter extends RecyclerView.Adapter<TrucksAdapter.TruckViewH
         return truckList.size();
     }
 
-    public void updateData(ArrayList<MainResponse.Data.TruckDetails> truckList) {
-        this.truckList = truckList;
-        notifyDataSetChanged();
-    }
+//    public void updateData(ArrayList<MainResponse.Data.TruckDetails> truckList) {
+//        this.truckList = truckList;
+//        notifyDataSetChanged();
+//    }
 
     public class TruckViewHolder extends RecyclerView.ViewHolder {
         private TextView list_view_driver_details,  list_title, list_edit, list_truck_type, list_capacity, list_preview_rc_book, list_preview_insurance, list_delete;

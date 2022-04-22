@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nlpl.R;
+import com.nlpl.model.GetTruckDetailsResponse;
 import com.nlpl.model.ModelForRecyclerView.TruckModel;
 import com.nlpl.model.Requests.PostATripRequest;
 import com.nlpl.model.Responses.AddTruckResponse;
@@ -136,11 +137,9 @@ public class PostATripActivity extends AppCompat {
         dialogSelectTruck.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         TextView dialogSelectTruckTitle = (TextView) dialogSelectTruck.findViewById(R.id.dialog_spinner_bind_title);
-        TextView dialogSelectTruckAddTruck = (TextView) dialogSelectTruck.findViewById(R.id.dialog_spinner_bind_add_details);
         TextView dialogSelectTruckOkButton = (TextView) dialogSelectTruck.findViewById(R.id.dialog_spinner_bind_cancel);
 
         dialogSelectTruckTitle.setText(getString(R.string.selectTruck));
-        dialogSelectTruckAddTruck.setVisibility(View.GONE);
         dialogSelectTruckOkButton.setVisibility(View.GONE);
 
         RecyclerView truckListRecyclerView = dialogSelectTruck.findViewById(R.id.dialog_spinner_bind_recycler_view);
@@ -712,13 +711,13 @@ public class PostATripActivity extends AppCompat {
     }
 
     public void TruckDetailsByTruckId() {
-        Call<TruckResponse> responseCall = ApiClient.addTruckService().getTruckByTruckId(truckId);
-        responseCall.enqueue(new Callback<TruckResponse>() {
+        Call<GetTruckDetailsResponse> responseCall = ApiClient.addTruckService().getTruckByTruckId(truckId);
+        responseCall.enqueue(new Callback<GetTruckDetailsResponse>() {
             @Override
-            public void onResponse(Call<TruckResponse> call, retrofit2.Response<TruckResponse> response) {
+            public void onResponse(Call<GetTruckDetailsResponse> call, retrofit2.Response<GetTruckDetailsResponse> response) {
                 try {
-                    TruckResponse response1 = response.body();
-                    TruckResponse.TruckList list = response1.getData().get(0);
+                    GetTruckDetailsResponse response1 = response.body();
+                    GetTruckDetailsResponse.TruckList list = response1.getData().get(0);
                     selectTruck.setText(list.getVehicle_no());
                 } catch (Exception e) {
 
@@ -726,7 +725,7 @@ public class PostATripActivity extends AppCompat {
             }
 
             @Override
-            public void onFailure(Call<TruckResponse> call, Throwable t) {
+            public void onFailure(Call<GetTruckDetailsResponse> call, Throwable t) {
 
             }
         });

@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -34,13 +36,21 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.nlpl.R;
 import com.nlpl.databinding.ActivityViewPersonalDetailsBinding;
+import com.nlpl.model.GetDriverDetailsResponse;
 import com.nlpl.model.MainResponse;
 import com.nlpl.model.Requests.ImageRequest;
 
+import com.nlpl.model.Responses.AddTruckResponse;
+import com.nlpl.model.Responses.BankResponse;
 import com.nlpl.model.Responses.ImageResponse;
 
 import com.nlpl.model.Responses.UploadImageResponse;
+import com.nlpl.model.UpdateMethods.UpdateTruckDetails;
 import com.nlpl.model.UpdateMethods.UpdateUserDetails;
+import com.nlpl.ui.adapters.BanksAdapter;
+import com.nlpl.ui.adapters.DriversAdapter;
+import com.nlpl.ui.adapters.DriversListAdapter;
+import com.nlpl.ui.adapters.TrucksAdapter;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.DownloadImageTask;
@@ -59,7 +69,7 @@ import retrofit2.Callback;
 
 public class ViewPersonalDetailsActivity extends AppCompat {
 
-    Boolean personalVisible = false, firmVisible = false;
+    Boolean personalVisible = false, firmVisible = false, bankVisible = false, truckVisible= false, driverVisible=false;
     TextView userFirmGSTTextview, userFirmGSTTextviewTitle, userFirmPANTextview, userFirmPANTextviewTitle, userNameTextView, userPhoneNumberTextView, userEmailTextView, userAddressTextView, userFirmNameTextView, userFirmAddressTextView, userFirmNameTitleTextView, userFirmAddressTitleTextView, userFirmTitle, userFirmAddCompany, userEditFirmDetailsTextView;
     String img_type;
     String phone, userId;
@@ -68,7 +78,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
     private int GET_FROM_GALLERY_profile = 5;
     TextView uploadPanAAdharBtn, uploadPanAAdharBtnTitle, roleProfile;
 
-    Dialog previewDialogPan, previewDialogAadhar, previewDialogProfile;
+    Dialog previewDialogPan, previewDialogAadhar, previewDialogProfile, previewDialogSpinner;
 
     TextView previewAadharBtn, panText, aadharText, panNumber, aadharNumber, previewPANBtn, userAlternateNumber, bankCount, truckCount, driverCount;
     ImageView profilePic, arrowPersonal, arrowFirm;
@@ -81,6 +91,30 @@ public class ViewPersonalDetailsActivity extends AppCompat {
     String userUpdatedByAPI, userDeletedAtAPI, userDeletedByAPI, idAPI, userLatitudeAPI, userLongitudeAPI, userDeviceIdAPI, userPanNumberAPI, userAadhaarNumberAPI, userIsSelfAddedAsDriverAPI;
 
     String userCompanyNameAPI, userCompanyTypeAPI, userCompanyGSTAPI, userCompanyPANAPI, userCompanyAddressAPI, userCompanyStateAPI, userCompanyCityAPI, userCompanyPINCodeAPI;
+
+    //Bank Details
+    private BanksAdapter bankListAdapter;
+    Dialog previewDialogCancelledCheque;
+    ImageView previewDialogCancelledChequeImageView;
+    //
+
+    //Truck Details
+    private DriversListAdapter driverListAdapter;
+    private RecyclerView driverListRecyclerView;
+    private TrucksAdapter truckListAdapter;
+    Dialog previewDialogRcBook, previewDialogInsurance, previewDialogDriverDetails;
+    ImageView previewRcBook, previewInsurance;
+    TextView previewDriverDetailsTitle, previewDriverDetailsDriverName, previewDriverDetailsDriverNumber, previewDriverDetailsDriverEmails, previewDriverDetailsDriverLicence, previewDriverDetailsDriverSelfie, previewDriverDetailsAssignDriverButton, previewDriverDetailsOKButton, previewDriverDetailsMessage;
+    Dialog previewDialogDL, previewDialogSelfie;
+    ImageView previewDL, previewSelfie;
+    String truckIdPass;
+    //
+
+    //Driver Details
+    private DriversAdapter userDriverListAdapter;
+    Dialog previewDialogSpinnerTruck;
+    private RecyclerView truckListRecyclerView;
+    //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,6 +204,93 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         previewDialogProfile.setContentView(R.layout.dialog_preview_profile);
         previewDialogProfile.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
 
+        //Bank Details
+        previewDialogCancelledCheque = new Dialog(ViewPersonalDetailsActivity.this);
+        previewDialogCancelledCheque.setContentView(R.layout.dialog_preview_images);
+        previewDialogCancelledCheque.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        previewDialogCancelledChequeImageView = (ImageView) previewDialogCancelledCheque.findViewById(R.id.dialog_preview_image_view);
+        //
+
+        //Truck Details
+        //---------------------------- Get Truck Details -------------------------------------------
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager.setReverseLayout(true);
+        binding.trucksListView.setLayoutManager(linearLayoutManager);
+        binding.trucksListView.setHasFixedSize(true);
+
+        previewDialogSpinner = new Dialog(ViewPersonalDetailsActivity.this);
+        previewDialogSpinner.setContentView(R.layout.dialog_spinner_bind);
+        previewDialogSpinner.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        //------------------------------------------------------------------------------------------
+        previewDialogRcBook = new Dialog(ViewPersonalDetailsActivity.this);
+        previewDialogRcBook.setContentView(R.layout.dialog_preview_images);
+        previewDialogRcBook.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        previewRcBook = (ImageView) previewDialogRcBook.findViewById(R.id.dialog_preview_image_view);
+
+        previewDialogInsurance = new Dialog(ViewPersonalDetailsActivity.this);
+        previewDialogInsurance.setContentView(R.layout.dialog_preview_images);
+        previewDialogInsurance.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        previewInsurance = (ImageView) previewDialogInsurance.findViewById(R.id.dialog_preview_image_view);
+        //---------------------------- Get Driver Details ------------------------------------------
+        driverListRecyclerView = previewDialogSpinner.findViewById(R.id.dialog_spinner_bind_recycler_view);
+
+        LinearLayoutManager linearLayoutManagerDriver = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManagerDriver.setReverseLayout(true);
+        driverListRecyclerView.setLayoutManager(linearLayoutManagerDriver);
+        driverListRecyclerView.setHasFixedSize(true);
+        //------------------------------------------------------------------------------------------
+        previewDialogDriverDetails = new Dialog(ViewPersonalDetailsActivity.this);
+        previewDialogDriverDetails.setContentView(R.layout.dialog_preview_driver_truck_details);
+        previewDialogDriverDetails.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        previewDriverDetailsTitle = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_title);
+        previewDriverDetailsDriverName = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_vehicle_number);
+        previewDriverDetailsDriverNumber = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_vehicle_model);
+        previewDriverDetailsDriverEmails = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_capacity);
+        previewDriverDetailsDriverLicence = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_rc_book_preview);
+        previewDriverDetailsDriverSelfie = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_insurance_preview);
+        previewDriverDetailsAssignDriverButton = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_reassign_button);
+        previewDriverDetailsOKButton = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_ok_button);
+        previewDriverDetailsMessage = previewDialogDriverDetails.findViewById(R.id.dialog_driver_truck_details_label_add_driver_bank);
+        //------------------------------------------------------------------------------------------
+        previewDialogDL = new Dialog(ViewPersonalDetailsActivity.this);
+        previewDialogDL.setContentView(R.layout.dialog_preview_images);
+        previewDialogDL.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        previewDL = (ImageView) previewDialogDL.findViewById(R.id.dialog_preview_image_view);
+
+        previewDialogSelfie = new Dialog(ViewPersonalDetailsActivity.this);
+        previewDialogSelfie.setContentView(R.layout.dialog_preview_images);
+        previewDialogSelfie.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        previewSelfie = (ImageView) previewDialogSelfie.findViewById(R.id.dialog_preview_image_view);
+        //
+
+        //Driver Details
+        LinearLayoutManager linearLayoutManagerUserDriver = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManagerUserDriver.setReverseLayout(true);
+        binding.driverListView.setLayoutManager(linearLayoutManagerUserDriver);
+        binding.driverListView.setHasFixedSize(true);
+
+        previewDialogSpinnerTruck = new Dialog(ViewPersonalDetailsActivity.this);
+        previewDialogSpinnerTruck.setContentView(R.layout.dialog_spinner_bind);
+        previewDialogSpinnerTruck.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        TextView previewSpinnerTitle = (TextView) previewDialogSpinnerTruck.findViewById(R.id.dialog_spinner_bind_title);
+        TextView previewSpinnerOkButton = (TextView) previewDialogSpinnerTruck.findViewById(R.id.dialog_spinner_bind_cancel);
+
+        previewSpinnerTitle.setText(getString(R.string.selectTruck));
+
+        truckListRecyclerView = previewDialogSpinnerTruck.findViewById(R.id.dialog_spinner_bind_recycler_view);
+
+        LinearLayoutManager linearLayoutManagerTruckList = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManagerTruckList.setReverseLayout(true);
+        truckListRecyclerView.setLayoutManager(linearLayoutManagerTruckList);
+        truckListRecyclerView.setHasFixedSize(true);
+        //
         getUserDetailsMain();
     }
 
@@ -340,6 +461,10 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                         } else {
                             truckCount.setText(truckList.size() + " Trucks");
                         }
+                        //Truck List
+                        truckListAdapter = new TrucksAdapter(ViewPersonalDetailsActivity.this, truckList);
+                        binding.trucksListView.setAdapter(truckListAdapter);
+                        //
 
                         //GET DRIVER DETAILS
                         ArrayList<MainResponse.Data.DriverDetails> driverList = new ArrayList<>();
@@ -349,6 +474,14 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                         } else {
                             driverCount.setText(driverList.size() + " Drivers");
                         }
+                        //Driver List for Truck Details
+                        driverListAdapter = new DriversListAdapter(ViewPersonalDetailsActivity.this, driverList);
+                        driverListRecyclerView.setAdapter(driverListAdapter);
+                        //
+                        //Driver List
+                        userDriverListAdapter = new DriversAdapter(ViewPersonalDetailsActivity.this, driverList);
+                        binding.driverListView.setAdapter(userDriverListAdapter);
+                        //
 
                         //GET BANK DETAILS
                         ArrayList<MainResponse.Data.BankDetails> bankList = new ArrayList<>();
@@ -358,6 +491,13 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                         } else {
                             bankCount.setText(bankList.size() + " Banks");
                         }
+                        LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(getApplicationContext());
+                        linearLayoutManagerBank.setReverseLayout(true);
+                        binding.bankListView.setLayoutManager(linearLayoutManagerBank);
+                        binding.bankListView.setHasFixedSize(true);
+
+                        bankListAdapter = new BanksAdapter(ViewPersonalDetailsActivity.this, bankList);
+                        binding.bankListView.setAdapter(bankListAdapter);
 
                         //GET COMPANY DETAILS
                         ArrayList<MainResponse.Data.CompanyDetails> companyDetails = new ArrayList<>();
@@ -461,7 +601,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                     e.printStackTrace();
                 }
 
-                if (loadingDialog.isShowing()){
+                if (loadingDialog.isShowing()) {
                     loadingDialog.dismiss();
                 }
             }
@@ -687,7 +827,6 @@ public class ViewPersonalDetailsActivity extends AppCompat {
             @Override
             public void onClick(View view) {
                 alert.dismiss();
-                RearrangeItems();
             }
         });
     }
@@ -884,14 +1023,26 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                 if (personalVisible) {
                     constrainProfileDetails.setVisibility(View.GONE);
                     constrainFirmDetails.setVisibility(View.GONE);
+                    binding.profileMyBankConstrain.setVisibility(View.GONE);
+                    binding.profileMyTruckConstrain.setVisibility(View.GONE);
+                    binding.profileMyDriverConstrain.setVisibility(View.GONE);
                     arrowPersonal.setImageDrawable(getResources().getDrawable(ic_down));
                     arrowFirm.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownBank.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownTruck.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownDriver.setImageDrawable(getResources().getDrawable(ic_down));
                     personalVisible = false;
                 } else {
                     constrainProfileDetails.setVisibility(View.VISIBLE);
                     constrainFirmDetails.setVisibility(View.GONE);
+                    binding.profileMyBankConstrain.setVisibility(View.GONE);
+                    binding.profileMyTruckConstrain.setVisibility(View.GONE);
+                    binding.profileMyDriverConstrain.setVisibility(View.GONE);
                     arrowPersonal.setImageDrawable(getResources().getDrawable(ic_up));
                     arrowFirm.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownBank.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownTruck.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownDriver.setImageDrawable(getResources().getDrawable(ic_down));
                     personalVisible = true;
                 }
 
@@ -900,17 +1051,116 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                 if (firmVisible) {
                     constrainProfileDetails.setVisibility(View.GONE);
                     constrainFirmDetails.setVisibility(View.GONE);
+                    binding.profileMyBankConstrain.setVisibility(View.GONE);
+                    binding.profileMyTruckConstrain.setVisibility(View.GONE);
+                    binding.profileMyDriverConstrain.setVisibility(View.GONE);
                     arrowPersonal.setImageDrawable(getResources().getDrawable(ic_down));
                     arrowFirm.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownBank.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownTruck.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownDriver.setImageDrawable(getResources().getDrawable(ic_down));
                     firmVisible = false;
                 } else {
                     constrainProfileDetails.setVisibility(View.GONE);
                     constrainFirmDetails.setVisibility(View.VISIBLE);
+                    binding.profileMyBankConstrain.setVisibility(View.GONE);
+                    binding.profileMyTruckConstrain.setVisibility(View.GONE);
+                    binding.profileMyDriverConstrain.setVisibility(View.GONE);
                     arrowPersonal.setImageDrawable(getResources().getDrawable(ic_down));
                     arrowFirm.setImageDrawable(getResources().getDrawable(ic_up));
+                    binding.profileDownBank.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownTruck.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownDriver.setImageDrawable(getResources().getDrawable(ic_down));
                     firmVisible = true;
                 }
                 break;
+
+            case R.id.profile_bank_details:
+                if (bankVisible) {
+                    constrainProfileDetails.setVisibility(View.GONE);
+                    constrainFirmDetails.setVisibility(View.GONE);
+                    binding.profileMyBankConstrain.setVisibility(View.GONE);
+                    binding.profileMyTruckConstrain.setVisibility(View.GONE);
+                    binding.profileMyDriverConstrain.setVisibility(View.GONE);
+                    arrowPersonal.setImageDrawable(getResources().getDrawable(ic_down));
+                    arrowFirm.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownBank.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownTruck.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownDriver.setImageDrawable(getResources().getDrawable(ic_down));
+                    bankVisible = false;
+                } else {
+                    binding.profileMyBankConstrain.setVisibility(View.VISIBLE);
+                    constrainProfileDetails.setVisibility(View.GONE);
+                    constrainFirmDetails.setVisibility(View.GONE);
+                    binding.profileMyTruckConstrain.setVisibility(View.GONE);
+                    binding.profileMyDriverConstrain.setVisibility(View.GONE);
+                    arrowPersonal.setImageDrawable(getResources().getDrawable(ic_down));
+                    arrowFirm.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownBank.setImageDrawable(getResources().getDrawable(ic_up));
+                    binding.profileDownTruck.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownDriver.setImageDrawable(getResources().getDrawable(ic_down));
+                    bankVisible = true;
+                }
+
+                break;
+
+            case R.id.profile_truck_details:
+                if (truckVisible) {
+                    constrainProfileDetails.setVisibility(View.GONE);
+                    constrainFirmDetails.setVisibility(View.GONE);
+                    binding.profileMyBankConstrain.setVisibility(View.GONE);
+                    binding.profileMyTruckConstrain.setVisibility(View.GONE);
+                    binding.profileMyDriverConstrain.setVisibility(View.GONE);
+                    arrowPersonal.setImageDrawable(getResources().getDrawable(ic_down));
+                    arrowFirm.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownBank.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownTruck.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownDriver.setImageDrawable(getResources().getDrawable(ic_down));
+                    truckVisible = false;
+                } else {
+                    binding.profileMyBankConstrain.setVisibility(View.GONE);
+                    constrainProfileDetails.setVisibility(View.GONE);
+                    constrainFirmDetails.setVisibility(View.GONE);
+                    binding.profileMyTruckConstrain.setVisibility(View.VISIBLE);
+                    binding.profileMyDriverConstrain.setVisibility(View.GONE);
+                    arrowPersonal.setImageDrawable(getResources().getDrawable(ic_down));
+                    arrowFirm.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownBank.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownTruck.setImageDrawable(getResources().getDrawable(ic_up));
+                    binding.profileDownDriver.setImageDrawable(getResources().getDrawable(ic_down));
+                    truckVisible = true;
+                }
+
+                break;
+
+            case R.id.profile_driver_details:
+                if (driverVisible) {
+                    constrainProfileDetails.setVisibility(View.GONE);
+                    constrainFirmDetails.setVisibility(View.GONE);
+                    binding.profileMyBankConstrain.setVisibility(View.GONE);
+                    binding.profileMyTruckConstrain.setVisibility(View.GONE);
+                    binding.profileMyDriverConstrain.setVisibility(View.GONE);
+                    arrowPersonal.setImageDrawable(getResources().getDrawable(ic_down));
+                    arrowFirm.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownBank.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownTruck.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownDriver.setImageDrawable(getResources().getDrawable(ic_down));
+                    driverVisible = false;
+                } else {
+                    binding.profileMyBankConstrain.setVisibility(View.GONE);
+                    constrainProfileDetails.setVisibility(View.GONE);
+                    constrainFirmDetails.setVisibility(View.GONE);
+                    binding.profileMyTruckConstrain.setVisibility(View.GONE);
+                    binding.profileMyDriverConstrain.setVisibility(View.VISIBLE);
+                    arrowPersonal.setImageDrawable(getResources().getDrawable(ic_down));
+                    arrowFirm.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownBank.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownTruck.setImageDrawable(getResources().getDrawable(ic_down));
+                    binding.profileDownDriver.setImageDrawable(getResources().getDrawable(ic_up));
+                    driverVisible = true;
+                }
+                break;
+
         }
     }
 
@@ -918,11 +1168,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         if (userUserTypeAPI.equals("Customer")) {
             switch (view.getId()) {
                 case R.id.profile_view_add_bank:
-                    if (userIsBankDetailsAddedAPI.equals("1")) {
-                        JumpTo.goToViewBankDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false);
-                    } else {
-                        JumpTo.goToBankDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false, false, null);
-                    }
+                    JumpTo.goToBankDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false, false, null);
                     break;
 
                 case R.id.profile_view_settings:
@@ -980,27 +1226,15 @@ public class ViewPersonalDetailsActivity extends AppCompat {
         } else {
             switch (view.getId()) {
                 case R.id.profile_view_add_bank:
-                    if (userIsBankDetailsAddedAPI.equals("1")) {
-                        JumpTo.goToViewBankDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false);
-                    } else {
-                        JumpTo.goToBankDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false, false, null);
-                    }
+                    JumpTo.goToBankDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false, false, null);
                     break;
 
                 case R.id.profile_view_add_truck:
-                    if (userIsTruckAddedAPI.equals("1")) {
-                        JumpTo.goToViewVehicleDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false);
-                    } else {
-                        JumpTo.goToVehicleDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false, false, false, false, null, null);
-                    }
+                    JumpTo.goToVehicleDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false, false, false, false, null, null);
                     break;
 
                 case R.id.profile_view_add_driver:
-                    if (userIsDriverAddedAPI.equals("1")) {
-                        JumpTo.goToViewDriverDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false);
-                    } else {
-                        JumpTo.goToDriverDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false, false, false, null, null);
-                    }
+                    JumpTo.goToDriverDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, false, false, false, null, null);
                     break;
 
                 case R.id.profile_view_settings:
@@ -1053,4 +1287,334 @@ public class ViewPersonalDetailsActivity extends AppCompat {
             }
         }
     }
+
+    //Bank Details
+    public void onClickPreviewBankDetails(MainResponse.Data.BankDetails obj) {
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(previewDialogCancelledCheque.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+        previewDialogCancelledCheque.show();
+        previewDialogCancelledCheque.getWindow().setAttributes(lp);
+
+        String cancelledChequeURL = obj.getCancelled_cheque();
+        Log.i("IMAGE CHEQUE URL", cancelledChequeURL);
+
+        new DownloadImageTask((ImageView) previewDialogCancelledCheque.findViewById(R.id.dialog_preview_image_view)).execute(cancelledChequeURL);
+    }
+
+    public void getBankDetails(MainResponse.Data.BankDetails obj) {
+        JumpTo.goToBankDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, true, false, obj.getBank_id());
+    }
+
+    public void deleteBankDetails(MainResponse.Data.BankDetails obj) {
+        //----------------------- Alert Dialog -------------------------------------------------
+        Dialog alert = new Dialog(ViewPersonalDetailsActivity.this);
+        alert.setContentView(R.layout.dialog_alert);
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(alert.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        alert.show();
+        alert.getWindow().setAttributes(lp);
+        alert.setCancelable(true);
+
+        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+
+        alertTitle.setText("Delete Bank Details");
+        alertMessage.setText("Are you sure?\nYou want to delete Bank Details?");
+        alertPositiveButton.setText(getString(R.string.yes));
+        alertNegativeButton.setText(getString(R.string.no));
+
+        alertPositiveButton.setOnClickListener(view -> {
+            alert.dismiss();
+            deleteUserBankDetails(obj.getBank_id());
+            RearrangeItems();
+        });
+
+        alertNegativeButton.setOnClickListener(view -> alert.dismiss());
+    }
+
+    private void deleteUserBankDetails(String bankId) {
+        Call<BankResponse> call = ApiClient.getBankService().deleteBankDetails(bankId);
+        call.enqueue(new Callback<BankResponse>() {
+            @Override
+            public void onResponse(Call<BankResponse> call, retrofit2.Response<BankResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<BankResponse> call, Throwable t) {
+            }
+        });
+    }
+    //
+
+    //Truck Details
+    public void onClickReAssignDriver(MainResponse.Data.DriverDetails obj) {
+        UpdateTruckDetails.updateTruckDriverId(truckIdPass, obj.getDriver_id());
+        RearrangeItems();
+    }
+
+    public void getTruckDetails(MainResponse.Data.TruckDetails obj) {
+        JumpTo.goToVehicleDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, true, false, false, false, null, obj.getTruck_id());
+    }
+
+    public void getOnClickPreviewTruckRcBook(MainResponse.Data.TruckDetails obj) {
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(previewDialogRcBook.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        previewDialogRcBook.show();
+        previewDialogRcBook.getWindow().setAttributes(lp);
+
+        String rcBookURL = obj.getRc_book();
+        new DownloadImageTask(previewRcBook).execute(rcBookURL);
+    }
+
+    public void getOnClickPreviewTruckInsurance(MainResponse.Data.TruckDetails obj) {
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(previewDialogInsurance.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        previewDialogInsurance.show();
+        previewDialogInsurance.getWindow().setAttributes(lp);
+
+        String insuranceURL = obj.getVehicle_insurance();
+        Log.i("IMAGE INSURANCE URL", insuranceURL);
+        new DownloadImageTask(previewInsurance).execute(insuranceURL);
+    }
+
+    public void getDriverDetailsOnTruckActivity(MainResponse.Data.TruckDetails obj) {
+        truckIdPass = obj.getTruck_id();
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(previewDialogDriverDetails.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        previewDialogDriverDetails.show();
+        previewDialogDriverDetails.getWindow().setAttributes(lp);
+        previewDialogDriverDetails.setCancelable(true);
+
+        previewDriverDetailsTitle.setText(getString(R.string.Driver_Details));
+        previewDriverDetailsDriverLicence.setText(getString(R.string.Driver_Licence));
+        previewDriverDetailsDriverSelfie.setText(getString(R.string.Driver_Selfie));
+        previewDriverDetailsMessage.setText(getString(R.string.Please_add_a_Driver));
+        previewDriverDetailsMessage.setVisibility(View.INVISIBLE);
+        String driverIdAPI = obj.getDriver_id();
+
+        if (driverIdAPI.equals("null") || driverIdAPI == null || driverIdAPI.equals("0")) {
+            previewDriverDetailsMessage.setVisibility(View.VISIBLE);
+            previewDriverDetailsDriverLicence.setVisibility(View.INVISIBLE);
+            previewDriverDetailsDriverSelfie.setVisibility(View.INVISIBLE);
+            previewDriverDetailsDriverName.setVisibility(View.INVISIBLE);
+            previewDriverDetailsDriverNumber.setVisibility(View.INVISIBLE);
+            previewDriverDetailsDriverEmails.setVisibility(View.INVISIBLE);
+            previewDriverDetailsAssignDriverButton.setText(getString(R.string.Assign_Driver));
+        } else {
+            previewDriverDetailsAssignDriverButton.setText(getString(R.string.ReAssign_Driver));
+            previewDriverDetailsMessage.setVisibility(View.INVISIBLE);
+            previewDriverDetailsDriverLicence.setVisibility(View.VISIBLE);
+            previewDriverDetailsDriverSelfie.setVisibility(View.VISIBLE);
+            previewDriverDetailsDriverName.setVisibility(View.VISIBLE);
+            previewDriverDetailsDriverNumber.setVisibility(View.VISIBLE);
+            previewDriverDetailsDriverEmails.setVisibility(View.VISIBLE);
+            getDriverDetailsAssigned(obj.getDriver_id());
+        }
+    }
+
+    public void deleteTruckDetails(MainResponse.Data.TruckDetails obj) {
+        //----------------------- Alert Dialog -------------------------------------------------
+        Dialog alert = new Dialog(ViewPersonalDetailsActivity.this);
+        alert.setContentView(R.layout.dialog_alert);
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(alert.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        alert.show();
+        alert.getWindow().setAttributes(lp);
+        alert.setCancelable(true);
+
+        TextView alertTitle = (TextView) alert.findViewById(R.id.dialog_alert_title);
+        TextView alertMessage = (TextView) alert.findViewById(R.id.dialog_alert_message);
+        TextView alertPositiveButton = (TextView) alert.findViewById(R.id.dialog_alert_positive_button);
+        TextView alertNegativeButton = (TextView) alert.findViewById(R.id.dialog_alert_negative_button);
+
+        alertTitle.setText(getString(R.string.Delete_Truck_Details));
+        alertMessage.setText(getString(R.string.Truck_Delete_message));
+        alertPositiveButton.setText(getString(R.string.yes));
+        alertNegativeButton.setText(getString(R.string.no));
+
+        alertPositiveButton.setOnClickListener(view -> {
+            alert.dismiss();
+            deleteUserTruckDetails(obj.getTruck_id());
+            RearrangeItems();
+        });
+
+        alertNegativeButton.setOnClickListener(view -> alert.dismiss());
+    }
+
+    private void deleteUserTruckDetails(String truckId) {
+        Call<AddTruckResponse> call = ApiClient.addTruckService().deleteTruckDetails(truckId);
+        call.enqueue(new Callback<AddTruckResponse>() {
+            @Override
+            public void onResponse(Call<AddTruckResponse> call, retrofit2.Response<AddTruckResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<AddTruckResponse> call, Throwable t) {
+            }
+        });
+    }
+
+    public void getDriverDetailsAssigned(String driverId) {
+        Call<GetDriverDetailsResponse> responseCall = ApiClient.addDriverService().getDriverByDriverId(driverId);
+        responseCall.enqueue(new Callback<GetDriverDetailsResponse>() {
+            @Override
+            public void onResponse(Call<GetDriverDetailsResponse> call, retrofit2.Response<GetDriverDetailsResponse> response) {
+                GetDriverDetailsResponse response1 = response.body();
+                GetDriverDetailsResponse.DriverList list = response1.getData().get(0);
+                try {
+                    if (response.isSuccessful()){
+                        previewDriverDetailsDriverName.setText(list.driver_name);
+
+                        String driverNumber = list.driver_number;
+                        String s1 = driverNumber.substring(2, 12);
+
+                        String driverAltNumber = list.alternate_ph_no;
+
+                        try {
+                            String s2 = driverAltNumber.substring(2, 12);
+                            previewDriverDetailsDriverNumber.setText("+91 " + s1 + "\n" + "+91 " + s2);
+                        } catch (Exception e) {
+                            previewDriverDetailsDriverNumber.setText("+91 " + s1);
+                        }
+
+                        String driverEmail = list.driver_emailId;
+                        String driverDlURL = list.upload_dl;
+                        String driverSelfieURL = list.driver_selfie;
+
+                        try {
+                            new DownloadImageTask(previewDL).execute(driverDlURL);
+                            new DownloadImageTask(previewSelfie).execute(driverSelfieURL);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        if (driverEmail == null) {
+                            previewDriverDetailsDriverEmails.setVisibility(View.INVISIBLE);
+                        } else {
+                            previewDriverDetailsDriverEmails.setVisibility(View.VISIBLE);
+                            previewDriverDetailsDriverEmails.setText(driverEmail);
+                        }
+
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetDriverDetailsResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void onClickPreviewRcBookAssigned(View view) {
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(previewDialogDL.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        previewDialogDL.show();
+        previewDialogDL.getWindow().setAttributes(lp);
+    }
+
+    public void onClickPreviewInsuranceAssigned(View view) {
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(previewDialogSelfie.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        previewDialogSelfie.show();
+        previewDialogSelfie.getWindow().setAttributes(lp);
+    }
+
+    public void onClickCloseDialogDriverBankDetails(View view) {
+        previewDialogDriverDetails.dismiss();
+        previewDialogSpinnerTruck.dismiss();
+    }
+
+    public void onClickReAssignTruck(View view) {
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(previewDialogSpinner.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        previewDialogSpinner.show();
+        previewDialogSpinner.getWindow().setAttributes(lp);
+    }
+
+    public void onClickCancelSelectBind(View view) {
+        previewDialogSpinner.dismiss();
+        previewDialogDriverDetails.dismiss();
+        previewDialogSpinnerTruck.dismiss();
+    }
+    //
+
+    //Driver Details
+    public void getDriverDetails(MainResponse.Data.DriverDetails obj) {
+        JumpTo.goToDriverDetailsActivity(ViewPersonalDetailsActivity.this, userId, phone, true, false, false, null, obj.getDriver_id());
+    }
+
+    public void onClickPreviewDriverLicense(MainResponse.Data.DriverDetails obj) {
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(previewDialogDL.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+
+        previewDialogDL.show();
+        previewDialogDL.getWindow().setAttributes(lp);
+
+        String drivingLicenseURL = obj.getUpload_dl();
+        Log.i("IMAGE DL URL", drivingLicenseURL);
+        new DownloadImageTask(previewDL).execute(drivingLicenseURL);
+    }
+
+    public void onClickPreviewDriverSelfie(MainResponse.Data.DriverDetails obj) {
+        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+        lp2.copyFrom(previewDialogSelfie.getWindow().getAttributes());
+        lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp2.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp2.gravity = Gravity.CENTER;
+
+        previewDialogSelfie.show();
+        previewDialogSelfie.getWindow().setAttributes(lp2);
+
+        String selfieURL = obj.getDriver_selfie();
+        Log.i("IMAGE Selfie URL", selfieURL);
+        new DownloadImageTask(previewSelfie).execute(selfieURL);
+    }
+    //
 }

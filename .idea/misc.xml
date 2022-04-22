@@ -162,6 +162,7 @@
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/bids_received_list.xml" value="0.3625" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/bids_responses_list.xml" value="0.3625" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/bottom_nav_bar.xml" value="0.3625" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/custom_list_single.xml" value="0.21345628415300547" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/dialog_acept_bid_customer.xml" value="0.1762917933130699" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/dialog_alert.xml" value="0.2875905797101449" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/dialog_alert_single_button.xml" value="0.2875905797101449" />
@@ -170,11 +171,15 @@
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/dialog_loading.xml" value="0.22894736842105262" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/dialog_menu.xml" value="0.2875905797101449" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/dialog_payment.xml" value="0.11247575953458307" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/dialog_preview_driver_details.xml" value="0.21345628415300547" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/dialog_preview_driver_truck_details.xml" value="0.22894736842105262" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/dialog_preview_images.xml" value="0.1762917933130699" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/dialog_preview_profile.xml" value="0.3625" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/dialog_spinner_bind.xml" value="0.21687158469945356" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/dialog_state_city.xml" value="0.3625" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/load_list.xml" value="0.3625" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/location_list.xml" value="0.3625" />
+        <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/my_driver_list.xml" value="0.21345628415300547" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/my_truck_list.xml" value="0.3625" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/pan_and_aadhar.xml" value="0.3625" />
         <entry key="..\:/Users/abhij/AndroidStudioProjects/NLPL-Project/app/src/main/res/layout/personal_and_address.xml" value="0.2875905797101449" />

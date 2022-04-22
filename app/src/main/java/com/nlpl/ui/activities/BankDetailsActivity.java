@@ -118,7 +118,7 @@ public class BankDetailsActivity extends AppCompat {
         getUserDetailsMain();
 
         binding.bankDetailsActionBar.actionBarTitle.setText(getString(R.string.bank_details));
-        binding.bankDetailsActionBar.actionBarBackButton.setOnClickListener(view -> JumpTo.goToViewBankDetailsActivity(BankDetailsActivity.this, userId, mobile, true));
+        binding.bankDetailsActionBar.actionBarBackButton.setOnClickListener(view -> JumpTo.goToViewPersonalDetailsActivity(BankDetailsActivity.this, userId, mobile, true));
 
         binding.bankDetailsPersonNameTextEdit.setFilters(new InputFilter[]{filter});
         int maxLength = 11;
@@ -347,14 +347,14 @@ public class BankDetailsActivity extends AppCompat {
             if (!isEdit) {
                 saveBank(createBankAcc());
                 uploadCheque(bankId, PathForCC);
-                JumpTo.goToViewBankDetailsActivity(BankDetailsActivity.this, userId, mobile, true);
+                JumpTo.goToViewPersonalDetailsActivity(BankDetailsActivity.this, userId, mobile, true);
             } else {
                 uploadCheque(bankId, PathForCC);
                 UpdateBankDetails.updateBankName(bankId, binding.bankDetailsPersonNameTextEdit.getText().toString());
                 UpdateBankDetails.updateBankAccountNumber(bankId, binding.bankDetailsAccountNumberEdit.getText().toString());
                 UpdateBankDetails.updateBankReEnterAccountNumber(bankId, binding.bankDetailsReenterAccountNumberEdit.getText().toString());
                 UpdateBankDetails.updateBankIFSICode(bankId, binding.bankDetailsIfscEdit.getText().toString());
-                JumpTo.goToViewBankDetailsActivity(BankDetailsActivity.this, userId, mobile, true);
+                JumpTo.goToViewPersonalDetailsActivity(BankDetailsActivity.this, userId, mobile, true);
             }
         } else {
             if (binding.bankDetailsPersonNameTextEdit.getText().toString().isEmpty()) {
@@ -376,7 +376,7 @@ public class BankDetailsActivity extends AppCompat {
                     UpdateBankDetails.updateBankAccountNumber(bankId, binding.bankDetailsAccountNumberEdit.getText().toString());
                     UpdateBankDetails.updateBankReEnterAccountNumber(bankId, binding.bankDetailsReenterAccountNumberEdit.getText().toString());
                     UpdateBankDetails.updateBankIFSICode(bankId, binding.bankDetailsIfscEdit.getText().toString());
-                    JumpTo.goToViewBankDetailsActivity(BankDetailsActivity.this, userId, mobile, true);
+                    JumpTo.goToViewPersonalDetailsActivity(BankDetailsActivity.this, userId, mobile, true);
                 } else {
                     if (bankVerified) {
                         saveBank(createBankAcc());
@@ -410,7 +410,7 @@ public class BankDetailsActivity extends AppCompat {
                             alert.dismiss();
                             //Update User Bank (IsBankAdded)
                             UpdateUserDetails.updateUserIsBankDetailsGiven(userId, "1");
-                            JumpTo.goToViewBankDetailsActivity(BankDetailsActivity.this, userId, mobile, true);
+                            JumpTo.goToViewPersonalDetailsActivity(BankDetailsActivity.this, userId, mobile, true);
                         });
                     } else {
                         Toast.makeText(this, "Please enter correct Bank Details", Toast.LENGTH_SHORT).show();
@@ -756,7 +756,7 @@ public class BankDetailsActivity extends AppCompat {
 //        } else {
 //            JumpTo.goToServiceProviderDashboard(BankDetailsActivity.this, mobile, true, true);
 //        }
-        JumpTo.goToViewBankDetailsActivity(BankDetailsActivity.this, userId, mobile, true);
+        JumpTo.goToViewPersonalDetailsActivity(BankDetailsActivity.this, userId, mobile, true);
     }
 
     public void showLoading(){

@@ -1,7 +1,6 @@
 package com.nlpl.ui.adapters;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,17 +10,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nlpl.R;
-import com.nlpl.model.ModelForRecyclerView.BankModel;
-import com.nlpl.ui.activities.ViewBankDetailsActivity;
+import com.nlpl.model.MainResponse;
+import com.nlpl.ui.activities.ViewPersonalDetailsActivity;
 
 import java.util.ArrayList;
 
 public class BanksAdapter extends RecyclerView.Adapter<BanksAdapter.BankViewHolder> {
 
-    private ArrayList<BankModel> bankList;
-    private ViewBankDetailsActivity activity;
+    private ArrayList<MainResponse.Data.BankDetails> bankList;
+    private ViewPersonalDetailsActivity activity;
 
-    public BanksAdapter(ViewBankDetailsActivity activity, ArrayList<BankModel> bankList) {
+    public BanksAdapter(ViewPersonalDetailsActivity activity, ArrayList<MainResponse.Data.BankDetails> bankList) {
         this.bankList = bankList;
         this.activity = activity;
     }
@@ -34,10 +33,9 @@ public class BanksAdapter extends RecyclerView.Adapter<BanksAdapter.BankViewHold
 
     @Override
     public void onBindViewHolder(BankViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        BankModel obj = bankList.get(position);
+        MainResponse.Data.BankDetails obj = bankList.get(position);
 //---------------------------------- Set Title -----------------------------------------------------
         String name1 = obj.getAccountholder_name();
-        Log.i("File Name:", name1);
 
         String accNumber = obj.getAccount_number();
         String ifsiNumber = obj.getIFSI_CODE();
@@ -56,10 +54,14 @@ public class BanksAdapter extends RecyclerView.Adapter<BanksAdapter.BankViewHold
         });
 
         String chequeURL = obj.getCancelled_cheque();
-        if (chequeURL.length() < 6){
-            holder.list_preview_bank_details.setVisibility(View.GONE);
-        }else{
-            holder.list_preview_bank_details.setVisibility(View.VISIBLE);
+        try{
+            if (chequeURL.length() < 6){
+                holder.list_preview_bank_details.setVisibility(View.GONE);
+            }else{
+                holder.list_preview_bank_details.setVisibility(View.VISIBLE);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
 
         holder.list_preview_bank_details.setOnClickListener(new View.OnClickListener() {
@@ -77,10 +79,10 @@ public class BanksAdapter extends RecyclerView.Adapter<BanksAdapter.BankViewHold
         return bankList.size();
     }
 
-    public void updateData(ArrayList<BankModel> bankList) {
-        this.bankList = bankList;
-        notifyDataSetChanged();
-    }
+//    public void updateData(ArrayList<MainResponse.Data.BankDetails> bankList) {
+//        this.bankList = bankList;
+//        notifyDataSetChanged();
+//    }
 
     public class BankViewHolder extends RecyclerView.ViewHolder {
         private TextView list_acc_no, list_edit, list_bank_name, list_ifsi, list_preview_bank_details, list_delete;

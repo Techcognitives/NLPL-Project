@@ -92,6 +92,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.sql.DatabaseMetaData;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -272,7 +273,7 @@ public class DriverDetailsActivity extends AppCompat {
             actionBarBackButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    JumpTo.goToViewDriverDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
+                    JumpTo.goToViewPersonalDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
                 }
             });
 
@@ -285,7 +286,7 @@ public class DriverDetailsActivity extends AppCompat {
             actionBarBackButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    JumpTo.goToViewDriverDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
+                    JumpTo.goToViewPersonalDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
                 }
             });
 
@@ -293,7 +294,7 @@ public class DriverDetailsActivity extends AppCompat {
 
         actionBarSkipButton.setOnClickListener(view -> {
             if (isDriverDetailsDoneAPI.equals("1")) {
-                JumpTo.goToViewDriverDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
+                JumpTo.goToViewPersonalDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
             } else {
                 //----------------------- Alert Dialog -------------------------------------------------
                 Dialog alert = new Dialog(DriverDetailsActivity.this);
@@ -1136,7 +1137,7 @@ public class DriverDetailsActivity extends AppCompat {
             if (dDOB.getText().toString() != null) {
                 UpdateDriverDetails.updateDriverDOB(driverId, dDOB.getText().toString());
             }
-            JumpTo.goToViewDriverDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
+            JumpTo.goToViewPersonalDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
 
         } else {
             if (alreadyDriver) {
@@ -1190,7 +1191,7 @@ public class DriverDetailsActivity extends AppCompat {
                     if (fromBidNow) {
                         DriverDetailsActivity.this.finish();
                     } else {
-                        JumpTo.goToViewDriverDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
+                        JumpTo.goToViewPersonalDetailsActivity(DriverDetailsActivity.this, userId, mobile, true);
                     }
                 }
             });

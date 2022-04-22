@@ -407,11 +407,9 @@ public class ServiceProviderDashboardActivity extends AppCompat {
         dialogSelectTruck.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         TextView dialogSelectTruckTitle = (TextView) dialogSelectTruck.findViewById(R.id.dialog_spinner_bind_title);
-        TextView dialogSelectTruckAddTruck = (TextView) dialogSelectTruck.findViewById(R.id.dialog_spinner_bind_add_details);
         TextView dialogSelectTruckOkButton = (TextView) dialogSelectTruck.findViewById(R.id.dialog_spinner_bind_cancel);
 
         dialogSelectTruckTitle.setText(getString(R.string.selectTruck));
-        dialogSelectTruckAddTruck.setVisibility(View.GONE);
         dialogSelectTruckOkButton.setVisibility(View.GONE);
 
         truckListRecyclerView = dialogSelectTruck.findViewById(R.id.dialog_spinner_bind_recycler_view);
@@ -430,11 +428,9 @@ public class ServiceProviderDashboardActivity extends AppCompat {
         dialogSelectDriver.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         TextView previewSpinnerTitle = (TextView) dialogSelectDriver.findViewById(R.id.dialog_spinner_bind_title);
-        TextView previewSpinnerAddTruck = (TextView) dialogSelectDriver.findViewById(R.id.dialog_spinner_bind_add_details);
         TextView previewSpinnerOkButton = (TextView) dialogSelectDriver.findViewById(R.id.dialog_spinner_bind_cancel);
 
         previewSpinnerTitle.setText(getString(R.string.selectDriver));
-        previewSpinnerAddTruck.setVisibility(View.GONE);
         previewSpinnerOkButton.setVisibility(View.GONE);
 
         driverListRecyclerView = dialogSelectDriver.findViewById(R.id.dialog_spinner_bind_recycler_view);
@@ -732,7 +728,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
 
             case R.id.menu_driver_details:
                 if (isDriverDetailsDone.equals("1")) {
-                    JumpTo.goToViewDriverDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, false);
+                    JumpTo.goToViewPersonalDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, true);
                 } else {
                     JumpTo.goToDriverDetailsActivity(ServiceProviderDashboardActivity.this, userId, phone, false, false, false, null, null);
                 }

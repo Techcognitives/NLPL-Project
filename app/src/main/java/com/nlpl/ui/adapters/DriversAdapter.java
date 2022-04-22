@@ -12,17 +12,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nlpl.R;
-import com.nlpl.model.ModelForRecyclerView.DriverModel;
-import com.nlpl.ui.activities.ViewDriverDetailsActivity;
+import com.nlpl.model.MainResponse;
+import com.nlpl.ui.activities.ViewPersonalDetailsActivity;
 
 import java.util.ArrayList;
 
 public class DriversAdapter extends RecyclerView.Adapter<DriversAdapter.DriverViewHolder> {
 
-    private ArrayList<DriverModel> driverList;
-    private ViewDriverDetailsActivity activity;
+    private ArrayList<MainResponse.Data.DriverDetails> driverList;
+    private ViewPersonalDetailsActivity activity;
 
-    public DriversAdapter(ViewDriverDetailsActivity activity, ArrayList<DriverModel> driverList) {
+    public DriversAdapter(ViewPersonalDetailsActivity activity, ArrayList<MainResponse.Data.DriverDetails> driverList) {
         this.driverList = driverList;
         this.activity = activity;
     }
@@ -35,7 +35,7 @@ public class DriversAdapter extends RecyclerView.Adapter<DriversAdapter.DriverVi
 
     @Override
     public void onBindViewHolder(DriverViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        DriverModel obj = driverList.get(position);
+        MainResponse.Data.DriverDetails obj = driverList.get(position);
 
         holder.list_title.setText(" " + obj.getDriver_name());
 
@@ -92,20 +92,6 @@ public class DriversAdapter extends RecyclerView.Adapter<DriversAdapter.DriverVi
                 activity.onClickPreviewDriverSelfie(obj);
             }
         });
-
-        holder.list_preview_driver_bank_details.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activity.onClickPreviewDriverBankDetails(obj);
-            }
-        });
-
-        holder.list_preview_truck_assigned.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activity.onClickPreviewAssignedTruckDetails(obj);
-            }
-        });
     }
 
     @Override
@@ -113,13 +99,13 @@ public class DriversAdapter extends RecyclerView.Adapter<DriversAdapter.DriverVi
         return driverList.size();
     }
 
-    public void updateData(ArrayList<DriverModel> driverList) {
-        this.driverList = driverList;
-        notifyDataSetChanged();
-    }
+//    public void updateData(ArrayList<DriverModel> driverList) {
+//        this.driverList = driverList;
+//        notifyDataSetChanged();
+//    }
 
     public class DriverViewHolder extends RecyclerView.ViewHolder {
-        private TextView list_title, list_edit, list_driver_number, alternateDriverNumber, list_driver_email_id, list_preview_driver_license, list_preview_driver_selfie, list_preview_driver_bank_details, list_preview_truck_assigned;
+        private TextView list_title, list_edit, list_driver_number, alternateDriverNumber, list_driver_email_id, list_preview_driver_license, list_preview_driver_selfie;
 
         public DriverViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -130,8 +116,6 @@ public class DriversAdapter extends RecyclerView.Adapter<DriversAdapter.DriverVi
             list_driver_number = itemView.findViewById(R.id.my_driver_list_driver_phone_number);
             list_driver_email_id = itemView.findViewById(R.id.my_driver_list_driver_email_id);
             list_preview_driver_selfie = itemView.findViewById(R.id.my_driver_list_driver_selfie);
-            list_preview_driver_bank_details = itemView.findViewById(R.id.my_driver_list_driver_bank_details);
-            list_preview_truck_assigned = itemView.findViewById(R.id.my_driver_list_truck_details);
             alternateDriverNumber = itemView.findViewById(R.id.my_driver_list_driver_alternate_mobile_number);
         }
 
