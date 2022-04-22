@@ -1827,7 +1827,7 @@ public class DriverDetailsActivity extends AppCompat {
 
     public void onClickOpenMaps(View view) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            Places.initialize(getApplicationContext(), "AIzaSyDAAes8x5HVKYB5YEIGBmdnCdyBrAHUijM");
+            Places.initialize(getApplicationContext(), getString(R.string.places_api));
             List<Place.Field> fields = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG);
             Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields).build(this);
             startActivityForResult(intent, 100);

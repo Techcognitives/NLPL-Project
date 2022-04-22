@@ -118,7 +118,7 @@ public class GetCurrentLocation {
     }
 
     public static void searchOnMap(Activity activity){
-        Places.initialize(activity.getApplicationContext(), "AIzaSyDAAes8x5HVKYB5YEIGBmdnCdyBrAHUijM");
+        Places.initialize(activity.getApplicationContext(), activity.getString(R.string.places_api));
         List<Place.Field> fields = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG);
         Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields).build(activity);
         activity.startActivityForResult(intent, 100);
