@@ -947,6 +947,25 @@
                                 app:layout_constraintHorizontal_bias="0.0"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/view_personal_details_complete_personal_details_text" />
+
+                            <TextView
+                                android:id="@+id/textView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:drawableStart="@drawable/ic_edit_small"
+                                android:drawableTint="@color/button_blue"
+                                android:onClick="@{handlers :: onClickEditProfileDetailsView}"
+                                android:padding="5dp"
+                                android:text="@string/edit"
+                                android:textAlignment="center"
+                                android:textColor="@color/button_blue"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:visibility="visible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/view_personal_details_add_personal_details" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView

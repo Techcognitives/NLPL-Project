@@ -70,7 +70,7 @@ import retrofit2.Callback;
 public class ViewPersonalDetailsActivity extends AppCompat {
 
     Boolean personalVisible = false, firmVisible = false, bankVisible = false, truckVisible= false, driverVisible=false;
-    TextView userFirmGSTTextview, userFirmGSTTextviewTitle, userFirmPANTextview, userFirmPANTextviewTitle, userNameTextView, userPhoneNumberTextView, userEmailTextView, userAddressTextView, userFirmNameTextView, userFirmAddressTextView, userFirmNameTitleTextView, userFirmAddressTitleTextView, userFirmTitle, userFirmAddCompany, userEditFirmDetailsTextView;
+    TextView userFirmGSTTextview, userFirmGSTTextviewTitle, userFirmPANTextview, userFirmPANTextviewTitle, userPhoneNumberTextView, userEmailTextView, userAddressTextView, userFirmNameTextView, userFirmAddressTextView, userFirmNameTitleTextView, userFirmAddressTitleTextView, userFirmTitle, userFirmAddCompany, userEditFirmDetailsTextView;
     String img_type;
     String phone, userId;
 
@@ -143,14 +143,9 @@ public class ViewPersonalDetailsActivity extends AppCompat {
             }
         });
 
-        binding.viewPersonalDetailsActionBar.actionBarSkip.setVisibility(View.VISIBLE);
-        binding.viewPersonalDetailsActionBar.actionBarSkip.setText(getString(R.string.edit));
-        binding.viewPersonalDetailsActionBar.actionBarSkip.setOnClickListener(view -> {
-            JumpTo.goToRegistrationActivity(ViewPersonalDetailsActivity.this, phone, true, userId, true);
-        });
+        binding.viewPersonalDetailsActionBar.actionBarSkip.setVisibility(View.GONE);
 
         //------------------------------------------------------------------------------------------
-        userNameTextView = (TextView) findViewById(R.id.view_personal_details_name_text_view);
         userPhoneNumberTextView = (TextView) findViewById(R.id.view_personal_details_phone_number_text_view);
         userEmailTextView = (TextView) findViewById(R.id.view_personal_details_email_id_text_view);
         userAddressTextView = (TextView) findViewById(R.id.view_personal_details_address_text_view);
@@ -350,7 +345,7 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                         userAadhaarNumberAPI = list.getAadhaar_number();
                         userIsSelfAddedAsDriverAPI = String.valueOf(list.getIs_self_added_asDriver());
 
-                        userNameTextView.setText(userNameAPI);
+                        binding.viewPersonalDetailsNameTextView.setText(userNameAPI);
 
                         String s1 = userPhoneNumberAPI.substring(2, 12);
 
@@ -1162,6 +1157,10 @@ public class ViewPersonalDetailsActivity extends AppCompat {
                 break;
 
         }
+    }
+
+    public void onClickEditProfileDetailsView(View view){
+        JumpTo.goToRegistrationActivity(ViewPersonalDetailsActivity.this, phone, true, userId, true);
     }
 
     public void onClickAddDetails(View view) {
