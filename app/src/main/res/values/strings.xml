@@ -1389,7 +1389,7 @@
     <string name="pick_up_time">Pick-up Time*</string>
     <string name="enterYourBudget">Enter Your Budget</string>
     <string name="budget">Budget</string>
-    <string name="budgetRs">Budget ₹</string>
+    <string name="budgetRs">Budget ₹*</string>
     <string name="truckTypeAndCapacity">Truck Body &amp; Load Type*</string>
     <string name="SelectVehicleModel">Vehicle Model</string>
     <string name="bodyType">Body Type: </string>
