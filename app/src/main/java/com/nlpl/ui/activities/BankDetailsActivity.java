@@ -139,19 +139,24 @@ public class BankDetailsActivity extends AppCompat {
     private Function1<ImageResult<? extends Uri>, Unit> imageCallBack() {
         return imageResult -> {
             if (imageResult instanceof ImageResult.Success) {
-                Uri uri = ((ImageResult.Success<Uri>) imageResult).getValue();
+                try {
+                    Uri uri = ((ImageResult.Success<Uri>) imageResult).getValue();
 //                imageView.setImageURI(uri);
-                binding.bankDetailsCanceledCheckImage.setImageURI(uri);
-                previewDialogCancelledChequeImageView.setImageURI(uri);
-                String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                Cursor cursor = getContentResolver().query(uri, filePathColumn, null, null, null);
-                cursor.moveToFirst();
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                String picturePath = cursor.getString(columnIndex);
-                cursor.close();
+                    binding.bankDetailsCanceledCheckImage.setImageURI(uri);
+                    previewDialogCancelledChequeImageView.setImageURI(uri);
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                    Cursor cursor = getContentResolver().query(uri, filePathColumn, null, null, null);
+                    cursor.moveToFirst();
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String picturePath = cursor.getString(columnIndex);
+                    cursor.close();
 
-                isImgUploaded = true;
-                PathForCC = picturePath;
+                    isImgUploaded = true;
+                    PathForCC = picturePath;
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
             } else {
                 String errorString = ((ImageResult.Failure) imageResult).getErrorString();
                 Toast.makeText(this, errorString, Toast.LENGTH_LONG).show();
