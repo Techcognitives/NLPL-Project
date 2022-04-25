@@ -61,6 +61,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.Objects;
 
+import dev.ronnie.github.imagepicker.ImagePicker;
+import dev.ronnie.github.imagepicker.ImageResult;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 import okhttp3.MediaType;
@@ -75,10 +77,11 @@ public class BankDetailsActivity extends AppCompat {
     String userId, PathForCC = "", bankId, mobile, userRoleAPI, ccUploadedAPI;
     int requestCode, resultCode, GET_FROM_GALLERY = 0, CAMERA_PIC_REQUEST1 = 0;
     Intent data;
-    Dialog previewDialogCancelledCheque, loadingDialog;
+    Dialog previewDialogCancelledCheque;
     ImageView previewDialogCancelledChequeImageView;
     Boolean isEdit, isImgUploaded = false, bankVerified = true;
     ActivityBankDetailsBinding binding;
+    ImagePicker imagePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,26 +98,11 @@ public class BankDetailsActivity extends AppCompat {
             isEdit = bundle.getBoolean("isEdit");
             bankId = bundle.getString("bankDetailsID");
             mobile = bundle.getString("mobile");
+            imagePicker = new ImagePicker(this);
+
         }
 
-        //------------------------------------------------------------------------------------------
-        loadingDialog = new Dialog(this);
-        loadingDialog.setContentView(R.layout.dialog_loading);
-        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-        lp2.copyFrom(loadingDialog.getWindow().getAttributes());
-        lp2.width = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp2.gravity = Gravity.CENTER;
-        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
-
-
-        loadingDialog.setCancelable(false);
-        loadingDialog.getWindow().setAttributes(lp2);
-
-        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
-        loading_img.startAnimation(rotate);
         //------------------------------------------------------------------------------------------
 
         getUserDetailsMain();
@@ -144,8 +132,33 @@ public class BankDetailsActivity extends AppCompat {
             getBankDetails();
         }
 
-        binding.bankDetailsCanceledCheckUpload.setOnClickListener(view -> DialogChoose());
+        binding.bankDetailsCanceledCheckUpload.setOnClickListener(view -> imagePicker.selectSource(imageCallBack()));
         binding.bankDetailsEditCanceledCheck.setOnClickListener(view -> DialogChoose());
+    }
+
+    private Function1<ImageResult<? extends Uri>, Unit> imageCallBack() {
+        return imageResult -> {
+            if (imageResult instanceof ImageResult.Success) {
+                Uri uri = ((ImageResult.Success<Uri>) imageResult).getValue();
+//                imageView.setImageURI(uri);
+
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                Cursor cursor = getContentResolver().query(uri, filePathColumn, null, null, null);
+                cursor.moveToFirst();
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String picturePath = cursor.getString(columnIndex);
+                cursor.close();
+
+                binding.bankDetailsCanceledCheckImage.setImageURI(uri);
+                previewDialogCancelledChequeImageView.setImageURI(uri);
+
+                isImgUploaded = true;
+            } else {
+                String errorString = ((ImageResult.Failure) imageResult).getErrorString();
+                Toast.makeText(this, errorString, Toast.LENGTH_LONG).show();
+            }
+            return null;
+        };
     }
 
     private void DialogChoose() {
@@ -240,6 +253,7 @@ public class BankDetailsActivity extends AppCompat {
             isImgUploaded = true;
 
             Uri selectedImage = data.getData();
+
             String[] filePathColumn = {MediaStore.Images.Media.DATA};
             Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
             cursor.moveToFirst();
@@ -772,14 +786,6 @@ public class BankDetailsActivity extends AppCompat {
 //            JumpTo.goToServiceProviderDashboard(BankDetailsActivity.this, mobile, true, true);
 //        }
         JumpTo.goToViewPersonalDetailsActivity(BankDetailsActivity.this, userId, mobile, true);
-    }
-
-    public void showLoading(){
-        loadingDialog.show();
-    }
-
-    public void dismissLoading(){
-        loadingDialog.dismiss();
     }
 
 }

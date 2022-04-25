@@ -3,7 +3,6 @@ apply plugin: 'com.google.gms.google-services'
 
 buildscript {
     repositories {
-        maven { url 'https://jitpack.io' }
         google()
         mavenCentral()
         flatDir {
@@ -92,4 +91,5 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     implementation 'com.basgeekball:awesome-validation:4.3'
+    implementation 'com.github.ronnieotieno:Ronnie-Image-Picker:1.1.0'
 }
