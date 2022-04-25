@@ -512,6 +512,17 @@ public class RegistrationActivity extends AppCompat {
     }
 
     public void getCurrentLocation(Activity activity, EditText address, EditText pinCode) {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+
+
         FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity);
 
         if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -542,6 +553,10 @@ public class RegistrationActivity extends AppCompat {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
+                        if (loadingDialog.isShowing()) {
+                            loadingDialog.dismiss();
+                        }
+
                     }
 
                 }
@@ -920,6 +935,16 @@ public class RegistrationActivity extends AppCompat {
 
 
     public void getUserDetails(String userId) {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+
         Call<UserResponse> call = ApiClient.getUserService().getUserDetailsParticular(userId);
         call.enqueue(new Callback<UserResponse>() {
             @Override
@@ -935,6 +960,10 @@ public class RegistrationActivity extends AppCompat {
                 } catch (Exception e) {
                     alternateMobile.setText("");
                 }
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
+
                 pinCode.setText(listObj.getPin_code());
                 selectStateText.setText(listObj.getState_code());
                 selectDistrictText.setText(listObj.getPreferred_location());
@@ -955,11 +984,4 @@ public class RegistrationActivity extends AppCompat {
         }
     }
 
-    public void showLoading(){
-        loadingDialog.show();
-    }
-
-    public void dismissLoading(){
-        loadingDialog.dismiss();
-    }
 }

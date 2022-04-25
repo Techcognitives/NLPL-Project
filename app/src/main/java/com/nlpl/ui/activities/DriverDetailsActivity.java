@@ -1380,6 +1380,16 @@ public class DriverDetailsActivity extends AppCompat {
     };
 
     private void getDriverDetails() {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+
         String url = getString(R.string.baseURL) + "/driver/driverId/" + driverId;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
@@ -1425,6 +1435,9 @@ public class DriverDetailsActivity extends AppCompat {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                }
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
                 }
             }
         }, new com.android.volley.Response.ErrorListener() {
@@ -1754,6 +1767,15 @@ public class DriverDetailsActivity extends AppCompat {
     }
 
     public void getUserDetails() {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
 
         String url = getString(R.string.baseURL) + "/user/" + userId;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -1813,6 +1835,10 @@ public class DriverDetailsActivity extends AppCompat {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
+
             }
         }, new com.android.volley.Response.ErrorListener() {
             @Override
@@ -1845,6 +1871,16 @@ public class DriverDetailsActivity extends AppCompat {
     }
 
     public void getCurrentLocation(Activity activity, EditText address, EditText pinCode) {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+
         FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity);
 
         if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -1875,6 +1911,10 @@ public class DriverDetailsActivity extends AppCompat {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
+                        if (loadingDialog.isShowing()) {
+                            loadingDialog.dismiss();
+                        }
+
                     }
 
                 }
@@ -1977,11 +2017,4 @@ public class DriverDetailsActivity extends AppCompat {
         });
     }
 
-    public void showLoading(){
-        loadingDialog.show();
-    }
-
-    public void dismissLoading(){
-        loadingDialog.dismiss();
-    }
 }

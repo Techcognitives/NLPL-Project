@@ -148,13 +148,30 @@ public class OtpCodeActivity extends AppCompat {
         otpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Dialog loadingDialog = new Dialog(OtpCodeActivity.this);
+                loadingDialog.setContentView(R.layout.dialog_loading);
+                loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+                loadingDialog.show();
+                loadingDialog.setCancelable(false);
+                Animation rotate = AnimationUtils.loadAnimation(OtpCodeActivity.this, R.anim.clockwiserotate);
+                loading_img.startAnimation(rotate);
 //                ShowAlert.loadingDialog(OtpCodeActivity.this);
+
+
                 otp = otpCode.getText().toString();
                 if (otp.length()==6){
                     //------------------------ Without OTP ---------------------------------------------
                     if (isEditPhone) {
+                        if (loadingDialog.isShowing()) {
+                            loadingDialog.dismiss();
+                        }
                         JumpTo.goToViewPersonalDetailsActivity(OtpCodeActivity.this, userIdBundle, mobile, true);
                     } else {
+                        if (loadingDialog.isShowing()) {
+                            loadingDialog.dismiss();
+                        }
                         checkPhoneInAPI(mobileNoFirebase);
                     }
                     //----------------------------------------------------------------------------------

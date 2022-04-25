@@ -166,6 +166,16 @@ public class ViewTruckDetailsActivity extends AppCompat {
     }
 
     private void getUserDetailsMain() {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+
         Call<MainResponse> responseCall = ApiClient.getUserService().mainResponse(userId);
         responseCall.enqueue(new Callback<MainResponse>() {
             @Override
@@ -314,6 +324,11 @@ public class ViewTruckDetailsActivity extends AppCompat {
                     e.printStackTrace();
                     getUserDetailsMain();
                 }
+
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
+
             }
 
             @Override
@@ -390,13 +405,4 @@ public class ViewTruckDetailsActivity extends AppCompat {
 //        truckListAdapter.updateData(searchVehicleList);
 //    }
 
-
-
-    public void showLoading(){
-        loadingDialog.show();
-    }
-
-    public void dismissLoading(){
-        loadingDialog.dismiss();
-    }
 }

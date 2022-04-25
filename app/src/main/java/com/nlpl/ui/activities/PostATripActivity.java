@@ -251,12 +251,31 @@ public class PostATripActivity extends AppCompat {
     }
 
     private void getTruckDetails() {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+
         Call<TruckResponse> truckModelClassCall = ApiClient.addTruckService().getTruckDetails(userId);
         truckModelClassCall.enqueue(new Callback<TruckResponse>() {
             @Override
             public void onResponse(Call<TruckResponse> call, Response<TruckResponse> response) {
-                TruckResponse truckModelClass = response.body();
-                if (response.isSuccessful()) truckList.addAll(truckModelClass.getData());
+                try{
+                    TruckResponse truckModelClass = response.body();
+                    if (response.isSuccessful()) truckList.addAll(truckModelClass.getData());
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
+
             }
 
             @Override
@@ -682,24 +701,43 @@ public class PostATripActivity extends AppCompat {
     }
 
     private void getTripDetails() {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+
         Call<TripResponse> tripModelClass = ApiClient.getPostTripService().getTripDetails(tripId);
         tripModelClass.enqueue(new Callback<TripResponse>() {
             @Override
             public void onResponse(Call<TripResponse> call, Response<TripResponse> response) {
-                TripResponse tripModelClass1 = response.body();
-                TripResponse.TripList list = tripModelClass1.getData().get(0);
-                selectDate.setText(list.getTrip_date());
-                selectTime.setText(list.getTrip_start_time());
-                selectBudget.setText(list.getTrip_budget());
-                bodyType.setText(list.getVehicle_model());
-                loadType.setText(list.getCapacity());
-                selectPickUpState.setText(list.getPick_state());
-                selectPickUpCity.setText(list.getPick_city());
-                selectDropState.setText(list.getDrop_state());
-                selectDropCity.setText(list.getDrop_city());
-                note.setText(list.getNotes_meterial_des());
-                truckId = list.getFeet();
-                TruckDetailsByTruckId();
+                try{
+                    TripResponse tripModelClass1 = response.body();
+                    TripResponse.TripList list = tripModelClass1.getData().get(0);
+                    selectDate.setText(list.getTrip_date());
+                    selectTime.setText(list.getTrip_start_time());
+                    selectBudget.setText(list.getTrip_budget());
+                    bodyType.setText(list.getVehicle_model());
+                    loadType.setText(list.getCapacity());
+                    selectPickUpState.setText(list.getPick_state());
+                    selectPickUpCity.setText(list.getPick_city());
+                    selectDropState.setText(list.getDrop_state());
+                    selectDropCity.setText(list.getDrop_city());
+                    note.setText(list.getNotes_meterial_des());
+                    truckId = list.getFeet();
+                    TruckDetailsByTruckId();
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
+
             }
 
             @Override
@@ -711,6 +749,16 @@ public class PostATripActivity extends AppCompat {
     }
 
     public void TruckDetailsByTruckId() {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+
         Call<GetTruckDetailsResponse> responseCall = ApiClient.addTruckService().getTruckByTruckId(truckId);
         responseCall.enqueue(new Callback<GetTruckDetailsResponse>() {
             @Override
@@ -720,7 +768,10 @@ public class PostATripActivity extends AppCompat {
                     GetTruckDetailsResponse.TruckList list = response1.getData().get(0);
                     selectTruck.setText(list.getVehicle_no());
                 } catch (Exception e) {
-
+                    e.printStackTrace();
+                }
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
                 }
             }
 
@@ -737,11 +788,4 @@ public class PostATripActivity extends AppCompat {
         JumpTo.goToFindLoadsActivity(this, userId, phone, true);
     }
 
-    public void showLoading(){
-        loadingDialog.show();
-    }
-
-    public void dismissLoading(){
-        loadingDialog.dismiss();
-    }
 }

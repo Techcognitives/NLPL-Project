@@ -551,26 +551,45 @@ public class PersonalDetailsActivity extends AppCompat {
     //-------------------------------------------------------------------------------------------------------------------
 
     public void getUserDetails(String userId) {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+
         Call<UserResponse> call = ApiClient.getUserService().getUserDetailsParticular(userId);
         call.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                UserResponse nameResponse = response.body();
-                UserResponse.UserList listObj = nameResponse.getData().get(0);
-                userRoleAPI = listObj.getUser_type();
-                int userVerified = listObj.getIsPersonal_dt_added();
-                Log.i("userVerified", String.valueOf(userVerified));
-                if (userVerified == 1) {
-                    panConstrain.setVisibility(View.GONE);
-                    aadharConstrain.setVisibility(View.GONE);
-                    okButton.setVisibility(View.GONE);
-                    uploadPanTitle.setText(getString(R.string.Your_profile_is_under_verification));
-                    uploadAadharTitle.setVisibility(View.GONE);
-                } else {
-                    panConstrain.setVisibility(View.VISIBLE);
-                    aadharConstrain.setVisibility(View.VISIBLE);
-                    okButton.setVisibility(View.VISIBLE);
-                    uploadAadharTitle.setVisibility(View.VISIBLE);
+
+                try {
+                    UserResponse nameResponse = response.body();
+                    UserResponse.UserList listObj = nameResponse.getData().get(0);
+                    userRoleAPI = listObj.getUser_type();
+                    int userVerified = listObj.getIsPersonal_dt_added();
+                    Log.i("userVerified", String.valueOf(userVerified));
+                    if (userVerified == 1) {
+                        panConstrain.setVisibility(View.GONE);
+                        aadharConstrain.setVisibility(View.GONE);
+                        okButton.setVisibility(View.GONE);
+                        uploadPanTitle.setText(getString(R.string.Your_profile_is_under_verification));
+                        uploadAadharTitle.setVisibility(View.GONE);
+                    } else {
+                        panConstrain.setVisibility(View.VISIBLE);
+                        aadharConstrain.setVisibility(View.VISIBLE);
+                        okButton.setVisibility(View.VISIBLE);
+                        uploadAadharTitle.setVisibility(View.VISIBLE);
+                    }
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
                 }
             }
 
@@ -1035,13 +1054,5 @@ public class PersonalDetailsActivity extends AppCompat {
             }
         });
         //****************************************************************************************//
-    }
-
-    public void showLoading(){
-        loadingDialog.show();
-    }
-
-    public void dismissLoading(){
-        loadingDialog.dismiss();
     }
 }
