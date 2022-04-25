@@ -83,7 +83,7 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
     private GoogleMap mMap;
     Marker marker;
     ArrayList<UserResponse.UserList> userDetails = new ArrayList<>();
-    Dialog loadingDialog;
+
 
     @SuppressLint({"UseCompatLoadingForColorStateLists", "UseCompatLoadingForDrawables"})
     @Override
@@ -99,22 +99,6 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
         }
 
         //------------------------------------------------------------------------------------------
-        loadingDialog = new Dialog(this);
-        loadingDialog.setContentView(R.layout.dialog_loading);
-        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-        lp2.copyFrom(loadingDialog.getWindow().getAttributes());
-        lp2.width = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp2.gravity = Gravity.CENTER;
-        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
-
-        loadingDialog.setCancelable(false);
-        loadingDialog.getWindow().setAttributes(lp2);
-
-        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
-        loading_img.startAnimation(rotate);
         //------------------------------------------------------------------------------------------
 
         getCurrentLocation(FindTrucksActivity.this);
@@ -164,14 +148,21 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
 
     //----------------------------------------------------------------------------------------------
     public void getAllUserDetails() {
+
         Call<UserResponse> call = ApiClient.getUserService().getAllUserDetails();
         call.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(@NonNull Call<UserResponse> call, @NonNull Response<UserResponse> response) {
-                loadingDialog.dismiss();
-                UserResponse userResponse = response.body();
-                if (userResponse != null) userDetails.addAll(userResponse.getData());
-                getAllDataLocation(userDetails);
+                try {
+                    UserResponse userResponse = response.body();
+                    if (userResponse != null) userDetails.addAll(userResponse.getData());
+                    getAllDataLocation(userDetails);
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+
+
             }
 
             @Override
@@ -184,7 +175,6 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        loadingDialog.show();
         getAllUserDetails();
 
     }
@@ -237,6 +227,7 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
 
     //----------------------------------------------------------------------------------------------
     public void getCurrentLocation(Activity activity) {
+
         FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity);
         if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             fusedLocationProviderClient.getLastLocation().addOnCompleteListener(task -> {
@@ -250,6 +241,7 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
                 }
 
             });
@@ -505,12 +497,5 @@ public class FindTrucksActivity extends AppCompat implements OnMapReadyCallback 
         });
     }
 
-    public void showLoading(){
-        loadingDialog.show();
-    }
-
-    public void dismissLoading(){
-        loadingDialog.dismiss();
-    }
 
 }

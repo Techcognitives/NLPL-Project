@@ -307,20 +307,38 @@ public class FindTripLPActivity extends AppCompatActivity {
     }
 
     private void getAllTripDetails() {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+
         Call<TripResponse> tripModelCall = ApiClient.getPostTripService().getAllTripDetails();
         tripModelCall.enqueue(new Callback<TripResponse>() {
             @Override
             public void onResponse(Call<TripResponse> call, Response<TripResponse> response) {
-                TripResponse tripModel = response.body();
-                TripResponse.TripList list = tripModel.getData().get(0);
 
-                tripList.addAll(tripModel.getData());
-                allTripAdapter.updateData(tripList);
+                try {
+                    TripResponse tripModel = response.body();
+                    TripResponse.TripList list = tripModel.getData().get(0);
 
-                if (tripList.size() == 0) noTrips.setVisibility(View.VISIBLE);
-                if (tripList.size() > 0) {
-                    getStateBidsPick(tripList);
-                    getStateBidsDrop(tripList);
+                    tripList.addAll(tripModel.getData());
+                    allTripAdapter.updateData(tripList);
+
+                    if (tripList.size() == 0) noTrips.setVisibility(View.VISIBLE);
+                    if (tripList.size() > 0) {
+                        getStateBidsPick(tripList);
+                        getStateBidsDrop(tripList);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
                 }
             }
 
@@ -1055,11 +1073,5 @@ public class FindTripLPActivity extends AppCompatActivity {
         JumpTo.goToCustomerDashboard(FindTripLPActivity.this, phone, true);
     }
 
-    public void showLoading(){
-        loadingDialog.show();
-    }
 
-    public void dismissLoading(){
-        loadingDialog.dismiss();
-    }
 }

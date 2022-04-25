@@ -173,6 +173,15 @@ public class CustomerLoadsHistoryActivity extends AppCompat {
     }
 
     public void getCompletedLoads() {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
 
         String url1 = getString(R.string.baseURL) + "/loadpost/getLoadDtByUser/" + userId;
         Log.i("URL: ", url1);
@@ -211,6 +220,10 @@ public class CustomerLoadsHistoryActivity extends AppCompat {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
+
             }
         }, new com.android.volley.Response.ErrorListener() {
             @Override
@@ -223,6 +236,15 @@ public class CustomerLoadsHistoryActivity extends AppCompat {
     }
 
     public void getExpiredLoads() {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
 
         String url1 = getString(R.string.baseURL) + "/loadpost/getLoadDtByUser/" + userId;
         Log.i("URL: ", url1);
@@ -276,6 +298,10 @@ public class CustomerLoadsHistoryActivity extends AppCompat {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
+
             }
         }, new com.android.volley.Response.ErrorListener() {
             @Override
@@ -583,13 +609,5 @@ public class CustomerLoadsHistoryActivity extends AppCompat {
 
         cancelBtn.setVisibility(View.GONE);
 
-    }
-
-    public void showLoading(){
-        loadingDialog.show();
-    }
-
-    public void dismissLoading(){
-        loadingDialog.dismiss();
     }
 }

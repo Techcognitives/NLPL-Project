@@ -260,6 +260,16 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
     }
 
     private void getUserId(String userMobileNumber) {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+
         //-----------------------------------Get User Details---------------------------------------
         String url = getString(R.string.baseURL) + "/user/get";
         Log.i("URL at Profile:", url);
@@ -300,6 +310,11 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -314,6 +329,16 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
     }
 
     private void getUserDetails() {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+
         String url = getString(R.string.baseURL) + "/user/" + userId;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
             @Override
@@ -345,6 +370,10 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
+
             }
         }, new com.android.volley.Response.ErrorListener() {
             @Override
@@ -377,6 +406,16 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
     }
 
     private void getBidListByUserId() {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+
         String url = getString(R.string.baseURL) + "/spbid/getBidDtByUserId/" + userId;
         Log.i("url betBidByUserID", url);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -394,6 +433,9 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
             }
         }, new com.android.volley.Response.ErrorListener() {
             @Override
@@ -405,6 +447,15 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
     }
 
     public void getBidSubmittedList(String loadIdReceived, String bidId) {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
         //---------------------------- Get Bank Details ------------------------------------------
         String url1 = getString(R.string.baseURL) + "/loadpost/getLoadDtByPostId/" + loadIdReceived;
         Log.i("URL: ", url1);
@@ -475,6 +526,9 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
             }
         }, new com.android.volley.Response.ErrorListener() {
             @Override
@@ -490,6 +544,15 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
     //-----------------------------------------------------------------------------------------------------
 
     private void getBidDetailsByBidId(String bidId, Boolean accept) {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
         //-------------------------------------------------------------------------------------------
         String url = getString(R.string.baseURL) + "/spbid/bidDtByBidId/" + bidId;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -509,6 +572,9 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
             }
         }, new com.android.volley.Response.ErrorListener() {
             @Override
@@ -522,6 +588,15 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
     }
 
     private void getTruckDetailsByTruckId(String truckIdSelected, Boolean acceptRevised) {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
 
         updateAssignedTruckId = truckIdSelected;
 
@@ -558,6 +633,9 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
             }
         }, new com.android.volley.Response.ErrorListener() {
             @Override
@@ -569,6 +647,15 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
     }
 
     private void getDriverDetailsByDriverId(String driverIdSelected) {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
 
         updateAssignedDriverId = driverIdSelected;
 
@@ -589,6 +676,9 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                }
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
                 }
             }
         }, new com.android.volley.Response.ErrorListener() {
@@ -978,6 +1068,15 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
     //----------------------------------------------------------------------------------------------
 
     private void getCustomerNameAndNumber(String user_id) {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
         //-------------------------------------------------------------------------------------------
         String url = getString(R.string.baseURL) + "/user/" + user_id;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -994,6 +1093,9 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                }
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
                 }
             }
         }, new com.android.volley.Response.ErrorListener() {
@@ -1018,6 +1120,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
     }
 
     private void getLocation() {
+
         if (ActivityCompat.checkSelfPermission(TrackForServiceProviderActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
                 @Override
@@ -1041,6 +1144,7 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
+
                     }
                 }
             });
@@ -1053,9 +1157,6 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
     final Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             int state = msg.getData().getInt("state");
-            if (state == 1) {
-                loadingDialog.dismiss();
-            }
         }
     };
 
@@ -1114,12 +1215,5 @@ public class TrackForServiceProviderActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         JumpTo.goToServiceProviderDashboard(this, phone, true, true);
-    }
-    public void showLoading(){
-        loadingDialog.show();
-    }
-
-    public void dismissLoading(){
-        loadingDialog.dismiss();
     }
 }

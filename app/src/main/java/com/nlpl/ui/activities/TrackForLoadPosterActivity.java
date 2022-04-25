@@ -260,6 +260,16 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
     }
 
     private void getUserId(String userMobileNumber) {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+
         ArrayList<String> arrayUserId = new ArrayList<>(), arrayMobileNo = new ArrayList<>(), arrayCustomerName = new ArrayList<>(), arrayCustomerEmail = new ArrayList<>(), isPersonalD = new ArrayList<>(), isProfileArray = new ArrayList<>(), isBankD = new ArrayList<>();
         //------------------------------get user details by mobile Number---------------------------------
         //-----------------------------------Get User Details---------------------------------------
@@ -307,6 +317,11 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
+
             }
         }, new com.android.volley.Response.ErrorListener() {
             @Override
@@ -323,6 +338,15 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
     }
 
     public void getBidsAccepted() {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
         //---------------------------- Get Bank Details -------------------------------------------
         String url1 = getString(R.string.baseURL) + "/loadpost/getLoadDtByUser/" + userId;
         Log.i("URL: ", url1);
@@ -382,6 +406,9 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                }
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
                 }
             }
         }, new com.android.volley.Response.ErrorListener() {
@@ -988,9 +1015,6 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
     final Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             int state = msg.getData().getInt("state");
-            if (state == 1) {
-                loadingDialog.dismiss();
-            }
         }
     };
 
@@ -1049,7 +1073,4 @@ public class TrackForLoadPosterActivity extends AppCompatActivity {
         loadingDialog.show();
     }
 
-    public void dismissLoading(){
-        loadingDialog.dismiss();
-    }
 }

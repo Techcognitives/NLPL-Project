@@ -634,6 +634,16 @@ public class PostALoadActivity extends AppCompat {
     }
 
     private void getLoadDetails() {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+
         String url = getString(R.string.baseURL) + "/loadpost/getLoadDtByPostId/" + loadId;
         Log.i("get Bank Detail URL", url);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -699,6 +709,9 @@ public class PostALoadActivity extends AppCompat {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                }
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
                 }
             }
         }, new com.android.volley.Response.ErrorListener() {
@@ -1197,11 +1210,4 @@ public class PostALoadActivity extends AppCompat {
         }
     };
 
-    public void showLoading(){
-        loadingDialog.show();
-    }
-
-    public void dismissLoading(){
-        loadingDialog.dismiss();
-    }
 }
