@@ -424,6 +424,18 @@ public class CompanyDetailsActivity extends AppCompat {
 
     private void getStateAndDistrict(String enteredPin) {
 
+        //loader start
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+
+        /********************************************************************************/
         Log.i("Entered PIN", enteredPin);
 
         String url = "http://13.234.163.179:3000/user/locationData/"+enteredPin;
@@ -446,6 +458,11 @@ public class CompanyDetailsActivity extends AppCompat {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                //Loader end
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
+                /*****************************************************************************/
             }
         }, new com.android.volley.Response.ErrorListener() {
             @Override
@@ -491,6 +508,18 @@ public class CompanyDetailsActivity extends AppCompat {
     }
 
     public void getCompanyDetails() {
+        //loader start
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+        /*********************************************************************************************/
+
         //---------------------------- Get Company Details -------------------------------------------
         String url1 = getString(R.string.baseURL) + "/company/get/" + userId;
         Log.i("URL: ", url1);
@@ -560,6 +589,11 @@ public class CompanyDetailsActivity extends AppCompat {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                //loader end
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
+                /************************************************************************************/
             }
         }, new com.android.volley.Response.ErrorListener() {
             @Override
