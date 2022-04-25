@@ -153,10 +153,11 @@ public class BankDetailsActivity extends AppCompat {
 
                     isImgUploaded = true;
                     PathForCC = picturePath;
+                    saveBank(createBankAcc());
+
                 }catch (Exception e){
                     e.printStackTrace();
                 }
-
             } else {
                 String errorString = ((ImageResult.Failure) imageResult).getErrorString();
                 Toast.makeText(this, errorString, Toast.LENGTH_LONG).show();
