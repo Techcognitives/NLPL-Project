@@ -61,6 +61,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.Objects;
 
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -182,7 +184,6 @@ public class BankDetailsActivity extends AppCompat {
             chooseDialog.dismiss();
         });
     }
-
 
     //-----------------------------------------------upload Image-----------------------------------
     ActivityResultLauncher<Intent> activityResultForCancelledCheque = registerForActivityResult(
@@ -422,6 +423,16 @@ public class BankDetailsActivity extends AppCompat {
     }
 
     private void getUserDetailsMain() {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+
         Call<MainResponse> responseCall = ApiClient.getUserService().mainResponse(userId);
         responseCall.enqueue(new Callback<MainResponse>() {
             @Override
@@ -435,6 +446,10 @@ public class BankDetailsActivity extends AppCompat {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                }
+
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
                 }
             }
 
