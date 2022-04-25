@@ -141,7 +141,8 @@ public class BankDetailsActivity extends AppCompat {
             if (imageResult instanceof ImageResult.Success) {
                 Uri uri = ((ImageResult.Success<Uri>) imageResult).getValue();
 //                imageView.setImageURI(uri);
-
+                binding.bankDetailsCanceledCheckImage.setImageURI(uri);
+                previewDialogCancelledChequeImageView.setImageURI(uri);
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
                 Cursor cursor = getContentResolver().query(uri, filePathColumn, null, null, null);
                 cursor.moveToFirst();
@@ -149,10 +150,8 @@ public class BankDetailsActivity extends AppCompat {
                 String picturePath = cursor.getString(columnIndex);
                 cursor.close();
 
-                binding.bankDetailsCanceledCheckImage.setImageURI(uri);
-                previewDialogCancelledChequeImageView.setImageURI(uri);
-
                 isImgUploaded = true;
+                PathForCC = picturePath;
             } else {
                 String errorString = ((ImageResult.Failure) imageResult).getErrorString();
                 Toast.makeText(this, errorString, Toast.LENGTH_LONG).show();
