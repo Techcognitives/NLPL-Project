@@ -153,7 +153,7 @@ public class BankDetailsActivity extends AppCompat {
 
                     isImgUploaded = true;
                     PathForCC = picturePath;
-                    saveBank(createBankAcc());
+//                    saveBank(createBankAcc());
 
                 }catch (Exception e){
                     e.printStackTrace();
