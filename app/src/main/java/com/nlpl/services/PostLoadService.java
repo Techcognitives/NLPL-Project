@@ -1,5 +1,6 @@
 package com.nlpl.services;
 
+import com.nlpl.model.GetLoadDetailsResponse;
 import com.nlpl.model.Requests.PostLoadRequest;
 import com.nlpl.model.Responses.PostLoadResponse;
 import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdateCount;
@@ -25,6 +26,7 @@ import com.nlpl.model.UpdateModel.Models.UpdateLoadPost.UpdatePaymentType;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -92,4 +94,7 @@ public interface PostLoadService {
 
     @PUT("/loadpost/updatePostByPID/{loadId}")
     Call<UpdatePaymentType> updatePaymentType(@Path("loadId") String bidId, @Body UpdatePaymentType updatePaymentType);
+
+    @GET("/loadpost/getLoadDtByPostId/{loadId}")
+    Call<GetLoadDetailsResponse> getLoadDetailsResponseCall(@Path("loadId") String userId);
 }

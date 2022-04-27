@@ -1,8 +1,6 @@
 package com.nlpl.ui.adapters;
 
 import android.annotation.SuppressLint;
-import android.os.Build;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,29 +16,26 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
-import com.nlpl.model.ModelForRecyclerView.BidsAcceptedModel;
-import com.nlpl.model.UpdateMethods.UpdatePostLoadDetails;
+import com.nlpl.model.MainResponse;
 import com.nlpl.ui.activities.CustomerDashboardActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapter.BidsAcceptedViewHolder> {
 
-    private ArrayList<BidsAcceptedModel> acceptedList;
+    private ArrayList<MainResponse.Data.PostaLoadDetails> acceptedList;
     private CustomerDashboardActivity activity;
     ArrayList<String> arrayBidId, arrayBidStatus;
     String fianlBidId, bidEndsAt, currentTimeToCompare, bidEndsAtStringTime, finalBidEndsAt, finalDate;
     int timeLeftToExpire, timeInMillisec, minLeftToExpire, months;
     private RequestQueue mQueue;
 
-    public BidsAcceptedAdapter(CustomerDashboardActivity activity, ArrayList<BidsAcceptedModel> acceptedList) {
+    public BidsAcceptedAdapter(CustomerDashboardActivity activity, ArrayList<MainResponse.Data.PostaLoadDetails> acceptedList) {
         this.acceptedList = acceptedList;
         this.activity = activity;
     }
@@ -56,7 +51,7 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
 
     @Override
     public void onBindViewHolder(BidsAcceptedViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        BidsAcceptedModel obj = acceptedList.get(position);
+        MainResponse.Data.PostaLoadDetails obj = acceptedList.get(position);
 
         if (obj.getBid_ends_at().equals("null")) {
             bidEndsAt = "2022-02-01 12:05:11.598";
@@ -351,7 +346,7 @@ public class BidsAcceptedAdapter extends RecyclerView.Adapter<BidsAcceptedAdapte
         return acceptedList.size();
     }
 
-    public void updateData(ArrayList<BidsAcceptedModel> acceptedList) {
+    public void updateData(ArrayList<MainResponse.Data.PostaLoadDetails> acceptedList) {
         this.acceptedList = acceptedList;
         notifyDataSetChanged();
     }

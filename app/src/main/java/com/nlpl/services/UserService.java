@@ -1,5 +1,6 @@
 package com.nlpl.services;
 
+import com.nlpl.model.GetUserByPhoneResponse;
 import com.nlpl.model.MainResponse;
 import com.nlpl.model.Requests.UserRequest;
 import com.nlpl.model.Responses.AdminResponse;
@@ -120,4 +121,7 @@ public interface UserService {
 
     @PUT("/user/{userId}")
     Call<UpdateUserAadharNumber> updateUserAadharNumber(@Path("userId") String userId, @Body UpdateUserAadharNumber updateUserAadharNumber);
+
+    @GET("/user/userDtByPhoneNo/{phoneNumber}")
+    Call<GetUserByPhoneResponse> getUserByPhoneResponseCall(@Path("phoneNumber") String phoneNumber);
 }

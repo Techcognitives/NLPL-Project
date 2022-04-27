@@ -82,6 +82,7 @@ public class BankDetailsActivity extends AppCompat {
     Boolean isEdit, isImgUploaded = false, bankVerified = true;
     ActivityBankDetailsBinding binding;
     ImagePicker imagePicker;
+    Uri newUriForCC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,9 +100,7 @@ public class BankDetailsActivity extends AppCompat {
             bankId = bundle.getString("bankDetailsID");
             mobile = bundle.getString("mobile");
             imagePicker = new ImagePicker(this);
-
         }
-
 
         //------------------------------------------------------------------------------------------
 
@@ -144,15 +143,16 @@ public class BankDetailsActivity extends AppCompat {
 //                imageView.setImageURI(uri);
                     binding.bankDetailsCanceledCheckImage.setImageURI(uri);
                     previewDialogCancelledChequeImageView.setImageURI(uri);
-                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                    Cursor cursor = getContentResolver().query(uri, filePathColumn, null, null, null);
-                    cursor.moveToFirst();
-                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    String picturePath = cursor.getString(columnIndex);
-                    cursor.close();
+                    newUriForCC= uri;
+//                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+//                    Cursor cursor = getContentResolver().query(uri, filePathColumn, null, null, null);
+//                    cursor.moveToFirst();
+//                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//                    String picturePath = cursor.getString(columnIndex);
+//                    cursor.close();
 
                     isImgUploaded = true;
-                    PathForCC = picturePath;
+                    PathForCC = String.valueOf(uri);
 //                    saveBank(createBankAcc());
 
                 }catch (Exception e){
@@ -703,10 +703,11 @@ public class BankDetailsActivity extends AppCompat {
 
     private void uploadCheque(String bankId1, String picPath) {
 
-        File file = new File(picPath);
+//        File file = new File(picPath);
 //        File file = new File(getExternalFilesDir("/").getAbsolutePath(), file);
 
-        MultipartBody.Part body = prepareFilePart("cheque", Uri.fromFile(file));
+//        MultipartBody.Part body = prepareFilePart("cheque", Uri.fromFile(file));
+        MultipartBody.Part body = prepareFilePart("cheque", newUriForCC);
 
         Call<UploadChequeResponse> call = ApiClient.getUploadChequeService().uploadCheque(bankId1, body);
         call.enqueue(new Callback<UploadChequeResponse>() {

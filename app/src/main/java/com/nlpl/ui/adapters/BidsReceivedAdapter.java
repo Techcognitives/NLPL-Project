@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.nlpl.R;
+import com.nlpl.model.MainResponse;
 import com.nlpl.model.ModelForRecyclerView.BidsReceivedModel;
 import com.nlpl.model.UpdateMethods.UpdatePostLoadDetails;
 import com.nlpl.ui.activities.CustomerDashboardActivity;
@@ -31,14 +32,14 @@ import java.util.Calendar;
 
 public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapter.BidsReceivedViewHolder> {
 
-    private ArrayList<BidsReceivedModel> loadList;
+    private ArrayList<MainResponse.Data.PostaLoadDetails> loadList;
     private CustomerDashboardActivity activity;
 
     String sortBy = "Sort By" , bidEndsAt, currentTimeToCompare, bidEndsAtStringTime, finalBidEndsAt, finalDate;
     private RequestQueue mQueue;
     int timeLeftToExpire, timeInMillisec, minLeftToExpire, months;
 
-    public BidsReceivedAdapter(CustomerDashboardActivity activity, ArrayList<BidsReceivedModel> loadList) {
+    public BidsReceivedAdapter(CustomerDashboardActivity activity, ArrayList<MainResponse.Data.PostaLoadDetails> loadList) {
         this.loadList = loadList;
         this.activity = activity;
         mQueue = Volley.newRequestQueue(activity);
@@ -52,7 +53,7 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
 
     @Override
     public void onBindViewHolder(BidsReceivedViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        BidsReceivedModel obj = loadList.get(position);
+        MainResponse.Data.PostaLoadDetails obj = loadList.get(position);
 
         if (obj.getBid_ends_at().equals("null")) {
             bidEndsAt = "2022-02-01 12:05:11.598";
@@ -244,12 +245,10 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
 
         activity.getBidsResponsesList(obj, holder.bidsResponsesRecyclerView, holder.showRecyclerView, sortBy, holder.showRecyclerViewBids);
 
-
-
-        if (obj.getSp_count()>3){
+        int spCount = Integer.parseInt(obj.sp_count);
+        if (spCount > 3){
 
         } else {
-
             holder.sortBy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
                 @Override
@@ -322,7 +321,7 @@ public class BidsReceivedAdapter extends RecyclerView.Adapter<BidsReceivedAdapte
         return loadList.size();
     }
 
-    public void updateData(ArrayList<BidsReceivedModel> loadList ) {
+    public void updateData(ArrayList<MainResponse.Data.PostaLoadDetails> loadList ) {
         this.loadList = loadList;
         notifyDataSetChanged();
     }

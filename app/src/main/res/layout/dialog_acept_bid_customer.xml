@@ -111,9 +111,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
                     android:background="@drawable/edit_text_border_grey"
                     android:ems="10"
                     android:hint="@string/Notes"
@@ -213,7 +211,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     android:background="@drawable/button_active"
                     android:backgroundTint="@color/grey"
@@ -227,7 +225,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/dialog_accept_bid_received_notes_textview"
                     app:layout_constraintEnd_toStartOf="@+id/dialog_accept_bid_bidder_quote_textview"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView52" />
+                    app:layout_constraintTop_toBottomOf="@+id/dialog_accept_bid_capacity_textview" />
 
                 <TextView
                     android:id="@+id/textView58"
@@ -243,7 +241,7 @@
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/dialog_accept_bid_bidder_quote_textview"
                     app:layout_constraintEnd_toStartOf="@+id/dialog_accept_bid_negotiable_textview"
-                    app:layout_constraintStart_toStartOf="@+id/textView52"
+                    app:layout_constraintStart_toEndOf="@+id/dialog_accept_bid_bidder_quote_textview"
                     app:layout_constraintTop_toTopOf="@+id/dialog_accept_bid_bidder_quote_textview"
                     app:layout_constraintVertical_bias="0.6" />
 
@@ -251,8 +249,10 @@
                     android:id="@+id/textView52"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
                     android:background="@drawable/button_active"
                     android:backgroundTint="@color/grey"
                     android:paddingLeft="2dp"
@@ -262,9 +262,9 @@
                     android:text="@string/body"
                     android:textSize="13dp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/textView56"
+                    app:layout_constraintBottom_toTopOf="@+id/textView50"
                     app:layout_constraintEnd_toStartOf="@+id/dialog_accept_bid_body_type_textview"
-                    app:layout_constraintStart_toEndOf="@+id/dialog_accept_bid_capacity_textview"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/dialog_accept_bid_driver_name" />
 
                 <RatingBar
@@ -307,10 +307,10 @@
                     android:layout_marginEnd="5dp"
                     android:text="@string/xx_capacity"
                     android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView52"
-                    app:layout_constraintEnd_toStartOf="@+id/textView52"
+                    app:layout_constraintBottom_toTopOf="@+id/textView56"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView50"
-                    app:layout_constraintTop_toTopOf="@+id/textView52" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView52" />
 
                 <TextView
                     android:id="@+id/textView3"

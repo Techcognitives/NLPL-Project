@@ -1,36 +1,23 @@
 package com.nlpl.ui.activities;
 
 import static com.nlpl.R.drawable.blue_profile_small;
-
 import static java.lang.Float.parseFloat;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import android.Manifest;
-import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -46,90 +33,77 @@ import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.firebase.auth.FirebaseAuth;
 import com.nlpl.R;
-import com.nlpl.model.ModelForRecyclerView.BidsAcceptedModel;
+import com.nlpl.model.GetLoadDetailsResponse;
+import com.nlpl.model.GetUserByPhoneResponse;
+import com.nlpl.model.MainResponse;
 import com.nlpl.model.ModelForRecyclerView.BidsReceivedModel;
 import com.nlpl.model.ModelForRecyclerView.BidsResponsesModel;
-import com.nlpl.model.Requests.ImageRequest;
 import com.nlpl.model.Responses.AdminResponse;
-import com.nlpl.model.Responses.ImageResponse;
-import com.nlpl.model.Responses.RatingResponse;
-import com.nlpl.model.Responses.UploadImageResponse;
 import com.nlpl.model.UpdateMethods.UpdateBidDetails;
 import com.nlpl.model.UpdateMethods.UpdatePostLoadDetails;
-import com.nlpl.model.UpdateMethods.UpdateUserDetails;
+
+import com.nlpl.ui.adapters.BanksAdapter;
 import com.nlpl.ui.adapters.BidsAcceptedAdapter;
 import com.nlpl.ui.adapters.BidsReceivedAdapter;
 import com.nlpl.ui.adapters.BidsResponsesAdapter;
+import com.nlpl.ui.adapters.DriversAdapter;
+import com.nlpl.ui.adapters.DriversListAdapter;
+import com.nlpl.ui.adapters.TrucksAdapter;
 import com.nlpl.utils.ApiClient;
 import com.nlpl.utils.AppCompat;
 import com.nlpl.utils.CreateUser;
 import com.nlpl.utils.DownloadImageTask;
 import com.nlpl.utils.EnglishNumberToWords;
-import com.nlpl.utils.FileUtils;
 import com.nlpl.utils.GetUserDetails;
 import com.nlpl.utils.InAppNotification;
-import com.nlpl.utils.FooThread;
 import com.nlpl.utils.JumpTo;
 import com.nlpl.utils.ShowAlert;
 import com.razorpay.Checkout;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-
 import com.razorpay.PaymentResultListener;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 
 public class CustomerDashboardActivity extends AppCompat implements PaymentResultListener {
 
     SwipeRefreshLayout swipeRefreshLayout;
     private RequestQueue mQueue;
 
-    private ArrayList<BidsReceivedModel> bidsList = new ArrayList<>();
-    private BidsReceivedAdapter bidsListAdapter;
-    private RecyclerView bidsListRecyclerView;
+    ArrayList<MainResponse.Data.PostaLoadDetails> bidsList = new ArrayList<>();
+    BidsReceivedAdapter bidsListAdapter;
+    RecyclerView bidsListRecyclerView;
 
-    private ArrayList<BidsAcceptedModel> acceptedList;
-    private BidsAcceptedAdapter bidsAcceptedAdapter;
-    private RecyclerView bidsAcceptedRecyclerView;
+    ArrayList<MainResponse.Data.PostaLoadDetails> acceptedList;
+    BidsAcceptedAdapter bidsAcceptedAdapter;
+    RecyclerView bidsAcceptedRecyclerView;
 
-    private BidsResponsesAdapter bidsResponsesAdapter;
-    boolean fabVisible = true, isBackPressed = false, bidsReceivedSelected = true, isbidsReceivedSelected;
+    BidsResponsesAdapter bidsResponsesAdapter;
+    boolean isBackPressed = false, bidsReceivedSelected = true, isbidsReceivedSelected;
 
-    private int CAMERA_PIC_REQUEST2 = 4;
-    private int GET_FROM_GALLERY2 = 5;
     int platformChargesBasicInt, platformChargesMainInt;
 
-    Dialog loadingDialog;
-    TextView spNumber, driverNumber, postALoadButton;
+    TextView spNumber, driverNumber;
     ImageView actionBarWhatsApp;
     Dialog previewDialogProfileOfSp;
     Boolean checkedReasonOne = false, checkedReasonTwo = false, checkedReasonThree = false, checkedReasonFour = false, checkedReasonFive = false, checkedReasonSix = false, checkedReasonSeven = false;
 
-    String isPersonalDetailsDone, isBankDetailsDone, isProfileAdded, profileImgUrlForRating, reasonForLowRate = "";
+    String isPersonalDetailsDone, isBankDetailsDone, profileImgUrlForRating, reasonForLowRate = "";
     float ratingGiven = 0;
     int count = 0;
-    String img_type, platformFeesBasic, platformFeesMain, paymentTypeFromAPI, numberOfBids, paymentMethod = "", paymentPercentage = "threePercent";
+    String platformFeesBasic, platformFeesMain, paymentTypeFromAPI, numberOfBids, paymentMethod = "", paymentPercentage = "threePercent";
 
     View actionBar, bidsReceivedUnderline, bidsAcceptedUnderline;
     TextView actionBarTitle;
@@ -143,13 +117,15 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
     RadioButton negotiable_yes, negotiable_no;
     EditText notesCustomer;
     String userId, phone, s1, customerEmail;
-    String spQuoteByApi, bid_idByAPI, noteByApi, vehicleModelByApi, vehicleFeetByApi, VehicleCapacityByApi, VehicleTypeByApi;
+    String spQuoteByApi, bid_idByAPI, noteByApi;
 
     ArrayList<String> arrayAssignedDriverId, arrayBidId, arrayUserId, arrayBidStatus, arrayNotesFromSP;
     String fianlBidId, noteBySPToCustomer, assignedDriverId, assignedDriverIdAPI, assignedUserId, assignedUserIdAPI, bidStatusAPI, customerNameAPI;
     String loadIdForUpdate, spBidIdForUpdate, noteForUpdate, quoteForUpdate;
 
-    FirebaseAuth auth;
+    String userNameAPI, userPhoneNumberAPI, userAlternatePhoneNumberAPI, userUserTypeAPI, userCityAPI, userPreferredLanguageAPI, userAddressAPI, userStateAPI, userPinCodeAPI, userEmailIdAPI, userPayTypeAPI, userIsRegistrationDoneAPI, userIsProfilePicAddedAPI;
+    String userIsTruckAddedAPI, userIsDriverAddedAPI, userIsBankDetailsAddedAPI, userIsCompanyAddedAPI, userIsPersonalAddedAPI, userIsAadhaarVerifiedAPI, userIsPanVerifiedAPI, userIsUserVerifiedAPI, userIsAccountActiveAPI, userCreatedAtAPI, userUpdatedAtAPI;
+    String userUpdatedByAPI, userDeletedAtAPI, userDeletedByAPI, idAPI, userLatitudeAPI, userLongitudeAPI, userDeviceIdAPI, userPanNumberAPI, userAadhaarNumberAPI, userIsSelfAddedAsDriverAPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,7 +147,6 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         bidsReceivedTextView = (TextView) findViewById(R.id.customer_dashboard_bids_received_button);
         bidsReceivedUnderline = (View) findViewById(R.id.customer_dashboard_bids_received_view);
         bidsAcceptedUnderline = (View) findViewById(R.id.customer_dashboard_bids_Accepted_view);
-        postALoadButton = (TextView) findViewById(R.id.customer_dashboard_post_a_load_button);
 
         if (isbidsReceivedSelected) {
             bidsReceivedSelected = true;
@@ -194,27 +169,10 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
 
         getUserId(phone);
 
-        loadingDialog = new Dialog(CustomerDashboardActivity.this);
-        loadingDialog.setContentView(R.layout.dialog_loading);
-        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-        lp2.copyFrom(loadingDialog.getWindow().getAttributes());
-        lp2.width = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp2.gravity = Gravity.CENTER;
-
-        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
         TextView noLoadTextView = (TextView) findViewById(R.id.customer_dashboard_no_load_text);
         noLoadTextView.setVisibility(View.INVISIBLE);
         TextView noAcceptedLoads = (TextView) findViewById(R.id.customer_dashboard_no_load_accepted_text);
         noAcceptedLoads.setVisibility(View.INVISIBLE);
-
-        loadingDialog.setCancelable(false);
-        loadingDialog.getWindow().setAttributes(lp2);
-
-        Animation rotate = AnimationUtils.loadAnimation(CustomerDashboardActivity.this, R.anim.clockwiserotate);
-        loading_img.startAnimation(rotate);
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -295,69 +253,347 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
     }
 
     private void getUserId(String userMobileNumber) {
-        ArrayList<String> arrayUserId = new ArrayList<>(), arrayMobileNo = new ArrayList<>(), arrayCustomerName = new ArrayList<>(), arrayCustomerEmail = new ArrayList<>(), isPersonalD = new ArrayList<>(), isProfileArray = new ArrayList<>(), isBankD = new ArrayList<>();
-        //------------------------------get user details by mobile Number---------------------------------
-        //-----------------------------------Get User Details---------------------------------------
-        String url = getString(R.string.baseURL) + "/user/get";
-        Log.i("URL at Profile:", url);
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+        Call<GetUserByPhoneResponse> getUserByPhoneResponseCall = ApiClient.getUserService().getUserByPhoneResponseCall(userMobileNumber);
+        getUserByPhoneResponseCall.enqueue(new Callback<GetUserByPhoneResponse>() {
             @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray jsonArray = response.getJSONArray("data");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject data = jsonArray.getJSONObject(i);
-                        String userIdAPI = data.getString("user_id");
-                        arrayUserId.add(userIdAPI);
-                        String mobileNoAPI = data.getString("phone_number");
-                        arrayMobileNo.add(mobileNoAPI);
-                        String userName = data.getString("name");
-                        arrayCustomerName.add(userName);
-                        String emailAPI = data.getString("email_id");
-                        arrayCustomerEmail.add(emailAPI);
+            public void onResponse(Call<GetUserByPhoneResponse> call, retrofit2.Response<GetUserByPhoneResponse> response) {
+                GetUserByPhoneResponse response1 = response.body();
+                GetUserByPhoneResponse.UserList list = response1.getData().get(0);
 
-                        String isPer = data.getString("isPersonal_dt_added");
-                        isPersonalD.add(isPer);
-                        isProfileArray.add(data.getString("isProfile_pic_added"));
-                        String isBank = data.getString("isBankDetails_given");
-                        isBankD.add(isBank);
-                    }
-
-                    for (int j = 0; j < arrayMobileNo.size(); j++) {
-                        if (arrayMobileNo.get(j).equals(userMobileNumber)) {
-                            userId = arrayUserId.get(j);
-                            customerNameAPI = arrayCustomerName.get(j);
-                            String customerNumberAPI = arrayMobileNo.get(j);
-                            s1 = customerNumberAPI.substring(2, 12);
-                            customerEmail = arrayCustomerEmail.get(j);
-
-                            isPersonalDetailsDone = isPersonalD.get(j);
-                            isProfileAdded = isProfileArray.get(j);
-                            isBankDetailsDone = isBankD.get(j);
-
-                        }
-                    }
-                    adminFeesList();
-                    getBidsReceived();
-                    getBidsAccepted();
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                userId = list.getUser_id();
+                getUserDetailsMain();
             }
-        }, new com.android.volley.Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void onFailure(Call<GetUserByPhoneResponse> call, Throwable t) {
 
             }
         });
-        mQueue.add(request);
-        //------------------------------------------------------------------------------------------------
+    }
+
+    private void getUserDetailsMain() {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+
+        Call<MainResponse> responseCall = ApiClient.getUserService().mainResponse(userId);
+        responseCall.enqueue(new Callback<MainResponse>() {
+            @Override
+            public void onResponse(Call<MainResponse> call, retrofit2.Response<MainResponse> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        MainResponse response1 = response.body();
+                        MainResponse.Data list = response1.getData();
+
+                        //GET USER DETAILS
+                        userNameAPI = list.getName();
+                        userPhoneNumberAPI = String.valueOf(list.getPhone_number());
+                        userAlternatePhoneNumberAPI = String.valueOf(list.getAlternate_ph_no());
+                        userUserTypeAPI = list.getUser_type();
+                        userCityAPI = list.getPreferred_location();
+                        userPreferredLanguageAPI = list.getPreferred_language();
+                        userAddressAPI = list.getAddress();
+                        userStateAPI = list.getState_code();
+                        userPinCodeAPI = String.valueOf(list.getPin_code());
+                        userEmailIdAPI = list.getEmail_id();
+                        userPayTypeAPI = list.getPay_type();
+                        userIsRegistrationDoneAPI = String.valueOf(list.getIsRegistration_done());
+                        userIsProfilePicAddedAPI = String.valueOf(list.getIsProfile_pic_added());
+                        userIsTruckAddedAPI = String.valueOf(list.getIsTruck_added());
+                        userIsDriverAddedAPI = String.valueOf(list.getIsDriver_added());
+                        userIsBankDetailsAddedAPI = String.valueOf(list.getIsBankDetails_given());
+                        userIsCompanyAddedAPI = String.valueOf(list.getIsCompany_added());
+                        userIsPersonalAddedAPI = String.valueOf(list.getIsPersonal_dt_added());
+                        userIsAadhaarVerifiedAPI = String.valueOf(list.getIs_Addhar_verfied());
+                        userIsPanVerifiedAPI = String.valueOf(list.getIs_pan_verfied());
+                        userIsUserVerifiedAPI = String.valueOf(list.getIs_user_verfied());
+                        userIsAccountActiveAPI = String.valueOf(list.getIs_account_active());
+                        userCreatedAtAPI = list.getCreated_at();
+                        userUpdatedAtAPI = list.getUpdated_at();
+                        userUpdatedByAPI = list.getUpdated_by();
+                        userDeletedAtAPI = list.getDeleted_at();
+                        userDeletedByAPI = list.getDeleted_by();
+                        idAPI = String.valueOf(list.getId());
+                        userLatitudeAPI = list.getLatitude();
+                        userLongitudeAPI = list.getLongitude();
+                        userDeviceIdAPI = list.getDevice_id();
+                        userPanNumberAPI = list.getPan_number();
+                        userAadhaarNumberAPI = list.getAadhaar_number();
+                        userIsSelfAddedAsDriverAPI = String.valueOf(list.getIs_self_added_asDriver());
+
+                        customerNameAPI = userNameAPI;
+
+                        s1 = phone.substring(2, 12);
+                        try {
+                            customerEmail = userEmailIdAPI;
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+
+                        isPersonalDetailsDone = userIsPersonalAddedAPI;
+                        isBankDetailsDone = userIsBankDetailsAddedAPI;
+                        adminFeesList();
+
+                        //GET BANK DETAILS
+                        ArrayList<MainResponse.Data.BankDetails> bankList = new ArrayList<>();
+                        bankList.addAll(list.getBankDetails());
+
+                        //GET COMPANY DETAILS
+                        ArrayList<MainResponse.Data.CompanyDetails> companyDetails = new ArrayList<>();
+                        companyDetails.addAll(list.getCompanyDetails());
+
+                        //GET POST LOAD DETAILS
+                        ArrayList<MainResponse.Data.PostaLoadDetails> loadList = new ArrayList<>();
+                        loadList.addAll(list.getPostaLoadDetails());
+
+                        for (int i = 0; i <= loadList.size(); i++) {
+
+                            if (loadList.get(i).bid_status.equals("loadSubmitted")) {
+                                ArrayList<MainResponse.Data.PostaLoadDetails> bidsAccepted = new ArrayList<>();
+                                bidsAccepted.add(loadList.get(i));
+                                TextView noAcceptedLoads = (TextView) findViewById(R.id.customer_dashboard_no_load_accepted_text);
+                                if (bidsAccepted.size() > 0) {
+                                    noAcceptedLoads.setVisibility(View.GONE);
+                                    bidsAcceptedAdapter.updateData(bidsAccepted);
+                                } else {
+                                    noAcceptedLoads.setVisibility(View.VISIBLE);
+                                }
+                            }
+
+                            if (!loadList.get(i).bid_status.equals("loadSubmitted") && !loadList.get(i).bid_status.equals("delete") && !loadList.get(i).bid_status.equals("loadExpired") && !loadList.get(i).bid_status.equals("start")){
+                                ArrayList<MainResponse.Data.PostaLoadDetails> bidsReceived = new ArrayList<>();
+                                bidsReceived.add(loadList.get(i));
+
+                                Collections.reverse(bidsReceived);
+                                TextView noLoadTextView = (TextView) findViewById(R.id.customer_dashboard_no_load_text);
+
+                                if (bidsReceived.size() > 0) {
+                                    noLoadTextView.setVisibility(View.GONE);
+                                    bidsListAdapter.updateData(bidsReceived);
+                                } else {
+                                    noLoadTextView.setVisibility(View.VISIBLE);
+                                }
+                            }
+
+                        }
+
+                        //GET PREFERRED LOCATIONS
+                        ArrayList<MainResponse.Data.PreferredLocation> preferredLocationList = new ArrayList<>();
+                        preferredLocationList.addAll(list.getPreferredLocations());
+
+                        //GET USER RATINGS
+                        ArrayList<MainResponse.Data.UserRatings> ratingsList = new ArrayList<>();
+                        ratingsList.addAll(list.getUserRatings());
+
+                        //GET USER IMAGE
+                        ArrayList<MainResponse.Data.UserImages> imagesList = new ArrayList<>();
+                        imagesList.addAll(list.getUserImages());
+                        for (int i = 0; i <= imagesList.size(); i++) {
+                            if (imagesList.get(i).image_type.equals("profile")) {
+                                String userProfileURL = imagesList.get(i).image_url;
+                            }
+                            if (imagesList.get(i).image_type.equals("pan")) {
+                                String userPanURL = imagesList.get(i).image_url;
+                            }
+                            if (imagesList.get(i).image_type.equals("aadhar")) {
+                                String userAadhaarURL = imagesList.get(i).image_url;
+                            }
+                        }
+
+                    } else {
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MainResponse> call, Throwable t) {
+                getUserDetailsMain();
+            }
+        });
+    }
+
+    private void getSPUserDetailsMain(String userIdOfSp, TextView spName, TextView spNumber, TextView companyName, TextView companyHeading, String driverId, TextView driverName, TextView driverNumber) {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+
+        Call<MainResponse> responseCall = ApiClient.getUserService().mainResponse(userIdOfSp);
+        responseCall.enqueue(new Callback<MainResponse>() {
+            @Override
+            public void onResponse(Call<MainResponse> call, retrofit2.Response<MainResponse> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        MainResponse response1 = response.body();
+                        MainResponse.Data list = response1.getData();
+
+                        //GET USER DETAILS
+                        String spNameAPI = list.getName();
+                        String spPhoneNumberAPI = String.valueOf(list.getPhone_number());
+                        String spAlternatePhoneNumberAPI = String.valueOf(list.getAlternate_ph_no());
+                        String spUserTypeAPI = list.getUser_type();
+                        String spCityAPI = list.getPreferred_location();
+                        String spPreferredLanguageAPI = list.getPreferred_language();
+                        String spAddressAPI = list.getAddress();
+                        String spStateAPI = list.getState_code();
+                        String spPinCodeAPI = String.valueOf(list.getPin_code());
+                        String spEmailIdAPI = list.getEmail_id();
+                        String spPayTypeAPI = list.getPay_type();
+                        String spIsRegistrationDoneAPI = String.valueOf(list.getIsRegistration_done());
+                        String spIsProfilePicAddedAPI = String.valueOf(list.getIsProfile_pic_added());
+                        String spIsTruckAddedAPI = String.valueOf(list.getIsTruck_added());
+                        String spIsDriverAddedAPI = String.valueOf(list.getIsDriver_added());
+                        String spIsBankDetailsAddedAPI = String.valueOf(list.getIsBankDetails_given());
+                        String spIsCompanyAddedAPI = String.valueOf(list.getIsCompany_added());
+                        String spIsPersonalAddedAPI = String.valueOf(list.getIsPersonal_dt_added());
+                        String spIsAadhaarVerifiedAPI = String.valueOf(list.getIs_Addhar_verfied());
+                        String spIsPanVerifiedAPI = String.valueOf(list.getIs_pan_verfied());
+                        String spIsUserVerifiedAPI = String.valueOf(list.getIs_user_verfied());
+                        String spIsAccountActiveAPI = String.valueOf(list.getIs_account_active());
+                        String spCreatedAtAPI = list.getCreated_at();
+                        String spUpdatedAtAPI = list.getUpdated_at();
+                        String spUpdatedByAPI = list.getUpdated_by();
+                        String spDeletedAtAPI = list.getDeleted_at();
+                        String spDeletedByAPI = list.getDeleted_by();
+                        String spIdAPI = String.valueOf(list.getId());
+                        String spLatitudeAPI = list.getLatitude();
+                        String spLongitudeAPI = list.getLongitude();
+                        String spDeviceIdAPI = list.getDevice_id();
+                        String spPanNumberAPI = list.getPan_number();
+                        String spAadhaarNumberAPI = list.getAadhaar_number();
+                        String spIsSelfAddedAsDriverAPI = String.valueOf(list.getIs_self_added_asDriver());
+
+                        try {
+                            spName.setText(spNameAPI);
+                            String s1 = spPhoneNumberAPI.substring(2, 12);
+                            spNumber.setText("+91 "+s1);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+
+                        //GET TRUCK DETAILS
+                        ArrayList<MainResponse.Data.TruckDetails> truckList = new ArrayList<>();
+                        truckList.addAll(list.getTruckdetails());
+
+                        //GET DRIVER DETAILS
+                        ArrayList<MainResponse.Data.DriverDetails> driverList = new ArrayList<>();
+                        driverList.addAll(list.getDriverDetails());
+                        try {
+                            for (int i = 0; i <= driverList.size(); i++) {
+                                if (driverList.get(i).driver_id.equals(driverId)){
+                                    driverName.setText(driverList.get(i).driver_name);
+                                    String driverNumberAPI = driverList.get(i).driver_number.substring(2, 12);
+                                    driverNumber.setText("+91 " + driverNumberAPI);
+                                }
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+
+                        //GET BANK DETAILS
+                        ArrayList<MainResponse.Data.BankDetails> bankList = new ArrayList<>();
+                        bankList.addAll(list.getBankDetails());
+
+                        //GET COMPANY DETAILS
+                        ArrayList<MainResponse.Data.CompanyDetails> companyDetails = new ArrayList<>();
+                        companyDetails.addAll(list.getCompanyDetails());
+
+                        try {
+                            String spCompanyNameAPI = companyDetails.get(0).company_name;
+                            String spCompanyTypeAPI = companyDetails.get(0).company_type;
+                            String spCompanyGSTAPI = companyDetails.get(0).company_gst_no;
+                            String spCompanyPANAPI = companyDetails.get(0).company_pan;
+                            String spCompanyAddressAPI = companyDetails.get(0).comp_add;
+                            String spCompanyStateAPI = companyDetails.get(0).comp_state;
+                            String spCompanyCityAPI = companyDetails.get(0).comp_city;
+                            String spCompanyPINCodeAPI = companyDetails.get(0).comp_zip;
+
+                            int isCompAded = Integer.parseInt(spIsCompanyAddedAPI);
+
+                            if (isCompAded == 1) {
+                                companyName.setVisibility(View.VISIBLE);
+                                companyHeading.setVisibility(View.VISIBLE);
+                                companyName.setText(spCompanyNameAPI);
+                            } else {
+                                companyName.setVisibility(View.GONE);
+                                companyHeading.setVisibility(View.GONE);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            companyName.setVisibility(View.GONE);
+                            companyHeading.setVisibility(View.GONE);
+                        }
+
+
+                        //GET POST LOAD DETAILS
+                        ArrayList<MainResponse.Data.PostaLoadDetails> loadList = new ArrayList<>();
+                        loadList.addAll(list.getPostaLoadDetails());
+
+                        //GET PREFERRED LOCATIONS
+                        ArrayList<MainResponse.Data.PreferredLocation> preferredLocationList = new ArrayList<>();
+                        preferredLocationList.addAll(list.getPreferredLocations());
+
+                        //GET USER RATINGS
+                        ArrayList<MainResponse.Data.UserRatings> ratingsList = new ArrayList<>();
+                        ratingsList.addAll(list.getUserRatings());
+
+                        //GET USER IMAGE
+                        ArrayList<MainResponse.Data.UserImages> imagesList = new ArrayList<>();
+                        imagesList.addAll(list.getUserImages());
+                        for (int i = 0; i <= imagesList.size(); i++) {
+                            if (imagesList.get(i).image_type.equals("profile")) {
+                                String userProfileURL = imagesList.get(i).image_url;
+                            }
+                            if (imagesList.get(i).image_type.equals("pan")) {
+                                String userPanURL = imagesList.get(i).image_url;
+                            }
+                            if (imagesList.get(i).image_type.equals("aadhar")) {
+                                String userAadhaarURL = imagesList.get(i).image_url;
+                            }
+                        }
+
+                        //GET SP BID DETAILS
+                        ArrayList<MainResponse.Data.SpBidDetails> spBidDetailsList = new ArrayList<>();
+                        spBidDetailsList.addAll(list.getSpBidDetails());
+
+                    } else {
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MainResponse> call, Throwable t) {
+                getUserDetailsMain();
+            }
+        });
     }
 
     public void RearrangeItems() {
-
         JumpTo.goToCustomerDashboard(CustomerDashboardActivity.this, phone, bidsReceivedSelected);
     }
 
@@ -368,12 +604,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
             public void onResponse(Call<AdminResponse> call, retrofit2.Response<AdminResponse> response) {
                 AdminResponse response1 = response.body();
                 AdminResponse.adminFeesList list = response1.getData().get(0);
-//                Toast.makeText(CustomerDashboardActivity.this, "id," + list.getAdmin_id() +
-//                        "\n success," + list.getCreated_at() +
-//                        "\n response_code," + list.getBase_platform_fees() +
-//                        "\n response_message," + list.getPlatform_fee_one() +
-//                        "\n pan_number," + list.getUpdated_at() +
-//                        "\n pan_status," + list.getUpdated_by(), Toast.LENGTH_SHORT).show();
+
                 platformFeesBasic = list.getBase_platform_fees();
                 platformFeesMain = list.getPlatform_fee_one();
 
@@ -385,80 +616,6 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
             public void onFailure(Call<AdminResponse> call, Throwable t) {
             }
         });
-    }
-
-    public void getBidsAccepted() {
-        //---------------------------- Get Bank Details -------------------------------------------
-        String url1 = getString(R.string.baseURL) + "/loadpost/getLoadDtByUser/" + userId;
-        Log.i("URL: ", url1);
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray acceptedLoadList = response.getJSONArray("data");
-                    for (int i = 0; i < acceptedLoadList.length(); i++) {
-
-                        JSONObject obj = acceptedLoadList.getJSONObject(i);
-                        BidsAcceptedModel bidsAcceptedModel = new BidsAcceptedModel();
-                        bidsAcceptedModel.setIdpost_load(obj.getString("idpost_load"));
-                        bidsAcceptedModel.setUser_id(obj.getString("user_id"));
-                        bidsAcceptedModel.setPick_up_date(obj.getString("pick_up_date"));
-                        bidsAcceptedModel.setPick_up_time(obj.getString("pick_up_time"));
-                        bidsAcceptedModel.setBudget(obj.getString("budget"));
-                        bidsAcceptedModel.setBid_status(obj.getString("bid_status"));
-                        bidsAcceptedModel.setVehicle_model(obj.getString("vehicle_model"));
-                        bidsAcceptedModel.setFeet(obj.getString("feet"));
-                        bidsAcceptedModel.setCapacity(obj.getString("capacity"));
-                        bidsAcceptedModel.setBody_type(obj.getString("body_type"));
-                        bidsAcceptedModel.setPick_add(obj.getString("pick_add"));
-                        bidsAcceptedModel.setPick_pin_code(obj.getString("pick_pin_code"));
-                        bidsAcceptedModel.setPick_city(obj.getString("pick_city"));
-                        bidsAcceptedModel.setPick_state(obj.getString("pick_state"));
-                        bidsAcceptedModel.setPick_country(obj.getString("pick_country"));
-                        bidsAcceptedModel.setDrop_add(obj.getString("drop_add"));
-                        bidsAcceptedModel.setDrop_pin_code(obj.getString("drop_pin_code"));
-                        bidsAcceptedModel.setDrop_city(obj.getString("drop_city"));
-                        bidsAcceptedModel.setDrop_state(obj.getString("drop_state"));
-                        bidsAcceptedModel.setDrop_country(obj.getString("drop_country"));
-                        bidsAcceptedModel.setKm_approx(obj.getString("km_approx"));
-                        bidsAcceptedModel.setNotes_meterial_des(obj.getString("notes_meterial_des"));
-                        bidsAcceptedModel.setBid_ends_at(obj.getString("bid_ends_at"));
-
-                        if (obj.getString("bid_status").equals("loadSubmitted")) {
-                            acceptedList.add(bidsAcceptedModel);
-                        }
-                    }
-
-                    FooThread fooThread = new FooThread(handler);
-                    fooThread.start();
-
-                    TextView noAcceptedLoads = (TextView) findViewById(R.id.customer_dashboard_no_load_accepted_text);
-//                    for (int i=0; i< acceptedList.size(); i++){
-//                        if (acceptedList.get(i).getBid_status().equals("FinalAccepted")){
-                    if (acceptedList.size() > 0) {
-//                        bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_active));
-                        noAcceptedLoads.setVisibility(View.GONE);
-                        bidsAcceptedAdapter.updateData(acceptedList);
-                    } else {
-//                        bidsReceivedTextView.setBackground(getResources().getDrawable(R.drawable.personal_details_buttons_de_active));
-                        noAcceptedLoads.setVisibility(View.VISIBLE);
-                    }
-//                        }
-//                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request);
-        //-------------------------------------------------------------------------------------------
     }
 
     public void onClickBidsAndLoads(View view) {
@@ -485,17 +642,6 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         }
     }
 
-    public void onClickPostALoad(View view) {
-        if (fabVisible) {
-            postALoadButton.setVisibility(View.VISIBLE);
-            fabVisible = false;
-        } else {
-            postALoadButton.setVisibility(View.GONE);
-            fabVisible = true;
-        }
-    }
-
-
     public void onClickBottomNavigation(View view) {
         switch (view.getId()) {
             case R.id.bottom_nav_sp_dashboard:
@@ -520,75 +666,6 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         }
     }
 
-    public void getBidsReceived() {
-
-        String url1 = getString(R.string.baseURL) + "/loadpost/getLoadDtByUser/" + userId;
-        Log.i("URL: ", url1);
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    bidsList = new ArrayList<>();
-                    JSONArray bidsLists = response.getJSONArray("data");
-                    for (int i = 0; i < bidsLists.length(); i++) {
-                        JSONObject obj = bidsLists.getJSONObject(i);
-                        BidsReceivedModel bidsReceivedModel = new BidsReceivedModel();
-                        bidsReceivedModel.setIdpost_load(obj.getString("idpost_load"));
-                        bidsReceivedModel.setUser_id(obj.getString("user_id"));
-                        bidsReceivedModel.setPick_up_date(obj.getString("pick_up_date"));
-                        bidsReceivedModel.setPick_up_time(obj.getString("pick_up_time"));
-                        bidsReceivedModel.setBudget(obj.getString("budget"));
-                        bidsReceivedModel.setBid_status(obj.getString("bid_status"));
-                        bidsReceivedModel.setCapacity(obj.getString("capacity"));
-                        bidsReceivedModel.setBody_type(obj.getString("body_type"));
-                        bidsReceivedModel.setPick_add(obj.getString("pick_add"));
-                        bidsReceivedModel.setPick_pin_code(obj.getString("pick_pin_code"));
-                        bidsReceivedModel.setPick_city(obj.getString("pick_city"));
-                        bidsReceivedModel.setPick_state(obj.getString("pick_state"));
-                        bidsReceivedModel.setPick_country(obj.getString("pick_country"));
-                        bidsReceivedModel.setDrop_add(obj.getString("drop_add"));
-                        bidsReceivedModel.setDrop_pin_code(obj.getString("drop_pin_code"));
-                        bidsReceivedModel.setDrop_city(obj.getString("drop_city"));
-                        bidsReceivedModel.setDrop_state(obj.getString("drop_state"));
-                        bidsReceivedModel.setSp_count(obj.getInt("sp_count"));
-                        bidsReceivedModel.setDrop_country(obj.getString("drop_country"));
-                        bidsReceivedModel.setKm_approx(obj.getString("km_approx"));
-                        bidsReceivedModel.setNotes_meterial_des(obj.getString("notes_meterial_des"));
-                        bidsReceivedModel.setBid_ends_at(obj.getString("bid_ends_at"));
-
-                        if (!obj.getString("bid_status").equals("loadSubmitted") && !obj.getString("bid_status").equals("delete") && !obj.getString("bid_status").equals("loadExpired") && !obj.getString("bid_status").equals("start")) {
-                            bidsList.add(bidsReceivedModel);
-                        }
-                    }
-
-                    FooThread fooThread = new FooThread(handler);
-                    fooThread.start();
-
-                    Collections.reverse(bidsList);
-                    TextView noLoadTextView = (TextView) findViewById(R.id.customer_dashboard_no_load_text);
-
-                    if (bidsList.size() > 0) {
-                        noLoadTextView.setVisibility(View.GONE);
-                        bidsListAdapter.updateData(bidsList);
-                    } else {
-                        noLoadTextView.setVisibility(View.VISIBLE);
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request);
-        //-------------------------------------------------------------------------------------------
-    }
-
     public void onClickViewAndAcceptBid(BidsResponsesModel obj) {
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -607,31 +684,9 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         quoteBySp1 = (TextView) previewDialogAcceptANdBid.findViewById(R.id.dialog_accept_bid_bidder_quote_textview);
         TextView negotiableBySP = (TextView) previewDialogAcceptANdBid.findViewById(R.id.dialog_accept_bid_negotiable_textview);
         TextView notesBySP = (TextView) previewDialogAcceptANdBid.findViewById(R.id.dialog_accept_bid_received_notes_textview);
+        TextView driverName = (TextView) previewDialogAcceptANdBid.findViewById(R.id.dialog_accept_bid_driver_name);
 
-        //----------------------------------------------------------
-        String url = getString(R.string.baseURL) + "/user/" + obj.getUser_id();
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray truckLists = response.getJSONArray("data");
-                    for (int i = 0; i < truckLists.length(); i++) {
-                        JSONObject obj = truckLists.getJSONObject(i);
-                        String spName = obj.getString("name");
-                        nameSP.setText(spName);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request);
-        //----------------------------------------------------------
+        getSPUserDetailsMain(obj.getUser_id(), nameSP, driverName, driverName, driverName, "driverName", driverName, driverName);
 
         Log.i("Bid-id", obj.getSp_bid_id());
         Log.i("Load-id", obj.getIdpost_load());
@@ -682,7 +737,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
             }
         });
 
-        getLoadDetails(obj.getIdpost_load());
+        getLoadDetails(obj.getIdpost_load(), null);
 
         submitResponseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -772,48 +827,29 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
 
     //----------------------------------------------------------------------------------------------------------------
 
-    private void getLoadDetails(String loadId) {
-        String url1 = getString(R.string.baseURL) + "/loadpost/getLoadDtByPostId/" + loadId;
-        Log.i("URL: ", url1);
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+    private void getLoadDetails(String loadId, TextView headingLoad) {
+        Call<GetLoadDetailsResponse> getLoadDetailsResponseCall = ApiClient.getPostLoadService().getLoadDetailsResponseCall(loadId);
+        getLoadDetailsResponseCall.enqueue(new Callback<GetLoadDetailsResponse>() {
             @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    bidsList = new ArrayList<>();
-                    JSONArray bidsLists = response.getJSONArray("data");
-                    for (int i = 0; i < bidsLists.length(); i++) {
-                        JSONObject obj = bidsLists.getJSONObject(i);
-                        count = obj.getInt("sp_count");
-                    }
-
-                    Collections.reverse(bidsList);
-                    TextView noLoadTextView = (TextView) findViewById(R.id.customer_dashboard_no_load_text);
-
-                    if (bidsList.size() > 0) {
-                        noLoadTextView.setVisibility(View.GONE);
-                        bidsListAdapter.updateData(bidsList);
-                    } else {
-                        noLoadTextView.setVisibility(View.VISIBLE);
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            public void onResponse(Call<GetLoadDetailsResponse> call, retrofit2.Response<GetLoadDetailsResponse> response) {
+                GetLoadDetailsResponse response1 = response.body();
+                GetLoadDetailsResponse.LoadList list = response1.getData().get(0);
+                count = Integer.parseInt(list.getSp_count());
+                paymentMethod = list.payment_type;
+                if (headingLoad != null){
+                    headingLoad.setText(getString(R.string.Load_Details) + list.pick_city + "-" + list.drop_city + "-000");
                 }
+
             }
-        }, new com.android.volley.Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+            public void onFailure(Call<GetLoadDetailsResponse> call, Throwable t) {
+
             }
         });
-        mQueue.add(request);
-        //-------------------------------------------------------------------------------------------
-
     }
 
     private void budgetSet(String previousBudget) {
-
         setBudget = new Dialog(CustomerDashboardActivity.this);
         setBudget.setContentView(R.layout.dialog_budget);
 
@@ -938,7 +974,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         });
     }
 
-    public void onClickEditLoadPost(BidsReceivedModel obj) {
+    public void onClickEditLoadPost(MainResponse.Data.PostaLoadDetails obj) {
         //----------------------- Alert Dialog -------------------------------------------------
         Dialog alert = new Dialog(CustomerDashboardActivity.this);
         alert.setContentView(R.layout.dialog_alert);
@@ -977,8 +1013,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         //------------------------------------------------------------------------------------------
     }
 
-
-    public void getBidsResponsesList(BidsReceivedModel obj1, RecyclerView bidsResponsesRecyclerView, ConstraintLayout showRecyclerView, String sortBy, ConstraintLayout showRecyclerViewBids) {
+    public void getBidsResponsesList(MainResponse.Data.PostaLoadDetails obj1, RecyclerView bidsResponsesRecyclerView, ConstraintLayout showRecyclerView, String sortBy, ConstraintLayout showRecyclerViewBids) {
         ArrayList<BidsResponsesModel> bidResponsesList = new ArrayList<>();
         bidResponsesList.clear();
 //        bidsList.clear();
@@ -1009,7 +1044,8 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                         bidsResponsesModel2.setBid_status(obj.getString("bid_status"));
                         bidsResponsesModel2.setIs_bid_accpted_by_sp(obj.getString("is_bid_accpted_by_sp"));
 
-                        if (obj1.getSp_count() >= 3) {
+                        int spCount = Integer.parseInt(obj1.getSp_count());
+                        if (spCount >= 3) {
                             if (obj.getString("bid_status").equals("AcceptedBySp") || obj.getString("bid_status").equals("RespondedByLp")) {
                                 bidResponsesList.add(bidsResponsesModel2);
                             }
@@ -1020,7 +1056,8 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                         }
                     }
 
-                    if (obj1.getSp_count() >= 3) {
+                    int spCount = Integer.parseInt(obj1.getSp_count());
+                    if (spCount >= 3) {
                         bidsResponsesAdapter = new BidsResponsesAdapter(CustomerDashboardActivity.this, bidResponsesList);
                         bidsResponsesRecyclerView.setAdapter(bidsResponsesAdapter);
                         bidsResponsesAdapter.updateData(bidResponsesList);
@@ -1122,7 +1159,6 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
     }
 
     public void acceptFinalOffer(BidsResponsesModel obj) {
-
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(acceptFinalBid.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -1140,31 +1176,9 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         TextView negotiableBySP = (TextView) acceptFinalBid.findViewById(R.id.dialog_accept_bid_negotiable_textview);
         TextView notesBySP = (TextView) acceptFinalBid.findViewById(R.id.dialog_accept_bid_received_notes_textview);
         TextView headingLoad = (TextView) acceptFinalBid.findViewById(R.id.dialog_bid_now_loadId_heading);
+        TextView driverName = (TextView) acceptFinalBid.findViewById(R.id.bid_now_time_left_textView);
 
-        //----------------------------------------------------------
-        String url = getString(R.string.baseURL) + "/user/" + obj.getUser_id();
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray truckLists = response.getJSONArray("data");
-                    for (int i = 0; i < truckLists.length(); i++) {
-                        JSONObject obj = truckLists.getJSONObject(i);
-                        String spName = obj.getString("name");
-                        nameSP.setText(spName);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request);
-        //----------------------------------------------------------
+        getSPUserDetailsMain(obj.getUser_id(), nameSP, driverName, driverName, driverName, "driverName",driverName,driverName);
 
         Log.i("Bid-id", obj.getSp_bid_id());
         Log.i("Load-id", obj.getIdpost_load());
@@ -1192,38 +1206,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         submitResponseBtn.setEnabled(true);
         submitResponseBtn.setBackgroundResource((R.drawable.button_active));
 
-        //------------------------------------------------------------------------------------------
-        String url1 = getString(R.string.baseURL) + "/loadpost/getLoadDtByPostId/" + obj.getIdpost_load();
-        Log.i("URL: ", url1);
-
-        JsonObjectRequest request2 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    bidsList = new ArrayList<>();
-                    JSONArray bidsLists = response.getJSONArray("data");
-                    for (int i = 0; i < bidsLists.length(); i++) {
-                        JSONObject obj = bidsLists.getJSONObject(i);
-                        String pickupCity = obj.getString("pick_city");
-                        String dropCity = obj.getString("drop_city");
-
-                        paymentTypeFromAPI = obj.getString("payment_type");
-                        paymentMethod = paymentTypeFromAPI;
-
-                        headingLoad.setText(getString(R.string.Load_Details) + pickupCity + "-" + dropCity + "-000");
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request2);
-        //------------------------------------------------------------------------------------------
+        getLoadDetails(obj.getIdpost_load(), headingLoad);
 
         submitResponseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1840,7 +1823,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         //------------------------------------------------------------------------------------------
     }
 
-    public void onClickViewConsignment(BidsAcceptedModel obj) {
+    public void onClickViewConsignment(MainResponse.Data.PostaLoadDetails obj) {
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(viewConsignmentCustomer.getWindow().getAttributes());
@@ -1942,91 +1925,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                         mQueue.add(request4);
                         //--------------------------------------------------------------------------
                         GetUserDetails.getRatings(assignedUserId, spRatingInInt);
-                        //----------------------------------------------------------
-                        String url = getString(R.string.baseURL) + "/user/" + assignedUserId;
-                        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                try {
-                                    JSONArray truckLists = response.getJSONArray("data");
-                                    for (int i = 0; i < truckLists.length(); i++) {
-                                        JSONObject obj = truckLists.getJSONObject(i);
-                                        nameSP.setText(obj.getString("name"));
-                                        String spNumberAPI = obj.getString("phone_number").substring(2, 12);
-                                        spNumber.setText("+91 " + spNumberAPI);
-
-                                        int isCompAded = obj.getInt("isCompany_added");
-
-                                        if (isCompAded == 1) {
-                                            companyName.setVisibility(View.VISIBLE);
-                                            companyNameHeading.setVisibility(View.VISIBLE);
-                                            //----------------------------------------------------------
-                                            String url2 = getString(R.string.baseURL) + "/company/get/" + obj.getString("user_id");
-                                            JsonObjectRequest request2 = new JsonObjectRequest(Request.Method.GET, url2, null, new com.android.volley.Response.Listener<JSONObject>() {
-                                                @Override
-                                                public void onResponse(JSONObject response) {
-                                                    try {
-                                                        JSONArray truckLists = response.getJSONArray("data");
-                                                        for (int i = 0; i < truckLists.length(); i++) {
-                                                            JSONObject obj = truckLists.getJSONObject(i);
-                                                            companyName.setText(obj.getString("company_name"));
-                                                        }
-                                                    } catch (JSONException e) {
-                                                        e.printStackTrace();
-                                                    }
-                                                }
-                                            }, new com.android.volley.Response.ErrorListener() {
-                                                @Override
-                                                public void onErrorResponse(VolleyError error) {
-                                                    error.printStackTrace();
-                                                }
-                                            });
-                                            mQueue.add(request2);
-                                            //----------------------------------------------------------
-                                        } else {
-                                            companyName.setVisibility(View.GONE);
-                                            companyNameHeading.setVisibility(View.GONE);
-                                        }
-
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }, new com.android.volley.Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                error.printStackTrace();
-                            }
-                        });
-                        mQueue.add(request);
-                        //----------------------------------------------------------
-
-                        //----------------------------------------------------------
-                        String url1 = getString(R.string.baseURL) + "/driver/driverId/" + assignedDriverId;
-                        JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                try {
-                                    JSONArray truckLists = response.getJSONArray("data");
-                                    for (int i = 0; i < truckLists.length(); i++) {
-                                        JSONObject obj = truckLists.getJSONObject(i);
-                                        driverName.setText(obj.getString("driver_name"));
-                                        String driverNumberAPI = obj.getString("driver_number").substring(2, 12);
-                                        driverNumber.setText("+91 " + driverNumberAPI);
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }, new com.android.volley.Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                error.printStackTrace();
-                            }
-                        });
-                        mQueue.add(request1);
-                        //----------------------------------------------------------
+                        getSPUserDetailsMain(assignedUserId, nameSP, spNumber, companyName, companyNameHeading, assignedDriverId, driverName, driverNumber);
                     }
                     negotiableBySP.setText(getString(R.string.no));
                     notesBySP.setText(noteBySPToCustomer);
@@ -2615,8 +2514,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         //------------------------------------------------------------------------------------------
     }
 
-    public void continueWithOtherSp(BidsAcceptedModel obj) {
-
+    public void continueWithOtherSp(MainResponse.Data.PostaLoadDetails obj) {
         //----------------------- Alert Dialog -------------------------------------------------
         Dialog alert = new Dialog(CustomerDashboardActivity.this);
         alert.setContentView(R.layout.dialog_alert);
@@ -2717,15 +2615,6 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
 
     }
 
-    final Handler handler = new Handler() {
-        public void handleMessage(Message msg) {
-            int state = msg.getData().getInt("state");
-            if (state == 1) {
-                loadingDialog.dismiss();
-            }
-        }
-    };
-
     public void onCLickPost(View view) {
         JumpTo.goToPostALoad(CustomerDashboardActivity.this, userId, phone, false, false, null, false);
     }
@@ -2779,13 +2668,5 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                 startActivity(intent);
             }
         });
-    }
-
-    public void showLoading(){
-        loadingDialog.show();
-    }
-
-    public void dismissLoading(){
-        loadingDialog.dismiss();
     }
 }
