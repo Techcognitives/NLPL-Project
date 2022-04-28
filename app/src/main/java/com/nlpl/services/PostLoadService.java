@@ -97,4 +97,5 @@ public interface PostLoadService {
 
     @GET("/loadpost/getLoadDtByPostId/{loadId}")
     Call<GetLoadDetailsResponse> getLoadDetailsResponseCall(@Path("loadId") String userId);
+
 }

@@ -100,7 +100,7 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
     Dialog previewDialogProfileOfSp;
     Boolean checkedReasonOne = false, checkedReasonTwo = false, checkedReasonThree = false, checkedReasonFour = false, checkedReasonFive = false, checkedReasonSix = false, checkedReasonSeven = false;
 
-    String isPersonalDetailsDone, isBankDetailsDone, profileImgUrlForRating, reasonForLowRate = "";
+    String isPersonalDetailsDone, isBankDetailsDone, reasonForLowRate = "";
     float ratingGiven = 0;
     int count = 0;
     String platformFeesBasic, platformFeesMain, paymentTypeFromAPI, numberOfBids, paymentMethod = "", paymentPercentage = "threePercent";
@@ -588,7 +588,6 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
 
             @Override
             public void onFailure(Call<MainResponse> call, Throwable t) {
-                getUserDetailsMain();
             }
         });
     }
@@ -667,7 +666,6 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
     }
 
     public void onClickViewAndAcceptBid(BidsResponsesModel obj) {
-
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(previewDialogAcceptANdBid.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -712,7 +710,6 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
         negotiable_yes.setChecked(false);
         negotiable_yes.setEnabled(false);
         negotiable_no.setChecked(true);
-
 
         if (!customerQuote.getText().toString().isEmpty()) {
             submitResponseBtn.setEnabled(true);
@@ -777,7 +774,6 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
                 alertNegativeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
                         if (count == 3) {
                             //----------------------- Alert Dialog -------------------------------------------------
                             Dialog alert = new Dialog(CustomerDashboardActivity.this);
@@ -2340,33 +2336,50 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
             }
         });
 
-        //------------------------------------------------------------------------------------------
-        String url1 = getString(R.string.baseURL) + "/imgbucket/Images/" + userIdForRating;
-        JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray imageList = response.getJSONArray("data");
-                    for (int i = 0; i < imageList.length(); i++) {
-                        JSONObject obj = imageList.getJSONObject(i);
-                        String imageType = obj.getString("image_type");
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
 
-                        if (imageType.equals("profile")) {
-                            profileImgUrlForRating = obj.getString("image_url");
-                            new DownloadImageTask(profile).execute(profileImgUrlForRating);
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+
+        Call<MainResponse> responseCall = ApiClient.getUserService().mainResponse(userIdForRating);
+        responseCall.enqueue(new Callback<MainResponse>() {
+            @Override
+            public void onResponse(Call<MainResponse> call, retrofit2.Response<MainResponse> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        MainResponse response1 = response.body();
+                        MainResponse.Data list = response1.getData();
+
+                        //GET USER IMAGE
+                        ArrayList<MainResponse.Data.UserImages> imagesList = new ArrayList<>();
+                        imagesList.addAll(list.getUserImages());
+                        for (int i = 0; i <= imagesList.size(); i++) {
+                            if (imagesList.get(i).image_type.equals("profile")) {
+                                String userProfileURL = imagesList.get(i).image_url;
+                                new DownloadImageTask(profile).execute(userProfileURL);
+                            }
                         }
+                    } else {
+
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
+
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
             }
-        }, new com.android.volley.Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+            public void onFailure(Call<MainResponse> call, Throwable t) {
             }
         });
-        mQueue.add(request1);
     }
 
     public void onClickProfileAndRegisterCustomer(View view) {
@@ -2434,45 +2447,62 @@ public class CustomerDashboardActivity extends AppCompat implements PaymentResul
     }
 
     public void ViewProfileOfSPToCustomer(BidsResponsesModel obj) {
-        String url1 = getString(R.string.baseURL) + "/imgbucket/Images/" + obj.getUser_id();
-        JsonObjectRequest request1 = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+
+        Call<MainResponse> responseCall = ApiClient.getUserService().mainResponse(obj.getUser_id());
+        responseCall.enqueue(new Callback<MainResponse>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(Call<MainResponse> call, retrofit2.Response<MainResponse> response) {
                 try {
-                    JSONArray imageList = response.getJSONArray("data");
-                    for (int i = 0; i < imageList.length(); i++) {
-                        JSONObject obj = imageList.getJSONObject(i);
-                        String imageType = obj.getString("image_type");
+                    if (response.isSuccessful()) {
+                        MainResponse response1 = response.body();
+                        MainResponse.Data list = response1.getData();
 
-                        String profileImgUrl = "";
-                        if (imageType.equals("profile")) {
-                            profileImgUrl = obj.getString("image_url");
-                            if (profileImgUrl.equals("null")) {
+                        //GET USER IMAGE
+                        ArrayList<MainResponse.Data.UserImages> imagesList = new ArrayList<>();
+                        imagesList.addAll(list.getUserImages());
+                        for (int i = 0; i <= imagesList.size(); i++) {
+                            if (imagesList.get(i).image_type.equals("profile")) {
+                                String userProfileURL = imagesList.get(i).image_url;
+                                if (userProfileURL.equals("null")) {
 
-                            } else {
-                                WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-                                lp2.copyFrom(previewDialogProfileOfSp.getWindow().getAttributes());
-                                lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
-                                lp2.height = WindowManager.LayoutParams.MATCH_PARENT;
-                                lp2.gravity = Gravity.CENTER;
+                                } else {
+                                    WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
+                                    lp2.copyFrom(previewDialogProfileOfSp.getWindow().getAttributes());
+                                    lp2.width = WindowManager.LayoutParams.MATCH_PARENT;
+                                    lp2.height = WindowManager.LayoutParams.MATCH_PARENT;
+                                    lp2.gravity = Gravity.CENTER;
 
-                                previewDialogProfileOfSp.show();
-                                previewDialogProfileOfSp.getWindow().setAttributes(lp2);
-                                new DownloadImageTask((ImageView) previewDialogProfileOfSp.findViewById(R.id.dialog_preview_image_view)).execute(profileImgUrl);
+                                    previewDialogProfileOfSp.show();
+                                    previewDialogProfileOfSp.getWindow().setAttributes(lp2);
+                                    new DownloadImageTask((ImageView) previewDialogProfileOfSp.findViewById(R.id.dialog_preview_image_view)).execute(userProfileURL);
+                                }
                             }
                         }
+                    } else {
+
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
+
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
             }
-        }, new com.android.volley.Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+            public void onFailure(Call<MainResponse> call, Throwable t) {
             }
         });
-        mQueue.add(request1);
     }
 
 

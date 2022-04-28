@@ -71,6 +71,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.nlpl.R;
+import com.nlpl.model.GetDriverDetailsResponse;
+import com.nlpl.model.GetLoadDetailsResponse;
+import com.nlpl.model.GetTruckDetailsResponse;
+import com.nlpl.model.GetUserByPhoneResponse;
+import com.nlpl.model.MainResponse;
 import com.nlpl.model.ModelForRecyclerView.BidSubmittedModel;
 import com.nlpl.model.ModelForRecyclerView.DriverModel;
 import com.nlpl.model.ModelForRecyclerView.FindLoadsModel;
@@ -142,17 +147,17 @@ public class ServiceProviderDashboardActivity extends AppCompat {
     private LoadSubmittedAdapter loadSubmittedAdapter;
     private RecyclerView loadListRecyclerView, loadSubmittedRecyclerView;
 
-    Dialog loadingDialog, setBudget, dialogSelectDriver, dialogSelectTruck, previewDialogBidNow, dialogAcceptRevisedBid, dialogViewConsignment;
-    String updateAssignedDriverId, s1, required_capacity, required_truck_body, truckIdPass, updateAssignedTruckId, spQuoteOnClickBidNow, bidStatus, vehicle_no, truckId, isTruckDetailsDone, isDriverDetailsDone;
+    Dialog setBudget, dialogSelectDriver, dialogSelectTruck, previewDialogBidNow, dialogAcceptRevisedBid, dialogViewConsignment;
+    String updateAssignedDriverId, required_capacity, required_truck_body, truckIdPass, updateAssignedTruckId, spQuoteOnClickBidNow, bidStatus, vehicle_no, truckId, isTruckDetailsDone, isDriverDetailsDone;
 
     SwipeListener swipeListener;
 
     //-------------------- Select Truck ------------------------------------------------------------
-    private ArrayList<TruckModel> truckList = new ArrayList<>();
+    private ArrayList<MainResponse.Data.TruckDetails> truckList = new ArrayList<>();
     private TrucksListAdapterBid truckListAdapter;
     private RecyclerView truckListRecyclerView;
     //----------------------------------------------------------------------------------------------
-    private ArrayList<DriverModel> driverList = new ArrayList<>();
+    private ArrayList<MainResponse.Data.DriverDetails> driverList = new ArrayList<>();
     private DriversListAdapterBid driverListAdapter;
     private RecyclerView driverListRecyclerView;
 
@@ -175,7 +180,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
     String loadId, selectedDriverId, selectedDriverName, userId, userIdAPI, phone, mobileNoAPI, vehicle_typeAPI, truck_ftAPI, truck_carrying_capacityAPI;
     ArrayList<String> arrayUserId, arrayMobileNo, arrayDriverMobileNo, arrayPinCode, arrayName, arrayRole, arrayCity, arrayAddress, arrayRegDone;
 
-    String mobile, name, address, pinCode, city, role, emailIdAPI;
+    String role;
 
     //------------------------------------ Find Loads ----------------------------------------------
     private RecyclerView searchListRecyclerView;
@@ -355,8 +360,6 @@ public class ServiceProviderDashboardActivity extends AppCompat {
         upListD = new ArrayList<>();
         wbListD = new ArrayList<>();
 
-        getUserId(phone);
-
         loadListRecyclerView = (RecyclerView) findViewById(R.id.dashboard_load_notification_recycler_view);
         loadSubmittedRecyclerView = (RecyclerView) findViewById(R.id.dashboard_load_notification_submitted_recycler_view);
 
@@ -368,24 +371,6 @@ public class ServiceProviderDashboardActivity extends AppCompat {
                 RearrangeItems();
             }
         });
-
-        loadingDialog = new Dialog(ServiceProviderDashboardActivity.this);
-        loadingDialog.setContentView(R.layout.dialog_loading);
-        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        WindowManager.LayoutParams lp2 = new WindowManager.LayoutParams();
-        lp2.copyFrom(loadingDialog.getWindow().getAttributes());
-        lp2.width = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp2.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp2.gravity = Gravity.CENTER;
-
-        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
-
-        loadingDialog.setCancelable(false);
-        loadingDialog.getWindow().setAttributes(lp2);
-
-        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
-        loading_img.startAnimation(rotate);
 
 //        swipeListener = new SwipeListener(loadListRecyclerView);
 
@@ -474,102 +459,8 @@ public class ServiceProviderDashboardActivity extends AppCompat {
         searchListRecyclerViewDrop.setAdapter(searchLoadAdapterDrop);
 
         stateConstrain = (ConstraintLayout) findViewById(R.id.find_loads_state_constrain);
-    }
 
-    public void getTruckList() {
-        //---------------------------- Get Truck Details -------------------------------------------
-        String url1 = getString(R.string.baseURL) + "/truck/truckbyuserID/" + userId;
-        Log.i("URL: ", url1);
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    truckList = new ArrayList<>();
-                    JSONArray truckLists = response.getJSONArray("data");
-                    for (int i = 0; i < truckLists.length(); i++) {
-                        JSONObject obj = truckLists.getJSONObject(i);
-                        TruckModel model = new TruckModel();
-                        model.setUser_id(obj.getString("user_id"));
-                        model.setVehicle_no(obj.getString("vehicle_no"));
-                        model.setTruck_type(obj.getString("truck_type"));
-                        model.setTruck_carrying_capacity(obj.getString("truck_carrying_capacity"));
-                        model.setRc_book(obj.getString("rc_book"));
-                        model.setVehicle_insurance(obj.getString("vehicle_insurance"));
-                        model.setTruck_id(obj.getString("truck_id"));
-                        model.setDriver_id(obj.getString("driver_id"));
-                        truckList.add(model);
-                    }
-                    if (truckList.size() > 0) {
-                        truckListAdapter.updateData(truckList);
-                    } else {
-                    }
-
-//                    if (truckList.size() > 5) {
-//                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//                        params.height = 235; //height recycleviewer
-//                        truckListRecyclerView.setLayoutParams(params);
-//                    } else {
-//                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//                        truckListRecyclerView.setLayoutParams(params);
-//                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request);
-        //-------------------------------------------------------------------------------------------
-    }
-
-    public void getDriverDetailsList() {
-        //---------------------------- Get Driver Details ------------------------------------------
-        String url1 = getString(R.string.baseURL) + "/driver/userId/" + userId;
-        Log.i("URL: ", url1);
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    driverList = new ArrayList<>();
-                    JSONArray driverLists = response.getJSONArray("data");
-                    for (int i = 0; i < driverLists.length(); i++) {
-                        JSONObject obj = driverLists.getJSONObject(i);
-                        DriverModel modelDriver = new DriverModel();
-                        modelDriver.setUser_id(obj.getString("user_id"));
-                        modelDriver.setTruck_id(obj.getString("truck_id"));
-                        modelDriver.setDriver_id(obj.getString("driver_id"));
-                        modelDriver.setDriver_name(obj.getString("driver_name"));
-                        modelDriver.setUpload_lc(obj.getString("upload_dl"));
-                        modelDriver.setDriver_selfie(obj.getString("driver_selfie"));
-                        modelDriver.setDriver_number(obj.getString("driver_number"));
-                        modelDriver.setDriver_emailId(obj.getString("driver_emailId"));
-                        driverList.add(modelDriver);
-                    }
-                    if (driverList.size() > 0) {
-                        driverListAdapter.updateData(driverList);
-                    } else {
-
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request);
-        //-------------------------------------------------------------------------------------------
+        getUserId(phone);
     }
 
     public void RearrangeItems() {
@@ -578,131 +469,178 @@ public class ServiceProviderDashboardActivity extends AppCompat {
     }
 
     private void getUserId(String userMobileNumber) {
-
-        //------------------------------get user details by mobile Number---------------------------------
-        //-----------------------------------Get User Details---------------------------------------
-        String url = getString(R.string.baseURL) + "/user/get";
-        Log.i("URL at Profile:", url);
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        Call<GetUserByPhoneResponse> getUserByPhoneResponseCall = ApiClient.getUserService().getUserByPhoneResponseCall(userMobileNumber);
+        getUserByPhoneResponseCall.enqueue(new Callback<GetUserByPhoneResponse>() {
             @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray jsonArray = response.getJSONArray("data");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject data = jsonArray.getJSONObject(i);
-                        userIdAPI = data.getString("user_id");
-                        arrayUserId.add(userIdAPI);
-                        mobileNoAPI = data.getString("phone_number");
-                        arrayMobileNo.add(mobileNoAPI);
-                    }
+            public void onResponse(Call<GetUserByPhoneResponse> call, retrofit2.Response<GetUserByPhoneResponse> response) {
+                GetUserByPhoneResponse response1 = response.body();
+                GetUserByPhoneResponse.UserList list = response1.getData().get(0);
+                userId = list.getUser_id();
 
-                    for (int j = 0; j < arrayMobileNo.size(); j++) {
-                        if (arrayMobileNo.get(j).equals(userMobileNumber)) {
-                            userId = arrayUserId.get(j);
-                            Log.i("userIDAPI:", userId);
-                        }
-                    }
+                getUserDetailsMain();
+                //---------------------------- Get Load Details -------------------------------------------
+                getLoadNotificationList();
 
-                    if (userId == null) {
-                        bidsSubmittedTextView.setVisibility(View.GONE);
-                        findLoadsConstrain.setVisibility(View.GONE);
-                    } else {
-                        bidsSubmittedTextView.setVisibility(View.VISIBLE);
-                        findLoadsConstrain.setVisibility(View.VISIBLE);
-                    }
+                if (userId == null) {
+                    bidsSubmittedTextView.setVisibility(View.GONE);
+                    findLoadsConstrain.setVisibility(View.GONE);
+                } else {
+                    bidsSubmittedTextView.setVisibility(View.VISIBLE);
+                    findLoadsConstrain.setVisibility(View.VISIBLE);
+                }
 
-                    getUserDetails();
-                    //---------------------------- Get Load Details -------------------------------------------
-                    getLoadNotificationList();
-                    getTruckList();
-                    getDriverDetailsList();
-
-                    LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(getApplicationContext());
+                LinearLayoutManager linearLayoutManagerBank = new LinearLayoutManager(getApplicationContext());
 //                    linearLayoutManagerBank.setReverseLayout(false);
-                    loadListRecyclerView.setLayoutManager(linearLayoutManagerBank);
-                    loadListRecyclerView.setHasFixedSize(true);
+                loadListRecyclerView.setLayoutManager(linearLayoutManagerBank);
+                loadListRecyclerView.setHasFixedSize(true);
 
-                    LinearLayoutManager linearLayoutManagerBank1 = new LinearLayoutManager(getApplicationContext());
+                LinearLayoutManager linearLayoutManagerBank1 = new LinearLayoutManager(getApplicationContext());
 //                    linearLayoutManagerBank1.setReverseLayout(false);
-                    loadSubmittedRecyclerView.setLayoutManager(linearLayoutManagerBank1);
-                    loadSubmittedRecyclerView.setHasFixedSize(true);
+                loadSubmittedRecyclerView.setLayoutManager(linearLayoutManagerBank1);
+                loadSubmittedRecyclerView.setHasFixedSize(true);
 
-                    loadSubmittedAdapter = new LoadSubmittedAdapter(ServiceProviderDashboardActivity.this, updatedLoadSubmittedList);
-                    loadSubmittedRecyclerView.setAdapter(loadSubmittedAdapter);
-                    loadSubmittedRecyclerView.scrollToPosition(loadSubmittedAdapter.getItemCount() - 1);
+                loadSubmittedAdapter = new LoadSubmittedAdapter(ServiceProviderDashboardActivity.this, updatedLoadSubmittedList);
+                loadSubmittedRecyclerView.setAdapter(loadSubmittedAdapter);
+                loadSubmittedRecyclerView.scrollToPosition(loadSubmittedAdapter.getItemCount() - 1);
 
-                    loadListAdapter = new LoadNotificationAdapter(ServiceProviderDashboardActivity.this, loadListToCompare);
+                loadListAdapter = new LoadNotificationAdapter(ServiceProviderDashboardActivity.this, loadListToCompare);
 //                    loadListRecyclerView.setAdapter(loadListAdapter);
-                    loadListRecyclerView.scrollToPosition(loadListAdapter.getItemCount() - 1);
+                loadListRecyclerView.scrollToPosition(loadListAdapter.getItemCount() - 1);
 
-                    //------------------------------------------------------------------------------------------
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                //------------------------------------------------------------------------------------------
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void onFailure(Call<GetUserByPhoneResponse> call, Throwable t) {
 
             }
         });
-        mQueue.add(request);
-
-        //------------------------------------------------------------------------------------------------
-
     }
 
-    private void getUserDetails() {
+    private void getUserDetailsMain() {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
 
-        String url = getString(R.string.baseURL) + "/user/" + userId;
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+
+        Call<MainResponse> responseCall = ApiClient.getUserService().mainResponse(userId);
+        responseCall.enqueue(new Callback<MainResponse>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(Call<MainResponse> call, retrofit2.Response<MainResponse> response) {
                 try {
-                    JSONArray truckLists = response.getJSONArray("data");
-                    for (int i = 0; i < truckLists.length(); i++) {
-                        JSONObject obj = truckLists.getJSONObject(i);
-                        name = obj.getString("name");
-                        mobile = obj.getString("phone_number");
-                        address = obj.getString("address");
-                        city = obj.getString("preferred_location");
-                        pinCode = obj.getString("pin_code");
-                        role = obj.getString("user_type");
+                    MainResponse response1 = response.body();
+                    MainResponse.Data list = response1.getData();
 
-                        emailIdAPI = obj.getString("email_id");
+                    //GET USER DETAILS
+                    String userNameAPI, userPhoneNumberAPI, userAlternatePhoneNumberAPI, userUserTypeAPI, userCityAPI, userPreferredLanguageAPI, userAddressAPI, userStateAPI, userPinCode, userEmailIdAPI, userPayTypeAPI, userIsRegistrationDoneAPI, userIsProfilePicAddedAPI;
+                    String userIsTruckAddedAPI, userIsDriverAddedAPI, userIsBankDetailsAddedAPI, userIsCompanyAddedAPI, userIsPersonalAddedAPI, userIsAadhaarVerifiedAPI, userIsPanVerifiedAPI, userIsUserVerifiedAPI, userIsAccountActiveAPI, userCreatedAtAPI, userUpdatedAtAPI;
+                    String userUpdatedByAPI, userDeletedAtAPI, userDeletedByAPI, idAPI, userLatitudeAPI, userLongitudeAPI, userDeviceIdAPI, userPanNumberAPI, userAadhaarNumberAPI, userIsSelfAddedAsDriverAPI;
 
-                        String deviceIdFromAPI = obj.getString("device_id");
-                        if (deviceIdFromAPI.equals("null") || deviceIdFromAPI == null) {
-                            String deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-                            UpdateUserDetails.updateUserDeviceId(userId, deviceId);
-                        }
+                    userNameAPI = list.getName();
+                    userPhoneNumberAPI = String.valueOf(list.getPhone_number());
+                    userAlternatePhoneNumberAPI = String.valueOf(list.getAlternate_ph_no());
+                    userUserTypeAPI = list.getUser_type();
+                    userCityAPI = list.getPreferred_location();
+                    userPreferredLanguageAPI = list.getPreferred_language();
+                    userAddressAPI = list.getAddress();
+                    userStateAPI = list.getState_code();
+                    userPinCode = String.valueOf(list.getPin_code());
+                    userEmailIdAPI = list.getEmail_id();
+                    userPayTypeAPI = list.getPay_type();
+                    userIsRegistrationDoneAPI = String.valueOf(list.getIsRegistration_done());
+                    userIsProfilePicAddedAPI = String.valueOf(list.getIsProfile_pic_added());
+                    userIsTruckAddedAPI = String.valueOf(list.getIsTruck_added());
+                    userIsDriverAddedAPI = String.valueOf(list.getIsDriver_added());
+                    userIsBankDetailsAddedAPI = String.valueOf(list.getIsBankDetails_given());
+                    userIsCompanyAddedAPI = String.valueOf(list.getIsCompany_added());
+                    userIsPersonalAddedAPI = String.valueOf(list.getIsPersonal_dt_added());
+                    userIsAadhaarVerifiedAPI = String.valueOf(list.getIs_Addhar_verfied());
+                    userIsPanVerifiedAPI = String.valueOf(list.getIs_pan_verfied());
+                    userIsUserVerifiedAPI = String.valueOf(list.getIs_user_verfied());
+                    userIsAccountActiveAPI = String.valueOf(list.getIs_account_active());
+                    userCreatedAtAPI = list.getCreated_at();
+                    userUpdatedAtAPI = list.getUpdated_at();
+                    userUpdatedByAPI = list.getUpdated_by();
+                    userDeletedAtAPI = list.getDeleted_at();
+                    userDeletedByAPI = list.getDeleted_by();
+                    idAPI = String.valueOf(list.getId());
+                    userLatitudeAPI = list.getLatitude();
+                    userLongitudeAPI = list.getLongitude();
+                    userDeviceIdAPI = list.getDevice_id();
+                    userPanNumberAPI = list.getPan_number();
+                    userAadhaarNumberAPI = list.getAadhaar_number();
+                    userIsSelfAddedAsDriverAPI = String.valueOf(list.getIs_self_added_asDriver());
 
-                        String isRegistrationDone = obj.getString("isRegistration_done");
-                        Log.i("IsREg", isRegistrationDone);
+                    role = userUserTypeAPI;
 
-                        isTruckDetailsDone = obj.getString("isTruck_added");
-                        isDriverDetailsDone = obj.getString("isDriver_added");
-
-                        //-------------------------------------Personal details ---- -------------------------------------
-
-                        s1 = mobile.substring(2, 12);
-
+                    String deviceIdFromAPI = userDeviceIdAPI;
+                    if (deviceIdFromAPI.equals("null") || deviceIdFromAPI == null) {
+                        String deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+                        UpdateUserDetails.updateUserDeviceId(userId, deviceId);
                     }
-                } catch (JSONException e) {
+
+                    isTruckDetailsDone = userIsTruckAddedAPI;
+                    isDriverDetailsDone = userIsDriverAddedAPI;
+
+                    //GET TRUCK DETAILS
+                    ArrayList<MainResponse.Data.TruckDetails> truckList = new ArrayList<>();
+                    truckList.addAll(list.getTruckdetails());
+                    truckListAdapter.updateData(truckList);
+
+                    //GET DRIVER DETAILS
+                    ArrayList<MainResponse.Data.DriverDetails> driverList = new ArrayList<>();
+                    driverList.addAll(list.getDriverDetails());
+                    driverListAdapter.updateData(driverList);
+
+                    //GET BANK DETAILS
+                    ArrayList<MainResponse.Data.BankDetails> bankList = new ArrayList<>();
+                    bankList.addAll(list.getBankDetails());
+
+
+                    //GET COMPANY DETAILS
+                    ArrayList<MainResponse.Data.CompanyDetails> companyDetails = new ArrayList<>();
+                    companyDetails.addAll(list.getCompanyDetails());
+
+                    //GET PREFERRED LOCATIONS
+                    ArrayList<MainResponse.Data.PreferredLocation> preferredLocationList = new ArrayList<>();
+                    preferredLocationList.addAll(list.getPreferredLocations());
+
+
+                    //GET USER RATINGS
+                    ArrayList<MainResponse.Data.UserRatings> ratingsList = new ArrayList<>();
+                    ratingsList.addAll(list.getUserRatings());
+
+                    //GET USER IMAGE
+                    ArrayList<MainResponse.Data.UserImages> imagesList = new ArrayList<>();
+                    imagesList.addAll(list.getUserImages());
+
+                    //GET SP BID DETAILS
+                    ArrayList<MainResponse.Data.SpBidDetails> spBidDetailsList = new ArrayList<>();
+                    spBidDetailsList.addAll(list.getSpBidDetails());
+
+                } catch (Exception e) {
                     e.printStackTrace();
+                    getUserDetailsMain();
                 }
+
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
+
             }
-        }, new com.android.volley.Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+            public void onFailure(Call<MainResponse> call, Throwable t) {
+                getUserDetailsMain();
             }
         });
-        mQueue.add(request);
-
     }
+
 
     public void onClickProfileAndRegister(View view) {
         switch (view.getId()) {
@@ -1370,10 +1308,10 @@ public class ServiceProviderDashboardActivity extends AppCompat {
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             String selected = adapterView.getSelectedItem().toString();
 
-            if (selected.equals("Pick-up Location")){
+            if (selected.equals("Pick-up Location")) {
                 searchListRecyclerViewDrop.setVisibility(View.INVISIBLE);
                 searchListRecyclerView.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 searchListRecyclerViewDrop.setVisibility(View.VISIBLE);
                 searchListRecyclerView.setVisibility(View.INVISIBLE);
             }
@@ -1386,82 +1324,91 @@ public class ServiceProviderDashboardActivity extends AppCompat {
     };
 
     private void getDriverDetailsByDriverId(String driverIdSelected) {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
 
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
         updateAssignedDriverId = driverIdSelected;
 
-        Log.i("Driver selected", driverIdSelected);
-        String url = getString(R.string.baseURL) + "/driver/driverId/" + driverIdSelected;
-        Log.i("url for truckByTruckId", url);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+        Call<GetDriverDetailsResponse> responseCall = ApiClient.addDriverService().getDriverByDriverId(driverIdSelected);
+        responseCall.enqueue(new Callback<GetDriverDetailsResponse>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(Call<GetDriverDetailsResponse> call, retrofit2.Response<GetDriverDetailsResponse> response) {
                 try {
-                    JSONArray truckLists = response.getJSONArray("data");
-                    for (int i = 0; i < truckLists.length(); i++) {
-                        JSONObject obj = truckLists.getJSONObject(i);
-                        selectedDriverName = obj.getString("driver_name");
+                    if (response.isSuccessful()) {
+                        GetDriverDetailsResponse response1 = response.body();
+                        GetDriverDetailsResponse.DriverList list = response1.getData().get(0);
+                        selectDriver.setText(list.driver_name);
                     }
-
-                    selectDriver.setText(selectedDriverName);
-
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
             }
-        }, new com.android.volley.Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+            public void onFailure(Call<GetDriverDetailsResponse> call, Throwable t) {
+
             }
         });
-        mQueue.add(request);
     }
 
     private void getTruckDetailsByTruckId(String truckIdSelected, Boolean acceptRevised) {
         updateAssignedTruckId = truckIdSelected;
-
         Log.i("truckId selected", truckIdSelected);
         truckId = truckIdSelected;
-        String url = getString(R.string.baseURL) + "/truck/" + truckIdSelected;
-        Log.i("url for truckByTruckId", url);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+
+        Call<GetTruckDetailsResponse> responseCall = ApiClient.addTruckService().getTruckByTruckId(truckIdSelected);
+        responseCall.enqueue(new Callback<GetTruckDetailsResponse>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(Call<GetTruckDetailsResponse> call, retrofit2.Response<GetTruckDetailsResponse> response) {
                 try {
-                    JSONArray truckLists = response.getJSONArray("data");
-                    for (int i = 0; i < truckLists.length(); i++) {
-                        JSONObject obj = truckLists.getJSONObject(i);
-                        String truckModel = obj.getString("truck_type");
-                        String truckCapacity = obj.getString("truck_carrying_capacity");
-                        String vehicleNo = obj.getString("vehicle_no");
-                        selectedDriverId = obj.getString("driver_id");
+                    GetTruckDetailsResponse response1 = response.body();
+                    GetTruckDetailsResponse.TruckList list = response1.getData().get(0);
 
-                        selectTruck.setText(vehicleNo);
-                        selectedTruckModel.setText(truckModel);
-                        selectedTruckCapacity.setText(truckCapacity);
-                    }
+                    selectedDriverId = list.getDriver_id();
+                    selectTruck.setText(list.getVehicle_no());
+                    selectedTruckModel.setText(list.getTruck_type());
+                    selectedTruckCapacity.setText(list.getTruck_carrying_capacity());
 
-                    if (selectedDriverId.equals("null")) {
+                    if (selectedDriverId.equals("null") || selectedDriverId == null) {
                         selectDriver.setText("");
                         Log.i("driverId null", "There is no driver Id for this truck");
                     } else {
                         if (acceptRevised) {
                             getDriverDetailsByDriverId(selectedDriverId);
                         }
-
                     }
-
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
             }
-        }, new com.android.volley.Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+            public void onFailure(Call<GetTruckDetailsResponse> call, Throwable t) {
+
             }
         });
-        mQueue.add(request);
     }
 
     private void getBidListByUserId(ArrayList<LoadNotificationModel> loadListToCompare) {
@@ -1495,6 +1442,22 @@ public class ServiceProviderDashboardActivity extends AppCompat {
 
     public void getBidSubmittedList(String loadIdReceived, String
             bidId, ArrayList<LoadNotificationModel> loadListToCompare) {
+
+        Call<GetLoadDetailsResponse> getLoadDetailsResponseCall = ApiClient.getPostLoadService().getLoadDetailsResponseCall(loadIdReceived);
+        getLoadDetailsResponseCall.enqueue(new Callback<GetLoadDetailsResponse>() {
+            @Override
+            public void onResponse(Call<GetLoadDetailsResponse> call, retrofit2.Response<GetLoadDetailsResponse> response) {
+                GetLoadDetailsResponse response1 = response.body();
+                ArrayList<GetLoadDetailsResponse.LoadList> loadList = new ArrayList<>();
+                loadList.addAll(response1.getData());
+
+            }
+
+            @Override
+            public void onFailure(Call<GetLoadDetailsResponse> call, Throwable t) {
+
+            }
+        });
         //---------------------------- Get Bank Details ------------------------------------------
         String url1 = getString(R.string.baseURL) + "/loadpost/getLoadDtByPostId/" + loadIdReceived;
         Log.i("URL: ", url1);
@@ -1540,11 +1503,8 @@ public class ServiceProviderDashboardActivity extends AppCompat {
                         }
                     }
 
-
                     TextView noBidsSubmittedTextView = (TextView) findViewById(R.id.dashboard_no_bids_submitted_text);
                     if (loadSubmittedList.size() > 0) {
-                        FooThread fooThread = new FooThread(handler);
-                        fooThread.start();
                         updatedLoadSubmittedList.addAll(loadSubmittedList);
                         loadSubmittedAdapter.updateData(updatedLoadSubmittedList);
                         if (updatedLoadSubmittedList.size() > 0) {
@@ -1580,36 +1540,6 @@ public class ServiceProviderDashboardActivity extends AppCompat {
         //-------------------------------------------------------------------------------------------
 
     }
-
-
-//    private void getDriverDetailsBySelectedDriver(String driverId){
-//        Log.i("driver selected", driverId);
-//        String url = getString(R.string.baseURL) + "/driver/driverId/" + driverId;
-//        Log.i("url for truckByTruckId", url);
-//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                try {
-//                    JSONArray truckLists = response.getJSONArray("data");
-//                    for (int i = 0; i < truckLists.length(); i++) {
-//                        JSONObject obj = truckLists.getJSONObject(i);
-//                        selectedDriverName = obj.getString("driver_name");
-//                    }
-//                    selectDriver.setText(selectedDriverName);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }, new com.android.volley.Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                error.printStackTrace();
-//            }
-//        });
-//        mQueue.add(request);
-//
-//    }
-
 
     private void budgetSet(String previousBudget) {
 
@@ -2075,7 +2005,6 @@ public class ServiceProviderDashboardActivity extends AppCompat {
     }
 
     public void viewConsignment(BidSubmittedModel obj) {
-
         loadId = obj.getIdpost_load();
         bidStatus = obj.getBid_status();
         String pick_up_date = obj.getPick_up_date();
@@ -2310,32 +2239,84 @@ public class ServiceProviderDashboardActivity extends AppCompat {
     }
 
     private void getCustomerNameAndNumber(String user_id) {
-        //-------------------------------------------------------------------------------------------
-        String url = getString(R.string.baseURL) + "/user/" + user_id;
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
+
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+
+        Call<MainResponse> responseCall = ApiClient.getUserService().mainResponse(user_id);
+        responseCall.enqueue(new Callback<MainResponse>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(Call<MainResponse> call, retrofit2.Response<MainResponse> response) {
                 try {
-                    JSONArray truckLists = response.getJSONArray("data");
-                    for (int i = 0; i < truckLists.length(); i++) {
-                        JSONObject obj1 = truckLists.getJSONObject(i);
-                        customerName.setText(obj1.getString("name"));
-                        String mobileNumberCustomer = obj1.getString("phone_number");
-                        String s = mobileNumberCustomer.substring(2, 12);
-                        customerNumber.setText("+91 " + s);
-                    }
-                } catch (JSONException e) {
+                    MainResponse response1 = response.body();
+                    MainResponse.Data list = response1.getData();
+
+                    //GET USER DETAILS
+                    String userNameAPI, userPhoneNumberAPI, userAlternatePhoneNumberAPI, userUserTypeAPI, userCityAPI, userPreferredLanguageAPI, userAddressAPI, userStateAPI, userPinCode, userEmailIdAPI, userPayTypeAPI, userIsRegistrationDoneAPI, userIsProfilePicAddedAPI;
+                    String userIsTruckAddedAPI, userIsDriverAddedAPI, userIsBankDetailsAddedAPI, userIsCompanyAddedAPI, userIsPersonalAddedAPI, userIsAadhaarVerifiedAPI, userIsPanVerifiedAPI, userIsUserVerifiedAPI, userIsAccountActiveAPI, userCreatedAtAPI, userUpdatedAtAPI;
+                    String userUpdatedByAPI, userDeletedAtAPI, userDeletedByAPI, idAPI, userLatitudeAPI, userLongitudeAPI, userDeviceIdAPI, userPanNumberAPI, userAadhaarNumberAPI, userIsSelfAddedAsDriverAPI;
+
+                    userNameAPI = list.getName();
+                    userPhoneNumberAPI = String.valueOf(list.getPhone_number());
+                    userAlternatePhoneNumberAPI = String.valueOf(list.getAlternate_ph_no());
+                    userUserTypeAPI = list.getUser_type();
+                    userCityAPI = list.getPreferred_location();
+                    userPreferredLanguageAPI = list.getPreferred_language();
+                    userAddressAPI = list.getAddress();
+                    userStateAPI = list.getState_code();
+                    userPinCode = String.valueOf(list.getPin_code());
+                    userEmailIdAPI = list.getEmail_id();
+                    userPayTypeAPI = list.getPay_type();
+                    userIsRegistrationDoneAPI = String.valueOf(list.getIsRegistration_done());
+                    userIsProfilePicAddedAPI = String.valueOf(list.getIsProfile_pic_added());
+                    userIsTruckAddedAPI = String.valueOf(list.getIsTruck_added());
+                    userIsDriverAddedAPI = String.valueOf(list.getIsDriver_added());
+                    userIsBankDetailsAddedAPI = String.valueOf(list.getIsBankDetails_given());
+                    userIsCompanyAddedAPI = String.valueOf(list.getIsCompany_added());
+                    userIsPersonalAddedAPI = String.valueOf(list.getIsPersonal_dt_added());
+                    userIsAadhaarVerifiedAPI = String.valueOf(list.getIs_Addhar_verfied());
+                    userIsPanVerifiedAPI = String.valueOf(list.getIs_pan_verfied());
+                    userIsUserVerifiedAPI = String.valueOf(list.getIs_user_verfied());
+                    userIsAccountActiveAPI = String.valueOf(list.getIs_account_active());
+                    userCreatedAtAPI = list.getCreated_at();
+                    userUpdatedAtAPI = list.getUpdated_at();
+                    userUpdatedByAPI = list.getUpdated_by();
+                    userDeletedAtAPI = list.getDeleted_at();
+                    userDeletedByAPI = list.getDeleted_by();
+                    idAPI = String.valueOf(list.getId());
+                    userLatitudeAPI = list.getLatitude();
+                    userLongitudeAPI = list.getLongitude();
+                    userDeviceIdAPI = list.getDevice_id();
+                    userPanNumberAPI = list.getPan_number();
+                    userAadhaarNumberAPI = list.getAadhaar_number();
+                    userIsSelfAddedAsDriverAPI = String.valueOf(list.getIs_self_added_asDriver());
+
+                    customerName.setText(userNameAPI);
+                    String s = userPhoneNumberAPI.substring(2, 12);
+                    customerNumber.setText("+91 " + s);
+
+                } catch (Exception e) {
                     e.printStackTrace();
+                    getUserDetailsMain();
                 }
+
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
+
             }
-        }, new com.android.volley.Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+            public void onFailure(Call<MainResponse> call, Throwable t) {
+                getUserDetailsMain();
             }
         });
-        mQueue.add(request);
-        //----------------------------------------------------------
     }
 
 
@@ -2368,7 +2349,7 @@ public class ServiceProviderDashboardActivity extends AppCompat {
         startActivity(i2);
     }
 
-    public void onClickAssignTruckFromList(TruckModel obj) {
+    public void onClickAssignTruckFromList(MainResponse.Data.TruckDetails obj) {
         if (obj.getTruck_type().toLowerCase().equals(required_truck_body.toLowerCase()) && obj.getTruck_carrying_capacity().toLowerCase().equals(required_capacity.toLowerCase())) {
             Log.i("Truck Type LP", required_truck_body);
             Log.i("Load Type LP", required_capacity);
@@ -2434,39 +2415,42 @@ public class ServiceProviderDashboardActivity extends AppCompat {
     }
 
     public void getDriverDetailsAssigned(String driverId) {
-        //---------------------------- Get Driver Details -------------------------------------------
-        String url1 = getString(R.string.baseURL) + "/driver/driverId/" + driverId;
-        Log.i("URL: ", url1);
+        Dialog loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.dialog_loading);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView loading_img = loadingDialog.findViewById(R.id.dialog_loading_image_view);
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url1, null, new com.android.volley.Response.Listener<JSONObject>() {
+        loadingDialog.show();
+        loadingDialog.setCancelable(false);
+        Animation rotate = AnimationUtils.loadAnimation(this, R.anim.clockwiserotate);
+        loading_img.startAnimation(rotate);
+
+        Call<GetDriverDetailsResponse> responseCall = ApiClient.addDriverService().getDriverByDriverId(driverId);
+        responseCall.enqueue(new Callback<GetDriverDetailsResponse>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(Call<GetDriverDetailsResponse> call, retrofit2.Response<GetDriverDetailsResponse> response) {
                 try {
-                    truckList = new ArrayList<>();
-                    JSONArray truckLists = response.getJSONArray("data");
-                    for (int i = 0; i < truckLists.length(); i++) {
-                        JSONObject obj = truckLists.getJSONObject(i);
-                        selectDriver.setText(obj.getString("driver_name"));
-                        String driverEmail = obj.getString("driver_emailId");
-                        String driverDlURL = obj.getString("upload_dl");
-                        String driverSelfieURL = obj.getString("driver_selfie");
+                    if (response.isSuccessful()) {
+                        GetDriverDetailsResponse response1 = response.body();
+                        GetDriverDetailsResponse.DriverList list = response1.getData().get(0);
+                        selectDriver.setText(list.driver_name);
                     }
-
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
             }
-        }, new com.android.volley.Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+            public void onFailure(Call<GetDriverDetailsResponse> call, Throwable t) {
+
             }
         });
-        mQueue.add(request);
-        //-------------------------------------------------------------------------------------------
     }
 
-    public void onClickReAssignDriver(DriverModel obj) {
+    public void onClickReAssignDriver(MainResponse.Data.DriverDetails obj) {
         dialogSelectDriver.dismiss();
         selectedDriverId = obj.getDriver_id();
         selectDriver.setText(obj.getDriver_name());
@@ -2667,16 +2651,6 @@ public class ServiceProviderDashboardActivity extends AppCompat {
             }
         }
     }
-
-    @SuppressLint("HandlerLeak")
-    final Handler handler = new Handler() {
-        public void handleMessage(Message msg) {
-            int state = msg.getData().getInt("state");
-            if (state == 1) {
-                loadingDialog.dismiss();
-            }
-        }
-    };
 
     public void onClickWhatsApp(View view) {
         Dialog chooseDialog = new Dialog(ServiceProviderDashboardActivity.this);
@@ -3567,13 +3541,5 @@ public class ServiceProviderDashboardActivity extends AppCompat {
                 wbList.add(loadListToCompare.get(i));
             }
         }
-    }
-
-    public void showLoading(){
-        loadingDialog.show();
-    }
-
-    public void dismissLoading(){
-        loadingDialog.dismiss();
     }
 }
