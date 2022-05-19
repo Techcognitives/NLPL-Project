@@ -58,7 +58,7 @@ public class OtpCodeActivity extends AppCompat {
 
     TextView countdown, otpTitle, reSendOtp;
     String mobile, otpId;
-    Button otpButton;
+
     String mobileNoFirebase, otp, userId, userIdAPI, name, nameAPI, phone, isRegistrationDone, isRegistrationDoneAPI, pinCode, pinCodeAPI, address, addressAPI, mobileNoAPI, cityAPI, city, roleAPI, role;
     FirebaseAuth mAuth;
     private RequestQueue mQueue;
